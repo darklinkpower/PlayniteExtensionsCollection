@@ -1,0 +1,9 @@
+﻿Name: PCGamingWiki Missing Info
+Author: darklinkpower
+Version: 1.0
+Module: PCGamingWikiMissingInfo.ps1
+Type: Script
+Icon: icon.png
+Functions:
+    - Description: PCGamingWiki - Check for games with missing information
+      FunctionName: PCGamingWikiMissingInfo

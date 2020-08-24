@@ -1,0 +1,12 @@
+﻿Name: Fit Description Images
+Author: darklinkpower
+Version: 1.0
+Module: FitDescriptionImages.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-373.html
+Functions:
+    - Description: Fit Description Images - Apply Style to games
+      FunctionName: Edit-DescriptionStyle

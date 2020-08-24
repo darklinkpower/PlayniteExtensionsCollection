@@ -1,0 +1,12 @@
+﻿Name: Image Cache Size Saver
+Author: darklinkpower
+Version: 1.0
+Module: ImageCacheSizeSaver.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-372.html
+Functions:
+    - Description: Image Cache Size Saver - Process Images in Cache
+      FunctionName: Invoke-ImageCacheSizeSaver

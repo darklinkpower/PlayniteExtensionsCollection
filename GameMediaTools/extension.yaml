@@ -1,0 +1,14 @@
+Name: Game Media Tools
+Author: darklinkpower
+Version: 1.1
+Module: GameMediaTools.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-313.html
+Functions: 
+    - Description: Game Media Tools - Tools
+      FunctionName: GameMediaTools
+    - Description: Game Media Tools - Open metadata folder
+      FunctionName: OpenMetadataFolder

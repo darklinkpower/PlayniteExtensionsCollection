@@ -1,0 +1,14 @@
+﻿Name: PlayState
+Author: darklinkpower
+Version: 1.7
+Module: PlayState.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-225.html
+Functions:
+    - Description: PlayState - Add selected games to blacklist
+      FunctionName: Add-PlaystateBlacklist
+    - Description: PlayState - Remove selected games from blacklist
+      FunctionName: Remove-PlaystateBlacklist

@@ -1,0 +1,12 @@
+﻿Name: Steam Date Importer
+Author: darklinkpower
+Version: 1.0.1
+Module: SteamDateImporter.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-376.html
+Functions:
+    - Description: Steam - Import dates
+      FunctionName: Invoke-SteamDateImporter

@@ -1,0 +1,12 @@
+﻿Name: NVIDIA GE GameStream Export
+Author: darklinkpower
+Version: 1.1.2
+Module: NVIDIAGEGameStreamExport.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-252.html
+Functions: 
+    - Description: NVIDIA Geforce Experience GameStream - Export
+      FunctionName: NVIDIAGEGameStreamExport

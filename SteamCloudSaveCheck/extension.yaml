@@ -1,0 +1,10 @@
+﻿Name: Steam Cloud Save Check
+Author: darklinkpower
+Version: 1.0
+Module: SteamCloudSaveCheck.ps1
+Type: Script
+Functions:
+    - Description: Steam - Add "No Cloud Saves" tag
+      FunctionName: SteamCloudSaveCheckAdd
+    - Description: Steam - Remove "No Cloud Saves" tag
+      FunctionName: SteamCloudSaveCheckRemove

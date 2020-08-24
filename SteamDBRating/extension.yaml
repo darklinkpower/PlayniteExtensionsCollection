@@ -1,0 +1,12 @@
+﻿Name: Steam DB Rating
+Author: darklinkpower
+Version: 1.0
+Module: SteamDbRating.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-320.html
+Functions:
+    - Description: SteamDB Rating - Get rating for selected games
+      FunctionName: SteamDbRating

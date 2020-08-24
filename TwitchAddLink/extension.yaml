@@ -1,0 +1,14 @@
+﻿Name: Twitch Add Link
+Author: darklinkpower
+Version: 1.0.3
+Module: TwitchAddLink.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-364.html
+Functions:
+    - Description: Twitch - Add Twitch link to selected games (Automatic)
+      FunctionName: TwitchAddLinkAutomatic
+    - Description: Twitch - Add Twitch link to selected games (Manual)
+      FunctionName: TwitchAddLinkManual
