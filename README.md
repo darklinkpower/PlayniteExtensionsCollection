@@ -8,7 +8,7 @@ Option 1: [Click here](https://github.com/darklinkpower/PlayniteScriptExtensions
 See for [Portable version](https://github.com/JosefNemec/Playnite/wiki/Installing-scripts-and-plugins#portable-version).
 See for [Standard version](https://github.com/JosefNemec/Playnite/wiki/Installing-scripts-and-plugins#standard-version).
 
-Option 2: Download the packaged *.pext files from the forum thread of the wanted extension linked in the [Extensions section](https://github.com/darklinkpower/PlayniteScriptExtensions#Extensions) and see [Packaged extensions](https://github.com/JosefNemec/Playnite/wiki/Installing-scripts-and-plugins#packaged-extensions).
+Option 2: Download the packaged *.pext files from the forum thread of the wanted extension linked in the [Extensions section](#extensions) and see [Packaged extensions](https://github.com/JosefNemec/Playnite/wiki/Installing-scripts-and-plugins#packaged-extensions).
 
 ## Usage
 
