@@ -1,3 +1,25 @@
+function global:GetGameMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem.Description =  "480p Trailer"
+    $menuItem.FunctionName = "SteamTrailers480p"
+    $menuItem.MenuSection = "Steam Trailers"
+   
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem2.Description =  "HD Trailer"
+    $menuItem2.FunctionName = "SteamTrailersMax"
+    $menuItem2.MenuSection = "Steam Trailers"
+
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem3.Description =  "Microtrailer"
+    $menuItem3.FunctionName = "SteamTrailersMicro"
+    $menuItem3.MenuSection = "Steam Trailers"
+
+    return $menuItem, $menuItem2, $menuItem3
+}
+
 function Get-SteamAppList() {
 	param (
 		[string]$AppListPath
