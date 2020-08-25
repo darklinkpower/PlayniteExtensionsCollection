@@ -1,7 +1,7 @@
-﻿Name: Search AIO
+﻿Name: Search Collection
 Author: darklinkpower
-Version: 1.0.1
-Module: SearchAIO.ps1
+Version: 1.1
+Module: SearchCollection.ps1
 Type: Script
 Icon: icon.png
 Links:
@@ -10,23 +10,30 @@ Links:
 Functions:
     - Description: Search game(s) on Bing Images (Wallpaper)
       FunctionName: SearchBingImagesWallpaper
+
     - Description: Search game(s) on Bing Images (Screenshot)
       FunctionName: SearchBingImagesScreenshot
+
     - Description: Search game(s) on Google Images (Wallpaper)
       FunctionName: SearchGoogleImagesWallpaper
+
     - Description: Search game(s) on Google Images (Screenshot)
       FunctionName: SearchGoogleImagesScreenshot
+
     - Description: Search game(s) on Metacritic
       FunctionName: SearchMetacritic
-    - Description: Search game(s) on Mixer
-      FunctionName: SearchMixer
+
     - Description: Search game(s) on SteamDB
       FunctionName: SearchSteamDB
+
     - Description: Search game(s) on SteamGridDB
       FunctionName: SearchSteamGridDB
+
     - Description: Search game(s) on Twitch
       FunctionName: SearchTwitch
+
     - Description: Search game(s) on VNDB
       FunctionName: SearchVNDB
+
     - Description: Search game(s) on Youtube
       FunctionName: SearchYoutube
