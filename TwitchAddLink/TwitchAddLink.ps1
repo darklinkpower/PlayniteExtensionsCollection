@@ -1,3 +1,20 @@
+function global:GetMainMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "Automatic mode"
+	$menuItem1.FunctionName = "TwitchAddLinkAutomatic"
+	$menuItem1.MenuSection = "@Twitch Add Link"
+
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Semi-Automatic mode"
+	$menuItem2.FunctionName = "TwitchAddLinkSemiAutomatic"
+	$menuItem2.MenuSection = "@Twitch Add Link"
+	
+	return $menuItem1, $menuItem2
+}
+
 function Add-TwitchLink() {
 	param (
 		[String]$ExecutionMode
@@ -21,7 +38,7 @@ function Add-TwitchLink() {
 			$Uri = 'https://static-cdn.jtvnw.net/ttv-boxart/' + "$GameName" + '.jpg'
 			$webrequest = Invoke-WebRequest $Uri -Method Head
 		} catch {
-			$PlayniteApi.Dialogs.ShowMessage("Couldn't download information for `"$($game.name)`".`nExtension will stop execution.`n`nTwitch link added to $CountLinkAdded games.");
+			$PlayniteApi.Dialogs.ShowMessage("Couldn't download information for `"$($game.name)`".`nExtension will stop execution.`n`nTwitch link added to $CountLinkAdded games.", "Twitch Add Link");
 			exit
 		}
 
@@ -39,7 +56,7 @@ function Add-TwitchLink() {
 				$Uri = 'https://static-cdn.jtvnw.net/ttv-boxart/' + "$GameName" + '.jpg'
 				$webrequest = Invoke-WebRequest $Uri -Method Head
 			} catch {
-				$PlayniteApi.Dialogs.ShowMessage("Couldn't download information for `"$($game.name)`".`nExtension will stop execution.`n`nTwitch link added to $CountLinkAdded games.");
+				$PlayniteApi.Dialogs.ShowMessage("Couldn't download information for `"$($game.name)`".`nExtension will stop execution.`n`nTwitch link added to $CountLinkAdded games.", "Twitch Add Link");
 				exit
 			}
 			if (!$webrequest.Headers.'X-404-Redirect')
@@ -47,7 +64,7 @@ function Add-TwitchLink() {
 				$TwitchUrl = 'https://www.twitch.tv/directory/game/' + "$GameName"
 			}
 		}
-		if ( (!$TwitchUrl) -and ($ExecutionMode -eq "Manual") )
+		if ( (!$TwitchUrl) -and ($ExecutionMode -eq "SemiAutomatic") )
 		{
 			# Open Twitch Search in Browser
 			$SearchUrl = 'https://www.twitch.tv/search?term=' + "$($game.name)"
@@ -83,7 +100,7 @@ function Add-TwitchLink() {
 					}
 					else
 					{
-						$PlayniteApi.Dialogs.ShowMessage("Twitch link added to $CountLinkAdded games.");
+						$PlayniteApi.Dialogs.ShowMessage("Twitch link added to $CountLinkAdded games.", "Twitch Add Link");
 						exit
 					}
 				}
@@ -116,7 +133,7 @@ function Add-TwitchLink() {
 		}
 	}
 	# Show finish dialogue with results
-	$PlayniteApi.Dialogs.ShowMessage("Twitch link added to $CountLinkAdded games.");
+	$PlayniteApi.Dialogs.ShowMessage("Twitch link added to $CountLinkAdded games.", "Twitch Add Link");
 }
 
 function TwitchAddLinkAutomatic() {
@@ -124,7 +141,7 @@ function TwitchAddLinkAutomatic() {
 	Add-TwitchLink -ExecutionMode $ExecutionMode
 }
 
-function TwitchAddLinkManual() {
-	$ExecutionMode = "Manual"
+function TwitchAddLinkSemiAutomatic() {
+	$ExecutionMode = "SemiAutomatic"
 	Add-TwitchLink -ExecutionMode $ExecutionMode
 }
