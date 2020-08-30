@@ -6,24 +6,21 @@ function global:NVIDIAGameStreamExport()
 	# Set GameDatabase
 	$GameDatabase = $PlayniteApi.MainView.SelectedGames
 	
-	# Set NVIDIA GameStream directory
-	$NVIDIAPath = Join-Path $env:LocalAppData -ChildPath "NVIDIA Corporation\Shield Apps"
-	
+	# Set paths
+	$NvidiaPath = Join-Path -Path $env:LocalAppData -ChildPath "NVIDIA Corporation\Shield Apps"
+	$UrlsDirectoryPath =  Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath "NVIDIAGameStreamExport"
+
 	# Set creation count
 	$ShortcutsCreatedCount = 0
 	
 	foreach ($Game in $GameDatabase) {
 		
-		#Set game launch URI
+		#Set game launch URI and Game Name
 		$GameLaunchURI = 'playnite://playnite/start/' + "$($game.id)"
-		
-		# Set shortcut path based on Windows Explorer compatible game name
-		$GameName = $($Game.name).Split([IO.Path]::GetInvalidFileNameChars()) -join ''
-		$NVIDIAShortcutPath = Join-Path -Path $NVIDIAPath -ChildPath $($GameName + '.lnk')
-		New-Item -ItemType File -Path $NVIDIAShortcutPath -Force
-		
+		$GameName = $($Game.name).Split([IO.Path]::GetInvalidFileNameChars()) -join '' -replace "[^\x00-\x7A]",""
+			
 		# Check if game has an icon and if it's a *.ico compatible file. Else point to Playnite executable for icon
-		if ($($game.icon) -match '.+\.ico$')
+		if ($($game.icon) -match '.+\.ico$') 
 		{
 			$IconPath = $PlayniteApi.Database.GetFullFilePath($game.icon)
 		}
@@ -32,19 +29,25 @@ function global:NVIDIAGameStreamExport()
 			$IconPath = $PlayniteExecutablePath
 		}
 		
-		# Create game shortcut file
+		# Create url file
+		$UrlPath = Join-Path -Path $UrlsDirectoryPath -ChildPath $($GameName + '.url')
+		New-Item -ItemType File -Path $UrlPath -Force
+		"[InternetShortcut]`nIconIndex=0`nIconFile=$IconPath`nURL=$GameLaunchURI" | Out-File -Encoding 'utf8' -FilePath $UrlPath
+
+		# Create Nvidia game shortcut file
+		$NvidiaShortcutPath = Join-Path -Path $NvidiaPath -ChildPath $($GameName + '.lnk')
+		New-Item -ItemType File -Path $NvidiaShortcutPath -Force
 		$shell = New-Object -ComObject WScript.Shell
-		$shortcut = $shell.CreateShortcut($NVIDIAShortcutPath)
+		$shortcut = $shell.CreateShortcut($NvidiaShortcutPath)
 		$shortcut.IconLocation = $IconPath
-		$shortcut.TargetPath = Join-Path -Path $env:SystemRoot -ChildPath "explorer.exe"
+		$shortcut.TargetPath = $UrlPath
 		$shortcut.Arguments = $GameLaunchURI
-		$shortcut.WorkingDirectory = $env:SystemRoot
-		$shortcut.WindowStyle = 7
+		$shortcut.WorkingDirectory = $NvidiaPath
 		$shortcut.Save()
 		
 		# Set cover path and create blank file
-		$NVIDIACover = Join-Path $NVIDIAPath -ChildPath 'StreamingAssets' | Join-Path -ChildPath $GameName | Join-Path -ChildPath '\box-art.png'
-		New-Item -ItemType File -Path $NVIDIACover -Force
+		$NvidiaCover = Join-Path -Path $NvidiaPath -ChildPath 'StreamingAssets' | Join-Path -ChildPath $GameName | Join-Path -ChildPath '\box-art.png'
+		New-Item -ItemType File -Path $NvidiaCover -Force
 		
 		# Check if game has a cover image
 		if ($game.CoverImage)
@@ -52,7 +55,7 @@ function global:NVIDIAGameStreamExport()
 			if ($game.CoverImage -match '.+\.png$')
 			{
 				$SourceCover = $PlayniteApi.Database.GetFullFilePath($game.CoverImage)
-				Copy-Item $SourceCover $NVIDIACover -Force
+				Copy-Item $SourceCover $NvidiaCover -Force
 			}
 			else
 			{
@@ -62,7 +65,7 @@ function global:NVIDIAGameStreamExport()
 					Add-Type -AssemblyName system.drawing
 					$imageFormat = “System.Drawing.Imaging.ImageFormat” -as [type]
 					$image = [drawing.image]::FromFile($SourceCover)
-					$image.Save($NVIDIACover, $imageFormat::png)
+					$image.Save($NvidiaCover, $imageFormat::png)
 				} catch {
 					$ErrorMessage = $_.Exception.Message
 					$__logger.Info("NVIDIA GameStream Export - Error converting cover image of `"$($game.name)`". Error: $ErrorMessage")
@@ -77,7 +80,7 @@ function global:NVIDIAGameStreamExport()
 			$SourceCover = Join-Path $PlayniteApi.Paths.ApplicationPath -ChildPath '\Themes\Desktop\Default\Images\custom_cover_background.png'
 			if (Test-Path $SourceCover)
 			{
-				Copy-Item $SourceCover $NVIDIACover -Force
+				Copy-Item $SourceCover $NvidiaCover -Force
 			}
 		}
 		
