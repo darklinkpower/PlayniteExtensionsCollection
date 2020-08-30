@@ -36,9 +36,9 @@ function global:NVIDIAGameStreamExport()
 		$shell = New-Object -ComObject WScript.Shell
 		$shortcut = $shell.CreateShortcut($NVIDIAShortcutPath)
 		$shortcut.IconLocation = $IconPath
-		$shortcut.TargetPath = 'cmd'
-		$shortcut.Arguments = "/q /c start $GameLaunchURI"
-		$shortcut.WorkingDirectory = Join-Path $env:SystemRoot -ChildPath 'System32'
+		$shortcut.TargetPath = Join-Path -Path $env:SystemRoot -ChildPath "explorer.exe"
+		$shortcut.Arguments = $GameLaunchURI
+		$shortcut.WorkingDirectory = $env:SystemRoot
 		$shortcut.WindowStyle = 7
 		$shortcut.Save()
 		
