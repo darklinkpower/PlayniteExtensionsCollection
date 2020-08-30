@@ -14,7 +14,7 @@ function global:NVIDIAGameStreamExport()
 		
 		# Set game launch URI and Game Name
 		$GameLaunchURI = 'playnite://playnite/start/' + "$($game.id)"
-		$GameName = $($Game.name).Split([IO.Path]::GetInvalidFileNameChars()) -join '' -replace "[^\x00-\x7A]",""
+		$GameName = $($Game.name).Split([IO.Path]::GetInvalidFileNameChars()) -join ''
 
 		# Check if game has an icon and if it's a *.ico compatible file. Else point to Playnite executable for icon
 		if ($($game.icon) -match '.+\.ico$') {
