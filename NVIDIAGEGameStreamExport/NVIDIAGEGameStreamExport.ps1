@@ -78,7 +78,7 @@ function global:NVIDIAGameStreamExport()
 			$SourceCover = Join-Path $PlayniteApi.Paths.ApplicationPath -ChildPath '\Themes\Desktop\Default\Images\custom_cover_background.png'
 			if (Test-Path $SourceCover)
 			{
-				Copy-Item $SourceCover $NvidiaCover -Force
+				Copy-Item $SourceCover $NvidiaGameCoverPath -Force
 			}
 		}
 
