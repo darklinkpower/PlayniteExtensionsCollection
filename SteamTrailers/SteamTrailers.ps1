@@ -86,14 +86,16 @@ function Get-SteamVideo() {
 		}
 
 		# Try to search for AppId by searching in local Steam AppList database
-		[array]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
-		$gamename = $($game.name).ToLower() -replace '[^\p{L}\p{Nd}]', ''
-		[array]$SteamApp = $AppList | Where-Object {$_.name -eq $gamename}
-		if ($SteamApp.count -gt 0)
-		{
-			$AppId = $SteamApp[0].appid
+		[object]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
+		$Gamename = $($game.name).ToLower() -replace '[^\p{L}\p{Nd}]', ''
+		foreach ($SteamApp in $AppList) {
+			if ($SteamApp.name -eq $Gamename) 
+			{
+				[string]$AppId = $SteamApp.appid
+				break
+			}
 		}
-		else
+		if (!$AppId)
 		{
 			# Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
 			$AppListLastWrite = (get-item $AppListPath).LastWriteTime
@@ -103,11 +105,13 @@ function Get-SteamVideo() {
 				Get-SteamAppList -AppListPath $AppListPath
 
 				# Try to search for AppId again by searching in the new downloaded AppList
-				[array]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
-				[array]$SteamApp = $AppList | Where-Object {$_.name -eq $gamename}
-				if ($SteamApp.count -gt 0)
-				{
-					$AppId = $SteamApp[0].appid
+				[object]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
+				foreach ($SteamApp in $AppList) {
+					if ($SteamApp.name -eq $Gamename) 
+					{
+						[string]$AppId = $SteamApp.appid
+						break
+					}
 				}
 			}
 		}
