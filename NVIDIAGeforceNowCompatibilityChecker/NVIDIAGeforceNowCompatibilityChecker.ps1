@@ -11,6 +11,7 @@ function Invoke-AddTag {
 		if ($FoundStatus -eq $false)
 		{
 			$game.FeatureIds.Remove($featureIds)
+			$PlayniteApi.Database.Games.Update($game)
 			$__logger.Info("NVIDIA Geforce NowCompatibility Checker - Feature removed from `"$($game.name)`"")
 			$global:FeatureRemoved++
 			return
