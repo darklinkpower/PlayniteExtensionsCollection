@@ -74,12 +74,13 @@ function global:NVIDIAGeforceNowCompatibilityChecker()
 	
 	# Generate game names for matching and lists per store
 	foreach ($SupportedGame in $NGFNowSupportedList) {
-		$SupportedGame.title =  $($SupportedGame.title) -replace '[^\p{L}\p{Nd}]', ''
+		$SupportedGame.title =  $SupportedGame.title -replace '[^\p{L}\p{Nd}]', ''
 	}
 	$NGFNowSupportedListSteam = $NGFNowSupportedList | Where-Object {$_.store -eq "Steam"}
 	$NGFNowSupportedListEpic = $NGFNowSupportedList | Where-Object {$_.store -eq "Epic"}
 	$NGFNowSupportedListUplay = $NGFNowSupportedList | Where-Object {$_.store -eq "UPLAY"}
 	$NGFNowSupportedListOrigin = $NGFNowSupportedList | Where-Object {$_.store -eq "Origin"}
+	
 	foreach ($game in $GameDatabase) {
 	
 		# Generate game name for matching in lists
@@ -91,37 +92,46 @@ function global:NVIDIAGeforceNowCompatibilityChecker()
 		{
 			'Steam' {
 				$SteamUrl = 'https://store.steampowered.com/app/' + "$($game.GameId)"
-				if (([array]($NGFNowSupportedListSteam | Where-Object {$_.steamUrl -eq $SteamUrl})).count -gt 0 )
-				{
-					$FoundStatus = $true
-					break
+				foreach ($SupportedGame in $NGFNowSupportedListSteam) {
+					if ($SupportedGame.SteamUrl -eq $SteamUrl) 
+					{
+						$FoundStatus = $true
+						break
+					}
 				}
 			}
 			'Epic' {
-				if (([array]($NGFNowSupportedListEpic | Where-Object {$_.Title -eq $GameName})).count -gt 0 )
-				{
-					$FoundStatus = $true
-					break
+				foreach ($SupportedGame in $NGFNowSupportedListEpic) {
+					if ($SupportedGame.Title -eq $GameName) 
+					{
+						$FoundStatus = $true
+						break
+					}
 				}
 			}
 			'Uplay' { 
-				if (([array]($NGFNowSupportedListUplay | Where-Object {$_.Title -eq $GameName})).count -gt 0 )
-				{
-					$FoundStatus = $true
-					break
+				foreach ($SupportedGame in $NGFNowSupportedListUplay) {
+					if ($SupportedGame.Title -eq $GameName) 
+					{
+						$FoundStatus = $true
+						break
+					}
 				}
 			}
 			'Origin' { 
-				if (([array]( $NGFNowSupportedListOrigin | Where-Object {$_.Title -eq $GameName})).count -gt 0 )
-				{
-					$FoundStatus = $true
-					break
+				foreach ($SupportedGame in $NGFNowSupportedListOrigin) {
+					if ($SupportedGame.Title -eq $GameName) 
+					{
+						$FoundStatus = $true
+						break
+					}
 				}
 			}
 			default {
 				break
 			}
 		}
+
 		# Invoke function to add tag
 		Invoke-AddTag -Game $Game -FeatureName $featureName -FeatureIds $featureIds -FoundStatus $FoundStatus
 	}
