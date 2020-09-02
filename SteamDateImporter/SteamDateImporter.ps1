@@ -202,16 +202,22 @@ function Invoke-SteamDateImporter
         $GameNameMatch = $($game.name) -replace "ü", 'u' -replace ' and ', '' -replace "Game of the Year", 'GOTY' -replace "(GOTY)$", 'GOTY Edition'
         $GameNameMatch = $GameNameMatch -replace '[^\p{L}\p{Nd}]', ''
         $GameDateOld = $game.Added
-        $GameLicense = @($LicensesList | Where-Object {$_.LicenseNameMatch -eq $GameNameMatch})
-
-        if ($GameLicense.count -eq 1)
+        $GameLicense = $null
+		foreach ($License in $LicensesList) {
+			if ($License.LicenseNameMatch -eq $GameNameMatch) 
+			{
+				[object]$GameLicense = $License
+				break
+			}
+		}
+        if ($GameLicense)
         {
             $CountMatchLicense++
             $LicenseFound = "True"
-            $LicenseDate = [datetime]$GameLicense[0].LicenseDate
+            $LicenseDate = [datetime]$GameLicense.LicenseDate
             if ($game.Added -ne $LicenseDate)
             {
-                $game.Added = [datetime]$GameLicense[0].LicenseDate
+                $game.Added = [datetime]$GameLicense.LicenseDate
                 $PlayniteApi.Database.Games.Update($game)
                 $GameDateNew = $game.Added
                 $DateChanged = "True"
