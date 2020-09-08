@@ -176,7 +176,7 @@ This extension will search the currently selected game(s) on different websites 
 
 </details>
 
-### Steam Add Game
+### SteamGameImporter
 
 Playnite Forum Thread: https://playnite.link/forum/thread-300.html
 
@@ -184,7 +184,7 @@ Playnite Forum Thread: https://playnite.link/forum/thread-300.html
 
 <summary>Description</summary>
 
-This extension will add a steam game to your library. You need to input either a valid steam id or url. Useful as a workaround for [Playnite's Issue #910](https://github.com/JosefNemec/Playnite/issues/910) or to add family shared games not in the linked account.
+This extension will add a steam game to your library. You need to input either a valid steam id or url. It can also import all your games not currently imported in Playnite. This extension is mainly intended as a workaround for [Playnite's Issue #910.](https://github.com/JosefNemec/Playnite/issues/910)
 
 </details>
 
