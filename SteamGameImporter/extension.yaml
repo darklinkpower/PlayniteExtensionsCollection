@@ -14,4 +14,3 @@ Functions:
       FunctionName: DepressurizerProfileImporter
     - Description: Steam Game Importer - Import games not in Database
       FunctionName: SteamGameUserDataImporter
-   
