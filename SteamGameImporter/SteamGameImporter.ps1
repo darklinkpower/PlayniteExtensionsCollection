@@ -30,12 +30,15 @@ function DepressurizerProfileImporter()
 
 	foreach ($Game in $DepressurizerXml.profile.games.game) {
 		
+		# Convert Game.Id to int value type for value comparison
+		[int]$GameId = $Game.id
+
 		# Skip game if it already exists in Planite game Database
-		if (($SteamGamesInDatabase -contains $Game.id) -or ($Game.source -eq "Unknown"))
+		if (($SteamGamesInDatabase -contains $Game.id) -or ($GameId -lt 0))
 		{
 			continue
 		}
-		else 
+		else
 		{
 			# Set game properties and save to database
 			$NewGame = New-Object "Playnite.SDK.Models.Game"
@@ -45,7 +48,7 @@ function DepressurizerProfileImporter()
 			$NewGame.PlatformId = $Platform.Id
 			$NewGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
 			$PlayniteApi.Database.Games.Add($NewGame)
-			$AddedGamesCount++	
+			$AddedGamesCount++
 		}
 	}
 	# Show dialogue with results
