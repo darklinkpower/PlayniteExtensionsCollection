@@ -57,7 +57,6 @@ function DepressurizerProfileImporter()
 	{
 		$PlayniteApi.Dialogs.ShowMessage("No new games were added", "Steam Game Importer");	
 	}
-
 }
 
 
