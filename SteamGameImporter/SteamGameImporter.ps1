@@ -59,7 +59,6 @@ function DepressurizerProfileImporter()
 	}
 }
 
-
 function SteamGameImporter()
 {
 	# Set Source
