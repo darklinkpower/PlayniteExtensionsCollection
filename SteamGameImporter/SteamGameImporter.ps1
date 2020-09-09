@@ -31,7 +31,7 @@ function DepressurizerProfileImporter()
 	foreach ($Game in $DepressurizerXml.profile.games.game) {
 		
 		# Skip game if it already exists in Planite game Database
-		if ($SteamGamesInDatabase -contains $Game.id)
+		if (($SteamGamesInDatabase -contains $Game.id) -or ($Game.source -eq "Unknown"))
 		{
 			continue
 		}
