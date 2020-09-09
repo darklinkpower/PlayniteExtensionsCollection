@@ -176,18 +176,6 @@ This extension will search the currently selected game(s) on different websites 
 
 </details>
 
-### SteamGameImporter
-
-Playnite Forum Thread: https://playnite.link/forum/thread-300.html
-
-<details>
-
-<summary>Description</summary>
-
-This extension will add a steam game to your library. You need to input either a valid steam id or url. It can also import all your games not currently imported in Playnite. This extension is mainly intended as a workaround for [Playnite's Issue #910.](https://github.com/JosefNemec/Playnite/issues/910)
-
-</details>
-
 ### Steam Date Importer
 
 Playnite Forum Thread: https://playnite.link/forum/thread-376.html
@@ -219,7 +207,19 @@ The extension is compatible with Steam games and games that have a Steam Store l
 
 </details>
 
-### SteamTrailers
+### Steam Game Importer
+
+Playnite Forum Thread: https://playnite.link/forum/thread-300.html
+
+<details>
+
+<summary>Description</summary>
+
+This extension will add a steam game to your library. You need to input either a valid steam id or url. It can also import all your games not currently imported in Playnite. This extension is mainly intended as a workaround for [Playnite's Issue #910.](https://github.com/JosefNemec/Playnite/issues/910)
+
+</details>
+
+### Steam Trailers
 
 Playnite Forum Thread: https://playnite.link/forum/thread-242.html
 
