@@ -44,7 +44,7 @@ function global:SteamGameImporter()
 			$TextInput = $TextInput -replace ' ',''
 			$TextSplit = $TextInput.Split(',')
 			foreach ($SplittedText in $TextSplit) {
-				if ($SplittedText -Match "\d+")
+				if ($SplittedText -Match "^\d+$")
 				{
 					$AppIds.Add($SplittedText)
 				}
