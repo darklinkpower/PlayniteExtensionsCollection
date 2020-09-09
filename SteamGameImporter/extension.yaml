@@ -1,6 +1,6 @@
 ﻿Name: Steam Game Importer
 Author: darklinkpower
-Version: 1.1
+Version: 1.2
 Module: SteamGameImporter.ps1
 Type: Script
 Icon: icon.png
@@ -8,7 +8,7 @@ Links:
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-300.html
 Functions:
-    - Description: Steam Game Importer - Add game with Steam Id or URL
+    - Description: Steam Game Importer - Add games with Steam Id or URL
       FunctionName: SteamGameImporter
     - Description: Steam Game Importer - Import games not in Database
       FunctionName: SteamGameImporterUserData

@@ -1,8 +1,5 @@
 function global:SteamGameImporter()
 {
-	# Set Log Path
-	# $LogPath = Join-Path -Path $($PlayniteApi.Paths.ApplicationPath) -ChildPath "PlayniteExtensionTests.log"
-	
 	# Set Source
 	$SourceName = "Steam"
 	$Source = $PlayniteApi.Database.Sources.Add($SourceName)
@@ -10,65 +7,125 @@ function global:SteamGameImporter()
 	# Set Platform
 	$PlatformName = "PC"
 	$Platform = $PlayniteApi.Database.Platforms.Add($PlatformName)
+
+	# Create cache of Steam games in Database
+	$SteamGames = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "Steam"}
+	[System.Collections.Generic.List[string]]$SteamGamesInDatabase = @()
+	foreach ($game in $SteamGames) {
+		$SteamGamesInDatabase.Add($($game.GameId))
+	}
+
+	# Set Regexes
+	$UrlRegex = "https?:\/\/store.steampowered.com\/app\/(\d+)"
 	
 	# Input window for Steam Store URL or Steam AppId
 	$UserInput = $PlayniteApi.Dialogs.SelectString( "Enter Steam game Id or URL:", "Steam Game Importer", "");
 	if ($UserInput.SelectedString)
 	{
-		#Verify if input was Steam Store URL
-		if ( $($UserInput.SelectedString) -match "https?://store.steampowered.com/app/\d+/?\w*/?")
+		# Create AppIds Collection
+		[System.Collections.Generic.List[string]]$AppIds = @()
+		[string]$TextInput = $UserInput.SelectedString		
+		$AddedGamesCount = 0
+
+		# Verify if input was Steam Store URL
+		if ($TextInput -match $UrlRegex)
 		{
-			switch -regex ($UserInput.SelectedString) {
-			"https?://store.steampowered.com/app/(\d+)/?\w*/?" {
-			$AppId = $matches[1]}
+			$UrlMatches = $TextInput | Select-String $UrlRegex -AllMatches
+			if ($UrlMatches.Matches.count -ge 1)
+			{
+				foreach ($UrlMatch in $UrlMatches.Matches) {
+					$AppIds.Add($UrlMatch.Groups[1].value)
+				}
 			}
 		}
-		#Verify if input was Steam Store AppId
-		elseif ( ($AppId -eq $null) -and (($UserInput.SelectedString) -match '^\d+$') )
+		# Verify if input was Steam Store AppId
+		else
 		{
-			$AppId = "$($UserInput.SelectedString)"
-		}
-		#Verify if AppId was obtained
-		if ($AppId)
-		{
-			# Verify is obtained AppId is valid and get game name with SteamAPI
-			try {
-				$SteamAPI = 'https://store.steampowered.com/api/appdetails?appids=' + "$AppId"
-				$json = Invoke-WebRequest -uri $SteamAPI -TimeoutSec '10' | ConvertFrom-Json
-				if ($json.$AppId.Success -eq "true")
+			$TextInput = $TextInput -replace ' ',''
+			$TextSplit = $TextInput.Split(',')
+			foreach ($SplittedText in $TextSplit) {
+				if ($SplittedText -Match "\d+")
 				{
-					$GameName = $json.$AppId.data.name
+					$AppIds.Add($SplittedText)
 				}
-				else
+			}
+		}
+		# Verify if AppId was obtained
+		if ($AppIds.count -ge 1)
+		{
+			foreach ($AppId in $AppIds) {
+				
+				# Skip game if it already exists in Planite game Database
+				if ($SteamGamesInDatabase -contains $AppId)
 				{
-					$PlayniteApi.Dialogs.ShowMessage("Not a valid id or URL. Please input a valid steam id number or URL", "Steam Game Importer");
+					continue
+				}
+
+				# Verify is obtained AppId is valid and get game name with SteamAPI
+				try {
+					$SteamAPI = 'https://store.steampowered.com/api/appdetails?appids={0}' -f $AppId
+					$json = Invoke-WebRequest -uri $SteamAPI -TimeoutSec '10' | ConvertFrom-Json
+					
+					# Sleep time to prevent error 429
+					Start-Sleep -Milliseconds 1200
+					if ($json.$AppId.Success -eq "true")
+					{
+						$GameName = $json.$AppId.data.name
+					}
+					else
+					{
+						if (!$AddUnknownChoice)
+						{
+							$AddUnknownChoice = $PlayniteApi.Dialogs.ShowMessage("Warning. Couldn't detect if obtained AppId `"$AppId`" is valid, add this and all unknown AppIds?", "Steam Game Importer", 4);
+						}
+						if ($AddUnknownChoice -ne "Yes")
+						{
+							continue
+						}
+						$GameName = "Unknown Steam Game"
+					}
+				} catch {
+					$ErrorMessage = $_.Exception.Message
+					$PlayniteApi.Dialogs.ShowMessage("Couldn't download Game information for AppId `"$AppId`". Error: $ErrorMessage", "Steam Game Importer");
 					exit
 				}
-			} catch {
-				$ErrorMessage = $_.Exception.Message
-				$PlayniteApi.Dialogs.ShowMessage("Couldn't download Game information. Error: $ErrorMessage", "Steam Game Importer");
-				exit
+				
+				# Set game properties and save to database
+				$newGame = New-Object "Playnite.SDK.Models.Game"
+				$newGame.Name = $GameName
+				$newGame.GameId = $AppId
+				$newGame.SourceId = $Source.Id
+				$newGame.PlatformId = $Platform.Id
+				$newGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
+				$PlayniteApi.Database.Games.Add($newGame)
+				$AddedGamesCount++
+				if ($AddedGamesCount -eq 1)
+				{
+					$FirstAddedGame = $GameName
+				}
+				
+				# Trigger download Metadata not available yet via SDK. https://github.com/JosefNemec/Playnite/issues/1870
 			}
-			
-			# Set game properties and save to database
-			$newGame = New-Object "Playnite.SDK.Models.Game"
-			$newGame.Name = "$GameName"
-			$newGame.GameId = "$($AppId)"
-			$newGame.SourceId = "$($Source.Id)"
-			$newGame.PlatformId = "$($Platform.Id)"
-			$newGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
-			$PlayniteApi.Database.Games.Add($newGame)
-			
-			# Trigger download Metadata not available yet via SDK. https://github.com/JosefNemec/Playnite/issues/1870
-			
-			#Show dialogue with report
-			$PlayniteApi.Dialogs.ShowMessage("`"$GameName`" added to Playnite.", "Steam Game Importer");
+		}	
+		else
+		{
+			$PlayniteApi.Dialogs.ShowMessage("Could not obtain any valid Steam AppId", "Steam Game Importer");
+		}
+
+		# Show dialogue with report
+		if ($AddedGamesCount -gt 1) 
+		{
+			$PlayniteApi.Dialogs.ShowMessage("Added $AddedGamesCount new Steam games.", "Steam Game Importer");
+		}
+		elseif ($AddedGamesCount -eq 1)
+		{
+			$PlayniteApi.Dialogs.ShowMessage("`"$FirstAddedGame`" Steam game added to Playnite.", "Steam Game Importer");
 		}
 		else
 		{
-			# Show error message if Steam AppId was not obtained
-			$PlayniteApi.Dialogs.ShowMessage("Not a valid id or URL. Please input a valid steam id number or URL", "Steam Game Importer");
+			$PlayniteApi.Dialogs.ShowMessage("No new games were added", "Steam Game Importer");
 		}
+		
 	}
 }
 
@@ -147,8 +204,8 @@ function global:SteamGameImporterUserData()
 			$newGame = New-Object "Playnite.SDK.Models.Game"
 			$newGame.Name = $Json.$OwnedAppId.data.name
 			$newGame.GameId = $OwnedAppId
-			$newGame.SourceId = "$($Source.Id)"
-			$newGame.PlatformId = "$($Platform.Id)"
+			$newGame.SourceId = $Source.Id
+			$newGame.PlatformId = $Platform.Id
 			$newGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
 			$PlayniteApi.Database.Games.Add($newGame)
 			$AddedGamesCount++
@@ -159,7 +216,7 @@ function global:SteamGameImporterUserData()
 		}
 
 		# Sleep time to prevent error 429
-		Start-Sleep -Seconds 1
+		Start-Sleep -Milliseconds 1200
 	}
 
 	# Finish dialogue with results
