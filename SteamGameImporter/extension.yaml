@@ -1,6 +1,6 @@
 ﻿Name: Steam Game Importer
 Author: darklinkpower
-Version: 1.2
+Version: 1.3
 Module: SteamGameImporter.ps1
 Type: Script
 Icon: icon.png
@@ -10,5 +10,8 @@ Links:
 Functions:
     - Description: Steam Game Importer - Add games with Steam Id or URL
       FunctionName: SteamGameImporter
+    - Description: Steam Game Importer - Import games from Depressurizer Profile
+      FunctionName: DepressurizerProfileImporter
     - Description: Steam Game Importer - Import games not in Database
-      FunctionName: SteamGameImporterUserData
+      FunctionName: SteamGameUserDataImporter
+   

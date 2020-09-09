@@ -1,4 +1,67 @@
-function global:SteamGameImporter()
+function DepressurizerProfileImporter()
+{
+	# Set Source
+	$SourceName = "Steam"
+	$Source = $PlayniteApi.Database.Sources.Add($SourceName)
+	
+	# Set Platform
+	$PlatformName = "PC"
+	$Platform = $PlayniteApi.Database.Platforms.Add($PlatformName)
+
+	# Ger Depressurizer xml data
+	$DepressurizerProfilePath = $PlayniteApi.Dialogs.SelectFile("Profiles|*.Profile")
+	if ($DepressurizerProfilePath)
+	{
+		[xml]$DepressurizerXml = [System.IO.File]::ReadAllLines($DepressurizerProfilePath)
+	}
+	else
+	{
+		exit
+	}
+	
+	# Create cache of Steam games in Database
+	$SteamGames = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "Steam"}
+	[System.Collections.Generic.List[string]]$SteamGamesInDatabase = @()
+	foreach ($game in $SteamGames) {
+		$SteamGamesInDatabase.Add($($game.GameId))
+	}
+
+	$AddedGamesCount = 0
+
+	foreach ($Game in $DepressurizerXml.profile.games.game) {
+		
+		# Skip game if it already exists in Planite game Database
+		if ($SteamGamesInDatabase -contains $Game.id)
+		{
+			continue
+		}
+		else 
+		{
+			# Set game properties and save to database
+			$NewGame = New-Object "Playnite.SDK.Models.Game"
+			$NewGame.Name = $Game.name
+			$NewGame.GameId = $Game.id
+			$NewGame.SourceId = $Source.Id
+			$NewGame.PlatformId = $Platform.Id
+			$NewGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
+			$PlayniteApi.Database.Games.Add($NewGame)
+			$AddedGamesCount++	
+		}
+	}
+	# Show dialogue with results
+	if ($AddedGamesCount -ge 1) 
+	{
+		$PlayniteApi.Dialogs.ShowMessage("Added $AddedGamesCount new Steam games.", "Steam Game Importer");
+	}
+	else
+	{
+		$PlayniteApi.Dialogs.ShowMessage("No new games were added", "Steam Game Importer");	
+	}
+
+}
+
+
+function SteamGameImporter()
 {
 	# Set Source
 	$SourceName = "Steam"
@@ -91,13 +154,13 @@ function global:SteamGameImporter()
 				}
 				
 				# Set game properties and save to database
-				$newGame = New-Object "Playnite.SDK.Models.Game"
-				$newGame.Name = $GameName
-				$newGame.GameId = $AppId
-				$newGame.SourceId = $Source.Id
-				$newGame.PlatformId = $Platform.Id
-				$newGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
-				$PlayniteApi.Database.Games.Add($newGame)
+				$NewGame = New-Object "Playnite.SDK.Models.Game"
+				$NewGame.Name = $GameName
+				$NewGame.GameId = $AppId
+				$NewGame.SourceId = $Source.Id
+				$NewGame.PlatformId = $Platform.Id
+				$NewGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
+				$PlayniteApi.Database.Games.Add($NewGame)
 				$AddedGamesCount++
 				if ($AddedGamesCount -eq 1)
 				{
@@ -112,7 +175,7 @@ function global:SteamGameImporter()
 			$PlayniteApi.Dialogs.ShowMessage("Could not obtain any valid Steam AppId", "Steam Game Importer");
 		}
 
-		# Show dialogue with report
+		# Show dialogue with results
 		if ($AddedGamesCount -gt 1) 
 		{
 			$PlayniteApi.Dialogs.ShowMessage("Added $AddedGamesCount new Steam games.", "Steam Game Importer");
@@ -129,7 +192,7 @@ function global:SteamGameImporter()
 	}
 }
 
-function global:SteamGameImporterUserData()
+function SteamGameUserDataImporter()
 {
 	# Set Source
 	$SourceName = "Steam"
@@ -201,13 +264,13 @@ function global:SteamGameImporterUserData()
 		if ($Json.$OwnedAppId.data.type -eq "game")
 		{
 			# Create game in database
-			$newGame = New-Object "Playnite.SDK.Models.Game"
-			$newGame.Name = $Json.$OwnedAppId.data.name
-			$newGame.GameId = $OwnedAppId
-			$newGame.SourceId = $Source.Id
-			$newGame.PlatformId = $Platform.Id
-			$newGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
-			$PlayniteApi.Database.Games.Add($newGame)
+			$NewGame = New-Object "Playnite.SDK.Models.Game"
+			$NewGame.Name = $Json.$OwnedAppId.data.name
+			$NewGame.GameId = $OwnedAppId
+			$NewGame.SourceId = $Source.Id
+			$NewGame.PlatformId = $Platform.Id
+			$NewGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
+			$PlayniteApi.Database.Games.Add($NewGame)
 			$AddedGamesCount++
 		}
 		else
