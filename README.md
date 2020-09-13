@@ -138,7 +138,7 @@ This extension will export your selected games to NVIDIA Geforce Experience Game
 
 </details>
 
-### NVIDIA Geforce NOW Compatibility Checker
+### NVIDIA Geforce NOW Enabler
 
 Playnite Forum Thread: https://playnite.link/forum/thread-298.html
 
@@ -146,7 +146,9 @@ Playnite Forum Thread: https://playnite.link/forum/thread-298.html
 
 <summary>Description</summary>
 
-This extension will check which of your games has been enabled for the NVIDIA Geforce NOW Service and add "NVIDIA Geforce NOW" in their features to easily check them. Compatible with games from Epic, Origin, Steam and Uplay.
+This extension will check which of your games have been enabled for the NVIDIA Geforce NOW Service, add "NVIDIA Geforce NOW" in their features to easily check them and also add a Play Action to the games to launch them via the service.
+
+Compatible with games from Epic, Origin, Steam and Uplay.
 
 </details>
 
