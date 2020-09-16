@@ -1,0 +1,16 @@
+﻿Name: AniList Importer
+Author: darklinkpower
+Version: 1.0
+Module: AniListImporter.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-395.html
+Functions:
+    - Description: AniList Importer - Import Anime and Manga
+      FunctionName: Import-All
+    - Description: AniList Importer - Import Anime
+      FunctionName: Import-Anime
+    - Description: AniList Importer - Import Manga
+      FunctionName: Import-Manga
