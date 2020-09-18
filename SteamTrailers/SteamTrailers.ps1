@@ -33,7 +33,7 @@ function Get-SteamAppList() {
 		}
 		
 		# Save Json file locally
-		ConvertTo-Json $AppListContent -Depth 2 | Out-File -Encoding 'UTF8' -FilePath $AppListPath
+		ConvertTo-Json $AppListContent -Depth 2  -Compress | Out-File -Encoding 'UTF8' -FilePath $AppListPath
 		$__logger.Info("Steam Trailers - Downloaded AppList")
 	} catch {
 		$ErrorMessage = $_.Exception.Message
