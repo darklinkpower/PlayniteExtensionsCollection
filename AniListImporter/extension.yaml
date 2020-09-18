@@ -1,6 +1,6 @@
 ﻿Name: AniList Importer
 Author: darklinkpower
-Version: 1.0
+Version: 1.1
 Module: AniListImporter.ps1
 Type: Script
 Icon: icon.png
@@ -14,3 +14,9 @@ Functions:
       FunctionName: Import-Anime
     - Description: AniList Importer - Import Manga
       FunctionName: Import-Manga
+    - Description: AniList Importer - Reset site links of all entries in database
+      FunctionName: Add-SiteLinksAll
+    - Description: AniList Importer - Add site links to all entries in database with no links
+      FunctionName: Add-SiteLinksMissing
+    - Description: AniList Importer - Reset site links of selected entries
+      FunctionName: Add-SiteLinksSelected
