@@ -21,7 +21,7 @@ function global:Import-AniList()
 	}
 	
 	# Get AniList username
-	$UsernameConfigPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'AniList Importer\Username.txt'
+	$UsernameConfigPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'Importer for AniList\Username.txt'
 	if (Test-Path $UsernameConfigPath)
 	{
 		$AniListUsername = [System.IO.File]::ReadAllLines($UsernameConfigPath)
@@ -569,7 +569,7 @@ function Add-SiteLinksSelected()
 function Set-Username()
 {
 	# Set paths
-	$ExtensionPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'AniList Importer'
+	$ExtensionPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'Importer for AniList'
 	$UsernameConfigPath = Join-Path -Path $ExtensionPath -ChildPath 'Username.txt'
 	if (!(Test-Path $ExtensionPath))
 	{
