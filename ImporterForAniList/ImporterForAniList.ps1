@@ -28,7 +28,7 @@ function global:Import-AniList()
 	}
 	else
 	{
-		$PlayniteApi.Dialogs.ShowMessage("Username has not been configured. A window to configure it will be opened.", "AniList Importer");
+		$PlayniteApi.Dialogs.ShowMessage("Username has not been configured. A window to configure it will be opened.", "Importer for Anilist");
 		Set-Username
 		$AniListUsername = [System.IO.File]::ReadAllLines($UsernameConfigPath)
 	}
@@ -92,11 +92,11 @@ function global:Import-AniList()
 	$PostParams = @{query=$ListQuery;variables=$Variables} | ConvertTo-Json            #<--- Create query parameters
 	try {
 		$UserStatusLists = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data.MediaListCollection.lists
-		$__logger.Info("AniList Importer - Downloaded $ListType list of user `"$AniListUsername`"")
+		$__logger.Info("Importer for Anilist - Downloaded $ListType list of user `"$AniListUsername`"")
 	} catch {
 		$ErrorMessage = $_.Exception.Message
-		$__logger.Info("AniList Importer - Error downloading user list. Error: $ErrorMessage")
-		$PlayniteApi.Dialogs.ShowErrorMessage("Error downloading user list. Error: $ErrorMessage", "AniList Importer");
+		$__logger.Info("Importer for Anilist - Error downloading user list. Error: $ErrorMessage")
+		$PlayniteApi.Dialogs.ShowErrorMessage("Error downloading user list. Error: $ErrorMessage", "Importer for Anilist");
 		exit
 	}
 	
@@ -108,7 +108,7 @@ function global:Import-AniList()
 			$EntriesInAccount.Add($Entry)
 		}
 	}
-	$__logger.Info("AniList Importer - Found $($EntriesInAccount.Count) entries of type `"$ListType`" in account")
+	$__logger.Info("Importer for Anilist - Found $($EntriesInAccount.Count) entries of type `"$ListType`" in account")
 	
 	foreach ($Entry in $EntriesInAccount) {
 		# Check if entry has been imported previously
@@ -129,7 +129,7 @@ function global:Import-AniList()
 					{
 						$ExistingEntry.CompletionStatus = 'PlanToPlay'
 						$PlayniteApi.Database.Games.Update($ExistingEntry)
-						$__logger.Info("AniList Importer - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"PlanToPlay`"")
+						$__logger.Info("Importer for Anilist - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"PlanToPlay`"")
 					}
 				}
 				'PAUSED' {
@@ -137,7 +137,7 @@ function global:Import-AniList()
 					{
 						$ExistingEntry.CompletionStatus = 'OnHold'
 						$PlayniteApi.Database.Games.Update($ExistingEntry)
-						$__logger.Info("AniList Importer - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"OnHold`"")
+						$__logger.Info("Importer for Anilist - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"OnHold`"")
 					}
 				}
 				'CURRENT' {
@@ -145,7 +145,7 @@ function global:Import-AniList()
 					{
 						$ExistingEntry.CompletionStatus = 'Playing'
 						$PlayniteApi.Database.Games.Update($ExistingEntry)
-						$__logger.Info("AniList Importer - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"Playing`"")
+						$__logger.Info("Importer for Anilist - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"Playing`"")
 					}
 				}
 				'DROPPED' {
@@ -153,7 +153,7 @@ function global:Import-AniList()
 					{
 						$ExistingEntry.CompletionStatus = 'Abandoned'
 						$PlayniteApi.Database.Games.Update($ExistingEntry)
-						$__logger.Info("AniList Importer - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"Abandoned`"")
+						$__logger.Info("Importer for Anilist - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"Abandoned`"")
 					}
 				}
 				'COMPLETED' {
@@ -161,7 +161,7 @@ function global:Import-AniList()
 					{
 						$ExistingEntry.CompletionStatus = 'Completed'
 						$PlayniteApi.Database.Games.Update($ExistingEntry)
-						$__logger.Info("AniList Importer - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"Completed`"")
+						$__logger.Info("Importer for Anilist - Entry: `"$($ExistingEntry.name)`", Changed Completion Status from `"$CompletionStatus`" to `"Completed`"")
 					}
 				}
 			}
@@ -172,7 +172,7 @@ function global:Import-AniList()
 			$MissingEntries.Add($Entry)
 		}
 	}
-	$__logger.Info("AniList Importer - Found $($MissingEntries.Count) missing entries of type `"$ListType`" in account")
+	$__logger.Info("Importer for Anilist - Found $($MissingEntries.Count) missing entries of type `"$ListType`" in account")
 
 	# Download Metadata of missing entries
 	[System.Collections.Generic.List[String]]$MissingEntriesQuery = @()
@@ -191,11 +191,11 @@ function global:Import-AniList()
 				$MetadaDownloadCount++
 				Start-Sleep -Milliseconds 670
 				$MetadataJson = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data
-				$__logger.Info("AniList Importer - Downloaded Metadata json $MetadaDownloadCount")
+				$__logger.Info("Importer for Anilist - Downloaded Metadata json $MetadaDownloadCount")
 			} catch {
 				$ErrorMessage = $_.Exception.Message
-				$__logger.Info("AniList Importer - Error downloading metadata Json file, execution stopped. Error: $ErrorMessage")
-				$PlayniteApi.Dialogs.ShowErrorMessage("Error downloading metadata Json file, execution will stop. Error: $ErrorMessage", "AniList Importer");
+				$__logger.Info("Importer for Anilist - Error downloading metadata Json file, execution stopped. Error: $ErrorMessage")
+				$PlayniteApi.Dialogs.ShowErrorMessage("Error downloading metadata Json file, execution will stop. Error: $ErrorMessage", "Importer for Anilist");
 				exit
 			}
 			
@@ -360,7 +360,7 @@ function global:Import-AniList()
 		
 		# Add entry to database
 		$PlayniteApi.Database.Games.Add($NewGame)
-		$__logger.Info("AniList Importer - Added: `"$($NewGame.name)`", Type: `"$ListType`"")
+		$__logger.Info("Importer for Anilist - Added: `"$($NewGame.name)`", Type: `"$ListType`"")
 		$EntriesAdded++
 
 		# Add links MAL-Sync API links to entry
@@ -371,21 +371,21 @@ function global:Import-AniList()
 	}
 
 	# Show results
-	$PlayniteApi.Dialogs.ShowMessage("$ListType List import of user `"$AniListUsername`" finished`nImported $EntriesAdded new entries", "AniList Importer")
-	$__logger.Info("AniList Importer - $ListType List import of user `"$AniListUsername`" finished`. Imported $EntriesAdded new entries.")
+	$PlayniteApi.Dialogs.ShowMessage("$ListType List import of user `"$AniListUsername`" finished`nImported $EntriesAdded new entries", "Importer for Anilist")
+	$__logger.Info("Importer for Anilist - $ListType List import of user `"$AniListUsername`" finished`. Imported $EntriesAdded new entries.")
 }
 
 function Import-Anime
 {
 	# Ask if user wants to overwrite completion statuses
-	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "AniList Importer", 4)
+	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "Importer for Anilist", 4)
 	if ($ReplaceCompletionStatus -ne "Yes")
 	{
 		$ReplaceCompletionStatus = "No"
 	}
 
 	# Ask if user wants to add MAL-Sync Links
-	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add streaming links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "AniList Importer", 4)
+	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add streaming links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "Importer for Anilist", 4)
 	if ($AddLinks -ne "Yes")
 	{
 		$AddLinks = "No"
@@ -398,14 +398,14 @@ function Import-Anime
 function Import-Manga
 {
 	# Ask if user wants to overwrite completion statuses
-	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "AniList Importer", 4)
+	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "Importer for Anilist", 4)
 	if ($ReplaceCompletionStatus -ne "Yes")
 	{
 		$ReplaceCompletionStatus = "No"
 	}
 	
 	# Ask if user wants to add MAL-Sync Links
-	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add reading links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "AniList Importer", 4)
+	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add reading links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "Importer for Anilist", 4)
 	if ($AddLinks -ne "Yes")
 	{
 		$AddLinks = "No"
@@ -418,14 +418,14 @@ function Import-Manga
 function Import-All
 {
 	# Ask if user wants to overwrite completion statuses
-	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "AniList Importer", 4)
+	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "Importer for Anilist", 4)
 	if ($ReplaceCompletionStatus -ne "Yes")
 	{
 		$ReplaceCompletionStatus = "No"
 	}
 	
 	# Ask if user wants to add MAL-Sync Links
-	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add streaming and reading links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "AniList Importer", 4)
+	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add streaming and reading links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "Importer for Anilist", 4)
 	if ($AddLinks -ne "Yes")
 	{
 		$AddLinks = "No"
@@ -482,11 +482,11 @@ function Add-SiteLinks()
 				continue
 			}
 			$ErrorMessage = $_.Exception.Message
-			$__logger.Info("AniList Importer - Title name: `"$($Entry.name)`", Type: `"$ListType`", MAL Id: `"$MalId`". Error downloading entry information from MAL-Sync API. Error: `"$ErrorMessage`"")
+			$__logger.Info("Importer for Anilist - Title name: `"$($Entry.name)`", Type: `"$ListType`", MAL Id: `"$MalId`". Error downloading entry information from MAL-Sync API. Error: `"$ErrorMessage`"")
 			if (!$Continue)
 			{
-				$PlayniteApi.Dialogs.ShowErrorMessage("Title name: `"$($Entry.name)`", Type: `"$ListType`", MAL Id: `"$MalId`"`nError downloading entry information from MAL-Sync API. Error: `"$ErrorMessage`"", "AniList Importer");
-				$Continue = $PlayniteApi.Dialogs.ShowMessage("Continue extension execution ignoring all errors?`nIf the error was `"(400)`" it's because the entry has no information in the MAL-Sync API and can be safely ignored", "AniList Importer", 4);
+				$PlayniteApi.Dialogs.ShowErrorMessage("Title name: `"$($Entry.name)`", Type: `"$ListType`", MAL Id: `"$MalId`"`nError downloading entry information from MAL-Sync API. Error: `"$ErrorMessage`"", "Importer for Anilist");
+				$Continue = $PlayniteApi.Dialogs.ShowMessage("Continue extension execution ignoring all errors?`nIf the error was `"(400)`" it's because the entry has no information in the MAL-Sync API and can be safely ignored", "Importer for Anilist", 4);
 			}
 			if ($Continue -eq "Yes")
 			{
@@ -522,7 +522,7 @@ function Add-SiteLinks()
 		# Update entry in database
 		$PlayniteApi.Database.Games.Update($Entry)
 		$global:CountLinkAddedGlobal++
-		$__logger.Info("AniList Importer - Added $CountLinkAddedEntry links to `"$($Entry.name)`", Type: `"$ListType`", MAL Id: `"$MalId`"")
+		$__logger.Info("Importer for Anilist - Added $CountLinkAddedEntry links to `"$($Entry.name)`", Type: `"$ListType`", MAL Id: `"$MalId`"")
 	}
 }
 
@@ -532,7 +532,7 @@ function Add-SiteLinksAll()
 	$GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "AniList"}
 	
 	# Ask for confirmation
-	$Confirm = $PlayniteApi.Dialogs.ShowMessage("Warning: This function can take a long time to complete depending on the number of entries in the account.`n`nAre you sure you want to reset the links in all entries?", "AniList Importer", 4)
+	$Confirm = $PlayniteApi.Dialogs.ShowMessage("Warning: This function can take a long time to complete depending on the number of entries in the account.`n`nAre you sure you want to reset the links in all entries?", "Importer for Anilist", 4)
 	if ($Confirm -ne "Yes")
 	{
 		exit
@@ -541,7 +541,7 @@ function Add-SiteLinksAll()
 	Add-SiteLinks $GameDatabase $false
 
 	# Show results
-	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "AniList Importer");
+	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "Importer for Anilist");
 }
 
 function Add-SiteLinksMissing()
@@ -552,7 +552,7 @@ function Add-SiteLinksMissing()
 	Add-SiteLinks $GameDatabase $false
 
 	# Show results
-	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "AniList Importer");
+	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "Importer for Anilist");
 }
 
 function Add-SiteLinksSelected()
@@ -563,7 +563,7 @@ function Add-SiteLinksSelected()
 	Add-SiteLinks $GameDatabase $false
 
 	# Show results
-	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "AniList Importer");
+	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "Importer for Anilist");
 }
 
 function Set-Username()
@@ -577,12 +577,12 @@ function Set-Username()
 	}
 	
 	# Request Username
-	$UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public:", "AniList Importer", "");
+	$UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public:", "Importer for Anilist", "");
 	if ($UserNameInput.Result -eq $false)
 	{
 		exit
 	}
 	$AniListUsername = $UserNameInput.SelectedString
 	$AniListUsername | Out-File -Encoding 'UTF8' -FilePath $UsernameConfigPath
-	$PlayniteApi.Dialogs.ShowMessage("Username `"$AniListUsername`" has been configured.", "AniList Importer");
+	$PlayniteApi.Dialogs.ShowMessage("Username `"$AniListUsername`" has been configured.", "Importer for Anilist");
 }
