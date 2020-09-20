@@ -1,6 +1,6 @@
 ﻿Name: AniList Importer
 Author: darklinkpower
-Version: 1.1
+Version: 1.2
 Module: AniListImporter.ps1
 Type: Script
 Icon: icon.png
@@ -20,3 +20,5 @@ Functions:
       FunctionName: Add-SiteLinksMissing
     - Description: AniList Importer - Reset site links of selected entries
       FunctionName: Add-SiteLinksSelected
+    - Description: AniList Importer - Configure AniList username
+      FunctionName: Set-Username

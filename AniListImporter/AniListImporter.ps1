@@ -2,8 +2,8 @@ function global:Import-AniList()
 {
 	param (
 		[String]$ListType,
-		[string]$AniListUsername,
-		[string]$ReplaceCompletionStatus
+		[string]$ReplaceCompletionStatus,
+		[string]$AddLinks
 	)
 	
 	# Set Source
@@ -19,48 +19,57 @@ function global:Import-AniList()
 	foreach ($Game in $AniListAsSource) {
 		$AniListEntriesInDatabase.Add($Game.GameId)
 	}
-
+	
+	# Get AniList username
+	$UsernameConfigPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'AniList Importer\Username.txt'
+	if (Test-Path $UsernameConfigPath)
+	{
+		$AniListUsername = [System.IO.File]::ReadAllLines($UsernameConfigPath)
+	}
+	else
+	{
+		$PlayniteApi.Dialogs.ShowMessage("Username has not been configured. A window to configure it will be opened.", "AniList Importer");
+		Set-Username
+		$AniListUsername = [System.IO.File]::ReadAllLines($UsernameConfigPath)
+	}
+	
 	# Define media API query
 	$MetadataQuery = '
-	query ($id: Int) {
-		Media (id: $id) {
-			type
-			id
-			idMal
-			siteUrl
-			coverImage {
-				medium
-				large
-			}
-			description(asHtml: true)
-			studios(sort: [NAME]) {
-				nodes {
-					id
-					name
-					isAnimationStudio
-				}
-			}
-			staff {
-				nodes {
-					name {
-						full
-			  		}
-				}
-			}
-			genres
-			tags {
+	Entry{0}: Media (id: {1}) {{
+		type
+		id
+		idMal
+		siteUrl
+		coverImage {{
+			large
+		}}
+		description(asHtml: true)
+		studios(sort: [NAME]) {{
+			nodes {{
 				name
-				isGeneralSpoiler
-				isMediaSpoiler
-			  }
-			averageScore
-			bannerImage
-			title {
-				romaji
-			}
-		}
-	}'
-
+				isAnimationStudio
+			}}
+		}}
+		staff {{
+			nodes {{
+				name {{
+					full
+				}}
+			}}
+		}}
+		genres
+		tags {{
+			name
+			isGeneralSpoiler
+			isMediaSpoiler
+		}}
+		averageScore
+		bannerImage
+		title {{
+			romaji
+		}}
+	}}'
+	
 	# Define Api List Query
 	$ListQuery = '
 	query ($userName: String, $type: MediaType) {
@@ -76,13 +85,13 @@ function global:Import-AniList()
 		}
 	}'
 	
-	# Download List
+	# Download user list from AniList
 	$ListTypeUpper = $ListType.ToUpper()
 	$ListTypeLower = $ListType.ToLower()
 	$Variables = "{`"userName`": `"$AniListUsername`", `"type`": `"$ListTypeUpper`"}"  #<--- Define Variables
 	$PostParams = @{query=$ListQuery;variables=$Variables} | ConvertTo-Json            #<--- Create query parameters
 	try {
-		$ListJson = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data.MediaListCollection.lists
+		$UserStatusLists = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data.MediaListCollection.lists
 		$__logger.Info("AniList Importer - Downloaded $ListType list of user `"$AniListUsername`"")
 	} catch {
 		$ErrorMessage = $_.Exception.Message
@@ -91,19 +100,19 @@ function global:Import-AniList()
 		exit
 	}
 	
-	# Create List collection
-	[System.Collections.Generic.List[Object]]$ListGlobal = @()
-	foreach ($StatusList in $ListJson)	{
-		foreach ($ListEntry in $StatusList.entries) {
-			$ListGlobal.Add($ListEntry)
+	# Create collection of entries and MediaIds found in account
+	[System.Collections.Generic.List[Object]]$EntriesInAccount = @()
+	[System.Collections.Generic.List[object]]$MissingEntries = @()
+	foreach ($StatusList in $UserStatusLists)	{
+		foreach ($Entry in $StatusList.entries) {
+			$EntriesInAccount.Add($Entry)
 		}
 	}
-	$EntriesAdded = 0
-
-	foreach ($ListEntry in $ListGlobal) {
-
+	$__logger.Info("AniList Importer - Found $($EntriesInAccount.Count) entries of type `"$ListType`" in account")
+	
+	foreach ($Entry in $EntriesInAccount) {
 		# Check if entry has been imported previously
-		if ($AniListEntriesInDatabase -contains $ListEntry.mediaId)
+		if ($AniListEntriesInDatabase -contains $Entry.mediaId)
 		{
 			if ($ReplaceCompletionStatus -ne "Yes")
 			{
@@ -111,9 +120,9 @@ function global:Import-AniList()
 			}
 
 			# Import Completion Status if it has changed
-			$ExistingEntry = $PlayniteApi.Database.Games | Where-Object {$_.GameId -eq $ListEntry.mediaId}
+			$ExistingEntry = $PlayniteApi.Database.Games | Where-Object {$_.GameId -eq $Entry.mediaId}
 			$CompletionStatus = $ExistingEntry.CompletionStatus
-			switch ($ListEntry.status)
+			switch ($Entry.status)
 			{
 				'PLANNING' {
 					if ($ExistingEntry.CompletionStatus -ne 'PlanToPlay') 
@@ -159,164 +168,206 @@ function global:Import-AniList()
 		}
 		else
 		{
-			# Download json of Entry
-			$Variables = "{`"id`": $($ListEntry.mediaId)}"                                 #<--- Define Variables
-			$PostParams = @{query=$MetadataQuery;variables=$Variables} | ConvertTo-Json    #<--- Create query parameters
+			# Save to list of missing entries
+			$MissingEntries.Add($Entry)
+		}
+	}
+	$__logger.Info("AniList Importer - Found $($MissingEntries.Count) missing entries of type `"$ListType`" in account")
+
+	# Download Metadata of missing entries
+	[System.Collections.Generic.List[String]]$MissingEntriesQuery = @()
+	$ItemCount = $MissingEntries.count - 1
+	$MetadaDownloadCount = 0
+	foreach ($Entry in $MissingEntries) {
+		$IterationCount++
+		[string]$MediaIdIndex = $MissingEntries.IndexOf($Entry)
+		$MediaIdQuery = $MetadataQuery -f $MediaIdIndex, $Entry.mediaId
+		$MissingEntriesQuery.Add($MediaIdQuery)
+		if (($IterationCount -eq 20) -or ($MediaIdIndex -eq $ItemCount))
+		{
+			# Download media information from AniList API
+			$MetadataRequestQuery = "{$MissingEntriesQuery}"                 #<--- Define Variables
+			$PostParams = @{query=$MetadataRequestQuery} | ConvertTo-Json    #<--- Create query parameters
 			try {
-				$MediaJson = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data.Media
+				$MetadaDownloadCount++
 				Start-Sleep -Milliseconds 1000
+				$MetadataJson = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data
+				$__logger.Info("AniList Importer - Downloaded Metadata json $MetadaDownloadCount")
 			} catch {
 				$ErrorMessage = $_.Exception.Message
-				$__logger.Info("AniList Importer - Error downloading media Json, execution stopped. Error: $ErrorMessage")
-				$PlayniteApi.Dialogs.ShowErrorMessage("Error downloading media Json, execution will stop. Error: $ErrorMessage", "AniList Importer");
-				break
+				$__logger.Info("AniList Importer - Error downloading metadata Json file, execution stopped. Error: $ErrorMessage")
+				$PlayniteApi.Dialogs.ShowErrorMessage("Error downloading metadata Json file, execution will stop. Error: $ErrorMessage", "AniList Importer");
+				exit
 			}
 			
-			# Initialize new game and check status
-			$NewGame = New-Object "Playnite.SDK.Models.Game"
-			switch ($ListEntry.status)
+ 			if ($null -eq $Metadata)
 			{
-				'PLANNING' {$NewGame.CompletionStatus = 'PlanToPlay'}
-				'PAUSED' {$NewGame.CompletionStatus = 'OnHold'}
-				'CURRENT' {$NewGame.CompletionStatus = 'Playing'}
-				'DROPPED' {$NewGame.CompletionStatus = 'Abandoned'}
-				'COMPLETED' {$NewGame.CompletionStatus = 'Completed'}
+				$Metadata = $MetadataJson
 			}
-
-			# Set game properties
-			$NewGame.Name = $MediaJson.title.romaji
-			$NewGame.GameId = $MediaJson.id
-			$NewGame.Description = $MediaJson.description
-			$NewGame.SourceId = $Source.Id			
-			$NewGame.PlatformId = $Platform.Id
-			$NewGame.CommunityScore = [int]$MediaJson.averageScore
-			$NewGame.IsInstalled = $true
-
-			# Set Cover and Background Image
-			$NewGame.CoverImage = $MediaJson.coverimage.large
-			if ($MediaJson.bannerImage)
+			else
 			{
-				$NewGame.BackgroundImage = $MediaJson.bannerImage
+				$Metadata = @($Metadata; $MetadataJson)
 			}
+			$IterationCount = 0
+			[System.Collections.Generic.List[String]]$MissingEntriesQuery = @()
+		}
+	}
 
-			# Set Studio, Producer and Authors
-			if ($MediaJson.Type -eq "MANGA")
-			{
-				foreach ($Author in $MediaJson.staff.nodes) {
-					# Create author in database
-					$AuthorName = $Author.name.full
-					$Author = $PlayniteApi.Database.Companies.Add($AuthorName)
+	# Add missing entries
+	$EntriesAdded = 0
+	foreach ($MissingEntry in $MissingEntries) {
+		# Get entry metadata
+		[string]$EntryIndex = $MissingEntries.IndexOf($MissingEntry)
+		$EntryNumber = "Entry" + $EntryIndex
+		$EntryMetadata = $Metadata.$EntryNumber
 
-					# Add author to entry
-					if ($NewGame.DeveloperIds)
+		# Initialize new game and check status
+		$NewGame = New-Object "Playnite.SDK.Models.Game"
+		switch ($MissingEntry.status)
+		{
+			'PLANNING' {$NewGame.CompletionStatus = 'PlanToPlay'}
+			'PAUSED' {$NewGame.CompletionStatus = 'OnHold'}
+			'CURRENT' {$NewGame.CompletionStatus = 'Playing'}
+			'DROPPED' {$NewGame.CompletionStatus = 'Abandoned'}
+			'COMPLETED' {$NewGame.CompletionStatus = 'Completed'}
+		}
+
+		# Set game properties
+		$NewGame.Name = $EntryMetadata.title.romaji
+		$NewGame.GameId = $MissingEntry.mediaId
+		$NewGame.Description = $EntryMetadata.description
+		$NewGame.SourceId = $Source.Id			
+		$NewGame.PlatformId = $Platform.Id
+		$NewGame.CommunityScore = $EntryMetadata.averageScore
+		$NewGame.IsInstalled = $true
+
+		# Set Cover and Background Image
+		$NewGame.CoverImage = $EntryMetadata.coverimage.large
+		if ($EntryMetadata.bannerImage)
+		{
+			$NewGame.BackgroundImage = $EntryMetadata.bannerImage
+		}
+
+		# Set Studio, Producer and Authors
+		if ($EntryMetadata.Type -eq "MANGA")
+		{
+			foreach ($Author in $EntryMetadata.staff.nodes) {
+				# Create author in database
+				$AuthorName = $Author.name.full
+				$Author = $PlayniteApi.Database.Companies.Add($AuthorName)
+
+				# Add author to entry
+				if ($NewGame.DeveloperIds)
+				{
+					$NewGame.DeveloperIds.Add($Author.Id)
+				}
+				else
+				{
+					# Fix in case game property is null
+					$NewGame.DeveloperIds = $Author.Id
+				}
+			}
+		}
+		elseif ($EntryMetadata.Type -eq "ANIME")
+		{
+			foreach ($Company in $EntryMetadata.studios.nodes) {
+				# Creat company in database
+				$CompanyName = $Company.name
+				$Company = $PlayniteApi.Database.Companies.Add($CompanyName)
+				if ($Company.isAnimationStudio -eq $false)
+				{
+					# Add publisher to entry
+					if ($NewGame.PublisherIds) 
 					{
-						$NewGame.DeveloperIds.Add($Author.Id)
+						$NewGame.PublisherIds.Add($Company.Id)
 					}
 					else
 					{
 						# Fix in case game property is null
-						$NewGame.DeveloperIds = $Author.Id
+						$NewGame.PublisherIds = $Company.Id
 					}
 				}
-			}
-			elseif ($MediaJson.Type -eq "ANIME")
-			{
-				foreach ($Company in $MediaJson.studios.nodes) {
-					# Creat company in database
-					$CompanyName = $Company.name
-					$Company = $PlayniteApi.Database.Companies.Add($CompanyName)
-					if ($Company.isAnimationStudio -eq $false)
+				else
+				{
+					# Add developer to entry
+					if ($NewGame.DeveloperIds) 
 					{
-						# Add publisher to entry
-						if ($NewGame.PublisherIds) 
-						{
-							$NewGame.PublisherIds.Add($Company.Id)
-						}
-						else
-						{
-							# Fix in case game property is null
-							$NewGame.PublisherIds = $Company.Id
-						}
+						$NewGame.DeveloperIds.Add($Company.Id)
 					}
 					else
 					{
-						# Add developer to entry
-						if ($NewGame.DeveloperIds) 
-						{
-							$NewGame.DeveloperIds.Add($Company.Id)
-						}
-						else
-						{
-							# Fix in case game property is null
-							$NewGame.DeveloperIds = $Company.Id
-						}
+						# Fix in case game property is null
+						$NewGame.DeveloperIds = $Company.Id
 					}
 				}
 			}
+		}
 
-			# Set Genres
-			foreach ($GenreName in $MediaJson.Genres) {
-				# Create genre in database
-				$Genre = $PlayniteApi.Database.Genres.Add($GenreName)
+		# Set Genres
+		foreach ($GenreName in $EntryMetadata.Genres) {
+			# Create genre in database
+			$Genre = $PlayniteApi.Database.Genres.Add($GenreName)
 
-				# Add genre to entry
-				if ($NewGame.GenreIds)
-				{
-					$NewGame.GenreIds.Add($Genre.Id)
-				}
-				else
-				{
-					# Fix in case game property is null
-					$NewGame.GenreIds = $Genre.Id
-				}
-			}
-
-			# Set tags
-			foreach ($TagName in $MediaJson.Tags) {
-				# Skip tag if it's a spoiler
-				if (($TagName.isGeneralSpoiler -eq $true) -or ($TagName.isMediaSpoiler -eq $true))
-				{
-					continue
-				}
-
-				# Create tag in database
-				$Tag = $PlayniteApi.Database.Tags.Add($TagName.name)
-
-				# Add tag to entry
-				if ($NewGame.TagIds)
-				{
-					$NewGame.TagIds.Add($Tag.Id)
-				}
-				else
-				{
-					# Fix in case game property is null
-					$NewGame.TagIds = $Tag.Id
-				}
-			}
-
-			# Create AniList PlayAction
-			$GameAction = [Playnite.SDK.Models.GameAction]::New()
-			$GameAction.Type = "URL"
-			$GameAction.Path = $MediaJson.siteUrl
-			$NewGame.PlayAction = $GameAction
-
-			# Create MyAnimeList PlayAction
-			if ($MediaJson.idMal)
+			# Add genre to entry
+			if ($NewGame.GenreIds)
 			{
-				$GameAction = [Playnite.SDK.Models.GameAction]::New()
-				$GameAction.Name = "Open in MyAnimeList"
-				$GameAction.Type = "URL"
-				$GameAction.Path = "https://myanimelist.net/{0}/{1}/" -f $ListTypeLower, $MediaJson.idMal
-				$NewGame.OtherActions = $GameAction
+				$NewGame.GenreIds.Add($Genre.Id)
 			}
-			
-			# Add entry to database
-			$PlayniteApi.Database.Games.Add($NewGame)
-			$__logger.Info("AniList Importer - Added: `"$($NewGame.name)`", Type: `"$ListType`"")
-			$EntriesAdded++
+			else
+			{
+				# Fix in case game property is null
+				$NewGame.GenreIds = $Genre.Id
+			}
+		}
 
-			# Add links MAL-Sync API links to entry
-			Add-SiteLinks $NewGame 0 $true
+		# Set tags
+		foreach ($TagName in $EntryMetadata.Tags) {
+			# Skip tag if it's a spoiler
+			if (($TagName.isGeneralSpoiler -eq $true) -or ($TagName.isMediaSpoiler -eq $true))
+			{
+				continue
+			}
+
+			# Create tag in database
+			$Tag = $PlayniteApi.Database.Tags.Add($TagName.name)
+
+			# Add tag to entry
+			if ($NewGame.TagIds)
+			{
+				$NewGame.TagIds.Add($Tag.Id)
+			}
+			else
+			{
+				# Fix in case game property is null
+				$NewGame.TagIds = $Tag.Id
+			}
+		}
+
+		# Create AniList PlayAction
+		$GameAction = [Playnite.SDK.Models.GameAction]::New()
+		$GameAction.Type = "URL"
+		$GameAction.Path = $EntryMetadata.siteUrl
+		$NewGame.PlayAction = $GameAction
+
+		# Create MyAnimeList PlayAction
+		if ($EntryMetadata.idMal)
+		{
+			$GameAction = [Playnite.SDK.Models.GameAction]::New()
+			$GameAction.Name = "Open in MyAnimeList"
+			$GameAction.Type = "URL"
+			$GameAction.Path = "https://myanimelist.net/{0}/{1}/" -f $ListTypeLower, $EntryMetadata.idMal
+			$NewGame.OtherActions = $GameAction
+		}
+		
+		# Add entry to database
+		$PlayniteApi.Database.Games.Add($NewGame)
+		$__logger.Info("AniList Importer - Added: `"$($NewGame.name)`", Type: `"$ListType`"")
+		$EntriesAdded++
+
+		# Add links MAL-Sync API links to entry
+		if ($AddLinks -eq "Yes")
+		{
+			Add-SiteLinks $NewGame $true
 		}
 	}
 
@@ -327,35 +378,26 @@ function global:Import-AniList()
 
 function Import-Anime
 {
-	# Request Username
-	$UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public.", "AniList Importer", "");
-	if (!$UserNameInput.SelectedString)
-	{
-		exit
-	}
-	$AniListUsername = $UserNameInput.SelectedString
-
 	# Ask if user wants to overwrite completion statuses
 	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "AniList Importer", 4)
 	if ($ReplaceCompletionStatus -ne "Yes")
 	{
 		$ReplaceCompletionStatus = "No"
 	}
-	
+
+	# Ask if user wants to add MAL-Sync Links
+	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add streaming links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "AniList Importer", 4)
+	if ($AddLinks -ne "Yes")
+	{
+		$AddLinks = "No"
+	}
+
 	# Invoke function
-	Import-AniList 'Anime' $AniListUsername $ReplaceCompletionStatus
+	Import-AniList 'Anime' $ReplaceCompletionStatus $AddLinks
 }
 
 function Import-Manga
 {
-	# Request Username
-	$UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public.", "AniList Importer", "");
-	if (!$UserNameInput.SelectedString)
-	{
-		exit
-	}
-	$AniListUsername = $UserNameInput.SelectedString
-
 	# Ask if user wants to overwrite completion statuses
 	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "AniList Importer", 4)
 	if ($ReplaceCompletionStatus -ne "Yes")
@@ -363,20 +405,19 @@ function Import-Manga
 		$ReplaceCompletionStatus = "No"
 	}
 	
+	# Ask if user wants to add MAL-Sync Links
+	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add reading links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "AniList Importer", 4)
+	if ($AddLinks -ne "Yes")
+	{
+		$AddLinks = "No"
+	}
+
 	# Invoke function
-	Import-AniList 'Manga' $AniListUsername $ReplaceCompletionStatus
+	Import-AniList 'Manga' $ReplaceCompletionStatus $AddLinks
 }
 
 function Import-All
 {
-	# Request Username
-	$UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public.", "AniList Importer", "");
-	if (!$UserNameInput.SelectedString)
-	{
-		exit
-	}
-	$AniListUsername = $UserNameInput.SelectedString
-
 	# Ask if user wants to overwrite completion statuses
 	$ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "AniList Importer", 4)
 	if ($ReplaceCompletionStatus -ne "Yes")
@@ -384,16 +425,22 @@ function Import-All
 		$ReplaceCompletionStatus = "No"
 	}
 	
+	# Ask if user wants to add MAL-Sync Links
+	$AddLinks = $PlayniteApi.Dialogs.ShowMessage("Do you want to add streaming and reading links during import process?`n`nBe aware that adding the links will make the import process much longer`nLinks can be added afterwards too with the extension functions", "AniList Importer", 4)
+	if ($AddLinks -ne "Yes")
+	{
+		$AddLinks = "No"
+	}
+
 	# Invoke function
-	Import-AniList 'Anime' $AniListUsername $ReplaceCompletionStatus
-	Import-AniList 'Manga' $AniListUsername $ReplaceCompletionStatus
+	Import-AniList 'Anime' $ReplaceCompletionStatus $AddLinks
+	Import-AniList 'Manga' $ReplaceCompletionStatus $AddLinks
 }
 
 function Add-SiteLinks()
 {
 	param (
 		$GameDatabase,
-		$SleepTime,
 		$IgnoreErrors
 	)
 	
@@ -426,9 +473,9 @@ function Add-SiteLinks()
 
 		# Download MAL-Sync entry information
 		try {
+			Start-Sleep -Milliseconds 1000
 			$MalSyncUri = $MalSyncApi -f $ListType, $MalId
 			$MalSyncInfo = Invoke-WebRequest $MalSyncUri  | ConvertFrom-Json
-			Start-Sleep -Milliseconds $SleepTime
 		}
 		catch {
 			if ($IgnoreErrors -eq $true)
@@ -446,15 +493,16 @@ function Add-SiteLinks()
 			{
 				continue
 			}
-			break
+			else
+			{
+				break			
+			}
 		}
 
 		# Add links to entry
-		$CountLinksAddedEntry = 0
 		$Entry.Links = $null
 		foreach ($Site in $MalSyncInfo.Sites.PSObject.Properties) {
 			foreach ($Version in $Site.Value.PSObject.Properties.Value) {
-				[string]$url = $Version.url
 				if ($Entry.links.url -notcontains $Version.url)
 				{
 					$LinkName = "$($Site.Name) - $($Version.title)"
@@ -483,8 +531,15 @@ function Add-SiteLinksAll()
 {
 	# Set gamedatabase
 	$GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "AniList"}
+	
+	# Ask for confirmation
+	$Confirm = $PlayniteApi.Dialogs.ShowMessage("Warning: This function can take a long time to complete depending on the number of entries in the account.`n`nAre you sure you want to reset the links in all entries?", "AniList Importer", 4)
+	if ($Confirm -ne "Yes")
+	{
+		exit
+	}
 
-	Add-SiteLinks $GameDatabase 1000 $false
+	Add-SiteLinks $GameDatabase $false
 
 	# Show results
 	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "AniList Importer");
@@ -495,7 +550,7 @@ function Add-SiteLinksMissing()
 	# Set gamedatabase
 	$GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "AniList"} | Where-Object {$_.Links.count -eq 0}
 
-	Add-SiteLinks $GameDatabase 1000 $false
+	Add-SiteLinks $GameDatabase $false
 
 	# Show results
 	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "AniList Importer");
@@ -506,8 +561,29 @@ function Add-SiteLinksSelected()
 	# Set gamedatabase
 	$GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.source.name -eq "AniList"}
 
-	Add-SiteLinks $GameDatabase 1000 $false
+	Add-SiteLinks $GameDatabase $false
 
 	# Show results
 	$PlayniteApi.Dialogs.ShowMessage("Added site links to $CountLinkAddedGlobal entries", "AniList Importer");
+}
+
+function Set-Username()
+{
+	# Set paths
+	$ExtensionPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'AniList Importer'
+	$UsernameConfigPath = Join-Path -Path $ExtensionPath -ChildPath 'Username.txt'
+	if (!(Test-Path $ExtensionPath))
+	{
+		New-Item -ItemType Directory -Path $ExtensionPath -Force
+	}
+	
+	# Request Username
+	$UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public:", "AniList Importer", "");
+	if ($UserNameInput.Result -eq $false)
+	{
+		exit
+	}
+	$AniListUsername = $UserNameInput.SelectedString
+	$AniListUsername | Out-File -Encoding 'UTF8' -FilePath $UsernameConfigPath
+	$PlayniteApi.Dialogs.ShowMessage("Username `"$AniListUsername`" has been configured.", "AniList Importer");
 }
