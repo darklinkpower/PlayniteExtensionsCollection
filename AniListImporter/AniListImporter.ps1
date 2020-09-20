@@ -177,7 +177,6 @@ function global:Import-AniList()
 	# Download Metadata of missing entries
 	[System.Collections.Generic.List[String]]$MissingEntriesQuery = @()
 	$ItemCount = $MissingEntries.count - 1
-	$MetadaDownloadCount = 0
 	foreach ($Entry in $MissingEntries) {
 		$IterationCount++
 		[string]$MediaIdIndex = $MissingEntries.IndexOf($Entry)
@@ -190,7 +189,7 @@ function global:Import-AniList()
 			$PostParams = @{query=$MetadataRequestQuery} | ConvertTo-Json    #<--- Create query parameters
 			try {
 				$MetadaDownloadCount++
-				Start-Sleep -Milliseconds 1000
+				Start-Sleep -Milliseconds 670
 				$MetadataJson = (Invoke-WebRequest -Uri 'https://graphql.AniList.co' -Method POST -Body $PostParams -ContentType 'application/json' | ConvertFrom-Json).data
 				$__logger.Info("AniList Importer - Downloaded Metadata json $MetadaDownloadCount")
 			} catch {
@@ -212,7 +211,7 @@ function global:Import-AniList()
 			[System.Collections.Generic.List[String]]$MissingEntriesQuery = @()
 		}
 	}
-
+	
 	# Add missing entries
 	$EntriesAdded = 0
 	foreach ($MissingEntry in $MissingEntries) {
