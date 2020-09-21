@@ -156,6 +156,22 @@ This extension has two main functions:
 
 </details>
 
+### Links Sorter
+
+Playnite Forum Thread: https://playnite.link/forum/thread-401.html
+
+<details>
+
+<summary>Description</summary>
+
+Simple extension that sorts the links of selected or all games in database by URL in ascending order (From A to Z, 0 to 9)
+
+Please be aware that it sorts using the URL and not the link names.
+
+This is with the purpose of not having to sort the game links manually each time a new one is added.
+
+</details>
+
 ### NVIDIA GeforceExperience GameStream Export
 
 Playnite Forum Thread: https://playnite.link/forum/thread-252.html
