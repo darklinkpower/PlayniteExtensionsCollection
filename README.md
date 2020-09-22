@@ -16,34 +16,6 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 ## Extensions
 
-### AniList Importer
-
-Playnite Forum Thread:https://playnite.link/forum/thread-395.html
-
-<details>
-
-<summary>Description</summary>
-
-Made for personal use but maybe someone else finds it useful. It imports your lists from [AniList](https://anilist.co/) for viewing in Playnite.
-
-Features:
-- Downloads Anime and Manga lists. "Platform" field is used to filter them
-- Gets respective entry title, description, genres and tags.
-- Uses "Developer" field for authors in case of manga and for Studios in case of Anime. "Publishers" field is used for Producers for Anime.
-- Gets completion status and the added entry uses the correspondant type in Playnite.
-- Can overwrite completion status in existing entries in Playnite if changed in Anilist
-- Sets cover and background images.
-- Play Action opens the entry AniList URL. A play action is also added for MyAnimeList if data is available.
-
-Notes:
-- Your profile must be public
-- It's suggested to use an exclusive Playnite installation for this extension to not saturate the database with entries, genres and specially tags.
-- The extension can't update in any way information back to AniList. It was made in mind for just viewing in Playnite, while all the entries updating would be automatically made by [MAL-Sync](https://malsync.moe/) in your browser.
-- API requests are not optimized, so first time import can take a long time depending on number of entries (Around 1~ second for each entry).
-- Extension is currently limited in what it can do. I plan to rewrite it as a Library extension in the future.
-
-</details>
-
 ### Batch Shortcut Creator
 
 Playnite Forum Thread: https://playnite.link/forum/thread-251.html
@@ -133,6 +105,33 @@ This extension will save a considerable amount of space by processing the images
 Only images that have less size after being processed will overwrite your current images to provide the best savings in your cache and the list of processed images will be saved to not try to process them again when the extension is run afterwards.
 
 The extension uses ImageMagick to do the image processing and it's required to download it in any location. ImageMagick can be downloaded here (See the "Windows Binary Release" section): https://imagemagick.org/script/download.php
+
+</details>
+
+### Importer for AniList
+
+Playnite Forum Thread:https://playnite.link/forum/thread-395.html
+
+<details>
+
+<summary>Description</summary>
+
+Made for personal use but maybe someone else finds it useful. It imports your lists from [MAL-Sync](https://malsync.moe/) for viewing in Playnite.
+
+Features:
+- Downloads Anime and Manga lists. "Platform" field is used to filter them
+- Gets entry metadata
+- Uses "Developer" field for authors in case of manga and for Studios in case of Anime. "Publishers" field is used for Producers for Anime.
+- Gets completion status and the added entry uses the correspondant type in Playnite.
+- Can overwrite completion status in existing entries in Playnite if changed in Anilist
+- Play Action opens the entry AniList URL. A play action is also added for MyAnimeList if data is available.
+- Adds links to stream or read imported entries, provided by MAL-Sync's API.
+
+Notes:
+- Your profile must be public
+- It's suggested to use an exclusive Playnite installation for this extension to not saturate the database with entries, genres and specially tags.
+- The extension can't update in any way information back to AniList. It was made in mind for just viewing in Playnite, while all the entries updating would be automatically made by [MAL-Sync](https://malsync.moe/) in your browser.
+- Extension is currently limited in what it can do. I plan to rewrite it as a Library extension in the future.
 
 </details>
 
