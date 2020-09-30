@@ -1,29 +1,24 @@
-function global:NVIDIAGEGameStreamExport()
+function global:NVIDIAGameStreamExport()
 {
-	# Set PlayniteExecutablePath
+	# Set paths
 	$PlayniteExecutablePath = Join-Path -Path $PlayniteApi.Paths.ApplicationPath -ChildPath "Playnite.DesktopApp.exe"
+	$NvidiaShorcutsPath = Join-Path -Path $env:LocalAppData -ChildPath "NVIDIA Corporation\Shield Apps"
+	$PlayniteShorcutsPath = Join-Path -Path $env:LocalAppData -ChildPath "NVIDIA Corporation\Playnite Shortcuts"
 	
 	# Set GameDatabase
 	$GameDatabase = $PlayniteApi.MainView.SelectedGames
 	
-	# Set NVIDIA GameStream directory
-	$NVIDIAPath = Join-Path $env:LocalAppData -ChildPath "NVIDIA Corporation\Shield Apps"
-	
-	# Set creation count
-	$count = 0
+	# Set creation counter
+	$ShortcutsCreatedCount = 0
 	
 	foreach ($Game in $GameDatabase) {
 		
-		#Set game launch URI
-		$URI = 'playnite://playnite/start/' + "$($game.id)"
-		
-		# Set shortcut path based on Windows Explorer compatible game name
+		# Set game launch URI and Game Name
+		$GameLaunchURI = 'playnite://playnite/start/' + "$($game.id)"
 		$GameName = $($Game.name).Split([IO.Path]::GetInvalidFileNameChars()) -join ''
-		$NVIDIAShortcutPath = Join-Path -Path $NVIDIAPath -ChildPath $("$($GameName)" + '.lnk')
-		New-Item -ItemType File -Path $NVIDIAShortcutPath -Force
-		
+
 		# Check if game has an icon and if it's a *.ico compatible file. Else point to Playnite executable for icon
-		if ($($game.icon) -match '.+\.ico$')
+		if ($($game.icon) -match '.+\.ico$') 
 		{
 			$IconPath = $PlayniteApi.Database.GetFullFilePath($game.icon)
 		}
@@ -32,56 +27,66 @@ function global:NVIDIAGEGameStreamExport()
 			$IconPath = $PlayniteExecutablePath
 		}
 		
-		# Create game .lnk file
-		$shell = New-Object -ComObject WScript.Shell
-		$shortcut = $shell.CreateShortcut("$NVIDIAShortcutPath")
+		# Create url file
+		$UrlPath = Join-Path -Path $PlayniteShorcutsPath -ChildPath $( $($GameName -replace "[^\x00-\x7A]","-") + '.url')
+		New-Item -ItemType File -Path $UrlPath -Force
+		"[InternetShortcut]`nIconIndex=0`nIconFile=$IconPath`nURL=$GameLaunchURI" | Out-File -Encoding 'utf8' -FilePath $UrlPath
+
+		# Create Nvidia game shortcut file. Save first at temp folder
+		# Move after to correct path; Fix in case path has incompatible characters with WshShell
+		$LnkPath = Join-Path -Path $NvidiaShorcutsPath -ChildPath $($GameName + '.lnk')
+		$LnkTempPath = Join-Path -Path $env:temp -ChildPath "LnkTmp.lnk"
+		New-Item -ItemType File -Path $LnkTempPath -Force
+		$WshShell = New-Object -ComObject WScript.Shell
+		$shortcut = $WshShell.CreateShortcut($LnkTempPath)
 		$shortcut.IconLocation = $IconPath
-		$shortcut.TargetPath = Join-Path $env:SystemRoot -ChildPath 'System32\cmd.exe'
-		$shortcut.WorkingDirectory = Join-Path $env:SystemRoot -ChildPath 'System32'
-		$shortcut.Arguments = "/min /q /c start $URI"
+		$shortcut.TargetPath = $UrlPath
 		$shortcut.Save()
-		
+		Move-Item $LnkTempPath $LnkPath -Force
+
 		# Set cover path and create blank file
-		$NVIDIACover = Join-Path $NVIDIAPath -ChildPath 'StreamingAssets' | Join-Path -ChildPath $GameName | Join-Path -ChildPath '\box-art.png'
-		New-Item -ItemType File -Path $NVIDIACover -Force
+		$NvidiaGameCoverPath = Join-Path -Path $NvidiaShorcutsPath -ChildPath 'StreamingAssets' | Join-Path -ChildPath $GameName | Join-Path -ChildPath '\box-art.png'
+		New-Item -ItemType File -Path $NvidiaGameCoverPath -Force
 		
 		# Check if game has a cover image
-		if ($($game.CoverImage))
+		if ($game.CoverImage)
 		{
-			if ($($game.CoverImage) -match '.+\.png$')
+			if ($game.CoverImage -match '.+\.png$')
 			{
 				$SourceCover = $PlayniteApi.Database.GetFullFilePath($game.CoverImage)
-				Copy-Item $SourceCover $NVIDIACover -Force
+				Copy-Item $SourceCover $NvidiaGameCoverPath -Force
 			}
 			else
 			{
-				# Convert cover image to compatible PNG
+				# Convert cover image to compatible PNG image format
 				try {
 					$SourceCover = $PlayniteApi.Database.GetFullFilePath($game.CoverImage)
 					Add-Type -AssemblyName system.drawing
 					$imageFormat = “System.Drawing.Imaging.ImageFormat” -as [type]
 					$image = [drawing.image]::FromFile($SourceCover)
-					$image.Save($NVIDIACover, $imageFormat::png)
+					$image.Save($NvidiaGameCoverPath, $imageFormat::png)
 				} catch {
+					$ErrorMessage = $_.Exception.Message
+					$__logger.Info("NVIDIA GameStream Export - Error converting cover image of `"$($game.name)`". Error: $ErrorMessage")
 					$SourceCover = $null
 				}
 			}
 		}
-
 		if (!$SourceCover)
 		{
 			# Copy Playnite blank cover to cover path if game cover was not copied or converted to png
 			$SourceCover = Join-Path $PlayniteApi.Paths.ApplicationPath -ChildPath '\Themes\Desktop\Default\Images\custom_cover_background.png'
 			if (Test-Path $SourceCover)
 			{
-				Copy-Item $SourceCover $NVIDIACover -Force
+				Copy-Item $SourceCover $NvidiaGameCoverPath -Force
 			}
 		}
-		
-		#Increase creation count and null $SourceCover
-		$count++
+
+		# Increase creation count and null $SourceCover
+		$ShortcutsCreatedCount++
 		$SourceCover = $null
 	}
+
 	# Show finish dialogue with shortcut creation count
-	$PlayniteApi.Dialogs.ShowMessage("NVIDIA Geforce Experience GameStream shortcut created for $count selected games.");
+	$PlayniteApi.Dialogs.ShowMessage("NVIDIA GameStream game shortcuts created: $ShortcutsCreatedCount", "NVIDIA GameStream Export");
 }

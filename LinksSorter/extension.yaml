@@ -1,0 +1,14 @@
+﻿Name: Links Sorter
+Author: darklinkpower
+Version: 1.0
+Module: LinksSorter.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-401.html
+Functions: 
+    - Description: Links Sorter - Sort links in all games
+      FunctionName: Format-AllGames
+    - Description: Links Sorter - Sort links in selected games
+      FunctionName: Format-SelectedGames

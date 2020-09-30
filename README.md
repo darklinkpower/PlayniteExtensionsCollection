@@ -108,6 +108,33 @@ The extension uses ImageMagick to do the image processing and it's required to d
 
 </details>
 
+### Importer for AniList
+
+Playnite Forum Thread:https://playnite.link/forum/thread-395.html
+
+<details>
+
+<summary>Description</summary>
+
+Made for personal use but maybe someone else finds it useful. It imports your lists from [MAL-Sync](https://malsync.moe/) for viewing in Playnite.
+
+Features:
+- Downloads Anime and Manga lists. "Platform" field is used to filter them
+- Gets entry metadata
+- Uses "Developer" field for authors in case of manga and for Studios in case of Anime. "Publishers" field is used for Producers for Anime.
+- Gets completion status and the added entry uses the correspondant type in Playnite.
+- Can overwrite completion status in existing entries in Playnite if changed in Anilist
+- Play Action opens the entry AniList URL. A play action is also added for MyAnimeList if data is available.
+- Adds links to stream or read imported entries, provided by MAL-Sync's API.
+
+Notes:
+- Your profile must be public
+- It's suggested to use an exclusive Playnite installation for this extension to not saturate the database with entries, genres and specially tags.
+- The extension can't update in any way information back to AniList. It was made in mind for just viewing in Playnite, while all the entries updating would be automatically made by [MAL-Sync](https://malsync.moe/) in your browser.
+- Extension is currently limited in what it can do. I plan to rewrite it as a Library extension in the future.
+
+</details>
+
 ### Installation Status Updater
 
 Playnite Forum Thread: https://playnite.link/forum/thread-316.html
@@ -128,6 +155,22 @@ This extension has two main functions:
 
 </details>
 
+### Links Sorter
+
+Playnite Forum Thread: https://playnite.link/forum/thread-401.html
+
+<details>
+
+<summary>Description</summary>
+
+Simple extension that sorts the links of selected or all games in database by URL in ascending order (From A to Z, 0 to 9)
+
+Please be aware that it sorts using the URL and not the link names.
+
+This is with the purpose of not having to sort the game links manually each time a new one is added.
+
+</details>
+
 ### NVIDIA GeforceExperience GameStream Export
 
 Playnite Forum Thread: https://playnite.link/forum/thread-252.html
@@ -138,7 +181,7 @@ This extension will export your selected games to NVIDIA Geforce Experience Game
 
 </details>
 
-### NVIDIA Geforce NOW Compatibility Checker
+### NVIDIA Geforce NOW Enabler
 
 Playnite Forum Thread: https://playnite.link/forum/thread-298.html
 
@@ -146,7 +189,9 @@ Playnite Forum Thread: https://playnite.link/forum/thread-298.html
 
 <summary>Description</summary>
 
-This extension will check which of your games has been enabled for the NVIDIA Geforce NOW Service and add "NVIDIA Geforce NOW" in their features to easily check them. Compatible with games from Epic, Origin, Steam and Uplay.
+This extension will check which of your games have been enabled for the NVIDIA Geforce NOW Service, add "NVIDIA Geforce NOW" in their features to easily check them and also add a Play Action to the games to launch them via the service.
+
+Compatible with games from Epic, Origin, Steam and Uplay.
 
 </details>
 
@@ -173,18 +218,6 @@ Playnite Forum Thread: https://playnite.link/forum/thread-163.html
 <summary>Description</summary>
 
 This extension will search the currently selected game(s) on different websites in your web browser.
-
-</details>
-
-### Steam Add Game
-
-Playnite Forum Thread: https://playnite.link/forum/thread-300.html
-
-<details>
-
-<summary>Description</summary>
-
-This extension will add a steam game to your library. You need to input either a valid steam id or url. Useful as a workaround for [Playnite's Issue #910](https://github.com/JosefNemec/Playnite/issues/910) or to add family shared games not in the linked account.
 
 </details>
 
@@ -219,7 +252,19 @@ The extension is compatible with Steam games and games that have a Steam Store l
 
 </details>
 
-### SteamTrailers
+### Steam Game Importer
+
+Playnite Forum Thread: https://playnite.link/forum/thread-300.html
+
+<details>
+
+<summary>Description</summary>
+
+This extension will add a steam game to your library. You need to input either a valid steam id or url. It can also import all your games not currently imported in Playnite. This extension is mainly intended as a workaround for [Playnite's Issue #910.](https://github.com/JosefNemec/Playnite/issues/910)
+
+</details>
+
+### Steam Trailers
 
 Playnite Forum Thread: https://playnite.link/forum/thread-242.html
 
