@@ -1,4 +1,5 @@
-﻿Name: Batch Shortcut Creator
+﻿Id: Batch_Shortcut_Creator
+Name: Batch Shortcut Creator
 Author: darklinkpower
 Version: 1.1.2
 Module: BatchShortcutCreator.ps1
@@ -7,6 +8,3 @@ Icon: icon.png
 Links:
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-251.html
-Functions: 
-    - Description: Batch Create Shortcuts
-      FunctionName: BatchCreateShortcuts
