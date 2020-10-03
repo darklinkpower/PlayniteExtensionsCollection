@@ -1,16 +1,16 @@
-function global:GetGameMenuItems()
+function global:GetMainMenuItems()
 {
     param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Add to PlayState Blacklist"
 	$menuItem1.FunctionName = "Add-PlaystateBlacklist"
-	$menuItem1.MenuSection = "PlayState"
+	$menuItem1.MenuSection = "@PlayState"
 
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem2.Description = "Remove from Playstate Blacklist"
 	$menuItem2.FunctionName = "Remove-PlaystateBlacklist"
-	$menuItem2.MenuSection = "PlayState"
+	$menuItem2.MenuSection = "@PlayState"
 	
 	return $menuItem1, $menuItem2
 }
