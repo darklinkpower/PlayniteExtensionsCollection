@@ -1,3 +1,45 @@
+function global:GetMainMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "Import Anime and Manga"
+	$menuItem1.FunctionName = "Import-All"
+	$menuItem1.MenuSection = "@Importer for AniList"
+	
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Import Anime"
+	$menuItem2.FunctionName = "Import-Anime"
+	$menuItem2.MenuSection = "@Importer for AniList"
+
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description = "Import Manga"
+	$menuItem3.FunctionName = "Import-Manga"
+	$menuItem3.MenuSection = "@Importer for AniList"
+
+	$menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description = "Reset site links of all entries in database"
+	$menuItem4.FunctionName = "Add-SiteLinksAll"
+	$menuItem4.MenuSection = "@Importer for AniList"
+
+	$menuItem5 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem5.Description = "Add site links to all entries in database with no links"
+	$menuItem5.FunctionName = "Add-SiteLinksMissing"
+	$menuItem5.MenuSection = "@Importer for AniList"
+
+	$menuItem6 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem6.Description = "Reset site links of selected entries"
+	$menuItem6.FunctionName = "Add-SiteLinksSelected"
+	$menuItem6.MenuSection = "@Importer for AniList"
+
+	$menuItem7 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem7.Description = "Configure AniList username"
+	$menuItem7.FunctionName = "Set-Username"
+	$menuItem7.MenuSection = "@Importer for AniList"
+
+	return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7
+}
+
 function global:Import-AniList() 
 {
 	param (
