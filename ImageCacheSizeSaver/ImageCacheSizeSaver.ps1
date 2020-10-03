@@ -1,3 +1,15 @@
+function global:GetMainMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "Process Images in Cache"
+	$menuItem1.FunctionName = "Invoke-ImageCacheSizeSaver"
+	$menuItem1.MenuSection = "@Image Cache Size Saver"
+
+	return $menuItem1
+}
+
 function Invoke-ImageCacheSizeSaver()
 {
 	# Set images cache path
