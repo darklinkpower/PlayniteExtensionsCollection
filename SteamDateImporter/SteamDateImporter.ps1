@@ -1,3 +1,15 @@
+function global:GetMainMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "Import dates"
+	$menuItem1.FunctionName = "Invoke-SteamDateImporter"
+	$menuItem1.MenuSection = "@Steam Date Importer"
+	
+	return $menuItem1
+}
+
 function Invoke-SteamDateImporter
 {
     # Create prefix strings to remove
