@@ -1,4 +1,5 @@
-﻿Name: Game Region Filler
+﻿Id: Game_Region_Filler
+Name: Game Region Filler
 Author: darklinkpower
 Version: 1.0
 Module: GameRegionFiller.ps1
@@ -7,6 +8,3 @@ Icon: icon.png
 Links:
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-369.html
-Functions:
-    - Description: Game Region Filler - Fill Region of games
-      FunctionName: GameRegionFiller
