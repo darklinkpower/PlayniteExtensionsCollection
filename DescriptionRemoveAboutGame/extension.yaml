@@ -1,11 +1,7 @@
-﻿Name: Description Remove About Game
+﻿Id: Description_Remove_About_Game
+Name: Description Remove About Game
 Author: darklinkpower
 Version: 1.0
 Module: DescriptionRemoveAboutGame.ps1
 Type: Script
 Icon: icon.png
-Functions:
-    - Description: Description - Remove before "About Game" (All)
-      FunctionName: DescriptionRemoveAboutGameAll
-    - Description: Description - Remove before "About Game" (Selected)
-      FunctionName: DescriptionRemoveAboutGameSelected

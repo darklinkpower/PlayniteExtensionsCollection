@@ -1,3 +1,20 @@
+function global:GetMainMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "All games in database"
+	$menuItem1.FunctionName = "DescriptionRemoveAboutGameAll"
+	$menuItem1.MenuSection = "@Description remove before `"About Game`""
+	
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Only selected games"
+	$menuItem2.FunctionName = "DescriptionRemoveAboutGameSelected"
+	$menuItem2.MenuSection = "@Description remove before `"About Game`""
+	
+	return $menuItem1, $menuItem2
+}
+
 function DescriptionRemoveAboutGameAll()
 {
 	#Set GameDatabase
