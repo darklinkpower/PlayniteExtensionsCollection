@@ -18,7 +18,7 @@ function global:GetMainMenuItems()
 function global:Invoke-InstallationStatusCheck()
 {
 	# Set GameDatabase
-	$GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.GameImagePath}
+	$GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"} | Where-Object {($_.GameImagePath) -or (($_.InstallDirectory) -and ($_.PlayAction.Type -eq "File"))}
 	
 	# Set Counters
 	$global:MarkedInstalled = 0
@@ -28,9 +28,19 @@ function global:Invoke-InstallationStatusCheck()
 	[System.Collections.Generic.List[Object]]$global:GamesProcessed = @()
 
 	foreach ($game in $GameDatabase) {
-	
+		
+		# Set game file path
+		if ($game.GameImagePath)
+		{
+			$GameFilePath = $game.GameImagePath
+		}
+		elseif ($game.PlayAction.Path)
+		{
+			$GameFilePath = $game.InstallDirectory.TrimEnd('\') + '\' +  $game.PlayAction.Path.TrimStart('\')
+		}
+		
 		# Check if game path is not valid in games marked as installed
-		if ( ($($game.InstallationStatus) -eq 'Installed') -and (![System.IO.File]::Exists($($game.GameImagePath))) )
+		if (($($game.InstallationStatus) -eq 'Installed') -and (![System.IO.File]::Exists($GameFilePath)))
 		{
 			$game.IsInstalled = $False
 			$PlayniteApi.Database.Games.Update($game)
@@ -40,7 +50,7 @@ function global:Invoke-InstallationStatusCheck()
 		}
 		
 		# Check if game path is valid in games marked as uninstalled
-		elseif ( ($($Game.InstallationStatus) -eq 'Uninstalled') -and ([System.IO.File]::Exists($($Game.GameImagePath))) )
+		elseif (($($Game.InstallationStatus) -eq 'Uninstalled') -and ([System.IO.File]::Exists($GameFilePath)))
 		{
 			$game.IsInstalled = $True
 			$PlayniteApi.Database.Games.Update($game)
