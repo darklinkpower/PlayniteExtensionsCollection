@@ -1,4 +1,5 @@
-﻿Name: NVIDIA GeForce Now Enabler
+﻿Id: NVIDIA_GeForce_Now_Enabler
+Name: NVIDIA GeForce Now Enabler
 Author: darklinkpower
 Version: 1.2
 Module: NVIDIAGeForceNowEnabler.ps1
@@ -7,10 +8,3 @@ Icon: icon.png
 Links:
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-298.html
-Functions:
-    - Description: NVIDIA Geforce NOW Enabler - Add feature
-      FunctionName: Add-Feature
-    - Description: NVIDIA Geforce NOW Enabler - Add Play Actions and feature
-      FunctionName: Add-PlayActionsAndFeature
-    - Description: NVIDIA Geforce NOW Enabler - Remove Play Actions from all games
-      FunctionName: Remove-PlayActions

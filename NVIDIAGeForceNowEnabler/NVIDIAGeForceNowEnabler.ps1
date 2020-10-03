@@ -1,3 +1,25 @@
+function global:GetMainMenuItems()
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "Add Play Actions and feature"
+	$menuItem1.FunctionName = "Add-PlayActionsAndFeature"
+	$menuItem1.MenuSection = "@NVIDIA Geforce NOW Enabler"
+	
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Add feature to enabled games"
+	$menuItem2.FunctionName = "Add-Feature"
+	$menuItem2.MenuSection = "@NVIDIA Geforce NOW Enabler"
+
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description = "Remove Play Actions from all games"
+	$menuItem3.FunctionName = "Remove-PlayActions"
+	$menuItem3.MenuSection = "@NVIDIA Geforce NOW Enabler"
+
+	return $menuItem1, $menuItem2, $menuItem3
+}
+
 function global:Add-Feature()
 {
 	param (
