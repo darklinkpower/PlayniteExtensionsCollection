@@ -1,14 +1,14 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Compact selected games with xpress8k algorithm"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Compact selected games with xpress8k algorithm"
 	$menuItem1.FunctionName = "CompactGameXpress8k"
 	$menuItem1.MenuSection = "@Game Compact"
 	
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Compact selected games with xpress16k algorithm"
+	$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem2.Description = "Compact selected games with xpress16k algorithm"
 	$menuItem2.FunctionName = "CompactGameXpress16k"
 	$menuItem2.MenuSection = "@Game Compact"
 	

@@ -1,14 +1,14 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Automatic mode"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Automatic mode"
 	$menuItem1.FunctionName = "TwitchAddLinkAutomatic"
 	$menuItem1.MenuSection = "@Twitch Add Link"
 
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Semi-Automatic mode"
+	$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem2.Description = "Semi-Automatic mode"
 	$menuItem2.FunctionName = "TwitchAddLinkSemiAutomatic"
 	$menuItem2.MenuSection = "@Twitch Add Link"
 	
@@ -23,7 +23,7 @@ function Add-TwitchLink() {
 	# Set GameDatabase
 	$GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Links.Name -NotContains "Twitch"}
 	
-    # Set counters
+	# Set counters
 	$CountLinkAdded = 0
 	$CountRemaining = $GameDatabase.Count
 	

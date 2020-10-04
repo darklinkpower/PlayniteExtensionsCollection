@@ -1,9 +1,9 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Fill Region of games"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Fill Region of games"
 	$menuItem1.FunctionName = "GameRegionFiller"
 	$menuItem1.MenuSection = "@Game Region Filler"
 	

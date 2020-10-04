@@ -1,14 +1,14 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Add to PlayState Blacklist"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Add to PlayState Blacklist"
 	$menuItem1.FunctionName = "Add-PlaystateBlacklist"
 	$menuItem1.MenuSection = "@PlayState"
 
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Remove from Playstate Blacklist"
+	$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem2.Description = "Remove from Playstate Blacklist"
 	$menuItem2.FunctionName = "Remove-PlaystateBlacklist"
 	$menuItem2.MenuSection = "@PlayState"
 	
@@ -134,7 +134,7 @@ function global:OnGameStarted()
 
 	# Stop AutohotKey leftover process
 	if (Test-Path $AhkPidPath)
-    {
+	{
 		$ProcessId = Get-Content $AhkPidPath
 		wmic process $ProcessId delete
 		"$(Get-Date -Format $DateFormat) | INFO: AutoHotKey process stopped" | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
@@ -144,7 +144,7 @@ function global:OnGameStarted()
 
 	# Check PlayState.log size and delete if bigger or equal than 50kb
 	if (Test-Path $PlaystateLogPath)
-    {
+	{
   		if ($((Get-Item $PlaystateLogPath).length/1KB) -gt 50kb)
 		{
 			Remove-Item -Path $PlaystateLogPath -Force -ErrorAction 'SilentlyContinue'
@@ -458,12 +458,12 @@ function global:OnGameStopped()
 	
 	# Cleanup AutoHotKey and PID temporal fileS
 	If (Test-Path $env:temp\PlayState.ahk)
-    {
-        Remove-Item $env:temp\PlayState.ahk -Force -ErrorAction 'SilentlyContinue'
+	{
+		Remove-Item $env:temp\PlayState.ahk -Force -ErrorAction 'SilentlyContinue'
 		"$(Get-Date -Format $DateFormat) | INFO: AutoHotKey PlayState.ahk temporal file deleted" | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
-    }
+	}
 	if (Test-Path $AhkPidPath)
-    {
+	{
 		$ProcessId = Get-Content $AhkPidPath
 		wmic process $ProcessId delete
 		"$(Get-Date -Format $DateFormat) | INFO: AutoHotKey process stopped" | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append

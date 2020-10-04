@@ -1,23 +1,23 @@
 function global:GetGameMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "480p Trailer"
-    $menuItem.FunctionName = "SteamTrailers480p"
-    $menuItem.MenuSection = "Steam Trailers"
+	$menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+	$menuItem.Description =  "480p Trailer"
+	$menuItem.FunctionName = "SteamTrailers480p"
+	$menuItem.MenuSection = "Steam Trailers"
    
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "HD Trailer"
-    $menuItem2.FunctionName = "SteamTrailersMax"
-    $menuItem2.MenuSection = "Steam Trailers"
+	$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+	$menuItem2.Description =  "HD Trailer"
+	$menuItem2.FunctionName = "SteamTrailersMax"
+	$menuItem2.MenuSection = "Steam Trailers"
 
-    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Microtrailer"
-    $menuItem3.FunctionName = "SteamTrailersMicro"
-    $menuItem3.MenuSection = "Steam Trailers"
+	$menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+	$menuItem3.Description =  "Microtrailer"
+	$menuItem3.FunctionName = "SteamTrailersMicro"
+	$menuItem3.MenuSection = "Steam Trailers"
 
-    return $menuItem, $menuItem2, $menuItem3
+	return $menuItem, $menuItem2, $menuItem3
 }
 
 function Get-SteamAppList() {
@@ -169,23 +169,23 @@ function Invoke-HtmlLaunch() {
 	  <link href='https://vjs.zencdn.net/7.8.2/video-js.min.css' rel='stylesheet' />
 	  <script src='https://vjs.zencdn.net/7.8.2/video.min.js'></script>
 	  <script type='text/css'>
-	    .container {
-	      width: 100%;
-	      height: 100vh;
-	    }
+		.container {
+		  width: 100%;
+		  height: 100vh;
+		}
 	  </script>
 	</head>
 	
 	<body>
 	  <div class='container'>
-	    <video id='video' class='video-js vjs-fill'  
-	      width='100%' height='100%'
-	      controls preload='auto'
-	      preload='auto'
-	      data-setup='{}'
-	      $VideoExtraArguments>
-	      <source src='$VideoUrl' type='video/webm'>
-	    </video>
+		<video id='video' class='video-js vjs-fill'  
+		  width='100%' height='100%'
+		  controls preload='auto'
+		  preload='auto'
+		  data-setup='{}'
+		  $VideoExtraArguments>
+		  <source src='$VideoUrl' type='video/webm'>
+		</video>
 	  </div>
 	</body>"
 	

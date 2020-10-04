@@ -1,19 +1,19 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Add games with Steam Id or URL"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Add games with Steam Id or URL"
 	$menuItem1.FunctionName = "SteamGameImporter"
 	$menuItem1.MenuSection = "@Steam Game Importer"
 	
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Import games from Depressurizer Profile"
+	$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem2.Description = "Import games from Depressurizer Profile"
 	$menuItem2.FunctionName = "DepressurizerProfileImporter"
 	$menuItem2.MenuSection = "@Steam Game Importer"
 
 	$menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Import games not in Database via Parsing (Slow)"
+	$menuItem3.Description = "Import games not in Database via Parsing (Slow)"
 	$menuItem3.FunctionName = "SteamGameUserDataImporter"
 	$menuItem3.MenuSection = "@Steam Game Importer"
 

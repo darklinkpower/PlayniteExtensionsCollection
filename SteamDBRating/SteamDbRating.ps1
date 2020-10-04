@@ -1,9 +1,9 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Get rating for selected games"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Get rating for selected games"
 	$menuItem1.FunctionName = "SteamDbRating"
 	$menuItem1.MenuSection = "@SteamDB Rating"
 

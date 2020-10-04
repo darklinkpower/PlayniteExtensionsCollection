@@ -1,9 +1,9 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Export selected games"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Export selected games"
 	$menuItem1.FunctionName = "NVIDIAGameStreamExport"
 	$menuItem1.MenuSection = "@NVIDIA GE GameStream Export"
 	

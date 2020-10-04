@@ -1,9 +1,9 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Create shortcut of selected games"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Create shortcut of selected games"
 	$menuItem1.FunctionName = "BatchCreateShortcuts"
 	$menuItem1.MenuSection = "@Batch Shortcut Creator"
 	

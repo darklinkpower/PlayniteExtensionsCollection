@@ -1,14 +1,14 @@
 function global:GetMainMenuItems()
 {
-    param($menuArgs)
+	param($menuArgs)
 
-    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Path Updater - Point to new path of selected games"
+	$menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem1.Description = "Path Updater - Point to new path of selected games"
 	$menuItem1.FunctionName = "InstallationPathUpdater"
 	$menuItem1.MenuSection = "@Installation Status Updater"
 
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Status Updater - Check installation status"
+	$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+	$menuItem2.Description = "Status Updater - Check installation status"
 	$menuItem2.FunctionName = "InstallationStatusUpdater"
 	$menuItem2.MenuSection = "@Installation Status Updater"
 	
