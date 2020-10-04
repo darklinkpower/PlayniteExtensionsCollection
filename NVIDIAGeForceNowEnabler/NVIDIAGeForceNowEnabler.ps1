@@ -20,7 +20,7 @@ function global:GetMainMenuItems()
 	return $menuItem1, $menuItem2, $menuItem3
 }
 
-function global:Add-Feature()
+function global:Invoke-GeforceNowEnabler()
 {
 	param (
 		[bool]$AddPlayAction
@@ -213,10 +213,15 @@ function global:Add-Feature()
 	$PlayniteApi.Dialogs.ShowMessage("$Results", "NVIDIA GeForce NOW Enabler");
 }
 
+function Add-Feature() 
+{
+	[bool]$AddPlayAction = $false
+	Invoke-GeforceNowEnabler -AddPlayAction $AddPlayAction
+}
 function Add-PlayActionsAndFeature() 
 {
 	[bool]$AddPlayAction = $true
-	Add-Feature -AddPlayAction $AddPlayAction
+	Invoke-GeforceNowEnabler -AddPlayAction $AddPlayAction
 }
 
 function Remove-PlayActions() 
