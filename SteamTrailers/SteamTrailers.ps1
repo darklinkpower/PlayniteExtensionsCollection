@@ -57,7 +57,6 @@ function Get-SteamVideo() {
 
 	else
 	{
-;
 		# Look for Steam Store URL in links for other games
 		foreach ($link in $game.Links) {
 			switch -regex ($link.Url) {
@@ -80,8 +79,7 @@ function Get-SteamVideo() {
 
 		# Download Steam AppList if missing
 		if (!(Test-Path $AppListPath))
-		{
-			
+		{	
 			Get-SteamAppList -AppListPath $AppListPath
 		}
 
@@ -169,24 +167,24 @@ function Invoke-HtmlLaunch() {
 	  <link href='https://vjs.zencdn.net/7.8.2/video-js.min.css' rel='stylesheet' />
 	  <script src='https://vjs.zencdn.net/7.8.2/video.min.js'></script>
 	  <script type='text/css'>
-		.container {
-		  width: 100%;
-		  height: 100vh;
-		}
+	    .container {
+	     width: 100%;
+	    height: 100vh;
+	    }
 	  </script>
 	</head>
 	
 	<body>
 	  <div class='container'>
-		<video id='video' class='video-js vjs-fill'  
-		  width='100%' height='100%'
-		  controls preload='auto'
-		  preload='auto'
-		  data-setup='{}'
-		  $VideoExtraArguments>
-		  <source src='$VideoUrl' type='video/webm'>
-		</video>
-	  </div>
+	    <video id='video' class='video-js vjs-fill'  
+	      width='100%' height='100%'
+	      controls preload='auto'
+	      preload='auto'
+	      data-setup='{}'
+	      $VideoExtraArguments>
+	      <source src='$VideoUrl' type='video/webm'>
+	    </video>
+	    </div>
 	</body>"
 	
 	# Open html in webview
