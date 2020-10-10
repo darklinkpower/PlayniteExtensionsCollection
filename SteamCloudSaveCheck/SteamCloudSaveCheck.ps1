@@ -1,4 +1,4 @@
-function global:SteamCloudSaveCheckAdd()
+function global:SteamCloudSaveCheckAdd
 {
     # Set Game database
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Features.name -notcontains "Cloud Saves"}
@@ -40,11 +40,11 @@ function global:SteamCloudSaveCheckAdd()
         }
     }
 
-	# Show finish dialogue with results
-	$PlayniteApi.Dialogs.ShowMessage("`"$tagName`" tag added to $TagAdded games. `n$TagExists already had the tag");
+    # Show finish dialogue with results
+    $PlayniteApi.Dialogs.ShowMessage("`"$tagName`" tag added to $TagAdded games. `n$TagExists already had the tag");
 }
 
-function global:SteamCloudSaveCheckRemove()
+function global:SteamCloudSaveCheckRemove
 {
     # Set Game database
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.tags.name -contains "No Cloud Saves"}
@@ -57,12 +57,12 @@ function global:SteamCloudSaveCheckRemove()
     $tag = $PlayniteApi.Database.tags.Add($tagName)
     [guid[]]$tagIds = $tag.Id
 
-	foreach ($game in $GameDatabase) {
+    foreach ($game in $GameDatabase) {
         $game.tagIds.Remove("$tagIds")
         $PlayniteApi.Database.Games.Update($game)
         $TagRemoved++
     }
 
-	# Show finish dialogue with results
-	$PlayniteApi.Dialogs.ShowMessage("`"$tagName`" removed from $TagRemoved games");
+    # Show finish dialogue with results
+    $PlayniteApi.Dialogs.ShowMessage("`"$tagName`" removed from $TagRemoved games");
 }

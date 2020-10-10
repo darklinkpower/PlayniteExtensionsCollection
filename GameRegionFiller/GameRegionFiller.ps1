@@ -1,4 +1,4 @@
-function global:GetMainMenuItems()
+function global:GetMainMenuItems
 {
 	param($menuArgs)
 
@@ -10,7 +10,7 @@ function global:GetMainMenuItems()
 	return $menuItem1
 }
 
-function global:GameRegionFiller()
+function global:GameRegionFiller
 {
 	# Set GameDatabase
 	$GameDatabase = $PlayniteApi.Database.Games | Where-Object {( ($_.GameImagePath) -and (-not ($_.Region)) )}
