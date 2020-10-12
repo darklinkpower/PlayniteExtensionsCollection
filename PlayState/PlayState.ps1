@@ -37,7 +37,7 @@ function global:Add-PlaystateBlacklist
     
     # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
-        if ($game.Features.name -eq "$($featureName)")
+        if ($game.Features.name -contains "$featureName")
         {
             # Game in blacklist: increase count and log game
             $CountInList++
@@ -60,7 +60,7 @@ function global:Add-PlaystateBlacklist
             $PlayniteApi.Database.Games.Update($game)
             $CountNotInList++
             "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was added to PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
-        } 
+        }
     }
     
     # Show finish dialogue with number of games added and games that already were in blacklist
@@ -94,7 +94,7 @@ function global:Remove-PlaystateBlacklist
     
     # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
-        if ($game.Features.name -eq "$($featureName)")
+        if ($game.Features.name -contains "$featureName")
         {
             # Game in blacklist: remove PlayState blacklist feature id, increase count and log game
             $game.FeatureIds.Remove("$featureIds")
@@ -107,7 +107,7 @@ function global:Remove-PlaystateBlacklist
             # Game not in blacklist: increase count and log game
             $CountNotInList++
             "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was already in PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
-        } 
+        }
     }
     
     # Show finish dialogue with number of games added and games that already were in blacklist
@@ -145,7 +145,7 @@ function global:OnGameStarted
     # Check PlayState.log size and delete if bigger or equal than 50kb
     if (Test-Path $PlaystateLogPath)
     {
-          if ($((Get-Item $PlaystateLogPath).length/1KB) -gt 50kb)
+        if ($((Get-Item $PlaystateLogPath).length/1KB) -gt 50kb)
         {
             Remove-Item -Path $PlaystateLogPath -Force -ErrorAction 'SilentlyContinue'
             "$(Get-Date -Format $DateFormat) | INFO: Deleted PlayState.log since size was equal or bigger than 50kb " | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
