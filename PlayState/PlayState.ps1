@@ -145,7 +145,7 @@ function global:OnGameStarted
     # Check PlayState.log size and delete if bigger or equal than 50kb
     if (Test-Path $PlaystateLogPath)
     {
-        if ($((Get-Item $PlaystateLogPath).length/1KB) -gt 50kb)
+        if ($((Get-Item $PlaystateLogPath).length/1KB) -gt 50)
         {
             Remove-Item -Path $PlaystateLogPath -Force -ErrorAction 'SilentlyContinue'
             "$(Get-Date -Format $DateFormat) | INFO: Deleted PlayState.log since size was equal or bigger than 50kb " | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
