@@ -1,9 +1,12 @@
-﻿Name: Installation Status Updater
+﻿Id: Installation_Status_Updater
+Name: Installation Status Updater
 Author: darklinkpower
 Version: 1.2.1
 Module: InstallationStatusUpdater.ps1
 Type: Script
 Icon: icon.ico
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-316.html

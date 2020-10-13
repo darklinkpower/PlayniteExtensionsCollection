@@ -6,5 +6,7 @@ Module: PlayState.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-225.html

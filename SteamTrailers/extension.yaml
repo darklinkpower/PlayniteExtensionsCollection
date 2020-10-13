@@ -1,9 +1,12 @@
-﻿Name: Steam Trailers
+﻿Id: Steam_Trailers
+Name: Steam Trailers
 Author: darklinkpower
 Version: 1.4
 Module: SteamTrailers.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-242.html
