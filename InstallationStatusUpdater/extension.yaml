@@ -1,14 +1,16 @@
-﻿Name: Installation Status Updater
+﻿Id: Installation_Status_Updater
+Name: Installation Status Updater
 Author: darklinkpower
+<<<<<<< HEAD
 Version: 1.2.1
+=======
+Version: 1.2.2
+>>>>>>> Playnite8
 Module: InstallationStatusUpdater.ps1
 Type: Script
 Icon: icon.ico
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-316.html
-Functions:
-    - Description: Installation Status Updater - Check installation status
-      FunctionName: InstallationStatusUpdater
-    - Description: Installation Path Updater - Point to new path of selected games
-      FunctionName: InstallationPathUpdater

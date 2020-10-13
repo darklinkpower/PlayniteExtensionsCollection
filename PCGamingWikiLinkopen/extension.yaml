@@ -1,8 +1,0 @@
-﻿Name: PCGamingWiki Link open
-Author: darklinkpower
-Version: 1.0
-Module: PCGamingWikiLinkOpen.ps1
-Type: Script
-Functions:
-    - Description: PCGamingWiki - Search selected games
-      FunctionName: PCGamingWikiLinkOpen

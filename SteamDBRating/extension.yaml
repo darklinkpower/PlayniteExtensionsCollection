@@ -1,12 +1,12 @@
-﻿Name: Steam DB Rating
+﻿Id: Steam_DB_Rating
+Name: Steam DB Rating
 Author: darklinkpower
-Version: 1.0
+Version: 1.0.1
 Module: SteamDbRating.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-320.html
-Functions:
-    - Description: SteamDB Rating - Get rating for selected games
-      FunctionName: SteamDbRating

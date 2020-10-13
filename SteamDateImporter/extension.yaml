@@ -1,12 +1,12 @@
-﻿Name: Steam Date Importer
+﻿Id: Steam_Date_Importer
+Name: Steam Date Importer
 Author: darklinkpower
-Version: 1.0.2
+Version: 1.0.3
 Module: SteamDateImporter.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-376.html
-Functions:
-    - Description: Steam - Import dates
-      FunctionName: Invoke-SteamDateImporter

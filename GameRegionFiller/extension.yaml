@@ -1,12 +1,12 @@
-﻿Name: Game Region Filler
+﻿Id: Game_Region_Filler
+Name: Game Region Filler
 Author: darklinkpower
-Version: 1.0
+Version: 1.0.1
 Module: GameRegionFiller.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-369.html
-Functions:
-    - Description: Game Region Filler - Fill Region of games
-      FunctionName: GameRegionFiller

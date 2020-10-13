@@ -1,3 +1,15 @@
+function global:GetMainMenuItems
+{
+    param($menuArgs)
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description = "Import dates"
+    $menuItem1.FunctionName = "Invoke-SteamDateImporter"
+    $menuItem1.MenuSection = "@Steam Date Importer"
+    
+    return $menuItem1
+}
+
 function Invoke-SteamDateImporter
 {
     # Create prefix strings to remove
@@ -203,13 +215,13 @@ function Invoke-SteamDateImporter
         $GameNameMatch = $GameNameMatch -replace '[^\p{L}\p{Nd}]', ''
         $GameDateOld = $game.Added
         $GameLicense = $null
-		foreach ($License in $LicensesList) {
-			if ($License.LicenseNameMatch -eq $GameNameMatch) 
-			{
-				[object]$GameLicense = $License
-				break
-			}
-		}
+        foreach ($License in $LicensesList) {
+            if ($License.LicenseNameMatch -eq $GameNameMatch) 
+            {
+                [object]$GameLicense = $License
+                break
+            }
+        }
         if ($GameLicense)
         {
             $CountMatchLicense++
@@ -244,7 +256,7 @@ function Invoke-SteamDateImporter
             NewDate = $GameDateNew
             DateChanged = $DateChanged
             LicenseFound = $LicenseFound
-            LicenseDate = $LicenseDate     
+            LicenseDate = $LicenseDate	 
         }
         $GameDatesList.Add($GameDates)
     }

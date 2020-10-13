@@ -1,24 +1,12 @@
-﻿Name: Importer for AniList
+﻿Id: Importer_for_AniList
+Name: Importer for AniList
 Author: darklinkpower
-Version: 1.2.1
+Version: 1.2.2
 Module: ImporterForAniList.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-395.html
-Functions:
-    - Description: Importer for AniList - Import Anime and Manga
-      FunctionName: Import-All
-    - Description: Importer for AniList - Import Anime
-      FunctionName: Import-Anime
-    - Description: Importer for AniList - Import Manga
-      FunctionName: Import-Manga
-    - Description: Importer for AniList - Reset site links of all entries in database
-      FunctionName: Add-SiteLinksAll
-    - Description: Importer for AniList - Add site links to all entries in database with no links
-      FunctionName: Add-SiteLinksMissing
-    - Description: Importer for AniList - Reset site links of selected entries
-      FunctionName: Add-SiteLinksSelected
-    - Description: Importer for AniList - Configure AniList username
-      FunctionName: Set-Username

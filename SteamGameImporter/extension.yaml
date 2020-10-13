@@ -1,16 +1,12 @@
-﻿Name: Steam Game Importer
+﻿Id: Steam_Game_Importer
+Name: Steam Game Importer
 Author: darklinkpower
-Version: 1.3.2
+Version: 1.3.3
 Module: SteamGameImporter.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-300.html
-Functions:
-    - Description: Steam Game Importer - Add games with Steam Id or URL
-      FunctionName: SteamGameImporter
-    - Description: Steam Game Importer - Import games from Depressurizer Profile
-      FunctionName: DepressurizerProfileImporter
-    - Description: Steam Game Importer - Import games not in Database
-      FunctionName: SteamGameUserDataImporter

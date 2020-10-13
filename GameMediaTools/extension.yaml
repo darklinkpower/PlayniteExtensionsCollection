@@ -1,3 +1,4 @@
+Id: Game_Media_Tools
 Name: Game Media Tools
 Author: darklinkpower
 Version: 1.1
@@ -5,6 +6,8 @@ Module: GameMediaTools.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-313.html
 Functions: 

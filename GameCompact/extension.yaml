@@ -1,14 +1,12 @@
-﻿Name: GameCompact
+﻿Id: Game_Compact
+Name: Game Compact
 Author: darklinkpower
-Version: 1.0
+Version: 1.0.1
 Module: GameCompact.ps1
 Type: Script
 Icon: icon.png
 Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-241.html
-Functions: 
-    - Description: Compact selected game(s) with xpress8k algorithm
-      FunctionName: CompactGameXpress8k
-    - Description: Compact selected game(s) with xpress16k algorithm
-      FunctionName: CompactGameXpress16k
