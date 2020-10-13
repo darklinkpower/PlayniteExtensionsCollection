@@ -264,6 +264,7 @@ function global:OnGameStarted
             "syscheck.exe",
             "SystemSurvey.exe",
             "TES Construction Set.exe",
+            "Texmod.exe",
             "*unins*",
             "*UnityCrashHandler*",
             "*x360ce*",
