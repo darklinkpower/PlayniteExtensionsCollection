@@ -1,7 +1,7 @@
 ﻿Id: NVIDIA_GE_GameStream_Export
 Name: NVIDIA GE GameStream Export
 Author: darklinkpower
-Version: 1.1.6
+Version: 1.1.7
 Module: NVIDIAGEGameStreamExport.ps1
 Type: Script
 Icon: icon.png
