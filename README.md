@@ -264,6 +264,41 @@ This extension will add a steam game to your library. You need to input either a
 
 </details>
 
+### Steam Mini
+
+Playnite Forum Thread: https://playnite.link/forum/thread-434.html
+
+<details>
+
+<summary>Description</summary>
+
+This extension will make Steam launch in a minimal mode with minimal RAM usage by disabling the embedded browser, which is the main culprit of high RAM usage by Steam
+
+There are 2 versions of the extension:
+
+    Whitelist: The extension will only execute for games marked as whitelisted by the extension functions.
+    Blacklist: The extension will execute for all games except the ones marked as blacklisted by the extension functions.
+
+Disabling the browser helps you reduce RAM usage but comes with drawbacks.
+
+What will work:
+
+    You can play games normally
+    You can install games and see your game list in Steam
+    You can access Steam settings normally
+
+What won't work while in this mode:
+
+    You can't uninstall games (Applies trying to Uninstall via Playnite as well).
+    Steam Chat will be unavailable
+    You can't use the Steam browser, so you can't access community pages, browse the Store or use the overlay browser
+
+Please make sure to understand this and don't ask for support when the drawbacks have been explained.
+
+To access the missing functions you can still launch Steam normally and it is recommended to use the "Auto Close Clients" feature in Playnite to not interfere with the uninstall feature by only launching Steam in this mode when a game will be played. 
+
+</details>
+
 ### Steam Trailers
 
 Playnite Forum Thread: https://playnite.link/forum/thread-242.html

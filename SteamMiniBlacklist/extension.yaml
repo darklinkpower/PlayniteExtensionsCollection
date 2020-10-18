@@ -1,0 +1,12 @@
+﻿Id: Steam_Mini_Blacklist
+Name: Steam Mini Blacklist
+Author: darklinkpower
+Version: 1.0
+Module: SteamMini.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-434.html
