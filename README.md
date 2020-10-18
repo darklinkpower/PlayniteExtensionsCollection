@@ -16,32 +16,6 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 ## Extensions
 
-### Batch Shortcut Creator
-
-Playnite Forum Thread: https://playnite.link/forum/thread-251.html
-
-<details>
-
-<summary>Description</summary>
-
-This extension will create shortcuts in batch for your selected games in your selection of choice. It mainly serves as a workaround until [Playnite's Issue #856](https://github.com/JosefNemec/Playnite/issues/856) is done, although it can serve other purposes.
-
-</details>
-
-### Fit Description Images 
-
-Playnite Forum Thread: https://playnite.link/forum/thread-373.html
-
-<details>
-
-<summary>Description</summary>
-
-This extension will apply the following style to your games's description to make images fit when viewing them in details:
-
-`<style>img{max-width:100%;}</style>`
-
-</details>
-
 ### GameCompact
 
 Playnite Forum Thread: https://playnite.link/forum/thread-241.html
@@ -276,22 +250,22 @@ This extension will make Steam launch in a minimal mode with minimal RAM usage b
 
 There are 2 versions of the extension:
 
-    Whitelist: The extension will only execute for games marked as whitelisted by the extension functions.
-    Blacklist: The extension will execute for all games except the ones marked as blacklisted by the extension functions.
+* Whitelist: The extension will only execute for games marked as whitelisted by the extension functions.
+* Blacklist: The extension will execute for all games except the ones marked as blacklisted by the extension functions.
 
 Disabling the browser helps you reduce RAM usage but comes with drawbacks.
 
 What will work:
 
-    You can play games normally
-    You can install games and see your game list in Steam
-    You can access Steam settings normally
+* You can play games normally
+* You can install games and see your game list in Steam
+* You can access Steam settings normally
 
 What won't work while in this mode:
 
-    You can't uninstall games (Applies trying to Uninstall via Playnite as well).
-    Steam Chat will be unavailable
-    You can't use the Steam browser, so you can't access community pages, browse the Store or use the overlay browser
+* You can't uninstall games (Applies trying to Uninstall via Playnite as well).
+* Steam Chat will be unavailable
+* You can't use the Steam browser, so you can't access community pages, browse the Store or use the overlay browser
 
 Please make sure to understand this and don't ask for support when the drawbacks have been explained.
 
