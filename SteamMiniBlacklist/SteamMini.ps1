@@ -6,18 +6,23 @@ function global:GetMainMenuItems
     $menuItem1.Description = "Launch Steam in `"Mini`" mode"
     $menuItem1.FunctionName = "Start-SteamMini"
     $menuItem1.MenuSection = "@Steam Mini"
-    
+
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Add to Steam Mini Blacklist"
-    $menuItem2.FunctionName = "Add-SteamMiniFeature"
+    $menuItem2.Description = "Launch Steam normally"
+    $menuItem2.FunctionName = "Start-SteamNormal"
     $menuItem2.MenuSection = "@Steam Mini"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Remove from Steam Mini Blacklist"
-    $menuItem3.FunctionName = "Remove-SteamMiniFeature"
+    $menuItem3.Description = "Add to Steam Mini Blacklist"
+    $menuItem3.FunctionName = "Add-SteamMiniFeature"
     $menuItem3.MenuSection = "@Steam Mini"
+
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description = "Remove from Steam Mini Blacklist"
+    $menuItem4.FunctionName = "Remove-SteamMiniFeature"
+    $menuItem4.MenuSection = "@Steam Mini"
     
-    return $menuItem1, $menuItem2, $menuItem3
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
 }
 
 function global:Add-SteamMiniFeature
@@ -96,8 +101,12 @@ function global:Remove-SteamMiniFeature
     $PlayniteApi.Dialogs.ShowMessage("Removed `"$featureName`" feature from $FeatureRemoved games.","Steam Mini");
 }
 
-function Start-SteamMini
+function Start-Steam
 {
+    param(
+        $Arguments
+    )
+    
     # Get Steam executable path
     $Key = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, [Microsoft.Win32.RegistryView]::Registry64)
     $RegSubKey =  $Key.OpenSubKey("Software\Valve\Steam")
@@ -116,13 +125,26 @@ function Start-SteamMini
     }
     elseif (Test-Path $SteamPath)
     {
-        Start-Process $SteamPath "-no-browser"
-        $__logger.Info("Steam launched in `"mini`" mode.")
+        Start-Process $SteamPath "$Arguments"
+        $__logger.Info("Steam launched with arguments `"$Arguments`".")
     }
     else
     {
         $PlayniteApi.Dialogs.ShowErrorMessage("Steam executable not found in `"$SteamPath`".","Steam Mini");
     }
+}
+function Start-SteamMini
+{
+    $__logger.Info("`"Start-SteamMini`" function Started.")
+    $Arguments = "-no-browser -silent"
+    Start-Steam $Arguments
+}
+
+function Start-SteamNormal
+{
+    $__logger.Info("`"Start-SteamNormal`" function Started.")
+    $Arguments = " "
+    Start-Steam $Arguments
 }
 
 function OnGameStarting
@@ -163,7 +185,7 @@ function OnGameStarting
             }
             elseif (Test-Path $SteamPath)
             {
-                Start-Process $SteamPath "-no-browser"
+                Start-Process $SteamPath "-no-browser -silent"
                 $__logger.Info("Steam launched in `"mini`" mode.")
             }
             else
