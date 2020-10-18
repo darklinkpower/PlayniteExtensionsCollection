@@ -28,7 +28,7 @@ function global:Add-SteamMiniFeature
     [guid[]]$featureIds = $feature.Id
     
     # Set GameDatabase
-    $GameDatabase = $PlayniteApi.MainView.SelectedGames
+    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
     
     # Set counters
     $FeatureAdded = 0
@@ -71,7 +71,7 @@ function global:Remove-SteamMiniFeature
     [guid[]]$featureIds = $feature.Id
     
     # Set GameDatabase
-    $GameDatabase = $PlayniteApi.MainView.SelectedGames
+    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
     
     # Set counters
     $FeatureRemoved = 0
