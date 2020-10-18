@@ -264,7 +264,7 @@ What will work:
 What won't work while in this mode:
 
 * You can't uninstall games (Applies trying to Uninstall via Playnite as well).
-* Steam Chat will be unavailable while playing a game in some cases.
+* Steam Chat will be unavailable while playing a game when the overlay is enabled in settings.
 * You can't use the Steam browser, so you can't access community pages, browse the Store or use the overlay browser.
 
 Please make sure to understand this and don't ask for support when the drawbacks have been explained.
