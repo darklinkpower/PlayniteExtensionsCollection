@@ -55,7 +55,7 @@ function global:Add-SteamMiniFeature
             # Update game in database
             $PlayniteApi.Database.Games.Update($game)
             $FeatureAdded++
-            $__logger.Info("Added `"$featureName`" feature to `"$($game.name)`".")           
+            $__logger.Info("Added `"$featureName`" feature to `"$($game.name)`".")
         }
     }
     
@@ -105,7 +105,7 @@ function Start-SteamMini
     if ($null -eq $SteamPath)
     {
         $SteamPath = 'C:\Program Files (x86)\Steam\steam.exe'
-        $__logger.Warn("Could not find Steam registry value. Default path will be used.","Steam Mini")
+        $__logger.Warn("Could not find Steam registry value. Default path will be used.")
     }
 
     # Start Steam
@@ -131,13 +131,13 @@ function OnGameStarting
         $game
     )
     
-    $__logger.Info("Execution started in `"Whitelist`" mode.","Steam Mini")
+    $__logger.Info("Execution started in `"Whitelist`" mode.")
     
     # Check if game contains Steam Mini feature
     $featureName = "Steam Mini Whitelist"
     if ($game.features.name -notcontains "$featureName")
     {
-        $__logger.Info("`"$($game.name)`" not contains Steam Mini feature. Execution will stop.","Steam Mini")
+        $__logger.Info("`"$($game.name)`" not contains Steam Mini feature. Execution will stop.")
         exit
     }
 
@@ -148,7 +148,7 @@ function OnGameStarting
     if ($null -eq $SteamPath)
     {
         $SteamPath = 'C:\Program Files (x86)\Steam\steam.exe'
-        $__logger.Warn("Could not find Steam registry value. Default path will be used.","Steam Mini")
+        $__logger.Warn("Could not find Steam registry value. Default path will be used.")
     }
 
     if ($game.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab")
