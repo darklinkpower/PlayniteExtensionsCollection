@@ -33,6 +33,7 @@ function Invoke-ImageCacheSizeSaver
         if (Test-Path $MagickExecutable)
         {
             $MagickExecutablePath = $MagickExecutable
+            $__logger.Info("Image Cache Size Saver - Found executable Path via registry in `"$MagickExecutablePath`".")
         }
     }
 
@@ -53,12 +54,14 @@ function Invoke-ImageCacheSizeSaver
                 exit
             }
             [System.IO.File]::WriteAllLines($MagickConfigPath, $MagickExecutablePath)
+            $__logger.Info("Image Cache Size Saver - Saved executable Path via user input in `"$MagickExecutablePath`".")
             $PlayniteApi.Dialogs.ShowMessage("Magick executable path saved", "Image Cache Size Saver")
         }
 
         if (!(Test-Path $MagickExecutablePath))
         {
             [System.IO.File]::Delete($MagickConfigPath)
+            $__logger.Info("Image Cache Size Saver - Executable not found in user configured path `"$MagickExecutablePath`".")
             $PlayniteApi.Dialogs.ShowMessage("Magick executable not found at configured location. Please run the extension again to configure it to the correct location.", "Image Cache Size Saver")
             exit
         }
@@ -72,7 +75,6 @@ function Invoke-ImageCacheSizeSaver
     }
     else
     {
-        New-Item -ItemType File -Path $PreviouslyProcessedPath -Force
         [System.Collections.Generic.List[string]]$PreviouslyProcessedList = @()
     }
     $ImageExtensions= @(
@@ -122,5 +124,6 @@ function Invoke-ImageCacheSizeSaver
     # Write new process list, calculate Image Cache Size after processing and show results
     [System.IO.File]::WriteAllLines($PreviouslyProcessedPath, $PreviouslyProcessedList)
     [string]$ImagesSizeAfter = "{0:N2}" -f ((Get-ChildItem -path $PathCacheDirectory -Include $ImageExtensions | Measure-Object -Sum Length).Sum / 1MB)
+    $__logger.Info("Image Cache Size Saver - Image processing finished. Images Processed: $($ImagesToProcess.count). Images that had size reduced: $ProcessedLessSize. Errors: $ProcessedError. Image Cache Size Before: $ImagesSizeBefore MB. Image Cache Size After: $ImagesSizeAfter MB")
     $PlayniteApi.Dialogs.ShowMessage("Image processing finished. Results:`n`nImages Processed: $($ImagesToProcess.count)`n`nImages that had size reduced: $ProcessedLessSize`nErrors: $ProcessedError`n`nImage Cache Size Before: $ImagesSizeBefore MB`nImage Cache Size After: $ImagesSizeAfter MB", "Image Cache Size Saver")
 }
