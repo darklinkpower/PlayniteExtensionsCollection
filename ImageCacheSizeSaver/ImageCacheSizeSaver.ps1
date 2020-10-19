@@ -22,11 +22,11 @@ function Invoke-ImageCacheSizeSaver
     {
         $PathCacheDirectory = Join-Path -Path $env:appdata -ChildPath "Playnite\cache\images\*"
     }
-    
+        
     # Set other paths
     $ImageTempPath = Join-Path -Path $env:temp -ChildPath 'ImageCacheSizeSaver.tmp'
-    $MagickConfigPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'ImageCacheSizeSaver\ConfigMagicPath.ini'
-    $PreviouslyProcessedPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'ImageCacheSizeSaver\ImageCacheSizeSaverList.txt'
+    $MagickConfigPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ConfigMagicPath.ini'
+    $PreviouslyProcessedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ImageCacheSizeSaverList.txt'
     
     # Set Magick Executable Path
     if (Test-Path $MagickConfigPath)
@@ -41,11 +41,10 @@ function Invoke-ImageCacheSizeSaver
         {
             exit
         }
-        New-Item -ItemType File -Path $MagickConfigPath -Force
         [System.IO.File]::WriteAllLines($MagickConfigPath, $MagickExecutablePath)
         $PlayniteApi.Dialogs.ShowMessage("Magick executable path saved", "Image Cache Size Saver")
     }
-
+    
     if (!(Test-Path $MagickExecutablePath))
     {
         [System.IO.File]::Delete($MagickConfigPath)
