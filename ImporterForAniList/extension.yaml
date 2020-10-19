@@ -1,7 +1,7 @@
 ﻿Id: Importer_for_AniList
 Name: Importer for AniList
 Author: darklinkpower
-Version: 1.2.2
+Version: 1.2.3
 Module: ImporterForAniList.ps1
 Type: Script
 Icon: icon.png
