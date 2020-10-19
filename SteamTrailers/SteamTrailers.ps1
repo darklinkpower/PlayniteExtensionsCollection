@@ -25,6 +25,7 @@ function Get-SteamAppList
     param (
         [string]$AppListPath
     )
+
     try {
         # Download Steam App list and convert App Names
         $Uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
@@ -68,19 +69,10 @@ function Get-SteamVideo() {
     }
     if (!$AppId)
     {
-        # Extension Data paths
-        $AppListPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'SteamTrailers\AppList.json'
-        $AppListDirectoryPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'SteamTrailers\'
-        
-        # Create extension data directory if not found
-        if (!(Test-Path $AppListDirectoryPath))
-        {
-            New-Item -ItemType Directory -Path $AppListDirectoryPath -Force	
-        }
-
-        # Download Steam AppList if missing
+        # Get Steam AppList
+        $AppListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
         if (!(Test-Path $AppListPath))
-        {	
+        {
             Get-SteamAppList -AppListPath $AppListPath
         }
 
@@ -169,8 +161,8 @@ function Invoke-HtmlLaunch() {
       <script src='https://vjs.zencdn.net/7.8.2/video.min.js'></script>
       <script type='text/css'>
         .container {
-         width: 100%;
-        height: 100vh;
+          width: 100%;
+          height: 100vh;
         }
       </script>
     </head>
