@@ -20,39 +20,52 @@ function Invoke-ImageCacheSizeSaver
     }
     else
     {
-        $PathCacheDirectory = Join-Path -Path $env:appdata -ChildPath "Playnite\cache\images\*"
+        $PathCacheDirectory = Join-Path -Path $env:APPDATA -ChildPath "Playnite\cache\images\*"
     }
-        
-    # Set other paths
-    $ImageTempPath = Join-Path -Path $env:temp -ChildPath 'ImageCacheSizeSaver.tmp'
-    $MagickConfigPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ConfigMagicPath.ini'
-    $PreviouslyProcessedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ImageCacheSizeSaverList.txt'
-    
-    # Set Magick Executable Path
-    if (Test-Path $MagickConfigPath)
+
+    # Try to get magick.exe path via registry
+    $Key = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine, [Microsoft.Win32.RegistryView]::Registry64)
+    $RegSubKey =  $Key.OpenSubKey("Software\ImageMagick\Current")
+    $RegInstallDir = $RegSubKey.GetValue("BinPath")
+    if ($RegInstallDir)
     {
-        $MagickExecutablePath = [System.IO.File]::ReadAllLines($MagickConfigPath)
-    }
-    else
-    {
-        $PlayniteApi.Dialogs.ShowMessage("Select ImageMagick executable", "Image Cache Size Saver")
-        $MagickExecutablePath = $PlayniteApi.Dialogs.SelectFile("magick|magick.exe")
-        if (!$MagickExecutablePath)
+        $MagickExecutable = Join-Path -Path $RegInstallDir -ChildPath 'magick.exe'
+        if (Test-Path $MagickExecutable)
         {
+            $MagickExecutablePath = $MagickExecutable
+        }
+    }
+
+    if ($null -eq $MagickExecutablePath)
+    {
+        # Set Magick Executable Path via user Input
+        $MagickConfigPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ConfigMagicPath.ini'
+        if (Test-Path $MagickConfigPath)
+        {
+            $MagickExecutablePath = [System.IO.File]::ReadAllLines($MagickConfigPath)
+        }
+        else
+        {
+            $PlayniteApi.Dialogs.ShowMessage("Select ImageMagick executable", "Image Cache Size Saver")
+            $MagickExecutablePath = $PlayniteApi.Dialogs.SelectFile("magick|magick.exe")
+            if (!$MagickExecutablePath)
+            {
+                exit
+            }
+            [System.IO.File]::WriteAllLines($MagickConfigPath, $MagickExecutablePath)
+            $PlayniteApi.Dialogs.ShowMessage("Magick executable path saved", "Image Cache Size Saver")
+        }
+
+        if (!(Test-Path $MagickExecutablePath))
+        {
+            [System.IO.File]::Delete($MagickConfigPath)
+            $PlayniteApi.Dialogs.ShowMessage("Magick executable not found at configured location. Please run the extension again to configure it to the correct location.", "Image Cache Size Saver")
             exit
         }
-        [System.IO.File]::WriteAllLines($MagickConfigPath, $MagickExecutablePath)
-        $PlayniteApi.Dialogs.ShowMessage("Magick executable path saved", "Image Cache Size Saver")
-    }
-    
-    if (!(Test-Path $MagickExecutablePath))
-    {
-        [System.IO.File]::Delete($MagickConfigPath)
-        $PlayniteApi.Dialogs.ShowMessage("Magick executable not found at configured location. Please run the extension again to configure it to the correct location.", "Image Cache Size Saver")
-        exit
     }
 
     # Set arrays for processed games and image extensions
+    $PreviouslyProcessedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ImageCacheSizeSaverList.txt'
     if (Test-Path $PreviouslyProcessedPath)
     {
         [System.Collections.Generic.List[string]]$PreviouslyProcessedList = @([System.IO.File]::ReadAllLines($PreviouslyProcessedPath))
@@ -76,6 +89,7 @@ function Invoke-ImageCacheSizeSaver
     $ImagesAll = Get-ChildItem -path $PathCacheDirectory -Include $ImageExtensions
     $ImagesToProcess = (Get-ChildItem -path $ImagesAll -Exclude $PreviouslyProcessedList).FullName
     [string]$ImagesSizeBefore = "{0:N2}" -f (($ImagesAll | Measure-Object -Sum Length).Sum / 1MB)
+    $ImageTempPath = Join-Path -Path $env:temp -ChildPath 'ImageCacheSizeSaver.tmp'
     
     foreach ($ImageSourcePath in $ImagesToProcess) {
         try {
