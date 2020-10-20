@@ -34,9 +34,9 @@ function Invoke-SteamDateImporter
         " \(South America\)",
         " SA",
         " \(WW\)",
-        " WW",
         " WW Digital Distribution",
         " \(Key-only WW\)",
+        " WW"
 
         # Release type
         " Collection Retail",
@@ -48,7 +48,6 @@ function Invoke-SteamDateImporter
         " \[DIGITAL RETAIL\]",
         " - [Digital]",
         " [Digital]"
-        " Retail",
         " \(preorder\)",
         " \(Pre-Order\)",
         " \(pre-purchase\)",
@@ -61,24 +60,22 @@ function Invoke-SteamDateImporter
 
         # Free
         " - Free Giveaway",
-        " - Free",
         " - Free for 24 Hours",
         " - Free For A Limited Time!",
         " \(Free\)",
-        " Free",
-        " Free Giveaway"
+        " Free Giveaway",
+        " Free"
 
         # Editions
         " Deluxe Edition",
         " Complete Edition",
         " Standard Edition",
         " Voiced Edition",
+        " - Digital Edition of Light",
         "  Digital Edition",
         " Digital Distribution"
-        " - Digital Edition of Light",
         " Day One Edition",
         " Enhanced Edition"
-        "  Complete Edition",
         " - Legacy Edition",
         " - Starter Pack",
         " - Starter Edition",
@@ -95,12 +92,12 @@ function Invoke-SteamDateImporter
         # Other
         " \(Rebellion Store\)",
         " PROMO",
+        " Gift Copy - Hades Purchase",
         " - Gift",
         " Gift",
         " Steam Store and Retail Key",
         " \(100% off week\)",
         " - Complimentary \(Opt In\)",
-        " Gift Copy - Hades Purchase",
         " - Holiday Pack",
         " Bundle (Summer 2012)",
         ": REVENGEANCE",
@@ -138,17 +135,21 @@ function Invoke-SteamDateImporter
     $webView.Close()
 
     # Use regex to get all licenses
-    $regex = '(?:<td\sclass="license_date_col">)(\d\d?\s\w{3},\s\d{4})(?:<\/td>\s+<td>\s+)(?:<div\sclass="free_license_remove_link">\s+<a\shref="javascript:RemoveFreeLicense\(\s\d+,\s''.+\s+<\/div>\s+)?((?:\S|\s(?!\s))*)(?:\s+<\/td>)'
+    $regex = '(?:<td class="license_date_col">)(.*?(?=<\/td>))(?:<\/td>\s+<td>)(?:\s+<div class="free_license_remove_link">(?:[\s\S]*?(?=<\/div>))<\/div>)?(?:\s+)([^\t]+)'
     $LicenseMatches = ([regex]$regex).Matches($LicensesHtmlContent)
     if ($LicenseMatches.count -eq 0)
     {
         # Use Webview to log in
+        $__logger.Info("Steam Date Importer - No licenses found in first try, WebView will be opened")
+        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in to Steam.", "Steam Date Importer");
+        $LicensesUrl = 'https://store.steampowered.com/account/licenses/'
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($LicensesUrl)
         $webView.OpenDialog()
         $webView.Close()
 
         # Use Webview to get licenses page content (Offscreen)
+        $LicensesUrl = 'https://store.steampowered.com/account/licenses/?l=english'
         $webView = $PlayniteApi.WebViews.CreateOffscreenView()
         $webView.NavigateAndWait($LicensesUrl)
         $LicensesHtmlContent = $webView.GetPageSource()
@@ -156,12 +157,14 @@ function Invoke-SteamDateImporter
         $LicenseMatches = ([regex]$regex).Matches($LicensesHtmlContent)
         if ($LicenseMatches.count -eq 0)
         {
+            $__logger.Info("Steam Date Importer - No licenses found in second try, not logged in or no licenses found")
             $PlayniteApi.Dialogs.ShowMessage("Not logged in or no licenses found", "Steam Date Importer")
             exit
         }
     }
     
     # Create collections of found licenses
+    $__logger.Info("Steam Date Importer - Found $($LicenseMatches.count) licenses")
     [System.Collections.Generic.List[object]]$LicensesList = @()
     foreach ($LicenseMatch in $LicenseMatches) {
         
@@ -197,13 +200,14 @@ function Invoke-SteamDateImporter
             {
                 $LicensesList | Select-Object LicenseName, LicenseDate | Format-Table -AutoSize | Out-File $LicenseExportPath -Encoding 'UTF8'
             }
+            $__logger.Info("Steam Date Importer - Licenses exported to `"$LicenseExportPath`"")
             $PlayniteApi.Dialogs.ShowMessage("Licenses exported succesfully.", "Steam Date Importer");
         }
     }
 
     # Set GameDatabase and create modified games collection
     [System.Collections.Generic.List[object]]$GameDatesList = @()
-    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "Steam"}
+    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
     $CountNewDate = 0
     $CountMatchLicense = 0
     $CountNoLicense = 0
@@ -234,8 +238,9 @@ function Invoke-SteamDateImporter
                 $GameDateNew = $game.Added
                 $DateChanged = "True"
                 $CountNewDate++
+                $__logger.Info("Steam Date Importer - Changed date of `"$($game.name)`", Old date: `"$GameDateOld`", New date: `"$GameDateNew`"")
             }
-            else 
+            else
             {
                 $DateChanged = "False"
                 $GameDateNew = $null
@@ -262,6 +267,7 @@ function Invoke-SteamDateImporter
     }
 
     # Show finish dialogue with results and ask if user wants to export results
+    $__logger.Info("Steam Date Importer - Finished. Processed games: $($GameDatabase.count), License Matches: $CountMatchLicense, Games without license match: $CountNoLicense, Changed dates: $CountNewDate")
     $ExportChoice = $PlayniteApi.Dialogs.ShowMessage("Processed games: $($GameDatabase.count)`n`nGames that matched a license: $CountMatchLicense`nGames that didn't match a license: $CountNoLicense`nGames that had the added date changed: $CountNewDate`n`nDo you want to export results?", "Steam Date Importer", 4)
     if ($ExportChoice -eq "Yes")
     {
@@ -276,6 +282,7 @@ function Invoke-SteamDateImporter
             {
                 $GameDatesList | Select-Object Name, OldDate, NewDate, DateChanged, LicenseFound, LicenseDate | Sort-Object -Property LicenseFound, Name | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
             }
+            $__logger.Info("Steam Date Importer - Results exported to `"$ExportPath`"")
             $PlayniteApi.Dialogs.ShowMessage("Results exported successfully.", "Steam Date Importer");
         }
     }
