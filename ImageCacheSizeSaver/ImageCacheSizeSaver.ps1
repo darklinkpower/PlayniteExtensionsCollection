@@ -15,25 +15,29 @@ function Invoke-ImageCacheSizeSaver
     # Set images cache path
     if ($PlayniteApi.Paths.IsPortable -eq $true)
     {
+        $__logger.Info("Image Cache Size Saver - Playnite is Portable.")
         $PathCacheDirectory = Join-Path -Path $PlayniteApi.Paths.ApplicationPath -ChildPath "cache\images\*"
-        
     }
     else
     {
+        $__logger.Info("Image Cache Size Saver - Playnite is Installed.")
         $PathCacheDirectory = Join-Path -Path $env:APPDATA -ChildPath "Playnite\cache\images\*"
     }
 
     # Try to get magick.exe path via registry
     $Key = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine, [Microsoft.Win32.RegistryView]::Registry64)
     $RegSubKey =  $Key.OpenSubKey("Software\ImageMagick\Current")
-    $RegInstallDir = $RegSubKey.GetValue("BinPath")
-    if ($RegInstallDir)
+    if ($RegSubKey)
     {
-        $MagickExecutable = Join-Path -Path $RegInstallDir -ChildPath 'magick.exe'
-        if (Test-Path $MagickExecutable)
+        $RegInstallDir = $RegSubKey.GetValue("BinPath")
+        if ($RegInstallDir)
         {
-            $MagickExecutablePath = $MagickExecutable
-            $__logger.Info("Image Cache Size Saver - Found executable Path via registry in `"$MagickExecutablePath`".")
+            $MagickExecutable = Join-Path -Path $RegInstallDir -ChildPath 'magick.exe'
+            if (Test-Path $MagickExecutable)
+            {
+                $MagickExecutablePath = $MagickExecutable
+                $__logger.Info("Image Cache Size Saver - Found executable Path via registry in `"$MagickExecutablePath`".")
+            }
         }
     }
 
@@ -62,7 +66,7 @@ function Invoke-ImageCacheSizeSaver
         {
             [System.IO.File]::Delete($MagickConfigPath)
             $__logger.Info("Image Cache Size Saver - Executable not found in user configured path `"$MagickExecutablePath`".")
-            $PlayniteApi.Dialogs.ShowMessage("Magick executable not found at configured location. Please run the extension again to configure it to the correct location.", "Image Cache Size Saver")
+            $PlayniteApi.Dialogs.ShowMessage("Magick executable not found in `"$MagickExecutablePath`". Please run the extension again to configure it to the correct location.", "Image Cache Size Saver")
             exit
         }
     }
@@ -72,10 +76,13 @@ function Invoke-ImageCacheSizeSaver
     if (Test-Path $PreviouslyProcessedPath)
     {
         [System.Collections.Generic.List[string]]$PreviouslyProcessedList = @([System.IO.File]::ReadAllLines($PreviouslyProcessedPath))
+        $__logger.Info("Image Cache Size Saver - Found existing processed list")
+
     }
     else
     {
         [System.Collections.Generic.List[string]]$PreviouslyProcessedList = @()
+        $__logger.Info("Image Cache Size Saver - Did not find existing processed list")
     }
     $ImageExtensions= @(
         "*.jpg",
