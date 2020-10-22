@@ -61,7 +61,7 @@ function Get-MissingMediaStats
     $GamesNoIcon = ($GameDatabase | Where-Object {$null -eq $_.Icon}).count
 
     # Show results
-    $Results = "Missing media in $Selection`:`n`nCovers: $GamesNoCover games`nBackground Images: $GamesNoBackground games`nIcons: $GamesNoIcon games"
+    $Results = "Missing media in $Selection ($($GameDatabase.Count)):`n`nCovers: $GamesNoCover games`nBackground Images: $GamesNoBackground games`nIcons: $GamesNoIcon games"
     $__logger.Info("Game Media Tools (Missing Media) - $($Results -replace "`n", ', ')")
     $PlayniteApi.Dialogs.ShowMessage("$Results", "Game Media Tools");
 }
@@ -512,7 +512,7 @@ function Invoke-GameMediaTools
         $Results += "`n`nTool tag name: $TagName`nGames with tag in selection: $($GamesToolTagSelection.Count)`nGames with tag in all games database: $($GamesToolTagAll.count)"
         
         # Remove tool tag from database if 0 games have it
-        if ($GamesToolTagAll.count -eq 0)
+        if (($GamesToolTagAll.count -eq 0) -and ($GamesToolTagSelection.count -eq 0))
         {
             $PlayniteApi.Database.Tags.Remove($ToolTagId)
             $__logger.Info("Game Media Tools - Removed tool tag `"$TagName`" from database")
