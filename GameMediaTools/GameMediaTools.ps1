@@ -170,7 +170,7 @@ function OpenMenu
             </Grid>
         </TabItem>
     </TabControl>
-    <Button Content="Add Tags" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,357,0,0" Name="ButtonAddTags" IsDefault="True"/>
+    <Button Content="Update Tags" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,357,0,0" Name="ButtonUpdateTags" IsDefault="True"/>
 </Grid>
 "@
 
@@ -196,7 +196,7 @@ function OpenMenu
     $Window.WindowStartupLocation = "CenterScreen"
 
     # Handler for pressing "Add Tags" button
-    $ButtonAddTags.Add_Click(
+    $ButtonUpdateTags.Add_Click(
     {
         # Get the variables from the controls
         $GameSelection = $CbGameSelection.SelectedIndex
