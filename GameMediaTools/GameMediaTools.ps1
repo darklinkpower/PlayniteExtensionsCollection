@@ -7,7 +7,17 @@ function global:GetMainMenuItems
     $menuItem1.FunctionName = "OpenMenu"
     $menuItem1.MenuSection = "@Game Media Tools"
 
-    return $menuItem1
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "See missing media statistics (All games)"
+    $menuItem2.FunctionName = "MissingMediaStatsAll"
+    $menuItem2.MenuSection = "@Game Media Tools"
+
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description = "See missing media statistics (Selected games)"
+    $menuItem3.FunctionName = "MissingMediaStatsSelection"
+    $menuItem3.MenuSection = "@Game Media Tools"
+
+    return $menuItem1, $menuItem2, $menuItem3
 }
 
 function global:GetGameMenuItems
@@ -36,6 +46,49 @@ function OpenMetadataFolder
             Invoke-Item $Directory
         }
     }
+}
+
+function Get-MissingMediaStats
+{
+    param (
+        $GameDatabase,
+        $Selection
+    )
+    
+    # Get information of missing media
+    $GamesNoCover = ($GameDatabase | Where-Object {$null -eq $_.CoverImage}).count
+    $GamesNoBackground = ($GameDatabase | Where-Object {$null -eq $_.BackgroundImage}).count
+    $GamesNoIcon = ($GameDatabase | Where-Object {$null -eq $_.Icon}).count
+
+    # Show results
+    $Results = "Missing media in $Selection`:`n`nCovers: $GamesNoCover games`nBackground Images: $GamesNoBackground games`nIcons: $GamesNoIcon games"
+    $__logger.Info("Game Media Tools (Missing Media) - $($Results -replace "`n", ', ')")
+    $PlayniteApi.Dialogs.ShowMessage("$Results", "Game Media Tools");
+}
+
+function MissingMediaStatsSelection
+{
+    
+    # Get information of missing media
+    $GameDatabase = $PlayniteApi.MainView.SelectedGames
+    $Selection = "selected games"
+    if ($GameDatabase.count -ge 1)
+    {
+        Get-MissingMediaStats $GameDatabase $Selection
+    }
+    else 
+    {
+        $PlayniteApi.Dialogs.ShowMessage("No games are selected", "Game Media Tools"); 
+    }
+}
+
+function MissingMediaStatsAll
+{
+    
+    # Get information of missing media
+    $GameDatabase = $PlayniteApi.Database.Games
+    $Selection = "all games"
+    Get-MissingMediaStats $GameDatabase $Selection
 }
 
 function OpenMenu
