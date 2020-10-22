@@ -43,122 +43,123 @@ function OpenMenu
     # Load assemblies
     Add-Type -AssemblyName PresentationCore
     Add-Type -AssemblyName PresentationFramework
-
+    
     # Set Xaml
-[xml]$Xaml = @"
+    [xml]$Xaml = @"
 <Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-<Grid.Resources>
-    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
-</Grid.Resources>
-<Border Margin="40,50,273.6,0" VerticalAlignment="Top" Height="25" Width="180" HorizontalAlignment="Left">
-    <TextBlock TextWrapping="Wrap" Text="Game Selection" VerticalAlignment="Center" Width="180"/>
-</Border>
-<ComboBox Name="CbGameSelection" SelectedIndex="0" HorizontalAlignment="Left" Margin="245,50,0,0" VerticalAlignment="Top" Height="25" Width="200">
-    <ComboBoxItem Content="All games in database" HorizontalAlignment="Stretch"/>
-    <ComboBoxItem Content="Selected Games" HorizontalAlignment="Stretch"/>
-</ComboBox>
-<Border Margin="40,90,273.6,0" VerticalAlignment="Top" Width="180" Height="25" HorizontalAlignment="Left">
-    <TextBlock TextWrapping="Wrap" Text="Media type selection" VerticalAlignment="Center" Margin="0,4,-0.6,4.8" Width="180"/>
-</Border>
-<ComboBox Name="CbMediaType" SelectedIndex="0" HorizontalAlignment="Left" Margin="245,90,0,0" VerticalAlignment="Top" Width="200" Height="25">
-    <ComboBoxItem Content="Cover Image" HorizontalAlignment="Stretch"/>
-    <ComboBoxItem Content="Background Image" HorizontalAlignment="Stretch"/>
-    <ComboBoxItem Content="Icon" HorizontalAlignment="Stretch"/>
-</ComboBox>
-<TabControl Name="ControlTools" HorizontalAlignment="Left" Height="185" Margin="40,143,34.6,44" VerticalAlignment="Top">
-    <TabItem Header="Missing Media">
-        <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold" Grid.RowSpan="2"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that are missing the selected media type." VerticalAlignment="Top" Width="303" Grid.ColumnSpan="2"/>
-        </Grid>
-    </TabItem>
-    <TabItem Header="Optimization">
-        <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type image resolution is too big. These type of media will decrease performance in Playnite." VerticalAlignment="Top" Width="303" Grid.ColumnSpan="2"/>
-        </Grid>
-    </TabItem>
-    <TabItem Header="Aspect Ratio">
-        <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered aspect ratio." VerticalAlignment="Top" Width="303"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" Text="Enter aspect ratio" VerticalAlignment="Top" Width="260" Height="20"/>
-            <TextBox Name="BoxAspectRatioWidth" HorizontalAlignment="Left" Height="20" Margin="140,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
-            <TextBlock HorizontalAlignment="Left" Margin="180,90,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" Width="20" Height="20" TextAlignment="Center"/>
-            <TextBox Name="BoxAspectRatioHeight" HorizontalAlignment="Left" Height="20" Margin="200,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
-        </Grid>
-    </TabItem>
-    <TabItem Header="Resolution">
-        <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered resolution." VerticalAlignment="Top" Width="303"/>
-            <TextBox Name="BoxResolutionWidth" HorizontalAlignment="Left" Height="20" Margin="77,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="20"><Run Text="Enter "/><Run Text="resolution in pixels"/></TextBlock>
-            <TextBox Name="BoxResolutionHeight" HorizontalAlignment="Left" Height="20" Margin="197,119,0,-11.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="20" Text="Width"/>
-            <TextBlock HorizontalAlignment="Left" Margin="137,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="20" Text="Height"/>
-        </Grid>
-    </TabItem>
-    <TabItem Header="Size">
-        <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is bigger than the entered size." VerticalAlignment="Top" Width="303"/>
-            <TextBox Name="BoxSize" HorizontalAlignment="Left" Height="20" Margin="17,120,0,-12.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="40"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" Text="Enter maximum size" VerticalAlignment="Top" Width="260" Height="20"/>
-            <TextBlock HorizontalAlignment="Left" Margin="62,120,0,-12.8" TextWrapping="Wrap" Text="kb" VerticalAlignment="Top" Width="35" Height="20"/>
-        </Grid>
-    </TabItem>
-    <TabItem Header="Extension">
-        <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is the entered extensionn" VerticalAlignment="Top" Width="303"/>
-            <TextBox Name="BoxExtension" HorizontalAlignment="Left" Height="20" Margin="17,120,0,-12.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="123"/>
-            <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="20"><Run Text="Enter "/><Run Text="image extension"/></TextBlock>
-        </Grid>
-    </TabItem>
-</TabControl>
-<Button Content="Add Tags" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,357,0,0" Name="ButtonAddTags" IsDefault="True"/>
+    <Grid.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </Grid.Resources>
+    <Border Margin="40,50,273.6,0" VerticalAlignment="Top" Height="25" Width="180" HorizontalAlignment="Left">
+        <TextBlock TextWrapping="Wrap" Text="Game Selection" VerticalAlignment="Center" Width="180"/>
+    </Border>
+    <ComboBox Name="CbGameSelection" SelectedIndex="0" HorizontalAlignment="Left" Margin="245,50,0,0" VerticalAlignment="Top" Height="25" Width="200">
+        <ComboBoxItem Content="All games in database" HorizontalAlignment="Stretch"/>
+        <ComboBoxItem Content="Selected Games" HorizontalAlignment="Stretch"/>
+    </ComboBox>
+    <Border Margin="40,90,273.6,0" VerticalAlignment="Top" Width="180" Height="25" HorizontalAlignment="Left">
+        <TextBlock TextWrapping="Wrap" Text="Media type selection" VerticalAlignment="Center" Margin="0,4,-0.6,4.8" Width="180"/>
+    </Border>
+    <ComboBox Name="CbMediaType" SelectedIndex="0" HorizontalAlignment="Left" Margin="245,90,0,0" VerticalAlignment="Top" Width="200" Height="25">
+        <ComboBoxItem Content="Cover Image" HorizontalAlignment="Stretch"/>
+        <ComboBoxItem Content="Background Image" HorizontalAlignment="Stretch"/>
+        <ComboBoxItem Content="Icon" HorizontalAlignment="Stretch"/>
+    </ComboBox>
+    <TabControl Name="ControlTools" HorizontalAlignment="Left" Height="185" Margin="40,143,34.6,44" VerticalAlignment="Top">
+        <TabItem Header="Missing Media">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold" Grid.RowSpan="2"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that are missing the selected media type." VerticalAlignment="Top" Width="303" Grid.ColumnSpan="2"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Optimization">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type image resolution is too big. These type of media will decrease performance in Playnite." VerticalAlignment="Top" Width="303" Grid.ColumnSpan="2"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Aspect Ratio">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered aspect ratio." VerticalAlignment="Top" Width="303"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" Text="Enter aspect ratio" VerticalAlignment="Top" Width="260" Height="20"/>
+                <TextBox Name="BoxAspectRatioWidth" HorizontalAlignment="Left" Height="25" Margin="140,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
+                <TextBlock HorizontalAlignment="Left" Margin="180,90,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" Width="20" Height="20" TextAlignment="Center"/>
+                <TextBox Name="BoxAspectRatioHeight" HorizontalAlignment="Left" Height="25" Margin="200,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Resolution">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered resolution." VerticalAlignment="Top" Width="303"/>
+                <TextBox Name="BoxResolutionWidth" HorizontalAlignment="Left" Height="25" Margin="77,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="20"><Run Text="Enter "/><Run Text="resolution in pixels"/></TextBlock>
+                <TextBox Name="BoxResolutionHeight" HorizontalAlignment="Left" Height="25" Margin="197,119,0,-11.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="20" Text="Width"/>
+                <TextBlock HorizontalAlignment="Left" Margin="137,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="20" Text="Height"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Size">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is bigger than the entered size." VerticalAlignment="Top" Width="303"/>
+                <TextBox Name="BoxSize" HorizontalAlignment="Left" Height="25" Margin="17,120,0,-12.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" Text="Enter maximum size" VerticalAlignment="Top" Width="260" Height="20"/>
+                <TextBlock HorizontalAlignment="Left" Margin="72,120,0,-12.8" TextWrapping="Wrap" Text="kb" VerticalAlignment="Top" Width="35" Height="25"/>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Extension">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is the entered extension" VerticalAlignment="Top" Width="303"/>
+                <TextBox Name="BoxExtension" HorizontalAlignment="Left" Height="25" Margin="17,120,0,-12.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="123"/>
+                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="20"><Run Text="Enter "/><Run Text="image extension"/></TextBlock>
+            </Grid>
+        </TabItem>
+    </TabControl>
+    <Button Content="Add Tags" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,357,0,0" Name="ButtonAddTags" IsDefault="True"/>
 </Grid>
 "@
 
     # Load the xaml for controls
-    $XMLReader = (New-Object System.Xml.XmlNodeReader $Xaml)
+    $XMLReader = [System.Xml.XmlNodeReader]::New($Xaml)
     $XMLForm = [Windows.Markup.XamlReader]::Load($XMLReader)
 
     # Make variables for each control
-    # $Control = $XMLForm.FindName("CbGameSelection")
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
 
-	# Set Window creation options
-	$WindowCreationOptions = New-Object Playnite.SDK.WindowCreationOptions
+    # Set Window creation options
+    $WindowCreationOptions = New-Object Playnite.SDK.WindowCreationOptions
     $WindowCreationOptions.ShowCloseButton = $true
     $WindowCreationOptions.ShowMaximizeButton = $False
-	$WindowCreationOptions.ShowMinimizeButton = $False
+    $WindowCreationOptions.ShowMinimizeButton = $False
 
-	# Create window
-	$global:Window = $PlayniteApi.Dialogs.CreateWindow($WindowCreationOptions)
-	$global:Window.Content = $XMLForm
-	$global:Window.Width = 560
-	$global:Window.Height = 460
-    $global:Window.Title = "Game Media Tools"
-    
-	# Set the owner so we can center it using startup location
-	$global:Window.Owner = $PlayniteApi.Dialogs.GetCurrentAppWindow()
-	$global:Window.WindowStartupLocation = [System.Windows.WindowStartupLocation]::CenterOwner
-    $global:Window.ResizeMode = [System.Windows.ResizeMode]::NoResize
-    
+    # Create window
+    $Window = $PlayniteApi.Dialogs.CreateWindow($WindowCreationOptions)
+    $Window.Content = $XMLForm
+    $Window.Width = 620
+    $Window.Height = 460
+    $Window.Title = "Game Media Tools"
+    $Window.WindowStartupLocation = "CenterScreen"
+
     # Handler for pressing "Add Tags" button
     $ButtonAddTags.Add_Click(
     {
         # Get the variables from the controls
-        $GameSelection = $CbGameSelection.SelectedIndex 
+        $GameSelection = $CbGameSelection.SelectedIndex
         $MediaTypeSelection = $CbMediaType.SelectedIndex
         $ToolSelection = $ControlTools.SelectedIndex
 
         # Set GameDatabase
         switch ($GameSelection) {
-            0 { $GameDatabase = $PlayniteApi.Database.Games }
-            1 { $GameDatabase = $PlayniteApi.MainView.SelectedGames }
+            0 {
+                $GameDatabase = $PlayniteApi.Database.Games
+                $__logger.Info("Game Media Tools - Game Selection: `"AllGames`"")
+            }
+            1 {
+                $GameDatabase = $PlayniteApi.MainView.SelectedGames
+                $__logger.Info("Game Media Tools - Game Selection: `"SelectedGames`"")
+            }
         }
 
         # Set Media Type
@@ -166,25 +167,34 @@ function OpenMenu
             0 { 
                 $MediaType = "Cover"
                 $OptimizedSize = 1
+                $__logger.Info("Game Media Tools - Media Selection: `"$MediaType`"")
             }
             1 {
                 $MediaType = "Background"
                 $OptimizedSize = 4
+                $__logger.Info("Game Media Tools - Media Selection: `"$MediaType`"")
             }
             2 {
                 $MediaType = "Icon"
                 $OptimizedSize = 0.1
+                $__logger.Info("Game Media Tools - Media Selection: `"$MediaType`"")
             }
         }
 
         # Set Tool
         switch ($ToolSelection) {
             0 { # Tool #0: Missing Media
+
+                $__logger.Info("Game Media Tools - Tool Selection: `"Missing Media`"")
+                
                 # Start Game Media Tools function
-                Invoke-GameMediaTools $GameDatabase $MediaType $TagName $ToolFunctionName $AditionalOperation $ExtraParameters
-                $PlayniteApi.Dialogs.ShowMessage("Finished.", "Game Media Tools");
+                $__logger.Info("Game Media Tools - Starting Function with parameters `"$MediaType, $TagName, $ToolFunctionName, $AditionalOperation, $ExtraParameters`"")
+                Invoke-GameMediaTools $GameDatabase $MediaType
             }
             1 { # Tool #1: Check Optimization
+                
+                $__logger.Info("Game Media Tools - Tool Selection: `"Check Optimization`"")
+                
                 # Set tag Name
                 $TagTitle = "Optimization"
                 $TagDescription = "not optimized"
@@ -198,12 +208,15 @@ function OpenMenu
                 )
                 
                 # Start Game Media Tools function
+                $__logger.Info("Game Media Tools - Starting Function with parameters `"$MediaType, $TagName, $ToolFunctionName, $AditionalOperation, $ExtraParameters`"")
                 Invoke-GameMediaTools $GameDatabase $MediaType $TagName $ToolFunctionName $AditionalOperation $ExtraParameters
-                $PlayniteApi.Dialogs.ShowMessage("Finished.", "Game Media Tools");
             }
             2 { # Tool #2: Image Aspect Ratio
+                
+                $__logger.Info("Game Media Tools - Tool Selection: `"Image Aspect Ratio`"")
                 $Width = $BoxAspectRatioWidth.Text
                 $Height = $BoxAspectRatioHeight.Text
+
                 if ( ($Width -match "^\d+$") -and ($Height -match "^\d+$") )
                 {
                     # Set tag Name
@@ -220,15 +233,18 @@ function OpenMenu
                     )
                     
                     # Start Game Media Tools function
+                    $__logger.Info("Game Media Tools - Starting Function with parameters `"$MediaType, $TagName, $ToolFunctionName, $AditionalOperation, $ExtraParameters`"")
                     Invoke-GameMediaTools $GameDatabase $MediaType $TagName $ToolFunctionName $AditionalOperation $ExtraParameters
-                    $PlayniteApi.Dialogs.ShowMessage("Finished.", "Game Media Tools");
                 }
                 else
                 {
+                    $__logger.Info("Game Media Tools - Invalid Input `"$Width`", `"$Height`"")
                     $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools");
                 }
             }
             3 { # Tool #3: Resolution
+                
+                $__logger.Info("Game Media Tools - Tool Selection: `"Resolution`"")
                 $Width = $BoxResolutionWidth.Text
                 $Height = $BoxResolutionHeight.Text
 
@@ -248,16 +264,20 @@ function OpenMenu
                     )
 
                     # Start Game Media Tools function
+                    $__logger.Info("Game Media Tools - Starting Function with parameters `"$MediaType, $TagName, $ToolFunctionName, $AditionalOperation, $ExtraParameters`"")
                     Invoke-GameMediaTools $GameDatabase $MediaType $TagName $ToolFunctionName $AditionalOperation $ExtraParameters
-                    $PlayniteApi.Dialogs.ShowMessage("Finished.", "Game Media Tools");
                 }
                 else
                 {
+                    $__logger.Info("Game Media Tools - Invalid Input `"$Width`", `"$Height`"")
                     $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools");
                 }
             }
             4 { # Tool #4: Image Size
+                
+                $__logger.Info("Game Media Tools - Tool Selection: `"Image Size`"")
                 $MaxSize = $BoxSize.Text
+
                 if ($MaxSize -match "^\d+$")
                 {
                     # Set tag Name
@@ -273,20 +293,24 @@ function OpenMenu
                     )
 
                     # Start Game Media Tools function
+                    $__logger.Info("Game Media Tools - Starting Function with parameters `"$MediaType, $TagName, $ToolFunctionName, $AditionalOperation, $ExtraParameters`"")
                     Invoke-GameMediaTools $GameDatabase $MediaType $TagName $ToolFunctionName $AditionalOperation $ExtraParameters
-                    $PlayniteApi.Dialogs.ShowMessage("Finished.", "Game Media Tools");
                 }
                 else
                 {
+                    $__logger.Info("Game Media Tools - Invalid Input `"$MaxSize`"")
                     $PlayniteApi.Dialogs.ShowMessage("Invalid Input in size input box.", "Game Media Tools");
                 }
             }
             5 { # Tool #5: Extension
+                
+                $__logger.Info("Game Media Tools - Tool Selection: `"Extension`"")
                 $Extension = $BoxExtension.Text
+
                 if ($Extension -match "^.+$")
                 {
                     # Set tag Name
-                    $TagTitle = "ImgExt"
+                    $TagTitle = "Extension"
                     $TagDescription = "is $Extension"
                     $TagName = "$TagTitle`: $MediaType $TagDescription"
 
@@ -298,11 +322,12 @@ function OpenMenu
                     )
                     
                     # Start Game Media Tools function
+                    $__logger.Info("Game Media Tools - Starting Function with parameters `"$MediaType, $TagName, $ToolFunctionName, $AditionalOperation, $ExtraParameters`"")
                     Invoke-GameMediaTools $GameDatabase $MediaType $TagName $ToolFunctionName $AditionalOperation $ExtraParameters
-                    $PlayniteApi.Dialogs.ShowMessage("Finished.", "Game Media Tools");
                 }
                 else
                 {
+                    $__logger.Info("Game Media Tools - Invalid Input `"$Extension`"")
                     $PlayniteApi.Dialogs.ShowMessage("Invalid Input in extension input box.", "Game Media Tools");
                 }
             }
@@ -310,8 +335,9 @@ function OpenMenu
     })
 
     # Show Window
-    $global:Window.ShowDialog()
-
+    $__logger.Info("Game Media Tools - Opening Window.")
+    $Window.ShowDialog()
+    $__logger.Info("Game Media Tools - Window closed.")
 }
 
 function Invoke-GameMediaTools
@@ -325,12 +351,6 @@ function Invoke-GameMediaTools
         $ExtraParameters
     )
     
-    # Set Counters
-    $global:CountNoMedia = 0
-    $global:CountNoMediaBefore = 0
-    $global:CountAddedTag = 0
-    $global:CountRemovedTag = 0
-
     # Create "No Media" tag
     $tagNoMediaName = "No Media: " + "$MediaType"
     $tagNoMedia = $PlayniteApi.Database.tags.Add($tagNoMediaName)
@@ -352,6 +372,32 @@ function Invoke-GameMediaTools
         {
             # Remove "No Media" tag
             Remove-TagFromGame $game $tagNoMediaIds
+
+            # Skip Game if media is of URL type
+            if ($ImageFilePath -match "https?:\/\/")
+            {
+                continue
+            }
+            
+            # Skip game if file path doesn't exist and delete property value
+            if ([System.IO.File]::Exists($ImageFilePath) -eq $false)
+            {
+                if ($MediaType -eq "Cover")
+                {
+                    $game.CoverImage = $null
+                    
+                }
+                elseif ($MediaType -eq "Background")
+                {
+                    $game.BackgroundImage = $null
+                }
+                elseif ($MediaType -eq "Icon")
+                {
+                    $game.Icon = $null
+                }
+                $__logger.Info("Game Media Tools - `"$($game.name)`" $MediaType doesn't exist in pointed path. Property value deleted.")
+                continue
+            }
 
             # Determine Tag Operation
             if ($AditionalOperation -eq "GetDimensions")
@@ -375,7 +421,7 @@ function Invoke-GameMediaTools
                 continue
             }
 
-            # Set-ToolTagsToGame
+            # Add or Remove tool tag
             if ($TagOperation -eq "RemoveTag")
             {
                 Remove-TagFromGame $game $ToolTagId
@@ -391,6 +437,38 @@ function Invoke-GameMediaTools
             Add-TagToGame $game $tagNoMediaIds
         }
     }
+    
+    # Generate results of missing media in selection
+    $GamesNoMediaSelection = $GameDatabase | Where-Object {$_.TagIds -contains $tagNoMediaIds.Guid}
+    $Results = "Finished. Games in selection: $($GameDatabase.count)`n`nSelected Media: $MediaType`nGames missing selected media in selection: $($GamesNoMediaSelection.Count)"
+
+    # Get information of games with missing media in all database and add to results
+    $GamesNoCoverAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.CoverImage}).count
+    $GamesNoBackgroundAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.BackgroundImage}).count
+    $GamesNoIconAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.Icon}).count
+    $Results += "`n`nMissing Media in all database`nCovers: $GamesNoCoverAll games`nBackground Images: $GamesNoBackgroundAll games`nIcons: $GamesNoIconAll games"
+
+    # Get information of tool Tag
+    if ($TagName)
+    {
+        $GamesToolTagSelection = $GameDatabase | Where-Object {$_.TagIds -contains $ToolTagId.Guid}
+        $GamesToolTagAll = $PlayniteApi.Database.Games | Where-Object {$_.TagIds -contains $ToolTagId.Guid}
+        $__logger.Info("Game Media Tools - Games with tool tag `"$TagName`" at finish: Selection $($GamesToolTagSelection.Count), All $($GamesToolTagAll.Count)")
+
+        # Add information to results
+        $Results += "`n`nTool tag name: $TagName`nGames with tag in selection: $($GamesToolTagSelection.Count)`nGames with tag in all games database: $($GamesToolTagAll.count)"
+        
+        # Remove tool tag from database if 0 games have it
+        if ($GamesToolTagAll.count -eq 0)
+        {
+            $PlayniteApi.Database.Tags.Remove($ToolTagId)
+            $__logger.Info("Game Media Tools - Removed tool tag `"$TagName`" from database")
+        }
+    }
+
+    # Show Results
+    $__logger.Info("Game Media Tools - $($Results -replace "`n", ', ')")
+    $PlayniteApi.Dialogs.ShowMessage("$Results", "Game Media Tools");
 }
 
 function Get-ImageDimensions
@@ -410,7 +488,7 @@ function Get-ImageDimensions
     } catch {
         $global:ImageSuccess = $false
         $ErrorMessage = $_.Exception.Message
-        $__logger.Info("Game Media Tools - $($game.name): Error `"$ErrorMessage`" when processing image `"$ImageFilePath`"")
+        $__logger.Error("Game Media Tools - $($game.name): Error `"$ErrorMessage`" when processing image `"$ImageFilePath`"")
     }
 }
 
@@ -434,7 +512,8 @@ function Get-ImagePath
     {
         $global:ImageFilePath = $PlayniteApi.Database.GetFullFilePath($game.Icon)
     }
-    else {
+    else
+    {
         $global:ImageFilePath = $null
     }
 }
