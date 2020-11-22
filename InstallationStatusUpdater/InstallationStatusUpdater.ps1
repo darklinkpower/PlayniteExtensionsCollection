@@ -1,4 +1,4 @@
-function global:GetMainMenuItems
+function GetMainMenuItems
 {
     param($menuArgs)
 
@@ -12,10 +12,20 @@ function global:GetMainMenuItems
     $menuItem2.FunctionName = "InstallationStatusUpdater"
     $menuItem2.MenuSection = "@Installation Status Updater"
     
-    return $menuItem1, $menuItem2
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description = "Status Updater - Add selected games to ignore list"
+    $menuItem3.FunctionName = "Add-IgnoreFeature"
+    $menuItem3.MenuSection = "@Installation Status Updater"
+
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description = "Status Updater - Remove selected games from ignore list"
+    $menuItem4.FunctionName = "Remove-IgnoreFeature"
+    $menuItem4.MenuSection = "@Installation Status Updater"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
 }
 
-function global:Invoke-InstallationStatusCheck
+function Invoke-InstallationStatusCheck
 {
     # Set GameDatabase
     $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"} | Where-Object {($_.GameImagePath) -or (($_.InstallDirectory) -and ($_.PlayAction.Type -eq "File"))}
@@ -27,7 +37,15 @@ function global:Invoke-InstallationStatusCheck
     # Create collection for processed games
     [System.Collections.Generic.List[Object]]$global:GamesProcessed = @()
 
+    # Set skip game feature
+    $featureName = "Ignore in Installation Status Updater"
+
     foreach ($game in $GameDatabase) {
+
+        if ($game.features.name -contains "$featureName")
+        {
+            continue
+        }
         
         # Set game file path
         if ($game.GameImagePath)
@@ -95,7 +113,7 @@ function InstallationStatusUpdater
     }
 }
 
-function global:InstallationPathUpdater
+function InstallationPathUpdater
 {
     # Set GameDatabase
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object { ($_.GameImagePath) }
@@ -164,4 +182,80 @@ function global:InstallationPathUpdater
         $PlayniteApi.Dialogs.ShowMessage("Changed install path of $CountPathChanged games.", "Installation Path Updater")
     }
     Invoke-InstallationStatusCheck
+}
+
+function Add-IgnoreFeature
+{
+    # Create Feature
+    $featureName = "Ignore in Installation Status Updater"
+    $feature = $PlayniteApi.Database.Features.Add($featureName)
+    [guid[]]$featureIds = $feature.Id
+    
+    # Set GameDatabase
+    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"}
+    
+    # Set counters
+    $FeatureAdded = 0
+    
+    # Start Execution for each game in the database
+    foreach ($game in $GameDatabase) {
+        if ($game.Features.name -contains "$featureName")
+        {
+            $__logger.Info("`"$($game.name)`" already had `"$featureName`" feature.")
+        }
+        else
+        {
+            # Add feature to game
+            if ($game.FeatureIds) 
+            {
+                $game.FeatureIds += $featureIds
+            } 
+            else
+            {
+                # Fix in case game has null FeatureIds
+                $game.FeatureIds = $featureIds
+            }
+            
+            # Update game in database
+            $PlayniteApi.Database.Games.Update($game)
+            $FeatureAdded++
+            $__logger.Info("Added `"$featureName`" feature to `"$($game.name)`".")
+        }
+    }
+    
+    # Show finish dialogue
+    $PlayniteApi.Dialogs.ShowMessage("Added `"$featureName`" feature to $FeatureAdded games.","Installation Status Updater");
+}
+
+function Remove-IgnoreFeature
+{
+    # Create Feature
+    $featureName = "Ignore in Installation Status Updater"
+    $feature = $PlayniteApi.Database.Features.Add($featureName)
+    [guid[]]$featureIds = $feature.Id
+    
+    # Set GameDatabase
+    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"}
+    
+    # Set counters
+    $FeatureRemoved = 0
+    
+    # Start Execution for each game in the database
+    foreach ($game in $GameDatabase) {
+        if ($game.Features.name -contains "$featureName")
+        {
+            # Remove feature from game
+            $game.FeatureIds.Remove("$featureIds")
+            $PlayniteApi.Database.Games.Update($game)
+            $FeatureRemoved++
+            $__logger.Info("Removed `"$featureName`" feature from `"$($game.name)`".")
+        }
+        else
+        {
+            $__logger.Info("`"$($game.name)`" doesn't have `"$featureName`" feature.")
+        }
+    }
+    
+    # Show results dialogue
+    $PlayniteApi.Dialogs.ShowMessage("Removed `"$featureName`" feature from $FeatureRemoved games.","Installation Status Updater");
 }
