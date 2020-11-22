@@ -1,7 +1,7 @@
 ﻿Id: Installation_Status_Updater
 Name: Installation Status Updater
 Author: darklinkpower
-Version: 1.2.2
+Version: 1.3
 Module: InstallationStatusUpdater.ps1
 Type: Script
 Icon: icon.ico
