@@ -17,7 +17,12 @@ function global:GetMainMenuItems
     $menuItem3.FunctionName = "Remove-PlayActions"
     $menuItem3.MenuSection = "@NVIDIA Geforce NOW Enabler"
 
-    return $menuItem1, $menuItem2, $menuItem3
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description = "Set NVIDIA Geforce NOW enabled games as installed"
+    $menuItem4.FunctionName = "Set-InstallationStatus"
+    $menuItem4.MenuSection = "@NVIDIA Geforce NOW Enabler"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
 }
 
 function global:Invoke-GeforceNowEnabler
@@ -249,4 +254,26 @@ function Remove-PlayActions
 
     # Show finish dialogue with results
     $PlayniteApi.Dialogs.ShowMessage("Play Action removed from $CounterPlayActionRemoved games", "NVIDIA GeForce NOW Enabler");
+}
+
+function Set-InstallationStatus
+{
+    # Set GameDatabase
+    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.OtherActions.Arguments -Match "--url-route=`"#\?cmsId=\d+&launchSource=External`""}
+    
+    # Counters
+    $SetAsInstalled = 0
+
+    foreach ($Game in $GameDatabase) {
+
+        if ($game.InstallationStatus -eq 'Uninstalled')
+        {
+            $game.IsInstalled = $true
+            $SetAsInstalled++
+            $__logger.Info("NVIDIA GeForce NOW Enabler - Set `"$($Game.name)`" installation status to Installed")
+        }
+    }
+
+    # Show finish dialogue with results
+    $PlayniteApi.Dialogs.ShowMessage("Set $SetAsInstalled games as installed", "NVIDIA GeForce NOW Enabler");
 }
