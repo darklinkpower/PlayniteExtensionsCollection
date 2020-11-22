@@ -28,7 +28,7 @@ function GetMainMenuItems
 function Invoke-InstallationStatusCheck
 {
     # Set GameDatabase
-    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"} | Where-Object {($_.GameImagePath) -or (($_.InstallDirectory) -and ($_.PlayAction.Type -eq "File"))}
+    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"} | Where-Object { ($_.GameImagePath) -or ($_.PlayAction.Type -eq "File") }
     
     # Set Counters
     $global:MarkedInstalled = 0
@@ -52,9 +52,13 @@ function Invoke-InstallationStatusCheck
         {
             $GameFilePath = $game.GameImagePath
         }
-        elseif ($game.PlayAction.Path)
+        elseif ($game.PlayAction.Path -and $Game.InstallationDirectory)
         {
             $GameFilePath = $game.InstallDirectory.TrimEnd('\') + '\' +  $game.PlayAction.Path.TrimStart('\')
+        }
+        else
+        {
+            $GameFilePath = $game.PlayAction.Path
         }
         
         # Check if game path is not valid in games marked as installed
