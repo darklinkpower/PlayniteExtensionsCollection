@@ -52,9 +52,17 @@ function Invoke-InstallationStatusCheck
         {
             $GameFilePath = $game.GameImagePath
         }
-        elseif ($game.PlayAction.Path -and $Game.InstallationDirectory)
+        elseif ($game.PlayAction.Path -and $game.InstallDirectory)
         {
-            $GameFilePath = $game.InstallDirectory.TrimEnd('\') + '\' +  $game.PlayAction.Path.TrimStart('\')
+            if($game.InstallDirectory -eq '{InstallDir}')
+            {
+                $GameFilePath = $game.PlayAction.Path
+            }
+            else
+            {
+                $GameFile = [System.IO.Path]::GetFileName($game.PlayAction.Path)
+                $GameFilePath = $game.InstallDirectory.TrimEnd('\') + '\' +  $GameFile  
+            }
         }
         else
         {
