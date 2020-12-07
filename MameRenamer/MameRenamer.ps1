@@ -1,4 +1,4 @@
-function global:GetMainMenuItems()
+function GetMainMenuItems()
 {
     param($menuArgs)
 
