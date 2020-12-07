@@ -1,0 +1,12 @@
+﻿Id: MameRenamer_be989711-a433-428f-932e-207860c94fc9
+Name: MAME Renamer
+Author: darklinkpower
+Version: 1.0
+Module: MameRenamer.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-495.html
