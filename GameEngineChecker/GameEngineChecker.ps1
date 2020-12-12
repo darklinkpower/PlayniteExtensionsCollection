@@ -86,7 +86,7 @@ function Add-EngineTag
             $engineName = $printouts.Uses_engine[0].fulltext -replace "Engine:", "Engine: "
             if (($engineName -eq "Engine: Unity") -and ($printouts.Unity_engine_build.Count -gt 0))
             {
-                $engineName = "Engine: Unity {0}" -f $printouts.Unity_engine_build[0].split('.')[0]
+                $engineName = "Engine: Unity {0}" -f $printouts.Unity_engine_build[-1].split('.')[0]
             }
         }
         else
