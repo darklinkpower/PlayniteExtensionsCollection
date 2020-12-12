@@ -142,7 +142,7 @@ function Get-SteamAppList
     } catch {
         $ErrorMessage = $_.Exception.Message
         $__logger.Error("$ExtensionName - Error downloading Steam AppList database. Error: $ErrorMessage")
-        $PlayniteApi.Dialogs.ShowErrorMessage("Error downloading Steam AppList database. Error: $ErrorMessage", "Steam Trailers");
+        $PlayniteApi.Dialogs.ShowErrorMessage("Error downloading Steam AppList database. Error: $ErrorMessage", $ExtensionName);
         exit
     }
 }
