@@ -2,7 +2,7 @@ function GetMainMenuItems
 {
     param($menuArgs)
 
-    $ExtensionName = "Game engine checker"
+    $ExtensionName = "Game Engine Checker"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Add game engine tag to selected games"
@@ -14,7 +14,7 @@ function GetMainMenuItems
 
 function Add-EngineTag
 {
-    $ExtensionName = "Game engine checker"
+    $ExtensionName = "Game Engine Checker"
     $pcgwApiTemplateSteam = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam+AppID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
     $pcgwApiTemplateGog = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom+ID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
     $CountertagAdded = 0
@@ -128,7 +128,7 @@ function Get-SteamAppList
         [string]$AppListPath
     )
 
-    $ExtensionName = "Game engine checker"
+    $ExtensionName = "Game Engine Checker"
 
     try {
         $Uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
