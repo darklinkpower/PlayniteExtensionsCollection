@@ -3,15 +3,24 @@ function global:GetMainMenuItems
     param($menuArgs)
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Import dates"
-    $menuItem1.FunctionName = "Invoke-SteamDateImporter"
+    $menuItem1.Description = "Import dates of selected games"
+    $menuItem1.FunctionName = "Invoke-SteamDateImporterSelected"
     $menuItem1.MenuSection = "@Steam Date Importer"
+
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Import dates of all games"
+    $menuItem2.FunctionName = "Invoke-SteamDateImporterAll"
+    $menuItem2.MenuSection = "@Steam Date Importer"
     
-    return $menuItem1
+    return $menuItem1, $menuItem2
 }
 
-function Invoke-SteamDateImporter
+function Add-SteamDates
 {
+    param (
+        $gameDatabase
+    )
+    
     # Create prefix strings to remove
     [System.Collections.Generic.List[string]]$RemoveStrings = @(
         
@@ -207,33 +216,54 @@ function Invoke-SteamDateImporter
 
     # Set GameDatabase and create modified games collection
     [System.Collections.Generic.List[object]]$GameDatesList = @()
-    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
     $CountNewDate = 0
     $CountMatchLicense = 0
     $CountNoLicense = 0
 
-    foreach ($game in $GameDatabase) {
+    $webView = $PlayniteApi.WebViews.CreateOffscreenView()
+    $webView.Navigate("https://help.steampowered.com")
+    $sessionIdCookie = $webView.GetCookies() | Where-Object {$_.Domain -eq "help.steampowered.com"} | Where-Object {$_.Name -eq "sessionid"}
+    $sessionId = $sessionIdCookie.Value
+    $helpTemplate = "https://help.steampowered.com/en/wizard/HelpWithGame/?appid={0}&sessionid={1}&wizard_ajax=1"
+    $regexDate = '\\r\\n\\t\\t\\t\\t\\t\\t\\t&lt;span&gt;(.*?(?=&amp;))&amp;nbsp;'
+
+    foreach ($game in $gameDatabase) {
         
-        # Generate matching game name and check for match in licenses collection
-        $GameNameMatch = $($game.name) -replace "ü", 'u' -replace ' and ', '' -replace "Game of the Year", 'GOTY' -replace "(GOTY)$", 'GOTY Edition'
+        $LicenseDate = $null
+        $GameNameMatch = $game.name -replace "ü", 'u' -replace ' and ', '' -replace "Game of the Year", 'GOTY' -replace "(GOTY)$", 'GOTY Edition'
         $GameNameMatch = $GameNameMatch -replace '[^\p{L}\p{Nd}]', ''
         $GameDateOld = $game.Added
-        $GameLicense = $null
+
         foreach ($License in $LicensesList) {
             if ($License.LicenseNameMatch -eq $GameNameMatch) 
             {
-                [object]$GameLicense = $License
+                $LicenseDate = $License.LicenseDate
                 break
             }
         }
-        if ($GameLicense)
+        if ($null -eq $LicenseDate)
+        {
+            $helpUrl = $helpTemplate -f $game.GameId, $sessionId
+            $webView.NavigateAndWait($helpUrl)
+            $DateMatch = ([regex]$regexDate).Matches($webView.GetPageSource())
+            if ($DateMatch.Groups.Count -gt 0)
+            {
+                $LicenseDate = $DateMatch.groups[1].Value
+                if ($LicenseDate -notmatch '\w{3} \d+, \d{4}')
+                {
+                    $LicenseDate = $LicenseDate + ", " + "$(Get-Date -Format yyyy)"
+                }
+            }
+        }
+
+        if ($LicenseDate)
         {
             $CountMatchLicense++
-            $LicenseFound = "True"
-            $LicenseDate = [datetime]$GameLicense.LicenseDate
+            $DateFound = "True"
+            $LicenseDate = [datetime]$LicenseDate
             if ($game.Added -ne $LicenseDate)
             {
-                $game.Added = [datetime]$GameLicense.LicenseDate
+                $game.Added = $LicenseDate
                 $PlayniteApi.Database.Games.Update($game)
                 $GameDateNew = $game.Added
                 $DateChanged = "True"
@@ -251,8 +281,7 @@ function Invoke-SteamDateImporter
             $CountNoLicense++
             $GameDateNew = $null
             $DateChanged = "False"
-            $LicenseFound = "False"
-            $LicenseDate = $null
+            $DateFound = "False"
         }
         
         $GameDates = [PSCustomObject]@{
@@ -260,15 +289,15 @@ function Invoke-SteamDateImporter
             OldDate = $GameDateOld
             NewDate = $GameDateNew
             DateChanged = $DateChanged
-            LicenseFound = $LicenseFound
-            LicenseDate = $LicenseDate	 
+            DateFound = $DateFound
+            LicenseDate = $LicenseDate
         }
         $GameDatesList.Add($GameDates)
     }
 
     # Show finish dialogue with results and ask if user wants to export results
-    $__logger.Info("Steam Date Importer - Finished. Processed games: $($GameDatabase.count), License Matches: $CountMatchLicense, Games without license match: $CountNoLicense, Changed dates: $CountNewDate")
-    $ExportChoice = $PlayniteApi.Dialogs.ShowMessage("Processed games: $($GameDatabase.count)`n`nGames that matched a license: $CountMatchLicense`nGames that didn't match a license: $CountNoLicense`nGames that had the added date changed: $CountNewDate`n`nDo you want to export results?", "Steam Date Importer", 4)
+    $__logger.Info("Steam Date Importer - Finished. Processed Steam games: $($GameDatabase.count). Games with date found: $CountMatchLicense`nGames without date found: $CountNoLicense. Games that had the added date changed: $CountNewDate")
+    $ExportChoice = $PlayniteApi.Dialogs.ShowMessage("Processed Steam games: $($GameDatabase.count)`n`nGames with date found: $CountMatchLicense`nGames without date found: $CountNoLicense`nGames that had the added date changed: $CountNewDate`n`nDo you want to export results?", "Steam Date Importer", 4)
     if ($ExportChoice -eq "Yes")
     {
         $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -276,14 +305,26 @@ function Invoke-SteamDateImporter
         {
             if ($ExportPath -match "\.csv$")
             {
-                $GameDatesList | Select-Object Name, OldDate, NewDate, DateChanged, LicenseFound, LicenseDate | Sort-Object -Property LicenseFound, Name | ConvertTo-Csv -NoTypeInformation | Out-File $ExportPath -Encoding 'UTF8'
+                $GameDatesList | Select-Object Name, OldDate, NewDate, DateChanged, DateFound, LicenseDate | Sort-Object -Property DateFound, Name | ConvertTo-Csv -NoTypeInformation | Out-File $ExportPath -Encoding 'UTF8'
             }
             else
             {
-                $GameDatesList | Select-Object Name, OldDate, NewDate, DateChanged, LicenseFound, LicenseDate | Sort-Object -Property LicenseFound, Name | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
+                $GameDatesList | Select-Object Name, OldDate, NewDate, DateChanged, DateFound, LicenseDate | Sort-Object -Property DateFound, Name | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
             }
             $__logger.Info("Steam Date Importer - Results exported to `"$ExportPath`"")
             $PlayniteApi.Dialogs.ShowMessage("Results exported successfully.", "Steam Date Importer");
         }
     }
+}
+
+function Invoke-SteamDateImporterSelected
+{
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
+    Add-SteamDates $gameDatabase
+}
+
+function Invoke-SteamDateImporterAll
+{
+    $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
+    Add-SteamDates $gameDatabase
 }
