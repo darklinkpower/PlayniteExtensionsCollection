@@ -1,8 +1,8 @@
 ﻿Id: Steam_Date_Importer
-Name: Steam Date Importer
+Name: Date Importer
 Author: darklinkpower
 Version: 1.1
-Module: SteamDateImporter.ps1
+Module: DateImporter.ps1
 Type: Script
 Icon: icon.jpg
 Links:
