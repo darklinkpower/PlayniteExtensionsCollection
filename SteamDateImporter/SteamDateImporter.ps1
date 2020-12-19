@@ -346,7 +346,7 @@ function Get-EpicLicenses
     
     [System.Collections.Generic.List[object]]$LicensesList = @()
     $apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?page={0}&lastCreatedAt={1}"
-    $loginStatus = Get-LoginStatus "https://www.epicgames.com" ".epicgames.com" "EPIC_SSO"
+    $loginStatus = Get-LoginStatus "https://www.epicgames.com" ".epicgames.com" "EPIC_SSO_RM"
     
     if ($loginStatus -eq $false)
     {
