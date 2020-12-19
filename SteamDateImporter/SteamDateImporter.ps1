@@ -13,51 +13,56 @@ function global:GetMainMenuItems
     $menuItem2.MenuSection = "@Date Importer"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Import dates of selected Steam games"
-    $menuItem3.FunctionName = "Invoke-SteamDateImporterSelected"
-    $menuItem3.MenuSection = "@Date Importer|Steam"
-
+    $menuItem3.Description = "Set added date of selected games manually"
+    $menuItem3.FunctionName = "Set-DatesFromInput"
+    $menuItem3.MenuSection = "@Date Importer"
+    
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = "Import dates of all Steam games"
-    $menuItem4.FunctionName = "Invoke-SteamDateImporterAll"
+    $menuItem4.Description = "Import dates of selected Steam games"
+    $menuItem4.FunctionName = "Invoke-SteamDateImporterSelected"
     $menuItem4.MenuSection = "@Date Importer|Steam"
 
     $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem5.Description = "Export Steam licenses list"
-    $menuItem5.FunctionName = "Export-SteamLicenses"
+    $menuItem5.Description = "Import dates of all Steam games"
+    $menuItem5.FunctionName = "Invoke-SteamDateImporterAll"
     $menuItem5.MenuSection = "@Date Importer|Steam"
 
     $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem6.Description = "Import dates of selected GOG games"
-    $menuItem6.FunctionName = "Invoke-GogDateImporterSelected"
-    $menuItem6.MenuSection = "@Date Importer|GOG"
+    $menuItem6.Description = "Export Steam licenses list"
+    $menuItem6.FunctionName = "Export-SteamLicenses"
+    $menuItem6.MenuSection = "@Date Importer|Steam"
 
     $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem7.Description = "Import dates of all GOG games"
-    $menuItem7.FunctionName = "Invoke-GogDateImporterAll"
+    $menuItem7.Description = "Import dates of selected GOG games"
+    $menuItem7.FunctionName = "Invoke-GogDateImporterSelected"
     $menuItem7.MenuSection = "@Date Importer|GOG"
 
     $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem8.Description = "Export GOG licenses list"
-    $menuItem8.FunctionName = "Export-GogLicenses"
+    $menuItem8.Description = "Import dates of all GOG games"
+    $menuItem8.FunctionName = "Invoke-GogDateImporterAll"
     $menuItem8.MenuSection = "@Date Importer|GOG"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem9.Description = "Import dates of selected Epic games"
-    $menuItem9.FunctionName = "Invoke-EpicDateImporterSelected"
-    $menuItem9.MenuSection = "@Date Importer|Epic"
+    $menuItem9.Description = "Export GOG licenses list"
+    $menuItem9.FunctionName = "Export-GogLicenses"
+    $menuItem9.MenuSection = "@Date Importer|GOG"
 
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem10.Description = "Import dates of all Epic games"
-    $menuItem10.FunctionName = "Invoke-EpicDateImporterAll"
+    $menuItem10.Description = "Import dates of selected Epic games"
+    $menuItem10.FunctionName = "Invoke-EpicDateImporterSelected"
     $menuItem10.MenuSection = "@Date Importer|Epic"
 
     $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem11.Description = "Export Epic licenses list"
-    $menuItem11.FunctionName = "Export-EpicLicenses"
+    $menuItem11.Description = "Import dates of all Epic games"
+    $menuItem11.FunctionName = "Invoke-EpicDateImporterAll"
     $menuItem11.MenuSection = "@Date Importer|Epic"
 
-    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11
+    $menuItem12 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem12.Description = "Export Epic licenses list"
+    $menuItem12.FunctionName = "Export-EpicLicenses"
+    $menuItem12.MenuSection = "@Date Importer|Epic"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12
 }
 
 function Invoke-DateImporterSelected
@@ -213,6 +218,39 @@ function Export-Results
             $PlayniteApi.Dialogs.ShowMessage("Results exported successfully.", "Steam Date Importer");
         }
     }
+}
+
+function Set-DatesFromInput
+{
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+
+    $dateInput = $PlayniteApi.Dialogs.SelectString("Enter date to import in the format `"'dd/MM/yyyy HH:mm'`":", "Date Importer", "");
+    if ($dateInput.Result -eq $false)
+    {
+        exit
+    }
+
+    try {
+        $date = $dateInput.SelectedString -replace '/', '-'
+        $date = [datetime]::parseexact($date, 'dd-MM-yyyy HH:mm', $null)
+    } catch {
+        $PlayniteApi.Dialogs.ShowErrorMessage("Error.`n`"$($dateInput.SelectedString)`" is in the wrong format.", "Date Importer");
+        return
+    }
+
+    $dateModified = 0
+    foreach ($game in $gameDatabase){
+        if ($game.Added -ne $dateInput)
+        {
+            $gameDateOld = $game.Added
+            $game.Added = $date
+            $PlayniteApi.Database.Games.Update($Game)
+            $gameDateNew = $game.Added
+            $__logger.Info("Date Importer - Changed date of `"$($game.name)`", Old date: `"$gameDateOld`", New date: `"$gameDateNew`"")
+            $dateModified++
+        }
+    }
+    $PlayniteApi.Dialogs.ShowMessage("Changed added date of $dateModified games.", "Date Importer");
 }
 
 function Set-DatesFromLicenses
@@ -488,7 +526,7 @@ function Add-SteamDates
         $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
         return
     }
-    
+
     Set-DatesFromLicenses $libraryName $LicensesList $gameDatabase
 }
 
