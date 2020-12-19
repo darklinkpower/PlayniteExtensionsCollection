@@ -301,6 +301,11 @@ function Set-DatesFromLicenses
         $GameDatesList.Add($GameDates)
     }
 
+    if ($libraryName -eq "Steam")
+    {
+        $webView.Close()
+    }
+    
     Export-Results $libraryName $gamedatabase $countMatchLicense $countNoLicense $CountNewDate $gameDatesList
 }
 
@@ -381,6 +386,7 @@ function Get-EpicLicenses
         }
     }
     
+    $webView.Close()
     return $LicensesList
 }
 
@@ -458,6 +464,8 @@ function Get-GogLicenses
            break
         }
     }
+    
+    $webView.Close()
     return $LicensesList
 }
 
@@ -640,6 +648,7 @@ function Get-SteamLicenses
         $webView.NavigateAndWait($LicensesUrl)
         $LicensesHtmlContent = $webView.GetPageSource()
         $webView.Close()
+
         $LicenseMatches = ([regex]$regex).Matches($LicensesHtmlContent)
         if ($LicenseMatches.count -eq 0)
         {
