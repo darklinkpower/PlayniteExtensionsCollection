@@ -305,7 +305,7 @@ function Set-DatesFromLicenses
     {
         $webView.Close()
     }
-    
+
     Export-Results $libraryName $gamedatabase $countMatchLicense $countNoLicense $CountNewDate $gameDatesList
 }
 
@@ -488,7 +488,7 @@ function Add-SteamDates
         $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
         return
     }
-    Export-Licenses $libraryName $LicensesList
+    
     Set-DatesFromLicenses $libraryName $LicensesList $gameDatabase
 }
 
