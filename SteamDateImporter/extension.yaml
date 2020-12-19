@@ -4,7 +4,7 @@ Author: darklinkpower
 Version: 1.1
 Module: SteamDateImporter.ps1
 Type: Script
-Icon: icon.png
+Icon: icon.jpg
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteScriptExtensions
