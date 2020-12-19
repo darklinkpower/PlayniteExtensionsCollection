@@ -345,24 +345,25 @@ function Get-EpicLicenses
     )
     
     [System.Collections.Generic.List[object]]$LicensesList = @()
-    $apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?page={0}"
-
+    $apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?page={0}&lastCreatedAt={1}"
     $loginStatus = Get-LoginStatus "https://www.epicgames.com" ".epicgames.com" "EPIC_SSO"
+    
     if ($loginStatus -eq $false)
     {
-        $PlayniteApi.Dialogs.ShowMessage("User is not loged in to $libraryName.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage("User is not logged in to $libraryName.", "$libraryName Date Importer");
         return $LicensesList
     }
-
+	$CreatedAt = [DateTime]::UtcNow.ToString('u') -replace " ", "T"
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
     for ($i = 0; $true; $i++) {
-        $apiUrl = $apiTemplate -f $i
+		$apiUrl = $apiTemplate -f $i, $CreatedAt
         $webView.NavigateAndWait($apiUrl)
         $json = Get-JsonFromPageSource $webView.GetPageSource()
         if ($json.orders.Count -gt 0)
         {
             foreach ($order in $json.orders) {
                 $date = (Get-Date 01.01.1970).AddSeconds($($order.createdAtMillis -replace ".{3}$"))
+                $CreatedAt = $date.ToString('u') -replace " ", "T";
 
                 foreach ($item in $order.items) {
                     $product = [PSCustomObject]@{
@@ -376,7 +377,7 @@ function Get-EpicLicenses
         }
         else
         {
-           break
+            break
         }
     }
     
