@@ -19,11 +19,11 @@ function GetGameMenuItems
 
 function Invoke-ReviewViewer
 {
-  Invoke-YoutubeVideo "Review"
+    Invoke-YoutubeVideo "Review"
 }
 function Invoke-TrailerViewer
 {
-  Invoke-YoutubeVideo "Trailer"
+    Invoke-YoutubeVideo "Trailer"
 }
 
 function Get-DownloadString
@@ -48,20 +48,20 @@ function Get-DownloadString
 
 function Invoke-YoutubeVideo
 {
-  param (
-    $videoType
-  )
+    param (
+        $videoType
+    )
 
-  $ExtensionName = "Review viewer"
-  
-  $game = $PlayniteApi.MainView.SelectedGames | Select-Object -last 1
-    
+    $ExtensionName = "Review viewer"
+
+    $game = $PlayniteApi.MainView.SelectedGames | Select-Object -last 1
+
     $query = "$($game.name -replace " ", "+" -replace "&", "and")+$videoType"
     $uri = "https://www.youtube.com/results?search_query={0}" -f $query
     $webContent = Get-DownloadString $uri
     if ($null -eq $webContent)
     {
-      exit
+        exit
     }
 
     $webContent -match '"videoId":"((.+?(?=")))"'
@@ -78,17 +78,17 @@ function Invoke-YoutubeVideo
     # Generate html
     $html = "
     <head>
-      <title>$($game.name) - Review</title>
+        <title>$($game.name) - Review</title>
     </head>
-    
+
     <body style='margin:0'>
-      <div>
-        <iframe width='100%' height='100%'
-          src='$youtubeLink'
-          frameborder='0'
-          allow='accelerometer; clipboard-write; encrypted-media; gyroscope;'>
-        </iframe>
-      </div>
+        <div>
+            <iframe width='100%' height='100%'
+                src='$youtubeLink'
+                frameborder='0'
+                allow='accelerometer; clipboard-write; encrypted-media; gyroscope;'>
+            </iframe>
+        </div>
     </body>"
 
     $webView = $PlayniteApi.WebViews.CreateView(1280, 750)
