@@ -1,120 +1,192 @@
 function global:GetGameMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "480p Trailer"
+    $menuItem.Description =  "Steam SD Trailer"
     $menuItem.FunctionName = "SteamTrailers480p"
-    $menuItem.MenuSection = "Steam Trailers"
+    $menuItem.MenuSection = "Video"
    
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "HD Trailer"
+    $menuItem2.Description =  "Steam HD Trailer"
     $menuItem2.FunctionName = "SteamTrailersMax"
-    $menuItem2.MenuSection = "Steam Trailers"
+    $menuItem2.MenuSection = "Video"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Microtrailer"
+    $menuItem3.Description =  "Steam Microtrailer"
     $menuItem3.FunctionName = "SteamTrailersMicro"
-    $menuItem3.MenuSection = "Steam Trailers"
+    $menuItem3.MenuSection = "Video"
 
     return $menuItem, $menuItem2, $menuItem3
+}
+
+function Get-RequestStatusCode
+{
+    param (
+        $url
+    )
+    
+    try {
+        $request = [System.Net.WebRequest]::Create($url)
+        $request.Method = "HEAD"
+        $response = $request.GetResponse()
+        return $response.StatusCode
+    } catch {
+        $statusCode = $_.Exception.InnerException.Response.StatusCode
+        $errorMessage = $_.Exception.Message
+        $__logger.Info("Error connecting to server. Error: $errorMessage")
+        if ($statusCode -ne 'NotFound')
+        {
+            $PlayniteApi.Dialogs.ShowMessage("Error connecting to server. Error: $errorMessage");
+        }
+        return $statusCode
+    }
+}
+
+function Get-UriHeaders
+{
+    param (
+        $url
+    )
+    try {
+        $url = 'https://steamcdn-a.akamaihd.net/steam/apps/2567408603/microtrailer.webm'
+        $request = [System.Net.WebRequest]::Create($url)
+        $request.Method = "HEAD"
+        $response = $request.GetResponse()
+        return $response
+    } catch {
+        $errorMessage = $_.Exception.Message
+        $__logger.Info("Error downloading headers. Error: $errorMessage")
+        $PlayniteApi.Dialogs.ShowMessage("Error downloading headers. Error: $errorMessage");
+        return
+    }
+}
+
+function Get-DownloadString
+{
+    param (
+        $url
+    )
+    
+    try {
+        $webClient = New-Object System.Net.WebClient
+        $webClient.Encoding = [System.Text.Encoding]::UTF8
+        $DownloadedString = $webClient.DownloadString($url)
+        $webClient.Dispose()
+        return $DownloadedString
+    } catch {
+        $errorMessage = $_.Exception.Message
+        $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
+        $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+        return
+    }
 }
 
 function Get-SteamAppList
 {
     param (
-        [string]$AppListPath
+        $appListPath
     )
 
-    try {
-        # Download Steam App list and convert App Names
-        $Uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
-        [array]$AppListContent = (Invoke-WebRequest $Uri | ConvertFrom-Json).applist.apps
-        foreach ($SteamApp in $AppListContent) {
-            $SteamApp.name = $($SteamApp.name).ToLower() -replace '[^\p{L}\p{Nd}]', ''
+    $uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
+    $steamAppList = Get-DownloadString $uri
+    if ($null -ne $steamAppList)
+    {
+        [array]$appListContent = ($steamAppList | ConvertFrom-Json).applist.apps
+        foreach ($steamApp in $appListContent) {
+            $steamApp.name = $steamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         }
-        
-        # Save Json file locally
-        ConvertTo-Json $AppListContent -Depth 2  -Compress | Out-File -Encoding 'UTF8' -FilePath $AppListPath
+        ConvertTo-Json $appListContent -Depth 2 -Compress | Out-File -Encoding 'UTF8' -FilePath $appListPath
         $__logger.Info("Steam Trailers - Downloaded AppList")
-    } catch {
-        $ErrorMessage = $_.Exception.Message
-        $__logger.Info("Steam Trailers - Error downloading Steam AppList database. Error: $ErrorMessage")
-        $PlayniteApi.Dialogs.ShowMessage("Error downloading Steam AppList database. Error: $ErrorMessage", "Steam Trailers");
+    }
+    else
+    {
         exit
     }
 }
 
-function Get-SteamVideo() {
+function Get-SteamAppId
+{
     param (
-        [object]$Game,
-        [string]$VideoQuality
+        $game
     )
-    # Check if it's a Steam Game and continue if true
-    if ($game.Source.name -eq "Steam")
-    {
-        # Use GameId for Steam games
-        $AppId = $game.GameId
-    }
 
+    # Use GameId for Steam games
+    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -eq "SteamLibrary")
+    {
+        return $game.GameId
+    }
     else
     {
         # Look for Steam Store URL in links for other games
         foreach ($link in $game.Links) {
             switch -regex ($link.Url) {
                 "https?://store.steampowered.com/app/(\d+)/?\w*/?" {
-                $AppId = $matches[1]}
+                return $matches[1]}
             }
         }
     }
+
     if (!$AppId)
     {
         # Get Steam AppList
-        $AppListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
-        if (!(Test-Path $AppListPath))
+        $appListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
+        if (!(Test-Path $appListPath))
         {
-            Get-SteamAppList -AppListPath $AppListPath
+            Get-SteamAppList -AppListPath $appListPath
         }
 
         # Try to search for AppId by searching in local Steam AppList database
-        [object]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
-        $Gamename = $($game.name).ToLower() -replace '[^\p{L}\p{Nd}]', ''
-        foreach ($SteamApp in $AppList) {
-            if ($SteamApp.name -eq $Gamename) 
+        [object]$AppList = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
+        $gameName = $game.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
+        foreach ($steamApp in $AppList) {
+            if ($steamApp.name -eq $gameName) 
             {
-                [string]$AppId = $SteamApp.appid
-                break
+                return $steamApp.appid
             }
         }
         if (!$AppId)
         {
             # Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
-            $AppListLastWrite = (get-item $AppListPath).LastWriteTime
-            $TimeSpan = new-timespan -days 2
-            if (((get-date) - $AppListLastWrite) -gt $TimeSpan)
+            $AppListLastWrite = (Get-Item $appListPath).LastWriteTime
+            $TimeSpan = New-Timespan -days 2
+            if (((Get-date) - $AppListLastWrite) -gt $TimeSpan)
             {
-                Get-SteamAppList -AppListPath $AppListPath
-
-                # Try to search for AppId again by searching in the new downloaded AppList
-                [object]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
+                Get-SteamAppList -AppListPath $appListPath
+                [object]$AppList = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
                 foreach ($SteamApp in $AppList) {
                     if ($SteamApp.name -eq $Gamename) 
                     {
-                        [string]$AppId = $SteamApp.appid
-                        break
+                        return $SteamApp.appid
                     }
                 }
             }
         }
     }
-    
-    # Continue only if AppId was obtained
-    if ($AppId)
+}
+
+function Get-SteamVideo
+{
+    param (
+        $game,
+        $videoQuality
+    )
+
+    if ($game.platform.name -ne "PC")
+    {
+        $PlayniteApi.Dialogs.ShowMessage("PC game not selected", "Steam Trailers");
+        exit
+    }
+    $appId = Get-SteamAppId $game
+
+    if ($appId)
     {
         # Set Steam API url and download json file
-        $SteamAPI = 'https://store.steampowered.com/api/appdetails?appids=' + "$AppId"
-        try { 
-            $json = Invoke-WebRequest -uri $SteamAPI -TimeoutSec '10' | ConvertFrom-Json
+        $steamApi = "https://store.steampowered.com/api/appdetails?appids={0}" -f $appId
+        try {
+            $json = Get-DownloadString $steamApi | ConvertFrom-Json
         } catch {
             $ErrorMessage = $_.Exception.Message
             $PlayniteApi.Dialogs.ShowMessage("Couldn't download game information. Error: $ErrorMessage");
@@ -125,8 +197,16 @@ function Get-SteamVideo() {
         {
             # Obtain video url from json file if available
             $VideoId = $json.$AppId.data.movies[0].id
-            $global:VideoMicro = 'https://steamcdn-a.akamaihd.net/steam/apps/' + "$VideoId" + '/microtrailer.webm'
-            $global:VideoUrl = $json.$AppId.data.movies[0].webm.$VideoQuality
+            
+            if (($videoQuality -eq "480") -or ($videoQuality -eq "max"))
+            {
+                $videoUrl = $json.$AppId.data.movies[0].webm.$VideoQuality
+            }
+            else
+            {
+                $videoUrl = "https://steamcdn-a.akamaihd.net/steam/apps/{0}/microtrailer.webm" -f $VideoId
+            }
+            return $videoUrl
         }
         else
         {
@@ -143,14 +223,15 @@ function Get-SteamVideo() {
     }
 }
 
-function Invoke-HtmlLaunch() {
+function Invoke-HtmlLaunch
+{
     param (
-        [object]$game,
-        [string]$VideoTitle,
-        [int]$VideoWidth,
-        [int]$VideoHeight,
-        [string]$VideoExtraArguments,
-        [string]$VideoUrl
+        $game,
+        $VideoTitle,
+        $webviewWidth,
+        $webviewHeight,
+        $VideoExtraArguments,
+        $videoUrl
     )
     
     # Generate html
@@ -167,7 +248,7 @@ function Invoke-HtmlLaunch() {
       </script>
     </head>
     
-    <body>
+    <body style='margin:0'>
       <div class='container'>
         <video id='video' class='video-js vjs-fill'  
           width='100%' height='100%'
@@ -175,68 +256,43 @@ function Invoke-HtmlLaunch() {
           preload='auto'
           data-setup='{}'
           $VideoExtraArguments>
-          <source src='$VideoUrl' type='video/webm'>
+          <source src='$videoUrl' type='video/webm'>
         </video>
-        </div>
+      </div>
     </body>"
     
     # Open html in webview
-    $webView = $PlayniteApi.WebViews.CreateView($VideoWidth, $VideoHeight)
+    $webView = $PlayniteApi.WebViews.CreateView($webviewWidth, $webviewHeight)
     $webView.Navigate("data:text/html," + $html)
     $webView.OpenDialog()
+    $webView.Dispose()
 }
 
 function SteamTrailers480p
 {
-    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.platform.name -eq "PC"} | Select-Object -last 1
-    if ($GameDatabase.count -ne 1)
-    {
-        $PlayniteApi.Dialogs.ShowMessage("PC game not selected", "Steam Trailers");
-        exit
-    }
-    $VideoTitle = "480p Trailer"
-    $VideoQuality = "480"
-    $VideoWidth = 886
-    $VideoHeight = 535
-    Get-SteamVideo -Game $GameDatabase -VideoQuality $VideoQuality
-    Invoke-HtmlLaunch -Game $GameDatabase -VideoTitle $VideoTitle -VideoWidth $VideoWidth -VideoHeight $VideoHeight -VideoUrl $VideoUrl
+    $game = $PlayniteApi.MainView.SelectedGames | Select-Object -last 1
+    $videoUrl = Get-SteamVideo -Game $game -VideoQuality "480"
+    Invoke-HtmlLaunch -Game $game -VideoTitle "SD Trailer" -webviewWidth 880 -webviewHeight 528 -VideoExtraArguments "" -VideoUrl $videoUrl
 }
 
 function SteamTrailersMax
 {
-    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.platform.name -eq "PC"} | Select-Object -last 1
-    if ($GameDatabase.count -ne 1)
-    {
-        $PlayniteApi.Dialogs.ShowMessage("PC game not selected", "Steam Trailers");
-        exit
-    }
-    $VideoTitle = "HD Trailer"
-    $VideoQuality = "max"
-    $VideoWidth = 1312
-    $VideoHeight = 775
-    Get-SteamVideo -Game $GameDatabase -VideoQuality $VideoQuality
-    Invoke-HtmlLaunch -Game $GameDatabase -VideoTitle $VideoTitle -VideoWidth $VideoWidth -VideoHeight $VideoHeight -VideoUrl $VideoUrl
+    $game = $PlayniteApi.MainView.SelectedGames | Select-Object -last 1
+    $videoUrl = Get-SteamVideo -Game $game -VideoQuality "max"
+    Invoke-HtmlLaunch -Game $game -VideoTitle "HD Trailer" -webviewWidth 1280 -webviewHeight 750 -VideoExtraArguments "" -VideoUrl $videoUrl
 }
 
 function SteamTrailersMicro
 {
-    $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.platform.name -eq "PC"} | Select-Object -last 1
-    if ($GameDatabase.count -ne 1)
+    $game = $PlayniteApi.MainView.SelectedGames | Select-Object -last 1
+    $videoUrl = Get-SteamVideo -Game $game -VideoQuality "micro"
+    $statusCode = Get-RequestStatusCode $videoUrl
+    if ($statusCode -eq 'OK')
     {
-        $PlayniteApi.Dialogs.ShowMessage("PC game not selected", "Steam Trailers");
-        exit
+        Invoke-HtmlLaunch -Game $game -VideoTitle "Microtrailer" -webviewWidth 880 -webviewHeight 528 -VideoExtraArguments "loop='true' autoplay muted" -VideoUrl $videoUrl
     }
-    $VideoTitle = "Microtrailer"
-    $VideoWidth = 886
-    $VideoHeight = 535
-    $VideoExtraArguments = "loop='true' autoplay muted"
-    Get-SteamVideo -Game $GameDatabase
-    try {
-        Invoke-WebRequest $VideoMicro -Method Head
-    } catch {
-        $PlayniteApi.Dialogs.ShowMessage("Microtrailer for `"$($GameDatabase.name)`" not available", "Steam Trailers");
-        exit
+    elseif ($statusCode -ne 'NotFound')
+    {
+        $PlayniteApi.Dialogs.ShowMessage("Microtrailer for `"$($game.name)`" not available", "Steam Trailers");
     }
-    $VideoUrl = $VideoMicro
-    Invoke-HtmlLaunch -Game $GameDatabase -VideoTitle $VideoTitle -VideoWidth $VideoWidth -VideoHeight $VideoHeight -VideoExtraArguments $VideoExtraArguments -VideoUrl $VideoUrl
 }
