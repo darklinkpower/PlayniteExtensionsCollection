@@ -103,74 +103,86 @@ function OpenMenu
     <Grid.Resources>
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
     </Grid.Resources>
-    <Border Margin="40,50,273.6,0" VerticalAlignment="Top" Height="25" Width="180" HorizontalAlignment="Left">
-        <TextBlock TextWrapping="Wrap" Text="Game Selection" VerticalAlignment="Center" Width="180"/>
-    </Border>
-    <ComboBox Name="CbGameSelection" SelectedIndex="0" HorizontalAlignment="Left" Margin="245,50,0,0" VerticalAlignment="Top" Height="25" Width="200">
-        <ComboBoxItem Content="All games in database" HorizontalAlignment="Stretch"/>
-        <ComboBoxItem Content="Selected Games" HorizontalAlignment="Stretch"/>
-    </ComboBox>
-    <Border Margin="40,90,273.6,0" VerticalAlignment="Top" Width="180" Height="25" HorizontalAlignment="Left">
-        <TextBlock TextWrapping="Wrap" Text="Media type selection" VerticalAlignment="Center" Margin="0,4,-0.6,4.8" Width="180"/>
-    </Border>
-    <ComboBox Name="CbMediaType" SelectedIndex="0" HorizontalAlignment="Left" Margin="245,90,0,0" VerticalAlignment="Top" Width="200" Height="25">
-        <ComboBoxItem Content="Cover Image" HorizontalAlignment="Stretch"/>
-        <ComboBoxItem Content="Background Image" HorizontalAlignment="Stretch"/>
-        <ComboBoxItem Content="Icon" HorizontalAlignment="Stretch"/>
-    </ComboBox>
-    <TabControl Name="ControlTools" HorizontalAlignment="Left" Height="185" Margin="40,143,34.6,44" VerticalAlignment="Top">
-        <TabItem Header="Missing Media">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold" Grid.RowSpan="2"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that are missing the selected media type." VerticalAlignment="Top" Width="303" Grid.ColumnSpan="2"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Optimization">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type image resolution is too big. These type of media will decrease performance in Playnite." VerticalAlignment="Top" Width="303" Grid.ColumnSpan="2"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Aspect Ratio">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered aspect ratio." VerticalAlignment="Top" Width="303"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" Text="Enter aspect ratio" VerticalAlignment="Top" Width="260" Height="20"/>
-                <TextBox Name="BoxAspectRatioWidth" HorizontalAlignment="Left" Height="25" Margin="140,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
-                <TextBlock HorizontalAlignment="Left" Margin="180,90,0,0" TextWrapping="Wrap" Text=":" VerticalAlignment="Top" Width="20" Height="20" TextAlignment="Center"/>
-                <TextBox Name="BoxAspectRatioHeight" HorizontalAlignment="Left" Height="25" Margin="200,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Resolution">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered resolution." VerticalAlignment="Top" Width="303"/>
-                <TextBox Name="BoxResolutionWidth" HorizontalAlignment="Left" Height="25" Margin="77,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="50"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="20"><Run Text="Enter "/><Run Text="resolution in pixels"/></TextBlock>
-                <TextBox Name="BoxResolutionHeight" HorizontalAlignment="Left" Height="25" Margin="197,119,0,-11.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="20" Text="Width"/>
-                <TextBlock HorizontalAlignment="Left" Margin="137,119,0,-11.8" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Height="20" Text="Height"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Size">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is bigger than the entered size." VerticalAlignment="Top" Width="303"/>
-                <TextBox Name="BoxSize" HorizontalAlignment="Left" Height="25" Margin="17,120,0,-12.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" Text="Enter maximum size" VerticalAlignment="Top" Width="260" Height="20"/>
-                <TextBlock HorizontalAlignment="Left" Margin="72,120,0,-12.8" TextWrapping="Wrap" Text="kb" VerticalAlignment="Top" Width="35" Height="25"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Extension">
-            <Grid>
-                <TextBlock HorizontalAlignment="Left" Margin="17,20,0,0" TextWrapping="Wrap" Text="Description:" VerticalAlignment="Top" Height="20" FontWeight="Bold"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,40,0,0" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is the entered extension" VerticalAlignment="Top" Width="303"/>
-                <TextBox Name="BoxExtension" HorizontalAlignment="Left" Height="25" Margin="17,120,0,-12.8" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="123"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="260" Height="20"><Run Text="Enter "/><Run Text="image extension"/></TextBlock>
-            </Grid>
-        </TabItem>
-    </TabControl>
-    <Button Content="Update Tags" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,357,0,0" Name="ButtonUpdateTags" IsDefault="True"/>
+
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+            <TextBlock TextWrapping="Wrap" Text="Game Selection:" VerticalAlignment="Center" MinWidth="140"/>
+            <ComboBox Name="CbGameSelection" SelectedIndex="0" MinHeight="25" MinWidth="200" VerticalAlignment="Center" Margin="10,0,0,0">
+                <ComboBoxItem Content="All games in database" HorizontalAlignment="Stretch"/>
+                <ComboBoxItem Content="Selected Games" HorizontalAlignment="Stretch"/>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+            <TextBlock TextWrapping="Wrap" Text="Media type selection:" VerticalAlignment="Center" MinWidth="140"/>
+            <ComboBox Name="CbMediaType" SelectedIndex="0" MinHeight="25" MinWidth="200" VerticalAlignment="Center" Margin="10,0,0,0">
+                <ComboBoxItem Content="Cover Image" HorizontalAlignment="Stretch"/>
+                <ComboBoxItem Content="Background Image" HorizontalAlignment="Stretch"/>
+                <ComboBoxItem Content="Icon" HorizontalAlignment="Stretch"/>
+            </ComboBox>
+        </StackPanel>
+        <TabControl Name="ControlTools" HorizontalAlignment="Left" MinHeight="220" Margin="0,0,0,15">
+            <TabItem Header="Missing Media">
+                <StackPanel>
+                    <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
+                    <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that are missing the selected media type."/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Optimization">
+                <StackPanel>
+                    <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
+                    <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type image resolution is too big. These type of media will decrease performance in Playnite."/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Aspect Ratio">
+                <StackPanel>
+                    <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
+                    <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered aspect ratio."/>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="Enter aspect ratio:" VerticalAlignment="Center"/>
+                        <TextBox Name="BoxAspectRatioWidth" Margin="10,0,0,15" MinHeight="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
+                        <TextBlock Margin="10,0,0,15" TextWrapping="Wrap" Text=":" VerticalAlignment="Center" TextAlignment="Center"/>
+                        <TextBox Name="BoxAspectRatioHeight" Margin="10,0,0,15" MinHeight="25" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Resolution">
+                <StackPanel>
+                    <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
+                    <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered resolution."/>
+                    <TextBlock Text="Enter resolution in pixels (px)" HorizontalAlignment="Left" Margin="0,15,0,10" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock TextWrapping="Wrap" Text="Width:" VerticalAlignment="Center"/>
+                        <TextBox Name="BoxResolutionWidth" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                        <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Height:" VerticalAlignment="Center"/>
+                        <TextBox Name="BoxResolutionHeight" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Size">
+                <StackPanel>
+                    <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
+                    <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is bigger than the entered size."/>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <TextBlock TextWrapping="Wrap" Text="Maximum size:" VerticalAlignment="Center"/>
+                        <TextBox Name="BoxSize" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                        <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="kb" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Extension">
+                <StackPanel>
+                    <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
+                    <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is the entered extension"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <TextBlock TextWrapping="Wrap" Text="Image extension:" VerticalAlignment="Center"/>
+                        <TextBox Name="BoxExtension" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <Button Content="Update Tags" HorizontalAlignment="Center" Margin="0,0,0,15" Name="ButtonUpdateTags" IsDefault="True"/>
+    </StackPanel>
 </Grid>
 "@
 
@@ -438,7 +450,7 @@ function Invoke-GameMediaTools
                 if ($MediaType -eq "Cover")
                 {
                     $game.CoverImage = $null
-                    
+
                 }
                 elseif ($MediaType -eq "Background")
                 {
@@ -463,11 +475,11 @@ function Invoke-GameMediaTools
                 {
                     continue
                 }
-                &$ToolFunctionName $ImageWidth $ImageHeight $ExtraParameters
+                $tagOperation = &$ToolFunctionName $ImageWidth $ImageHeight $ExtraParameters
             }
             elseif ($AditionalOperation -eq "ImagePath")
             {
-                &$ToolFunctionName $ImageFilePath $ExtraParameters
+                $tagOperation = &$ToolFunctionName $ImageFilePath $ExtraParameters
             }
             else
             {
@@ -627,11 +639,11 @@ function ToolCheckOptimization
     $ImageMegaPixels = [math]::Round((($ImageWidth * $ImageHeight) / 1000000), 3)
     if ($ImageMegaPixels -gt $OptimizedSize)
     {
-        $global:TagOperation = "AddTag"
+        return "AddTag"
     }
     else
     {
-        $global:TagOperation = "RemoveTag"
+        return "RemoveTag"
     }
 }
 
@@ -651,11 +663,11 @@ function ToolAspectRatio
     $ImageAspectRatio = $imageWidth/$imageHeight
     if ($ImageAspectRatio -eq $AspectRatio)
     {
-        $global:TagOperation = "RemoveTag"
+        return "RemoveTag"
     }
     else
     {
-        $global:TagOperation = "AddTag"
+        return "AddTag"
     }
 }
 function ToolImageResolution
@@ -673,11 +685,11 @@ function ToolImageResolution
 
     if ( ($Width -eq $imageWidth) -and ($Height -eq $imageHeight) )
     {
-        $global:TagOperation = "RemoveTag"
+        return "RemoveTag"
     }
     else
     {
-        $global:TagOperation = "AddTag"
+        return "AddTag"
     }
 }
 function ToolImageSize
@@ -695,11 +707,11 @@ function ToolImageSize
     $ImageSize = (Get-Item $ImageFilePath).length/1KB
     if ($ImageSize -gt $MaxSize)
     {
-        $global:TagOperation = "AddTag"
+        return "AddTag"
     }
     else
     {
-        $global:TagOperation = "RemoveTag"
+        return "RemoveTag"
     }
 }
 
@@ -718,10 +730,10 @@ function ToolImageExtension
     $ImageExtension = [IO.Path]::GetExtension($ImageFilePath) -replace '^\.', ''
     if ($ImageExtension -eq $Extension)
     {
-        $global:TagOperation = "AddTag"
+        return "AddTag"
     }
     else
     {
-        $global:TagOperation = "RemoveTag"
+        return "RemoveTag"
     }
 }
