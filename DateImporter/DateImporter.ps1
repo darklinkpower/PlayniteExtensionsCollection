@@ -1,15 +1,17 @@
-function global:GetMainMenuItems
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Import dates of selected Epic, GOG and Steam games"
-    $menuItem1.FunctionName = "Invoke-SteamDateImporterSelected"
+    $menuItem1.FunctionName = "Invoke-DateImporterSelected"
     $menuItem1.MenuSection = "@Date Importer"
     
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem2.Description = "Import dates of all Epic, GOG and Steam games"
-    $menuItem2.FunctionName = "Invoke-SteamDateImporterSelected"
+    $menuItem2.FunctionName = "Invoke-DateImporterAll"
     $menuItem2.MenuSection = "@Date Importer"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
@@ -67,7 +69,6 @@ function global:GetMainMenuItems
 
 function Invoke-DateImporterSelected
 {
-    
     Invoke-SteamDateImporterSelected
     Invoke-GogDateImporterSelected
     Invoke-EpicDateImporterSelected
