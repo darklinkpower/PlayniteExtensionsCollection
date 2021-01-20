@@ -150,7 +150,7 @@ function Get-LoginStatusViaJson
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
     $webView.Navigate($navigateUrl)
     $pageSource = $webView.GetPageSource()
-    $webView.Close()
+    $webView.Dispose()
 
     $jsonValid = Get-IsValidJson $pageSource
 
@@ -160,12 +160,12 @@ function Get-LoginStatusViaJson
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($navigateUrl)
         $webView.OpenDialog()
-        $webView.Close()
+        $webView.Dispose()
 
         $webView = $PlayniteApi.WebViews.CreateOffscreenView()
         $webView.Navigate($navigateUrl)
         $pageSource = $webView.GetPageSource()
-        $webView.Close()
+        $webView.Dispose()
         $jsonValid = Get-IsValidJson $pageSource
 
         if ($jsonValid -eq $false)
@@ -194,19 +194,19 @@ function Get-LoginStatus
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
     $webView.Navigate($navigateUrl)
     $sessionIdCookie = $webView.GetCookies() | Where-Object {$_.Domain -eq $domain} | Where-Object {$_.Name -eq $cookieName}
-    $webView.Close()
+    $webView.Dispose()
     if ($null -eq $sessionIdCookie)
     {
         $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in.", "$libraryName Date Importer");
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($navigateUrl)
         $webView.OpenDialog()
-        $webView.Close()
+        $webView.Dispose()
 
         $webView = $PlayniteApi.WebViews.CreateOffscreenView()
         $webView.Navigate($navigateUrl)
         $sessionIdCookie = $webView.GetCookies() | Where-Object {$_.Domain -eq $domain} | Where-Object {$_.Name -eq $cookieName}
-        $webView.Close()
+        $webView.Dispose()
 
         if ($null -eq $sessionIdCookie)
         {
@@ -398,7 +398,7 @@ function Set-DatesFromLicenses
 
     if ($libraryName -eq "Steam")
     {
-        $webView.Close()
+        $webView.Dispose()
     }
 
     Export-Results $libraryName $gamedatabase $countMatchLicense $countNoLicense $CountNewDate $gameDatesList
@@ -482,7 +482,7 @@ function Get-EpicLicenses
         }
     }
     
-    $webView.Close()
+    $webView.Dispose()
     return $LicensesList
 }
 
@@ -562,7 +562,7 @@ function Get-GogLicenses
         }
     }
     
-    $webView.Close()
+    $webView.Dispose()
     return $LicensesList
 }
 
@@ -723,7 +723,7 @@ function Get-SteamLicenses
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
     $webView.NavigateAndWait($LicensesUrl)
     $LicensesHtmlContent = $webView.GetPageSource()
-    $webView.Close()
+    $webView.Dispose()
 
     # Use regex to get all licenses
     $regex = '(?:<td class="license_date_col">)(.*?(?=<\/td>))(?:<\/td>\s+<td>)(?:\s+<div class="free_license_remove_link">(?:[\s\S]*?(?=<\/div>))<\/div>)?(?:\s+)([^\t]+)'
@@ -737,14 +737,14 @@ function Get-SteamLicenses
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($LicensesUrl)
         $webView.OpenDialog()
-        $webView.Close()
+        $webView.Dispose()
 
         # Use Webview to get licenses page content (Offscreen)
         $LicensesUrl = 'https://store.steampowered.com/account/licenses/?l=english'
         $webView = $PlayniteApi.WebViews.CreateOffscreenView()
         $webView.NavigateAndWait($LicensesUrl)
         $LicensesHtmlContent = $webView.GetPageSource()
-        $webView.Close()
+        $webView.Dispose()
 
         $LicenseMatches = ([regex]$regex).Matches($LicensesHtmlContent)
         if ($LicenseMatches.count -eq 0)
