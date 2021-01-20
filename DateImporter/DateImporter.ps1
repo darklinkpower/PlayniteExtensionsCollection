@@ -127,6 +127,62 @@ function Get-JsonFromPageSource
     return $json
 }
 
+function Get-IsValidJson 
+{
+    param (
+        $string
+    )
+
+    try {
+        $string -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json
+        return $true
+    } catch {
+        return $false
+    }    
+}
+
+function Get-LoginStatusViaJson
+{
+    param (
+        $navigateUrl
+    )
+
+    $webView = $PlayniteApi.WebViews.CreateOffscreenView()
+    $webView.Navigate($navigateUrl)
+    $pageSource = $webView.GetPageSource()
+    $webView.Close()
+
+    $jsonValid = Get-IsValidJson $pageSource
+
+    if ($jsonValid -eq $false)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in.", "$libraryName Date Importer");
+        $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
+        $webView.Navigate($navigateUrl)
+        $webView.OpenDialog()
+        $webView.Close()
+
+        $webView = $PlayniteApi.WebViews.CreateOffscreenView()
+        $webView.Navigate($navigateUrl)
+        $pageSource = $webView.GetPageSource()
+        $webView.Close()
+        $jsonValid = Get-IsValidJson $pageSource
+
+        if ($jsonValid -eq $false)
+        {
+            return $false
+        }
+        else
+        {
+            return $true
+        }
+    }
+    else
+    {
+        return $true  
+    }
+}
+
 function Get-LoginStatus
 {
     param (
@@ -141,7 +197,7 @@ function Get-LoginStatus
     $webView.Close()
     if ($null -eq $sessionIdCookie)
     {
-        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in to $libraryName.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in.", "$libraryName Date Importer");
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($navigateUrl)
         $webView.OpenDialog()
@@ -390,13 +446,14 @@ function Get-EpicLicenses
     
     [System.Collections.Generic.List[object]]$LicensesList = @()
     $apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?page={0}&lastCreatedAt={1}"
-    $loginStatus = Get-LoginStatus "https://www.epicgames.com" ".epicgames.com" "EPIC_SSO_RM"
-    
+    $loginStatusNavigateUrl = $apiTemplate -f "0", [DateTime]::UtcNow.ToString('u') -replace " ", "T"
+    $loginStatus = Get-LoginStatusViaJson $loginStatusNavigateUrl
     if ($loginStatus -eq $false)
     {
         $PlayniteApi.Dialogs.ShowMessage("User is not logged in to $libraryName.", "$libraryName Date Importer");
         return $LicensesList
     }
+
 	$CreatedAt = [DateTime]::UtcNow.ToString('u') -replace " ", "T"
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
     for ($i = 0; $true; $i++) {
@@ -471,13 +528,14 @@ function Get-GogLicenses
     
     [System.Collections.Generic.List[object]]$LicensesList = @()
     $apiTemplate = "https://www.gog.com/account/settings/orders/data?canceled=0&completed=1&in_progress=1&not_redeemed=1&page={0}&pending=1&redeemed=1"
-
-    $loginStatus = Get-LoginStatus "https://www.gog.com/" ".gog.com" "gog-al"
+    $loginStatusNavigateUrl = $apiTemplate -f "0"
+    $loginStatus = Get-LoginStatusViaJson $loginStatusNavigateUrl
     if ($loginStatus -eq $false)
     {
         $PlayniteApi.Dialogs.ShowMessage("User is not loged in to $libraryName.", "$libraryName Date Importer");
         return $LicensesList
     }
+    
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
     for ($i = 0; $true; $i++) {
         $apiUrl = $apiTemplate -f $i
