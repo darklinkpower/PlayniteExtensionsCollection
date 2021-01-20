@@ -127,14 +127,14 @@ function Get-JsonFromPageSource
     return $json
 }
 
-function Get-IsValidJson 
+function Get-IsJsonValidFromPage
 {
     param (
-        $string
+        $pageSource
     )
 
     try {
-        $string -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json
+        $pageSource -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json
         return $true
     } catch {
         return $false
@@ -148,11 +148,11 @@ function Get-LoginStatusViaJson
     )
 
     $webView = $PlayniteApi.WebViews.CreateOffscreenView()
-    $webView.Navigate($navigateUrl)
+    $webView.NavigateAndWait($navigateUrl)
     $pageSource = $webView.GetPageSource()
     $webView.Dispose()
 
-    $jsonValid = Get-IsValidJson $pageSource
+    $jsonValid = Get-IsJsonValidFromPage $pageSource
 
     if ($jsonValid -eq $false)
     {
@@ -163,10 +163,10 @@ function Get-LoginStatusViaJson
         $webView.Dispose()
 
         $webView = $PlayniteApi.WebViews.CreateOffscreenView()
-        $webView.Navigate($navigateUrl)
+        $webView.NavigateAndWait($navigateUrl)
         $pageSource = $webView.GetPageSource()
         $webView.Dispose()
-        $jsonValid = Get-IsValidJson $pageSource
+        $jsonValid = Get-IsJsonValidFromPage $pageSource
 
         if ($jsonValid -eq $false)
         {
