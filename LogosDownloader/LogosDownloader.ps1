@@ -152,11 +152,16 @@ function Get-SteamLogos
             } catch {
                 $errorMessage = $_.Exception.Message
                 $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-                $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+                $countErrors++
             }
         }
     }
-    $PlayniteApi.Dialogs.ShowMessage("Downloaded logo of $counter games", "Logos Downloader");
+    $results = "Downloaded logo of $counter games."
+    if ($countErrors -gt 0)
+    {
+        $results += ". There were $countErrors errors, view Playnite log for details."
+    }
+    $PlayniteApi.Dialogs.ShowMessage($results, "Logos Downloader");
 }
 
 function Get-SteamLogosLocal
