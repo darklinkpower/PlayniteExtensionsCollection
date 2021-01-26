@@ -184,6 +184,7 @@ function Get-SteamLogos
                 $webClient.Encoding = [System.Text.Encoding]::UTF8
                 $webClient.DownloadFile($logoUri, $logoPath)
                 $webClient.Dispose()
+                Start-Sleep -Seconds 1
                 $counter++
             } catch {
                 $errorMessage = $_.Exception.Message
