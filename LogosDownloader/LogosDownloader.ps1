@@ -5,21 +5,55 @@ function GetGameMenuItems
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "Download Logos Downloader for selected games"
-    $menuItem.FunctionName = "Get-SteamLogos"
-    $menuItem.MenuSection = "Logos Downloader"
+    $menuItem.Description =  "Open extra metadata directory"
+    $menuItem.FunctionName = "Invoke-DirectoryOpen"
+    $menuItem.MenuSection = "Extra Metadata tools"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "Add logo from local file of selected game"
-    $menuItem2.FunctionName = "Get-SteamLogosLocal"
-    $menuItem2.MenuSection = "Logos Downloader"
+    $menuItem2.Description =  "Download Steam logos for selected games"
+    $menuItem2.FunctionName = "Get-SteamLogos"
+    $menuItem2.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Add logo from url of selected game"
-    $menuItem3.FunctionName = "Get-SteamLogosUri"
-    $menuItem3.MenuSection = "Logos Downloader"
+    $menuItem3.Description =  "Add logo from local file of selected game"
+    $menuItem3.FunctionName = "Get-SteamLogosLocal"
+    $menuItem3.MenuSection = "Extra Metadata tools|Logos"
 
-    return $menuItem, $menuItem2, $menuItem3
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem4.Description =  "Add logo from url of selected game"
+    $menuItem4.FunctionName = "Get-SteamLogosUri"
+    $menuItem4.MenuSection = "Extra Metadata tools|Logos"
+
+    $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem5.Description =  "Convert icons to custom logos asset"
+    $menuItem5.FunctionName = "Get-IconToLogoConvert"
+    $menuItem5.MenuSection = "Extra Metadata tools|Logos"
+
+    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5
+}
+
+function Invoke-DirectoryOpen
+{
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    foreach ($game in $gameDatabase) {
+        $directory = Set-GameDirectory $game
+        Invoke-Item $Directory
+    }
+    
+}
+
+function Set-GameDirectory
+{
+    param (
+        $game
+    )
+
+    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\" + "$($game.Id)" 
+    if(!(Test-Path $directory))
+    {
+        New-Item -ItemType Directory -Path $directory -Force
+    }
+    return $directory
 }
 
 function Get-DownloadString
@@ -132,7 +166,8 @@ function Get-SteamLogos
     $logoUriTemplate = "https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png"
     $counter = 0
     foreach ($game in $gameDatabase) {
-        $logoPath = $PlayniteApi.Database.DatabasePath + "\Files\" + "$($game.Id)\" + "Logo.png"
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"        
         if (Test-Path $logoPath)
         {
             continue
@@ -161,7 +196,7 @@ function Get-SteamLogos
     {
         $results += ". There were $countErrors errors, view Playnite log for details."
     }
-    $PlayniteApi.Dialogs.ShowMessage($results, "Logos Downloader");
+    $PlayniteApi.Dialogs.ShowMessage($results, "Extra Metadata tools");
 }
 
 function Get-SteamLogosLocal
@@ -170,15 +205,16 @@ function Get-SteamLogosLocal
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -gt 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Logos Downloader");
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
         return
     }
 
     foreach ($game in $gameDatabase) {
-        $logoPath = $PlayniteApi.Database.DatabasePath + "\Files\" + "$($game.Id)\" + "Logo.png"
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
         $logoPathLocal = $PlayniteApi.Dialogs.SelectFile("logo|*.png")
         Copy-Item $logoPathLocal -Destination $logoPath -Force
-        $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Logos Downloader");
+        $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
     }
 }
 
@@ -188,14 +224,15 @@ function Get-SteamLogosUri
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -gt 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Logos Downloader");
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
         return
     }
 
     foreach ($game in $gameDatabase) {
-        $logoPath = $PlayniteApi.Database.DatabasePath + "\Files\" + "$($game.Id)\" + "Logo.png"
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
 
-        $logoUriInput = $PlayniteApi.Dialogs.SelectString("Enter logo Url:", "Logos Downloader", "");
+        $logoUriInput = $PlayniteApi.Dialogs.SelectString("Enter logo Url:", "Extra Metadata tools", "");
         
         # Check if input was entered
         if ($logoUriInput.result -eq "True")
@@ -205,11 +242,42 @@ function Get-SteamLogosUri
                 $webClient = New-Object System.Net.WebClient
                 $webClient.DownloadFile($logoUri, $logoPath)
                 $webClient.Dispose()
-                $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Logos Downloader");
+                $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
             } catch {
                 $errorMessage = $_.Exception.Message
                 $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
                 $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+            }
+        }
+    }
+}
+
+function Get-IconToLogoConvert
+{
+    $convertChoice = $PlayniteApi.Dialogs.ShowMessage("This function will convert the icons of the selected games to logos for use in compatible themes.
+    `nThis is intended to use in case you have used a theme that has used the icons asset as a replacement for logos.
+    `nFor safety it will only process icons that have the `".png`" file extension.
+    `nChanges are not reversible.`n`nDo you wish to continue?", "Extra Metadata tools", 4)
+    if ($convertChoice -ne "Yes")
+    {
+        return
+    }
+
+    # Set GameDatabase
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Icon}
+
+    foreach ($game in $gameDatabase) {
+        $iconPath = $PlayniteApi.Database.GetFullFilePath($game.Icon)
+        $iconExtension = [System.IO.Path]::GetExtension($iconPath)
+        if ($iconExtension -eq ".png")
+        {
+            if (Test-Path $iconPath)
+            {
+                $extraMetadataDirectory = Set-GameDirectory $game
+                $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+                Move-Item $iconPath -Destination $logoPath -Force
+                $game.Icon = $null
+                $PlayniteApi.Database.Games.Update($game)
             }
         }
     }
