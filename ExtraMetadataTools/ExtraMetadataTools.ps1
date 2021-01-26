@@ -51,7 +51,8 @@ function Set-GameDirectory
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\" + "$($game.Id)" 
     if(!(Test-Path $directory))
     {
-        New-Item -ItemType Directory -Path $directory -Force
+        #Store new Item in variable to fix directory returning 2 times
+        $newItem = New-Item -ItemType Directory -Path $directory -Force
     }
     return $directory
 }
@@ -167,7 +168,7 @@ function Get-SteamLogos
     $counter = 0
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
-        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"        
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
         if (Test-Path $logoPath)
         {
             continue
