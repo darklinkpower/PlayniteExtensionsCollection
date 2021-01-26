@@ -214,6 +214,11 @@ function Get-SteamLogosLocal
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+        if (Test-Path $logoPath)
+        {
+            $PlayniteApi.Dialogs.ShowMessage("Existing logo detected. This function is only compatible with games without existing logo file.", "Extra Metadata tools");
+            return
+        }
         $logoPathLocal = $PlayniteApi.Dialogs.SelectFile("logo|*.png")
         Copy-Item $logoPathLocal -Destination $logoPath -Force
         $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
@@ -233,7 +238,11 @@ function Get-SteamLogosUri
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
-
+        if (Test-Path $logoPath)
+        {
+            $PlayniteApi.Dialogs.ShowMessage("Existing logo detected. This function is only compatible with games without existing logo file.", "Extra Metadata tools");
+            return
+        }
         $logoUriInput = $PlayniteApi.Dialogs.SelectString("Enter logo Url:", "Extra Metadata tools", "");
         
         # Check if input was entered
@@ -277,6 +286,10 @@ function Get-IconToLogoConvert
             {
                 $extraMetadataDirectory = Set-GameDirectory $game
                 $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+                if (Test-Path $logoPath)
+                {
+                    continue
+                }
                 Move-Item $iconPath -Destination $logoPath -Force
                 $game.Icon = $null
                 $PlayniteApi.Database.Games.Update($game)
