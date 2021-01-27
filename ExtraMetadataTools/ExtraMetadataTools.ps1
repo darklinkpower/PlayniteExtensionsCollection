@@ -32,6 +32,58 @@ function GetGameMenuItems
     return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5
 }
 
+function OnApplicationStarted
+{
+    $playniteConfigPath = Join-Path $PlayniteApi.Paths.ConfigurationPath -ChildPath "config.json"
+    if (Test-Path $playniteConfigPath)
+    {
+        $playniteConfig = [System.IO.File]::ReadAllLines($playniteConfigPath) | ConvertFrom-Json
+        $themeInUse = $playniteConfig.Theme
+        $constantsPath = $PlayniteApi.Paths.ConfigurationPath + "\Themes\Desktop\" + $themeInUse + "\Constants.xaml"
+        if (Test-Path $constantsPath)
+        {
+            $configChanged = $false
+            $constantsContent = [System.IO.File]::ReadAllLines($constantsPath)
+            
+            # Path value replacer
+            $keyMatchRegex = "<sys:String x:Key=`"ExtraMetadataPath`">(.*?(?=<\/sys:String>))<\/sys:String>"
+            $keyMatch = ([regex]$keyMatchRegex).Matches($constantsContent)
+            if ($keyMatch.count -eq 1)
+            {
+                $extraMetadataOriginalValue = $keyMatch[0].Value
+                $extraMetadataNewValue = "<sys:String x:Key=`"ExtraMetadataPath`">{0}</sys:String>" -f $PlayniteApi.Paths.ConfigurationPath
+                if ($extraMetadataOriginalValue -ne $extraMetadataNewValue)
+                {
+                    $constantsContent = $constantsContent -replace [Regex]::Escape($extraMetadataOriginalValue), $extraMetadataNewValue
+                    $__logger.Info("Extra Metadata Tools - Changed path from `"$extraMetadataOriginalValue`" to `"$extraMetadataNewValue`"")
+                    $configChanged = $true
+                }
+            }
+
+            # Bool value replacer
+            $keyMatchRegex = "<sys:Boolean x:Key=`"UseAbsoluteExtraMetadataPath`">(.*?(?=<\/sys:Boolean>))<\/sys:Boolean>"
+            $keyMatch = ([regex]$keyMatchRegex).Matches($constantsContent)
+            if ($keyMatch.count -eq 1)
+            {
+                $extraMetadataOriginalValue = $keyMatch[0].Value
+                $extraMetadataNewValue = "<sys:Boolean x:Key=`"UseAbsoluteExtraMetadataPath`">{0}</sys:Boolean>" -f "true"
+                if ($extraMetadataOriginalValue -ne $extraMetadataNewValue)
+                {
+                    $constantsContent = $constantsContent -replace [Regex]::Escape($extraMetadataOriginalValue), $extraMetadataNewValue
+                    $__logger.Info("Extra Metadata Tools - Changed bool string from `"$extraMetadataOriginalValue`" to `"$extraMetadataNewValue`"")
+                    $configChanged = $true
+                }
+            }
+
+            if ($configChanged -eq $true)
+            {
+                [System.IO.File]::WriteAllLines($constantsPath, $constantsContent)
+                $PlayniteApi.Dialogs.ShowMessage("Extra Metadata configuration for `"$themeInUse`" updated.`nPlease restart Playnite to make changes take effect.", "Extra Metadata Tools");
+            }
+        }
+    }
+}
+
 function Invoke-DirectoryOpen
 {
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
@@ -48,10 +100,10 @@ function Set-GameDirectory
         $game
     )
 
-    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\" + "$($game.Id)" 
+    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\" + "games\" + $game.Id
     if(!(Test-Path $directory))
     {
-        #Store new Item in variable to fix directory returning 2 times
+        # Store new Item in variable to fix function returning 2 times
         $newItem = New-Item -ItemType Directory -Path $directory -Force
     }
     return $directory
@@ -174,7 +226,7 @@ function Get-SteamLogos
             continue
         }
 
-        $steamAppId =  Get-SteamAppId $game
+        $steamAppId = Get-SteamAppId $game
         if ($steamAppId)
         {
             $logoUri = $logoUriTemplate -f $steamAppId
@@ -214,11 +266,6 @@ function Get-SteamLogosLocal
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
-        if (Test-Path $logoPath)
-        {
-            $PlayniteApi.Dialogs.ShowMessage("Existing logo detected. This function is only compatible with games without existing logo file.", "Extra Metadata tools");
-            return
-        }
         $logoPathLocal = $PlayniteApi.Dialogs.SelectFile("logo|*.png")
         Copy-Item $logoPathLocal -Destination $logoPath -Force
         $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
@@ -238,11 +285,6 @@ function Get-SteamLogosUri
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
-        if (Test-Path $logoPath)
-        {
-            $PlayniteApi.Dialogs.ShowMessage("Existing logo detected. This function is only compatible with games without existing logo file.", "Extra Metadata tools");
-            return
-        }
         $logoUriInput = $PlayniteApi.Dialogs.SelectString("Enter logo Url:", "Extra Metadata tools", "");
         
         # Check if input was entered
@@ -286,10 +328,6 @@ function Get-IconToLogoConvert
             {
                 $extraMetadataDirectory = Set-GameDirectory $game
                 $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
-                if (Test-Path $logoPath)
-                {
-                    continue
-                }
                 Move-Item $iconPath -Destination $logoPath -Force
                 $game.Icon = $null
                 $PlayniteApi.Database.Games.Update($game)
