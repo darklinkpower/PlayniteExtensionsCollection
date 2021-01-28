@@ -40,6 +40,17 @@ function OnApplicationStarted
         $playniteConfig = [System.IO.File]::ReadAllLines($playniteConfigPath) | ConvertFrom-Json
         $themeInUse = $playniteConfig.Theme
         $constantsPath = $PlayniteApi.Paths.ConfigurationPath + "\Themes\Desktop\" + $themeInUse + "\Constants.xaml"
+        if (!(Test-Path $constantsPath))
+        {
+            $resolvePathsWildcard = $PlayniteApi.Paths.ConfigurationPath + "\Themes\Desktop\" + $themeInUse + "*"
+            $resolvedPaths = Resolve-Path -Path $resolvePathsWildcard
+            $PlayniteApi.Dialogs.ShowMessage("Found $($resolvedPaths.count) `"$resolvedPaths`"");
+            if ($resolvedPaths.Count -eq 1)
+            {
+                $constantsPath = $resolvedPaths[0].Path + "\Constants.xaml"
+                $PlayniteApi.Dialogs.ShowMessage("Constants not found `"$constantsPath`"");
+            }
+        }
         if (Test-Path $constantsPath)
         {
             $configChanged = $false
