@@ -29,7 +29,13 @@ function GetGameMenuItems
     $menuItem5.FunctionName = "Get-IconToLogoConvert"
     $menuItem5.MenuSection = "Extra Metadata tools|Logos"
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5
+    $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem6.Description =  "Delete logos of selected games"
+    $menuItem6.FunctionName = "Remove-LogosSelectedGames"
+    $menuItem6.MenuSection = "Extra Metadata tools|Logos"
+    
+
+    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6
 }
 
 function OnApplicationStarted
@@ -353,4 +359,31 @@ function Get-IconToLogoConvert
             }
         }
     }
+}
+
+function Remove-LogosSelectedGames
+{
+    param (
+        $game
+    )
+
+    $convertChoice = $PlayniteApi.Dialogs.ShowMessage("This function will delete the logos for the selected games.
+    `nChanges are not reversible.`n`nDo you wish to continue?", "Extra Metadata tools", 4)
+    if ($convertChoice -ne "Yes")
+    {
+        return
+    }
+
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    $removedLogos = 0
+    foreach ($game in $gameDatabase) {
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+        if (Test-Path $logoPath)
+        {
+            Remove-Item $logoPath
+            $removedLogos++
+        }
+    }
+    $PlayniteApi.Dialogs.ShowMessage("Removed logos of $removedLogos games.", "Extra Metadata tools")
 }
