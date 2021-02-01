@@ -34,15 +34,25 @@ function GetGameMenuItems
 
 function OnApplicationStarted
 {
-    $playniteConfigPath = Join-Path $PlayniteApi.Paths.ConfigurationPath -ChildPath "config.json"
+    if ($PlayniteApi.ApplicationInfo.Mode -eq "Desktop")
+    {
+        $themesSubPath = "\Themes\Desktop\"
+        $configurationFile = "config.json"
+    }
+    else
+    {
+        $themesSubPath = "\Themes\Fullscreen\"
+        $configurationFile = "fullscreenConfig.json"
+    }
+    $playniteConfigPath = Join-Path $PlayniteApi.Paths.ConfigurationPath -ChildPath $configurationFile
     if (Test-Path $playniteConfigPath)
     {
         $playniteConfig = [System.IO.File]::ReadAllLines($playniteConfigPath) | ConvertFrom-Json
         $themeInUse = $playniteConfig.Theme
-        $constantsPath = $PlayniteApi.Paths.ConfigurationPath + "\Themes\Desktop\" + $themeInUse + "\Constants.xaml"
+        $constantsPath = $PlayniteApi.Paths.ConfigurationPath + $themesSubPath + $themeInUse + "\Constants.xaml"
         if (!(Test-Path $constantsPath))
         {
-            $resolvePathsWildcard = $PlayniteApi.Paths.ConfigurationPath + "\Themes\Desktop\" + $themeInUse + "*"
+            $resolvePathsWildcard = $PlayniteApi.Paths.ConfigurationPath + $themesSubPath + $themeInUse + "*"
             $resolvedPaths = Resolve-Path -Path $resolvePathsWildcard
             if ($resolvedPaths.Count -eq 1)
             {
