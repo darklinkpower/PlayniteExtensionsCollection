@@ -72,7 +72,11 @@ function Add-EngineTag
         }
 
         try {
-            $gameInfo = Invoke-WebRequest $Uri | ConvertFrom-Json
+            $webClient = New-Object System.Net.WebClient
+            $webClient.Encoding = [System.Text.Encoding]::UTF8
+            $downloadedString = $webClient.DownloadString($uri)
+            $webClient.Dispose()
+            $gameInfo = $DownloadedString | ConvertFrom-Json
         } catch {
             $ErrorMessage = $_.Exception.Message
             $__logger.Error("$ExtensionName - Couldn't download game information of `"$($game.name)`" from PCGW. Error: `"$ErrorMessage`".")
@@ -131,8 +135,12 @@ function Get-SteamAppList
     $ExtensionName = "Game Engine Checker"
 
     try {
-        $Uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
-        [array]$AppListContent = (Invoke-WebRequest $Uri | ConvertFrom-Json).applist.apps
+        $uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
+        $webClient = New-Object System.Net.WebClient
+        $webClient.Encoding = [System.Text.Encoding]::UTF8
+        $downloadedString = $webClient.DownloadString($uri)
+        $webClient.Dispose()
+        [array]$AppListContent = ($downloadedString | ConvertFrom-Json).applist.apps
         foreach ($SteamApp in $AppListContent) {
             $SteamApp.name = $SteamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         }
