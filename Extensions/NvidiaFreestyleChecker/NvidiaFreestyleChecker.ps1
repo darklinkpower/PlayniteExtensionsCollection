@@ -23,8 +23,11 @@ function Update-IsFreestyleEnabled
     $CounterFeatureAdded = 0
     
     try {
-        $Uri = "https://www.nvidia.com/es-la/geforce/geforce-experience/games/"
-        $WebContent = Invoke-WebRequest $Uri
+        $uri = "https://www.nvidia.com/es-la/geforce/geforce-experience/games/"
+        $webClient = New-Object System.Net.WebClient
+        $webClient.Encoding = [System.Text.Encoding]::UTF8
+        $WebContent = $webClient.DownloadString($uri)
+        $webClient.Dispose()
     } catch {
         $ErrorMessage = $_.Exception.Message
         $PlayniteApi.Dialogs.ShowErrorMessage("Couldn't download NVIDIA Freestyle database. Error: $ErrorMessage", $ExtensionName);
@@ -33,7 +36,7 @@ function Update-IsFreestyleEnabled
     
     # Use regex to get supported games
     $regex = '(?:<div class="gameName(?:.*?(?=freestyle))freestyle(?:.*?(?=">))">\s+)([^\n]+)'
-    $UrlMatches = ([regex]$regex).Matches($WebContent.Content)
+    $UrlMatches = ([regex]$regex).Matches($WebContent)
 
     [System.Collections.Generic.List[string]]$SupportedGames = @()
     foreach ($Match in $UrlMatches) {
