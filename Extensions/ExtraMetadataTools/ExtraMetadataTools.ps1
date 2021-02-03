@@ -33,9 +33,28 @@ function GetGameMenuItems
     $menuItem6.Description =  "Delete logos of selected games"
     $menuItem6.FunctionName = "Remove-LogosSelectedGames"
     $menuItem6.MenuSection = "Extra Metadata tools|Logos"
-    
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6
+    $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem7.Description =  "Open themes directory"
+    $menuItem7.FunctionName = "Invoke-ThemesDirectoryRootOpen"
+    $menuItem7.MenuSection = "Extra Metadata tools|Themes"
+
+    $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem8.Description =  "Set profile picture"
+    $menuItem8.FunctionName = "Set-ProfilePicture"
+    $menuItem8.MenuSection = "Extra Metadata tools|Themes"
+
+    $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem9.Description =  "Set background music"
+    $menuItem9.FunctionName = "Set-BackgroundMusic"
+    $menuItem9.MenuSection = "Extra Metadata tools|Themes"
+
+    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem10.Description =  "Set background video"
+    $menuItem10.FunctionName = "Set-BackgroundVideo"
+    $menuItem10.MenuSection = "Extra Metadata tools|Themes"
+    
+    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10
 }
 
 function OnApplicationStarted
@@ -126,6 +145,50 @@ function Set-GameDirectory
     )
 
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\" + "games\" + $game.Id
+    if(!(Test-Path $directory))
+    {
+        # Store new Item in variable to fix function returning 2 times
+        $newItem = New-Item -ItemType Directory -Path $directory -Force
+    }
+    return $directory
+}
+
+function Invoke-ThemesDirectoryRootOpen
+{
+    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes"
+    if(!(Test-Path $directory))
+    {
+        # Store new Item in variable to fix function returning 2 times
+        $newItem = New-Item -ItemType Directory -Path $directory -Force
+    }
+    Invoke-Item $directory
+}
+
+function Set-FullscreenThemesDirectory
+{
+    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes\Fullscreen\"
+    if(!(Test-Path $directory))
+    {
+        # Store new Item in variable to fix function returning 2 times
+        $newItem = New-Item -ItemType Directory -Path $directory -Force
+    }
+    return $directory
+}
+
+function Set-DesktopThemesDirectory
+{
+    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes\Desktop\"
+    if(!(Test-Path $directory))
+    {
+        # Store new Item in variable to fix function returning 2 times
+        $newItem = New-Item -ItemType Directory -Path $directory -Force
+    }
+    return $directory
+}
+
+function Set-CommonThemesDirectory
+{
+    $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes\Common\"
     if(!(Test-Path $directory))
     {
         # Store new Item in variable to fix function returning 2 times
@@ -386,4 +449,58 @@ function Remove-LogosSelectedGames
         }
     }
     $PlayniteApi.Dialogs.ShowMessage("Removed logos of $removedLogos games.", "Extra Metadata tools")
+}
+
+function Set-ProfilePicture
+{
+    $imageFile = $PlayniteApi.Dialogs.SelectImagefile()
+    if ([string]::IsNullOrEmpty($imageFile))
+    {
+        return
+    }
+    $fileDestination = Set-CommonThemesDirectory | Join-Path -ChildPath "ProfilePicture.png"
+
+    if ([System.IO.Path]::GetExtension($imageFile) -eq ".png")
+    {
+        Copy-Item $imageFile $fileDestination -Force
+    }
+    else
+    {
+        try {
+            Add-Type -AssemblyName system.drawing
+            $imageFormat = “System.Drawing.Imaging.ImageFormat” -as [type]
+            $image = [drawing.image]::FromFile($imageFile)
+            $image.Save($fileDestination, $imageFormat::png)
+        } catch {
+            $errorMessage = $_.Exception.Message
+            $__logger.Info("Extra Metadata Tools - Error converting image file to png. Error: `"$errorMessage`"")
+            $PlayniteApi.Dialogs.ShowMessage("Error converting image file to png. Error: `"$errorMessage`"", "Extra Metadata Tools");
+            return
+        }
+    }
+    $PlayniteApi.Dialogs.ShowMessage("Profile picture set.", "Extra Metadata tools")
+}
+
+function Set-BackgroundMusic
+{
+    $file = $PlayniteApi.Dialogs.SelectFile("mp3|*.mp3")
+    if ([string]::IsNullOrEmpty($file))
+    {
+        return
+    }
+    $fileDestination = Set-FullscreenThemesDirectory | Join-Path -ChildPath "BackgroundMusic.mp3"
+    Copy-Item $file $fileDestination -Force
+    $PlayniteApi.Dialogs.ShowMessage("Background music set.", "Extra Metadata tools")
+}
+
+function Set-BackgroundVideo
+{
+    $file = $PlayniteApi.Dialogs.SelectFile("mp4|*.mp4")
+    if ([string]::IsNullOrEmpty($file))
+    {
+        return
+    }
+    $fileDestination = Set-FullscreenThemesDirectory | Join-Path -ChildPath "BackgroundVideo.mp4"
+    Copy-Item $file $fileDestination -Force
+    $PlayniteApi.Dialogs.ShowMessage("Background video set.", "Extra Metadata tools")
 }
