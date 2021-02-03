@@ -1,7 +1,7 @@
 ﻿Id: NVIDIA_Freestyle_Checker
 Name: NVIDIA Freestyle checker
 Author: darklinkpower
-Version: 1.0
+Version: 1.0.1
 Module: NvidiaFreestyleChecker.ps1
 Type: Script
 Icon: icon.png
