@@ -1,6 +1,8 @@
-function global:GetMainMenuItems
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Get rating for selected games"
@@ -48,8 +50,12 @@ function SteamDbRating
         {
             # Set Steam Db url and web request
             try {
-                $SteamApiSearchUrl = $SteamApiReviewsTemplate -f $AppId
-                $json = Invoke-WebRequest -Uri $SteamApiSearchUrl | ConvertFrom-Json
+                $steamApiSearchUrl = $SteamApiReviewsTemplate -f $AppId
+                $webClient = New-Object System.Net.WebClient
+                $webClient.Encoding = [System.Text.Encoding]::UTF8
+                $downloadedString = $webClient.DownloadString($steamApiSearchUrl)
+                $webClient.Dispose()
+                $json = $downloadedString | ConvertFrom-Json
             } catch {
                 $__logger.Warn("SteamDbRating - `"$($game.name)`" information couldn't be downloaded")
                 $CountErrors++
