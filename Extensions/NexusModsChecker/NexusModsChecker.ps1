@@ -31,6 +31,26 @@ function Invoke-AddToAllGames
     Add-NexusFeatureLinks $gameDatabase
 }
 
+function Get-DownloadString
+{
+    param (
+        $url
+    )
+    
+    try {
+        $webClient = New-Object System.Net.WebClient
+        $webClient.Encoding = [System.Text.Encoding]::UTF8
+        $DownloadedString = $webClient.DownloadString($url)
+        $webClient.Dispose()
+        return $DownloadedString
+    } catch {
+        $errorMessage = $_.Exception.Message
+        $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
+        $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+        return
+    }
+}
+
 function Add-NexusFeatureLinks
 {
     param(
@@ -46,16 +66,13 @@ function Add-NexusFeatureLinks
 
     $featureName = "Nexus Mods"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
-
-    $uri = "https://www.nexusmods.com/games"
-    try {
-        $webContent = Invoke-WebRequest $uri
-    } catch {
-        $ErrorMessage = $_.Exception.Message
-        $PlayniteApi.Dialogs.ShowErrorMessage("Couldn't download file. Error: $ErrorMessage", $ExtensionName);
-        exit
+    
+    $webContent = Get-DownloadString "https://www.nexusmods.com/games"
+    if ($null -eq $webContent)
+    {
+        return
     }
-    $webContent.RawContent -match 'var json = ((.*?(?=}];))}])'
+    $webContent -match 'var json = ((.*?(?=}];))}])'
     if ($matches)
     {
         $nexusGames = $matches[1] | ConvertFrom-Json
