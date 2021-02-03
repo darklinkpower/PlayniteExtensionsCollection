@@ -1,6 +1,8 @@
-function global:GetMainMenuItems
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Add games with Steam Id or URL"
@@ -149,8 +151,12 @@ function SteamGameImporter
 
                 # Verify is obtained AppId is valid and get game name with SteamAPI
                 try {
-                    $SteamAPI = 'https://store.steampowered.com/api/appdetails?appids={0}' -f $AppId
-                    $json = Invoke-WebRequest -uri $SteamAPI -TimeoutSec '10' | ConvertFrom-Json
+                    $steamAPI = 'https://store.steampowered.com/api/appdetails?appids={0}' -f $AppId
+                    $webClient = New-Object System.Net.WebClient
+                    $webClient.Encoding = [System.Text.Encoding]::UTF8
+                    $downloadedString = $webClient.DownloadString($steamAPI)
+                    $webClient.Dispose()
+                    $json = $downloadedString | ConvertFrom-Json
                     
                     # Sleep time to prevent error 429
                     Start-Sleep -Milliseconds 1200
@@ -276,8 +282,12 @@ function SteamGameUserDataImporter
         else
         {
             try {
-                $SteamApi = 'https://store.steampowered.com/api/appdetails?appids={0}' -f $OwnedAppId
-                $Json = Invoke-WebRequest -uri $SteamApi -TimeoutSec '10' | ConvertFrom-Json
+                $steamApi = 'https://store.steampowered.com/api/appdetails?appids={0}' -f $OwnedAppId
+                $webClient = New-Object System.Net.WebClient
+                $webClient.Encoding = [System.Text.Encoding]::UTF8
+                $downloadedString = $webClient.DownloadString($steamAPI)
+                $webClient.Dispose()
+                $Json = $downloadedString | ConvertFrom-Json
             } catch {
                 $ErrorMessage = $_.Exception.Message
                 $PlayniteApi.Dialogs.ShowMessage("Couldn't download Owned App Data. Error: $ErrorMessage", "Steam Game Importer");
