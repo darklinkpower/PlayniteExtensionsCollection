@@ -75,6 +75,7 @@ function OnApplicationStarted
         $playniteConfig = [System.IO.File]::ReadAllLines($playniteConfigPath) | ConvertFrom-Json
         $themeInUse = $playniteConfig.Theme
         $constantsPath = $PlayniteApi.Paths.ConfigurationPath + $themesSubPath + $themeInUse + "\Constants.xaml"
+        $manifestPath = $PlayniteApi.Paths.ConfigurationPath + $themesSubPath + $themeInUse + "\theme.yaml"
         if (!(Test-Path $constantsPath))
         {
             $resolvePathsWildcard = $PlayniteApi.Paths.ConfigurationPath + $themesSubPath + $themeInUse + "*"
@@ -82,6 +83,7 @@ function OnApplicationStarted
             if ($resolvedPaths.Count -eq 1)
             {
                 $constantsPath = $resolvedPaths[0].Path + "\Constants.xaml"
+                $manifestPath = $resolvedPaths[0].Path + "\theme.yaml"
             }
         }
         if (Test-Path $constantsPath)
@@ -122,7 +124,14 @@ function OnApplicationStarted
             if ($configChanged -eq $true)
             {
                 [System.IO.File]::WriteAllLines($constantsPath, $constantsContent)
-                $PlayniteApi.Dialogs.ShowMessage("Extra Metadata configuration for `"$themeInUse`" updated.`nPlease restart Playnite to make changes take effect.", "Extra Metadata Tools");
+                if (Test-Path $manifestPath)
+                {
+                    $themeManifest = [System.IO.File]::ReadAllLines($manifestPath)
+                    $regex = "^Name: ([^\n]+)"
+                    $nameProperty = $themeManifest | Select-String -Pattern $regex
+                    $themeInUse = $nameProperty -replace "Name: ", ""
+                }
+                $PlayniteApi.Dialogs.ShowMessage("Extra Metadata configuration for the theme `"$themeInUse`" updated.`nPlease restart Playnite to make changes take effect.", "Extra Metadata Tools");
             }
         }
     }
