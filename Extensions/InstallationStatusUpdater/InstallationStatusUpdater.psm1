@@ -1,24 +1,26 @@
 function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Path Updater - Point to new path of selected games"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemPathUpdaterDescription")
     $menuItem1.FunctionName = "InstallationPathUpdater"
     $menuItem1.MenuSection = "@Installation Status Updater"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Status Updater - Check installation status"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemStatusUpdaterDescription")
     $menuItem2.FunctionName = "InstallationStatusUpdater"
     $menuItem2.MenuSection = "@Installation Status Updater"
     
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Status Updater - Add selected games to ignore list"
+    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuAddIgnoreFeatureDescription")
     $menuItem3.FunctionName = "Add-IgnoreFeature"
     $menuItem3.MenuSection = "@Installation Status Updater"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = "Status Updater - Remove selected games from ignore list"
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuRemoveIgnoreFeatureDescription")
     $menuItem4.FunctionName = "Remove-IgnoreFeature"
     $menuItem4.MenuSection = "@Installation Status Updater"
 
@@ -96,12 +98,16 @@ function OnApplicationStarted
 }
 function InstallationStatusUpdater
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+
     Invoke-InstallationStatusCheck
 
     # Show finish dialogue with results and ask if user wants to export results
     if ($GamesProcessed.count -gt 0)
     {
-        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage("$MarkedUninstalled previously installed games were marked as uninstalled`n$MarkedInstalled previously uninstalled games were marked as installed`n`nDo you want to export results?", "Installation Status Updater", 4)
+        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCStatusUpdaterExportChoiceMessage") -f $MarkedUninstalled, $MarkedInstalled), "Installation Status Updater", 4)
         if ($ExportChoice -eq "Yes")
         {
             $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -115,29 +121,33 @@ function InstallationStatusUpdater
                 {
                     $GamesProcessed | Select-Object Name, GameImagePath, InstallationStatus, Platform | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
                 }
-                $PlayniteApi.Dialogs.ShowMessage("Results exported successfully.", "Installation Status Updater");
+                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExportSuccessMessage"), "Installation Status Updater");
             }
         }
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("$MarkedUninstalled previously installed games were marked as uninstalled`n$MarkedInstalled previously uninstalled games were marked as installed", "Installation Status Updater")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoChangesResultsMessage"), "Installation Status Updater")
     }
 }
 
 function InstallationPathUpdater
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+
     # Set GameDatabase
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object { ($_.GameImagePath) }
     
     # Set Counters
-    $CountPathChanged = 0
+    $countPathChanged = 0
     
     # Create collection for processed games
     [System.Collections.Generic.List[Object]]$GamesProcessed = @()
     
     # Select new directory to point installations
-    $PlayniteApi.Dialogs.ShowMessage("Select the new folder path to point the selected games", "Installation Path Updater")
+    $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCPathUpdaterSelectDirectoryMessage"), "Installation Path Updater")
     $NewDir = $PlayniteApi.Dialogs.SelectFolder()
     if (!$NewDir)
     {
@@ -155,23 +165,23 @@ function InstallationPathUpdater
         $game.GameImagePath = $GameImagePathNew
         $game.InstallDirectory = $NewDir
         $PlayniteApi.Database.Games.Update($game)
-        $CountPathChanged++
+        $countPathChanged++
         
         # Log information and add to processed games collection
         $__logger.Info("Installation Path Updater - Game: `"$($game.name)`" | OldPath: `"$GameImagePathOld`" | NewPath: `"$GameImagePathNew`"")
         $GameObject = [PSCustomObject]@{
 
-            Name  = "$($game.name)"
-            PathOld = "$GameImagePathOld"
-            PathNew = "$GameImagePathNew"
+            Name  = $game.name
+            PathOld = $GameImagePathOld
+            PathNew = $GameImagePathNew
         }
         $GamesProcessed.Add($GameObject)
     }
     
     # Show finish dialogue with results and ask if user wants to export results
-    if ($CountPathChanged -gt 0)
+    if ($countPathChanged -gt 0)
     {
-        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage("Changed install path of $CountPathChanged games.`n`nDo you want to export results?", "Installation Path Updater", 4)
+        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCPathUpdaterExportChoiceMessage") -f $countPathChanged), "Installation Path Updater", 4)
         if ($ExportChoice -eq "Yes")
         {
             $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -185,19 +195,23 @@ function InstallationPathUpdater
                 {
                     $GamesProcessed | Select-Object Name, PathOld, PathNew | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
                 }
-                $PlayniteApi.Dialogs.ShowMessage("Results exported successfully.", "Installation Path Updater");
+                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExportSuccessMessage"), "Installation Path Updater")
             }
         }
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("Changed install path of $CountPathChanged games.", "Installation Path Updater")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoChangesResultsMessage"), "Installation Path Updater")
     }
     Invoke-InstallationStatusCheck
 }
 
 function Add-IgnoreFeature
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+
     # Create Feature
     $featureName = "Ignore in Installation Status Updater"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
@@ -207,7 +221,7 @@ function Add-IgnoreFeature
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"}
     
     # Set counters
-    $FeatureAdded = 0
+    $featureAdded = 0
     
     # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
@@ -230,17 +244,21 @@ function Add-IgnoreFeature
             
             # Update game in database
             $PlayniteApi.Database.Games.Update($game)
-            $FeatureAdded++
+            $featureAdded++
             $__logger.Info("Added `"$featureName`" feature to `"$($game.name)`".")
         }
     }
     
     # Show finish dialogue
-    $PlayniteApi.Dialogs.ShowMessage("Added `"$featureName`" feature to $FeatureAdded games.","Installation Status Updater");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCStatusUpdaterAddIgnoreFeatureMessage") -f $featureName, $featureAdded),"Installation Status Updater")
 }
 
 function Remove-IgnoreFeature
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+
     # Create Feature
     $featureName = "Ignore in Installation Status Updater"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
@@ -250,7 +268,7 @@ function Remove-IgnoreFeature
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "00000000-0000-0000-0000-000000000000"}
     
     # Set counters
-    $FeatureRemoved = 0
+    $featureRemoved = 0
     
     # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
@@ -259,7 +277,7 @@ function Remove-IgnoreFeature
             # Remove feature from game
             $game.FeatureIds.Remove("$featureIds")
             $PlayniteApi.Database.Games.Update($game)
-            $FeatureRemoved++
+            $featureRemoved++
             $__logger.Info("Removed `"$featureName`" feature from `"$($game.name)`".")
         }
         else
@@ -269,5 +287,5 @@ function Remove-IgnoreFeature
     }
     
     # Show results dialogue
-    $PlayniteApi.Dialogs.ShowMessage("Removed `"$featureName`" feature from $FeatureRemoved games.","Installation Status Updater");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCStatusUpdaterRemoveIgnoreFeatureMessage") -f $featureName, $featureRemoved),"Installation Status Updater")
 }
