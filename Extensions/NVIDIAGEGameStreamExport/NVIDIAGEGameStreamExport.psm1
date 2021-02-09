@@ -1,17 +1,23 @@
-function global:GetMainMenuItems()
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Export selected games"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemExportSelectedGamesDescription")
     $menuItem1.FunctionName = "NVIDIAGameStreamExport"
     $menuItem1.MenuSection = "@NVIDIA GE GameStream Export"
     
     return $menuItem1
 }
 
-function global:NVIDIAGameStreamExport()
+function NVIDIAGameStreamExport
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set paths
     $PlayniteExecutablePath = Join-Path -Path $PlayniteApi.Paths.ApplicationPath -ChildPath "Playnite.DesktopApp.exe"
     $NvidiaShorcutsPath = Join-Path -Path $env:LocalAppData -ChildPath "NVIDIA Corporation\Shield Apps"
@@ -97,5 +103,5 @@ function global:NVIDIAGameStreamExport()
     }
 
     # Show finish dialogue with shortcut creation count
-    $PlayniteApi.Dialogs.ShowMessage("NVIDIA GameStream game shortcuts created: $ShortcutsCreatedCount", "NVIDIA GameStream Export");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $ShortcutsCreatedCount), "NVIDIA GameStream Export")
 }
