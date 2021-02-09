@@ -1,11 +1,13 @@
 function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $ExtensionName = "Game Engine Checker"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Add game engine tag to selected games"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddTagSelectedGamesDescription")
     $menuItem1.FunctionName = "Add-EngineTag"
     $menuItem1.MenuSection = "@$ExtensionName"
 
@@ -14,6 +16,10 @@ function GetMainMenuItems
 
 function Add-EngineTag
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+
     $ExtensionName = "Game Engine Checker"
     $pcgwApiTemplateSteam = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam+AppID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
     $pcgwApiTemplateGog = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom+ID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
@@ -79,8 +85,7 @@ function Add-EngineTag
             $gameInfo = $DownloadedString | ConvertFrom-Json
         } catch {
             $ErrorMessage = $_.Exception.Message
-            $__logger.Error("$ExtensionName - Couldn't download game information of `"$($game.name)`" from PCGW. Error: `"$ErrorMessage`".")
-            $PlayniteApi.Dialogs.ShowErrorMessage("Couldn't download game information of `"$($game.name)`" from PCGW. Error: `"$ErrorMessage`"", $ExtensionName);
+            $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCDownloadErrorMessage") -f $game.name, $ErrorMessage), $ExtensionName)
             break
         }
 
@@ -122,8 +127,7 @@ function Add-EngineTag
     }
 
     # Show finish dialogue with results
-    $Results = "Finished.`nAdded engine tag to $CountertagAdded games."
-    $PlayniteApi.Dialogs.ShowMessage($Results, $ExtensionName);
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $CountertagAdded), $ExtensionName)
 }
 
 function Get-SteamAppList
@@ -150,7 +154,7 @@ function Get-SteamAppList
     } catch {
         $ErrorMessage = $_.Exception.Message
         $__logger.Error("$ExtensionName - Error downloading Steam AppList database. Error: $ErrorMessage")
-        $PlayniteApi.Dialogs.ShowErrorMessage("Error downloading Steam AppList database. Error: $ErrorMessage", $ExtensionName);
+        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteamAppListDownloadErrorMessage") -f $ErrorMessage), $ExtensionName)
         exit
     }
 }
