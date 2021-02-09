@@ -2,7 +2,7 @@
 Name: Steam Viewer
 Author: darklinkpower
 Version: 1.1
-Module: SteamViewer.ps1
+Module: SteamViewer.psm1
 Type: Script
 Icon: icon.png
 Links:

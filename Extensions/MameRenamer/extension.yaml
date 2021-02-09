@@ -2,7 +2,7 @@
 Name: MAME Renamer
 Author: darklinkpower
 Version: 1.0
-Module: MameRenamer.ps1
+Module: MameRenamer.psm1
 Type: Script
 Icon: icon.png
 Links:

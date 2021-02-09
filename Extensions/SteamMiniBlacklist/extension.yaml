@@ -2,7 +2,7 @@
 Name: Steam Mini Blacklist
 Author: darklinkpower
 Version: 1.0.2
-Module: SteamMini.ps1
+Module: SteamMini.psm1
 Type: Script
 Icon: icon.png
 Links:

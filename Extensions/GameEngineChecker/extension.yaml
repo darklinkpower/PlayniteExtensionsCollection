@@ -2,7 +2,7 @@
 Name: Game Engine Checker
 Author: darklinkpower
 Version: 1.0.1
-Module: GameEngineChecker.ps1
+Module: GameEngineChecker.psm1
 Type: Script
 Icon: icon.jpg
 Links:

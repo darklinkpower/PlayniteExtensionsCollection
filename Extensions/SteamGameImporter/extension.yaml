@@ -2,7 +2,7 @@
 Name: Steam Game Importer
 Author: darklinkpower
 Version: 1.3.4
-Module: SteamGameImporter.ps1
+Module: SteamGameImporter.psm1
 Type: Script
 Icon: icon.png
 Links:

@@ -1,7 +1,7 @@
 ﻿Name: PCGamingWiki Missing Info
 Author: darklinkpower
 Version: 1.0
-Module: PCGamingWikiMissingInfo.ps1
+Module: PCGamingWikiMissingInfo.psm1
 Type: Script
 Icon: icon.png
 Functions:

@@ -2,7 +2,7 @@
 Name: Steam DB Rating
 Author: darklinkpower
 Version: 1.0.2
-Module: SteamDbRating.ps1
+Module: SteamDbRating.psm1
 Type: Script
 Icon: icon.png
 Links:

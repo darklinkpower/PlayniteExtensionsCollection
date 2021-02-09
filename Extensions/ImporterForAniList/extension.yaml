@@ -2,7 +2,7 @@
 Name: Importer for AniList
 Author: darklinkpower
 Version: 1.2.3
-Module: ImporterForAniList.ps1
+Module: ImporterForAniList.psm1
 Type: Script
 Icon: icon.png
 Links:

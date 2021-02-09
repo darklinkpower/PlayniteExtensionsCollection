@@ -2,7 +2,7 @@
 Name: Game Region Filler
 Author: darklinkpower
 Version: 1.0.1
-Module: GameRegionFiller.ps1
+Module: GameRegionFiller.psm1
 Type: Script
 Icon: icon.png
 Links:

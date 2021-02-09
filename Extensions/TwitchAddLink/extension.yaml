@@ -2,7 +2,7 @@
 Name: Twitch Add Link
 Author: darklinkpower
 Version: 1.1
-Module: TwitchAddLink.ps1
+Module: TwitchAddLink.psm1
 Type: Script
 Icon: icon.png
 Links:

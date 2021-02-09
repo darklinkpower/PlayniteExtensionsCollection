@@ -2,7 +2,7 @@
 Name: Date Importer
 Author: darklinkpower
 Version: 1.2.1
-Module: DateImporter.ps1
+Module: DateImporter.psm1
 Type: Script
 Icon: icon.jpg
 Links:

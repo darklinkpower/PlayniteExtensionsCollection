@@ -2,7 +2,7 @@
 Name: Review Viewer
 Author: darklinkpower
 Version: 1.1
-Module: ReviewViewer.ps1
+Module: ReviewViewer.psm1
 Type: Script
 Icon: icon.png
 Links:

@@ -2,7 +2,7 @@
 Name: PlayState
 Author: darklinkpower
 Version: 1.7.1
-Module: PlayState.ps1
+Module: PlayState.psm1
 Type: Script
 Icon: icon.png
 Links:

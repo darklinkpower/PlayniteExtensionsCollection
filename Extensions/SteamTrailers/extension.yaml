@@ -2,7 +2,7 @@
 Name: Steam Trailers
 Author: darklinkpower
 Version: 1.4.2
-Module: SteamTrailers.ps1
+Module: SteamTrailers.psm1
 Type: Script
 Icon: icon.png
 Links:

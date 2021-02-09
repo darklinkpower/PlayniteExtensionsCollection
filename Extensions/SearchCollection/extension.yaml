@@ -2,7 +2,7 @@
 Name: Search Collection
 Author: darklinkpower
 Version: 1.2
-Module: SearchCollection.ps1
+Module: SearchCollection.psm1
 Type: Script
 Icon: icon.png
 Links:

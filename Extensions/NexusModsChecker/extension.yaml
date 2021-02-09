@@ -2,7 +2,7 @@
 Name: Nexus Mods checker
 Author: darklinkpower
 Version: 1.0.1
-Module: NexusModsChecker.ps1
+Module: NexusModsChecker.psm1
 Type: Script
 Icon: icon.png
 Links:

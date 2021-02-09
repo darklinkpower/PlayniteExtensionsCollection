@@ -2,7 +2,7 @@
 Name: NVIDIA GeForce Now Enabler
 Author: darklinkpower
 Version: 1.3
-Module: NVIDIAGeForceNowEnabler.ps1
+Module: NVIDIAGeForceNowEnabler.psm1
 Type: Script
 Icon: icon.png
 Links:

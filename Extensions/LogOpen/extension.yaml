@@ -2,7 +2,7 @@
 Name: Log Open
 Author: darklinkpower
 Version: 1.0
-Module: LogOpen.ps1
+Module: LogOpen.psm1
 Type: Script
 Icon: icon.jpg
 Links:

@@ -2,7 +2,7 @@
 Name: Links Sorter
 Author: darklinkpower
 Version: 1.0.1
-Module: LinksSorter.ps1
+Module: LinksSorter.psm1
 Type: Script
 Icon: icon.png
 Links:

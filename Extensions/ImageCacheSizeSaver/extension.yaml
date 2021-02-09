@@ -2,7 +2,7 @@
 Name: Image Cache Size Saver
 Author: darklinkpower
 Version: 1.0.3
-Module: ImageCacheSizeSaver.ps1
+Module: ImageCacheSizeSaver.psm1
 Type: Script
 Icon: icon.png
 Links:
