@@ -14,12 +14,7 @@ function GetMainMenuItems
     $menuItem2.FunctionName = "DepressurizerProfileImporter"
     $menuItem2.MenuSection = "@Steam Game Importer"
 
-    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Import games not in Database via Parsing (Slow)"
-    $menuItem3.FunctionName = "SteamGameUserDataImporter"
-    $menuItem3.MenuSection = "@Steam Game Importer"
-
-    return $menuItem1, $menuItem2, $menuItem3
+    return $menuItem1, $menuItem2
 }
 
 function DepressurizerProfileImporter
@@ -219,102 +214,4 @@ function SteamGameImporter
         }
         
     }
-}
-
-function SteamGameUserDataImporter
-{
-    # Set Source
-    $SourceName = "Steam"
-    $Source = $PlayniteApi.Database.Sources.Add($SourceName)
-    
-    # Set Platform
-    $PlatformName = "PC"
-    $Platform = $PlayniteApi.Database.Platforms.Add($PlatformName)
-
-    # Create cache of Steam games in Database
-    $SteamGames = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "Steam"}
-    [System.Collections.Generic.List[string]]$SteamGamesInDatabase = @()
-    foreach ($game in $SteamGames) {
-        $SteamGamesInDatabase.Add($($game.GameId))
-    }
-
-    
-    # Use Webview to log in to Steam
-    $PlayniteApi.Dialogs.ShowMessage("Login to Steam to continue", "Steam Game Importer");
-    $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
-    $webView.Navigate('https://steamcommunity.com/login/home/')
-    $webView.OpenDialog()
-    $webView.Close()
-
-    try {
-        # Download Steam User Data
-        $webView = $PlayniteApi.WebViews.CreateOffscreenView()
-        $webView.NavigateAndWait('https://store.steampowered.com/dynamicstore/userdata/')
-        $SteamUserDataSource = $webView.GetPageSource() -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">','' -replace '</pre></body></html>',''
-        $webView.Close()
-
-        # Convert Json
-        $SteamUserData = $SteamUserDataSource | ConvertFrom-Json
-    } catch {
-        $ErrorMessage = $_.Exception.Message
-        $PlayniteApi.Dialogs.ShowMessage("Couldn't download Steam User Data. Error: $ErrorMessage", "Steam Game Importer");
-        exit
-    }
-
-    # Get cache of AppIds that are not games
-    $ExtensionPath = Join-Path -Path $PlayniteApi.Paths.ExtensionsDataPath -ChildPath 'SteamGameImporter'
-    $CacheSteamNoGamesPath = Join-Path -Path $ExtensionPath -ChildPath 'Cache.txt'
-    if (!(Test-Path $ExtensionPath))
-    {
-        New-Item -ItemType Directory -Path $ExtensionPath -Force
-    }
-    if (Test-Path $CacheSteamNoGamesPath)
-    {
-        [System.Collections.Generic.List[string]]$CacheSteamNoGames = [System.IO.File]::ReadAllLines($CacheSteamNoGamesPath)
-    }
-    $AddedGamesCount = 0
-
-    foreach ($OwnedAppId in $SteamUserData.rgOwnedApps) {
-        if ( ($SteamGamesInDatabase -contains $OwnedAppId) -or ($CacheSteamNoGames -contains $OwnedAppId) )
-        {
-            continue
-        }
-        else
-        {
-            try {
-                $steamApi = 'https://store.steampowered.com/api/appdetails?appids={0}' -f $OwnedAppId
-                $webClient = New-Object System.Net.WebClient
-                $webClient.Encoding = [System.Text.Encoding]::UTF8
-                $downloadedString = $webClient.DownloadString($steamAPI)
-                $webClient.Dispose()
-                $Json = $downloadedString | ConvertFrom-Json
-            } catch {
-                $ErrorMessage = $_.Exception.Message
-                $PlayniteApi.Dialogs.ShowMessage("Couldn't download Owned App Data. Error: $ErrorMessage", "Steam Game Importer");
-                exit
-            }
-        }
-        if ($Json.$OwnedAppId.data.type -eq "game")
-        {
-            # Create game in database
-            $NewGame = New-Object "Playnite.SDK.Models.Game"
-            $NewGame.Name = $Json.$OwnedAppId.data.name
-            $NewGame.GameId = $OwnedAppId
-            $NewGame.SourceId = $Source.Id
-            $NewGame.PlatformId = $Platform.Id
-            $NewGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
-            $PlayniteApi.Database.Games.Add($NewGame)
-            $AddedGamesCount++
-        }
-        else
-        {
-            "$OwnedAppId" | Out-File -Encoding 'UTF8' -FilePath $CacheSteamNoGamesPath -Append
-        }
-
-        # Sleep time to prevent error 429
-        Start-Sleep -Milliseconds 1200
-    }
-
-    # Finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage("Imported $AddedGamesCount games", "Steam Game Importer");
 }
