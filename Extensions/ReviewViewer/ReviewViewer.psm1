@@ -19,10 +19,18 @@ function GetGameMenuItems
 
 function Invoke-ReviewViewer
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     Invoke-YoutubeVideo "Review"
 }
 function Invoke-TrailerViewer
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     Invoke-YoutubeVideo "Trailer"
 }
 
@@ -41,7 +49,7 @@ function Get-DownloadString
     } catch {
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericFileDownloadError") -f $url, $errorMessage))
         return
     }
 }
@@ -71,7 +79,7 @@ function Invoke-YoutubeVideo
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("No video found in Youtube search.", $ExtensionName);
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoVideoFoundMessage"), $ExtensionName)
         exit
     }
 
