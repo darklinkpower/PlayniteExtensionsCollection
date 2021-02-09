@@ -3,12 +3,12 @@ function global:GetMainMenuItems
     param($menuArgs)
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Automatic mode"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddLinkSelectedGamesAutomaticDescription")
     $menuItem1.FunctionName = "TwitchAddLinkAutomatic"
     $menuItem1.MenuSection = "@Twitch Add Link"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Semi-Automatic mode"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddLinkSelectedGamesSemiAutomaticDescription")
     $menuItem2.FunctionName = "TwitchAddLinkSemiAutomatic"
     $menuItem2.MenuSection = "@Twitch Add Link"
     
@@ -35,11 +35,11 @@ function Add-TwitchLink
         
         # Download headers
         try {
-            $GameName = $($game.name).Replace("™","").Replace("’","`'").Replace("?","%3F").Replace("#","%23")
+            $GameName = $game.name.Replace("™","").Replace("’","`'").Replace("?","%3F").Replace("#","%23")
             $Uri = 'https://static-cdn.jtvnw.net/ttv-boxart/' + "$GameName" + '.jpg'
             $webrequest = Invoke-WebRequest $Uri -Method Head
         } catch {
-            $PlayniteApi.Dialogs.ShowMessage("Couldn't download information for `"$($game.name)`".`nExtension will stop execution.`n`nTwitch link added to $CountLinkAdded games.", "Twitch Add Link");
+            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericGameInformationDownloadFailMessage") -f $game.name), "Twitch Add Link")
             exit
         }
 
@@ -57,8 +57,8 @@ function Add-TwitchLink
                 $Uri = 'https://static-cdn.jtvnw.net/ttv-boxart/' + "$GameName" + '.jpg'
                 $webrequest = Invoke-WebRequest $Uri -Method Head
             } catch {
-                $PlayniteApi.Dialogs.ShowMessage("Couldn't download information for `"$($game.name)`".`nExtension will stop execution.`n`nTwitch link added to $CountLinkAdded games.", "Twitch Add Link");
-                exit
+                $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericGameInformationDownloadFailMessage") -f $game.name), "Twitch Add Link")
+                break
             }
             if (!$webrequest.Headers.'X-404-Redirect')
             {
@@ -73,35 +73,33 @@ function Add-TwitchLink
             
             # Request Manual Input of Url
             while ($True) {
-                $InputUrl = $PlayniteApi.Dialogs.SelectString(
-                    "Game Twich Url couldn't be found automatically for `"$($game.name)`".`nEnter correct Url:"
-                    , "Twitch - Add Link", ""
-                );
+                $InputUrl = $PlayniteApi.Dialogs.SelectString(([Playnite.SDK.ResourceProvider]::GetString("LOCRequestManualInput") -f $game.name),
+                "Twitch Add Link", "")
                 
                 # Check if input was entered
-                if ("$($InputUrl.result)" -eq "True")
+                if ($InputUrl.result -eq "True")
                 {
-                    if ("$($InputUrl.Selectedstring)" -match '^https://www.twitch.tv/directory/game/.+$')
+                    if ($InputUrl.Selectedstring -match '^https://www.twitch.tv/directory/game/.+$')
                     {
                         $TwitchUrl = "$($InputUrl.Selectedstring)"
                         break
                     }
                     else
                     {
-                        $PlayniteApi.Dialogs.ShowMessage("Invalid Url.");
+                        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInvalidUrlMessage"), "Twitch Add Link")
                     }
                 }
                 elseif ($CountRemaining -gt 0)
                 {
                     # Ask user if wants to continue execution for remaining games
-                    $UserContinue = $PlayniteApi.Dialogs.ShowMessage("Do you want to continue the extension execution for the remaining games?", "Twitch Add Link", 4)
+                    $UserContinue = $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCAskContinueMessage"), "Twitch Add Link", 4)
                     if ($UserContinue -eq "Yes")
                     {
                         break
                     }
                     else
                     {
-                        $PlayniteApi.Dialogs.ShowMessage("Twitch link added to $CountLinkAdded games.", "Twitch Add Link");
+                        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $CountLinkAdded), "Twitch Add Link")
                         exit
                     }
                 }
@@ -134,17 +132,25 @@ function Add-TwitchLink
         }
     }
     # Show finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage("Twitch link added to $CountLinkAdded games.", "Twitch Add Link");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $CountLinkAdded), "Twitch Add Link")
 }
 
 function TwitchAddLinkAutomatic
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $ExecutionMode = "Automatic"
     Add-TwitchLink -ExecutionMode $ExecutionMode
 }
 
 function TwitchAddLinkSemiAutomatic
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $ExecutionMode = "SemiAutomatic"
     Add-TwitchLink -ExecutionMode $ExecutionMode
 }
