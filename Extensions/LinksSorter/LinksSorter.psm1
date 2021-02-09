@@ -1,14 +1,16 @@
-function global:GetMainMenuItems()
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Sort links in selected games"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemFormatSelectedDescription")
     $menuItem1.FunctionName = "Format-SelectedGames"
     $menuItem1.MenuSection = "@Links Sorter"
     
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Sort links in all games"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemFormatAllDescription")
     $menuItem2.FunctionName = "Format-AllGames"
     $menuItem2.MenuSection = "@Links Sorter"
     
@@ -35,11 +37,15 @@ function Format-Links
     }
     
     # Show finish dialogue with shortcut creation count
-    $PlayniteApi.Dialogs.ShowMessage("Sorted links of $SortedGames games", "Links Sorter");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $SortedGames), "Links Sorter");
 }
 
 function Format-SelectedGames
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set GameDatabase
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Links}
     
@@ -48,6 +54,10 @@ function Format-SelectedGames
 
 function Format-AllGames
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set GameDatabase
     $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.Links}
     
