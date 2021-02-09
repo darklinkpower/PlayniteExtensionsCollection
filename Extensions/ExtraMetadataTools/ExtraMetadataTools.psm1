@@ -5,52 +5,52 @@ function GetGameMenuItems
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "Open extra metadata directory"
+    $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemInvokeExtraDirectoryDescription")
     $menuItem.FunctionName = "Invoke-DirectoryOpen"
     $menuItem.MenuSection = "Extra Metadata tools"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "Download Steam logos for selected games"
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGetSteamLogosDescription")
     $menuItem2.FunctionName = "Get-SteamLogos"
     $menuItem2.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Add logo from local file of selected game"
+    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSelectLocalLogoDescription")
     $menuItem3.FunctionName = "Get-SteamLogosLocal"
     $menuItem3.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem4.Description =  "Add logo from url of selected game"
+    $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGetUrlLogoDescription")
     $menuItem4.FunctionName = "Get-SteamLogosUri"
     $menuItem4.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem5.Description =  "Convert icons to custom logos asset"
+    $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemConvertIconsToLogosDescription")
     $menuItem5.FunctionName = "Get-IconToLogoConvert"
     $menuItem5.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem6.Description =  "Delete logos of selected games"
+    $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemRemoveLogosSelectedGamesDescription")
     $menuItem6.FunctionName = "Remove-LogosSelectedGames"
     $menuItem6.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem7.Description =  "Open themes directory"
+    $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemInvokeThemesDirectoryDescription")
     $menuItem7.FunctionName = "Invoke-ThemesDirectoryRootOpen"
     $menuItem7.MenuSection = "Extra Metadata tools|Themes"
 
     $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem8.Description =  "Set profile picture"
+    $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetProfilePictureDescription")
     $menuItem8.FunctionName = "Set-ProfilePicture"
     $menuItem8.MenuSection = "Extra Metadata tools|Themes"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem9.Description =  "Set background music"
+    $menuItem9.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetBackgroundMusicDescription")
     $menuItem9.FunctionName = "Set-BackgroundMusic"
     $menuItem9.MenuSection = "Extra Metadata tools|Themes"
 
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  "Set background video"
+    $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetBackgroundVideoDescription")
     $menuItem10.FunctionName = "Set-BackgroundVideo"
     $menuItem10.MenuSection = "Extra Metadata tools|Themes"
     
@@ -131,7 +131,7 @@ function OnApplicationStarted
                     $nameProperty = $themeManifest | Select-String -Pattern $regex
                     $themeInUse = $nameProperty -replace "Name: ", ""
                 }
-                $PlayniteApi.Dialogs.ShowMessage("Extra Metadata configuration for the theme `"$themeInUse`" updated.`nPlease restart Playnite to make changes take effect.", "Extra Metadata Tools");
+                $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCThemeConstantsUpdatedMessage") -f $themeInUse), "Extra Metadata Tools")
             }
         }
     }
@@ -139,6 +139,10 @@ function OnApplicationStarted
 
 function Invoke-DirectoryOpen
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     foreach ($game in $gameDatabase) {
         $directory = Set-GameDirectory $game
@@ -221,7 +225,7 @@ function Get-DownloadString
     } catch {
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericFileDownloadError") -f $url, $errorMessage))
         return
     }
 }
@@ -311,6 +315,10 @@ function Get-SteamAppId
 
 function Get-SteamLogos
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     # Set GameDatabase
     $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.Name -eq "PC"}
     $logoUriTemplate = "https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png"
@@ -338,25 +346,23 @@ function Get-SteamLogos
             } catch {
                 $errorMessage = $_.Exception.Message
                 $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-                $countErrors++
             }
         }
     }
-    $results = "Downloaded logo of $counter games."
-    if ($countErrors -gt 0)
-    {
-        $results += ". There were $countErrors errors, view Playnite log for details."
-    }
-    $PlayniteApi.Dialogs.ShowMessage($results, "Extra Metadata tools");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGetSteamLogosResultsMessage") -f $counter), "Extra Metadata tools");
 }
 
 function Get-SteamLogosLocal
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     # Set GameDatabase
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -gt 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMoreThanOneGameSelectedMessage"), "Extra Metadata tools")
         return
     }
 
@@ -365,24 +371,28 @@ function Get-SteamLogosLocal
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
         $logoPathLocal = $PlayniteApi.Dialogs.SelectFile("logo|*.png")
         Copy-Item $logoPathLocal -Destination $logoPath -Force
-        $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSelectLogoResultsMessage") -f $game.Name), "Extra Metadata tools");
     }
 }
 
 function Get-SteamLogosUri
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     # Set GameDatabase
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -gt 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMoreThanOneGameSelectedMessage"), "Extra Metadata tools")
         return
     }
 
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
-        $logoUriInput = $PlayniteApi.Dialogs.SelectString("Enter logo Url:", "Extra Metadata tools", "");
+        $logoUriInput = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCEnterUrlMessage"), "Extra Metadata tools", "")
         
         # Check if input was entered
         if ($logoUriInput.result -eq "True")
@@ -392,11 +402,11 @@ function Get-SteamLogosUri
                 $webClient = New-Object System.Net.WebClient
                 $webClient.DownloadFile($logoUri, $logoPath)
                 $webClient.Dispose()
-                $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
+                $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSelectLogoResultsMessage") -f $game.Name), "Extra Metadata tools")
             } catch {
                 $errorMessage = $_.Exception.Message
                 $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-                $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+                $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericFileDownloadError") -f $url, $errorMessage), "Extra Metadata tools");
             }
         }
     }
@@ -404,10 +414,11 @@ function Get-SteamLogosUri
 
 function Get-IconToLogoConvert
 {
-    $convertChoice = $PlayniteApi.Dialogs.ShowMessage("This function will convert the icons of the selected games to logos for use in compatible themes.
-    `nThis is intended to use in case you have used a theme that has used the icons asset as a replacement for logos.
-    `nFor safety it will only process icons that have the `".png`" file extension.
-    `nChanges are not reversible.`n`nDo you wish to continue?", "Extra Metadata tools", 4)
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
+    $convertChoice = $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCConvertIconsChoiceMessage"), "Extra Metadata tools", 4)
     if ($convertChoice -ne "Yes")
     {
         return
@@ -435,12 +446,11 @@ function Get-IconToLogoConvert
 
 function Remove-LogosSelectedGames
 {
-    param (
-        $game
+    param(
+        $scriptGameMenuItemActionArgs
     )
-
-    $convertChoice = $PlayniteApi.Dialogs.ShowMessage("This function will delete the logos for the selected games.
-    `nChanges are not reversible.`n`nDo you wish to continue?", "Extra Metadata tools", 4)
+    
+    $convertChoice = $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCRemoveLogosChoiceMessage"), "Extra Metadata tools", 4)
     if ($convertChoice -ne "Yes")
     {
         return
@@ -457,11 +467,15 @@ function Remove-LogosSelectedGames
             $removedLogos++
         }
     }
-    $PlayniteApi.Dialogs.ShowMessage("Removed logos of $removedLogos games.", "Extra Metadata tools")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCRemoveLogosResultsMessage") -f $removedLogos), "Extra Metadata tools")
 }
 
 function Set-ProfilePicture
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $imageFile = $PlayniteApi.Dialogs.SelectImagefile()
     if ([string]::IsNullOrEmpty($imageFile))
     {
@@ -483,15 +497,19 @@ function Set-ProfilePicture
         } catch {
             $errorMessage = $_.Exception.Message
             $__logger.Info("Extra Metadata Tools - Error converting image file to png. Error: `"$errorMessage`"")
-            $PlayniteApi.Dialogs.ShowMessage("Error converting image file to png. Error: `"$errorMessage`"", "Extra Metadata Tools");
+            $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCImageConversionErrorMessage") -f $errorMessage), "Extra Metadata Tools")
             return
         }
     }
-    $PlayniteApi.Dialogs.ShowMessage("Profile picture set.", "Extra Metadata tools")
+    $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSetProfilePictureResultsMessage"), "Extra Metadata tools")
 }
 
 function Set-BackgroundMusic
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $file = $PlayniteApi.Dialogs.SelectFile("mp3|*.mp3")
     if ([string]::IsNullOrEmpty($file))
     {
@@ -499,11 +517,15 @@ function Set-BackgroundMusic
     }
     $fileDestination = Set-FullscreenThemesDirectory | Join-Path -ChildPath "BackgroundMusic.mp3"
     Copy-Item $file $fileDestination -Force
-    $PlayniteApi.Dialogs.ShowMessage("Background music set.", "Extra Metadata tools")
+    $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSetBackgroundMusicResultsMessage"), "Extra Metadata tools")
 }
 
 function Set-BackgroundVideo
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $file = $PlayniteApi.Dialogs.SelectFile("mp4|*.mp4")
     if ([string]::IsNullOrEmpty($file))
     {
@@ -511,5 +533,5 @@ function Set-BackgroundVideo
     }
     $fileDestination = Set-FullscreenThemesDirectory | Join-Path -ChildPath "BackgroundVideo.mp4"
     Copy-Item $file $fileDestination -Force
-    $PlayniteApi.Dialogs.ShowMessage("Background video set.", "Extra Metadata tools")
+    $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSetBackgroundVideoResultsMessage"), "Extra Metadata tools")
 }
