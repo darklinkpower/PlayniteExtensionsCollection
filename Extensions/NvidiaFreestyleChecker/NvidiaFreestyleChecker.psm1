@@ -1,11 +1,13 @@
 function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $ExtensionName = "NVIDIA Freestyle checker"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Check for Freestyle supported games in library"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemCheckFreestyleEnabledGamesDescription")
     $menuItem1.FunctionName = "Update-IsFreestyleEnabled"
     $menuItem1.MenuSection = "@$ExtensionName"
 
@@ -14,6 +16,10 @@ function GetMainMenuItems
 
 function Update-IsFreestyleEnabled
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $ExtensionName = "NVIDIA Freestyle checker"
     
     $featureName = "NVIDIA Freestyle"
@@ -29,8 +35,8 @@ function Update-IsFreestyleEnabled
         $WebContent = $webClient.DownloadString($uri)
         $webClient.Dispose()
     } catch {
-        $ErrorMessage = $_.Exception.Message
-        $PlayniteApi.Dialogs.ShowErrorMessage("Couldn't download NVIDIA Freestyle database. Error: $ErrorMessage", $ExtensionName);
+        $errorMessage = $_.Exception.Message
+        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNvidiaJsonDownloadFailErrorMessage") -f $errorMessage), $ExtensionName)
         exit
     }
     
@@ -45,7 +51,7 @@ function Update-IsFreestyleEnabled
     }
     if ($SupportedGames.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("Error: Not found any freestyle enabled game", $ExtensionName);
+        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoSupportedGamesErrorMessage"), $ExtensionName)
         exit
     }
 
@@ -81,6 +87,5 @@ function Update-IsFreestyleEnabled
     }
 
     # Show finish dialogue with results
-    $Results = "NVIDIA Freestyle supported games in library: $FreestyleEnabled`n`nAdded `"$featureName`" feature to $CounterFeatureAdded games"
-    $PlayniteApi.Dialogs.ShowMessage($Results, $ExtensionName);
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $FreestyleEnabled, $featureName, $CounterFeatureAdded), $ExtensionName)
 }
