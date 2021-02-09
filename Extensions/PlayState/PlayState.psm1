@@ -1,22 +1,28 @@
-function global:GetMainMenuItems
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Add to PlayState Blacklist"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddToBlacklistDescription")
     $menuItem1.FunctionName = "Add-PlaystateBlacklist"
     $menuItem1.MenuSection = "@PlayState"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Remove from Playstate Blacklist"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemRemoveFromBlacklistDescription")
     $menuItem2.FunctionName = "Remove-PlaystateBlacklist"
     $menuItem2.MenuSection = "@PlayState"
     
     return $menuItem1, $menuItem2
 }
 
-function global:Add-PlaystateBlacklist
+function Add-PlaystateBlacklist
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set Log Path
     $PlaystateLogPath = Join-Path -Path $($PlayniteApi.Paths.ApplicationPath) -ChildPath "PlayState.log"
     
@@ -32,7 +38,6 @@ function global:Add-PlaystateBlacklist
     $GameDatabase = $PlayniteApi.MainView.SelectedGames
     
     # Set counters for added/already in list count
-    $CountInList = 0
     $CountNotInList = 0
     
     # Start Execution for each game in the database
@@ -40,7 +45,6 @@ function global:Add-PlaystateBlacklist
         if ($game.Features.name -contains "$featureName")
         {
             # Game in blacklist: increase count and log game
-            $CountInList++
             "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was already in PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
         }
         else
@@ -64,16 +68,15 @@ function global:Add-PlaystateBlacklist
     }
     
     # Show finish dialogue with number of games added and games that already were in blacklist
-    if ($CountInList -gt 0)
-    {
-        $InList = " $($CountInList) games were already in the PlayState blacklist"
-    }
-
-    $PlayniteApi.Dialogs.ShowMessage("Added $($CountNotInList) games to PlayState blacklist.$($InList)");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCBlacklistAddedResultsMessage") -f $CountNotInList), "PlayState")
 }
 
-function global:Remove-PlaystateBlacklist
+function Remove-PlaystateBlacklist
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set Log Path
     $PlaystateLogPath = Join-Path -Path $($PlayniteApi.Paths.ApplicationPath) -ChildPath "PlayState.log"
     
@@ -90,7 +93,6 @@ function global:Remove-PlaystateBlacklist
     
     # Set counters for removed/already in list count
     $CountInList = 0
-    $CountNotInList = 0
     
     # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
@@ -105,20 +107,15 @@ function global:Remove-PlaystateBlacklist
         else
         {
             # Game not in blacklist: increase count and log game
-            $CountNotInList++
             "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was already in PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $PlaystateLogPath -Append
         }
     }
     
     # Show finish dialogue with number of games added and games that already were in blacklist
-    if ($CountNotInList -gt 0)
-    {
-        $NotInList = " $($CountNotInList) games were not in the PlayState blacklist"
-    }
-    $PlayniteApi.Dialogs.ShowMessage("Removed $($CountInList) games from PlayState blacklist.$($NotInList)");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCBlacklistRemovedResultsMessage") -f $CountInList), "PlayState")
 }
 
-function global:OnGameStarted
+function OnGameStarted
 {
     param(
         $game
@@ -443,7 +440,7 @@ function global:OnGameStarted
     }
 }
 
-function global:OnGameStopped
+function OnGameStopped
 {
     param(
         $game
