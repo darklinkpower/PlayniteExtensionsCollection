@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCMenuItemSteamSdTrailerDescription">Steam SD Trailer</sys:String>
+    <sys:String x:Key="LOCMenuItemSteamHDTrailerDescription">Steam HD Trailer</sys:String>
+    <sys:String x:Key="LOCMenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
+    <sys:String x:Key="LOCPcGameNotSelectedMessage" xml:space="preserve">"{0}" is not a PC Game. 
+The extension is only compatible with PC Games"</sys:String>
+    <sys:String x:Key="LOCGameInformationDownloadFailMessage">Error downloading game information for AppId "{0}". Error: {1}</sys:String>
+    <sys:String x:Key="LOCNoVideoAvailableMessage">Video not available.</sys:String>
+    <sys:String x:Key="LOCNoAppIdFoundMessage">"{0}" is not a Steam game and Steam AppId was not found to obtain video data.</sys:String>
+    <sys:String x:Key="LOCGenericConnectionErrorMessage">Error connecting to server. Error: {0}</sys:String>
+    <sys:String x:Key="LOCGenericGetHeadersErrorMessage">Error downloading headers. Error: {0}</sys:String>
+    <sys:String x:Key="LOCGenericFileDownloadErrorMessage">Error downloading file from url "{0}". Error: {1}</sys:String>
+</ResourceDictionary>
