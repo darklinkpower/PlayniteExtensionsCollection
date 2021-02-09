@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCMenuItemComponentsSection">Components</sys:String>
+    <sys:String x:Key="LOCMenuItemComponentActivateProductDescription">Activate product</sys:String>
+    <sys:String x:Key="LOCMenuItemComponentDownloadsDescription">Downloads</sys:String>
+    <sys:String x:Key="LOCMenuItemComponentFriendsDescription">Friends</sys:String>
+    <sys:String x:Key="LOCMenuItemComponentNewsDescription">News</sys:String>
+    <sys:String x:Key="LOCMenuItemComponentScreenshotsDescription">Screenshots</sys:String>
+    <sys:String x:Key="LOCMenuItemComponentSettingsDescription">Settings</sys:String>
+    <sys:String x:Key="LOCMenuItemGameStorePageDescription">Store Page</sys:String>
+    <sys:String x:Key="LOCMenuItemGameCommunityHubDescription">Community Hub</sys:String>
+    <sys:String x:Key="LOCMenuItemGameDiscussionsDescription">Discussions</sys:String>
+    <sys:String x:Key="LOCMenuItemGameGuidesDescription">Guides</sys:String>
+    <sys:String x:Key="LOCMenuItemGameNewsDescription">News</sys:String>
+    <sys:String x:Key="LOCMenuItemGameAchievementsDescription">Achievements</sys:String>
+    <sys:String x:Key="LOCMenuItemGamePointsShopDescription">PointsShop</sys:String>
+    <sys:String x:Key="LOCMenuItemGameLibraryDescription">View in Steam Library</sys:String>
+</ResourceDictionary>
