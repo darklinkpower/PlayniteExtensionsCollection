@@ -5,12 +5,12 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Add games with Steam Id or URL"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddGamesIdUrlDescription")
     $menuItem1.FunctionName = "SteamGameImporter"
     $menuItem1.MenuSection = "@Steam Game Importer"
     
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Import games from Depressurizer Profile"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddGamesDepressurizerDescription")
     $menuItem2.FunctionName = "DepressurizerProfileImporter"
     $menuItem2.MenuSection = "@Steam Game Importer"
 
@@ -19,6 +19,10 @@ function GetMainMenuItems
 
 function DepressurizerProfileImporter
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set Source
     $SourceName = "Steam"
     $Source = $PlayniteApi.Database.Sources.Add($SourceName)
@@ -71,18 +75,15 @@ function DepressurizerProfileImporter
         }
     }
     # Show dialogue with results
-    if ($AddedGamesCount -ge 1) 
-    {
-        $PlayniteApi.Dialogs.ShowMessage("Added $AddedGamesCount new Steam games.", "Steam Game Importer");
-    }
-    else
-    {
-        $PlayniteApi.Dialogs.ShowMessage("No new games were added", "Steam Game Importer");	
-    }
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $AddedGamesCount), "Steam Game Importer")
 }
 
 function SteamGameImporter
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set Source
     $SourceName = "Steam"
     $Source = $PlayniteApi.Database.Sources.Add($SourceName)
@@ -102,7 +103,7 @@ function SteamGameImporter
     $UrlRegex = "https?:\/\/store.steampowered.com\/app\/(\d+)"
     
     # Input window for Steam Store URL or Steam AppId
-    $UserInput = $PlayniteApi.Dialogs.SelectString( "Enter Steam game Id or URL:", "Steam Game Importer", "");
+    $UserInput = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCRequestInputSteamIdUrlMessage"), "Steam Game Importer", "")
     if ($UserInput.SelectedString)
     {
         # Create AppIds Collection
@@ -163,7 +164,7 @@ function SteamGameImporter
                     {
                         if (!$AddUnknownChoice)
                         {
-                            $AddUnknownChoice = $PlayniteApi.Dialogs.ShowMessage("Warning. Couldn't detect if obtained AppId `"$AppId`" is valid, add this and all unknown AppIds?", "Steam Game Importer", 4);
+                            $AddUnknownChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCInvalidSteamIdWarningMessage") -f $AppId), "Steam Game Importer", 4)
                         }
                         if ($AddUnknownChoice -ne "Yes")
                         {
@@ -172,9 +173,9 @@ function SteamGameImporter
                         $GameName = "Unknown Steam Game"
                     }
                 } catch {
-                    $ErrorMessage = $_.Exception.Message
-                    $PlayniteApi.Dialogs.ShowMessage("Couldn't download Game information for AppId `"$AppId`". Error: $ErrorMessage", "Steam Game Importer");
-                    exit
+                    $errorMessage = $_.Exception.Message
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $AppId, $errorMessage), "Steam Game Importer")
+                    break
                 }
                 
                 # Set game properties and save to database
@@ -186,32 +187,17 @@ function SteamGameImporter
                 $NewGame.PluginId = "CB91DFC9-B977-43BF-8E70-55F46E410FAB"
                 $PlayniteApi.Database.Games.Add($NewGame)
                 $AddedGamesCount++
-                if ($AddedGamesCount -eq 1)
-                {
-                    $FirstAddedGame = $GameName
-                }
                 
                 # Trigger download Metadata not available yet via SDK. https://github.com/JosefNemec/Playnite/issues/1870
             }
         }	
         else
         {
-            $PlayniteApi.Dialogs.ShowMessage("Could not obtain any valid Steam AppId", "Steam Game Importer");
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInputNoValidAppIdsMessage"), "Steam Game Importer")
         }
 
         # Show dialogue with results
-        if ($AddedGamesCount -gt 1) 
-        {
-            $PlayniteApi.Dialogs.ShowMessage("Added $AddedGamesCount new Steam games.", "Steam Game Importer");
-        }
-        elseif ($AddedGamesCount -eq 1)
-        {
-            $PlayniteApi.Dialogs.ShowMessage("`"$FirstAddedGame`" Steam game added to Playnite.", "Steam Game Importer");
-        }
-        else
-        {
-            $PlayniteApi.Dialogs.ShowMessage("No new games were added", "Steam Game Importer");
-        }
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $AddedGamesCount), "Steam Game Importer")
         
     }
 }
