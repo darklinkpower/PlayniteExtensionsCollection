@@ -61,9 +61,9 @@ function Get-MissingMediaStats
     $GamesNoIcon = ($GameDatabase | Where-Object {$null -eq $_.Icon}).count
 
     # Show results
-    $Results = "Missing media in $Selection ($($GameDatabase.Count)):`n`nCovers: $GamesNoCover games`nBackground Images: $GamesNoBackground games`nIcons: $GamesNoIcon games"
-    $__logger.Info("Game Media Tools (Missing Media) - $($Results -replace "`n", ', ')")
-    $PlayniteApi.Dialogs.ShowMessage("$Results", "Game Media Tools");
+    $results = "Missing media in $Selection $($GameDatabase.Count):`n`nCovers: $GamesNoCover games`nBackground Images: $GamesNoBackground games`nIcons: $GamesNoIcon games"
+    $__logger.Info("Game Media Tools (Missing Media) - $($results -replace "`n", ', ')")
+    $PlayniteApi.Dialogs.ShowMessage($results, "Game Media Tools")
 }
 
 function MissingMediaStatsSelection
@@ -78,7 +78,7 @@ function MissingMediaStatsSelection
     }
     else 
     {
-        $PlayniteApi.Dialogs.ShowMessage("No games are selected", "Game Media Tools"); 
+        $PlayniteApi.Dialogs.ShowMessage("No games are selected", "Game Media Tools")
     }
 }
 
@@ -292,9 +292,9 @@ function OpenMenu
                     # Set function to determine tag operation
                     $ToolFunctionName = "ToolAspectRatio"
                     $AditionalOperation = "GetDimensions"
+                    $aspectRatio = $Width/$Height
                     $ExtraParameters = @(
-                        $Width,
-                        $Height
+                        $aspectRatio
                     )
                     
                     # Start Game Media Tools function
@@ -304,7 +304,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$Width`", `"$Height`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools");
+                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools")
                 }
             }
             3 { # Tool #3: Resolution
@@ -335,7 +335,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$Width`", `"$Height`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools");
+                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools")
                 }
             }
             4 { # Tool #4: Image Size
@@ -364,7 +364,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$MaxSize`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in size input box.", "Game Media Tools");
+                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in size input box.", "Game Media Tools")
                 }
             }
             5 { # Tool #5: Extension
@@ -393,7 +393,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$Extension`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in extension input box.", "Game Media Tools");
+                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in extension input box.", "Game Media Tools")
                 }
             }
         }
@@ -505,13 +505,13 @@ function Invoke-GameMediaTools
     
     # Generate results of missing media in selection
     $GamesNoMediaSelection = $GameDatabase | Where-Object {$_.TagIds -contains $tagNoMediaIds.Guid}
-    $Results = "Finished. Games in selection: $($GameDatabase.count)`n`nSelected Media: $MediaType`nGames missing selected media in selection: $($GamesNoMediaSelection.Count)"
+    $results = "Finished. Games in selection: $($GameDatabase.count)`n`nSelected Media: $MediaType`nGames missing selected media in selection: $($GamesNoMediaSelection.Count)"
 
     # Get information of games with missing media in all database and add to results
     $GamesNoCoverAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.CoverImage}).count
     $GamesNoBackgroundAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.BackgroundImage}).count
     $GamesNoIconAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.Icon}).count
-    $Results += "`n`nMissing Media in all database`nCovers: $GamesNoCoverAll games`nBackground Images: $GamesNoBackgroundAll games`nIcons: $GamesNoIconAll games"
+    $results += "`n`nMissing Media in all database`nCovers: $GamesNoCoverAll games`nBackground Images: $GamesNoBackgroundAll games`nIcons: $GamesNoIconAll games"
 
     # Get information of tool Tag
     if ($TagName)
@@ -521,7 +521,7 @@ function Invoke-GameMediaTools
         $__logger.Info("Game Media Tools - Games with tool tag `"$TagName`" at finish: Selection $($GamesToolTagSelection.Count), All $($GamesToolTagAll.Count)")
 
         # Add information to results
-        $Results += "`n`nTool tag name: $TagName`nGames with tag in selection: $($GamesToolTagSelection.Count)`nGames with tag in all games database: $($GamesToolTagAll.count)"
+        $results += "`n`nTool tag name: $TagName`nGames with tag in selection: $($GamesToolTagSelection.Count)`nGames with tag in all games database: $($GamesToolTagAll.count)"
         
         # Remove tool tag from database if 0 games have it
         if (($GamesToolTagAll.count -eq 0) -and ($GamesToolTagSelection.count -eq 0))
@@ -532,8 +532,8 @@ function Invoke-GameMediaTools
     }
 
     # Show Results
-    $__logger.Info("Game Media Tools - $($Results -replace "`n", ', ')")
-    $PlayniteApi.Dialogs.ShowMessage("$Results", "Game Media Tools");
+    $__logger.Info("Game Media Tools - $($results -replace "`n", ', ')")
+    $PlayniteApi.Dialogs.ShowMessage("$results", "Game Media Tools")
 }
 
 function Get-ImageDimensions
@@ -560,8 +560,8 @@ function Get-ImageDimensions
 function Get-ImagePath
 {
     param (
-        [object]$game, 
-        [string]$MediaType
+        $game, 
+        $MediaType
     )
 
     # Verify selected media type, if game has it and get full file path
