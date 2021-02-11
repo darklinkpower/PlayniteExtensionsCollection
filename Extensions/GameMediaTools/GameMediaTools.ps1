@@ -154,12 +154,14 @@ function OpenMenu
                 <StackPanel>
                     <TextBlock Margin="0,15,0,15" TextWrapping="Wrap" Text="Description:" FontWeight="Bold"/>
                     <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="This tool will add a tag to all selected games that its media type is not the entered resolution."/>
-                    <TextBlock Text="Enter resolution in pixels (px)" HorizontalAlignment="Left" Margin="0,15,0,10" TextWrapping="Wrap"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock TextWrapping="Wrap" Text="Width:" VerticalAlignment="Center"/>
-                        <TextBox Name="BoxResolutionWidth" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
-                        <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Height:" VerticalAlignment="Center"/>
-                        <TextBox Name="BoxResolutionHeight" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                    <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+                        <TextBlock Text="Enter resolution in pixels (px)" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                            <TextBlock TextWrapping="Wrap" Text="Width:" VerticalAlignment="Center"/>
+                            <TextBox Name="BoxResolutionWidth" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                            <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Text="Height:" VerticalAlignment="Center"/>
+                            <TextBox Name="BoxResolutionHeight" Margin="10,0,0,0" MinHeight="25" TextWrapping="Wrap" Width="50"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
