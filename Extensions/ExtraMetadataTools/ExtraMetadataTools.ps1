@@ -570,6 +570,64 @@ function Get-SgdbApiKey
     }
 }
 
+function Get-SgdbRequestUrl
+{
+    param (
+        $game,
+        $sgdbApiKey
+    )
+
+    switch ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId)) {
+        "SteamLibrary" { $platformEnum = "steam" ; break }
+        # Don't use SGDB platform enums since a lot of games are not associated with the Platforms IDs
+        #"OriginLibrary" { $platformEnum = "origin" ; break }
+        #"EpicLibrary" { $platformEnum = "egs" ; break }
+        #"BattleNetLibrary" { $platformEnum = "bnet" ; break }
+        #"UplayLibrary" { $platformEnum = "uplay" ; break }
+        Default { $platformEnum = $null ; break }
+    }
+
+    if ($null -ne $platformEnum)
+    {
+        $requestUri = "https://www.steamgriddb.com/api/v2/logos/{0}/{1}" -f $platformEnum, $game.GameId
+        return $requestUri
+    }
+    else
+    {
+        if ($game.Platform.Name -eq "PC")
+        {
+            $steamAppId = Get-SteamAppId $game
+            if ($null -ne $steamAppId)
+            {
+                $requestUri = "https://www.steamgriddb.com/api/v2/logos/steam/{0}" -f $steamAppId
+                return $requestUri
+            }
+        }
+
+        if ($null -ne $requestUri)
+        {
+            try {
+                $requestUri = "https://www.steamgriddb.com/api/v2/search/autocomplete/{0}" -f [uri]::EscapeDataString($game.name)
+                $sgdbSearchRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
+            } catch {
+                $errorMessage = $_.Exception.Message
+                $__logger.Info("Error in SGDB API Request. Request Uri: `"$requestUri`". Error: $errorMessage")
+                $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage", "Extra Metadata Tools")
+                return $null
+            }
+            if ($sgdbSearchRequest.data.Count -gt 0)
+            {
+                $requestUri = "https://www.steamgriddb.com/api/v2/logos/game/{0}" -f $sgdbSearchRequest.data[0].id
+                return $requestUri
+            }
+            else
+            {
+                return $null
+            }
+        }
+    }
+}
+
 function Get-SgdbLogo
 {
     $sgdbApiKey = Get-SgdbApiKey
@@ -579,7 +637,7 @@ function Get-SgdbLogo
         return
     }
     
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.Name -eq "PC"}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     $downloadedLogos = 0
     foreach ($game in $gameDatabase) {
         $extraMetadataDirectory = Set-GameDirectory $game
@@ -588,39 +646,18 @@ function Get-SgdbLogo
         {
             continue
         }
-
-        switch ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId)) {
-            "SteamLibrary" { $platformEnum = "steam" ; break}
-            "OriginLibrary" { $platformEnum = "origin" ; break}
-            "EpicLibrary" { $platformEnum = "egs" ; break}
-            "BattleNetLibrary" { $platformEnum = "bnet" ; break}
-            "UplayLibrary" { $platformEnum = "uplay" ; break }
-            Default { $platformEnum = $null ; break }
-        }
-
-        if ($null -eq $platformEnum)
+        $requestUri = Get-SgdbRequestUrl $game $sgdbApiKey
+        if ([string]::IsNullOrEmpty($requestUri))
         {
-            $steamAppId = Get-SteamAppId $game
-            if ($null -ne $steamAppId)
-            {
-                $requestUri = "https://www.steamgriddb.com/api/v2/logos/steam/{0}" -f $steamAppId
-            }
-            else
-            {
-                continue
-            }
-        }
-        else
-        {
-            $requestUri = "https://www.steamgriddb.com/api/v2/logos/{0}/{1}" -f $platformEnum, $game.GameId
+            continue
         }
         
         try {
             $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
         } catch {
             $errorMessage = $_.Exception.Message
-            $__logger.Info("Error in SGDB API Request. Error: $errorMessage")
-            $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request. Verify that the API key is correct. Error: $errorMessage")
+            $__logger.Info("Error in SGDB API Request. Request Uri: `"$requestUri`". Error: $errorMessage")
+            $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage", "Extra Metadata Tools")
             break
         }
 
@@ -633,17 +670,18 @@ function Get-SgdbLogo
             else
             {
                 try {
+                    Start-Sleep -Seconds 1
+                    $url = $sgdbRequest.data[0].url
                     $webClient = New-Object System.Net.WebClient
                     $webClient.Encoding = [System.Text.Encoding]::UTF8
-                    $webClient.DownloadFile($sgdbRequest.data[0].url, $logoPath)
+                    $webClient.DownloadFile($url, $logoPath)
                     $webClient.Dispose()
-                    Start-Sleep -Seconds 1
                     $downloadedLogos++
                 } catch {
+                    $webClient.Dispose()
                     $errorMessage = $_.Exception.Message
-                    $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-                    $PlayniteApi.Dialogs.ShowErrorMessage("Error downloading file from SteamGridDB. Error: $errorMessage")
-                    break
+                    $__logger.Info("Error downloading file `"$url`" file from SteamGridDB. Error: $errorMessage")
+                    continue
                 }
             }
         }
