@@ -379,6 +379,10 @@ function Get-SteamLogosLocal
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
         $logoPathLocal = $PlayniteApi.Dialogs.SelectFile("logo|*.png")
+        if ([string]::IsNullOrEmpty($logoPathLocal))
+        {
+            return
+        }
         Copy-Item $logoPathLocal -Destination $logoPath -Force
         $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools");
     }
