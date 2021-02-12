@@ -370,6 +370,10 @@ function Get-SteamLogosLocal
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
         $logoPathLocal = $PlayniteApi.Dialogs.SelectFile("logo|*.png")
+        if ([string]::IsNullOrEmpty($logoPathLocal))
+        {
+            return
+        }
         Copy-Item $logoPathLocal -Destination $logoPath -Force
         $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSelectLogoResultsMessage") -f $game.Name), "Extra Metadata tools");
     }
@@ -534,4 +538,158 @@ function Set-BackgroundVideo
     $fileDestination = Set-FullscreenThemesDirectory | Join-Path -ChildPath "BackgroundVideo.mp4"
     Copy-Item $file $fileDestination -Force
     $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSetBackgroundVideoResultsMessage"), "Extra Metadata tools")
+}
+
+function Set-SgdbApiKey
+{
+    $sgdbApiKeyPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'sgdbApiKey.json'
+    Start-Process "https://www.steamgriddb.com/profile/preferences"
+    $userInput = $PlayniteApi.Dialogs.SelectString("Enter a valid SGDB API Key:", "Extra Metadata tools", "");
+    if ($userInput.Result -eq $true)
+    {
+        @{'ApiKey'=$userInput.SelectedString} | ConvertTo-Json | Out-File $sgdbApiKeyPath
+        return $userInput.SelectedString
+    }
+}
+
+function Get-SgdbApiKey
+{
+    $sgdbApiKeyPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'sgdbApiKey.json'
+    if (Test-Path $sgdbApiKeyPath)
+    {
+        $sgdbApiKey = ([System.IO.File]::ReadAllLines($sgdbApiKeyPath) | ConvertFrom-Json).ApiKey
+    }
+    else
+    {
+        $sgdbApiKey = Set-SgdbApiKey
+    }
+    if ([string]::IsNullOrEmpty($sgdbApiKey))
+    {
+        if (Test-Path $sgdbApiKeyPath)
+        {
+            Remove-Item $sgdbApiKeyPath -Force
+        }
+        return $null
+    }
+    else
+    {
+        return $sgdbApiKey
+    }
+}
+function Get-SgdbLogo
+{
+    $sgdbApiKey = Get-SgdbApiKey
+    if ([string]::IsNullOrEmpty($sgdbApiKey))
+    {
+        $PlayniteApi.Dialogs.ShowMessage("Couldn't get SGDB API Key. Please configure it before continuing.", "Extra Metadata tools")
+        return
+    }
+    
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.Name -eq "PC"}
+    $downloadedLogos = 0
+    foreach ($game in $gameDatabase) {
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+        if (Test-Path $logoPath)
+        {
+            continue
+        }
+
+        switch ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId)) {
+            "SteamLibrary" { $platformEnum = "steam" ; break}
+            "OriginLibrary" { $platformEnum = "origin" ; break}
+            "EpicLibrary" { $platformEnum = "egs" ; break}
+            "BattleNetLibrary" { $platformEnum = "bnet" ; break}
+            "UplayLibrary" { $platformEnum = "uplay" ; break }
+            Default { $platformEnum = $null ; break }
+        }
+
+        if ($null -eq $platformEnum)
+        {
+            $steamAppId = Get-SteamAppId $game
+            if ($null -ne $steamAppId)
+            {
+                $requestUri = "https://www.steamgriddb.com/api/v2/logos/steam/{0}" -f $steamAppId
+            }
+            else
+            {
+                continue
+            }
+        }
+        else
+        {
+            $requestUri = "https://www.steamgriddb.com/api/v2/logos/{0}/{1}" -f $platformEnum, $game.GameId
+        }
+        
+        try {
+            $headers = @{'Authorization'="Bearer $sgdbApiKey"}
+            $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers $headers | ConvertFrom-Json
+        } catch {
+            $errorMessage = $_.Exception.Message
+            $__logger.Info("Error in SGDB API Request. Error: $errorMessage")
+            $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request. Verify that the API key is correct. Error: $errorMessage")
+            break
+        }
+        $headers = @{'Authorization'="Bearer $sgdbApiKey"}
+        $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers $headers | ConvertFrom-Json
+
+        if ($sgdbRequest.data.Count -gt 0)
+        {
+            if ([string]::IsNullOrEmpty($sgdbRequest.data[0].url))
+            {
+                continue
+            }
+            else
+            {
+                try {
+                    $webClient = New-Object System.Net.WebClient
+                    $webClient.Encoding = [System.Text.Encoding]::UTF8
+                    $webClient.DownloadFile($sgdbRequest.data[0].url, $logoPath)
+                    $webClient.Dispose()
+                    Start-Sleep -Seconds 1
+                    $downloadedLogos++
+                } catch {
+                    $errorMessage = $_.Exception.Message
+                    $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
+                    $PlayniteApi.Dialogs.ShowErrorMessage("Error downloading file from SteamGridDB. Error: $errorMessage")
+                    break
+                }
+            }
+        }
+    }
+    $PlayniteApi.Dialogs.ShowMessage("Downloaded $downloadedLogos logos from SteamGridDB.", "Extra Metadata tools")
+}
+
+function Add-TagMissingLogo
+{
+    $tag = $PlayniteApi.Database.Tags.Add("Logo missing")
+    $missingLogos = 0
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    foreach ($game in $gameDatabase) {
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+        if (!(Test-Path $logoPath))
+        {
+            if ($game.tagIds -notcontains $tag.Id)
+            {
+                if ($game.tagIds)
+                {
+                    $game.tagIds += $tag.Id
+                }
+                else
+                {
+                    # Fix in case game has null tagIds
+                    $game.tagIds = $tag.Id
+                }
+                $PlayniteApi.Database.Games.Update($game)
+                $missingLogos++
+            }
+        }
+        elseif ($game.tagIds -contains $tag.Id)
+        {
+            $game.tagIds.Remove($tag.Id)
+            $PlayniteApi.Database.Games.Update($game)
+        }
+    }
+    $PlayniteApi.Dialogs.ShowMessage("Done.`nMissing logo in $missingLogos game(s).", "Extra Metadata tools")
 }

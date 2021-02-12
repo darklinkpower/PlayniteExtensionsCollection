@@ -1,12 +1,12 @@
 ﻿Id: Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e
 Name: Extra Metadata tools
 Author: darklinkpower
-Version: 1.3.1
+Version: 1.4
 Module: ExtraMetadataTools.psm1
 Type: Script
 Icon: icon.png
 Links:
-    - Name: Github
+    - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteScriptExtensions
     - Name: Playnite Forums thread
-      Url: https://playnite.link/forum/thread-242.html
+      Url: https://playnite.link/forum/thread-575.html
