@@ -15,7 +15,7 @@ function GetGameMenuItems
     $menuItem2.MenuSection = "Extra Metadata tools|Logos"
     
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Download logos for selected PC games from SteamGridDB"
+    $menuItem3.Description =  "Download logos for selected games from SteamGridDB"
     $menuItem3.FunctionName = "Get-SgdbLogo"
     $menuItem3.MenuSection = "Extra Metadata tools|Logos"
 
@@ -604,26 +604,22 @@ function Get-SgdbRequestUrl
             }
         }
 
-        if ($null -ne $requestUri)
+        try {
+            $requestUri = "https://www.steamgriddb.com/api/v2/search/autocomplete/{0}" -f [uri]::EscapeDataString($game.name)
+            $sgdbSearchRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
+        } catch {
+            $errorMessage = $_.Exception.Message
+            $__logger.Info("Error in SGDB API Request. Request Uri: `"$requestUri`". Error: $errorMessage")
+            return $null
+        }
+        if ($sgdbSearchRequest.data.Count -gt 0)
         {
-            try {
-                $requestUri = "https://www.steamgriddb.com/api/v2/search/autocomplete/{0}" -f [uri]::EscapeDataString($game.name)
-                $sgdbSearchRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
-            } catch {
-                $errorMessage = $_.Exception.Message
-                $__logger.Info("Error in SGDB API Request. Request Uri: `"$requestUri`". Error: $errorMessage")
-                $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage", "Extra Metadata Tools")
-                return $null
-            }
-            if ($sgdbSearchRequest.data.Count -gt 0)
-            {
-                $requestUri = "https://www.steamgriddb.com/api/v2/logos/game/{0}" -f $sgdbSearchRequest.data[0].id
-                return $requestUri
-            }
-            else
-            {
-                return $null
-            }
+            $requestUri = "https://www.steamgriddb.com/api/v2/logos/game/{0}" -f $sgdbSearchRequest.data[0].id
+            return $requestUri
+        }
+        else
+        {
+            return $null
         }
     }
 }
