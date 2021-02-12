@@ -569,12 +569,13 @@ function Get-SgdbApiKey
         return $sgdbApiKey
     }
 }
+
 function Get-SgdbLogo
 {
     $sgdbApiKey = Get-SgdbApiKey
     if ([string]::IsNullOrEmpty($sgdbApiKey))
     {
-        $PlayniteApi.Dialogs.ShowMessage("Couldn't get SGDB API Key. Please configure it before continuing.", "Extra Metadata tools")
+        $PlayniteApi.Dialogs.ShowMessage("Couldn't get SteamGridDB API Key. Please configure it before continuing.", "Extra Metadata tools")
         return
     }
     
@@ -615,16 +616,13 @@ function Get-SgdbLogo
         }
         
         try {
-            $headers = @{'Authorization'="Bearer $sgdbApiKey"}
-            $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers $headers | ConvertFrom-Json
+            $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
         } catch {
             $errorMessage = $_.Exception.Message
             $__logger.Info("Error in SGDB API Request. Error: $errorMessage")
             $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request. Verify that the API key is correct. Error: $errorMessage")
             break
         }
-        $headers = @{'Authorization'="Bearer $sgdbApiKey"}
-        $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers $headers | ConvertFrom-Json
 
         if ($sgdbRequest.data.Count -gt 0)
         {
