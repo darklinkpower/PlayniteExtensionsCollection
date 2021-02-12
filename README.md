@@ -2,6 +2,8 @@
 
 Collection of extension scripts made for [Playnite](https://github.com/JosefNemec/Playnite).
 
+**Note: The master branch contains changes for the upcoming Playnite 9 version. Playnite 8 compatible extensions are in [this branch.](https://github.com/darklinkpower/PlayniteScriptExtensions/tree/pre-playnite9)**
+
 ## Download and installation
 
 Option 1: [Click here](https://github.com/darklinkpower/PlayniteScriptExtensions/archive/master.zip) to download the whole repository and extract the wanted extensions in your Playnite Extensions folder depending if you are using a Portable or Standard installation.
