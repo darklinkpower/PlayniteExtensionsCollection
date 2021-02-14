@@ -72,7 +72,7 @@ function Add-NexusFeatureLinks
     {
         return
     }
-    $webContent -match 'var json = ((.*?(?=}];))}])'
+    $webContent -match 'var json = ((.*?(?=}]))}])'
     if ($matches)
     {
         $nexusGames = $matches[1] | ConvertFrom-Json
