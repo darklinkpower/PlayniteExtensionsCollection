@@ -171,8 +171,7 @@ function Set-GameDirectory
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\" + "games\" + $game.Id
     if(!(Test-Path $directory))
     {
-        # Store new Item in variable to fix function returning 2 times
-        $newItem = New-Item -ItemType Directory -Path $directory -Force
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
     return $directory
 }
@@ -182,8 +181,7 @@ function Invoke-ThemesDirectoryRootOpen
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes"
     if(!(Test-Path $directory))
     {
-        # Store new Item in variable to fix function returning 2 times
-        $newItem = New-Item -ItemType Directory -Path $directory -Force
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
     Invoke-Item $directory
 }
@@ -193,8 +191,7 @@ function Set-FullscreenThemesDirectory
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes\Fullscreen\"
     if(!(Test-Path $directory))
     {
-        # Store new Item in variable to fix function returning 2 times
-        $newItem = New-Item -ItemType Directory -Path $directory -Force
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
     return $directory
 }
@@ -204,8 +201,7 @@ function Set-DesktopThemesDirectory
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes\Desktop\"
     if(!(Test-Path $directory))
     {
-        # Store new Item in variable to fix function returning 2 times
-        $newItem = New-Item -ItemType Directory -Path $directory -Force
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
     return $directory
 }
@@ -215,8 +211,7 @@ function Set-CommonThemesDirectory
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes\Common\"
     if(!(Test-Path $directory))
     {
-        # Store new Item in variable to fix function returning 2 times
-        $newItem = New-Item -ItemType Directory -Path $directory -Force
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
     return $directory
 }
