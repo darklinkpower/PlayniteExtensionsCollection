@@ -579,11 +579,11 @@ function Get-SgdbRequestUrl
 
     switch ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId)) {
         "SteamLibrary" { $platformEnum = "steam" ; break }
-        # Don't use SGDB platform enums since a lot of games are not associated with the Platforms IDs
-        #"OriginLibrary" { $platformEnum = "origin" ; break }
-        #"EpicLibrary" { $platformEnum = "egs" ; break }
-        #"BattleNetLibrary" { $platformEnum = "bnet" ; break }
-        #"UplayLibrary" { $platformEnum = "uplay" ; break }
+        <# Don't use SGDB platform enums since a lot of games are not associated with the Platforms IDs
+        "OriginLibrary" { $platformEnum = "origin" ; break }
+        "EpicLibrary" { $platformEnum = "egs" ; break }
+        "BattleNetLibrary" { $platformEnum = "bnet" ; break }
+        "UplayLibrary" { $platformEnum = "uplay" ; break } #>
         Default { $platformEnum = $null ; break }
     }
 
@@ -606,12 +606,29 @@ function Get-SgdbRequestUrl
 
         try {
             $requestUri = "https://www.steamgriddb.com/api/v2/search/autocomplete/{0}" -f [uri]::EscapeDataString($game.name)
-            $sgdbSearchRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
+            $webClient = New-Object System.Net.WebClient
+            $webClient.Encoding = [System.Text.Encoding]::UTF8
+            $webClient.Headers.Add("Authorization", "Bearer $sgdbApiKey")
+            $sgdbSearchRequest = $webClient.DownloadString($requestUri) | ConvertFrom-Json
+            $webClient.Dispose()
         } catch {
+            $webClient.Dispose()
             $errorMessage = $_.Exception.Message
-            $__logger.Info("Error in SGDB API Request. Request Uri: `"$requestUri`". Error: $errorMessage")
-            return $null
+            $errorCode = $_.Exception.InnerException.Response.StatusCode
+            if ($errorCode -eq "Unauthorized")
+            {
+                # 401 Status Code Error handling
+                $__logger.Info("Error in SteamGridDB API Request. Configured SteamGridDB API Key is invalid.")
+                $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request.`nConfigured SteamGridDB API Key is invalid.", "Extra Metadata Tools") | Out-Null
+                exit
+            }
+            else
+            {
+                $__logger.Info("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage")
+                return $null
+            }
         }
+
         if ($sgdbSearchRequest.data.Count -gt 0)
         {
             $requestUri = "https://www.steamgriddb.com/api/v2/logos/game/{0}" -f $sgdbSearchRequest.data[0].id
@@ -649,12 +666,33 @@ function Get-SgdbLogo
         }
         
         try {
-            $sgdbRequest = Invoke-WebRequest -Uri $requestUri -Headers @{'Authorization'="Bearer $sgdbApiKey"} | ConvertFrom-Json
+            $webClient = New-Object System.Net.WebClient
+            $webClient.Encoding = [System.Text.Encoding]::UTF8
+            $webClient.Headers.Add("Authorization", "Bearer $sgdbApiKey")
+            $sgdbRequest = $webClient.DownloadString($requestUri) | ConvertFrom-Json
+            $webClient.Dispose()
         } catch {
+            $webClient.Dispose()
             $errorMessage = $_.Exception.Message
-            $__logger.Info("Error in SGDB API Request. Request Uri: `"$requestUri`". Error: $errorMessage")
-            $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage", "Extra Metadata Tools")
-            break
+            $errorCode = $_.Exception.InnerException.Response.StatusCode
+            if ($errorCode -eq "NotFound")
+            {
+                # 404 Status Code Error handling
+                continue
+            }
+            elseif ($errorCode -eq "Unauthorized")
+            {
+                # 401 Status Code Error handling
+                $__logger.Info("Error in SteamGridDB API Request. Configured SteamGridDB API Key is invalid.")
+                $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request.`nConfigured SteamGridDB API Key is invalid.", "Extra Metadata Tools")
+                break
+            }
+            else
+            {
+                $__logger.Info("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage")
+                $PlayniteApi.Dialogs.ShowErrorMessage("Error in SteamGridDB API Request `"$requestUri`". Error: $errorMessage", "Extra Metadata Tools")
+                break
+            }
         }
 
         if ($sgdbRequest.data.Count -gt 0)
