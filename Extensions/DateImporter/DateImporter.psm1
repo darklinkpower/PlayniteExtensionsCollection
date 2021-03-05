@@ -5,62 +5,62 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Import dates of selected Epic, GOG and Steam games"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportSelectedDescription")
     $menuItem1.FunctionName = "Invoke-DateImporterSelected"
     $menuItem1.MenuSection = "@Date Importer"
     
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Import dates of all Epic, GOG and Steam games"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportAllDescription")
     $menuItem2.FunctionName = "Invoke-DateImporterAll"
     $menuItem2.MenuSection = "@Date Importer"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Set added date of selected games manually"
+    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetDateManualDescription")
     $menuItem3.FunctionName = "Set-DatesFromInput"
     $menuItem3.MenuSection = "@Date Importer"
     
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = "Import dates of selected Steam games"
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportSelectedSteamDatesDescription")
     $menuItem4.FunctionName = "Invoke-SteamDateImporterSelected"
     $menuItem4.MenuSection = "@Date Importer|Steam"
 
     $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem5.Description = "Import dates of all Steam games"
+    $menuItem5.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportAllSteamDatesDescription")
     $menuItem5.FunctionName = "Invoke-SteamDateImporterAll"
     $menuItem5.MenuSection = "@Date Importer|Steam"
 
     $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem6.Description = "Export Steam licenses list"
+    $menuItem6.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemExportSteamLicencesDescription")
     $menuItem6.FunctionName = "Export-SteamLicenses"
     $menuItem6.MenuSection = "@Date Importer|Steam"
 
     $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem7.Description = "Import dates of selected GOG games"
+    $menuItem7.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportSelectedGogDatesDescription")
     $menuItem7.FunctionName = "Invoke-GogDateImporterSelected"
     $menuItem7.MenuSection = "@Date Importer|GOG"
 
     $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem8.Description = "Import dates of all GOG games"
+    $menuItem8.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportAllGogDatesDescription")
     $menuItem8.FunctionName = "Invoke-GogDateImporterAll"
     $menuItem8.MenuSection = "@Date Importer|GOG"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem9.Description = "Export GOG licenses list"
+    $menuItem9.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemExportGogLicencesDescription")
     $menuItem9.FunctionName = "Export-GogLicenses"
     $menuItem9.MenuSection = "@Date Importer|GOG"
 
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem10.Description = "Import dates of selected Epic games"
+    $menuItem10.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportSelectedEpicDatesDescription")
     $menuItem10.FunctionName = "Invoke-EpicDateImporterSelected"
     $menuItem10.MenuSection = "@Date Importer|Epic"
 
     $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem11.Description = "Import dates of all Epic games"
+    $menuItem11.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemImportAllEpicDatesDescription")
     $menuItem11.FunctionName = "Invoke-EpicDateImporterAll"
     $menuItem11.MenuSection = "@Date Importer|Epic"
 
     $menuItem12 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem12.Description = "Export Epic licenses list"
+    $menuItem12.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemExportEpicLicencesDescription")
     $menuItem12.FunctionName = "Export-EpicLicenses"
     $menuItem12.MenuSection = "@Date Importer|Epic"
 
@@ -156,7 +156,7 @@ function Get-LoginStatusViaJson
 
     if ($jsonValid -eq $false)
     {
-        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLoginNotifyMessage"), "$libraryName Date Importer")
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($navigateUrl)
         $webView.OpenDialog()
@@ -197,7 +197,7 @@ function Get-LoginStatus
     $webView.Dispose()
     if ($null -eq $sessionIdCookie)
     {
-        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLoginNotifyMessage"), "$libraryName Date Importer")
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($navigateUrl)
         $webView.OpenDialog()
@@ -224,7 +224,7 @@ function Export-Licenses
         $LicensesList
     )
     
-    $LicenseExportChoice = $PlayniteApi.Dialogs.ShowMessage("Found $($LicensesList.count) $libraryName licenses`nDo you want to export your found $libraryName licenses?", "$libraryName Date Importer", 4)
+    $LicenseExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesExportChoiceMessage") -f $LicensesList.count, $libraryName), "$libraryName Date Importer", 4)
     if ($LicenseExportChoice -eq "Yes")
     {
         $LicenseExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -239,7 +239,7 @@ function Export-Licenses
                 $LicensesList | Select-Object LicenseName, LicenseDate | Format-Table -AutoSize | Out-File $LicenseExportPath -Encoding 'UTF8'
             }
             $__logger.Info("$libraryName Date Importer - Licenses exported to `"$LicenseExportPath`"")
-            $PlayniteApi.Dialogs.ShowMessage("Licenses exported succesfully.", "$libraryName Date Importer");
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesExportSuccessMessage"), "$libraryName Date Importer")
         }
     }
 }
@@ -257,7 +257,7 @@ function Export-Results
     
     # Show finish dialogue with results and ask if user wants to export results
     $__logger.Info("$libraryName Date Importer - Finished. Processed Steam games: $($gameDatabase.count). Games with date found: $countMatchLicense`nGames without date found: $countNoLicense. Games that had the added date changed: $countNewDate")
-    $ExportChoice = $PlayniteApi.Dialogs.ShowMessage("Processed $libraryName games: $($gameDatabase.count)`n`nGames with date found: $countMatchLicense`nGames without date found: $countNoLicense`nGames that had the added date changed: $countNewDate`n`nDo you want to export results?", "$libraryName Date Importer", 4)
+    $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsExportChoiceMessage") -f $libraryName, $gameDatabase.count, $countMatchLicense, $countNoLicense, $countNewDate), "$libraryName Date Importer", 4)
     if ($ExportChoice -eq "Yes")
     {
         $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -272,7 +272,7 @@ function Export-Results
                 $gameDatesList | Select-Object Name, OldDate, NewDate, DateChanged, DateFound, LicenseDate | Sort-Object -Property DateFound, Name | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
             }
             $__logger.Info("Steam Date Importer - Results exported to `"$ExportPath`"")
-            $PlayniteApi.Dialogs.ShowMessage("Results exported successfully.", "Steam Date Importer");
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCResultsExportSuccessMessage"), "Steam Date Importer")
         }
     }
 }
@@ -281,7 +281,7 @@ function Set-DatesFromInput
 {
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
 
-    $dateInput = $PlayniteApi.Dialogs.SelectString("Enter date to import in the format `"'dd/MM/yyyy HH:mm'`":", "Date Importer", "");
+    $dateInput = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCResultsDateInputMessage"), "Date Importer", "")
     if ($dateInput.Result -eq $false)
     {
         exit
@@ -291,7 +291,7 @@ function Set-DatesFromInput
         $date = $dateInput.SelectedString -replace '/', '-'
         $date = [datetime]::parseexact($date, 'dd-MM-yyyy HH:mm', $null)
     } catch {
-        $PlayniteApi.Dialogs.ShowErrorMessage("Error.`n`"$($dateInput.SelectedString)`" is in the wrong format.", "Date Importer");
+        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsDateInputBadFormatMessage") -f $dateInput.SelectedString), "Date Importer")
         return
     }
 
@@ -307,7 +307,7 @@ function Set-DatesFromInput
             $dateModified++
         }
     }
-    $PlayniteApi.Dialogs.ShowMessage("Changed added date of $dateModified games.", "Date Importer");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCAddedDateModifiedResultsMessage") -f $dateModified), "Date Importer")
 }
 
 function Set-DatesFromLicenses
@@ -419,7 +419,7 @@ function Add-EpicDates
     $LicensesList = Get-EpicLicenses
     if ($LicensesList.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "$libraryName Date Importer")
         return
     }
     Set-DatesFromLicenses $libraryName $LicensesList $gameDatabase
@@ -432,7 +432,7 @@ function Export-EpicLicenses
     $LicensesList = Get-EpicLicenses
     if ($LicensesList.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "$libraryName Date Importer")
         return
     }
     Export-Licenses $libraryName $LicensesList
@@ -450,7 +450,7 @@ function Get-EpicLicenses
     $loginStatus = Get-LoginStatusViaJson $loginStatusNavigateUrl
     if ($loginStatus -eq $false)
     {
-        $PlayniteApi.Dialogs.ShowMessage("User is not logged in to $libraryName.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCUsetNotLoggedMessage") -f $libraryName), "$libraryName Date Importer")
         return $LicensesList
     }
 
@@ -464,7 +464,7 @@ function Get-EpicLicenses
         {
             foreach ($order in $json.orders) {
                 $date = (Get-Date 01.01.1970).AddSeconds($($order.createdAtMillis -replace ".{3}$"))
-                $CreatedAt = $date.ToString('u') -replace " ", "T";
+                $CreatedAt = $date.ToString('u') -replace " ", "T"
 
                 foreach ($item in $order.items) {
                     $product = [PSCustomObject]@{
@@ -501,7 +501,7 @@ function Add-GogDates
     $LicensesList = Get-GOGLicenses
     if ($LicensesList.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "$libraryName Date Importer")
         return
     }
 
@@ -514,7 +514,7 @@ function Export-GogLicenses
     $LicensesList = Get-GogLicenses $libraryName
     if ($LicensesList.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "$libraryName Date Importer")
         return
     }
     Export-Licenses $libraryName $LicensesList
@@ -532,7 +532,7 @@ function Get-GogLicenses
     $loginStatus = Get-LoginStatusViaJson $loginStatusNavigateUrl
     if ($loginStatus -eq $false)
     {
-        $PlayniteApi.Dialogs.ShowMessage("User is not loged in to $libraryName.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCUsetNotLoggedMessage") -f $libraryName), "$libraryName Date Importer")
         return $LicensesList
     }
     
@@ -582,7 +582,7 @@ function Add-SteamDates
     $LicensesList = Get-SteamLicenses
     if ($LicensesList.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "$libraryName Date Importer")
         return
     }
 
@@ -595,7 +595,7 @@ function Export-SteamLicenses
     $LicensesList = Get-SteamLicenses
     if ($LicensesList.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No licenses were found.", "$libraryName Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "$libraryName Date Importer")
         return
     }
     Export-Licenses $libraryName $LicensesList
@@ -732,7 +732,7 @@ function Get-SteamLicenses
     {
         # Use Webview to log in
         $__logger.Info("Steam Date Importer - No licenses found in first try, WebView will be opened")
-        $PlayniteApi.Dialogs.ShowMessage("A web browser window will be opened, please close the window after login in to Steam.", "Steam Date Importer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLoginNotifyMessage"), "Steam Date Importer")
         $LicensesUrl = 'https://store.steampowered.com/account/licenses/'
         $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
         $webView.Navigate($LicensesUrl)
@@ -750,7 +750,7 @@ function Get-SteamLicenses
         if ($LicenseMatches.count -eq 0)
         {
             $__logger.Info("Steam Date Importer - No licenses found in second try, not logged in or no licenses found")
-            $PlayniteApi.Dialogs.ShowMessage("Not logged in or no licenses found", "Steam Date Importer")
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLicensesNotFoundMessage"), "Steam Date Importer")
             return
         }
     }
