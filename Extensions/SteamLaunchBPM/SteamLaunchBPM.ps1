@@ -58,7 +58,6 @@ function OnGameStarting
                 break
             }
         }
-        $steamIsRunning
     }
     if ($steamIsRunning -eq $false)
     {
