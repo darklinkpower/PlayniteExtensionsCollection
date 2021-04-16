@@ -60,8 +60,12 @@ function Invoke-InstallationStatusCheck
             }
             else
             {
+                $GameFilePath =  $game.PlayAction.Path.Replace("{InstallDir}", $game.InstallDirectory).Replace("{PlayniteDir}", $PlayniteApi.Paths.ApplicationPath)
                 $GameFile = [System.IO.Path]::GetFileName($game.PlayAction.Path)
-                $GameFilePath = $game.InstallDirectory.TrimEnd('\') + '\' +  $GameFile  
+                if ($GameFilePath -eq $GameFile)
+                {
+                    $GameFilePath = $game.InstallDirectory.TrimEnd('\') + '\' +  $GameFile
+                }
             }
         }
         else
