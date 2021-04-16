@@ -1,7 +1,7 @@
 ﻿Id: MameRenamer_be989711-a433-428f-932e-207860c94fc9
-Name: MAME Renamer
+Name: MAME Tools
 Author: darklinkpower
-Version: 1.0
+Version: 1.1
 Module: MameRenamer.ps1
 Type: Script
 Icon: icon.png
