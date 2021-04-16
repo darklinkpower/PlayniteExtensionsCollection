@@ -10,68 +10,64 @@ function OnGameStarting
         return
     }
     
+    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -ne "SteamLibrary")
+    {
+        return
+    }
+
+    if ($game.InstallationStatus -ne 'Installed')
+    {
+        return
+    }
+
     # Get Steam executable path
     $Key = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, [Microsoft.Win32.RegistryView]::Registry64)
     $RegSubKey =  $Key.OpenSubKey("Software\Valve\Steam")
     if ($RegSubKey)
     {
-        $SteamPath = $RegSubKey.GetValue("SteamExe")
+        $steamPath = $RegSubKey.GetValue("SteamExe")
     }
-    if ($null -eq $SteamPath)
+    if ($null -eq $steamPath)
     {
-        $SteamPath = 'C:\Program Files (x86)\Steam\steam.exe'
+        $steamPath = 'C:\Program Files (x86)\Steam\steam.exe'
         $__logger.Warn("Could not find Steam registry value. Default path will be used.")
     }
 
-    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -eq "SteamLibrary")
+    if (!(Test-Path $steamPath))
     {
-        if ($game.InstallationStatus -eq 'Installed')
-        {
-            $__logger.Info("`"$($Game.Name)`" is a Steam game and is installed")
+        $__logger.Error("Steam executable not found in `"$steamPath`".")
+        return
+    }
+
+    $steamIsRunning = $false
+    $steam = Get-Process 'steam' -ErrorAction 'SilentlyContinue'
+    if ($Steam)
+    {
+        for ($i = 0; $i -lt 6; $i++) {
+            Start-Process $steamPath "-shutdown"
             $Steam = Get-Process 'steam' -ErrorAction 'SilentlyContinue'
             if ($Steam)
             {
-                for ($i = 0; $i -lt 6; $i++) {
-                    Start-Process "steam://ExitSteam"
-                    $Steam = Get-Process 'steam' -ErrorAction 'SilentlyContinue'
-                    if ($Steam)
-                    {
-                        Start-Sleep -Seconds 3
-                    }
-                    else
-                    {
-                        if (Test-Path $SteamPath)
-                        {
-                            Start-Process $SteamPath "-bigpicture"
-                            $__logger.Info("Steam launched in `"Big Picture`" mode.")
-            
-                            # Sleep time in case Steam needs time to start before launching game from Playnite
-                            Start-Sleep -Milliseconds 500
-                        }
-                        else
-                        {
-                            $__logger.Error("Steam executable not found in `"$SteamPath`".")
-                        }
-                        break
-                    }
-                }
-            }
-            elseif (Test-Path $SteamPath)
-            {
-                Start-Process $SteamPath "-bigpicture"
-                $__logger.Info("Steam launched in `"Big Picture`" mode.")
-
-                # Sleep time in case Steam needs time to start before launching game from Playnite
-                Start-Sleep -Milliseconds 500
+                $steamIsRunning = $true
+                Start-Sleep -Seconds 3
             }
             else
             {
-                $__logger.Error("Steam executable not found in `"$SteamPath`".")
+                $steamIsRunning = $false
+                break
             }
         }
-        else
-        {
-            $__logger.Info("`"$($Game.Name)`" is a Steam game but is not installed.")
-        }
+    }
+    if ($steamIsRunning -eq $false)
+    {
+        Start-Process $steamPath "-bigpicture"
+        $__logger.Info("Steam launched in `"Big Picture`" mode.")
+
+        # Sleep time in case Steam needs time to start before launching game from Playnite
+        Start-Sleep -Milliseconds 500
+    }
+    else
+    {
+        $__logger.Warn("Steam was detected as running and was not launched via the extension.")
     }
 }
