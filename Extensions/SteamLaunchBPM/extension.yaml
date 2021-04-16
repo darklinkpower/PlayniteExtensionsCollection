@@ -1,0 +1,10 @@
+﻿Id: Steam_Launch_BPM
+Name: Steam Launch BPM
+Author: darklinkpower
+Version: 1.0
+Module: SteamLaunchBPM.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
