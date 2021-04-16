@@ -43,8 +43,9 @@ function OnGameStarting
     $steam = Get-Process 'steam' -ErrorAction 'SilentlyContinue'
     if ($Steam)
     {
+        Start-Process $steamPath "-shutdown"
+        $__logger.Info("Steam was shutdown.")
         for ($i = 0; $i -lt 6; $i++) {
-            Start-Process $steamPath "-shutdown"
             $Steam = Get-Process 'steam' -ErrorAction 'SilentlyContinue'
             if ($Steam)
             {
@@ -57,6 +58,7 @@ function OnGameStarting
                 break
             }
         }
+        $steamIsRunning
     }
     if ($steamIsRunning -eq $false)
     {
