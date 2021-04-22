@@ -130,6 +130,12 @@ function Get-MameSnapshot
     $screenshotMissing = 0
     foreach ($game in $gameDatabase) {
         $romFileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        $arguments = @("-listxml", $fileName)
+        [xml]$output = & $mamePath $arguments
+        if ($output.mame.machine[0].cloneof)
+        {
+            $romFileName = $output.mame.machine[0].cloneof
+        }
         $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $romFileName + ".png")
         if (!(Test-Path $sourceScreenshotPath))
         {
@@ -137,7 +143,6 @@ function Get-MameSnapshot
             $__logger.Info("$($game.Name) is not a MAME game or is missing a screenshot.")
             continue
         }
-
         if ($game.BackgroundImage)
         {
             $PlayniteApi.Database.RemoveFile($game.BackgroundImage)
@@ -186,6 +191,12 @@ function Get-MameSnapshotToCover
     $screenshotMissing = 0
     foreach ($game in $gameDatabase) {
         $romFileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        $arguments = @("-listxml", $fileName)
+        [xml]$output = & $mamePath $arguments
+        if ($output.mame.machine[0].cloneof)
+        {
+            $romFileName = $output.mame.machine[0].cloneof
+        }
         $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $romFileName + ".png")
         if (!(Test-Path $sourceScreenshotPath))
         {
