@@ -50,9 +50,9 @@ namespace SteamLauncherUtility
                     logger.Info(String.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
-                else if (settings.LaunchMode == 1 && matchingFeature.Count() > 0)
+                else if (settings.LaunchMode == 1 && matchingFeature.Count() == 0)
                 {
-                    logger.Info(String.Format("Stopped execution in game \"{0}\". Selective mode and game has \"{1}\" feature", game.Name, modeFeatureName));
+                    logger.Info(String.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
             }
