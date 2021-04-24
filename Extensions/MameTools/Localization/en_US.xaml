@@ -2,7 +2,7 @@
     <sys:String x:Key="LOCMenuItemRenameRegionInNameDescription">Rename selected MAME games</sys:String>
     <sys:String x:Key="LOCMenuItemRenameNoRegionInNameDescription">Rename selected MAME games (Without region in game name)</sys:String>
     <sys:String x:Key="LOCMenuItemSetSnapAsBackgroundDescription">Import snapshots of selected game(s) as Background images from MAME into Playnite</sys:String>
-    <sys:String x:Key="LOCMenuItemRemoveBiosEntriesDescription">Remove selected MAME Bios entries</sys:String>
+    <sys:String x:Key="LOCMenuItemRemoveBiosEntriesDescription">Remove selected MAME entries that are not games</sys:String>
     <sys:String x:Key="LOCMenuItemSetSnapAsCoverDescription">Import snapshots of selected game(s) as Cover images from MAME into Playnite</sys:String><sys:String x:Key="LOCMameExecutableSelectMessage">Select the MAME executable.</sys:String>
     <sys:String x:Key="LOCMameExecutablePathSavedMessage">MAME executable path saved.</sys:String>
     <sys:String x:Key="LOCMameExecutableNotFoundMessage" xml:space="preserve">MAME executable not found in {0}. 
@@ -10,5 +10,5 @@ Please run the extension again to configure it to the correct location.</sys:Str
     <sys:String x:Key="LOCResultsMessage">Changed the name of {0} game(s).</sys:String>
     <sys:String x:Key="LOCSnapshotsImportResultsMessage" xml:space="preserve">Imported snapshots of {0} game(s) to Playnite. 
 {0} gamee(s) have a missing snapshot or are not MAME games.</sys:String>
-    <sys:String x:Key="LOCRemoveBiosResultsMessage">Removed {0} entries from Playnite that were MAME BIOS.</sys:String>
+    <sys:String x:Key="LOCRemoveBiosResultsMessage">Removed {0} MAME entries from Playnite that were not games.</sys:String>
 </ResourceDictionary>
