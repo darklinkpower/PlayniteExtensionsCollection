@@ -25,6 +25,34 @@ function GetMainMenuItems()
     return $menuItem1, $menuItem2, $menuItem3, $menuItem4
 }
 
+function Get-ProcessOutput
+{
+    param (
+        $executablePath,
+        $arguments
+    )
+
+    try {
+        $processStartInfo = New-object System.Diagnostics.ProcessStartInfo
+        $processStartInfo.CreateNoWindow = $true
+        $processStartInfo.UseShellExecute = $false
+        $processStartInfo.RedirectStandardOutput = $true
+        $processStartInfo.RedirectStandardError = $true
+        $processStartInfo.FileName = $executablePath
+        $processStartInfo.Arguments = $arguments
+        $process = New-Object System.Diagnostics.Process
+        $process.StartInfo = $processStartInfo
+        $process.Start() | Out-Null
+        $output = $process.StandardOutput.ReadToEnd()
+        $process.WaitForExit()
+        $process.Dispose()
+        return $output
+    } catch {
+        $process.Dispose()
+        return
+    }
+}
+
 function Rename-SelectedMameGames
 {
     param (
@@ -63,7 +91,7 @@ function Rename-SelectedMameGames
         try {
             $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
             $arguments = @("-listxml", $fileName)
-            [xml]$output = & $mamePath $arguments
+            [xml]$output = Get-ProcessOutput $mamePath $arguments
             $nameInXml = $output.mame.machine[0].description
             if ($keepRegionInfo -eq $false)
             {
@@ -129,20 +157,31 @@ function Get-MameSnapshot
     $screenshotAdded = 0
     $screenshotMissing = 0
     foreach ($game in $gameDatabase) {
-        $romFileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
-        $arguments = @("-listxml", $fileName)
-        [xml]$output = & $mamePath $arguments
-        if ($output.mame.machine[0].cloneof)
-        {
-            $romFileName = $output.mame.machine[0].cloneof
-        }
-        $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $romFileName + ".png")
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
         if (!(Test-Path $sourceScreenshotPath))
         {
-            $screenshotMissing++
-            $__logger.Info("$($game.Name) is not a MAME game or is missing a screenshot.")
-            continue
+            $arguments = @("-listxml", $fileName)
+            [xml]$output = Get-ProcessOutput $mamePath $arguments
+            if ($output.mame.machine[0].cloneof)
+            {
+                $fileName = $output.mame.machine[0].cloneof
+                $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
+                if (!(Test-Path $sourceScreenshotPath))
+                {
+                    $screenshotMissing++
+                    $__logger.Info("$($game.Name) is missing a screenshot.")
+                    continue
+                }
+            }
+            else
+            {
+                $screenshotMissing++
+                $__logger.Info("$($game.Name) is not a a clone or is missing a screenshot.")
+                continue
+            }
         }
+
         if ($game.BackgroundImage)
         {
             $PlayniteApi.Database.RemoveFile($game.BackgroundImage)
@@ -190,19 +229,29 @@ function Get-MameSnapshotToCover
     $screenshotAdded = 0
     $screenshotMissing = 0
     foreach ($game in $gameDatabase) {
-        $romFileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
-        $arguments = @("-listxml", $fileName)
-        [xml]$output = & $mamePath $arguments
-        if ($output.mame.machine[0].cloneof)
-        {
-            $romFileName = $output.mame.machine[0].cloneof
-        }
-        $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $romFileName + ".png")
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
         if (!(Test-Path $sourceScreenshotPath))
         {
-            $screenshotMissing++
-            $__logger.Info("$($game.Name) is not a MAME game or is missing a screenshot.")
-            continue
+            $arguments = @("-listxml", $fileName)
+            [xml]$output = Get-ProcessOutput $mamePath $arguments
+            if ($output.mame.machine[0].cloneof)
+            {
+                $fileName = $output.mame.machine[0].cloneof
+                $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
+                if (!(Test-Path $sourceScreenshotPath))
+                {
+                    $screenshotMissing++
+                    $__logger.Info("$($game.Name) is missing a screenshot.")
+                    continue
+                }
+            }
+            else
+            {
+                $screenshotMissing++
+                $__logger.Info("$($game.Name) is not a a clone or is missing a screenshot.")
+                continue
+            }
         }
 
         if ($game.CoverImage)
