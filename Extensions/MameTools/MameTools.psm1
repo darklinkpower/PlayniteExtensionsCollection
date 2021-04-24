@@ -24,7 +24,41 @@ function GetMainMenuItems
     $menuItem4.FunctionName = "Set-SnapshotAsBackgroundImage"
     $menuItem4.MenuSection = "@Mame Tools"
 
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetSnapAsCoverDescription")
+    $menuItem4.FunctionName = "Set-SnapshotAsBackgroundImage"
+    $menuItem4.MenuSection = "@Mame Tools"
+
     return $menuItem1, $menuItem2, $menuItem3, $menuItem4
+}
+
+
+function Get-ProcessOutput
+{
+    param (
+        $executablePath,
+        $arguments
+    )
+
+    try {
+        $processStartInfo = New-object System.Diagnostics.ProcessStartInfo
+        $processStartInfo.CreateNoWindow = $true
+        $processStartInfo.UseShellExecute = $false
+        $processStartInfo.RedirectStandardOutput = $true
+        $processStartInfo.RedirectStandardError = $true
+        $processStartInfo.FileName = $executablePath
+        $processStartInfo.Arguments = $arguments
+        $process = New-Object System.Diagnostics.Process
+        $process.StartInfo = $processStartInfo
+        $process.Start() | Out-Null
+        $output = $process.StandardOutput.ReadToEnd()
+        $process.WaitForExit()
+        $process.Dispose()
+        return $output
+    } catch {
+        $process.Dispose()
+        return
+    }
 }
 
 function Get-MamePath
@@ -75,7 +109,7 @@ function Rename-SelectedMameGames
         try {
             $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
             $arguments = @("-listxml", $fileName)
-            [xml]$output = & $mamePath $arguments
+            [xml]$output = Get-ProcessOutput $mamePath $arguments
             $nameInXml = $output.mame.machine[0].description
             if ($keepRegionInfo -eq $false)
             {
@@ -135,7 +169,7 @@ function Set-MameSnapshotToPlayniteMedia
     foreach ($game in $gameDatabase) {
         $romFileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
         $arguments = @("-listxml", $fileName)
-        [xml]$output = & $mamePath $arguments
+        [xml]$output = Get-ProcessOutput $mamePath $arguments
         if ($output.mame.machine[0].cloneof)
         {
             $romFileName = $output.mame.machine[0].cloneof
