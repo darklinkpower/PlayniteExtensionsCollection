@@ -5,24 +5,29 @@ function GetMainMenuItems()
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Rename selected MAME games"
     $menuItem1.FunctionName = "Rename-WithInfo"
-    $menuItem1.MenuSection = "@MAME tools"
+    $menuItem1.MenuSection = "@MAME Tools"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem2.Description = "Rename selected MAME games (Without region information)"
     $menuItem2.FunctionName = "Rename-NoInfo"
-    $menuItem2.MenuSection = "@MAME tools"
+    $menuItem2.MenuSection = "@MAME Tools"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem3.Description = "Import screenshots as Background images to Playnite from MAME of selected games"
     $menuItem3.FunctionName = "Get-MameSnapshot"
-    $menuItem3.MenuSection = "@MAME tools"
+    $menuItem3.MenuSection = "@MAME Tools"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem4.Description = "Import screenshots as Cover images to Playnite from MAME of selected games"
     $menuItem4.FunctionName = "Get-MameSnapshotToCover"
-    $menuItem4.MenuSection = "@MAME tools"
+    $menuItem4.MenuSection = "@MAME Tools"
 
-    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
+    $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem5.Description = "Remove selected entries that are MAME BIOS"
+    $menuItem5.FunctionName = "Remove-MameBiosEntries"
+    $menuItem5.MenuSection = "@MAME Tools"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5
 }
 
 function Get-ProcessOutput
@@ -53,12 +58,8 @@ function Get-ProcessOutput
     }
 }
 
-function Rename-SelectedMameGames
+function Get-MamePath
 {
-    param (
-        $keepRegionInfo
-    )
-
     $mameSavedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'mameSavedPath.txt'
     if (Test-Path $mameSavedPath)
     {
@@ -66,23 +67,37 @@ function Rename-SelectedMameGames
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("Select the MAME executable", "MAME renamer");
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMameExecutableSelectMessage"), "MAME renamer")
         $mamePath = $PlayniteApi.Dialogs.SelectFile("MAME executable|mame*.exe")
         if (!$mamePath)
         {
-            exit
+            return
         }
         [System.IO.File]::WriteAllLines($mameSavedPath, $mamePath)
         $__logger.Info("MAME renamer - Saved `"$mamePath`" executable path.")
-        $PlayniteApi.Dialogs.ShowMessage("MAME executable path `"$mamePath`" saved.", "MAME renamer")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameExecutablePathSavedMessage") -f $mamePath), "MAME renamer")
     }
 
     if (!(Test-Path $mamePath))
     {
         [System.IO.File]::Delete($mameSavedPath)
         $__logger.Info("MAME renamer - Executable not found in `"$mamePath`" and saved path was deleted.")
-        $PlayniteApi.Dialogs.ShowMessage("MAME executable was not found in `"$mamePath`". Please run the extension again to configure it to the correct location.", "MAME renamer")
-        exit
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameExecutableNotFoundMessage") -f $mamePath), "MAME renamer")
+        return
+    }
+    return $mamePath
+}
+
+function Rename-SelectedMameGames
+{
+    param (
+        $keepRegionInfo
+    )
+
+    $mamePath = Get-MamePath
+    if ($null -eq $mamePath)
+    {
+        return
     }
 
     $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
@@ -110,7 +125,7 @@ function Rename-SelectedMameGames
         }
     }
     
-    $PlayniteApi.Dialogs.ShowMessage("Changed name of $nameChanged games.", "MAME renamer");
+    $PlayniteApi.Dialogs.ShowMessage("Changed name of $nameChanged games.", "MAME Tools");
     $__logger.Info("Changed the name of $nameChanged games.")
 }
 
@@ -126,30 +141,10 @@ function Rename-NoInfo
 
 function Get-MameSnapshot
 {
-    $mameSavedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'mameSavedPath.txt'
-    if (Test-Path $mameSavedPath)
+    $mamePath = Get-MamePath
+    if ($null -eq $mamePath)
     {
-        $mamePath = [System.IO.File]::ReadAllLines($mameSavedPath)
-    }
-    else
-    {
-        $PlayniteApi.Dialogs.ShowMessage("Select the MAME executable", "MAME renamer");
-        $mamePath = $PlayniteApi.Dialogs.SelectFile("MAME executable|mame*.exe")
-        if (!$mamePath)
-        {
-            exit
-        }
-        [System.IO.File]::WriteAllLines($mameSavedPath, $mamePath)
-        $__logger.Info("MAME renamer - Saved `"$mamePath`" executable path.")
-        $PlayniteApi.Dialogs.ShowMessage("MAME executable path `"$mamePath`" saved.", "MAME renamer")
-    }
-
-    if (!(Test-Path $mamePath))
-    {
-        [System.IO.File]::Delete($mameSavedPath)
-        $__logger.Info("MAME renamer - Executable not found in `"$mamePath`" and saved path was deleted.")
-        $PlayniteApi.Dialogs.ShowMessage("MAME executable was not found in `"$mamePath`". Please run the extension again to configure it to the correct location.", "MAME renamer")
-        exit
+        return
     }
 
     $mameDirectory = [System.IO.Path]::GetDirectoryName($mamePath)
@@ -198,30 +193,10 @@ function Get-MameSnapshot
 
 function Get-MameSnapshotToCover
 {
-    $mameSavedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'mameSavedPath.txt'
-    if (Test-Path $mameSavedPath)
+    $mamePath = Get-MamePath
+    if ($null -eq $mamePath)
     {
-        $mamePath = [System.IO.File]::ReadAllLines($mameSavedPath)
-    }
-    else
-    {
-        $PlayniteApi.Dialogs.ShowMessage("Select the MAME executable", "MAME renamer");
-        $mamePath = $PlayniteApi.Dialogs.SelectFile("MAME executable|mame*.exe")
-        if (!$mamePath)
-        {
-            exit
-        }
-        [System.IO.File]::WriteAllLines($mameSavedPath, $mamePath)
-        $__logger.Info("MAME renamer - Saved `"$mamePath`" executable path.")
-        $PlayniteApi.Dialogs.ShowMessage("MAME executable path `"$mamePath`" saved.", "MAME renamer")
-    }
-
-    if (!(Test-Path $mamePath))
-    {
-        [System.IO.File]::Delete($mameSavedPath)
-        $__logger.Info("MAME renamer - Executable not found in `"$mamePath`" and saved path was deleted.")
-        $PlayniteApi.Dialogs.ShowMessage("MAME executable was not found in `"$mamePath`". Please run the extension again to configure it to the correct location.", "MAME renamer")
-        exit
+        return
     }
 
     $mameDirectory = [System.IO.Path]::GetDirectoryName($mamePath)
@@ -266,4 +241,28 @@ function Get-MameSnapshotToCover
     }
 
     $PlayniteApi.Dialogs.ShowMessage("Imported Screenshots of $screenshotAdded games to Playnite.`n$screenshotMissing have a missing screenshot or are not MAME games.", "MAME screenshot importer");
+}
+
+function Remove-MameBiosEntries
+{
+    $mamePath = Get-MamePath
+    if ($null -eq $mamePath)
+    {
+        return
+    }
+
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
+    $entriesRemoved = 0
+    foreach ($game in $gameDatabase) {
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        $arguments = @("-listxml", $fileName)
+        [xml]$output = Get-ProcessOutput $mamePath $arguments
+        if ($output.mame.machine[0].isbios -eq "yes")
+        {
+            $PlayniteApi.Database.Games.Remove($game.Id)
+            $entriesRemoved++
+        }
+    }
+
+    $PlayniteApi.Dialogs.ShowMessage("Removed $entriesRemoved entries from Playnite that were BIOS.", "MAME Tools");
 }
