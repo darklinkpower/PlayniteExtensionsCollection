@@ -167,20 +167,31 @@ function Set-MameSnapshotToPlayniteMedia
     $snapshotsImportCount = 0
     $snapshotsMissingCount = 0
     foreach ($game in $gameDatabase) {
-        $romFileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
-        $arguments = @("-listxml", $fileName)
-        [xml]$output = Get-ProcessOutput $mamePath $arguments
-        if ($output.mame.machine[0].cloneof)
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
+        if (![System.IO.File]::Exists($sourceScreenshotPath))
         {
-            $romFileName = $output.mame.machine[0].cloneof
+            $arguments = @("-listxml", $fileName)
+            [xml]$output = Get-ProcessOutput $mamePath $arguments
+            if ($output.mame.machine[0].cloneof)
+            {
+                $fileName = $output.mame.machine[0].cloneof
+                $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
+                if (![System.IO.File]::Exists($sourceScreenshotPath))
+                {
+                    $screenshotMissing++
+                    $__logger.Info("$($game.Name) is missing a screenshot.")
+                    continue
+                }
+            }
+            else
+            {
+                $screenshotMissing++
+                $__logger.Info("$($game.Name) is not a a clone or is missing a screenshot.")
+                continue
+            }
         }
-        $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $romFileName + ".png")
-        if (!(Test-Path $sourceScreenshotPath))
-        {
-            $snapshotsMissingCount++
-            $__logger.Info("$($game.Name) is not a MAME game or is missing a screenshot.")
-            continue
-        }
+
         if ($targetMedia -eq "Background Image")
         {
             if ($game.BackgroundImage)
