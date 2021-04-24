@@ -208,23 +208,27 @@ function Get-MameSnapshotToCover
         $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
         if (!(Test-Path $sourceScreenshotPath))
         {
-            $arguments = @("-listxml", $fileName)
-            [xml]$output = Get-ProcessOutput $mamePath $arguments
-            if ($output.mame.machine[0].cloneof)
-            {
-                $fileName = $output.mame.machine[0].cloneof
-                $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
-                if (!(Test-Path $sourceScreenshotPath))
+            try {
+                $arguments = @("-listxml", $fileName)
+                [xml]$output = Get-ProcessOutput $mamePath $arguments
+                if ($output.mame.machine[0].cloneof)
+                {
+                    $fileName = $output.mame.machine[0].cloneof
+                    $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
+                    if (!(Test-Path $sourceScreenshotPath))
+                    {
+                        $screenshotMissing++
+                        $__logger.Info("$($game.Name) is missing a screenshot.")
+                        continue
+                    }
+                }
+                else
                 {
                     $screenshotMissing++
-                    $__logger.Info("$($game.Name) is missing a screenshot.")
+                    $__logger.Info("$($game.Name) is not a a clone or is missing a screenshot.")
                     continue
                 }
-            }
-            else
-            {
-                $screenshotMissing++
-                $__logger.Info("$($game.Name) is not a a clone or is missing a screenshot.")
+            } catch {
                 continue
             }
         }
@@ -254,13 +258,23 @@ function Remove-MameBiosEntries
     $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
     $entriesRemoved = 0
     foreach ($game in $gameDatabase) {
-        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
-        $arguments = @("-listxml", $fileName)
-        [xml]$output = Get-ProcessOutput $mamePath $arguments
-        if ($output.mame.machine[0].isbios -eq "yes")
-        {
-            $PlayniteApi.Database.Games.Remove($game.Id)
-            $entriesRemoved++
+        try {
+            $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+            $arguments = @("-listxml", $fileName)
+            [xml]$output = Get-ProcessOutput $mamePath $arguments
+            
+            if ($output.mame.machine.isdevice -eq "yes")
+            {
+                $PlayniteApi.Database.Games.Remove($game.Id)
+                $entriesRemoved++
+            }
+            elseif ($output.mame.machine[0].isbios -eq "yes")
+            {
+                $PlayniteApi.Database.Games.Remove($game.Id)
+                $entriesRemoved++
+            }
+        } catch {
+            continue
         }
     }
 
