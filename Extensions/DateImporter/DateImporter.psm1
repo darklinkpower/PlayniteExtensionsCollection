@@ -134,7 +134,7 @@ function Get-IsJsonValidFromPage
     )
 
     try {
-        $pageSource -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json
+        $pageSource -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json | Out-Null
         return $true
     } catch {
         return $false
@@ -322,10 +322,32 @@ function Set-DatesFromLicenses
     {
         $webView = $PlayniteApi.WebViews.CreateOffscreenView()
         $webView.Navigate("https://help.steampowered.com")
+        $cookie = $webView.GetCookies() | Where-Object {$_.Domain -eq "help.steampowered.com"} | Where-Object {$_.Name -eq "steamLoginSecure"}
+        $isLoggedOnSteamHelp = $true
+        $webView.Dispose()
+        if ($null -eq $cookie)
+        {
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCLoginNotifyMessage"), "$libraryName Date Importer")
+            $webView = $PlayniteApi.WebViews.CreateView(1020, 600)
+            $webView.Navigate("https://help.steampowered.com/")
+            $webView.OpenDialog()
+            $webView.Dispose()
+
+            $webView = $PlayniteApi.WebViews.CreateOffscreenView()
+            $webView.Navigate("https://help.steampowered.com")
+            $cookie = $webView.GetCookies() | Where-Object {$_.Domain -eq "help.steampowered.com"} | Where-Object {$_.Name -eq "steamLoginSecure"}
+            $webView.Dispose()
+            if ($null -eq $cookie)
+            {
+                $isLoggedOnSteamHelp = $false
+            }
+        }
+        $webView = $PlayniteApi.WebViews.CreateOffscreenView()
+        $webView.Navigate("https://help.steampowered.com")
         $sessionIdCookie = $webView.GetCookies() | Where-Object {$_.Domain -eq "help.steampowered.com"} | Where-Object {$_.Name -eq "sessionid"}
         $sessionId = $sessionIdCookie.Value
         $helpTemplate = "https://help.steampowered.com/en/wizard/HelpWithGame/?appid={0}&sessionid={1}&wizard_ajax=1"
-        $regexDate = '\\r\\n\\t\\t\\t\\t\\t\\t\\t&lt;span&gt;(.*?(?=&amp;))&amp;nbsp;'
+        $regexDate = 'class=\\"LineItemRow\\"&gt;\\r\\n\\t\\t\\t\\t\\t\\t\\t&lt;span&gt;(.*?(?=&amp;))'
     }
 
     # Counters and export list
@@ -350,7 +372,7 @@ function Set-DatesFromLicenses
             }
         }
 
-        if ( ($null -eq $LicenseDate) -and ($libraryName -eq "Steam") )
+        if (($null -eq $LicenseDate) -and ($libraryName -eq "Steam") -and ($isLoggedOnSteamHelp -eq $true))
         {
             $helpUrl = $helpTemplate -f $game.GameId, $sessionId
             $webView.NavigateAndWait($helpUrl)
