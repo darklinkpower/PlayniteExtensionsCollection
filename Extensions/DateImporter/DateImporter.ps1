@@ -134,7 +134,7 @@ function Get-IsJsonValidFromPage
     )
 
     try {
-        $pageSource -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json
+        $pageSource -replace '<html><head></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">', '' -replace '</pre></body></html>', '' | ConvertFrom-Json | Out-Null
         return $true
     } catch {
         return $false
