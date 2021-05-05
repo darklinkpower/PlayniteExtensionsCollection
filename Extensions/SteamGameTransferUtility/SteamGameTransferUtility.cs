@@ -31,7 +31,7 @@ namespace SteamGameTransferUtility
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new SteamGameTransferUtilitySettingsView();
+            return null;
         }
 
         public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs menuArgs)
