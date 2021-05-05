@@ -1,0 +1,9 @@
+﻿Name: Steam Guides
+Author: darklinkpower
+Version: 1.0
+Module: SteamGuides.psm1
+Type: Script
+Icon: icon.png
+Functions: 
+    - Description: Steam Guides - Add Steam Guide link to all Steam games
+      FunctionName: Add-SteamGuides
