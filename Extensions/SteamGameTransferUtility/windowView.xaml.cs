@@ -226,7 +226,7 @@ namespace SteamGameTransferUtility
             }
             if (copiedGamesCount > 0 || deletedSourceFilesCount > 0)
             {
-                results += "\n\nUpdate your Playnite library after restaring Steam to reflect the changes";
+                results += "\n\nUpdate your Playnite library after restarting Steam to reflect the changes";
             }
             PlayniteApi.Dialogs.ShowMessage(results, "Steam Game Transfer Utility");
 

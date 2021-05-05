@@ -31,7 +31,15 @@ namespace SteamGameTransferUtility
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return null;
+            return new SteamGameTransferUtilitySettingsView();
+        }
+
+        public override void OnLibraryUpdated()
+        {
+            if (settings.UpdateLocTagsOnLibUpdate == true)
+            {
+                UpdateInstallDirTags();
+            }
         }
 
         public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs menuArgs)
@@ -40,7 +48,7 @@ namespace SteamGameTransferUtility
             {
                 new MainMenuItem
                 {
-                    Description = "Steam Game Transfer Utility",
+                    Description = "Launch menu window",
                     MenuSection = "@Steam Game Transfer Utility",
                     Action = args => {
                         WindowMethod();
@@ -48,10 +56,10 @@ namespace SteamGameTransferUtility
                 },
                 new MainMenuItem
                 {
-                    Description = "Set installation drive tag in all games",
+                    Description = "Update installation drive tag in all games",
                     MenuSection = "@Steam Game Transfer Utility",
                     Action = args => {
-                        SetInstallDirTags();
+                        UpdateInstallDirTagsMenu();
                     }
                 }
             };
@@ -81,7 +89,13 @@ namespace SteamGameTransferUtility
             window.ShowDialog();
         }
 
-        public void SetInstallDirTags()
+        public void UpdateInstallDirTagsMenu()
+        {
+            UpdateInstallDirTags();
+            PlayniteApi.Dialogs.ShowMessage("Finished updating installation drive tags.", "Steam Game Transfer Utility");
+        }
+
+        public void UpdateInstallDirTags()
         {
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
@@ -120,8 +134,6 @@ namespace SteamGameTransferUtility
                     }
                 }
             }, new GlobalProgressOptions("Setting installation drive tags..."));
-
-            PlayniteApi.Dialogs.ShowMessage("Finished setting installation drive tags.", "Steam Game Transfer Utility");
         }
 
         public bool RemoveTag(Game game, Tag tag)
