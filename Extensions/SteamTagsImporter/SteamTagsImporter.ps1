@@ -47,12 +47,37 @@ function Get-SteamAppList
             $steamApp.name = $steamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         }
         ConvertTo-Json $appListContent -Depth 2 -Compress | Out-File -Encoding 'UTF8' -FilePath $appListPath
-        $__logger.Info("Downloaded Steam AppList")
+        $__logger.Info("Downloaded AppList")
+        $global:appListDownloaded = $true
     }
     else
     {
         exit
     }
+}
+
+function Set-GlobalAppList
+{
+    param (
+        [bool]$forceDownload
+    )
+    
+    # Get Steam AppList
+    $appListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
+    if (!(Test-Path $appListPath) -or ($forceDownload -eq $true))
+    {
+        Get-SteamAppList -AppListPath $appListPath
+    }
+    $global:appList = @{}
+    [object]$appListJson = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
+    foreach ($steamApp in $appListJson) {
+        # Use a try block in case multple apps use the same name
+        try {
+            $appList.add($steamApp.name, $steamApp.appid)
+        } catch {}
+    }
+
+    $__logger.Info(("Global applist set from {0}" -f $appListPath))
 }
 
 function Get-SteamAppId
@@ -61,64 +86,64 @@ function Get-SteamAppId
         $game
     )
 
+    $gamePlugin = [Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId).ToString()
+    $__logger.Info(("Get-SteammAppId start. Game: {0}, Plugin: {1}" -f $game.Name, $gamePlugin))
+
     # Use GameId for Steam games
-    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -eq "SteamLibrary")
+    if ($gamePlugin -eq "SteamLibrary")
     {
+        $__logger.Info(("Game: {0}, appId {1} found via pluginId" -f $game.Name, $game.GameId))
         return $game.GameId
     }
-    else
+    elseif ($null -ne $game.Links)
     {
         # Look for Steam Store URL in links for other games
         foreach ($link in $game.Links) {
-            switch -regex ($link.Url) {
-                "https?://store.steampowered.com/app/(\d+)/?\w*/?" {
-                return $matches[1]}
+            if ($link.Url -match "https?://store.steampowered.com/app/(\d+)/?")
+            {
+                $__logger.Info(("Game: {0}, appId {1} found via links" -f $game.Name, $link.Url))
+                return $matches[1]
             }
         }
     }
 
-    if (!$AppId)
+    $gameName = $game.Name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
+    if ($null -ne $appList[$gameName])
     {
-        # Get Steam AppList
+        $appId = $appList[$gameName].ToString()
+        $__logger.Info(("Game: {0}, appId {1} found via AppList" -f $game.Name, $appId))
+        return $appId
+    }
+    
+    if ((!$appId) -and ($appListDownloaded -eq $false))
+    {
+        # Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
         $appListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
-        if (!(Test-Path $appListPath))
+        $AppListLastWrite = (Get-Item $appListPath).LastWriteTime
+        $timeSpan = New-Timespan -days 2
+        if (((Get-date) - $AppListLastWrite) -gt $timeSpan)
         {
-            Get-SteamAppList -AppListPath $appListPath
-        }
-
-        # Try to search for AppId by searching in local Steam AppList database
-        [object]$AppList = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
-        $gameName = $game.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
-        foreach ($steamApp in $AppList) {
-            if ($steamApp.name -eq $gameName) 
+            Set-GlobalAppList $true
+            if ($null -ne $appList[$gameName])
             {
-                return $steamApp.appid
+                $appId = $appList[$gameName].ToString()
+                $__logger.Info(("Game: {0}, appId {1} found via AppList" -f $game.Name, $appId))
+                return $appId
             }
-        }
-        if (!$AppId)
-        {
-            # Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
-            $AppListLastWrite = (Get-Item $appListPath).LastWriteTime
-            $TimeSpan = New-Timespan -days 2
-            if (((Get-date) - $AppListLastWrite) -gt $TimeSpan)
-            {
-                Get-SteamAppList -AppListPath $appListPath
-                [object]$AppList = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
-                foreach ($SteamApp in $AppList) {
-                    if ($SteamApp.name -eq $Gamename) 
-                    {
-                        return $SteamApp.appid
-                    }
-                }
-            }
+            return $null
         }
     }
 }
 
 function Get-SteamTags
 {
-
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.name -eq "PC"}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    if ($gameDatabase.count -gt 0)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("No games selected")
+        return
+    }
+    Set-GlobalAppList $false
     $regex = 'InitAppTagModal\([^[]+([^\n]+)'
     $CountertagsAdded = 0
 
