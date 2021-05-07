@@ -5,11 +5,16 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Import Steam Tags for selected games"
-    $menuItem1.FunctionName = "Get-SteamTags"
+    $menuItem1.Description = "Import Steam Tags for selected games (Maximum 5 tags)"
+    $menuItem1.FunctionName = "Get-SteamTagsDefault"
     $menuItem1.MenuSection = "@Steam Tags Importer"
 
-    return $menuItem1
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Import Steam Tags for selected games (Select maximum tags)"
+    $menuItem2.FunctionName = "Get-SteamTagsManual"
+    $menuItem2.MenuSection = "@Steam Tags Importer"
+
+    return $menuItem1, $menuItem2
 }
 
 function Get-DownloadString
@@ -137,8 +142,11 @@ function Get-SteamAppId
 
 function Get-SteamTags
 {
+    param (
+        [int]$tagsLimit
+    )
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    if ($gameDatabase.count -gt 0)
+    if ($gameDatabase.count -eq 0)
     {
         $PlayniteApi.Dialogs.ShowMessage("No games selected")
         return
@@ -191,7 +199,7 @@ function Get-SteamTags
             continue
         }
         $gameTags = $sourceRegex.Groups[1].Value -replace "..$" | ConvertFrom-Json
-        $gameTags = $gameTags | Select-Object -First 5
+        $gameTags = $gameTags | Select-Object -First $tagsLimit
         $tagsAdded = $false
 
         foreach ($gameTag in $gameTags) {
@@ -219,4 +227,31 @@ function Get-SteamTags
     }
 
     $PlayniteApi.Dialogs.ShowMessage("Added $CountertagsAdded tags to $($gameDatabase.Count) game(s).", "Steam Tags Importer")
+}
+
+function Get-SteamTagsDefault
+{
+    Get-SteamTags 5
+}
+
+function Get-SteamTagsManual
+{
+    $userInput = $PlayniteApi.Dialogs.SelectString("Enter number of tags to download", "Steam Tags Importer", "5")
+    
+    if ($userInput.result -eq "True")
+    {
+        try {
+            $number = [System.Int32]::Parse($userInput.SelectedString)
+        } catch {
+            $PlayniteApi.Dialogs.ShowMessage("Invalid input", "Steam Tags Importer")
+            return
+        }
+        if ($userInput.SelectedString -eq 0)
+        {
+            $PlayniteApi.Dialogs.ShowMessage("Invalid input", "Steam Tags Importer")
+            return
+        }
+        Get-SteamTags $number
+    }
+    return    
 }
