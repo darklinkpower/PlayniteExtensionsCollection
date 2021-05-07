@@ -1,0 +1,12 @@
+﻿Id: ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6
+Name: Extra Metadata Tools Video
+Author: darklinkpower
+Version: 1.0
+Module: ExtraMetadataToolsVideo.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-575.html
