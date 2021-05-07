@@ -10,11 +10,16 @@ function GetMainMenuItems
     $menuItem1.MenuSection = "@Steam Tags Importer"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Import Steam Tags for selected games (Select maximum tags)"
-    $menuItem2.FunctionName = "Get-SteamTagsManual"
+    $menuItem2.Description = "Import Steam Tags for selected games (All available tags)"
+    $menuItem2.FunctionName = "Get-SteamTagsAll"
     $menuItem2.MenuSection = "@Steam Tags Importer"
 
-    return $menuItem1, $menuItem2
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description = "Import Steam Tags for selected games (Select maximum tags)"
+    $menuItem3.FunctionName = "Get-SteamTagsManual"
+    $menuItem3.MenuSection = "@Steam Tags Importer"
+
+    return $menuItem1, $menuItem2, $menuItem3
 }
 
 function Get-DownloadString
@@ -232,6 +237,11 @@ function Get-SteamTags
 function Get-SteamTagsDefault
 {
     Get-SteamTags 5
+}
+
+function Get-SteamTagsAll
+{
+    Get-SteamTags 99
 }
 
 function Get-SteamTagsManual
