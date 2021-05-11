@@ -533,7 +533,7 @@ function Get-VideoMicrotrailerFromVideo
     $settings = Get-Settings
     $videoInformation = Get-VideoInformation $videoSourcePath
 
-    if ([System.Double]::Parse($videoInformation.VideoDurationSeconds) -le 8)
+    if ([System.Double]::Parse($videoInformation.VideoDurationSeconds) -le 14)
     {
         $isConversionNeeded = Get-IsConversionNeeded $videoSourcePath
         if ($isConversionNeeded -eq $true)
