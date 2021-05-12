@@ -857,6 +857,71 @@ function Set-YouTubeVideo
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nSet video to {0} game(s)" -f $videoSetCount.ToString()), "Extra Metadata Tools")
 }
 
+function CreateWindowFromArray
+{
+    param (
+        $ResultsArray
+    )
+
+    # Load assemblies
+    Add-Type -AssemblyName PresentationCore
+    Add-Type -AssemblyName PresentationFramework
+
+    # Set Xaml
+    [xml]$Xaml = @"
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Grid.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </Grid.Resources>
+
+    <StackPanel Margin="20">
+        <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="Video list:" VerticalAlignment="Center"/>
+        <ComboBox Name="CbVideoSelection" SelectedIndex="0" MinHeight="25" MinWidth="200" VerticalAlignment="Center" Margin="0,10,0,0"/>
+        <Button Content="Download selected video" HorizontalAlignment="Center" Margin="0,10,0,0" Name="ButtonDownloadVideo" IsDefault="True"/>
+    </StackPanel>
+</Grid>
+"@
+
+    # Load the xaml for controls
+    $XMLReader = [System.Xml.XmlNodeReader]::New($Xaml)
+    $XMLForm = [Windows.Markup.XamlReader]::Load($XMLReader)
+
+    # Make variables for each control
+    $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
+
+    # Set items sources of controls
+    $CbVideoSelection.ItemsSource = $ResultsArray
+    $CbVideoSelection.DisplayMemberPath = "Name"
+    $CbVideoSelection.SelectedValue
+
+    # Set Window creation options
+    $windowCreationOptions = New-Object Playnite.SDK.WindowCreationOptions
+    $windowCreationOptions.ShowCloseButton = $true
+    $windowCreationOptions.ShowMaximizeButton = $False
+    $windowCreationOptions.ShowMinimizeButton = $False
+
+    # Create window
+    $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
+    $window.Content = $XMLForm
+    $window.Width = 300
+    $window.Height = 460
+    $window.Title = "Extra Metadata Tools Video"
+    $window.WindowStartupLocation = "CenterScreen"
+
+    # Handler for pressing "Download selected video" button
+    $ButtonDownloadVideo.Add_Click(
+    {
+        $YouTubeID = $CbVideoSelection.SelectedValue.Value
+        Set-YouTubeVideoManual $YouTubeID
+        $window.Close()
+    })
+    
+    # Show Window
+    $__logger.Info("Opening Window.")
+    $window.ShowDialog()
+    $__logger.Info("Window closed.")
+}
+
 function Set-YouTubeGameplayVideo
 {
     $settings = Get-Settings
@@ -871,15 +936,12 @@ function Set-YouTubeGameplayVideo
 
     $game = $PlayniteApi.MainView.SelectedGames[0]
 
-    $extraMetadataDirectory = Set-GameDirectory $game
-    #$tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s#____#%(id)s.%(ext)s"	
+    $extraMetadataDirectory = Set-GameDirectory $game	
     $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
     $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
 	$youtubedl = $settings.youtubedlPath
 	$search = '"' + "ytsearch20:" + $game.Name + " " + $game.Platform + " gameplay" + '"'
 
-	#C:\YouTube-DL\youtube-dl.exe 'ytsearch10:cyberpunk 2077 game trailer ign' --write-description  --skip-download -o "C:\YouTube-DL\%(title)s#____#%(id)s.%(ext)s"
-		
 	$trailerdownloadparams = @{
 		'FilePath'     = $youtubedl
 		'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
@@ -891,62 +953,23 @@ function Set-YouTubeGameplayVideo
 	$ListResults = @(Get-ChildItem -Name $descriptionPath)
 	
 	$ResultsArray=[collections.arraylist]@(
-	Foreach ($ListResult in $ListResults)
-	{
-	$pos1 = $ListResult.IndexOf("~____~")	
-	$pos2 = $ListResult.IndexOf("#____#")
-	$ResultName = $ListResult.Substring(0, $pos1)
-	$ResultID = $ListResult.Substring($pos2+6)	
-	$Length = $ListResult.Substring(0, $pos2)
-	$Length = $Length.Replace($ResultName,"")	
-	$Length = $Length.Replace("~____~","")
-	$LengthFormatted =  [timespan]::fromseconds($Length)
-	$LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
-	$Name = $ResultName + " - DURATION: " + $LengthFormatted
-	
-	[pscustomobject]@{Name=$Name;Value=$ResultID}
-	}
+        Foreach ($ListResult in $ListResults)
+        {
+            $pos1 = $ListResult.IndexOf("~____~")	
+            $pos2 = $ListResult.IndexOf("#____#")
+            $ResultName = $ListResult.Substring(0, $pos1)
+            $ResultID = $ListResult.Substring($pos2+6)	
+            $Length = $ListResult.Substring(0, $pos2)
+            $Length = $Length.Replace($ResultName,"")	
+            $Length = $Length.Replace("~____~","")
+            $LengthFormatted =  [timespan]::fromseconds($Length)
+            $LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
+            $Name = $ResultName + " - DURATION: " + $LengthFormatted
+            
+            [pscustomobject]@{Name=$Name;Value=$ResultID}
+            }
 	)
-	$ResultsArray	
-
-	Add-Type -assembly System.Windows.Forms
-	$main_form = New-Object System.Windows.Forms.Form
-	$main_form.Text ='Choose a YouTube Video'
-	$main_form.Width = 1920
-	$main_form.Height = 800
-	$main_form.AutoSize = $true
-
-	$Label = New-Object System.Windows.Forms.Label
-	$Label.Text = "Video List:"
-	$Label.Location  = New-Object System.Drawing.Point(10,10)
-	$Label.AutoSize = $true
-
-	$main_form.Controls.Add($Label)
-	$ComboBox = New-Object System.Windows.Forms.ComboBox
-	$ComboBox.add_SelectedIndexChanged({Write-Host $ComboBox.SelectedItem.Value})
-	$ComboBox.Width = 1780
-	$ComboBox.Height = 100
-	$ComboBox.Location  = New-Object System.Drawing.Point(10,50)	
-	$ComboBox.DataSource=$ResultsArray
-	$ComboBox.DisplayMember='Name'
-	$main_form.Controls.Add($ComboBox)
-
-	$Button = New-Object System.Windows.Forms.Button
-	$Button.Location = New-Object System.Drawing.Size(1800,50)
-	$Button.Size = New-Object System.Drawing.Size(120,40)
-	$Button.Text = "Choose"
-	$main_form.Controls.Add($Button)
-
-	$Button.Add_Click(
-		{
-			$ComboBox
-			$YouTubeID =  $ComboBox.SelectedValue.Value
-			Set-YouTubeVideoManual $YouTubeID
-			$main_form.Close()
-		}
-	)
-	
-	$main_form.ShowDialog()
+	CreateWindowFromArray $ResultsArray
 	
 	Remove-Item $descriptionPath
 }
@@ -966,14 +989,17 @@ function Get-YouTubeVideoList
     $game = $PlayniteApi.MainView.SelectedGames[0]
 
     $extraMetadataDirectory = Set-GameDirectory $game
+    #$tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s#____#%(id)s.%(ext)s"	
     $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
     $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
 	$youtubedl = $settings.youtubedlPath
 	$search = '"' + "ytsearch20:" + $game.Name + " " + $game.Platform + " game trailer" + '"'
+
+	#C:\YouTube-DL\youtube-dl.exe 'ytsearch10:cyberpunk 2077 game trailer ign' --write-description  --skip-download -o "C:\YouTube-DL\%(title)s#____#%(id)s.%(ext)s"
 		
 	$trailerdownloadparams = @{
 		'FilePath'     = $youtubedl
-		'ArgumentList' = '-o ' + $tempPath, '--write-description --skip-download', $search
+		'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
 		'Wait'         = $true
 		'PassThru'     = $true
 	}
@@ -982,64 +1008,24 @@ function Get-YouTubeVideoList
 	$ListResults = @(Get-ChildItem -Name $descriptionPath)
 	
 	$ResultsArray=[collections.arraylist]@(
-	Foreach ($ListResult in $ListResults)
-	{
-	$pos1 = $ListResult.IndexOf("~____~")	
-	$pos2 = $ListResult.IndexOf("#____#")
-	$ResultName = $ListResult.Substring(0, $pos1)
-	$ResultID = $ListResult.Substring($pos2+6)	
-	$Length = $ListResult.Substring(0, $pos2)
-	$Length = $Length.Replace($ResultName,"")	
-	$Length = $Length.Replace("~____~","")
-	$LengthFormatted =  [timespan]::fromseconds($Length)
-	$LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
-	$Name = $ResultName + " - DURATION: " + $LengthFormatted
-	
-	[pscustomobject]@{Name=$Name;Value=$ResultID}
-	}
+        Foreach ($ListResult in $ListResults)
+        {
+            $pos1 = $ListResult.IndexOf("~____~")	
+            $pos2 = $ListResult.IndexOf("#____#")
+            $ResultName = $ListResult.Substring(0, $pos1)
+            $ResultID = $ListResult.Substring($pos2+6)	
+            $Length = $ListResult.Substring(0, $pos2)
+            $Length = $Length.Replace($ResultName,"")	
+            $Length = $Length.Replace("~____~","")
+            $LengthFormatted =  [timespan]::fromseconds($Length)
+            $LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
+            $Name = $ResultName + " - DURATION: " + $LengthFormatted
+            
+            [pscustomobject]@{Name=$Name;Value=$ResultID}
+        }
 	)
-	$ResultsArray	
+    CreateWindowFromArray $ResultsArray
 
-	Add-Type -assembly System.Windows.Forms
-	$main_form = New-Object System.Windows.Forms.Form
-	$main_form.Text ='Choose a YouTube Video'
-	$main_form.Width = 1920
-	$main_form.Height = 800
-	$main_form.AutoSize = $true
-
-	$Label = New-Object System.Windows.Forms.Label
-	$Label.Text = "Video List:"
-	$Label.Location  = New-Object System.Drawing.Point(10,10)
-	$Label.AutoSize = $true
-
-	$main_form.Controls.Add($Label)
-	$ComboBox = New-Object System.Windows.Forms.ComboBox
-	$ComboBox.add_SelectedIndexChanged({Write-Host $ComboBox.SelectedItem.Value})
-	$ComboBox.Width = 1780
-	$ComboBox.Height = 100
-	$ComboBox.Location  = New-Object System.Drawing.Point(10,50)	
-	$ComboBox.DataSource=$ResultsArray
-	$ComboBox.DisplayMember='Name'
-	$main_form.Controls.Add($ComboBox)
-
-	$Button = New-Object System.Windows.Forms.Button
-	$Button.Location = New-Object System.Drawing.Size(1800,50)
-	$Button.Size = New-Object System.Drawing.Size(120,40)
-	$Button.Text = "Choose"
-	$main_form.Controls.Add($Button)
-
-	$Button.Add_Click(
-		{
-			$ComboBox
-			$YouTubeID =  $ComboBox.SelectedValue.Value
-			Set-YouTubeVideoManual $YouTubeID
-			#Set-YouTubeVideo
-			$main_form.Close()
-		}
-	)
-	
-	$main_form.ShowDialog()
-	
 	Remove-Item $descriptionPath
 }
 
