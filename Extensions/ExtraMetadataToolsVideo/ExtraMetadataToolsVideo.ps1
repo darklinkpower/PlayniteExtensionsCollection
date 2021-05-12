@@ -54,37 +54,67 @@ function GetGameMenuItems
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
 
+    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem10.Description =  "[YouTube] Search YouTube video for the selected game"
+    $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
+    $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
+
+    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem10.Description =  "[YouTube] Search YouTube video for the selected game"
+    $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
+    $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
+
     return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
 }
 
 function Get-MandatorySettingsList
 {
-    [System.Collections.Generic.List[String]]$mandatorySettingsList = @(
-        "ffmpegPath",
-        "ffProbePath",
-        "youtubedlPath"
-    )
+    $mandatorySettingsList = @{
+        ffmpegPath = [string]::Empty
+        ffProbePath = [string]::Empty
+        youtubedlPath = [string]::Empty
+    }
 
     return $mandatorySettingsList
+}
+
+function Get-OptionalSettingsList
+{
+    $optionalSettingsList = @{
+        youtubedlWindowStyle = "Minimized"
+    }
+
+    return $optionalSettingsList
 }
 
 function Get-Settings
 {
     $mandatorySettingsList = Get-MandatorySettingsList
+    $optionalSettingsList = Get-OptionalSettingsList
     $settingsObject = [PSCustomObject]@{}
     
-    foreach ($mandatorySetting in $mandatorySettingsList) {
-        $settingsObject | Add-Member -NotePropertyName $mandatorySetting -NotePropertyValue $null
+    foreach ($setting in $mandatorySettingsList.GetEnumerator()) {
+        $settingsObject | Add-Member -NotePropertyName $setting.Name -NotePropertyValue $setting.Value
     }
     
+    foreach ($setting in $optionalSettingsList.GetEnumerator()) {
+        $settingsObject | Add-Member -NotePropertyName $setting.Name -NotePropertyValue $setting.Value
+    }
+
     $settingsStoragePath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'settings.json'
     if (Test-Path $settingsStoragePath)
     {
         $savedSettings = [System.IO.File]::ReadAllLines($settingsStoragePath) | ConvertFrom-Json
-        foreach ($mandatorySetting in $mandatorySettingsList) {
-            if ($savedSettings.$mandatorySetting)
+        foreach ($setting in $mandatorySettingsList.GetEnumerator()) {
+            if ($savedSettings.($setting.Name))
             {
-                $settingsObject.$mandatorySetting = $savedSettings.$mandatorySetting
+                $settingsObject.($setting.Name) = $savedSettings.($setting.Name)
+            }
+        }
+        foreach ($setting in $mandatorySettingsList.GetEnumerator()) {
+            if ($savedSettings.($setting.Name))
+            {
+                $settingsObject.($setting.Name) = $savedSettings.($setting.Name)
             }
         }
     }
@@ -165,7 +195,6 @@ function Set-MandatorySettings
         $youtubedlPath = $PlayniteApi.Dialogs.SelectFile("youtube-dl executable|youtube-dl.exe")
         if ($youtubedlPath)
         {
-            
             $settings.youtubedlPath = $youtubedlPath
             $__logger.Info(("Saved youtube-dl path: {0}" -f $settings.youtubedlPath))
         }
@@ -174,9 +203,9 @@ function Set-MandatorySettings
     Save-Settings $settings
 
     $mandatorySettingsList = Get-MandatorySettingsList
-    foreach ($mandatorySetting in $mandatorySettingsList)
+    foreach ($setting in $mandatorySettingsList.GetEnumerator())
     {
-        if ([string]::IsNullOrEmpty($settings.$mandatorySetting))
+        if ([string]::IsNullOrEmpty($settings.($setting.Name)))
         {
             $PlayniteApi.Dialogs.ShowMessage("Please configure all requested mandatory settings to continue", "Extra Metadata Tools")
             exit
@@ -818,7 +847,7 @@ function Set-YouTubeVideo
             'Wait'         = $true
             'PassThru'     = $true
         }
-        $proc = Start-Process @trailerdownloadparams
+        $proc = Start-Process @trailerdownloadparams -WindowStyle $settings.youtubedlWindowStyle
         
         if (Test-Path $videoTempPath -PathType leaf)
         {
@@ -1030,7 +1059,7 @@ function Set-YouTubeVideoManual
         'Wait'         = $true
         'PassThru'     = $true
     }
-    $proc = Start-Process @trailerdownloadparams
+    $proc = Start-Process @trailerdownloadparams -WindowStyle $settings.youtubedlWindowStyle
     
     if (Test-Path $videoTempPath -PathType leaf)
     {
