@@ -718,7 +718,7 @@ function Set-VideoManually
 
     $extraMetadataDirectory = Set-GameDirectory $game
     $videoPath = Join-Path $extraMetadataDirectory -ChildPath $videoName
-    $videoTempPath = $PlayniteApi.Dialogs.SelectFile("Video file|*")
+    $videoTempPath = $PlayniteApi.Dialogs.SelectFile("Video file|*.mp4;*.avi;*.mkv;*.webm;*.flv;*.wmv;*.mov;*.m4v")
     if ([string]::IsNullOrEmpty($videoTempPath))
     {
         return
