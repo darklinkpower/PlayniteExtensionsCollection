@@ -45,21 +45,16 @@ function GetGameMenuItems
     $menuItem8.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem9.Description =  "[Youtube] Auto download YouTube trailer video"
-    $menuItem9.FunctionName = "Get-YouTubeVideo"
+    $menuItem9.Description =  "[Youtube] Auto download YouTube trailer video for selected games"
+    $menuItem9.FunctionName = "Set-YouTubeVideo"
     $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
     
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  "[Youtube] Choose YouTube trailer from list"
-    $menuItem10.FunctionName = "Get-YoutubeTrailerVideoManual"
+    $menuItem10.Description =  "[Youtube] Search youtube video for the selected game"
+    $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
-    
-    $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem11.Description =  "[Youtube] Choose YouTube gameplay video from list"
-    $menuItem11.FunctionName = "Get-YoutubeGameplayVideoManual"
-    $menuItem11.MenuSection = "Extra Metadata tools|Video|Trailers"
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem11, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
+    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
 }
 
 function Get-MandatorySettingsList
@@ -253,7 +248,7 @@ function Get-DownloadFile
         [string]$url,
         [string]$destinationPath
     )
-
+    
     try {
         $webClient = [System.Net.WebClient]::new()
         $webClient.DownloadFile($url, $destinationPath)
@@ -788,9 +783,7 @@ function Set-YouTubeVideo
     )
     
     $settings = Get-Settings
-    Set-GlobalAppList
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    $global:appListDownloaded = $false
     $videoSetCount = 0
 
     switch ($videoQuality) {
@@ -806,7 +799,7 @@ function Set-YouTubeVideo
         $videoPath = Join-Path $extraMetadataDirectory -ChildPath $videoName
         $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
         $youtubedl = $settings.youtubedlPath
-        $search = '"' + "ytsearch1:" + $game.Name + " " + $game.Platform + " game trailer ign" + '"'
+        $search = "`"ytsearch1:{0} {1} {2}`"" -f $game.Name, $game.Platform.Name, "trailer"
         if (Test-Path $videoTempPath)
         {
             try {
@@ -857,11 +850,69 @@ function Set-YouTubeVideo
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nSet video to {0} game(s)" -f $videoSetCount.ToString()), "Extra Metadata Tools")
 }
 
-function CreateWindowFromArray
+function Get-YoutubeResultsArray
 {
     param (
-        $ResultsArray
+        [string]$queryInput
     )
+
+    $query = [uri]::EscapeDataString($queryInput)
+    $uri = "https://www.youtube.com/results?search_query={0}" -f $query
+    $webContent = Get-DownloadString $uri
+    $webContent -match 'var ytInitialData = ((.*?(?=(;<\/script>))))' | Out-Null
+
+    [System.Collections.ArrayList]$searchResults = @()
+    if ($matches)
+    {
+        $json = $matches[1] | ConvertFrom-Json
+        $searchItems = $json.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents.itemSectionRenderer.contents | Select-Object -First 12
+        foreach ($searchItem in $searchItems)
+        {
+            if ($null -eq $searchItem.videoRenderer)
+            {
+                continue
+            }
+    
+            $thumbnailUrl = ($searchItem.videoRenderer.thumbnail.thumbnails | Sort-Object -Property width)[0].url
+            $thumbnailPath = [System.IO.Path]::Combine($CurrentExtensionDataPath, ([guid]::NewGuid().ToString() + ".jpg"))
+            Get-DownloadFile $thumbnailUrl $thumbnailPath | Out-Null
+    
+            $searchResult = [PSCustomObject]@{
+                Name = $searchItem.videoRenderer.title.runs.text
+                Value = $searchItem.videoRenderer.videoId
+                Lenght = $searchItem.videoRenderer.lengthText.simpleText
+                Thumbnail = $thumbnailPath
+            }
+            $searchResults.Add($searchResult) | Out-Null
+        }
+    }
+
+    return $searchResults
+}
+
+function Invoke-TempFilesCleanup
+{
+    Get-ChildItem -Path $CurrentExtensionDataPath -File | Where-Object {$_.Name -like "*.jpg"} | ForEach-Object {
+        try {
+            Remove-Item $_.FullName
+        } catch {  
+
+        }
+    }
+}
+
+function Invoke-YoutubeSearchWindow
+{
+    Set-MandatorySettings
+    
+    # Set GameDatabase
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    if ($gameDatabase.count -ne 1)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        return
+    }
+    $game = $gameDatabase[0]
 
     # Load assemblies
     Add-Type -AssemblyName PresentationCore
@@ -875,9 +926,29 @@ function CreateWindowFromArray
     </Grid.Resources>
 
     <StackPanel Margin="20">
-        <TextBlock Margin="0,0,0,15" TextWrapping="Wrap" Text="Video list:" VerticalAlignment="Center"/>
-        <ComboBox Name="CbVideoSelection" SelectedIndex="0" MinHeight="25" MinWidth="200" VerticalAlignment="Center" Margin="0,10,0,0"/>
-        <Button Content="Download selected video" HorizontalAlignment="Center" Margin="0,10,0,0" Name="ButtonDownloadVideo" IsDefault="True"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="TextboxSearch" Grid.Column="0" HorizontalContentAlignment="Stretch"/>
+            <Button Name="ButtonVideoSearch" Grid.Column="1" Content="Search" HorizontalAlignment="Right" Margin="10,0,0,0" IsDefault="True"/>
+        </Grid>
+        <TextBlock Text="Video list:" Margin="0,20,0,0"/>
+        <ListBox Name="ListBoxVideos" Height="500" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel>
+                        <Image Margin="3" Height="80" Source="{Binding Thumbnail}"/>
+                        <StackPanel Margin="5,0,0,0">
+                            <TextBlock Margin="3" Text="{Binding Name}"/>
+                            <TextBlock Margin="3" Text="{Binding Lenght}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="Download selected video" HorizontalAlignment="Center" Margin="0,20,0,0" Name="ButtonDownloadVideo" IsDefault="False"/>
     </StackPanel>
 </Grid>
 "@
@@ -890,9 +961,9 @@ function CreateWindowFromArray
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
 
     # Set items sources of controls
-    $CbVideoSelection.ItemsSource = $ResultsArray
-    $CbVideoSelection.DisplayMemberPath = "Name"
-    $CbVideoSelection.SelectedValue
+    $query = "{0} {1} Trailer" -f $game.Name, $game.Platform.Name
+    $TextboxSearch.Text = $query
+    $ListBoxVideos.ItemsSource = Get-YoutubeResultsArray $query
 
     # Set Window creation options
     $windowCreationOptions = New-Object Playnite.SDK.WindowCreationOptions
@@ -904,95 +975,29 @@ function CreateWindowFromArray
     $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
     $window.Content = $XMLForm
     $window.Width = 800
-    $window.Height = 300
+    $window.Height = 700
     $window.Title = "Extra Metadata Tools Video"
     $window.WindowStartupLocation = "CenterScreen"
+
+    # Handler for pressing "Search" button
+    $ButtonVideoSearch.Add_Click(
+    {
+        $ListBoxVideos.ItemsSource = Get-YoutubeResultsArray $TextboxSearch.Text
+    })
 
     # Handler for pressing "Download selected video" button
     $ButtonDownloadVideo.Add_Click(
     {
-        $YouTubeID = $CbVideoSelection.SelectedValue.Value
-        Set-YouTubeVideoManual $YouTubeID
+        $YouTubeID = $ListBoxVideos.SelectedValue.Value
         $window.Close()
+        Set-YouTubeVideoManual $YouTubeID
     })
     
     # Show Window
-    $__logger.Info("Opening Window.")
     $window.ShowDialog()
-    $__logger.Info("Window closed.")
-}
 
-function Get-YoutubeGameplayVideoManual
-{
-    Set-MandatorySettings
-    Get-YouTubeVideoList "gameplay"
-}
-
-function Get-YoutubeTrailerVideoManual
-{
-    Set-MandatorySettings
-    Get-YouTubeVideoList "game trailer"
-}
-
-function Get-YouTubeVideoList
-{
-    param (
-        $videoSearchSuffix
-    )
-
-    $settings = Get-Settings
-    
-    # Set GameDatabase
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    if ($gameDatabase.count -ne 1)
-    {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
-        return
-    }
-
-    $game = $PlayniteApi.MainView.SelectedGames[0]
-
-    $extraMetadataDirectory = Set-GameDirectory $game	
-    $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
-    $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
-    $youtubedl = $settings.youtubedlPath
-    $searchResults = "20"
-    if ($game.Platform.Name -eq "PC")
-    {
-        $searchResults = "10"
-    }
-    $search = "`"ytsearch{0}:{1} {2} {3}`"" -f $searchResults, $game.Name, $game.Platform.Name, $videoSearchSuffix
-
-    $trailerdownloadparams = @{
-        'FilePath'     = $youtubedl
-        'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
-        'Wait'         = $true
-        'PassThru'     = $true
-    }
-    $proc = Start-Process @trailerdownloadparams
-    
-    $ListResults = @(Get-ChildItem -Name $descriptionPath)
-    
-    $ResultsArray=[collections.arraylist]@(
-        Foreach ($ListResult in $ListResults)
-        {
-            $pos1 = $ListResult.IndexOf("~____~")	
-            $pos2 = $ListResult.IndexOf("#____#")
-            $ResultName = $ListResult.Substring(0, $pos1)
-            $ResultID = $ListResult.Substring($pos2+6)	
-            $Length = $ListResult.Substring(0, $pos2)
-            $Length = $Length.Replace($ResultName,"")	
-            $Length = $Length.Replace("~____~","")
-            $LengthFormatted =  [timespan]::fromseconds($Length)
-            $LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
-            $Name = $ResultName + " - DURATION: " + $LengthFormatted
-            
-            [pscustomobject]@{Name=$Name;Value=$ResultID}
-        }
-    )
-    CreateWindowFromArray $ResultsArray
-
-    Remove-Item $descriptionPath
+    # Cleanup temp files on close
+    Invoke-TempFilesCleanup
 }
 
 function Set-YouTubeVideoManual
