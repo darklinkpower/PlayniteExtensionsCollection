@@ -45,12 +45,12 @@ function GetGameMenuItems
     $menuItem8.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem9.Description =  "[Youtube] Auto download YouTube trailer video for selected games"
+    $menuItem9.Description =  "[YouTube] Auto download YouTube trailer video for selected games"
     $menuItem9.FunctionName = "Set-YouTubeVideo"
     $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
     
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  "[Youtube] Search youtube video for the selected game"
+    $menuItem10.Description =  "[YouTube] Search YouTube video for the selected game"
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
 
