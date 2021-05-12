@@ -5,17 +5,17 @@ function GetGameMenuItems
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "Download Steam trailer video (SD quality)"
+    $menuItem.Description =  "[Steam] Download Steam trailer video (SD quality)"
     $menuItem.FunctionName = "Get-SteamVideoSd"
     $menuItem.MenuSection = "Extra Metadata tools|Video|Trailers"
    
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "Download Steam trailer video (HD quality)"
+    $menuItem2.Description =  "[Steam] Download Steam trailer video (HD quality)"
     $menuItem2.FunctionName = "Get-SteamVideoHd"
     $menuItem2.MenuSection = "Extra Metadata tools|Video|Trailers"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Download Steam microtrailer video"
+    $menuItem3.Description =  "[Steam] Download Steam microtrailer video"
     $menuItem3.FunctionName = "Get-SteamVideoMicro"
     $menuItem3.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
@@ -44,14 +44,30 @@ function GetGameMenuItems
     $menuItem8.FunctionName = "Remove-VideoMicrotrailer"
     $menuItem8.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
+	$menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem9.Description =  "[Youtube] Auto download YouTube trailer video"
+    $menuItem9.FunctionName = "Get-YouTubeVideo"
+    $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
+	
+	$menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem10.Description =  "[Youtube] Choose YouTube trailer from list"
+    $menuItem10.FunctionName = "Get-YouTubeVideoManual"
+    $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
+	
+	$menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem11.Description =  "[Youtube] Choose YouTube gameplay video from list"
+    $menuItem11.FunctionName = "Get-YouTubeGameplayVideo"
+    $menuItem11.MenuSection = "Extra Metadata tools|Video|Trailers"
+
+    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem11, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
 }
 
 function Get-MandatorySettingsList
 {
     [System.Collections.Generic.List[String]]$mandatorySettingsList = @(
         "ffmpegPath",
-        "ffProbePath"
+        "ffProbePath",
+		"youtubedlPath"
     )
 
     return $mandatorySettingsList
@@ -135,6 +151,28 @@ function Set-MandatorySettings
         {
             $settings.ffProbePath = $ffProbePath
             $__logger.Info(("Saved ffprobre path: {0}" -f $settings.ffProbePath))
+        }
+    }
+	
+	# Setting: youtubedlPath
+    if (![string]::IsNullOrEmpty($settings.youtubedlPath))
+    {
+        if (!(Test-Path $settings.youtubedlPath))
+        {
+            $__logger.Info(("youtubedlPath executable not found in {0} and saved path was deleted." -f $settings.youtubedlPath))
+            $settings.youtubedlPath = $null
+        }
+    }
+
+    if ($null -eq $settings.youtubedlPath)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("Select youtube-dl executable", "Extra Metadata Tools")
+        $youtubedlPath = $PlayniteApi.Dialogs.SelectFile("youtube-dl executable|youtube-dl.exe")
+        if ($youtubedlPath)
+        {
+			
+            $settings.youtubedlPath = $youtubedlPath
+            $__logger.Info(("Saved youtube-dl path: {0}" -f $settings.youtubedlPath))
         }
     }
 
@@ -439,7 +477,11 @@ function Set-SteamVideo
         if ($downloadSuccess -eq $true)
         {
             $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
-            if ($isConversionNeeded -eq $true)
+            if ($isConversionNeeded -eq "invalidFile")
+            {
+                continue
+            }
+            elseif ($isConversionNeeded -eq "true")
             {
                 $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
                 $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
@@ -468,24 +510,28 @@ function Get-IsConversionNeeded
         $videoPath
     )
     
-    if ([System.IO.Path]::GetExtension($videoPath) -ne ".mp4")
-    {
-        $__logger.Info(("Conversion is needed for video {0}, extension is not mp4" -f $videoTempPath))
-        return $true
-    }
     $videoInformation = Get-VideoInformation $videoPath
-
     if ($null -eq $videoInformation)
     {
-        $__logger.Info(("Conversion is needed for video {0}, could not obtain video information" -f $videoTempPath))
-        return $true
+        $__logger.Info(("Conversion is needed for video {0}, could not obtain video information" -f $videoPath))
+        return "invalidFile"
     }
-    if ($videoInformation.ColorEncoding -eq "yuv444p")
+    if ($null -eq $videoInformation.pix_fmt)
     {
-        $__logger.Info(("Conversion is needed for video {0}, color encoding is yuv444p" -f $videoTempPath))
-        return $true
+        $__logger.Info(("File {0} is invalid. Couldn't obtain pixel format information" -f $videoPath))
+        return "invalidFile"
     }
-    return $false
+    if ($videoInformation.pix_fmt -eq "yuv444p")
+    {
+        $__logger.Info(("Conversion is needed for video {0}, color encoding is yuv444p" -f $videoPath))
+        return "true"
+    }
+    if ([System.IO.Path]::GetExtension($videoPath) -ne ".mp4")
+    {
+        $__logger.Info(("Conversion is needed for video {0}, extension is not mp4" -f $videoPath))
+        return "true"
+    }
+    return "false"
 }
 
 function Get-VideoInformation
@@ -495,32 +541,30 @@ function Get-VideoInformation
     )
 
     $settings = Get-Settings
-    $arguments = @("-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height, codec_name, pix_fmt, duration", "-of", "json", $videoPath)
+
+    # Set ErrorActionPreference in case source video is invalid and ffprobe throws an error
+    $ErrorActionPreference = "SilentlyContinue"
+
+    $arguments = @("-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height, codec_name_name, pix_fmt, duration", "-of", "json", $videoPath)
+    
     $output = &$settings.ffProbePath $arguments | ConvertFrom-Json
-    if ($null -ne $output)
+    
+    # Restore ErrorActionPreference
+    $ErrorActionPreference = "Stop"
+    
+    $propertiesString = @(
+        "Video Path: $videoPath"
+    )
+
+    $videoInformation = [PSCustomObject]@{}
+    foreach ($property in $output.streams[0].PSObject.Properties)
     {
-        $videoInformation = [PSCustomObject]@{
-            Codec = $output.streams.codec_name
-            VideoWidth = $output.streams.width
-            VideoHeight = $output.streams.height
-            ColorEncoding = $output.streams.pix_fmt
-            VideoDurationSeconds = $output.streams.duration
-        }
-
-        # Log video Properties
-        $propertiesString = @(
-            "Video Path: $videoPath"
-        )
-        foreach ($property in $videoInformation.PSObject.Properties)
-        {
-            $propertiesString += ("{0}: {1}" -f $property.Name, $property.Value)
-        }
-
-        $__logger.Info(($propertiesString -join ", "))
-
-        return $videoInformation
+        $videoInformation | Add-Member -NotePropertyName $property.Name -NotePropertyValue $property.Value
+        $propertiesString += ("{0}: {1}" -f $property.Name, $property.Value)
     }
-    return $null
+    $__logger.Info(($propertiesString -join ", "))
+
+    return $videoInformation
 }
 
 function Get-VideoMicrotrailerFromVideo
@@ -533,10 +577,21 @@ function Get-VideoMicrotrailerFromVideo
     $settings = Get-Settings
     $videoInformation = Get-VideoInformation $videoSourcePath
 
-    if ([System.Double]::Parse($videoInformation.VideoDurationSeconds) -le 14)
+    if ($null -eq $videoInformation.pix_fmt)
+    {
+        $__logger.Info(("File {0} is invalid. Couldn't obtain pixel format information" -f $videoSourcePath))
+        $PlayniteApi.Dialogs.ShowMessage(("File {0} is invalid. Couldn't obtain pixel format information" -f $videoSourcePath))
+        return $null
+    }
+    if ([System.Double]::Parse($videoInformation.duration) -le 14)
     {
         $isConversionNeeded = Get-IsConversionNeeded $videoSourcePath
-        if ($isConversionNeeded -eq $true)
+        if ($isConversionNeeded -eq "invalidFile")
+        {
+            $PlayniteApi.Dialogs.ShowMessage(("File {0} is invalid. Couldn't obtain video information" -f $videoSourcePath))
+            return
+        }
+        elseif ($isConversionNeeded -eq "true")
         {
             # Convert
             $arguments = @("-y", "-i", $videoSourcePath, "-c:v", "libx264", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "-an", $videoDestinationPath)
@@ -565,7 +620,7 @@ function Get-VideoMicrotrailerFromVideo
             65
         )
         foreach ($percentage in $startPercentageVideo) {
-            $startSecond = ($percentage * $videoInformation.VideoDurationSeconds) / 100
+            $startSecond = ($percentage * $videoInformation.duration) / 100
             $clipStartsecondList += ("{0:n2}" -f $startSecond) 
         }
 
@@ -661,7 +716,12 @@ function Set-VideoManually
         }
     }
     $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
-    if ($isConversionNeeded -eq $true)
+    if ($isConversionNeeded -eq "invalidFile")
+    {
+        $PlayniteApi.Dialogs.ShowMessage(("File {0} is not a valid video or is corrupted" -f $videoTempPath))
+        return
+    }
+    elseif ($isConversionNeeded -eq "true")
     {
         $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
         $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
@@ -669,8 +729,8 @@ function Set-VideoManually
     }
     else
     {
-        Move-Item $videoTempPath $videoPath -Force
-        $__logger.Info(("Conversion is not needed for video and moved to {0}" -f $videoPath))
+        Copy-Item $videoTempPath $videoPath -Force
+        $__logger.Info(("Conversion is not needed for video and copied to {0}" -f $videoPath))
     }
     if (Test-Path $videoPath)
     {
@@ -721,6 +781,338 @@ function Remove-DownloadedVideos
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nDeleted videos: {0}" -f $deletedVideos.ToString()), "Extra Metadata Tools")
 }
 
+function Set-YouTubeVideo
+{
+    param (
+        [string]$videoQuality
+    )
+    
+    $settings = Get-Settings
+    Set-GlobalAppList
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    $global:appListDownloaded = $false
+    $videoSetCount = 0
+
+    switch ($videoQuality) {
+        "max" {$videoName = "VideoTrailer.mp4"}
+        "480" {$videoName = "VideoTrailer.mp4"}
+        "micro" {$videoName = "VideoMicrotrailer.mp4"}
+        default {$videoName = "VideoTrailer.mp4"}
+    }
+
+    foreach ($game in $gameDatabase)
+    {
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $videoPath = Join-Path $extraMetadataDirectory -ChildPath $videoName
+        $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
+		$youtubedl = $settings.youtubedlPath
+		$search = '"' + "ytsearch1:" + $game.Name + " " + $game.Platform + " game trailer ign" + '"'
+        if (Test-Path $videoTempPath)
+        {
+            try {
+                Remove-Item $videoTempPath -Force
+            } catch {}
+        }
+
+        if (Test-Path $videoPath)
+        {
+            continue
+        }
+		
+		$trailerdownloadparams = @{
+			'FilePath'     = $youtubedl
+			'ArgumentList' = '-o ' + $videoTempPath, '-f "mp4"', $search
+			'Wait'         = $true
+			'PassThru'     = $true
+		}
+		$proc = Start-Process @trailerdownloadparams
+		
+		if (Test-Path $videoTempPath -PathType leaf)
+		{
+            $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
+            if ($isConversionNeeded -eq "invalidFile")
+            {
+                continue
+            }
+            elseif ($isConversionNeeded -eq "true")
+            {
+                $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
+                $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
+                Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
+            }
+            else
+            {
+                Move-Item $videoTempPath $videoPath -Force
+                $__logger.Info(("Conversion is not needed for video and moved to {0}" -f $videoPath))
+            }
+            try {
+                Remove-Item $videoTempPath -Force
+            } catch {}
+            if (Test-Path $videoPath)
+            {
+                $videoSetCount++
+            }
+        }
+    }
+    $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nSet video to {0} game(s)" -f $videoSetCount.ToString()), "Extra Metadata Tools")
+}
+
+function Set-YouTubeGameplayVideo
+{
+    $settings = Get-Settings
+    
+    # Set GameDatabase
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    if ($gameDatabase.count -ne 1)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        return
+    }
+
+    $game = $PlayniteApi.MainView.SelectedGames[0]
+
+    $extraMetadataDirectory = Set-GameDirectory $game
+    #$tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s#____#%(id)s.%(ext)s"	
+    $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
+    $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
+	$youtubedl = $settings.youtubedlPath
+	$search = '"' + "ytsearch20:" + $game.Name + " " + $game.Platform + " gameplay" + '"'
+
+	#C:\YouTube-DL\youtube-dl.exe 'ytsearch10:cyberpunk 2077 game trailer ign' --write-description  --skip-download -o "C:\YouTube-DL\%(title)s#____#%(id)s.%(ext)s"
+		
+	$trailerdownloadparams = @{
+		'FilePath'     = $youtubedl
+		'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
+		'Wait'         = $true
+		'PassThru'     = $true
+	}
+	$proc = Start-Process @trailerdownloadparams
+	
+	$ListResults = @(Get-ChildItem -Name $descriptionPath)
+	
+	$ResultsArray=[collections.arraylist]@(
+	Foreach ($ListResult in $ListResults)
+	{
+	$pos1 = $ListResult.IndexOf("~____~")	
+	$pos2 = $ListResult.IndexOf("#____#")
+	$ResultName = $ListResult.Substring(0, $pos1)
+	$ResultID = $ListResult.Substring($pos2+6)	
+	$Length = $ListResult.Substring(0, $pos2)
+	$Length = $Length.Replace($ResultName,"")	
+	$Length = $Length.Replace("~____~","")
+	$LengthFormatted =  [timespan]::fromseconds($Length)
+	$LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
+	$Name = $ResultName + " - DURATION: " + $LengthFormatted
+	
+	[pscustomobject]@{Name=$Name;Value=$ResultID}
+	}
+	)
+	$ResultsArray	
+
+	Add-Type -assembly System.Windows.Forms
+	$main_form = New-Object System.Windows.Forms.Form
+	$main_form.Text ='Choose a YouTube Video'
+	$main_form.Width = 1920
+	$main_form.Height = 800
+	$main_form.AutoSize = $true
+
+	$Label = New-Object System.Windows.Forms.Label
+	$Label.Text = "Video List:"
+	$Label.Location  = New-Object System.Drawing.Point(10,10)
+	$Label.AutoSize = $true
+
+	$main_form.Controls.Add($Label)
+	$ComboBox = New-Object System.Windows.Forms.ComboBox
+	$ComboBox.add_SelectedIndexChanged({Write-Host $ComboBox.SelectedItem.Value})
+	$ComboBox.Width = 1780
+	$ComboBox.Height = 100
+	$ComboBox.Location  = New-Object System.Drawing.Point(10,50)	
+	$ComboBox.DataSource=$ResultsArray
+	$ComboBox.DisplayMember='Name'
+	$main_form.Controls.Add($ComboBox)
+
+	$Button = New-Object System.Windows.Forms.Button
+	$Button.Location = New-Object System.Drawing.Size(1800,50)
+	$Button.Size = New-Object System.Drawing.Size(120,40)
+	$Button.Text = "Choose"
+	$main_form.Controls.Add($Button)
+
+	$Button.Add_Click(
+		{
+			$ComboBox
+			$YouTubeID =  $ComboBox.SelectedValue.Value
+			Set-YouTubeVideoManual $YouTubeID
+			$main_form.Close()
+		}
+	)
+	
+	$main_form.ShowDialog()
+	
+	Remove-Item $descriptionPath
+}
+
+function Get-YouTubeVideoList
+{
+	$settings = Get-Settings
+    
+    # Set GameDatabase
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    if ($gameDatabase.count -ne 1)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        return
+    }
+
+    $game = $PlayniteApi.MainView.SelectedGames[0]
+
+    $extraMetadataDirectory = Set-GameDirectory $game
+    $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
+    $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
+	$youtubedl = $settings.youtubedlPath
+	$search = '"' + "ytsearch20:" + $game.Name + " " + $game.Platform + " game trailer" + '"'
+		
+	$trailerdownloadparams = @{
+		'FilePath'     = $youtubedl
+		'ArgumentList' = '-o ' + $tempPath, '--write-description --skip-download', $search
+		'Wait'         = $true
+		'PassThru'     = $true
+	}
+	$proc = Start-Process @trailerdownloadparams
+	
+	$ListResults = @(Get-ChildItem -Name $descriptionPath)
+	
+	$ResultsArray=[collections.arraylist]@(
+	Foreach ($ListResult in $ListResults)
+	{
+	$pos1 = $ListResult.IndexOf("~____~")	
+	$pos2 = $ListResult.IndexOf("#____#")
+	$ResultName = $ListResult.Substring(0, $pos1)
+	$ResultID = $ListResult.Substring($pos2+6)	
+	$Length = $ListResult.Substring(0, $pos2)
+	$Length = $Length.Replace($ResultName,"")	
+	$Length = $Length.Replace("~____~","")
+	$LengthFormatted =  [timespan]::fromseconds($Length)
+	$LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
+	$Name = $ResultName + " - DURATION: " + $LengthFormatted
+	
+	[pscustomobject]@{Name=$Name;Value=$ResultID}
+	}
+	)
+	$ResultsArray	
+
+	Add-Type -assembly System.Windows.Forms
+	$main_form = New-Object System.Windows.Forms.Form
+	$main_form.Text ='Choose a YouTube Video'
+	$main_form.Width = 1920
+	$main_form.Height = 800
+	$main_form.AutoSize = $true
+
+	$Label = New-Object System.Windows.Forms.Label
+	$Label.Text = "Video List:"
+	$Label.Location  = New-Object System.Drawing.Point(10,10)
+	$Label.AutoSize = $true
+
+	$main_form.Controls.Add($Label)
+	$ComboBox = New-Object System.Windows.Forms.ComboBox
+	$ComboBox.add_SelectedIndexChanged({Write-Host $ComboBox.SelectedItem.Value})
+	$ComboBox.Width = 1780
+	$ComboBox.Height = 100
+	$ComboBox.Location  = New-Object System.Drawing.Point(10,50)	
+	$ComboBox.DataSource=$ResultsArray
+	$ComboBox.DisplayMember='Name'
+	$main_form.Controls.Add($ComboBox)
+
+	$Button = New-Object System.Windows.Forms.Button
+	$Button.Location = New-Object System.Drawing.Size(1800,50)
+	$Button.Size = New-Object System.Drawing.Size(120,40)
+	$Button.Text = "Choose"
+	$main_form.Controls.Add($Button)
+
+	$Button.Add_Click(
+		{
+			$ComboBox
+			$YouTubeID =  $ComboBox.SelectedValue.Value
+			Set-YouTubeVideoManual $YouTubeID
+			#Set-YouTubeVideo
+			$main_form.Close()
+		}
+	)
+	
+	$main_form.ShowDialog()
+	
+	Remove-Item $descriptionPath
+}
+
+function Set-YouTubeVideoManual
+{
+	param (
+        [string]$YouTubeID
+    )
+    
+	$settings = Get-Settings
+    
+    # Set GameDatabase
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    if ($gameDatabase.count -ne 1)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        return
+    }
+
+    $game = $PlayniteApi.MainView.SelectedGames[0]
+
+    $extraMetadataDirectory = Set-GameDirectory $game
+    $videoPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTrailer.mp4"
+    $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
+	$youtubedl = $settings.youtubedlPath
+	$search = '"' + "https://www.youtube.com/watch?v=" + $YouTubeID + '"'
+		
+	$trailerdownloadparams = @{
+		'FilePath'     = $youtubedl
+		'ArgumentList' = '-v -o ' + $videoTempPath, '-f "mp4"', $search
+		'Wait'         = $true
+		'PassThru'     = $true
+	}
+	$proc = Start-Process @trailerdownloadparams
+	
+	if (Test-Path $videoTempPath -PathType leaf)
+    {
+        $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
+        if ($isConversionNeeded -eq "invalidFile")
+        {
+            $__logger.Info(("File {0} is not a valid video or is corrupted" -f $videoTempPath))
+            $PlayniteApi.Dialogs.ShowMessage(("File {0} is not a valid video or is corrupted" -f $videoTempPath))
+            return
+        }
+        elseif ($isConversionNeeded -eq "true")
+        {
+            $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
+            $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
+            Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
+        }
+        else
+        {
+            Move-Item $videoTempPath $videoPath -Force
+            $__logger.Info(("Conversion is not needed for video and moved to {0}" -f $videoPath))
+        }
+        try {
+            Remove-Item $videoTempPath -Force
+        } catch {}
+        if (Test-Path $videoPath)
+        {
+            $videoSetCount++
+        }
+    }
+	if (Test-Path $videoPath)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("Finished.", "Extra Metadata tools")
+    }
+    else
+    {
+        $PlayniteApi.Dialogs.ShowMessage("Selected file could not be processed.", "Extra Metadata tools")
+    }
+}
+
 function Remove-VideoTrailer
 {
     Set-MandatorySettings
@@ -761,4 +1153,22 @@ function Get-SteamVideoMicro
 {
     Set-MandatorySettings
     Set-SteamVideo "micro"
+}
+
+function Get-YouTubeVideo
+{
+    Set-MandatorySettings
+	Set-YouTubeVideo
+}
+
+function Get-YouTubeGameplayVideo
+{
+    Set-MandatorySettings
+	Set-YouTubeGameplayVideo
+}
+
+function Get-YouTubeVideoManual
+{
+    Set-MandatorySettings
+	Get-YouTubeVideoList
 }
