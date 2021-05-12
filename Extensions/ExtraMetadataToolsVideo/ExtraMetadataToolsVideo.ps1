@@ -44,19 +44,19 @@ function GetGameMenuItems
     $menuItem8.FunctionName = "Remove-VideoMicrotrailer"
     $menuItem8.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
-	$menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem9.Description =  "[Youtube] Auto download YouTube trailer video"
     $menuItem9.FunctionName = "Get-YouTubeVideo"
     $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
-	
-	$menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    
+    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem10.Description =  "[Youtube] Choose YouTube trailer from list"
-    $menuItem10.FunctionName = "Get-YouTubeVideoManual"
+    $menuItem10.FunctionName = "Get-YoutubeTrailerVideoManual"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
-	
-	$menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    
+    $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem11.Description =  "[Youtube] Choose YouTube gameplay video from list"
-    $menuItem11.FunctionName = "Get-YouTubeGameplayVideo"
+    $menuItem11.FunctionName = "Get-YoutubeGameplayVideoManual"
     $menuItem11.MenuSection = "Extra Metadata tools|Video|Trailers"
 
     return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem11, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
@@ -67,7 +67,7 @@ function Get-MandatorySettingsList
     [System.Collections.Generic.List[String]]$mandatorySettingsList = @(
         "ffmpegPath",
         "ffProbePath",
-		"youtubedlPath"
+        "youtubedlPath"
     )
 
     return $mandatorySettingsList
@@ -153,8 +153,8 @@ function Set-MandatorySettings
             $__logger.Info(("Saved ffprobre path: {0}" -f $settings.ffProbePath))
         }
     }
-	
-	# Setting: youtubedlPath
+    
+    # Setting: youtubedlPath
     if (![string]::IsNullOrEmpty($settings.youtubedlPath))
     {
         if (!(Test-Path $settings.youtubedlPath))
@@ -170,7 +170,7 @@ function Set-MandatorySettings
         $youtubedlPath = $PlayniteApi.Dialogs.SelectFile("youtube-dl executable|youtube-dl.exe")
         if ($youtubedlPath)
         {
-			
+            
             $settings.youtubedlPath = $youtubedlPath
             $__logger.Info(("Saved youtube-dl path: {0}" -f $settings.youtubedlPath))
         }
@@ -805,8 +805,8 @@ function Set-YouTubeVideo
         $extraMetadataDirectory = Set-GameDirectory $game
         $videoPath = Join-Path $extraMetadataDirectory -ChildPath $videoName
         $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
-		$youtubedl = $settings.youtubedlPath
-		$search = '"' + "ytsearch1:" + $game.Name + " " + $game.Platform + " game trailer ign" + '"'
+        $youtubedl = $settings.youtubedlPath
+        $search = '"' + "ytsearch1:" + $game.Name + " " + $game.Platform + " game trailer ign" + '"'
         if (Test-Path $videoTempPath)
         {
             try {
@@ -818,17 +818,17 @@ function Set-YouTubeVideo
         {
             continue
         }
-		
-		$trailerdownloadparams = @{
-			'FilePath'     = $youtubedl
-			'ArgumentList' = '-o ' + $videoTempPath, '-f "mp4"', $search
-			'Wait'         = $true
-			'PassThru'     = $true
-		}
-		$proc = Start-Process @trailerdownloadparams
-		
-		if (Test-Path $videoTempPath -PathType leaf)
-		{
+        
+        $trailerdownloadparams = @{
+            'FilePath'     = $youtubedl
+            'ArgumentList' = '-o ' + $videoTempPath, '-f "mp4"', $search
+            'Wait'         = $true
+            'PassThru'     = $true
+        }
+        $proc = Start-Process @trailerdownloadparams
+        
+        if (Test-Path $videoTempPath -PathType leaf)
+        {
             $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
             if ($isConversionNeeded -eq "invalidFile")
             {
@@ -903,8 +903,8 @@ function CreateWindowFromArray
     # Create window
     $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
     $window.Content = $XMLForm
-    $window.Width = 300
-    $window.Height = 460
+    $window.Width = 800
+    $window.Height = 300
     $window.Title = "Extra Metadata Tools Video"
     $window.WindowStartupLocation = "CenterScreen"
 
@@ -922,8 +922,24 @@ function CreateWindowFromArray
     $__logger.Info("Window closed.")
 }
 
-function Set-YouTubeGameplayVideo
+function Get-YoutubeGameplayVideoManual
 {
+    Set-MandatorySettings
+    Get-YouTubeVideoList "gameplay"
+}
+
+function Get-YoutubeTrailerVideoManual
+{
+    Set-MandatorySettings
+    Get-YouTubeVideoList "game trailer"
+}
+
+function Get-YouTubeVideoList
+{
+    param (
+        $videoSearchSuffix
+    )
+
     $settings = Get-Settings
     
     # Set GameDatabase
@@ -939,75 +955,25 @@ function Set-YouTubeGameplayVideo
     $extraMetadataDirectory = Set-GameDirectory $game	
     $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
     $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
-	$youtubedl = $settings.youtubedlPath
-	$search = '"' + "ytsearch20:" + $game.Name + " " + $game.Platform + " gameplay" + '"'
-
-	$trailerdownloadparams = @{
-		'FilePath'     = $youtubedl
-		'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
-		'Wait'         = $true
-		'PassThru'     = $true
-	}
-	$proc = Start-Process @trailerdownloadparams
-	
-	$ListResults = @(Get-ChildItem -Name $descriptionPath)
-	
-	$ResultsArray=[collections.arraylist]@(
-        Foreach ($ListResult in $ListResults)
-        {
-            $pos1 = $ListResult.IndexOf("~____~")	
-            $pos2 = $ListResult.IndexOf("#____#")
-            $ResultName = $ListResult.Substring(0, $pos1)
-            $ResultID = $ListResult.Substring($pos2+6)	
-            $Length = $ListResult.Substring(0, $pos2)
-            $Length = $Length.Replace($ResultName,"")	
-            $Length = $Length.Replace("~____~","")
-            $LengthFormatted =  [timespan]::fromseconds($Length)
-            $LengthFormatted = $LengthFormatted.ToString("hh\:mm\:ss")
-            $Name = $ResultName + " - DURATION: " + $LengthFormatted
-            
-            [pscustomobject]@{Name=$Name;Value=$ResultID}
-            }
-	)
-	CreateWindowFromArray $ResultsArray
-	
-	Remove-Item $descriptionPath
-}
-
-function Get-YouTubeVideoList
-{
-	$settings = Get-Settings
-    
-    # Set GameDatabase
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    if ($gameDatabase.count -ne 1)
+    $youtubedl = $settings.youtubedlPath
+    $searchResults = "20"
+    if ($game.Platform.Name -eq "PC")
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
-        return
+        $searchResults = "10"
     }
+    $search = "`"ytsearch{0}:{1} {2} {3}`"" -f $searchResults, $game.Name, $game.Platform.Name, $videoSearchSuffix
 
-    $game = $PlayniteApi.MainView.SelectedGames[0]
-
-    $extraMetadataDirectory = Set-GameDirectory $game
-    #$tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s#____#%(id)s.%(ext)s"	
-    $tempPath = Join-Path $extraMetadataDirectory -ChildPath "%(title)s~____~%(duration)s#____#%(id)s.%(ext)s"
-    $descriptionPath = Join-Path $extraMetadataDirectory -ChildPath "*.description"
-	$youtubedl = $settings.youtubedlPath
-	$search = '"' + "ytsearch20:" + $game.Name + " " + $game.Platform + " game trailer" + '"'
-
-	#C:\YouTube-DL\youtube-dl.exe 'ytsearch10:cyberpunk 2077 game trailer ign' --write-description  --skip-download -o "C:\YouTube-DL\%(title)s#____#%(id)s.%(ext)s"
-		
-	$trailerdownloadparams = @{
-		'FilePath'     = $youtubedl
-		'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
-		'Wait'         = $true
-		'PassThru'     = $true
-	}
-	$proc = Start-Process @trailerdownloadparams
-	
-	$ListResults = @(Get-ChildItem -Name $descriptionPath)
-	
-	$ResultsArray=[collections.arraylist]@(
+    $trailerdownloadparams = @{
+        'FilePath'     = $youtubedl
+        'ArgumentList' = '-o ' + $tempPath, '--write-description  --skip-download', $search
+        'Wait'         = $true
+        'PassThru'     = $true
+    }
+    $proc = Start-Process @trailerdownloadparams
+    
+    $ListResults = @(Get-ChildItem -Name $descriptionPath)
+    
+    $ResultsArray=[collections.arraylist]@(
         Foreach ($ListResult in $ListResults)
         {
             $pos1 = $ListResult.IndexOf("~____~")	
@@ -1023,19 +989,19 @@ function Get-YouTubeVideoList
             
             [pscustomobject]@{Name=$Name;Value=$ResultID}
         }
-	)
+    )
     CreateWindowFromArray $ResultsArray
 
-	Remove-Item $descriptionPath
+    Remove-Item $descriptionPath
 }
 
 function Set-YouTubeVideoManual
 {
-	param (
+    param (
         [string]$YouTubeID
     )
     
-	$settings = Get-Settings
+    $settings = Get-Settings
     
     # Set GameDatabase
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
@@ -1050,18 +1016,18 @@ function Set-YouTubeVideoManual
     $extraMetadataDirectory = Set-GameDirectory $game
     $videoPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTrailer.mp4"
     $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
-	$youtubedl = $settings.youtubedlPath
-	$search = '"' + "https://www.youtube.com/watch?v=" + $YouTubeID + '"'
-		
-	$trailerdownloadparams = @{
-		'FilePath'     = $youtubedl
-		'ArgumentList' = '-v -o ' + $videoTempPath, '-f "mp4"', $search
-		'Wait'         = $true
-		'PassThru'     = $true
-	}
-	$proc = Start-Process @trailerdownloadparams
-	
-	if (Test-Path $videoTempPath -PathType leaf)
+    $youtubedl = $settings.youtubedlPath
+    $search = '"' + "https://www.youtube.com/watch?v=" + $YouTubeID + '"'
+    
+    $trailerdownloadparams = @{
+        'FilePath'     = $youtubedl
+        'ArgumentList' = '-v -o ' + $videoTempPath, '-f "mp4"', $search
+        'Wait'         = $true
+        'PassThru'     = $true
+    }
+    $proc = Start-Process @trailerdownloadparams
+    
+    if (Test-Path $videoTempPath -PathType leaf)
     {
         $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
         if ($isConversionNeeded -eq "invalidFile")
@@ -1089,7 +1055,7 @@ function Set-YouTubeVideoManual
             $videoSetCount++
         }
     }
-	if (Test-Path $videoPath)
+    if (Test-Path $videoPath)
     {
         $PlayniteApi.Dialogs.ShowMessage("Finished.", "Extra Metadata tools")
     }
@@ -1144,17 +1110,5 @@ function Get-SteamVideoMicro
 function Get-YouTubeVideo
 {
     Set-MandatorySettings
-	Set-YouTubeVideo
-}
-
-function Get-YouTubeGameplayVideo
-{
-    Set-MandatorySettings
-	Set-YouTubeGameplayVideo
-}
-
-function Get-YouTubeVideoManual
-{
-    Set-MandatorySettings
-	Get-YouTubeVideoList
+    Set-YouTubeVideo
 }
