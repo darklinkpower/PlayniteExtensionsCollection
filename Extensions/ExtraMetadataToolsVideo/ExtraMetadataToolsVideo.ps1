@@ -54,25 +54,15 @@ function GetGameMenuItems
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
 
-    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  "[YouTube] Search YouTube video for the selected game"
-    $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
-    $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
-
-    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  "[YouTube] Search YouTube video for the selected game"
-    $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
-    $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
-
     return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
 }
 
 function Get-MandatorySettingsList
 {
     $mandatorySettingsList = @{
-        ffmpegPath = [string]::Empty
-        ffProbePath = [string]::Empty
-        youtubedlPath = [string]::Empty
+        ffmpegPath = $null
+        ffProbePath = $null
+        youtubedlPath = $null
     }
 
     return $mandatorySettingsList
@@ -111,7 +101,7 @@ function Get-Settings
                 $settingsObject.($setting.Name) = $savedSettings.($setting.Name)
             }
         }
-        foreach ($setting in $mandatorySettingsList.GetEnumerator()) {
+        foreach ($setting in $optionalSettingsList.GetEnumerator()) {
             if ($savedSettings.($setting.Name))
             {
                 $settingsObject.($setting.Name) = $savedSettings.($setting.Name)
