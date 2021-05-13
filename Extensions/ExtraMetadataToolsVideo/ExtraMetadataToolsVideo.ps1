@@ -597,7 +597,8 @@ function Get-VideoMicrotrailerFromVideo
         $PlayniteApi.Dialogs.ShowMessage(("File {0} is invalid. Couldn't obtain pixel format information" -f $videoSourcePath))
         return $null
     }
-    if ([System.Double]::Parse($videoInformation.duration) -le 14)
+    $videoDuration = [System.Double]::Parse($videoInformation.duration, [CultureInfo]::InvariantCulture)
+    if ($videoDuration -le 14)
     {
         $isConversionNeeded = Get-IsConversionNeeded $videoSourcePath
         if ($isConversionNeeded -eq "invalidFile")
@@ -623,7 +624,6 @@ function Get-VideoMicrotrailerFromVideo
     else
     {
         $rangeString = @()
-        $clipStartsecondList = @()
         $clipDuration = 1
         $startPercentageVideo = @(
             15,
@@ -634,14 +634,9 @@ function Get-VideoMicrotrailerFromVideo
             65
         )
         foreach ($percentage in $startPercentageVideo) {
-            $startSecond = ($percentage * $videoInformation.duration) / 100
-            $clipStartsecondList += ("{0:n2}" -f $startSecond) 
-        }
-
-        foreach ($clipStartSecond in $clipStartsecondList) {
-            $clipStart = [System.Double]::Parse($clipStartsecond)
-            $clipEnd = [System.Double]::Parse($clipStartsecond) + $clipDuration
-            $rangeString += ("between(t,{0},{1})" -f $clipStart, $clipEnd)
+            [double]$clipStart = ($percentage * $videoDuration) / 100
+            [double]$clipEnd = $clipStart + $clipDuration
+            $rangeString += "between(t,{0:n2},{1:n2})" -f $clipStart.ToString([cultureinfo]::InvariantCulture), $clipEnd.ToString([cultureinfo]::InvariantCulture)
         }
         
         # Convert
