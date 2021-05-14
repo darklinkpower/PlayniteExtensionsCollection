@@ -54,7 +54,12 @@ function GetGameMenuItems
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
+    $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem11.Description =  "Update assets status tags of all games in database"
+    $menuItem11.FunctionName = "Update-AssetsStatusGameDatabase"
+    $menuItem11.MenuSection = "Extra Metadata tools"
+
+    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem11
 }
 
 function Get-MandatorySettingsList
@@ -210,7 +215,7 @@ function Set-GameDirectory
     )
 
     $directory = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id) 
-    if(!(Test-Path $directory))
+    if(![System.IO.Directory]::Exists($directory))
     {
         New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
@@ -674,6 +679,9 @@ function Get-VideoMicrotrailerFromTrailer
             $microtrailersCreated++
         }
     }
+
+    # Update assets status of collection
+    Update-CollectionExtraAssetsStatus $gameDatabase $false
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nCreated {0} microtrailers from video trailers." -f $microtrailersCreated), "Extra Metadata Tools")
 }
 
@@ -749,6 +757,9 @@ function Set-VideoManually
     {
         $PlayniteApi.Dialogs.ShowMessage("Selected file could not be processed.", "Extra Metadata tools")
     }
+
+    # Update game assets status
+    Update-GameExtraAssetsStatus $game $false
 }
 
 function Remove-DownloadedVideos
@@ -787,6 +798,9 @@ function Remove-DownloadedVideos
             }
         }
     }
+
+    # Update assets status of collection
+    Update-CollectionExtraAssetsStatus $gameDatabase $false
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nDeleted videos: {0}" -f $deletedVideos.ToString()), "Extra Metadata Tools")
 }
 
@@ -861,6 +875,10 @@ function Set-YouTubeVideo
             }
         }
     }
+
+    # Update assets status of collection
+    Update-CollectionExtraAssetsStatus $gameDatabase $false
+
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nSet video to {0} game(s)" -f $videoSetCount.ToString()), "Extra Metadata Tools")
 }
 
@@ -1082,6 +1100,9 @@ function Set-YouTubeVideoManual
     {
         $PlayniteApi.Dialogs.ShowMessage("Selected file could not be processed.", "Extra Metadata tools")
     }
+
+    # Update assets status
+    Update-GameExtraAssetsStatus $game $false
 }
 
 function Remove-VideoTrailer
@@ -1130,4 +1151,155 @@ function Get-YouTubeVideo
 {
     Set-MandatorySettings
     Set-YouTubeVideo
+}
+
+function Add-Tag
+{
+    param (
+        [Playnite.SDK.Models.Game] $game,
+        [Playnite.SDK.Models.Tag] $tag
+    )
+
+    if ($game.tagIds -notcontains $tag.Id)
+    {
+        if ($game.tagIds)
+        {
+            $game.tagIds.Add($tag.Id)
+        }
+        else
+        {
+            # Fix in case game has null tagIds
+            $game.tagIds = $tag.Id
+        }
+        $PlayniteApi.Database.Games.Update($game)
+        return $true
+    }
+    return $false
+}
+
+function Remove-Tag
+{
+    param (
+        [Playnite.SDK.Models.Game] $game,
+        [Playnite.SDK.Models.Tag] $tag
+    )
+
+    if ($game.tagIds -contains $tag.Id)
+    {
+        $game.tagIds.Remove($tag.Id)
+        $PlayniteApi.Database.Games.Update($game)
+        return $true
+    }
+    return $false
+}
+
+function Get-MissingAssetTags
+{
+    [System.Collections.Generic.List[[Playnite.SDK.Models.Tag]]]$tagsList = @(
+        $PlayniteApi.Database.Tags.Add("[EMT] Video Trailer missing"),
+        $PlayniteApi.Database.Tags.Add("[EMT] Video Microtrailer missing"),
+        $PlayniteApi.Database.Tags.Add("[EMT] Logo missing")
+    )
+
+    return $tagsList
+}
+
+function Update-GameExtraAssetsStatus
+{
+    param (
+        [Playnite.SDK.Models.Game] $game,
+        [bool] $showResultsDialog
+    )
+
+    $tags = Get-MissingAssetTags
+    $resultsString = "Finished.`nGame: {0}`nStatus.`n"
+    foreach ($tag in $tags) {
+        switch ($tag.Name) {
+            "[EMT] Video Trailer missing" {$assetName = "VideoTrailer.mp4"; $resultsDescription = "`nGame has trailer: {0}"}
+            "[EMT] Video Microtrailer missing" {$assetName = "VideoMicrotrailer.mp4"; $resultsDescription = "`nGame has microtrailer: {0}"}
+            "[EMT] Logo missing" {$assetName = "Logo.png"; $resultsDescription = "`nGame has logo: {0}"}
+            Default {continue}
+        }
+
+        $extraMetadataDirectory = Set-GameDirectory $game
+        $assetPath = [System.IO.Path]::Combine($extraMetadataDirectory, $assetName)
+        if ([System.IO.File]::Exists($assetPath))
+        {
+            Remove-Tag $game $Tag
+        }
+        else
+        {
+            Add-Tag $game $Tag
+        }
+
+        if ([System.IO.File]::Exists($assetPath))
+        {
+            $resultsString += $resultsDescription -f "Yes"
+        }
+        else
+        {
+            $resultsString += $resultsDescription -f "No"
+        }
+    }
+
+    if ($showResultsDialog -eq $true)
+    {
+        $PlayniteApi.Dialogs.ShowMessage($resultsString, "Extra Metadata tools")
+    }
+}
+
+function Update-CollectionExtraAssetsStatus
+{
+    param (
+        [System.Collections.Generic.List[[Playnite.SDK.Models.Game]]] $gameCollection,
+        [bool] $showResultsDialog
+    )
+    
+    $tags = Get-MissingAssetTags
+
+
+    foreach ($tag in $tags) {
+        switch ($tag.Name) {
+            "[EMT] Video Trailer missing" {$assetName = "VideoTrailer.mp4"}
+            "[EMT] Video Microtrailer missing" {$assetName = "VideoMicrotrailer.mp4"}
+            "[EMT] Logo missing" {$assetName = "Logo.png"}
+            Default {continue}
+        }
+        foreach ($game in $gameCollection) {
+            $extraMetadataDirectory = Set-GameDirectory $game
+            $assetPath = [System.IO.Path]::Combine($extraMetadataDirectory, $assetName)
+            if ([System.IO.File]::Exists($assetPath))
+            {
+                Remove-Tag $game $Tag
+            }
+            else
+            {
+                Add-Tag $game $Tag
+            }
+        }
+    }
+
+    if ($showResultsDialog -eq $true)
+    {
+        $resultsString = "Finished.`nAssets status in collection: {0}`n`n" -f $gameCollection.Count
+        
+        foreach ($tag in $tags) {
+            $tagBaseName = $tag.Name.Replace("[EMT] ", "")
+            $resultsString += ("{0}: {1}" -f $tagBaseName, ($gameCollection | Where-Object {$_.TagIds -notcontains $tag.Id}).Count).Replace("missing", "exists")
+            $resultsString += "`n"
+            $resultsString += ("{0}: {1}" -f $tagBaseName, ($gameCollection | Where-Object {$_.TagIds -contains $tag.Id}).Count)
+            $resultsString += "`n"
+        }
+        $PlayniteApi.Dialogs.ShowMessage($resultsString, "Extra Metadata tools")
+    }
+}
+
+function Update-AssetsStatusGameDatabase
+{
+    Update-CollectionExtraAssetsStatus $PlayniteApi.Database.Games $true
+}
+
+function OnLibraryUpdated
+{
+    Update-CollectionExtraAssetsStatus $PlayniteApi.Database.Games $false
 }
