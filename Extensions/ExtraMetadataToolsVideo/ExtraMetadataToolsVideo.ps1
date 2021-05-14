@@ -1270,11 +1270,24 @@ function Update-CollectionExtraAssetsStatus
             $assetPath = [System.IO.Path]::Combine($extraMetadataDirectory, $assetName)
             if ([System.IO.File]::Exists($assetPath))
             {
-                Remove-Tag $game $Tag
+                if ($game.tagIds -contains $tag.Id)
+                {
+                    $game.tagIds.Remove($tag.Id)
+                    $PlayniteApi.Database.Games.Update($game)
+                }
             }
-            else
+            elseif ($game.tagIds -notcontains $tag.Id)
             {
-                Add-Tag $game $Tag
+                if ($game.tagIds)
+                {
+                    $game.tagIds.Add($tag.Id)
+                }
+                else
+                {
+                    # Fix in case game has null tagIds
+                    $game.tagIds = $tag.Id
+                }
+                $PlayniteApi.Database.Games.Update($game)
             }
         }
     }
