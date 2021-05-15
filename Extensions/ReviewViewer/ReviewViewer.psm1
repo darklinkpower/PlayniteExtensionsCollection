@@ -22,7 +22,7 @@ function Invoke-ReviewViewer
     param(
         $scriptMainMenuItemActionArgs
     )
-    
+
     Invoke-YoutubeVideo "Review"
 }
 function Invoke-TrailerViewer
@@ -30,7 +30,7 @@ function Invoke-TrailerViewer
     param(
         $scriptMainMenuItemActionArgs
     )
-    
+
     Invoke-YoutubeVideo "Trailer"
 }
 
@@ -39,7 +39,7 @@ function Get-DownloadString
     param (
         $url
     )
-    
+
     try {
         $webClient = New-Object System.Net.WebClient
         $webClient.Encoding = [System.Text.Encoding]::UTF8
@@ -87,16 +87,10 @@ function Invoke-YoutubeVideo
     $html = "
     <head>
         <title>$($game.name) - Review</title>
+        <meta http-equiv='refresh' content='0; url=$youtubeLink'>
     </head>
 
     <body style='margin:0'>
-        <div>
-            <iframe width='100%' height='100%'
-                src='$youtubeLink'
-                frameborder='0'
-                allow='accelerometer; clipboard-write; encrypted-media; gyroscope;'>
-            </iframe>
-        </div>
     </body>"
 
     $webView = $PlayniteApi.WebViews.CreateView(1280, 750)
