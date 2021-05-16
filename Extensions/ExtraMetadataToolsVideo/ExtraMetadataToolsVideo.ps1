@@ -475,18 +475,6 @@ function Set-SteamVideo
         $extraMetadataDirectory = Set-GameDirectory $game
         $videoPath = Join-Path $extraMetadataDirectory -ChildPath $videoName
         $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
-        if (Test-Path $videoTempPath)
-        {
-            try {
-                Remove-Item $videoTempPath -Force
-            } catch {}
-        }
-
-        if (Test-Path $videoPath)
-        {
-            continue
-        }
-
         $videoUrl = Get-SteamVideoUrl -Game $game -VideoQuality $videoQuality
         if ($null -eq $videoUrl)
         {
@@ -520,6 +508,9 @@ function Set-SteamVideo
             }
         }
     }
+
+    # Update assets status of collection
+    Update-CollectionExtraAssetsStatus $gameDatabase $false
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nSet video to {0} game(s)" -f $videoSetCount.ToString()), "Extra Metadata Tools")
 }
 
@@ -673,10 +664,6 @@ function Get-VideoMicrotrailerFromTrailer
         {
             continue
         }
-        if (Test-Path $videoMicrotrailerPath)
-        {
-            continue
-        }
 
         Get-VideoMicrotrailerFromVideo $videoPath $videoMicrotrailerPath
         if (Test-Path $videoMicrotrailerPath)
@@ -722,21 +709,6 @@ function Set-VideoManually
         return
     }
     
-    if (Test-Path $videoPath)
-    {
-        try {
-            Remove-Item $videoPath -Force
-        } catch {
-            $errorMessage = $_.Exception.Message
-            $PlayniteApi.Dialogs.ShowMessage((("Game: {0}`nError deleting video: {1}`nError: {2}" + 
-            "`n`nThe error could have been caused by the file being in use or currently playing on Playnite." +
-            "`n`nThe game extra metadata directory will be opened, please delete the file manually when the video file is not in use" +
-            "") -f $game.Name, $videoPath, $errorMessage),
-            "Extra Metadata Tools")
-            Start-Process $extraMetadataDirectory
-            continue
-        }
-    }
     $isConversionNeeded = Get-IsConversionNeeded $videoTempPath
     if ($isConversionNeeded -eq "invalidFile")
     {
@@ -838,11 +810,6 @@ function Set-YouTubeVideo
             try {
                 Remove-Item $videoTempPath -Force
             } catch {}
-        }
-
-        if (Test-Path $videoPath)
-        {
-            continue
         }
         
         $trailerdownloadparams = @{
@@ -1053,7 +1020,7 @@ function Set-YouTubeVideoManual
         return
     }
 
-    $game = $PlayniteApi.MainView.SelectedGames[0]
+    $game = $gameDatabase[0]
 
     $extraMetadataDirectory = Set-GameDirectory $game
     $videoPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTrailer.mp4"
@@ -1261,7 +1228,6 @@ function Update-CollectionExtraAssetsStatus
     )
     
     $tags = Get-MissingAssetTags
-
 
     foreach ($tag in $tags) {
         switch ($tag.Name) {
