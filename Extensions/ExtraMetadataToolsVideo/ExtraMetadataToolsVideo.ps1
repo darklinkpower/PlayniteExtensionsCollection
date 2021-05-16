@@ -490,7 +490,7 @@ function Set-SteamVideo
             }
             elseif ($isConversionNeeded -eq "true")
             {
-                $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
+                $arguments = @("-y", "-i", "`"$videoTempPath`"", "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "`"$videoPath`"")
                 $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
                 Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
             }
@@ -560,7 +560,7 @@ function Get-VideoInformation
     # Set ErrorActionPreference in case source video is invalid and ffprobe throws an error
     $ErrorActionPreference = "SilentlyContinue"
 
-    $arguments = @("-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height, codec_name_name, pix_fmt, duration", "-of", "json", $videoPath)
+    $arguments = @("-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height, codec_name_name, pix_fmt, duration", "-of", "json", "`"$videoPath`"")
     
     $output = &$settings.ffProbePath $arguments | ConvertFrom-Json
     
@@ -610,14 +610,14 @@ function Get-VideoMicrotrailerFromVideo
         elseif ($isConversionNeeded -eq "true")
         {
             # Convert
-            $arguments = @("-y", "-i", $videoSourcePath, "-c:v", "libx264", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "-an", $videoDestinationPath)
+            $arguments = @("-y", "-i", "`"$videoSourcePath`"", "-c:v", "libx264", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "-an", "`"$videoDestinationPath`"")
             $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
             Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
         }
         else
         {
             # Just copy stream without audio
-            $arguments = @("-y", "-i", $videoSourcePath, "-c:v", "copy", "-an", $videoDestinationPath)
+            $arguments = @("-y", "-i", "`"$videoSourcePath`"", "-c:v", "copy", "-an", "`"$videoDestinationPath`"")
             $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
             Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
         }
@@ -642,7 +642,7 @@ function Get-VideoMicrotrailerFromVideo
         
         # Convert
         $selectString = "`"select='" + ($rangeString -join "+") + "', setpts=N/FRAME_RATE/TB" + ", scale=trunc(iw/2)*2:trunc(ih/2)*2`""
-        $arguments = @("-y", "-i", $videoSourcePath, "-vf", $selectString, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", $videoDestinationPath)
+        $arguments = @("-y", "-i", "`"$videoSourcePath`"", "-vf", $selectString, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-an", "`"$videoDestinationPath`"")
         $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
         Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
     }
@@ -717,7 +717,7 @@ function Set-VideoManually
     }
     elseif ($isConversionNeeded -eq "true")
     {
-        $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
+        $arguments = @("-y", "-i", "`"$videoTempPath`"", "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "`"$videoPath`"")
         $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
         Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
     }
@@ -829,7 +829,7 @@ function Set-YouTubeVideo
             }
             elseif ($isConversionNeeded -eq "true")
             {
-                $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
+                $arguments = @("-y", "-i", "`"$videoTempPath`"", "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", "`"$videoPath`"")
                 $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
                 Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
             }
@@ -1041,7 +1041,7 @@ function Set-YouTubeVideoManual
         }
         elseif ($isConversionNeeded -eq "true")
         {
-            $arguments = @("-y", "-i", $videoTempPath, "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p", $videoPath)
+            $arguments = @("-y", "-i", "`"$videoTempPath`"", "-c:v", "libx264", "-c:a", "mp3", "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-pix_fmt", "yuv420p"," `"$videoPath`"")
             $__logger.Info(("Starting ffmpeg with arguments {0}" -f ($arguments -join ", ")))
             Start-Process -FilePath $settings.ffmpegPath -ArgumentList $arguments -Wait -WindowStyle Hidden
         }
