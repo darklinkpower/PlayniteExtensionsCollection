@@ -861,7 +861,7 @@ function Get-YoutubeResultsArray
     )
 
     $query = [uri]::EscapeDataString($queryInput)
-    $uri = "https://www.youtube.com/results?search_query={0}" -f $query
+    $uri = "https://www.youtube.com/results?search_query={0}&sp=EgQQARgB" -f $query
     $webContent = Get-DownloadString $uri
     $webContent -match 'var ytInitialData = ((.*?(?=(;<\/script>))))' | Out-Null
 
