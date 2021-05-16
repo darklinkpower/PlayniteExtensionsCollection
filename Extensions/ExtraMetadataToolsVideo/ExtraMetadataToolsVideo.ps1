@@ -1259,7 +1259,7 @@ function Update-CollectionExtraAssetsStatus
 
     if ($showResultsDialog -eq $true)
     {
-        $resultsString = "Finished.`nAssets status in collection: {0}`n`n" -f $gameCollection.Count
+        $resultsString = "Finished.`nTotal games: {0}`n`n" -f $gameCollection.Count
         
         foreach ($tag in $tags) {
             $tagBaseName = $tag.Name.Replace("[EMT] ", "")
