@@ -878,14 +878,11 @@ function Get-YoutubeResultsArray
             }
     
             $thumbnailUrl = ($searchItem.videoRenderer.thumbnail.thumbnails | Sort-Object -Property width)[0].url
-            $thumbnailPath = [System.IO.Path]::Combine($CurrentExtensionDataPath, ([guid]::NewGuid().ToString() + ".jpg"))
-            Get-DownloadFile $thumbnailUrl $thumbnailPath | Out-Null
-    
             $searchResult = [PSCustomObject]@{
                 Name = $searchItem.videoRenderer.title.runs.text
                 Value = $searchItem.videoRenderer.videoId
                 Lenght = $searchItem.videoRenderer.lengthText.simpleText
-                Thumbnail = $thumbnailPath
+                Thumbnail = $thumbnailUrl
             }
             $searchResults.Add($searchResult) | Out-Null
         }
@@ -999,9 +996,6 @@ function Invoke-YoutubeSearchWindow
     
     # Show Window
     $window.ShowDialog()
-
-    # Cleanup temp files on close
-    Invoke-TempFilesCleanup
 }
 
 function Set-YouTubeVideoManual
