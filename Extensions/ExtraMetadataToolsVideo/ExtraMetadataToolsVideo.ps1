@@ -532,7 +532,12 @@ function Get-IsConversionNeeded
     $videoInformation = Get-VideoInformation $videoPath
     if ($null -eq $videoInformation)
     {
-        $__logger.Info(("Conversion is needed for video {0}, could not obtain video information" -f $videoPath))
+        $__logger.Info(("File {0} is invalid, could not obtain video information" -f $videoPath))
+        return "invalidFile"
+    }
+    if (($null -eq $videoInformation.width) -or ($null -eq $videoInformation.height))
+    {
+        $__logger.Info(("File {0} is invalid, could not obtain width and height information" -f $videoPath))
         return "invalidFile"
     }
     if ($null -eq $videoInformation.pix_fmt)
