@@ -333,8 +333,8 @@ function Invoke-OpenVideoManagerWindow
         {
             $ButtonRemoveVideo.Visibility = "Hidden"
             $TextBlockVideoAvailable.Visibility = "Visible"
-            $VideoPlayer.Source = ""
             $VideoPlayer.Stop()
+            $VideoPlayer.Source = ""
         }
     })
 
@@ -355,8 +355,8 @@ function Invoke-OpenVideoManagerWindow
     # Handler for pressing "Add Video" button
     $ButtonAddVideo.Add_Click(
     {
-        $VideoPlayer.Source = ""
         $VideoPlayer.Stop()
+        $VideoPlayer.Source = ""
         switch ($ComboBoxCollections.SelectedItem.Name) {
             "Games" {$collection = "games"}
             "Sources" {$collection = "sources"}
@@ -379,8 +379,8 @@ function Invoke-OpenVideoManagerWindow
     # Handler for pressing "Remove Video" button
     $ButtonRemoveVideo.Add_Click(
     {
-        $VideoPlayer.Source = ""
         $VideoPlayer.Stop()
+        $VideoPlayer.Source = ""
         switch ($ComboBoxCollections.SelectedItem.Name) {
             "Games" {$collection = "games"}
             "Sources" {$collection = "sources"}
@@ -395,15 +395,15 @@ function Invoke-OpenVideoManagerWindow
         {
             $ButtonRemoveVideo.Visibility = "Hidden"
             $TextBlockVideoAvailable.Visibility = "Visible"
-            $VideoPlayer.Source = ""
             $VideoPlayer.Stop()
+            $VideoPlayer.Source = ""
         }
     })
 
     $window.Add_Closing(
     {
-        $VideoPlayer.Source = ""
         $VideoPlayer.Stop()
+        $VideoPlayer.Source = ""
     })
 
     $window.ShowDialog()
