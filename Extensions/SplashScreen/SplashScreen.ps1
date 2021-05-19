@@ -85,7 +85,7 @@ function Invoke-ViewSettings
     $window.Content = $XMLForm
     $window.Width = 800
     $window.Height = 300
-    $window.Title = "Splash Screen settings"
+    $window.Title = "Splash Screen - Settings"
     $window.WindowStartupLocation = "CenterScreen"
 
     # Handler for pressing "Cancel" button
@@ -197,13 +197,22 @@ function Invoke-OpenVideoManagerWindow
         $platforms.Add($platform) | Out-Null
     }
 
-    [System.Collections.ArrayList]$selectedGames = @()
-    $PlayniteApi.MainView.SelectedGames | Sort-Object -Property "Name" | Select-Object -Unique | ForEach-Object {
-        $platform = [PSCustomObject]@{
+    [System.Collections.ArrayList]$sources = @()
+    $PlayniteApi.Database.Sources | Sort-Object -Property "Name" | ForEach-Object {
+        $source = [PSCustomObject]@{
             Name = $_.Name
             Value = $_.Id.ToString()
         }
-        $selectedGames.Add($platform) | Out-Null
+        $sources.Add($source) | Out-Null
+    }
+
+    [System.Collections.ArrayList]$selectedGames = @()
+    $PlayniteApi.MainView.SelectedGames | Sort-Object -Property "Name" | Select-Object -Unique | ForEach-Object {
+        $game = [PSCustomObject]@{
+            Name = $_.Name
+            Value = $_.Id.ToString()
+        }
+        $selectedGames.Add($game) | Out-Null
     }
 
     [System.Collections.ArrayList]$playniteModes = @()
@@ -218,11 +227,14 @@ function Invoke-OpenVideoManagerWindow
     }
     $playniteModes.Add($mode) | Out-Null
 
-    $comboBoxCollectionSource = @{
+    $comboBoxCollectionSource = [ordered]@{
         "Games" = "Games"
+        "Sources" = "Sources"
         "Plaforms" = "Plaforms"
         "Playnite Mode" = "Playnite Mode"
     }
+
+    $comboBoxCollectionSource
 
     $extraMetadataDirectory = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata")
 
@@ -294,7 +306,7 @@ function Invoke-OpenVideoManagerWindow
     $window.Content = $XMLForm
     $window.Width = 800
     $window.Height = 700
-    $window.Title = "Splash Screen"
+    $window.Title = "Splash Screen - Video manager"
     $window.WindowStartupLocation = "CenterScreen"
 
     # Handler for ListBoxPlatforms
@@ -303,6 +315,7 @@ function Invoke-OpenVideoManagerWindow
         $ButtonAddVideo.Visibility = "Visible"
         switch ($ComboBoxCollections.SelectedItem.Name) {
             "Games" {$collection = "games"}
+            "Sources" {$collection = "sources"}
             "Plaforms" {$collection = "platforms"}
             "Playnite Mode" {$collection = "playnite"}
             default {$collection = "other"}
@@ -330,6 +343,7 @@ function Invoke-OpenVideoManagerWindow
     {
         switch ($ComboBoxCollections.SelectedItem.Name) {
             "Games" {$ListBoxSelectedCollection.ItemsSource = $selectedGames}
+            "Sources" {$ListBoxSelectedCollection.ItemsSource = $sources}
             "Plaforms" {$ListBoxSelectedCollection.ItemsSource = $platforms}
             "Playnite Mode" {$ListBoxSelectedCollection.ItemsSource = $playniteModes}
             default {}
@@ -345,6 +359,7 @@ function Invoke-OpenVideoManagerWindow
         $VideoPlayer.Stop()
         switch ($ComboBoxCollections.SelectedItem.Name) {
             "Games" {$collection = "games"}
+            "Sources" {$collection = "sources"}
             "Plaforms" {$collection = "platforms"}
             "Playnite Mode" {$collection = "playnite"}
             default {$collection = "other"}
@@ -368,6 +383,7 @@ function Invoke-OpenVideoManagerWindow
         $VideoPlayer.Stop()
         switch ($ComboBoxCollections.SelectedItem.Name) {
             "Games" {$collection = "games"}
+            "Sources" {$collection = "sources"}
             "Plaforms" {$collection = "platforms"}
             "Playnite Mode" {$collection = "playnite"}
             default {$collection = "other"}
@@ -444,6 +460,15 @@ function Get-SplashVideoPath
         return $splashVideo
     }
 
+    if ($null -ne $game.Source)
+    {
+        $splashVideo = $videoTemplate -f "sources", $game.Source.Id.ToString()
+        if ([System.IO.File]::Exists($splashVideo))
+        {
+            return $splashVideo
+        }
+    }
+    
     if ($null -ne $game.Platform)
     {
         $splashVideo = $videoTemplate -f "platforms", $game.Platform.Id.ToString()
