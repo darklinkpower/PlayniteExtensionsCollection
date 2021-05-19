@@ -200,42 +200,45 @@ function Remove-IntroVideo
 
 function Invoke-OpenVideoManagerWindow
 {
-    [System.Collections.ArrayList]$platforms = @()
-    $PlayniteApi.Database.Platforms | Sort-Object -Property "Name" | ForEach-Object {
-        $platform = [PSCustomObject]@{
+    
+    $videoPathTemplate = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4")
+
+    [System.Collections.ArrayList]$selectedGames = @()
+    $PlayniteApi.MainView.SelectedGames | Sort-Object -Property "Name" | Select-Object -Unique | ForEach-Object {
+        $game = [PSCustomObject]@{
             Name = $_.Name
-            Value = $_.Id.ToString()
+            Value = $videoPathTemplate -f "games", $_.Id.ToString()
         }
-        $platforms.Add($platform) | Out-Null
+        $selectedGames.Add($game) | Out-Null
     }
 
     [System.Collections.ArrayList]$sources = @()
     $PlayniteApi.Database.Sources | Sort-Object -Property "Name" | ForEach-Object {
         $source = [PSCustomObject]@{
             Name = $_.Name
-            Value = $_.Id.ToString()
+            Value = $videoPathTemplate -f "sources", $_.Id.ToString()
         }
         $sources.Add($source) | Out-Null
     }
 
-    [System.Collections.ArrayList]$selectedGames = @()
-    $PlayniteApi.MainView.SelectedGames | Sort-Object -Property "Name" | Select-Object -Unique | ForEach-Object {
-        $game = [PSCustomObject]@{
+    [System.Collections.ArrayList]$platforms = @()
+    $PlayniteApi.Database.Platforms | Sort-Object -Property "Name" | ForEach-Object {
+        $platform = [PSCustomObject]@{
             Name = $_.Name
-            Value = $_.Id.ToString()
+            Value = $videoPathTemplate -f "platforms", $_.Id.ToString()
         }
-        $selectedGames.Add($game) | Out-Null
+        $platforms.Add($platform) | Out-Null
     }
 
     [System.Collections.ArrayList]$playniteModes = @()
     $mode = [PSCustomObject]@{
         Name = "Desktop"
-        Value = "Desktop"
+        Value = $videoPathTemplate -f "playnite", "Desktop"
     }
     $playniteModes.Add($mode) | Out-Null
     $mode = [PSCustomObject]@{
         Name = "Fullscreen"
-        Value = "Fullscreen"
+        Value = $videoPathTemplate -f "playnite", "Fullscreen"
     }
     $playniteModes.Add($mode) | Out-Null
 
@@ -245,8 +248,6 @@ function Invoke-OpenVideoManagerWindow
         "Plaforms" = "Plaforms"
         "Playnite Mode" = "Playnite Mode"
     }
-
-    $extraMetadataDirectory = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata")
 
     # Load assemblies
     Add-Type -AssemblyName PresentationCore
@@ -323,15 +324,7 @@ function Invoke-OpenVideoManagerWindow
     $ListBoxSelectedCollection.Add_SelectionChanged(
     {
         $ButtonAddVideo.Visibility = "Visible"
-        switch ($ComboBoxCollections.SelectedItem.Name) {
-            "Games" {$collection = "games"}
-            "Sources" {$collection = "sources"}
-            "Plaforms" {$collection = "platforms"}
-            "Playnite Mode" {$collection = "playnite"}
-            default {$collection = "other"}
-        }
-
-        $videoPath = [System.IO.Path]::Combine($extraMetadataDirectory, $collection, $ListBoxSelectedCollection.SelectedItem.Value, "VideoIntro.mp4")
+        $videoPath = $ListBoxSelectedCollection.SelectedItem.Value
         if ([System.IO.File]::Exists($videoPath))
         {
             $ButtonRemoveVideo.Visibility = "Visible"
@@ -367,15 +360,7 @@ function Invoke-OpenVideoManagerWindow
     {
         $VideoPlayer.Stop()
         $VideoPlayer.Source = ""
-        switch ($ComboBoxCollections.SelectedItem.Name) {
-            "Games" {$collection = "games"}
-            "Sources" {$collection = "sources"}
-            "Plaforms" {$collection = "platforms"}
-            "Playnite Mode" {$collection = "playnite"}
-            default {$collection = "other"}
-        }
-
-        $videoPath = [System.IO.Path]::Combine($extraMetadataDirectory, $collection, $ListBoxSelectedCollection.SelectedItem.Value, "VideoIntro.mp4")
+        $videoPath = $ListBoxSelectedCollection.SelectedItem.Value
         Set-Video $videoPath
         if ([System.IO.File]::Exists($videoPath))
         {
@@ -391,15 +376,7 @@ function Invoke-OpenVideoManagerWindow
     {
         $VideoPlayer.Stop()
         $VideoPlayer.Source = ""
-        switch ($ComboBoxCollections.SelectedItem.Name) {
-            "Games" {$collection = "games"}
-            "Sources" {$collection = "sources"}
-            "Plaforms" {$collection = "platforms"}
-            "Playnite Mode" {$collection = "playnite"}
-            default {$collection = "other"}
-        }
-
-        $videoPath = [System.IO.Path]::Combine($extraMetadataDirectory, $collection, $ListBoxSelectedCollection.SelectedItem.Value, "VideoIntro.mp4")
+        $videoPath = $ListBoxSelectedCollection.SelectedItem.Value
         Remove-IntroVideo $videoPath
         if(![System.IO.File]::Exists($videoPath))
         {
@@ -427,9 +404,9 @@ function Get-SplashVideoPath
         [Playnite.SDK.Models.Game] $game
     )
 
-    $videoTemplate = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4")
+    $videoPathTemplate = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4")
 
-    $splashVideo = $videoTemplate -f "games", $game.Id.ToString()
+    $splashVideo = $videoPathTemplate -f "games", $game.Id.ToString()
     if ([System.IO.File]::Exists($splashVideo))
     {
         $__logger.Info(("Specific game video found in {0}." -f $splashVideo))
@@ -438,7 +415,7 @@ function Get-SplashVideoPath
 
     if ($null -ne $game.Source)
     {
-        $splashVideo = $videoTemplate -f "sources", $game.Source.Id.ToString()
+        $splashVideo = $videoPathTemplate -f "sources", $game.Source.Id.ToString()
         if ([System.IO.File]::Exists($splashVideo))
         {
             $__logger.Info(("Source video found in {0}." -f $splashVideo))
@@ -448,7 +425,7 @@ function Get-SplashVideoPath
     
     if ($null -ne $game.Platform)
     {
-        $splashVideo = $videoTemplate -f "platforms", $game.Platform.Id.ToString()
+        $splashVideo = $videoPathTemplate -f "platforms", $game.Platform.Id.ToString()
         if ([System.IO.File]::Exists($splashVideo))
         {
             $__logger.Info(("Platform video found in {0}." -f $splashVideo))
@@ -456,7 +433,7 @@ function Get-SplashVideoPath
         }
     }
     
-    $splashVideo = $videoTemplate -f "playnite", $PlayniteApi.ApplicationInfo.Mode
+    $splashVideo = $videoPathTemplate -f "playnite", $PlayniteApi.ApplicationInfo.Mode
     if ([System.IO.File]::Exists($splashVideo))
     {
         $__logger.Info(("Playnite mode video found in {0}." -f $splashVideo))
