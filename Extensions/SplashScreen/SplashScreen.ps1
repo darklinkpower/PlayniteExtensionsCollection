@@ -40,8 +40,10 @@ function Invoke-ViewSettings
         <StackPanel Grid.Row="0" DockPanel.Dock="Top">
             <CheckBox Name="CBexecuteInDesktopMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBviewVideoDesktopMode" Margin="0,10,00,0"/>
+            <CheckBox Name="CBcloseSplashScreenDesktopMode" Margin="0,10,00,0"/>
             <CheckBox Name="CBexecuteInFullscreenMode" Margin="0,20,0,0"/>
             <CheckBox Name="CBviewVideoFullscreenMode" Margin="0,10,0,0"/>
+            <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,00,0"/>
             <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
         </StackPanel>
     </DockPanel>
@@ -56,17 +58,23 @@ function Invoke-ViewSettings
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
 
     # Set items sources of controls
-    $CBexecuteInDesktopMode.Content = "Execute extension in Playnite Desktop Mode"
+    $CBexecuteInDesktopMode.Content = "Execute extension in Desktop Mode"
     $CBexecuteInDesktopMode.IsChecked = $settings.executeInDesktopMode
 
-    $CBexecuteInFullscreenMode.Content = "Execute extension in Playnite Fullscreen Mode"
-    $CBexecuteInFullscreenMode.IsChecked = $settings.executeInFullscreenMode
-
-    $CBviewVideoDesktopMode.Content = "View intro videos in Playnite Desktop Mode"
+    $CBviewVideoDesktopMode.Content = "View intro videos in Desktop Mode"
     $CBviewVideoDesktopMode.IsChecked = $settings.viewVideoDesktopMode
 
-    $CBviewVideoFullscreenMode.Content = "View intro videos in Playnite Fullscreen Mode"
+    $CBcloseSplashScreenDesktopMode.Content = "Automatically close splashscreen in Desktop Mode (Hides desktop when game closes but disabling can cause issues)"
+    $CBcloseSplashScreenDesktopMode.IsChecked = $settings.closeSplashScreenDesktopMode
+
+    $CBexecuteInFullscreenMode.Content = "Execute extension in Fullscreen Mode"
+    $CBexecuteInFullscreenMode.IsChecked = $settings.executeInFullscreenMode
+
+    $CBviewVideoFullscreenMode.Content = "View intro videos in Fullscreen Mode"
     $CBviewVideoFullscreenMode.IsChecked = $settings.viewVideoFullscreenMode
+
+    $CBcloseSplashScreenFullscreenMode.Content = "Automatically close splashscreen in Fullscreen Mode (Hides desktop when game closes but disabling can cause issues)"
+    $CBcloseSplashScreenFullscreenMode.IsChecked = $settings.closeSplashScreenFullscreenMode
 
     $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
     $CBshowLogoInSplashscreen.IsChecked = $settings.showLogoInSplashscreen
@@ -84,7 +92,7 @@ function Invoke-ViewSettings
     $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
     $window.Content = $XMLForm
     $window.Width = 800
-    $window.Height = 300
+    $window.Height = 450
     $window.Title = "Splash Screen - Settings"
     $window.WindowStartupLocation = "CenterScreen"
 
@@ -98,9 +106,11 @@ function Invoke-ViewSettings
     $ButtonSave.Add_Click(
     {
         $settings.executeInDesktopMode = $CBexecuteInDesktopMode.IsChecked
-        $settings.executeInFullscreenMode = $CBexecuteInFullscreenMode.IsChecked
         $settings.viewVideoDesktopMode = $CBviewVideoDesktopMode.IsChecked
+        $settings.closeSplashScreenDesktopMode = $CBcloseSplashScreenDesktopMode.IsChecked
+        $settings.executeInFullscreenMode = $CBexecuteInFullscreenMode.IsChecked
         $settings.viewVideoFullscreenMode = $CBviewVideoFullscreenMode.IsChecked
+        $settings.closeSplashScreenFullscreenMode = $CBcloseSplashScreenFullscreenMode.IsChecked
         $settings.showLogoInSplashscreen = $CBshowLogoInSplashscreen.IsChecked
 
         Save-Settings $settings
@@ -127,10 +137,12 @@ function Get-Settings
 {
     # Set default settings values
     $settings = @{
-        "viewVideoDesktopMode" = $false
-        "viewVideoFullscreenMode" = $true
         "executeInDesktopMode" = $false
+        "viewVideoDesktopMode" = $false
+        "closeSplashScreenDesktopMode" = $true
         "executeInFullscreenMode" = $true
+        "viewVideoFullscreenMode" = $true
+        "closeSplashScreenFullscreenMode" = $true
         "showLogoInSplashscreen" = $false
     }
     
@@ -543,8 +555,14 @@ function OnGameStarting
     {
         $logoPath = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
     }
+    
+    $settings.closeSplashScreenDesktopMode
 
-    @($splashImage, $logoPath) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
+    switch ($PlayniteApi.ApplicationInfo.Mode.ToString()) {
+        "Desktop" { $closeSplashScreenAutomatic = $settings.closeSplashScreenDesktopMode}
+        Default { $closeSplashScreenAutomatic = $settings.closeSplashScreenFullscreenMode }
+    }
+    @($splashImage, $logoPath, $closeSplashScreenAutomatic) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
 
     if ((($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.viewVideoDesktopMode -eq $true)) -or (($PlayniteApi.ApplicationInfo.Mode -eq "Fullscreen") -and ($settings.executeInFullscreenMode -eq $true)))
     {
@@ -571,6 +589,7 @@ function Invoke-ImageSplashScreen
             $splashPaths = Get-Content (Join-Path $env:TEMP -ChildPath "SplashScreen.json") | ConvertFrom-Json
             $splashImage = $splashPaths[0]
             $logoPath = $splashPaths[1]
+            $closeSplashScreenAutomatic = $splashPaths[2]
             
             # Load assemblies
             Add-Type -AssemblyName PresentationCore
@@ -629,21 +648,27 @@ function Invoke-ImageSplashScreen
             {
                 $logoImage.Source = $logoPath
             }
-            $timer = [System.Windows.Threading.DispatcherTimer]::new()
-            $timer.Interval = New-TimeSpan -Seconds 1
-            $timeSpanLimit = New-TimeSpan -Seconds 30
-            $endTime = (Get-Date).Add($timeSpanLimit)
-            $timer.Add_Tick({
-                if ((Get-Date) -ge $endTime)
-                {
-                    $window.Close()
-                    return
-                }
-            })
+
+            if ($closeSplashScreenAutomatic -eq $true)
+            {
+                $timer = [System.Windows.Threading.DispatcherTimer]::new()
+                $timer.Interval = New-TimeSpan -Seconds 3
+                $timeSpanLimit = New-TimeSpan -Seconds 30
+                $endTime = (Get-Date).Add($timeSpanLimit)
+                $timer.Start()
+                $timer.Add_Tick({
+                    if ((Get-Date) -ge $endTime)
+                    {
+                        $window.Close()
+                        return
+                    }
+                })
+            }
 
             # Show Window
-            $timer.Start()
             $window.ShowDialog() | Out-Null
+            $window = $null
+            [System.GC]::Collect()
         }
     }
 
