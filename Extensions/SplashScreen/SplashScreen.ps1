@@ -501,6 +501,14 @@ function Get-SplashImagePath
         }
     }
 
+    if ($game.Platform)
+    {
+        if ($game.Platform.Background)
+        {
+            return $PlayniteApi.Database.GetFullFilePath($game.Platform.Background)
+        }
+    }
+
     if ($PlayniteApi.ApplicationInfo.Mode -eq "Desktop")
     {
         return [System.IO.Path]::Combine($CurrentExtensionInstallPath, "SplashScreenDesktopMode.png")
