@@ -320,6 +320,20 @@ function Invoke-OpenVideoManagerWindow
     $window.Title = "Splash Screen - Video manager"
     $window.WindowStartupLocation = "CenterScreen"
 
+    # Handler for ComboBoxCollections
+    $ComboBoxCollections.Add_SelectionChanged(
+        {
+            switch ($ComboBoxCollections.SelectedItem.Name) {
+                "Games" {$ListBoxSelectedCollection.ItemsSource = $selectedGames}
+                "Sources" {$ListBoxSelectedCollection.ItemsSource = $sources}
+                "Plaforms" {$ListBoxSelectedCollection.ItemsSource = $platforms}
+                "Playnite Mode" {$ListBoxSelectedCollection.ItemsSource = $playniteModes}
+                default {}
+            }
+    
+            $ButtonAddVideo.Visibility = "Hidden"
+        })
+
     # Handler for ListBoxPlatforms
     $ListBoxSelectedCollection.Add_SelectionChanged(
     {
@@ -336,30 +350,14 @@ function Invoke-OpenVideoManagerWindow
         {
             $ButtonRemoveVideo.Visibility = "Hidden"
             $TextBlockVideoAvailable.Visibility = "Visible"
-            $VideoPlayer.Stop()
-            $VideoPlayer.Source = ""
+            $VideoPlayer.Source = $null
         }
-    })
-
-    # Handler for ComboBoxCollections
-    $ComboBoxCollections.Add_SelectionChanged(
-    {
-        switch ($ComboBoxCollections.SelectedItem.Name) {
-            "Games" {$ListBoxSelectedCollection.ItemsSource = $selectedGames}
-            "Sources" {$ListBoxSelectedCollection.ItemsSource = $sources}
-            "Plaforms" {$ListBoxSelectedCollection.ItemsSource = $platforms}
-            "Playnite Mode" {$ListBoxSelectedCollection.ItemsSource = $playniteModes}
-            default {}
-        }
-
-        $ButtonAddVideo.Visibility = "Hidden"
     })
 
     # Handler for pressing "Add Video" button
     $ButtonAddVideo.Add_Click(
     {
-        $VideoPlayer.Stop()
-        $VideoPlayer.Source = ""
+        $VideoPlayer.Source = $null
         $videoPath = $ListBoxSelectedCollection.SelectedItem.Value
         Set-Video $videoPath
         if ([System.IO.File]::Exists($videoPath))
@@ -374,23 +372,20 @@ function Invoke-OpenVideoManagerWindow
     # Handler for pressing "Remove Video" button
     $ButtonRemoveVideo.Add_Click(
     {
-        $VideoPlayer.Stop()
-        $VideoPlayer.Source = ""
+        $VideoPlayer.Source = $null
         $videoPath = $ListBoxSelectedCollection.SelectedItem.Value
         Remove-IntroVideo $videoPath
         if(![System.IO.File]::Exists($videoPath))
         {
             $ButtonRemoveVideo.Visibility = "Hidden"
             $TextBlockVideoAvailable.Visibility = "Visible"
-            $VideoPlayer.Stop()
-            $VideoPlayer.Source = ""
+            $VideoPlayer.Source = $null
         }
     })
 
     $window.Add_Closing(
     {
-        $VideoPlayer.Stop()
-        $VideoPlayer.Source = ""
+        $VideoPlayer.Source = $null
     })
 
     $window.ShowDialog()
