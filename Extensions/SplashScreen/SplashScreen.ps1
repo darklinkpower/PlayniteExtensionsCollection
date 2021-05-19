@@ -64,7 +64,7 @@ function Invoke-ViewSettings
     $CBviewVideoDesktopMode.Content = "View intro videos in Desktop Mode"
     $CBviewVideoDesktopMode.IsChecked = $settings.viewVideoDesktopMode
 
-    $CBcloseSplashScreenDesktopMode.Content = "Automatically close splashscreen in Desktop Mode (Hides desktop when game closes but disabling can cause issues)"
+    $CBcloseSplashScreenDesktopMode.Content = "Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)"
     $CBcloseSplashScreenDesktopMode.IsChecked = $settings.closeSplashScreenDesktopMode
 
     $CBexecuteInFullscreenMode.Content = "Execute extension in Fullscreen Mode"
@@ -73,7 +73,7 @@ function Invoke-ViewSettings
     $CBviewVideoFullscreenMode.Content = "View intro videos in Fullscreen Mode"
     $CBviewVideoFullscreenMode.IsChecked = $settings.viewVideoFullscreenMode
 
-    $CBcloseSplashScreenFullscreenMode.Content = "Automatically close splashscreen in Fullscreen Mode (Hides desktop when game closes but disabling can cause issues)"
+    $CBcloseSplashScreenFullscreenMode.Content = "Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)"
     $CBcloseSplashScreenFullscreenMode.IsChecked = $settings.closeSplashScreenFullscreenMode
 
     $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
