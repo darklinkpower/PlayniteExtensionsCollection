@@ -423,41 +423,6 @@ function Invoke-OpenVideoManagerWindow
     [System.GC]::Collect()
 }
 
-function Invoke-SetIntroVideoGames
-{
-    $videoSourcePath = $PlayniteApi.Dialogs.SelectFile("mp4|*.mp4")
-    if ([string]::IsNullOrEmpty($videoSourcePath))
-    {
-        return
-    }
-    
-    $count = 0
-    foreach ($game in $PlayniteApi.MainView.SelectedGames)
-    {
-        $videoName = $game.Id + ".mp4"
-        $videoDestinationPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath $videoName
-        Copy-Item $videoSourcePath $videoDestinationPath -Force
-        $count++
-    }
-    $PlayniteApi.Dialogs.ShowMessage("Intro video has been added to $count game(s)", "Splash Screen")
-}
-
-function Invoke-RemoveIntroVideoGames
-{
-    $count = 0
-    foreach ($game in $PlayniteApi.MainView.SelectedGames)
-    {
-        $videoName = $game.Id + ".mp4"
-        $videoPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath $videoName
-        if (Test-Path $videoPath)
-        {
-            Remove-Item $videoPath -Force
-            $count++
-        }
-    }
-    $PlayniteApi.Dialogs.ShowMessage("Intro video has been removed from $count game(s)", "Splash Screen")
-}
-
 function Get-SplashVideoPath
 {
     param (
