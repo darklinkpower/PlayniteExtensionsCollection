@@ -240,13 +240,11 @@ function Invoke-OpenVideoManagerWindow
     $playniteModes.Add($mode) | Out-Null
 
     $comboBoxCollectionSource = [ordered]@{
-        "Games" = "Games"
+        "Games" = "Selected games"
         "Sources" = "Sources"
         "Plaforms" = "Plaforms"
         "Playnite Mode" = "Playnite Mode"
     }
-
-    $comboBoxCollectionSource
 
     $extraMetadataDirectory = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata")
 
@@ -434,6 +432,7 @@ function Get-SplashVideoPath
     $splashVideo = $videoTemplate -f "games", $game.Id.ToString()
     if ([System.IO.File]::Exists($splashVideo))
     {
+        $__logger.Info(("Specific game video found in {0}." -f $splashVideo))
         return $splashVideo
     }
 
@@ -442,6 +441,7 @@ function Get-SplashVideoPath
         $splashVideo = $videoTemplate -f "sources", $game.Source.Id.ToString()
         if ([System.IO.File]::Exists($splashVideo))
         {
+            $__logger.Info(("Source video found in {0}." -f $splashVideo))
             return $splashVideo
         }
     }
@@ -451,6 +451,7 @@ function Get-SplashVideoPath
         $splashVideo = $videoTemplate -f "platforms", $game.Platform.Id.ToString()
         if ([System.IO.File]::Exists($splashVideo))
         {
+            $__logger.Info(("Platform video found in {0}." -f $splashVideo))
             return $splashVideo
         }
     }
@@ -458,9 +459,11 @@ function Get-SplashVideoPath
     $splashVideo = $videoTemplate -f "playnite", $PlayniteApi.ApplicationInfo.Mode
     if ([System.IO.File]::Exists($splashVideo))
     {
+        $__logger.Info(("Playnite mode video found in {0}." -f $splashVideo))
         return $splashVideo
     }
 
+    $__logger.Info(("Video not found"))
     return $null
 }
 
@@ -474,6 +477,7 @@ function Get-SplashImagePath
     {
         if ($game.BackgroundImage -notmatch "^http")
         {
+            $__logger.Info(("Found game background image"))
             return $PlayniteApi.Database.GetFullFilePath($game.BackgroundImage)
         }
     }
@@ -482,16 +486,19 @@ function Get-SplashImagePath
     {
         if ($game.Platform.Background)
         {
+            $__logger.Info(("Found platform background image"))
             return $PlayniteApi.Database.GetFullFilePath($game.Platform.Background)
         }
     }
 
     if ($PlayniteApi.ApplicationInfo.Mode -eq "Desktop")
     {
+        $__logger.Info(("Using generic Desktop mode background image"))
         return [System.IO.Path]::Combine($CurrentExtensionInstallPath, "SplashScreenDesktopMode.png")
     }
     else
     {
+        $__logger.Info(("Using generic Fullscreen mode background image"))
         return [System.IO.Path]::Combine($CurrentExtensionInstallPath, "SplashScreenFullscreenMode.png")
     }
 }
@@ -513,6 +520,7 @@ function OnGameStarting
         return
     }
 
+    $__logger.Info(("Game: {0}" -f $game.Name))
     $splashImage = Get-SplashImagePath $game
 
     $logoPath = ""
