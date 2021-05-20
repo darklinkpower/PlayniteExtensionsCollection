@@ -8,13 +8,23 @@ function GetMainMenuItems
     $menuItem1.Description = "Open video manager"
     $menuItem1.FunctionName = "Invoke-OpenVideoManagerWindow"
     $menuItem1.MenuSection = "@Splash Screen"
-    
+
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem2.Description = "View settings"
     $menuItem2.FunctionName = "Invoke-ViewSettings"
     $menuItem2.MenuSection = "@Splash Screen"
 
-    return $menuItem1, $menuItem2
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description = "Add image splash screen skip feature to selected games"
+    $menuItem3.FunctionName = "Add-ImageSkipFeature"
+    $menuItem3.MenuSection = "@Splash Screen|Exclude functions"
+
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description = "Remove image splash screen skip feature from selected games"
+    $menuItem4.FunctionName = "Remove-ImageSkipFeature"
+    $menuItem4.MenuSection = "@Splash Screen|Exclude functions"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
 }
 
 function Invoke-ViewSettings
@@ -485,43 +495,59 @@ function OnGameStarting
 
     if (($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.executeInDesktopMode -eq $false))
     {
+        $__logger.Info(("Execution disabled for Desktop mode in settings" -f $game.Name))
         return
     }
     elseif (($PlayniteApi.ApplicationInfo.Mode -eq "Fullscreen") -and ($settings.executeInFullscreenMode -eq $false))
     {
+        $__logger.Info(("Execution disabled for Fullscreen mode in settings" -f $game.Name))
         return
     }
 
     $__logger.Info(("Game: {0}" -f $game.Name))
-    $splashImage = Get-SplashImagePath $game
-
-    $logoPath = ""
-    if ($settings.showLogoInSplashscreen -eq $true)
+    $skipSplashImage = $false
+    if ($game.features)
     {
-        $logoPath = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
+        foreach ($feature in $game.features) {
+            if ($feature.Name -eq "[Splash Screen] Skip splash image")
+            {
+                $__logger.Info(("Game has exclude filter feature"))
+                $skipSplashImage = $true
+                break
+            }
+        }
+    }
+
+    if ($skipSplashImage -eq $false)
+    {
+        $splashImage = Get-SplashImagePath $game
+
+        switch ($PlayniteApi.ApplicationInfo.Mode.ToString()) {
+            "Desktop" { $closeSplashScreenAutomatic = $settings.closeSplashScreenDesktopMode}
+            Default { $closeSplashScreenAutomatic = $settings.closeSplashScreenFullscreenMode }
+        }
+        
+        $logoPath = ""
+        if ($settings.showLogoInSplashscreen -eq $true)
+        {
+            $logoPath = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
+        }
+        @($splashImage, $logoPath, $closeSplashScreenAutomatic) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
     }
     
-    $settings.closeSplashScreenDesktopMode
-
-    switch ($PlayniteApi.ApplicationInfo.Mode.ToString()) {
-        "Desktop" { $closeSplashScreenAutomatic = $settings.closeSplashScreenDesktopMode}
-        Default { $closeSplashScreenAutomatic = $settings.closeSplashScreenFullscreenMode }
-    }
-    @($splashImage, $logoPath, $closeSplashScreenAutomatic) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
-
     if ((($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.viewVideoDesktopMode -eq $true)) -or (($PlayniteApi.ApplicationInfo.Mode -eq "Fullscreen") -and ($settings.executeInFullscreenMode -eq $true)))
     {
         $splashVideo = Get-SplashVideoPath $game
         if ($null -ne $splashVideo)
         {
-            Invoke-VideoSplashScreen $splashVideo
+            Invoke-VideoSplashScreen $splashVideo $skipSplashImage
         }
-        else
+        elseif ($skipSplashImage -eq $false)
         {
             Invoke-ImageSplashScreen
         }
     }
-    else
+    elseif ($skipSplashImage -eq $false)
     {
         Invoke-ImageSplashScreen
     }
@@ -624,7 +650,8 @@ function Invoke-ImageSplashScreen
 function Invoke-VideoSplashScreen
 {
     param (
-        [string]$splashVideo
+        [string] $splashVideo,
+        [bool] $skipSplashImage
     )
 
     # Load assemblies
@@ -651,13 +678,17 @@ function Invoke-VideoSplashScreen
 
     $VideoPlayer.Volume = 100;
     [uri]$videoSource = $splashVideo
-    $VideoPlayer.Source = $VideoSource;
+    $VideoPlayer.Source = $VideoSource
     $VideoPlayer.Play()
     
     # Handler for video player
     $VideoPlayer.Add_MediaEnded({
-        Invoke-ImageSplashScreen
-        Start-Sleep -Milliseconds 300
+        $VideoPlayer.Source = $null
+        if ($skipSplashImage -eq $false)
+        {
+            Invoke-ImageSplashScreen
+            Start-Sleep -Milliseconds 300
+        }
         $window.Close()
     })
 
@@ -679,4 +710,61 @@ function OnGameStopped
             } catch { }
         }
     }
+}
+
+function Add-ImageSkipFeature
+{
+    $featureName = "[Splash Screen] Skip splash image"
+    $feature = $PlayniteApi.Database.Features.Add($featureName)
+    
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    
+    $featureAdded = 0
+    
+    foreach ($game in $gameDatabase) {
+        if ($game.FeatureIds) 
+        {
+            if ($game.FeatureIds -contains $feature.Id)
+            {
+                continue
+            }
+            $game.FeatureIds += $feature.Id
+        }
+        else
+        {
+            # Fix in case game has null Feature
+            $game.FeatureIds = $feature.Id
+        }
+        
+        $PlayniteApi.Database.Games.Update($game)
+        $featureAdded++
+        $__logger.Info(("Added `"{0}`" feature to `"{1}`"." -f $featureName, $game.name))
+    }
+    
+    $PlayniteApi.Dialogs.ShowMessage(("Added `"{0}`" exclude feature to {1} game(s)" -f $featureName, $featureAdded.Count.ToString()), "Splash Screen")
+}
+
+function Remove-ImageSkipFeature
+{
+    $featureName = "[Splash Screen] Skip splash image"
+    $feature = $PlayniteApi.Database.Features.Add($featureName)
+    
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    
+    $featureRemoved = 0
+    
+    foreach ($game in $GameDatabase) {
+        if ($game.FeatureIds)
+        {
+            if ($game.FeatureIds -contains $feature.Id)
+            {
+                $game.FeatureIds.Remove($feature.Id)
+                $PlayniteApi.Database.Games.Update($game)
+                $featureRemoved++
+                $__logger.Info(("Removed `"{0}`" feature from `"{1}`"." -f $featureName, $game.name))          
+            }
+        }
+    }
+    
+    $PlayniteApi.Dialogs.ShowMessage(("Removed `"{0}`" exclude feature from {1} game(s)" -f $featureName, $featureRemoved.Count.ToString()), "Splash Screen");
 }
