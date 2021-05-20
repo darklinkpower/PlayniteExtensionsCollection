@@ -55,6 +55,7 @@ function Invoke-ViewSettings
             <CheckBox Name="CBviewVideoFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,00,0"/>
             <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
+            <CheckBox Name="CBuseBlackSplashscreen" Margin="0,10,00,0"/>
         </StackPanel>
     </DockPanel>
 </Grid>
@@ -89,6 +90,9 @@ function Invoke-ViewSettings
     $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
     $CBshowLogoInSplashscreen.IsChecked = $settings.showLogoInSplashscreen
 
+    $CBuseBlackSplashscreen.Content = "Use black splashscreen instead of the image splashscreen"
+    $CBuseBlackSplashscreen.IsChecked = $settings.useBlackSplashscreen
+
     $ButtonSave.Content = "Save"
     $ButtonCancel.Content = "Cancel"
 
@@ -122,6 +126,7 @@ function Invoke-ViewSettings
         $settings.viewVideoFullscreenMode = $CBviewVideoFullscreenMode.IsChecked
         $settings.closeSplashScreenFullscreenMode = $CBcloseSplashScreenFullscreenMode.IsChecked
         $settings.showLogoInSplashscreen = $CBshowLogoInSplashscreen.IsChecked
+        $settings.useBlackSplashscreen = $CBuseBlackSplashscreen.IsChecked
 
         Save-Settings $settings
         $window.Close()
@@ -154,6 +159,7 @@ function Get-Settings
         "viewVideoFullscreenMode" = $true
         "closeSplashScreenFullscreenMode" = $true
         "showLogoInSplashscreen" = $false
+        "useBlackSplashscreen" = $false
     }
     
     $settingsPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath "Settings.json"
@@ -520,7 +526,14 @@ function OnGameStarting
 
     if ($skipSplashImage -eq $false)
     {
-        $splashImage = Get-SplashImagePath $game
+        if ($settings.useBlackSplashscreen -eq $true)
+        {
+            $splashImage = [System.IO.Path]::Combine($CurrentExtensionInstallPath, "SplashScreenBlack.png")
+        }
+        else
+        {
+            $splashImage = Get-SplashImagePath $game
+        }
 
         switch ($PlayniteApi.ApplicationInfo.Mode.ToString()) {
             "Desktop" { $closeSplashScreenAutomatic = $settings.closeSplashScreenDesktopMode}
