@@ -161,12 +161,12 @@ function Get-GoogleResultsArray
 { 
     param (
         [string]$queryInput,
-        [bool]$transparantImages
+        [bool]$transparentImages
     )
 
     $query = [uri]::EscapeDataString($queryInput)
     $uri = ""
-    if ($transparantImages)
+    if ($transparentImages)
     {
         $uri = "https://www.google.com/search?tbm=isch&client=firefox-b-d&source=lnt&q={0}&tbs=ic:trans" -f $query
     }
@@ -229,7 +229,7 @@ function Get-GoogleLogo
             <RowDefinition Height="Auto"/>            
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Margin="15,5,10,5">        
-            <CheckBox Name="CheckboxTransparant" IsChecked="True" Content="Transparant"
+            <CheckBox Name="CheckboxTransparent" IsChecked="True" Content="Transparent"
                 DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
         </DockPanel>
         <DockPanel Grid.Row="1" Margin="15,5,10,5">        
@@ -303,7 +303,7 @@ function Get-GoogleLogo
         # Handler for pressing "Search" button
         $ButtonImageSearch.Add_Click(
         {
-            $ListBoxImages.ItemsSource = Get-GoogleResultsArray $TextboxSearch.Text $CheckboxTransparant.IsChecked
+            $ListBoxImages.ItemsSource = Get-GoogleResultsArray $TextboxSearch.Text $CheckboxTransparent.IsChecked
         })
 
         # Handler for pressing "Download selected video" button
@@ -322,8 +322,8 @@ function Get-GoogleLogo
                     $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools")
                 } catch {
                     $errorMessage = $_.Exception.Message
-                    $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-                    $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage")
+                    $__logger.Info("Error downloading file `"$logoUri`". Error: $errorMessage")
+                    $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$logoUri`". Error: $errorMessage")
                 }
             }
         })
