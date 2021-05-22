@@ -221,28 +221,29 @@ function Get-GoogleLogo
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
     </Grid.Resources>
 
-    <Grid Margin="0,4,0,0">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>            
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Margin="15,5,10,5">        
-            <CheckBox Name="CheckboxTransparent" IsChecked="True" Content="Transparent"
-                DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
-        </DockPanel>
-        <DockPanel Grid.Row="1" Margin="15,5,10,5">        
+        <DockPanel Grid.Row="0" Margin="0">
             <Grid DockPanel.Dock="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBox  Name="TextboxSearch" Grid.Column="0" HorizontalContentAlignment="Stretch"/>
-                <Button  Grid.Column="1" Margin="10,0,0,0" Name="ButtonImageSearch" Content="Search" HorizontalAlignment="Right" IsDefault="True"/>
+                <Button  Grid.Column="1" Margin="10,0,0,0" Name="ButtonImageSearch"
+                        Content="Search" HorizontalAlignment="Right" IsDefault="True"/>
             </Grid>
-        </DockPanel>        
-        <ListBox Grid.Row="2" Name="ListBoxImages"
+        </DockPanel>
+        <DockPanel Grid.Row="1" Margin="0,10,0,0">        
+            <CheckBox Name="CheckboxTransparent" IsChecked="True"
+                    DockPanel.Dock="Left" VerticalAlignment="Center"/>
+        </DockPanel>
+        <ListBox Grid.Row="2" Name="ListBoxImages" Margin="0,20,0,0"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             BorderThickness="0"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -268,7 +269,7 @@ function Get-GoogleLogo
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="3" Content="Download selected Logo" HorizontalAlignment="Center" Margin="0,20,0,10" Name="ButtonDownloadLogo" IsDefault="False"/>
+        <Button Grid.Row="3" Content="Download selected Logo" HorizontalAlignment="Center" Margin="0,20,0,0" Name="ButtonDownloadLogo" IsDefault="False"/>
     </Grid>
 </Grid>
 "@
@@ -285,6 +286,7 @@ function Get-GoogleLogo
         $query = "{0} Logo" -f $game.Name
         $TextboxSearch.Text = $query
         $ListBoxImages.ItemsSource = Get-GoogleResultsArray $query $true
+        $CheckboxTransparent.Content = "Search only for images with transparency"
 
         # Set Window creation options
         $windowCreationOptions = New-Object Playnite.SDK.WindowCreationOptions
