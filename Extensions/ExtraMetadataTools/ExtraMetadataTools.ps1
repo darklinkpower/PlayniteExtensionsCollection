@@ -182,7 +182,11 @@ function Get-GoogleResultsArray
     $googleContent = $webView.GetPageSource()
     $googleContent = $googleContent -replace "\r\n?|\n", ""
     $regex = "\[""(https:\/\/encrypted-[^,]+?)"",\d+,\d+\],\[""(http.+?)"",(\d+),(\d+)\]"
-    $regexmatch = ([regex]$regex).Matches($($googleContent))
+    $regexMatch = ([regex]$regex).Matches($googleContent)
+    if ($null -ne $regexMatch)
+    {
+        $regexMatch = $regexMatch | Select-Object -First 30
+    }
     [System.Collections.ArrayList]$searchResults = @()
     foreach ($match in $RegexMatch)
     { 
