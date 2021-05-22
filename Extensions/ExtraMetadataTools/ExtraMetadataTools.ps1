@@ -68,8 +68,13 @@ function GetGameMenuItems
     $menuItem13.Description =  "Update `"Logo missing`" tags of selected game(s)"
     $menuItem13.FunctionName = "Add-TagMissingLogo"
     $menuItem13.MenuSection = "Extra Metadata tools|Other"
-        
-    return $menuItem, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13
+
+    $menuItem14 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem14.Description =  "Download logo for selected game from Google"
+    $menuItem14.FunctionName = "Get-GoogleLogo"
+    $menuItem14.MenuSection = "Extra Metadata tools|Logos"
+
+    return $menuItem, $menuItem2, $menuItem3, $menuItem14, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13
 }
 
 function OnApplicationStarted
@@ -149,6 +154,182 @@ function OnApplicationStarted
                 $PlayniteApi.Dialogs.ShowMessage("Extra Metadata configuration for the theme `"$themeInUse`" updated.`nPlease restart Playnite to make changes take effect.", "Extra Metadata Tools");
             }
         }
+    }
+}
+
+function Get-GoogleResultsArray
+{ 
+    param (
+        [string]$queryInput,
+        [bool]$transparantImages
+    )
+
+    $query = [uri]::EscapeDataString($queryInput)
+    $uri = ""
+    if ($transparantImages)
+    {
+        $uri = "https://www.google.com/search?tbm=isch&client=firefox-b-d&source=lnt&q={0}&tbs=ic:trans" -f $query
+    }
+    else
+    {
+        $uri = "https://www.google.com/search?tbm=isch&client=firefox-b-d&source=lnt&q={0}" -f $query
+    }
+    $webViewSettings = New-Object "Playnite.SDK.WebViewSettings"
+    $webViewSettings.CacheEnabled = $false
+    $webViewSettings.JavaScriptEnabled = $true
+    $webView = $PlayniteApi.WebViews.CreateOffscreenView($webViewSettings)
+    $webView.NavigateAndWait($uri)
+    $googleContent = $webView.GetPageSource()
+    $googleContent = $googleContent -replace "\r\n?|\n", ""
+    $regex = "\[""(https:\/\/encrypted-[^,]+?)"",\d+,\d+\],\[""(http.+?)"",(\d+),(\d+)\]"
+    $regexmatch = ([regex]$regex).Matches($($googleContent))
+    [System.Collections.ArrayList]$searchResults = @()
+    foreach ($match in $RegexMatch)
+    { 
+        $json = ConvertFrom-Json("[" + $match.Value + "]")
+        $searchResult = [PSCustomObject]@{
+            Width  = [string]($json[1][1]) 
+            Height  = [string]($json[1][2]) 
+            ImageUrl = $json[1][0]
+            ThumbUrl  = $json[0][0]
+            Size = [string]($json[1][1])  + "x" + [string]($json[1][2])  
+        }
+        $searchResults.Add($searchResult) | Out-Null
+    }
+    $webView.Dispose()
+
+    return $searchResults
+}
+
+function Get-GoogleLogo
+{
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    if ($gameDatabase.count -gt 1)
+    {
+        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        return
+    }
+
+    # Load assemblies
+    Add-Type -AssemblyName PresentationCore
+    Add-Type -AssemblyName PresentationFramework
+
+    # Set Xaml
+    [xml]$Xaml = @"
+<Grid xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Grid.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </Grid.Resources>
+
+    <Grid Margin="0,4,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>            
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Margin="15,5,10,5">        
+            <CheckBox Name="CheckboxTransparant" IsChecked="True" Content="Transparant"
+                DockPanel.Dock="Left" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Margin="15,5,10,5">        
+            <Grid DockPanel.Dock="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox  Name="TextboxSearch" Grid.Column="0" HorizontalContentAlignment="Stretch"/>
+                <Button  Grid.Column="1" Margin="10,0,0,0" Name="ButtonImageSearch" Content="Search" HorizontalAlignment="Right" IsDefault="True"/>
+            </Grid>
+        </DockPanel>        
+        <ListBox Grid.Row="2" Name="ListBoxImages"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            BorderThickness="0"
+            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="4" Background="#33000000">
+                        <DockPanel ToolTip="{Binding ImageUrl}"
+                                   ToolTipService.InitialShowDelay="2000">
+                            <TextBlock DockPanel.Dock="Bottom" Text="{Binding Size, StringFormat={}{0}px}"
+                                       Margin="0,3,0,0"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Image Width="240" Height="180"
+                                   Source="{Binding ThumbUrl, IsAsync=True}"
+                                   DockPanel.Dock="Top"
+                                   Stretch="Uniform" StretchDirection="Both" />
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="3" Content="Download selected Logo" HorizontalAlignment="Center" Margin="0,20,0,10" Name="ButtonDownloadLogo" IsDefault="False"/>
+    </Grid>
+</Grid>
+"@
+    foreach ($game in $gameDatabase) 
+    {
+        # Load the xaml for controls
+        $XMLReader = [System.Xml.XmlNodeReader]::New($Xaml)
+        $XMLForm = [Windows.Markup.XamlReader]::Load($XMLReader)
+
+        # Make variables for each control
+        $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
+
+        # Set items sources of controls
+        $query = "{0} Logo" -f $game.Name
+        $TextboxSearch.Text = $query
+        $ListBoxImages.ItemsSource = Get-GoogleResultsArray $query $true
+
+        # Set Window creation options
+        $windowCreationOptions = New-Object Playnite.SDK.WindowCreationOptions
+        $windowCreationOptions.ShowCloseButton = $true
+        $windowCreationOptions.ShowMaximizeButton = $False
+        $windowCreationOptions.ShowMinimizeButton = $False
+
+        # Create window
+        $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
+        $window.Content = $XMLForm
+        $window.Width = 830
+        $window.Height = 600
+        $window.Title = "Extra Metadata Tools - Google Logo Search"
+        $window.WindowStartupLocation = "CenterScreen"
+
+        # Handler for pressing "Search" button
+        $ButtonImageSearch.Add_Click(
+        {
+            $ListBoxImages.ItemsSource = Get-GoogleResultsArray $TextboxSearch.Text $CheckboxTransparant.IsChecked
+        })
+
+        # Handler for pressing "Download selected video" button
+        $ButtonDownloadLogo.Add_Click(
+        {
+            $logoUri = $ListBoxImages.SelectedValue.ImageUrl
+            $window.Close()
+            if (($logoUri) -and ($logoUri -ne ""))
+            {
+                $extraMetadataDirectory = Set-GameDirectory $game
+                $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
+                try {
+                    $webClient = New-Object System.Net.WebClient
+                    $webClient.DownloadFile($logoUri, $logoPath)
+                    $webClient.Dispose()
+                    $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools")
+                } catch {
+                    $errorMessage = $_.Exception.Message
+                    $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
+                    $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage")
+                }
+            }
+        })
+
+        # Show Window
+        $window.ShowDialog()
     }
 }
 
