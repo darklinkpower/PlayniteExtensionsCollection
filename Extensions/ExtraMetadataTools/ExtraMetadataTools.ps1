@@ -64,17 +64,12 @@ function GetGameMenuItems
     $menuItem12.FunctionName = "Set-SgdbApiKey"
     $menuItem12.MenuSection = "Extra Metadata tools|Other"
 
-    $menuItem13 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem13.Description =  "Update `"Logo missing`" tags of selected game(s)"
-    $menuItem13.FunctionName = "Add-TagMissingLogo"
-    $menuItem13.MenuSection = "Extra Metadata tools|Other"
-
     $menuItem14 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem14.Description =  "Download logo for selected game from Google"
     $menuItem14.FunctionName = "Get-GoogleLogo"
     $menuItem14.MenuSection = "Extra Metadata tools|Logos"
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem14, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13
+    return $menuItem, $menuItem2, $menuItem3, $menuItem14, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12
 }
 
 function OnApplicationStarted
@@ -903,38 +898,4 @@ function Get-SgdbLogo
         }
     }
     $PlayniteApi.Dialogs.ShowMessage("Downloaded $downloadedLogos logos from SteamGridDB.", "Extra Metadata tools")
-}
-
-function Add-TagMissingLogo
-{
-    $tag = $PlayniteApi.Database.Tags.Add("Logo missing")
-    $missingLogos = 0
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    foreach ($game in $gameDatabase) {
-        $extraMetadataDirectory = Set-GameDirectory $game
-        $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
-        if (!(Test-Path $logoPath))
-        {
-            if ($game.tagIds -notcontains $tag.Id)
-            {
-                if ($game.tagIds)
-                {
-                    $game.tagIds += $tag.Id
-                }
-                else
-                {
-                    # Fix in case game has null tagIds
-                    $game.tagIds = $tag.Id
-                }
-                $PlayniteApi.Database.Games.Update($game)
-                $missingLogos++
-            }
-        }
-        elseif ($game.tagIds -contains $tag.Id)
-        {
-            $game.tagIds.Remove($tag.Id)
-            $PlayniteApi.Database.Games.Update($game)
-        }
-    }
-    $PlayniteApi.Dialogs.ShowMessage("Done.`nMissing logo in $missingLogos game(s).", "Extra Metadata tools")
 }
