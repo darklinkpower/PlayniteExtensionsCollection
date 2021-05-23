@@ -55,9 +55,19 @@ function Invoke-ViewSettings
             <CheckBox Name="CBexecuteInFullscreenMode" Margin="0,20,0,0"/>
             <CheckBox Name="CBviewImageSplashscreenFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBviewVideoFullscreenMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,00,0"/>
+            <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
-            <CheckBox Name="CBuseBlackSplashscreen" Margin="0,10,00,0"/>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Name="TextBlockLogoPosition" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <ComboBox Name="ComboBoxLogoPosition" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
+                        HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="Value" Margin="10,0,0,0"/>
+            </DockPanel>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Name="TextBlockLogoVerticalAlignment" VerticalAlignment="Center"/>
+                <ComboBox Name="ComboBoxLogoVerticalAlignment" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
+                        HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="Value" Margin="10,0,0,0"/>
+            </DockPanel>
+            <CheckBox Name="CBuseBlackSplashscreen" Margin="0,20,0,0"/>
         </StackPanel>
     </DockPanel>
 </Grid>
@@ -98,8 +108,46 @@ function Invoke-ViewSettings
     $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
     $CBshowLogoInSplashscreen.IsChecked = $settings.showLogoInSplashscreen
 
-    $CBuseBlackSplashscreen.Content = "Use black splashscreen instead of the image splashscreen"
+    $CBuseBlackSplashscreen.Content = "Use black splashscreen instead of the splashscreen image"
     $CBuseBlackSplashscreen.IsChecked = $settings.useBlackSplashscreen
+
+    [System.Collections.ArrayList]$ComboBoxLogoPositionSource = @(
+        [PSCustomObject]@{
+            Name = "Center"
+            Value = "Center"
+        },
+        [PSCustomObject]@{
+            Name = "Left"
+            Value = "Left"
+        },
+        [PSCustomObject]@{
+            Name = "Right"
+            Value = "Right"
+        }
+    )
+
+    [System.Collections.ArrayList]$ComboBoxLogoVerticalAlignmentSource = @(
+        [PSCustomObject]@{
+            Name = "Top"
+            Value = "Top"
+        },
+        [PSCustomObject]@{
+            Name = "Center"
+            Value = "Center"
+        },
+        [PSCustomObject]@{
+            Name = "Bottom"
+            Value = "Bottom"
+        }
+    )
+
+    $TextBlockLogoPosition.Text = "Logo horizontal position:"
+    $ComboBoxLogoPosition.ItemsSource = $ComboBoxLogoPositionSource
+    $ComboBoxLogoPosition.SelectedValue = $settings.logoPosition
+
+    $TextBlockLogoVerticalAlignment.Text = "Logo vertical position:"
+    $ComboBoxLogoVerticalAlignment.ItemsSource = $ComboBoxLogoVerticalAlignmentSource
+    $ComboBoxLogoVerticalAlignment.SelectedValue = $settings.logoVerticalAlignment
 
     $ButtonSave.Content = "Save"
     $ButtonCancel.Content = "Cancel"
@@ -114,7 +162,7 @@ function Invoke-ViewSettings
     $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
     $window.Content = $XMLForm
     $window.Width = 800
-    $window.Height = 450
+    $window.Height = 550
     $window.Title = "Splash Screen - Settings"
     $window.WindowStartupLocation = "CenterScreen"
 
@@ -136,6 +184,8 @@ function Invoke-ViewSettings
         $settings.viewVideoFullscreenMode = $CBviewVideoFullscreenMode.IsChecked
         $settings.closeSplashScreenFullscreenMode = $CBcloseSplashScreenFullscreenMode.IsChecked
         $settings.showLogoInSplashscreen = $CBshowLogoInSplashscreen.IsChecked
+        $settings.logoPosition = $ComboBoxLogoPosition.SelectedValue
+        $settings.logoVerticalAlignment = $ComboBoxLogoVerticalAlignment.SelectedValue
         $settings.useBlackSplashscreen = $CBuseBlackSplashscreen.IsChecked
 
         Save-Settings $settings
@@ -171,6 +221,8 @@ function Get-Settings
         "viewVideoFullscreenMode" = $true
         "closeSplashScreenFullscreenMode" = $true
         "showLogoInSplashscreen" = $false
+        "logoPosition" = "Center"
+        "logoVerticalAlignment" = "Center"
         "useBlackSplashscreen" = $false
     }
     
@@ -563,7 +615,8 @@ function OnGameStarting
         {
             $logoPath = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
         }
-        @($splashImage, $logoPath, $closeSplashScreenAutomatic) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
+
+        @($splashImage, $logoPath, $closeSplashScreenAutomatic, $settings.logoPosition, $settings.logoVerticalAlignment) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
     }
     
     if ((($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.viewVideoDesktopMode -eq $true)) -or (($PlayniteApi.ApplicationInfo.Mode -eq "Fullscreen") -and ($settings.executeInFullscreenMode -eq $true)))
@@ -592,6 +645,8 @@ function Invoke-ImageSplashScreen
             $splashImage = $splashPaths[0]
             $logoPath = $splashPaths[1]
             $closeSplashScreenAutomatic = $splashPaths[2]
+            $logoPosition = $splashPaths[3]
+            $logoVerticalAlignment = $splashPaths[4]
             
             # Load assemblies
             Add-Type -AssemblyName PresentationCore
@@ -611,7 +666,7 @@ function Invoke-ImageSplashScreen
                     <Image Name="BackgroundImage" Stretch="UniformToFill"
                             HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3"/>
                     <Image Name="LogoImage" Source="" Stretch="Uniform"
-                        HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="1">
+                        HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="1" Margin="20">
                         <Image.Effect>
                             <DropShadowEffect Direction="0" Color="#FF000000" ShadowDepth="0" BlurRadius="40" />
                         </Image.Effect>
@@ -649,6 +704,13 @@ function Invoke-ImageSplashScreen
             if ([System.IO.File]::Exists($logoPath))
             {
                 $logoImage.Source = $logoPath
+                $logoImage.VerticalAlignment = $logoVerticalAlignment
+                switch ($logoPosition) {
+                    "Left" { $logoImage.SetValue([Windows.Controls.Grid]::ColumnProperty, 0) }
+                    "Center" { $logoImage.SetValue([Windows.Controls.Grid]::ColumnProperty, 1) }
+                    "Right" { $logoImage.SetValue([Windows.Controls.Grid]::ColumnProperty, 2) }
+                    Default {}
+                }
             }
 
             if ($closeSplashScreenAutomatic -eq $true)
