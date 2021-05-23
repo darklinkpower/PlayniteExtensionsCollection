@@ -80,8 +80,54 @@ function Invoke-ViewSettings
     # Make variables for each control
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
 
+    # Control IsEnabled events
+    $CBexecuteInDesktopMode.Add_Checked(
+    {
+        $CBviewImageSplashscreenDesktopMode.IsEnabled = $true
+        $CBviewVideoDesktopMode.IsEnabled = $true
+        $CBcloseSplashScreenDesktopMode.IsEnabled = $true
+    })
+
+    $CBexecuteInDesktopMode.Add_Unchecked(
+    {
+        $CBviewImageSplashscreenDesktopMode.IsEnabled = $false
+        $CBviewVideoDesktopMode.IsEnabled = $false
+        $CBcloseSplashScreenDesktopMode.IsEnabled = $false
+    })
+
+    $CBexecuteInFullscreenMode.Add_Checked(
+    {
+        $CBviewImageSplashscreenFullscreenMode.IsEnabled = $true
+        $CBviewVideoFullscreenMode.IsEnabled = $true
+        $CBcloseSplashScreenFullscreenMode.IsEnabled = $true
+    })
+
+    $CBexecuteInFullscreenMode.Add_Unchecked(
+    {
+        $CBviewImageSplashscreenFullscreenMode.IsEnabled = $false
+        $CBviewVideoFullscreenMode.IsEnabled = $false
+        $CBcloseSplashScreenFullscreenMode.IsEnabled = $false
+    })
+
+    $CBshowLogoInSplashscreen.Add_Checked(
+    {
+        $TextBlockLogoPosition.IsEnabled = $true
+        $ComboBoxLogoPosition.IsEnabled = $true
+        $TextBlockLogoVerticalAlignment.IsEnabled = $true
+        $ComboBoxLogoVerticalAlignment.IsEnabled = $true
+    })
+
+    $CBshowLogoInSplashscreen.Add_Unchecked(
+    {
+        $TextBlockLogoPosition.IsEnabled = $false
+        $ComboBoxLogoPosition.IsEnabled = $false
+        $TextBlockLogoVerticalAlignment.IsEnabled = $false
+        $ComboBoxLogoVerticalAlignment.IsEnabled = $false
+    })
+
     # Set items sources of controls
     $CBexecuteInDesktopMode.Content = "Execute extension in Desktop Mode"
+    $CBexecuteInDesktopMode.IsChecked = $true
     $CBexecuteInDesktopMode.IsChecked = $settings.executeInDesktopMode
 
     $CBviewImageSplashscreenDesktopMode.Content = "View splashscreen images in Desktop Mode"
@@ -94,6 +140,7 @@ function Invoke-ViewSettings
     $CBcloseSplashScreenDesktopMode.IsChecked = $settings.closeSplashScreenDesktopMode
 
     $CBexecuteInFullscreenMode.Content = "Execute extension in Fullscreen Mode"
+    $CBexecuteInFullscreenMode.IsChecked = $true
     $CBexecuteInFullscreenMode.IsChecked = $settings.executeInFullscreenMode
 
     $CBviewImageSplashscreenFullscreenMode.Content = "View splashscreen images in Fullscreen Mode"
@@ -106,6 +153,7 @@ function Invoke-ViewSettings
     $CBcloseSplashScreenFullscreenMode.IsChecked = $settings.closeSplashScreenFullscreenMode
 
     $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
+    $CBshowLogoInSplashscreen.IsChecked = $true
     $CBshowLogoInSplashscreen.IsChecked = $settings.showLogoInSplashscreen
 
     $CBuseBlackSplashscreen.Content = "Use black splashscreen instead of the splashscreen image"
