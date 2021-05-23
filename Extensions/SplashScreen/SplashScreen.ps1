@@ -49,9 +49,11 @@ function Invoke-ViewSettings
         </DockPanel>
         <StackPanel Grid.Row="0" DockPanel.Dock="Top">
             <CheckBox Name="CBexecuteInDesktopMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBviewVideoDesktopMode" Margin="0,10,00,0"/>
-            <CheckBox Name="CBcloseSplashScreenDesktopMode" Margin="0,10,00,0"/>
+            <CheckBox Name="CBviewImageSplashscreenDesktopMode" Margin="0,10,0,0"/>
+            <CheckBox Name="CBviewVideoDesktopMode" Margin="0,10,0,0"/>
+            <CheckBox Name="CBcloseSplashScreenDesktopMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBexecuteInFullscreenMode" Margin="0,20,0,0"/>
+            <CheckBox Name="CBviewImageSplashscreenFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBviewVideoFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,00,0"/>
             <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
@@ -72,6 +74,9 @@ function Invoke-ViewSettings
     $CBexecuteInDesktopMode.Content = "Execute extension in Desktop Mode"
     $CBexecuteInDesktopMode.IsChecked = $settings.executeInDesktopMode
 
+    $CBviewImageSplashscreenDesktopMode.Content = "View splashscreen images in Desktop Mode"
+    $CBviewImageSplashscreenDesktopMode.IsChecked = $settings.viewImageSplashscreenDesktopMode
+
     $CBviewVideoDesktopMode.Content = "View intro videos in Desktop Mode"
     $CBviewVideoDesktopMode.IsChecked = $settings.viewVideoDesktopMode
 
@@ -81,6 +86,9 @@ function Invoke-ViewSettings
     $CBexecuteInFullscreenMode.Content = "Execute extension in Fullscreen Mode"
     $CBexecuteInFullscreenMode.IsChecked = $settings.executeInFullscreenMode
 
+    $CBviewImageSplashscreenFullscreenMode.Content = "View splashscreen images in Fullscreen Mode"
+    $CBviewImageSplashscreenFullscreenMode.IsChecked = $settings.viewImageSplashscreenFullscreenMode
+    
     $CBviewVideoFullscreenMode.Content = "View intro videos in Fullscreen Mode"
     $CBviewVideoFullscreenMode.IsChecked = $settings.viewVideoFullscreenMode
 
@@ -120,9 +128,11 @@ function Invoke-ViewSettings
     $ButtonSave.Add_Click(
     {
         $settings.executeInDesktopMode = $CBexecuteInDesktopMode.IsChecked
+        $settings.viewImageSplashscreenDesktopMode = $CBviewImageSplashscreenDesktopMode.IsChecked
         $settings.viewVideoDesktopMode = $CBviewVideoDesktopMode.IsChecked
         $settings.closeSplashScreenDesktopMode = $CBcloseSplashScreenDesktopMode.IsChecked
         $settings.executeInFullscreenMode = $CBexecuteInFullscreenMode.IsChecked
+        $settings.viewImageSplashscreenFullscreenMode = $CBviewImageSplashscreenFullscreenMode.IsChecked
         $settings.viewVideoFullscreenMode = $CBviewVideoFullscreenMode.IsChecked
         $settings.closeSplashScreenFullscreenMode = $CBcloseSplashScreenFullscreenMode.IsChecked
         $settings.showLogoInSplashscreen = $CBshowLogoInSplashscreen.IsChecked
@@ -153,9 +163,11 @@ function Get-Settings
     # Set default settings values
     $settings = @{
         "executeInDesktopMode" = $false
+        "viewImageSplashscreenDesktopMode" = $true
         "viewVideoDesktopMode" = $false
         "closeSplashScreenDesktopMode" = $true
         "executeInFullscreenMode" = $true
+        "viewImageSplashscreenFullscreenMode" = $true
         "viewVideoFullscreenMode" = $true
         "closeSplashScreenFullscreenMode" = $true
         "showLogoInSplashscreen" = $false
@@ -511,8 +523,14 @@ function OnGameStarting
     }
 
     $__logger.Info(("Game: {0}" -f $game.Name))
+
     $skipSplashImage = $false
-    if ($game.features)
+    if ((($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.viewImageSplashscreenDesktopMode -eq $false)) -or (($PlayniteApi.ApplicationInfo.Mode -eq "Fullscreen") -and ($settings.viewImageSplashscreenFullscreenMode -eq $false)))
+    {
+        $skipSplashImage = $true
+        $__logger.Info(("Splashscreen image is disabled for {0} mode" -f $PlayniteApi.ApplicationInfo.Mode.ToString()))
+    }
+    elseif ($game.features)
     {
         foreach ($feature in $game.features) {
             if ($feature.Name -eq "[Splash Screen] Skip splash image")
@@ -644,7 +662,6 @@ function Invoke-ImageSplashScreen
                     if ((Get-Date) -ge $endTime)
                     {
                         $window.Close()
-                        return
                     }
                 })
             }
@@ -653,6 +670,7 @@ function Invoke-ImageSplashScreen
             $window.ShowDialog() | Out-Null
             $window = $null
             [System.GC]::Collect()
+            exit
         }
     }
 
@@ -689,7 +707,7 @@ function Invoke-VideoSplashScreen
     # Make variables for each control
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $window.FindName($_.Name) }
 
-    $VideoPlayer.Volume = 100;
+    $VideoPlayer.Volume = 100
     [uri]$videoSource = $splashVideo
     $VideoPlayer.Source = $VideoSource
     $VideoPlayer.Play()
