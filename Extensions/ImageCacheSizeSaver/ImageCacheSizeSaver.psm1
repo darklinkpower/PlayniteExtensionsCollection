@@ -78,27 +78,26 @@ function Invoke-ImageCacheSizeSaver
     }
 
     # Set arrays for processed games and image extensions
-    $PreviouslyProcessedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ImageCacheSizeSaverList.txt'
-    if (Test-Path $PreviouslyProcessedPath)
+    $previouslyProcessedPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'ImageCacheSizeSaverList.txt'
+    $processedImagesHashtable = @{}
+    if (Test-Path $previouslyProcessedPath)
     {
-        [System.Collections.Generic.List[string]]$PreviouslyProcessedList = @([System.IO.File]::ReadAllLines($PreviouslyProcessedPath))
         $__logger.Info("Image Cache Size Saver - Found existing processed list")
+        @([System.IO.File]::ReadAllLines($previouslyProcessedPath)) | ForEach-Object {
+            $processedImagesHashtable.add($_, "")
+        }
+    }
 
-    }
-    else
-    {
-        [System.Collections.Generic.List[string]]$PreviouslyProcessedList = @()
-        $__logger.Info("Image Cache Size Saver - Did not find existing processed list")
-    }
+    # Set Counters
+    $processedError = 0
+    $processedLessSize = 0
+    $processedImagesCount= 0
+
     $ImageExtensions= @(
         "*.jpg",
         "*.png",
         "*.gif"
     )
-
-    # Set Counters
-    $ProcessedError = 0
-    $ProcessedLessSize = 0
 
     # Set images to be processed and get current cache size
     $ImagesAll = Get-ChildItem -path $PathCacheDirectory -Include $ImageExtensions
@@ -106,10 +105,17 @@ function Invoke-ImageCacheSizeSaver
     [string]$ImagesSizeBefore = "{0:N2}" -f (($ImagesAll | Measure-Object -Sum Length).Sum / 1MB)
     $ImageTempPath = Join-Path -Path $env:temp -ChildPath 'ImageCacheSizeSaver.tmp'
     
-    foreach ($ImageSourcePath in $ImagesToProcess) {
+    foreach ($imageObject in $imagesObjectList)
+    {
+        $imageSourcePath = $imageObject.FullName
+        if ($null -ne $processedImagesHashtable[$imageObject.Name])
+        {
+            continue
+        }
+
         try {
             # Process Image with ImageMagick. Try to delete temp image for safety.
-            [System.IO.File]::Delete($ImageTempPath)
+            $processedImagesCount++
             & "$MagickExecutablePath" "$ImageSourcePath[0]" $ImageTempPath
 
             # Overwrite original image if it's bigger than processed image
@@ -125,18 +131,24 @@ function Invoke-ImageCacheSizeSaver
             }
 
             # Add to processed list
-            $ImageFileName = [System.IO.Path]::GetFileName($ImageSourcePath)
-            $PreviouslyProcessedList.Add($ImageFileName)
+            $processedImagesHashtable.add($imageObject.Name, "")
         } catch {
+            $processedImagesHashtable.add($imageObject.Name, "")
             $ErrorMessage = $_.Exception.Message
             $__logger.Error("Image Cache Size Saver - `"$ImageSourcePath`" image couldn't be processed - Error: $ErrorMessage")
             $ProcessedError++
+            [System.IO.File]::Delete($ImageTempPath)
         }
     }
     
     # Write new process list, calculate Image Cache Size after processing and show results
-    [System.IO.File]::WriteAllLines($PreviouslyProcessedPath, $PreviouslyProcessedList)
+    if ($ImagesToProcess -gt 0)
+    {
+        $processedImagesList = $processedImagesHashtable.GetEnumerator() | ForEach-Object { "$($_.Key)" }
+        [System.IO.File]::WriteAllLines($PreviouslyProcessedPath, $processedImagesList)
+    }
+
     [string]$ImagesSizeAfter = "{0:N2}" -f ((Get-ChildItem -path $PathCacheDirectory -Include $ImageExtensions | Measure-Object -Sum Length).Sum / 1MB)
-    $__logger.Info("Image Cache Size Saver - Image processing finished. Images Processed: $($ImagesToProcess.count). Images that had size reduced: $ProcessedLessSize. Errors: $ProcessedError. Image Cache Size Before: $ImagesSizeBefore MB. Image Cache Size After: $ImagesSizeAfter MB")
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $ImagesToProcess.count, $ProcessedLessSize, $ProcessedError, $ImagesSizeBefore, $ImagesSizeAfter), "Image Cache Size Saver")
+    $__logger.Info("Image Cache Size Saver - Image processing finished. Images Processed: $processedImagesCount. Images that had size reduced: $ProcessedLessSize. Errors: $ProcessedError. Image Cache Size Before: $ImagesSizeBefore MB. Image Cache Size After: $ImagesSizeAfter MB")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $processedImagesCount, $ProcessedLessSize, $ProcessedError, $ImagesSizeBefore, $ImagesSizeAfter), "Image Cache Size Saver")   
 }
