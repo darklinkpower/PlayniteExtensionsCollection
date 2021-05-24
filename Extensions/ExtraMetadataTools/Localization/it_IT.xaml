@@ -2,6 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCMenuItemInvokeExtraDirectoryDescription">Open extra metadata directory</sys:String>
     <sys:String x:Key="LOCMenuItemGetSteamLogosDescription">Download Steam logos for selected games</sys:String>
+    <sys:String x:Key="LOCMenuItemGetLogosFromSgdbDescription">Download logos for selected games from SteamGridDB</sys:String>
+    <sys:String x:Key="LOCMenuItemSetSgdbApiKeyDescription">Set SteamGridDB API Key</sys:String>
+    <sys:String x:Key="LOCMenuItemGetLogosFromGoogleDescription">Download logo for selected game from Google</sys:String>
     <sys:String x:Key="LOCMenuItemSelectLocalLogoDescription">Add logo from local file of selected game</sys:String>
     <sys:String x:Key="LOCMenuItemGetUrlLogoDescription">Add logo from url of selected game</sys:String>
     <sys:String x:Key="LOCMenuItemConvertIconsToLogosDescription">Convert icons to custom logos asset</sys:String>
