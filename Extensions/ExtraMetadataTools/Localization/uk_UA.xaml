@@ -1,0 +1,38 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCMenuItemInvokeExtraDirectoryDescription">Open extra metadata directory</sys:String>
+    <sys:String x:Key="LOCMenuItemGetSteamLogosDescription">Download Steam logos for selected games</sys:String>
+    <sys:String x:Key="LOCMenuItemGetLogosFromSgdbDescription">Download logos for selected games from SteamGridDB</sys:String>
+    <sys:String x:Key="LOCMenuItemSetSgdbApiKeyDescription">Set SteamGridDB API Key</sys:String>
+    <sys:String x:Key="LOCMenuItemGetLogosFromGoogleDescription">Download logo for selected game from Google</sys:String>
+    <sys:String x:Key="LOCMenuItemSelectLocalLogoDescription">Add logo from local file of selected game</sys:String>
+    <sys:String x:Key="LOCMenuItemGetUrlLogoDescription">Add logo from url of selected game</sys:String>
+    <sys:String x:Key="LOCMenuItemConvertIconsToLogosDescription">Convert icons to custom logos asset</sys:String>
+    <sys:String x:Key="LOCMenuItemRemoveLogosSelectedGamesDescription">Delete logos of selected games</sys:String>
+    <sys:String x:Key="LOCMenuItemInvokeThemesDirectoryDescription">Open themes directory</sys:String>
+    <sys:String x:Key="LOCMenuItemSetProfilePictureDescription">Set profile picture</sys:String>
+    <sys:String x:Key="LOCMenuItemSetBackgroundMusicDescription">Set background music</sys:String>
+    <sys:String x:Key="LOCMenuItemSetBackgroundVideoDescription">Set background video</sys:String>
+    <sys:String x:Key="LOCThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme &quot;{0}&quot; updated.
+Please restart Playnite to make changes take effect.</sys:String>
+    <sys:String x:Key="LOCGenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCGetSteamLogosResultsMessage">Downloaded logo of {0} game(s).</sys:String>
+    <sys:String x:Key="LOCMoreThanOneGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
+    <sys:String x:Key="LOCSelectLogoResultsMessage">Added logo file to &quot;{0}&quot;.</sys:String>
+    <sys:String x:Key="LOCEnterUrlMessage">Enter logo Url:</sys:String>
+    <sys:String x:Key="LOCConvertIconsChoiceMessage" xml:space="preserve">This function will convert the icons of the selected games to logos for use in compatible themes.
+This is intended to use in case you have used a theme that has used the icons asset as a replacement for logos.
+For safety it will only process icons that have the &quot;.png&quot; file extension.
+Changes are not reversible.
+
+Do you wish to continue?</sys:String>
+    <sys:String x:Key="LOCRemoveLogosChoiceMessage" xml:space="preserve">This function will delete the logos for the selected games.
+Changes are not reversible.
+
+Do you wish to continue?</sys:String>
+    <sys:String x:Key="LOCRemoveLogosResultsMessage">Removed logos of {0} game(s).</sys:String>
+    <sys:String x:Key="LOCImageConversionErrorMessage">Error converting image file to png. Error: &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSetProfilePictureResultsMessage">Profile Picture set.</sys:String>
+    <sys:String x:Key="LOCSetBackgroundMusicResultsMessage">Profile Picture set.</sys:String>
+    <sys:String x:Key="LOCSetBackgroundVideoResultsMessage">Profile Picture set.</sys:String>
+</ResourceDictionary>
