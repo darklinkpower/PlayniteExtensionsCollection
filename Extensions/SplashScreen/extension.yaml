@@ -1,0 +1,12 @@
+﻿Id: SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a
+Name: Splash Screen
+Author: darklinkpower
+Version: 1.3
+Module: SplashScreen.ps1
+Type: Script
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-681.html
