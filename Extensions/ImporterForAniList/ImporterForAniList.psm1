@@ -419,6 +419,10 @@ function global:Import-AniList
 
 function Import-Anime
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Ask if user wants to overwrite completion statuses
     $ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "Importer for Anilist", 4)
     if ($ReplaceCompletionStatus -ne "Yes")
@@ -439,6 +443,10 @@ function Import-Anime
 
 function Import-Manga
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Ask if user wants to overwrite completion statuses
     $ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "Importer for Anilist", 4)
     if ($ReplaceCompletionStatus -ne "Yes")
@@ -459,6 +467,10 @@ function Import-Manga
 
 function Import-All
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Ask if user wants to overwrite completion statuses
     $ReplaceCompletionStatus = $PlayniteApi.Dialogs.ShowMessage("Do you want to overwrite the completion status of already imported entries?", "Importer for Anilist", 4)
     if ($ReplaceCompletionStatus -ne "Yes")
@@ -570,6 +582,10 @@ function Add-SiteLinks()
 
 function Add-SiteLinksAll
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set gamedatabase
     $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "AniList"}
     
@@ -588,6 +604,10 @@ function Add-SiteLinksAll
 
 function Add-SiteLinksMissing
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set gamedatabase
     $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.source.name -eq "AniList"} | Where-Object {$_.Links.count -eq 0}
 
@@ -599,6 +619,10 @@ function Add-SiteLinksMissing
 
 function Add-SiteLinksSelected
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Set gamedatabase
     $GameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.source.name -eq "AniList"}
 
@@ -610,6 +634,10 @@ function Add-SiteLinksSelected
 
 function Set-Username
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Request Username
     $UsernameConfigPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'Username.txt'
     $UserNameInput = $PlayniteApi.Dialogs.SelectString("Enter AniList Username. Profile must be public:", "Importer for Anilist", "");
