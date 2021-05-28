@@ -33,6 +33,6 @@ Do you wish to continue?</sys:String>
     <sys:String x:Key="LOCRemoveLogosResultsMessage">Removed logos of {0} game(s).</sys:String>
     <sys:String x:Key="LOCImageConversionErrorMessage">Error converting image file to png. Error: &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCSetProfilePictureResultsMessage">Profile Picture set.</sys:String>
-    <sys:String x:Key="LOCSetBackgroundMusicResultsMessage">Profile Picture set.</sys:String>
-    <sys:String x:Key="LOCSetBackgroundVideoResultsMessage">Profile Picture set.</sys:String>
+    <sys:String x:Key="LOCSetBackgroundMusicResultsMessage">Background music set.</sys:String>
+    <sys:String x:Key="LOCSetBackgroundVideoResultsMessage">Background video set.</sys:String>
 </ResourceDictionary>
