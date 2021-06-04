@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="ImporterforAnilist.ImporterforAnilistSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid>
+        <StackPanel Margin="20">
+            <DockPanel>
+                <Button Content="Get access code" DockPanel.Dock="Right"
+                        Command="{Binding LoginCommand}" Margin="10,0,0,0"/>
+                <TextBox Name="AccountAccessCode" Text="{Binding AccountAccessCode}"/>
+            </DockPanel>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Text="Metadata properties prefix:" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <TextBox Name="PropertiesPrefix" Text="{Binding PropertiesPrefix}" Width="Auto" MinWidth="15" Margin="10,0,0,0"/>
+            </DockPanel>
+            <CheckBox Name="ImportAnimeLibrary" Margin="0,10,0,0" IsChecked="{Binding ImportAnimeLibrary}" Content="Import anime library during library update"/>
+            <CheckBox Name="ImportMangaLibrary" Margin="0,10,0,0" IsChecked="{Binding ImportMangaLibrary}" Content="Import manga library during library update"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

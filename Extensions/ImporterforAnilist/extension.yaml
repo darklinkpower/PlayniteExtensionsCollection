@@ -1,0 +1,12 @@
+﻿Id: ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3
+Name: Importer for Anilist
+Author: John Doe
+Version: 1.0
+Module: ImporterforAnilist.dll
+Type: GameLibrary
+Icon: icon.png
+Links:
+    - Name: Github
+      Url: https://github.com/darklinkpower/PlayniteScriptExtensions
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-395.html
