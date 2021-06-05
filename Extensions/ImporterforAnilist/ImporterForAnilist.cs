@@ -72,8 +72,11 @@ namespace ImporterforAnilist
 
             //Scores
             game.CommunityScore = entry.Media.AverageScore ?? null;
-            game.UserScore = entry.Score;
-
+            if (entry.Score != 0)
+            {
+                game.UserScore = entry.Score;
+            }
+            
             //Genres
             if (entry.Media.Genres != null)
             {
@@ -143,7 +146,6 @@ namespace ImporterforAnilist
             if (settings.UpdateProgressOnLibUpdate == true)
             {
                 //Version (Used for progress)
-                
                 var totalLength = 0;
                 var progressPercentageString = string.Empty;
                 var progressPercentageFormat = string.Empty;
