@@ -34,6 +34,22 @@ namespace ImporterforAnilist
             settings = new ImporterForAnilistSettings(this);
         }
 
+        public string intToThreeDigitsString(int number)
+        {
+            if (number < 10)
+            {
+                return string.Format("00{0}", number.ToString());
+            }
+            else if (number < 100)
+            {
+                return string.Format("0{0}", number.ToString());
+            }
+            else
+            {
+                return number.ToString();
+            }
+        }
+
         public GameInfo EntryToGameInfo(Entry entry, string propertiesPrefix)
         {
             var game = new GameInfo()
@@ -49,29 +65,28 @@ namespace ImporterforAnilist
                     IsHandledByPlugin = false
                 },
                 Platform = string.Format("AniList {0}", entry.Media.Type.ToString()),
-                BackgroundImage = entry.Media.BannerImage ?? string.Empty,
-                CommunityScore = entry.Media.AverageScore ?? null,
-                CoverImage = entry.Media.CoverImage.ExtraLarge ?? string.Empty,
-                Description = entry.Media.Description ?? string.Empty,
-                Links = new List<Link>()
-            };
-            game.Links.Add(new Link("AniList", entry.Media.SiteUrl.ToString()));
 
+                //Description
+                Description = entry.Media.Description ?? string.Empty,
+            };
+
+            //Scores
+            game.CommunityScore = entry.Media.AverageScore ?? null;
+            game.UserScore = entry.Score;
+
+            //Genres
             if (entry.Media.Genres != null)
             {
                 game.Genres = entry.Media.Genres.Select(a => string.Format("{0}{1}", propertiesPrefix, a)).ToList();
             }
 
+            //ReleaseDate
             if (entry.Media.StartDate.Year != null && entry.Media.StartDate.Month != null && entry.Media.StartDate.Day != null)
             {
                 game.ReleaseDate = new DateTime((int)entry.Media.StartDate.Year, (int)entry.Media.StartDate.Month, (int)entry.Media.StartDate.Day);
             }
 
-            if (entry.Media.IdMal != null)
-            {
-                game.Links.Add(new Link("MyAnimeList", string.Format("https://myanimelist.net/{0}/{1}/", entry.Media.Type.ToString().ToLower(), entry.Media.IdMal.ToString())));
-            }
-
+            //Developers and Publishers
             if (entry.Media.Type == TypeEnum.Manga)
             {
                 game.Developers = entry.Media.Staff.Nodes.
@@ -84,6 +99,8 @@ namespace ImporterforAnilist
                 game.Publishers = entry.Media.Studios.Nodes.Where(s => s.IsAnimationStudio == false).
                     Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
             }
+
+            //Tags
             var tags = entry.Media.Tags.
                 Where(s => s.IsMediaSpoiler == false).
                 Where(s => s.IsGeneralSpoiler == false).
@@ -91,10 +108,13 @@ namespace ImporterforAnilist
 
             if (entry.Media.Season != null)
             {
-                tags.Add(string.Format("Season: {0}", entry.Media.Season.ToString()));
+                tags.Add(string.Format("{0}Season: {1}", propertiesPrefix, entry.Media.Season.ToString()));
             }
+            tags.Add(string.Format("{0}Status: {1}", propertiesPrefix, entry.Media.Status.ToString()));
+            tags.Add(string.Format("{0}Format: {1}", propertiesPrefix, entry.Media.Format.ToString()));
             game.Tags = tags;
 
+            //CompletionStatus
             switch (entry.Status)
             {
                 case EntryStatus.Current:
@@ -116,11 +136,76 @@ namespace ImporterforAnilist
                     game.CompletionStatus = CompletionStatus.Playing;
                     break;
                 default:
+                    game.CompletionStatus = CompletionStatus.NotPlayed;
                     break;
             }
 
+            if (settings.UpdateProgressOnLibUpdate == true)
+            {
+                //Version (Used for progress)
+                
+                var totalLength = 0;
+                var progressPercentageString = string.Empty;
+                var progressPercentageFormat = string.Empty;
+                var totalLenghtString = "??";
+                if (entry.Media.Type == TypeEnum.Manga)
+                {
+                    if (entry.Media.Chapters != null)
+                    {
+                        totalLength = (int)entry.Media.Chapters;
+                        totalLenghtString = intToThreeDigitsString(totalLength);
+                    }
+                }
+                else if (entry.Media.Type == TypeEnum.Anime)
+                {
+                    if (entry.Media.Episodes != null)
+                    {
+                        totalLength = (int)entry.Media.Episodes;
+                        totalLenghtString = intToThreeDigitsString(totalLength);
+                    }
+                }
+                if (totalLength != 0)
+                {
+                    int percentage = Convert.ToInt32((entry.Progress * 100) / totalLength);
+                    progressPercentageFormat = string.Format("({0}%) ", intToThreeDigitsString(percentage));
+                }
+
+                game.Version = string.Format("{0}{1}/{2}", progressPercentageFormat, intToThreeDigitsString(entry.Progress), totalLenghtString);
+            }
+
             return game;
-    }
+        }
+
+        public void overrideGameProperties(GameInfo gameInfo)
+        {
+            var game = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).Where(g => g.GameId == gameInfo.GameId).FirstOrDefault();
+            if (game != null)
+            {
+                var updateGame = false;
+                if (settings.UpdateUserScoreOnLibUpdate == true && gameInfo.UserScore != 0 && gameInfo.UserScore != game.UserScore)
+                {
+                    game.UserScore = gameInfo.UserScore;
+                    updateGame = true;
+                }
+
+                if (settings.UpdateCompletionStatusOnLibUpdate == true && gameInfo.CompletionStatus != game.CompletionStatus)
+                {
+                    game.CompletionStatus = gameInfo.CompletionStatus;
+                    updateGame = true;
+                }
+
+                if (settings.UpdateProgressOnLibUpdate == true && gameInfo.Version != game.Version)
+                {
+                    game.Version = gameInfo.Version;
+                    updateGame = true;
+                }
+
+                if (updateGame == true)
+                {
+                    PlayniteApi.Database.Games.Update(game);
+                }
+            }
+        }
 
         public override IEnumerable<GameInfo> GetGames()
         {
@@ -131,7 +216,7 @@ namespace ImporterforAnilist
             {
                 playniteApi.Notifications.Add(new NotificationMessage(
                     dbImportMessageId,
-                    "Anilist access code has not been configured in settings",
+                    "AniList access code has not been configured in the library settings",
                     NotificationType.Error));
             }
             else
@@ -141,34 +226,41 @@ namespace ImporterforAnilist
                 {
                     propertiesPrefix = string.Format("{0} ", propertiesPrefix);
                 }
+
                 var accountApi = new AnilistAccountClient(playniteApi, settings.AccountAccessCode);
                 if (string.IsNullOrEmpty(accountApi.anilistUsername))
                 {
                     //Username could not be obtained
                     playniteApi.Notifications.Add(new NotificationMessage(
                         dbImportMessageId,
-                        "Could not obtain Anilist username. Verify that the configured access code is valid",
+                        "Could not obtain AniList username. Verify that the configured access code is valid",
                         NotificationType.Error));
                 }
                 else
                 {
+                    logger.Info($"AniList username: {accountApi.anilistUsername}");
                     if (settings.ImportAnimeLibrary == true)
                     {
                         var animeEntries = accountApi.GetEntries("ANIME");
-                        logger.Debug($"Found {animeEntries.Count} Anime items.");
+                        logger.Debug($"Found {animeEntries.Count} Anime items");
                         foreach (var entry in animeEntries)
                         {
-                            gamesList.Add(EntryToGameInfo(entry, propertiesPrefix));
+                            var gameInfo = EntryToGameInfo(entry, propertiesPrefix);
+                            gamesList.Add(gameInfo);
+                            overrideGameProperties(gameInfo);
+
                         }
                     }
 
                     if (settings.ImportMangaLibrary == true)
                     {
                         var mangaEntries = accountApi.GetEntries("MANGA");
-                        logger.Debug($"Found {mangaEntries.Count} Manga items.");
+                        logger.Debug($"Found {mangaEntries.Count} Manga items");
                         foreach (var entry in mangaEntries)
                         {
-                            gamesList.Add(EntryToGameInfo(entry, propertiesPrefix));
+                            var gameInfo = EntryToGameInfo(entry, propertiesPrefix);
+                            gamesList.Add(gameInfo);
+                            overrideGameProperties(gameInfo);
                         }
                     }
                 }

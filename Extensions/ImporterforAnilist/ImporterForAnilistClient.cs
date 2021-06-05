@@ -9,7 +9,7 @@ namespace ImporterforAnilist
 {
     public class ImporterForAnilistClient : LibraryClient
     {
-        public override bool IsInstalled => true;
+        public override bool IsInstalled => false;
 
         public override void Open()
         {

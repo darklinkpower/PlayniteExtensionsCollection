@@ -28,9 +28,9 @@ namespace ImporterforAnilist.Models
         public string Image { get; set; }
 
         [JsonProperty("malId")]
-        public int MalId { get; set; }
+        public int? MalId { get; set; }
 
         [JsonProperty("aniId")]
-        public int AniId { get; set; }
+        public int? AniId { get; set; }
     }
 }

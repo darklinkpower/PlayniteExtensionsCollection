@@ -14,9 +14,12 @@ namespace ImporterforAnilist
         private readonly ImporterForAnilist plugin;
 
         public string AccountAccessCode { get; set; } = string.Empty;
-        public string PropertiesPrefix { get; set; } = "[AL]";
+        public string PropertiesPrefix { get; set; } = string.Empty;
         public bool ImportAnimeLibrary { get; set; } = true;
         public bool ImportMangaLibrary { get; set; } = true;
+        public bool UpdateUserScoreOnLibUpdate { get; set; } = true;
+        public bool UpdateCompletionStatusOnLibUpdate { get; set; } = true;
+        public bool UpdateProgressOnLibUpdate { get; set; } = false;
 
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
@@ -44,6 +47,9 @@ namespace ImporterforAnilist
                 PropertiesPrefix = savedSettings.PropertiesPrefix;
                 ImportAnimeLibrary = savedSettings.ImportAnimeLibrary;
                 ImportMangaLibrary = savedSettings.ImportMangaLibrary;
+                UpdateUserScoreOnLibUpdate = savedSettings.UpdateUserScoreOnLibUpdate;
+                UpdateCompletionStatusOnLibUpdate = savedSettings.UpdateCompletionStatusOnLibUpdate;
+                UpdateProgressOnLibUpdate = savedSettings.UpdateProgressOnLibUpdate;
             }
         }
 

@@ -39,13 +39,13 @@ namespace ImporterforAnilist.Models
     public class Entry
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("progress")]
-        public long Progress { get; set; }
+        public int Progress { get; set; }
 
         [JsonProperty("score")]
-        public long Score { get; set; }
+        public int Score { get; set; }
 
         [JsonProperty("status")]
         public EntryStatus Status { get; set; }
@@ -78,7 +78,7 @@ namespace ImporterforAnilist.Models
         public int? Episodes { get; set; }
 
         [JsonProperty("chapters")]
-        public object Chapters { get; set; }
+        public int? Chapters { get; set; }
 
         [JsonProperty("averageScore")]
         public int? AverageScore { get; set; }

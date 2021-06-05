@@ -44,7 +44,7 @@ namespace ImporterforAnilist.Services
                             entries {
                                 id
                                 progress
-                                score
+                                score(format: POINT_100)
                                 status
                                 updatedAt
                                 media {
@@ -136,7 +136,7 @@ namespace ImporterforAnilist.Services
                 return string.Empty;
             }
             var anilistUser = JsonConvert.DeserializeObject<AnilistUser>(response);
-            return anilistUser.Data.Viewer.Name ?? string.Empty; ;
+            return anilistUser.Data.Viewer?.Name ?? string.Empty;
         }
 
         public List<Entry> GetEntries(string listType)
