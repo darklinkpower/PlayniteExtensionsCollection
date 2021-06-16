@@ -12,9 +12,8 @@ namespace GamePassCatalogBrowser
     {
         private readonly GamePassCatalogBrowser plugin;
 
-        public string Option1 { get; set; } = string.Empty;
-
-        public bool Option2 { get; set; } = false;
+        public bool UpdateCatalogOnLibraryUpdate { get; set; } = true;
+        public bool NotifyCatalogUpdates { get; set; } = true;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -37,8 +36,8 @@ namespace GamePassCatalogBrowser
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
-                Option1 = savedSettings.Option1;
-                Option2 = savedSettings.Option2;
+                UpdateCatalogOnLibraryUpdate = savedSettings.UpdateCatalogOnLibraryUpdate;
+                NotifyCatalogUpdates = savedSettings.NotifyCatalogUpdates;
             }
         }
 

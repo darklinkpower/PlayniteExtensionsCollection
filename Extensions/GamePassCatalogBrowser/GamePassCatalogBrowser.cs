@@ -38,7 +38,7 @@ namespace GamePassCatalogBrowser
                     Description = "Browse Game Pass Catalog",
                     MenuSection = "@Game Pass Catalog Browser",
                     Action = args => {
-                        MainMethod();
+                        InvokeViewWindow();
                     }
                 }
             };
@@ -46,7 +46,10 @@ namespace GamePassCatalogBrowser
 
         public override void OnLibraryUpdated()
         {
-            // Add code to be executed when library is updated.
+            if (settings.UpdateCatalogOnLibraryUpdate == true)
+            {
+                UpdateGamePassCatalog();
+            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -58,17 +61,22 @@ namespace GamePassCatalogBrowser
         {
             return new GamePassCatalogBrowserSettingsView();
         }
-
-        public void MainMethod()
+        public List<GamePassGame> UpdateGamePassCatalog()
         {
-
             var gamePassGamesList = new List<GamePassGame>();
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath());
+                var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates);
                 gamePassGamesList = service.GetGamePassGamesList();
                 service.Dispose();
             }, new GlobalProgressOptions("Updating Game Pass Catalog..."));
+
+            return gamePassGamesList;
+        }
+
+        public void InvokeViewWindow()
+        {
+            var gamePassGamesList = UpdateGamePassCatalog();
 
             if (gamePassGamesList.Count == 0)
             {
@@ -82,17 +90,12 @@ namespace GamePassCatalogBrowser
             });
 
             window.Title = "Game Pass Catalog Browser";
-
-            // Set content of a window. Can be loaded from xaml, loaded from UserControl or created from code behind
             window.Content = new CatalogBrowserView();
-            window.DataContext = new CatalogBrowserViewModel(gamePassGamesList);
-
-            // Set owner if you need to create modal dialog window
+            window.DataContext = new CatalogBrowserViewModel(gamePassGamesList, PlayniteApi);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.WindowState = WindowState.Maximized;
 
-            // Use Show or ShowDialog to show the window
             window.ShowDialog();
         }
     }

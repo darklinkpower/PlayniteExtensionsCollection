@@ -1,7 +1,7 @@
-﻿Id: XboxGamePassBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
-Name: Generic Plugin
-Author: John Doe
+﻿Id: GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
+Name: Game Pass Catalog Browser
+Author: darklinkpower
 Version: 1.0
-Module: XboxGamePassBrowser.dll
+Module: GamePassCatalogBrowser.dll
 Type: GenericPlugin
 Icon: icon.png

@@ -7,8 +7,8 @@
     <ProjectGuid>{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XboxGamePassBrowser</RootNamespace>
-    <AssemblyName>XboxGamePassBrowser</AssemblyName>
+    <RootNamespace>GamePassCatalogBrowser</RootNamespace>
+    <AssemblyName>GamePassCatalogBrowser</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -60,7 +60,7 @@
       <DependentUpon>CatalogBrowserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CatalogBrowserViewModel.cs" />
-    <Compile Include="GamePassCatalogBrowserService.cs" />
+    <Compile Include="Services\GamePassCatalogBrowserService.cs" />
     <Compile Include="GamePassCatalogBrowser.cs" />
     <Compile Include="GamePassCatalogBrowserSettings.cs" />
     <Compile Include="GamePassCatalogBrowserSettingsView.xaml.cs">
