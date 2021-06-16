@@ -1,0 +1,7 @@
+﻿Id: XboxGamePassBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: XboxGamePassBrowser.dll
+Type: GenericPlugin
+Icon: icon.png
