@@ -177,6 +177,7 @@ namespace GamePassCatalogBrowser.Services
             string[] linesToRemove =
             {
                 ": Windows Edition",
+                " - Windows Edition",
                 " Windows Edition",
                 " Windows 10",
                 "- PC",
