@@ -67,7 +67,7 @@ namespace GamePassCatalogBrowser
         public void RefreshLibraryItems()
         {
             LibraryGames = PlayniteApi.Database.Games.
-                Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary));
+                Where(g => g.PluginId.Equals(pluginId));
 
             var gamesOnLibrary = new HashSet<string>();
             foreach (Game game in LibraryGames)
@@ -114,6 +114,39 @@ namespace GamePassCatalogBrowser
                 sb.AppendLine("</p>");
             }
             return sb.ToString();
+        }
+
+        public Game GetLibraryGameFromGamePassGame(GamePassGame gamePassGame)
+        {
+            var game = PlayniteApi.Database.Games.
+                Where(g => g.PluginId.Equals(pluginId)).
+                Where(g => g.GameId.Equals(gamePassGame.GameId)).
+                Where(g => g.SourceId != null).
+                Where(g => g.SourceId.Equals(source.Id)).
+                FirstOrDefault();
+
+            return game;
+        }
+
+        public bool RemoveGamePassGame(GamePassGame gamePassGame)
+        {
+            var game = GetLibraryGameFromGamePassGame(gamePassGame);
+            if (game != null)
+            {
+                PlayniteApi.Database.Games.Remove(game.Id);
+                GameIdsInLibrary.Remove(game.GameId);
+                return true;
+            }
+            return false;
+        }
+
+        public void AddExpiredTag(GamePassGame gamePassGame)
+        {
+            var game = GetLibraryGameFromGamePassGame(gamePassGame);
+            if (game != null)
+            {
+                AddTagToGame(game, gameExpiredTag);
+            }
         }
 
         public int AddGamePassListToLibrary (List<GamePassGame> gamePassGamesList)

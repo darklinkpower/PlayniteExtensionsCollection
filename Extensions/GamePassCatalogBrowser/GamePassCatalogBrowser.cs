@@ -51,10 +51,10 @@ namespace GamePassCatalogBrowser
                 },
                 new MainMenuItem
                 {
-                    Description = "Refresh Cache",
+                    Description = "Reset Cache",
                     MenuSection = "@Game Pass Catalog Browser",
                     Action = args => {
-                        RefreshCache();
+                        ResetCache();
                     }
                 }
             };
@@ -78,7 +78,7 @@ namespace GamePassCatalogBrowser
             return new GamePassCatalogBrowserSettingsView();
         }
 
-        public void RefreshCache()
+        public void ResetCache()
         {
             UpdateGamePassCatalog(true);
             PlayniteApi.Dialogs.ShowMessage("Game Pass catalog refreshed", "Game Pass Catalog Browser");
@@ -86,14 +86,14 @@ namespace GamePassCatalogBrowser
 
         public void AddAllGamePassCatalog()
         {
-            var choice = PlayniteApi.Dialogs.ShowMessage("Are you sure you want to add all the Game Pass catalog to your library?\n", "Game Catalog Importer", MessageBoxButton.YesNo);
+            var choice = PlayniteApi.Dialogs.ShowMessage("Are you sure you want to add all the Game Pass catalog to your library?", "Game Catalog Importer", MessageBoxButton.YesNo);
             if (choice == MessageBoxResult.Yes)
             {
                 
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var gamePassGamesList = new List<GamePassGame>();
-                    var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates);
+                    var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates,  settings.AddExpiredTagToGames, settings.AddNewGames, settings.RemoveExpiredGames);
                     gamePassGamesList = service.GetGamePassGamesList();
                     if (gamePassGamesList.Count == 0)
                     {
@@ -114,7 +114,7 @@ namespace GamePassCatalogBrowser
             var gamePassGamesList = new List<GamePassGame>();
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates);
+                var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates, settings.AddExpiredTagToGames, settings.AddNewGames, settings.RemoveExpiredGames);
                 if (resetCache == true)
                 {
                     service.DeleteCache();

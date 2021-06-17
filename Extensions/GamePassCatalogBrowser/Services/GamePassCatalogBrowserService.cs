@@ -27,6 +27,9 @@ namespace GamePassCatalogBrowser.Services
         private readonly string languageCode = string.Empty;
         private readonly string countryCode = string.Empty;
         private readonly bool notifyCatalogUpdates;
+        private readonly bool addExpiredTagToGames;
+        private readonly bool addNewGames;
+        private readonly bool removeExpiredGames;
         public XboxLibraryHelper xboxLibraryHelper;
 
         public void Dispose()
@@ -72,19 +75,24 @@ namespace GamePassCatalogBrowser.Services
             ClearFolder(cachePath);
         }
 
-        public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, string _languageCode = "en-us", string _countryCode = "US")
+        public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, bool _addExpiredTagToGames, bool _addNewGames, bool _removeExpiredGames, string _languageCode = "en-us", string _countryCode = "US")
         {
             playniteApi = api;
+            userDataPath = dataPath;
+            notifyCatalogUpdates = _notifyCatalogUpdates;
+            addExpiredTagToGames = _addExpiredTagToGames;
+            addNewGames = _addNewGames;
+            removeExpiredGames = _removeExpiredGames;
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            userDataPath = dataPath;
+            
             cachePath = Path.Combine(userDataPath, "cache");
             imageCachePath = Path.Combine(cachePath, "images");
             gameDataCachePath = Path.Combine(cachePath, "gamesCache.json");
             languageCode = _languageCode;
             countryCode = _countryCode;
             gamepassCatalogApiUrl = string.Format(gamepassCatalogApiBaseUrl, languageCode, countryCode);
-            notifyCatalogUpdates = _notifyCatalogUpdates;
+            
             xboxLibraryHelper = new XboxLibraryHelper(api);
         }
 
@@ -134,10 +142,6 @@ namespace GamePassCatalogBrowser.Services
             catch (Exception e)
             {
                 logger.Error(e, $"Error during file download, url {requestUri}");
-                playniteApi.Notifications.Add(new NotificationMessage(
-                    "Error",
-                    $"Game Pass Browser. Error downloading Game Pass catalog: {e.Message}",
-                    NotificationType.Info));
             }
         }
 
@@ -249,15 +253,6 @@ namespace GamePassCatalogBrowser.Services
                 {
                     if (gamePassCatalog.Any(x => x.Id == game.ProductId) == false)
                     {
-                        // Notify user that game has been removed
-                        if (notifyCatalogUpdates == true)
-                        {
-                            playniteApi.Notifications.Add(new NotificationMessage(
-                                Guid.NewGuid().ToString(),
-                                $"{game.Name} has been removed from the Game Pass catalog",
-                                NotificationType.Info));
-                        }
-
                         string[] gameFilesPaths =
                         {
                             Path.Combine(imageCachePath, game.BackgroundImage),
@@ -269,6 +264,33 @@ namespace GamePassCatalogBrowser.Services
                         foreach (string filePath in gameFilesPaths)
                         {
                             DeleteFileFromPath(filePath);
+                        }
+
+                        var gameRemoved = false;
+                        if (removeExpiredGames == true)
+                        {
+                            gameRemoved = xboxLibraryHelper.RemoveGamePassGame(game);
+                            if (gameRemoved == true)
+                            {
+                                // Notify user that game has been removed from the library
+                                playniteApi.Notifications.Add(new NotificationMessage(
+                                Guid.NewGuid().ToString(),
+                                    $"{game.Name} has been removed from the Game Pass catalog and Playnite library",
+                                    NotificationType.Info));
+                            }
+                        }
+                        else if (addExpiredTagToGames == true)
+                        {
+                            xboxLibraryHelper.AddExpiredTag(game);
+                        }
+
+                        if (notifyCatalogUpdates == true && gameRemoved == false)
+                        {
+                            // Notify user that game has been removed
+                            playniteApi.Notifications.Add(new NotificationMessage(
+                            Guid.NewGuid().ToString(),
+                                $"{game.Name} has been removed from the Game Pass catalog",
+                                NotificationType.Info));
                         }
 
                         gamePassGamesList.Remove(game);
