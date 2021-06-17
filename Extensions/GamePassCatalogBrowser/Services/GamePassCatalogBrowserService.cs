@@ -366,9 +366,23 @@ namespace GamePassCatalogBrowser.Services
                             }
 
                             gamePassGamesList.Add(gamePassGame);
+                            var tempGame = DownloadGamePassGameCache(gamePassGame);
+
+                            var gameAdded = false;
+                            if (addNewGames == true)
+                            {
+                                gameAdded = xboxLibraryHelper.AddGameToLibrary(tempGame, false);
+                                if (gameAdded == true)
+                                {
+                                    playniteApi.Notifications.Add(new NotificationMessage(
+                                        Guid.NewGuid().ToString(),
+                                        $"{gamePassGame.Name} has been added to the Game Pass catalog and Playnite library",
+                                        NotificationType.Info));
+                                }
+                            }
 
                             // Notify user that game has been added
-                            if (notifyCatalogUpdates == true)
+                            if (notifyCatalogUpdates == true && gameAdded == false)
                             {
                                 playniteApi.Notifications.Add(new NotificationMessage(
                                     Guid.NewGuid().ToString(),
@@ -390,32 +404,35 @@ namespace GamePassCatalogBrowser.Services
                 }
             }
 
-            return BuildCacheAndSetFullPaths(gamePassGamesList);
+            return SetGamePassListFullPaths(gamePassGamesList);
         }
 
-        public List<GamePassGame> BuildCacheAndSetFullPaths(List<GamePassGame> cacheGamesList)
+        public GamePassGame DownloadGamePassGameCache(GamePassGame game)
+        {
+            game.CoverImageLowRes = Path.Combine(imageCachePath, game.CoverImageLowRes);
+            DownloadFile(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl), game.CoverImageLowRes).GetAwaiter().GetResult();
+
+            game.CoverImage = Path.Combine(imageCachePath, game.CoverImage);
+            DownloadFile(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl), game.CoverImage).GetAwaiter().GetResult();
+
+            if (game.Icon != null)
+            {
+                game.Icon = Path.Combine(imageCachePath, game.Icon);
+                DownloadFile(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl), game.Icon).GetAwaiter().GetResult();
+            }
+
+            return game;
+        }
+
+        public List<GamePassGame> SetGamePassListFullPaths(List<GamePassGame> cacheGamesList)
         {
             foreach (GamePassGame game in cacheGamesList)
             {
                 game.CoverImageLowRes = Path.Combine(imageCachePath, game.CoverImageLowRes);
-                if (!File.Exists(game.CoverImageLowRes))
-                {
-                    DownloadFile(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl), game.CoverImageLowRes).GetAwaiter().GetResult();
-                }
-
                 game.CoverImage = Path.Combine(imageCachePath, game.CoverImage);
-                if (!File.Exists(game.CoverImage))
-                {
-                    DownloadFile(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl), game.CoverImage).GetAwaiter().GetResult();
-                }
-
                 if (game.Icon != null)
                 {
                     game.Icon = Path.Combine(imageCachePath, game.Icon);
-                    if (!File.Exists(game.Icon))
-                    {
-                        DownloadFile(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl), game.Icon).GetAwaiter().GetResult();
-                    }
                 }
             }
 

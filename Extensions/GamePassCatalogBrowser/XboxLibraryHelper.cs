@@ -39,7 +39,7 @@ namespace GamePassCatalogBrowser
             RefreshLibraryItems();
 
             pcPlatform = PlayniteApi.Database.Platforms.Add("PC");
-            gameExpiredTag = PlayniteApi.Database.Tags.Add("Game Pass game expired");
+            gameExpiredTag = PlayniteApi.Database.Tags.Add("Game Pass (Formerly on)");
             gameAddedTag = PlayniteApi.Database.Tags.Add("Game Pass");
             source = PlayniteApi.Database.Sources.Add("Xbox Game Pass");
         }
@@ -128,6 +128,16 @@ namespace GamePassCatalogBrowser
             return game;
         }
 
+        public Game GetLibraryGameFromGamePassGameAnySource(GamePassGame gamePassGame)
+        {
+            var game = PlayniteApi.Database.Games.
+                Where(g => g.PluginId.Equals(pluginId)).
+                Where(g => g.GameId.Equals(gamePassGame.GameId)).
+                FirstOrDefault();
+
+            return game;
+        }
+
         public bool RemoveGamePassGame(GamePassGame gamePassGame)
         {
             var game = GetLibraryGameFromGamePassGame(gamePassGame);
@@ -184,6 +194,12 @@ namespace GamePassCatalogBrowser
         public bool AddGameToLibrary(GamePassGame game, bool showGameAddDialog)
         {
             if (game == null)
+            {
+                return false;
+            }
+
+            var existingGame = GetLibraryGameFromGamePassGameAnySource(game);
+            if (existingGame != null)
             {
                 return false;
             }

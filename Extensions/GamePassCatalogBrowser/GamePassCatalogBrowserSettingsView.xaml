@@ -10,6 +10,6 @@
         <CheckBox IsChecked="{Binding NotifyCatalogUpdates}" Content="Notify of Game Pass catalog updates" Margin="0,10,0,0"/>
         <CheckBox IsChecked="{Binding AddExpiredTagToGames}" Content="Add expired tag to games removed from Game Pass" Margin="0,10,0,0"/>
         <CheckBox IsChecked="{Binding AddNewGames}" Content="Add newly added games when updating the Game Pass catalog to the Playnite library" Margin="0,10,0,0"/>
-        <CheckBox IsChecked="{Binding RemoveExpiredGames}" Content="Remove removed games when updating the Game Pass from the Playnite library" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding RemoveExpiredGames}" Content="Remove removed games when updating the Game Pass catalog from the Playnite library" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>
