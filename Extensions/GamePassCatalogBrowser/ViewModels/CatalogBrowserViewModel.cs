@@ -65,8 +65,7 @@ namespace GamePassCatalogBrowser.ViewModels
             {
                 return false;
             }
-            if (PlayniteApi.Database.Games.Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary)).
-                Any(g => g.GameId.Equals(game.GameId)))
+            if (GamesOnLibrary.Contains(game.GameId))
             {
                 return false;
             }
