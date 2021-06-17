@@ -33,6 +33,43 @@ namespace GamePassCatalogBrowser.Services
             client.Dispose();
         }
 
+        private void ClearFolder(string folderPath)
+        {
+            DirectoryInfo dir = new DirectoryInfo(folderPath);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                file.Delete();
+            }
+
+            foreach (DirectoryInfo directory in dir.GetDirectories())
+            {
+                ClearFolder(directory.FullName);
+                directory.Delete();
+            }
+        }
+
+        private void DeleteFileFromPath (string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                var fileInfo = new FileInfo(filePath);
+                try
+                {
+                    fileInfo.Delete();
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error deleting file {filePath}");
+                }
+            }
+        }
+
+        public void DeleteCache()
+        {
+            ClearFolder(cachePath);
+        }
+
         public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, string _languageCode = "en-us", string _countryCode = "US")
         {
             playniteApi = api;
@@ -46,9 +83,6 @@ namespace GamePassCatalogBrowser.Services
             countryCode = _countryCode;
             gamepassCatalogApiUrl = string.Format(gamepassCatalogApiBaseUrl, languageCode, countryCode);
             notifyCatalogUpdates = _notifyCatalogUpdates;
-
-            // Try to create cache directory in case it doesn't exist
-            Directory.CreateDirectory(imageCachePath);
         }
 
         public List<GamePassCatalogProduct> GetGamepassCatalog()
@@ -188,6 +222,9 @@ namespace GamePassCatalogBrowser.Services
 
         public List<GamePassGame> GetGamePassGamesList()
         {
+            // Try to create cache directory in case it doesn't exist
+            Directory.CreateDirectory(imageCachePath);
+
             List<GamePassGame> gamePassGamesList = new List<GamePassGame>();
             var gamePassCatalog = GetGamepassCatalog();
 
@@ -228,11 +265,7 @@ namespace GamePassCatalogBrowser.Services
 
                         foreach (string filePath in gameFilesPaths)
                         {
-                            try
-                            {
-                                File.Delete(filePath);
-                            }
-                            catch {}
+                            DeleteFileFromPath(filePath);
                         }
 
                         gamePassGamesList.Remove(game);

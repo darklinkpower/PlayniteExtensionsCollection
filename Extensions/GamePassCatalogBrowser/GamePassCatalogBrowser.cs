@@ -40,6 +40,14 @@ namespace GamePassCatalogBrowser
                     Action = args => {
                         InvokeViewWindow();
                     }
+                },
+                new MainMenuItem
+                {
+                    Description = "Refresh Cache",
+                    MenuSection = "@Game Pass Catalog Browser",
+                    Action = args => {
+                        RefreshCache();
+                    }
                 }
             };
         }
@@ -48,7 +56,7 @@ namespace GamePassCatalogBrowser
         {
             if (settings.UpdateCatalogOnLibraryUpdate == true)
             {
-                UpdateGamePassCatalog();
+                UpdateGamePassCatalog(false);
             }
         }
 
@@ -61,12 +69,23 @@ namespace GamePassCatalogBrowser
         {
             return new GamePassCatalogBrowserSettingsView();
         }
-        public List<GamePassGame> UpdateGamePassCatalog()
+
+        public void RefreshCache()
+        {
+            UpdateGamePassCatalog(true);
+            PlayniteApi.Dialogs.ShowMessage("Game Pass catalog refreshed", "Game Pass Catalog Browser");
+        }
+
+        public List<GamePassGame> UpdateGamePassCatalog(bool resetCache)
         {
             var gamePassGamesList = new List<GamePassGame>();
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates);
+                if (resetCache == true)
+                {
+                    service.DeleteCache();
+                }
                 gamePassGamesList = service.GetGamePassGamesList();
                 service.Dispose();
             }, new GlobalProgressOptions("Updating Game Pass Catalog..."));
@@ -76,7 +95,7 @@ namespace GamePassCatalogBrowser
 
         public void InvokeViewWindow()
         {
-            var gamePassGamesList = UpdateGamePassCatalog();
+            var gamePassGamesList = UpdateGamePassCatalog(false);
 
             if (gamePassGamesList.Count == 0)
             {
