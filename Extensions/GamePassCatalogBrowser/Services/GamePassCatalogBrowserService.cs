@@ -328,6 +328,7 @@ namespace GamePassCatalogBrowser.Services
                 }
             }
 
+            cacheGamesList.Sort((x, y) => x.Name.CompareTo(y.Name));
             return cacheGamesList;
         }
     }
