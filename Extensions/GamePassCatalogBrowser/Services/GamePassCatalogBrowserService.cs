@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using GamePassCatalogBrowser.Models;
+using System.Text.RegularExpressions;
 
 namespace GamePassCatalogBrowser.Services
 {
@@ -103,6 +104,17 @@ namespace GamePassCatalogBrowser.Services
             }
         }
 
+        private static string RegexRemoveOnEnd(string input, string search)
+        {
+            string result = Regex.Replace(
+                input,
+                string.Format("{0}$", Regex.Escape(search)),
+                "",
+                RegexOptions.IgnoreCase
+            );
+            return result;
+        }
+
         public string NormalizeGameName(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -110,14 +122,35 @@ namespace GamePassCatalogBrowser.Services
                 return str;
             }
 
-            return str.Replace("(PC)", "").
+            str = str.Replace("(PC)", "").
                 Replace("(Windows)", "").
+                Replace("(Windows 10)", "").
                 Replace("for Windows 10", "").
                 Replace("- Windows 10", "").
+                Replace("Windows 10", "").
                 Replace(@"®", "").
                 Replace(@"™", "").
                 Replace(@"©", "").
                 Trim();
+
+            string[] linesToRemove =
+            {
+                ": Windows Edition",
+                " Windows Edition",
+                " Windows 10",
+                "- PC",
+                " PC",
+                " Windows",
+                " Win10",
+                " Win 10"
+            };
+
+            foreach (string lineToRemove in linesToRemove)
+            {
+                str = RegexRemoveOnEnd(str, lineToRemove);
+            }
+
+            return str.Trim();
         }
 
         public string[] companiesStringToArray(string companiesString)
