@@ -12,6 +12,7 @@ using Playnite.SDK.Models;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Net;
+using System.Collections;
 
 namespace GamePassCatalogBrowser.ViewModels
 {
@@ -25,10 +26,32 @@ namespace GamePassCatalogBrowser.ViewModels
         private bool _storeButtonEnabled;
         private bool _addButtonEnabled;
 
+        private bool showGamesOnLibrary = true;
+        public bool ShowGamesOnLibrary
+        {
+            get { return showGamesOnLibrary; }
+            set
+            {
+                showGamesOnLibrary = value;
+                _gamePassGamesView.Refresh();
+            }
+        }
+
+        private HashSet<string> gamesOnLibrary;
+        public HashSet<string> GamesOnLibrary
+        {
+            get { return gamesOnLibrary; }
+            set
+            {
+                gamesOnLibrary = value;
+                _gamePassGamesView.Refresh();
+            }
+        }
+
         private GamePassGame selectedGamePassGame;
         public GamePassGame SelectedGamePassGame
         {
-            get => selectedGamePassGame;
+            get { return selectedGamePassGame; }
             set
             {
                 selectedGamePassGame = value;
@@ -115,6 +138,17 @@ namespace GamePassCatalogBrowser.ViewModels
 
             _gamePassGamesView.CurrentChanged += GamePassGameSelectionChanged;
 
+            var gamesOnLibrary = new HashSet<string>();
+            var xboxLibraryGames = PlayniteApi.Database.Games.
+                Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary));
+            
+            foreach (Game game in xboxLibraryGames)
+            {
+                gamesOnLibrary.Add(game.GameId);
+            }
+
+            GamesOnLibrary = gamesOnLibrary;
+
             void GamePassGameSelectionChanged(object sender, EventArgs e)
             {
                 if (sender == null)
@@ -126,7 +160,7 @@ namespace GamePassCatalogBrowser.ViewModels
             _gamePassGamesView.Filter = GamePassGameFilter;
 
 
-            bool isGameInCollection (GamePassGame game)
+            bool IsGameInCollection (GamePassGame game)
             {
                 if (_filterString == "All")
                 {
@@ -142,22 +176,39 @@ namespace GamePassCatalogBrowser.ViewModels
                 }
             }
 
-            bool GamePassGameFilter(object item)
+            bool GameContainsString (GamePassGame game)
             {
-                GamePassGame game = item as GamePassGame;
-
                 if (string.IsNullOrEmpty(_searchString))
                 {
-                    return isGameInCollection(game);
+                    return IsGameInCollection(game);
                 }
                 else if (game.Name.ToLower().Contains(_searchString.ToLower()))
                 {
-                    return isGameInCollection(game);
+                    return IsGameInCollection(game);
                 }
                 else
                 {
                     return false;
                 }
+            }
+
+            bool GamePassGameFilter(object item)
+            {
+                GamePassGame game = item as GamePassGame;
+
+                if (showGamesOnLibrary == false)
+                {
+                    if (gamesOnLibrary.Contains(game.GameId))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return GameContainsString(game);
+                    } 
+                }
+
+                return GameContainsString(game);
             }
 
             IList<string> collections = GetCollectionsList(list);
@@ -298,7 +349,9 @@ namespace GamePassCatalogBrowser.ViewModels
                 }
 
                 PlayniteApi.Database.Games.Update(newGame);
+                gamesOnLibrary.Add(game.GameId);
                 AddButtonEnabled = false;
+                Collections.Refresh();
                 PlayniteApi.Dialogs.ShowMessage($"{game.Name} added to the Playnite library");
             }
         }
