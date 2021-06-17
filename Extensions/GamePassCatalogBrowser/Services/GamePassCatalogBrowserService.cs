@@ -27,10 +27,12 @@ namespace GamePassCatalogBrowser.Services
         private readonly string languageCode = string.Empty;
         private readonly string countryCode = string.Empty;
         private readonly bool notifyCatalogUpdates;
+        public XboxLibraryHelper xboxLibraryHelper;
 
         public void Dispose()
         {
             client.Dispose();
+            xboxLibraryHelper.Dispose();
         }
 
         private void ClearFolder(string folderPath)
@@ -83,6 +85,7 @@ namespace GamePassCatalogBrowser.Services
             countryCode = _countryCode;
             gamepassCatalogApiUrl = string.Format(gamepassCatalogApiBaseUrl, languageCode, countryCode);
             notifyCatalogUpdates = _notifyCatalogUpdates;
+            xboxLibraryHelper = new XboxLibraryHelper(api);
         }
 
         public List<GamePassCatalogProduct> GetGamepassCatalog()

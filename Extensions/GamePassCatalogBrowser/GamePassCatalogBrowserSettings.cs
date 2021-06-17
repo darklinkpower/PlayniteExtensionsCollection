@@ -14,6 +14,10 @@ namespace GamePassCatalogBrowser
 
         public bool UpdateCatalogOnLibraryUpdate { get; set; } = true;
         public bool NotifyCatalogUpdates { get; set; } = true;
+        public bool AddExpiredTagToGames { get; set; } = true;
+        public bool AddNewGames { get; set; } = false;
+        public bool RemoveExpiredGames { get; set; } = false;
+
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
@@ -38,6 +42,9 @@ namespace GamePassCatalogBrowser
             {
                 UpdateCatalogOnLibraryUpdate = savedSettings.UpdateCatalogOnLibraryUpdate;
                 NotifyCatalogUpdates = savedSettings.NotifyCatalogUpdates;
+                AddExpiredTagToGames = savedSettings.AddExpiredTagToGames;
+                AddNewGames = savedSettings.AddNewGames;
+                RemoveExpiredGames = savedSettings.RemoveExpiredGames;
             }
         }
 

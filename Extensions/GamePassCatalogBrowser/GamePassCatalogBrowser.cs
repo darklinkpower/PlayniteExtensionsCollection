@@ -43,6 +43,14 @@ namespace GamePassCatalogBrowser
                 },
                 new MainMenuItem
                 {
+                    Description = "Add all Catalog to the Playnite library",
+                    MenuSection = "@Game Pass Catalog Browser",
+                    Action = args => {
+                        AddAllGamePassCatalog();
+                    }
+                },
+                new MainMenuItem
+                {
                     Description = "Refresh Cache",
                     MenuSection = "@Game Pass Catalog Browser",
                     Action = args => {
@@ -74,6 +82,31 @@ namespace GamePassCatalogBrowser
         {
             UpdateGamePassCatalog(true);
             PlayniteApi.Dialogs.ShowMessage("Game Pass catalog refreshed", "Game Pass Catalog Browser");
+        }
+
+        public void AddAllGamePassCatalog()
+        {
+            var choice = PlayniteApi.Dialogs.ShowMessage("Are you sure you want to add all the Game Pass catalog to your library?\n", "Game Catalog Importer", MessageBoxButton.YesNo);
+            if (choice == MessageBoxResult.Yes)
+            {
+                
+                PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                {
+                    var gamePassGamesList = new List<GamePassGame>();
+                    var service = new GamePassCatalogBrowserService(PlayniteApi, GetPluginUserDataPath(), settings.NotifyCatalogUpdates);
+                    gamePassGamesList = service.GetGamePassGamesList();
+                    if (gamePassGamesList.Count == 0)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage("Could not obtain Game Pass catalog", "Game Pass Catalog Browser");
+                    }
+                    else
+                    {
+                        var addedGames = service.xboxLibraryHelper.AddGamePassListToLibrary(gamePassGamesList);
+                        PlayniteApi.Dialogs.ShowMessage($"Added {addedGames} new games to the Playnite library", "Game Pass Catalog Browser");
+                    }
+                    service.Dispose();
+                }, new GlobalProgressOptions("Updating Game Pass Catalog and adding games..."));
+            }
         }
 
         public List<GamePassGame> UpdateGamePassCatalog(bool resetCache)

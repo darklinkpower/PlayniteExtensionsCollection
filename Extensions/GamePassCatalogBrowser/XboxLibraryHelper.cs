@@ -22,6 +22,7 @@ namespace GamePassCatalogBrowser
         private Platform pcPlatform;
         private Tag gameExpiredTag;
         private Tag gameAddedTag;
+        private GameSource source;
         public IEnumerable<Game> LibraryGames;
         public HashSet<string> GameIdsInLibrary;
 
@@ -40,6 +41,7 @@ namespace GamePassCatalogBrowser
             pcPlatform = PlayniteApi.Database.Platforms.Add("PC");
             gameExpiredTag = PlayniteApi.Database.Tags.Add("Game Pass game expired");
             gameAddedTag = PlayniteApi.Database.Tags.Add("Game Pass");
+            source = PlayniteApi.Database.Sources.Add("Xbox Game Pass");
         }
 
         public async Task DownloadFile(string requestUri, string path)
@@ -114,17 +116,24 @@ namespace GamePassCatalogBrowser
             return sb.ToString();
         }
 
-        public void AddGamePassListToLibrary (List<GamePassGame> gamePassGamesList)
+        public int AddGamePassListToLibrary (List<GamePassGame> gamePassGamesList)
         {
+            var i = 0;
             foreach (GamePassGame game in gamePassGamesList.ToList())
             {
                 if (GameIdsInLibrary.Contains(game.GameId) == false)
                 {
-                    AddGameToLibrary(game);
+                    var success = AddGameToLibrary(game, false);
+                    if (success == true)
+                    {
+                        i++;
+                    }
                 }
             }
 
             RefreshLibraryItems();
+
+            return i;
         }
 
         public void AddTagToGame(Game game, Tag tag)
@@ -139,7 +148,7 @@ namespace GamePassCatalogBrowser
             }
         }
 
-        public bool AddGameToLibrary(GamePassGame game)
+        public bool AddGameToLibrary(GamePassGame game, bool showGameAddDialog)
         {
             if (game == null)
             {
@@ -154,7 +163,8 @@ namespace GamePassCatalogBrowser
                 PublisherIds = arrayToCompanyGuids(game.Publishers),
                 PluginId = pluginId,
                 PlatformId = pcPlatform.Id,
-                Description = StringToHtml(game.Description, true)
+                Description = StringToHtml(game.Description, true),
+                SourceId = source.Id
             };
 
             AddTagToGame(newGame, gameAddedTag);
@@ -185,9 +195,12 @@ namespace GamePassCatalogBrowser
             }
 
             PlayniteApi.Database.Games.Update(newGame);
-            PlayniteApi.Dialogs.ShowMessage($"{game.Name} added to the Playnite library");
             GameIdsInLibrary.Add(game.GameId);
 
+            if (showGameAddDialog == true)
+            {
+                PlayniteApi.Dialogs.ShowMessage($"{game.Name} added to the Playnite library");
+            }
             return true;
         }
     }

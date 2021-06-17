@@ -242,7 +242,7 @@ namespace GamePassCatalogBrowser.ViewModels
             get => new RelayCommand<GamePassGame>((gamePassGame) =>
             {
                 var success = false;
-                success = xboxLibraryHelper.AddGameToLibrary(gamePassGame);
+                success = xboxLibraryHelper.AddGameToLibrary(gamePassGame, true);
                 if (success == true)
                 {
                     AddButtonEnabled = false;
