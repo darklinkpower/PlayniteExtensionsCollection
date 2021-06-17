@@ -110,12 +110,15 @@ namespace GamePassCatalogBrowser
 
             window.Title = "Game Pass Catalog Browser";
             window.Content = new CatalogBrowserView();
-            window.DataContext = new CatalogBrowserViewModel(gamePassGamesList, PlayniteApi);
+            CatalogBrowserViewModel catalogBrowserViewModel = new CatalogBrowserViewModel(gamePassGamesList, PlayniteApi);
+            window.DataContext = catalogBrowserViewModel;
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.WindowState = WindowState.Maximized;
 
             window.ShowDialog();
+
+            catalogBrowserViewModel.Dispose();
         }
     }
 }

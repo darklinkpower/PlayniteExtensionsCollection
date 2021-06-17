@@ -25,6 +25,7 @@ namespace GamePassCatalogBrowser.ViewModels
         private string _searchString;
         private bool _storeButtonEnabled;
         private bool _addButtonEnabled;
+        private XboxLibraryHelper xboxLibraryHelper;
 
         private bool showGamesOnLibrary = true;
         public bool ShowGamesOnLibrary
@@ -33,17 +34,6 @@ namespace GamePassCatalogBrowser.ViewModels
             set
             {
                 showGamesOnLibrary = value;
-                _gamePassGamesView.Refresh();
-            }
-        }
-
-        private HashSet<string> gamesOnLibrary;
-        public HashSet<string> GamesOnLibrary
-        {
-            get { return gamesOnLibrary; }
-            set
-            {
-                gamesOnLibrary = value;
                 _gamePassGamesView.Refresh();
             }
         }
@@ -65,7 +55,7 @@ namespace GamePassCatalogBrowser.ViewModels
             {
                 return false;
             }
-            if (GamesOnLibrary.Contains(game.GameId))
+            if (xboxLibraryHelper.GameIdsInLibrary.Contains(game.GameId))
             {
                 return false;
             }
@@ -127,9 +117,16 @@ namespace GamePassCatalogBrowser.ViewModels
             //throw new NotImplementedException();
         }
 
+        public void Dispose()
+        {
+            xboxLibraryHelper.Dispose();
+        }
+
         public CatalogBrowserViewModel(List<GamePassGame> list, IPlayniteAPI api)
         {
             PlayniteApi = api;
+
+            xboxLibraryHelper = new XboxLibraryHelper(api);
 
             IList<GamePassGame> gamePassGames = list;
 
@@ -137,23 +134,9 @@ namespace GamePassCatalogBrowser.ViewModels
 
             _gamePassGamesView.CurrentChanged += GamePassGameSelectionChanged;
 
-            var gamesOnLibrary = new HashSet<string>();
-            var xboxLibraryGames = PlayniteApi.Database.Games.
-                Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary));
-            
-            foreach (Game game in xboxLibraryGames)
-            {
-                gamesOnLibrary.Add(game.GameId);
-            }
-
-            GamesOnLibrary = gamesOnLibrary;
-
             void GamePassGameSelectionChanged(object sender, EventArgs e)
             {
-                if (sender == null)
-                {
-                    _addButtonEnabled = false;
-                }
+                // Not implemented
             }
 
             _gamePassGamesView.Filter = GamePassGameFilter;
@@ -197,7 +180,7 @@ namespace GamePassCatalogBrowser.ViewModels
 
                 if (showGamesOnLibrary == false)
                 {
-                    if (gamesOnLibrary.Contains(game.GameId))
+                    if (xboxLibraryHelper.GameIdsInLibrary.Contains(game.GameId))
                     {
                         return false;
                     }
@@ -258,101 +241,14 @@ namespace GamePassCatalogBrowser.ViewModels
         {
             get => new RelayCommand<GamePassGame>((gamePassGame) =>
             {
-                InvokeAddGameToLibrary(gamePassGame);
+                var success = false;
+                success = xboxLibraryHelper.AddGameToLibrary(gamePassGame);
+                if (success == true)
+                {
+                    AddButtonEnabled = false;
+                    Collections.Refresh();
+                }
             }, (gamePassGame) => AddButtonEnabled);
-        }
-
-        public List<Guid> arrayToCompanyGuids(string [] array)
-        {
-            var list = new List<Guid>();
-            foreach (string str in array)
-            {
-                var company = PlayniteApi.Database.Companies.Add(str);
-                list.Add(company.Id);
-            }
-
-            return list;
-        }
-
-        public static string StringToHtml(string s, bool nofollow)
-        {
-            s = WebUtility.HtmlEncode(s);
-            string[] paragraphs = s.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);
-            StringBuilder sb = new StringBuilder();
-            foreach (string par in paragraphs)
-            {
-                sb.AppendLine("<p>");
-                string p = par.Replace(Environment.NewLine, "<br />\r\n");
-                if (nofollow)
-                {
-                    p = Regex.Replace(p, @"\[\[(.+)\]\[(.+)\]\]", "<a href=\"$2\" rel=\"nofollow\">$1</a>");
-                    p = Regex.Replace(p, @"\[\[(.+)\]\]", "<a href=\"$1\" rel=\"nofollow\">$1</a>");
-                }
-                else
-                {
-                    p = Regex.Replace(p, @"\[\[(.+)\]\[(.+)\]\]", "<a href=\"$2\">$1</a>");
-                    p = Regex.Replace(p, @"\[\[(.+)\]\]", "<a href=\"$1\">$1</a>");
-                    sb.AppendLine(p);
-                }
-                sb.AppendLine(p);
-                sb.AppendLine("</p>");
-            }
-            return sb.ToString();
-        }
-
-        private void InvokeAddGameToLibrary(GamePassGame game)
-        {
-            if (game != null)
-            {
-                var newGame = new Game
-                {
-                    Name = game.Name,
-                    GameId = game.GameId,
-                    DeveloperIds = arrayToCompanyGuids(game.Developers),
-                    PublisherIds = arrayToCompanyGuids(game.Publishers),
-                    PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary),
-                    PlatformId = PlayniteApi.Database.Platforms.Add("PC").Id,
-                    Description = StringToHtml(game.Description, true)
-                };
-
-                PlayniteApi.Database.Games.Add(newGame);
-
-                if (File.Exists(game.CoverImage))
-                {
-                    var copiedImage = PlayniteApi.Database.AddFile(game.CoverImage, newGame.Id);
-                    newGame.CoverImage = copiedImage;
-                }
-
-                if (File.Exists(game.Icon))
-                {
-                    var copiedImage = PlayniteApi.Database.AddFile(game.Icon, newGame.Id);
-                    newGame.Icon = copiedImage;
-                }
-
-                if (string.IsNullOrEmpty(game.BackgroundImageUrl) == false)
-                {
-                    using (var webClient = new WebClient())
-                    {
-                        try
-                        {
-                            var fileName = string.Format("{0}.jpg", Guid.NewGuid().ToString());
-                            var downloadPath = Path.Combine(PlayniteApi.Database.GetFileStoragePath(newGame.Id), fileName);
-                            webClient.DownloadFile(game.BackgroundImageUrl, downloadPath);
-                            newGame.BackgroundImage = string.Format("{0}/{1}", newGame.Id.ToString(), fileName);
-                        }
-                        catch
-                        {
-
-                        }
-                    }
-                }
-
-                PlayniteApi.Database.Games.Update(newGame);
-                gamesOnLibrary.Add(game.GameId);
-                AddButtonEnabled = false;
-                Collections.Refresh();
-                PlayniteApi.Dialogs.ShowMessage($"{game.Name} added to the Playnite library");
-            }
         }
     }
 }

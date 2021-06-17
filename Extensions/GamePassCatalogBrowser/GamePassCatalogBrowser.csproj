@@ -67,6 +67,7 @@
       <DependentUpon>GamePassCatalogBrowserSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XboxLibraryHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
