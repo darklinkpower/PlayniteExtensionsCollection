@@ -59,6 +59,14 @@ namespace GamePassCatalogBrowser.ViewModels
             {
                 return false;
             }
+            if (game.ProductType == ProductType.Collection)
+            {
+                return false;
+            }
+            if (game.ProductType == ProductType.EaGame)
+            {
+                return false;
+            }
             return true;
         }
 
