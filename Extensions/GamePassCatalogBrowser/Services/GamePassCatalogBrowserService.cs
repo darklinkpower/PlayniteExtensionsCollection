@@ -297,6 +297,7 @@ namespace GamePassCatalogBrowser.Services
                 {
                     BackgroundImage = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
                     BackgroundImageUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.SuperHeroArt)?.FirstOrDefault()?.Uri),
+                    Category = product.Properties.Category,
                     Categories = product.Properties.Categories,
                     CoverImage = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
                     CoverImageUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.Poster)?.FirstOrDefault()?.Uri),

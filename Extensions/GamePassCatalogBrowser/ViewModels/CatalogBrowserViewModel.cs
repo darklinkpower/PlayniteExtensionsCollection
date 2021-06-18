@@ -148,14 +148,16 @@ namespace GamePassCatalogBrowser.ViewModels
                 {
                     return true;
                 }
-                else if (game.Categories == null)
+                else if (string.IsNullOrEmpty(game.Category))
                 {
                     return false;
                 }
-                else
+                else if (game.Category == _filterString)
                 {
-                    return game.Categories.Any(x => x.Equals(_filterString));
+                    return true;
                 }
+
+                return false;
             }
 
             bool GameContainsString (GamePassGame game)
@@ -202,12 +204,12 @@ namespace GamePassCatalogBrowser.ViewModels
             List<string> GetCollectionsList(List<GamePassGame> collection)
             {
                 var categoriesList = new List<string>()
-                    {
+                {
                         {"All"}
-                    };
-                var categories = collection.Select(x => x.Categories).
-                    Where(a => a != null && a.Any()).SelectMany(a => a).
-                    Distinct().OrderBy(c => c).ToList();
+                };
+                var categories = collection.Select(x => x.Category).
+                    Where(a => a != null).Distinct().
+                    OrderBy(c => c).ToList();
                 foreach (string category in categories)
                 {
                     categoriesList.Add(category);

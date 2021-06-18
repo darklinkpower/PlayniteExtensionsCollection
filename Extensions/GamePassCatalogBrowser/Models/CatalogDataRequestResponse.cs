@@ -99,7 +99,7 @@ namespace GamePassCatalogBrowser.Models
         [JsonProperty("Attributes")]
         public Attribute[] Attributes { get; set; }
 
-        [JsonProperty("Category")]
+        [JsonProperty("Category", NullValueHandling = NullValueHandling.Ignore)]
         public string Category { get; set; }
 
         [JsonProperty("Categories")]

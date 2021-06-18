@@ -10,6 +10,7 @@ namespace GamePassCatalogBrowser.Models
     {
         public string BackgroundImage { get; set; }
         public string BackgroundImageUrl { get; set; }
+        public string Category { get; set; }
         public string[] Categories { get; set; }
         public string CoverImage { get; set; }
         public string CoverImageUrl { get; set; }
