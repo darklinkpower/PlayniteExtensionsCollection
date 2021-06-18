@@ -338,12 +338,13 @@ namespace GamePassCatalogBrowser.Services
                 }
 
                 gamePassGamesList.Add(gamePassGame);
-                var tempGame = DownloadGamePassGameCache(gamePassGame);
+                DownloadGamePassGameCache(gamePassGame);
 
                 var gameAdded = false;
                 if (addNewGames == true && gamePassGame.ProductType == ProductType.Game)
                 {
-                    gameAdded = xboxLibraryHelper.AddGameToLibrary(tempGame, false);
+                    xboxLibraryHelper.AddGameToLibrary(gamePassGame, false);
+                    RestoreMediaPaths(gamePassGame);
                     if (gameAdded == true)
                     {
                         playniteApi.Notifications.Add(new NotificationMessage(
@@ -474,7 +475,7 @@ namespace GamePassCatalogBrowser.Services
             return SetGamePassListFullPaths(gamePassGamesList);
         }
 
-        public GamePassGame DownloadGamePassGameCache(GamePassGame game)
+        public void DownloadGamePassGameCache(GamePassGame game)
         {
             game.CoverImageLowRes = Path.Combine(imageCachePath, game.CoverImageLowRes);
             DownloadFile(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl), game.CoverImageLowRes).GetAwaiter().GetResult();
@@ -486,6 +487,16 @@ namespace GamePassCatalogBrowser.Services
             {
                 game.Icon = Path.Combine(imageCachePath, game.Icon);
                 DownloadFile(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl), game.Icon).GetAwaiter().GetResult();
+            }
+        }
+
+        public GamePassGame RestoreMediaPaths(GamePassGame game)
+        {
+            game.CoverImageLowRes = Path.GetFileName(game.CoverImageLowRes);
+            game.CoverImage = Path.GetFileName(game.CoverImage);
+            if (game.Icon != null)
+            {
+                game.Icon = Path.GetFileName(game.Icon);
             }
 
             return game;
