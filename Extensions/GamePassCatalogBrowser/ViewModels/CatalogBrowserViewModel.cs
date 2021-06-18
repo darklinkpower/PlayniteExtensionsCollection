@@ -21,7 +21,9 @@ namespace GamePassCatalogBrowser.ViewModels
         private IPlayniteAPI PlayniteApi;
         private ICollectionView _gamePassGamesView;
         private ICollectionView _collectionsView;
-        private string _filterString;
+        private ICollectionView _categoriesView;
+        private string _collectionsFilterString;
+        private string _categoriesFilterString;
         private string _searchString;
         private bool _storeButtonEnabled;
         private bool _addButtonEnabled;
@@ -109,13 +111,29 @@ namespace GamePassCatalogBrowser.ViewModels
             get { return _collectionsView; }
         }
 
-        public string FilterString
+        public ICollectionView Categories
         {
-            get { return _filterString; }
+            get { return _categoriesView; }
+        }
+
+        public string CollectionsFilterString
+        {
+            get { return _collectionsFilterString; }
             set
             {
-                _filterString = value;
-                NotifyPropertyChanged("FilterString");
+                _collectionsFilterString = value;
+                NotifyPropertyChanged("CollectionsFilterString");
+                _gamePassGamesView.Refresh();
+            }
+        }
+
+        public string CategoriesFilterString
+        {
+            get { return _categoriesFilterString; }
+            set
+            {
+                _categoriesFilterString = value;
+                NotifyPropertyChanged("CategoriesFilterString");
                 _gamePassGamesView.Refresh();
             }
         }
@@ -150,9 +168,9 @@ namespace GamePassCatalogBrowser.ViewModels
             _gamePassGamesView.Filter = GamePassGameFilter;
 
 
-            bool IsGameInCollection (GamePassGame game)
+            bool IsGameInGenre(GamePassGame game)
             {
-                if (_filterString == "All")
+                if (_categoriesFilterString == "All")
                 {
                     return true;
                 }
@@ -160,7 +178,7 @@ namespace GamePassCatalogBrowser.ViewModels
                 {
                     return false;
                 }
-                else if (game.Category == _filterString)
+                else if (game.Category == _categoriesFilterString)
                 {
                     return true;
                 }
@@ -172,11 +190,11 @@ namespace GamePassCatalogBrowser.ViewModels
             {
                 if (string.IsNullOrEmpty(_searchString))
                 {
-                    return IsGameInCollection(game);
+                    return IsGameInGenre(game);
                 }
                 else if (game.Name.ToLower().Contains(_searchString.ToLower()))
                 {
-                    return IsGameInCollection(game);
+                    return IsGameInGenre(game);
                 }
                 else
                 {
@@ -188,6 +206,24 @@ namespace GamePassCatalogBrowser.ViewModels
             {
                 GamePassGame game = item as GamePassGame;
 
+                switch(game.ProductType)
+                {
+                    case ProductType.Game:
+                        if (_collectionsFilterString != "Games")
+                            return false;
+                        break;
+                    case ProductType.Collection:
+                        if (_collectionsFilterString != "Collections")
+                            return false;
+                        break;
+                    case ProductType.EaGame:
+                        if (_collectionsFilterString != "EA Games")
+                            return false;
+                        break;
+                    default:
+                        break;
+                }
+                
                 if (showGamesOnLibrary == false)
                 {
                     if (xboxLibraryHelper.GameIdsInLibrary.Contains(game.GameId))
@@ -203,31 +239,52 @@ namespace GamePassCatalogBrowser.ViewModels
                 return GameContainsString(game);
             }
 
-            IList<string> collections = GetCollectionsList(list);
+            IList<string> collections = GetCollectionsList();
 
             _collectionsView = CollectionViewSource.GetDefaultView(collections);
 
             _collectionsView.CurrentChanged += CollectionSelectionChanged;
 
-            List<string> GetCollectionsList(List<GamePassGame> collection)
+            void CollectionSelectionChanged(object sender, EventArgs e)
+            {
+                CollectionsFilterString = Collections.CurrentItem.ToString();
+            }
+
+            List<string> GetCollectionsList()
+            {
+                return new List<string>()
+                {
+                    {"Games"},
+                    {"EA Games"},
+                    {"Collections"}
+                };
+            }
+
+            IList<string> categories = GetCategoriesList(list);
+
+            _categoriesView = CollectionViewSource.GetDefaultView(categories);
+
+            _categoriesView.CurrentChanged += CategoriesSelectionChanged;
+
+            void CategoriesSelectionChanged(object sender, EventArgs e)
+            {
+                CategoriesFilterString = Categories.CurrentItem.ToString();
+            }
+
+            List<string> GetCategoriesList(List<GamePassGame> collection)
             {
                 var categoriesList = new List<string>()
                 {
                         {"All"}
                 };
-                var categories = collection.Select(x => x.Category).
+                var categoriesTempList = collection.Select(x => x.Category).
                     Where(a => a != null).Distinct().
                     OrderBy(c => c).ToList();
-                foreach (string category in categories)
+                foreach (string category in categoriesTempList)
                 {
                     categoriesList.Add(category);
                 }
                 return categoriesList;
-            }
-
-            void CollectionSelectionChanged(object sender, EventArgs e)
-            {
-                FilterString = Collections.CurrentItem.ToString();
             }
         }
 

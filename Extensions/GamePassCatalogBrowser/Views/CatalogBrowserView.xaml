@@ -36,8 +36,8 @@
                     <TextBlock Text="Collection:" Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Center"/>
                     <ComboBox Name="ComboBoxCollections" Grid.Column="1" ItemsSource="{Binding Collections}" IsSynchronizedWithCurrentItem="True"
                           Margin="10,0,0,0"/>
-                    <TextBlock Text="Genre:" Margin="10,0,0,0" Grid.Column="2" VerticalAlignment="Center"/>
-                    <ComboBox Name="ComboBoxGenres" Grid.Column="3" ItemsSource="{Binding Collections}" IsSynchronizedWithCurrentItem="True"
+                    <TextBlock Text="Category:" Margin="10,0,0,0" Grid.Column="2" VerticalAlignment="Center"/>
+                    <ComboBox Name="ComboBoxCategories" Grid.Column="3" ItemsSource="{Binding Categories}" IsSynchronizedWithCurrentItem="True"
                           Margin="10,0,0,0"/>
                     <TextBlock Text="Search:" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,0"/>
                     <TextBox Margin="10,10,0,0" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
