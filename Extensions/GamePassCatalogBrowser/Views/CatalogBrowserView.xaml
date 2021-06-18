@@ -48,7 +48,7 @@
                                        Margin="0,3,0,0" Width="150"
                                        HorizontalAlignment="Left" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
                                     <Image Width="150" Height="225"
-                                       Source="{Binding CoverImageLowRes, IsAsync=True}"
+                                       Source="{Binding CoverImageLowRes, IsAsync=True, Converter={StaticResource ImageStringToImageConverter}}"
                                        DockPanel.Dock="Top"
                                        Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Center"/>
                                 </DockPanel>
