@@ -345,7 +345,6 @@ namespace GamePassCatalogBrowser.Services
                 if (addNewGames == true && gamePassGame.ProductType == ProductType.Game)
                 {
                     xboxLibraryHelper.AddGameToLibrary(gamePassGame, false);
-                    RestoreMediaPaths(gamePassGame);
                     if (gameAdded == true)
                     {
                         playniteApi.Notifications.Add(new NotificationMessage(
@@ -354,7 +353,7 @@ namespace GamePassCatalogBrowser.Services
                             NotificationType.Info));
                     }
                 }
-
+                
                 // Notify user that game has been added
                 if (notifyCatalogUpdates == true && gameAdded == false)
                 {
@@ -363,6 +362,8 @@ namespace GamePassCatalogBrowser.Services
                         $"{gamePassGame.Name} has been added to the Game Pass catalog",
                         NotificationType.Info));
                 }
+
+                RestoreMediaPaths(gamePassGame);
             }
         }
 

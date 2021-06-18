@@ -198,6 +198,16 @@ namespace GamePassCatalogBrowser
                 return false;
             }
 
+            if (string.IsNullOrEmpty(game.GameId))
+            {
+                return false;
+            }
+
+            if (game.ProductType != ProductType.Game)
+            {
+                return false;
+            }
+
             var existingGame = GetLibraryGameFromGamePassGameAnySource(game);
             if (existingGame != null)
             {
