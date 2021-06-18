@@ -21,11 +21,38 @@ namespace GamePassCatalogBrowser.Models
         [JsonProperty("LocalizedProperties")]
         public ProductLocalizedProperty[] LocalizedProperties { get; set; }
 
+        [JsonProperty("MarketProperties")]
+        public ProductMarketProperty[] MarketProperties { get; set; }
+
         [JsonProperty("ProductId")]
         public string ProductId { get; set; }
 
         [JsonProperty("Properties")]
         public ProductProperties Properties { get; set; }
+
+        [JsonProperty("ProductASchema")]
+        public string ProductASchema { get; set; }
+
+        [JsonProperty("ProductBSchema")]
+        public string ProductBSchema { get; set; }
+    }
+
+    public partial class ProductMarketProperty
+    {
+        [JsonProperty("OriginalReleaseDate")]
+        public DateTimeOffset OriginalReleaseDate { get; set; }
+
+        [JsonProperty("RelatedProducts")]
+        public RelatedProduct[] RelatedProducts { get; set; }
+    }
+
+    public partial class RelatedProduct
+    {
+        [JsonProperty("RelatedProductId")]
+        public string RelatedProductId { get; set; }
+
+        [JsonProperty("RelationshipType")]
+        public string RelationshipType { get; set; }
     }
 
     public partial class ProductLocalizedProperty
@@ -38,7 +65,6 @@ namespace GamePassCatalogBrowser.Models
 
         [JsonProperty("PublisherWebsiteUri")]
         public string PublisherWebsiteUri { get; set; }
-
 
         [JsonProperty("Franchises")]
         public object[] Franchises { get; set; }
@@ -88,7 +114,7 @@ namespace GamePassCatalogBrowser.Models
         [JsonProperty("PublisherCertificateName")]
         public string PublisherCertificateName { get; set; }
 
-        [JsonProperty("HasAddOns")]
+        [JsonProperty("HasAddOns", NullValueHandling = NullValueHandling.Ignore)]
         public bool HasAddOns { get; set; }
     }
 

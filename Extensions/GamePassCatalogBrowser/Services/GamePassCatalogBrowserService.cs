@@ -17,6 +17,7 @@ namespace GamePassCatalogBrowser.Services
         private IPlayniteAPI playniteApi;
         private ILogger logger = LogManager.GetLogger();
         private HttpClient client;
+        public List<GamePassGame> gamePassGamesList = new List<GamePassGame>();
         private readonly string userDataPath = string.Empty;
         private readonly string cachePath = string.Empty;
         private readonly string imageCachePath = string.Empty;
@@ -54,7 +55,7 @@ namespace GamePassCatalogBrowser.Services
             }
         }
 
-        private void DeleteFileFromPath (string filePath)
+        private void DeleteFileFromPath(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -85,14 +86,14 @@ namespace GamePassCatalogBrowser.Services
             removeExpiredGames = _removeExpiredGames;
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            
+
             cachePath = Path.Combine(userDataPath, "cache");
             imageCachePath = Path.Combine(cachePath, "images");
             gameDataCachePath = Path.Combine(cachePath, "gamesCache.json");
             languageCode = _languageCode;
             countryCode = _countryCode;
             gamepassCatalogApiUrl = string.Format(gamepassCatalogApiBaseUrl, languageCode, countryCode);
-            
+
             xboxLibraryHelper = new XboxLibraryHelper(api);
         }
 
@@ -124,7 +125,7 @@ namespace GamePassCatalogBrowser.Services
                 return gamePassGames;
             }
         }
-
+       
         public async Task DownloadFile(string requestUri, string path)
         {
             try
@@ -195,6 +196,7 @@ namespace GamePassCatalogBrowser.Services
             return str.Trim();
         }
 
+
         public string[] companiesStringToArray(string companiesString)
         {
             var companiesList = new List<string>();
@@ -228,12 +230,144 @@ namespace GamePassCatalogBrowser.Services
             return companiesList.ToArray();
         }
 
+        public void addGamesFromCatalogData(CatalogData catalogData, bool addChildProducts)
+        {
+            foreach (CatalogProduct product in catalogData.Products)
+            {
+                if (product.ProductBSchema == "ProductAddOn;3")
+                {
+                    continue;
+                }
+
+                if (gamePassGamesList.Any(g => g.ProductId.Equals(product.ProductId)))
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(product.Properties.PackageFamilyName))
+                {
+                    if (addChildProducts == true)
+                    {
+                        var marketProperties = product.MarketProperties.FirstOrDefault();
+                        if (marketProperties != null)
+                        {
+                            var idsForDataRequest = new List<string>();
+                            foreach (RelatedProduct relatedProduct in marketProperties.RelatedProducts)
+                            {
+                                if (relatedProduct.RelationshipType == "Bundle" || relatedProduct.RelationshipType == "Parent")
+                                {
+                                    if (gamePassGamesList.Any(g => g.ProductId.Equals(relatedProduct.RelatedProductId)) == false)
+                                    {
+                                        idsForDataRequest.Add(relatedProduct.RelatedProductId);
+                                    }
+                                }
+                            }
+
+                            if (idsForDataRequest.Count > 0)
+                            {
+                                var bigIdsParam = string.Join(",", idsForDataRequest);
+                                string catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
+                                try
+                                {
+                                    var response = client.GetAsync(string.Format(catalogDataApiUrl));
+                                    var contents = response.Result.Content.ReadAsStringAsync();
+                                    if (response.Status == TaskStatus.RanToCompletion)
+                                    {
+                                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), false);
+                                    }
+                                    else
+                                    {
+                                        logger.Info($"Request {catalogDataApiUrl} not completed");
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    logger.Error(e, $"Error in ApiRequest {catalogDataApiUrl}");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                var gamePassGame = new GamePassGame
+                {
+                    BackgroundImage = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
+                    BackgroundImageUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.SuperHeroArt)?.FirstOrDefault()?.Uri),
+                    Categories = product.Properties.Categories,
+                    CoverImage = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
+                    CoverImageUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.Poster)?.FirstOrDefault()?.Uri),
+                    CoverImageLowRes = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
+                    Description = product.LocalizedProperties[0].ProductDescription,
+                    Name = NormalizeGameName(product.LocalizedProperties[0].ProductTitle),
+                    ProductId = product.ProductId,
+                    Publishers = companiesStringToArray(product.LocalizedProperties[0].PublisherName)
+                };
+
+                if (string.IsNullOrEmpty(product.Properties.PackageFamilyName))
+                {
+                    gamePassGame.ProductType = ProductType.Collection;
+                }
+                else
+                {
+                    gamePassGame.GameId = product.Properties.PackageFamilyName;
+                    gamePassGame.ProductType = ProductType.Game;
+                }
+
+                if (string.IsNullOrEmpty(product.LocalizedProperties[0].DeveloperName))
+                {
+                    gamePassGame.Developers = gamePassGame.Publishers;
+                }
+                else
+                {
+                    gamePassGame.Developers = companiesStringToArray(product.LocalizedProperties[0].DeveloperName);
+                }
+
+                if (product.LocalizedProperties[0].Images.Any(x => x.ImagePurpose == ImagePurpose.BoxArt) == true)
+                {
+                    gamePassGame.Icon = string.Format("{0}.jpg", Guid.NewGuid().ToString());
+                    gamePassGame.IconUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.BoxArt)?.FirstOrDefault()?.Uri);
+                }
+                else if (product.LocalizedProperties[0].Images.Any(x => x.ImagePurpose == ImagePurpose.Logo) == true)
+                {
+                    gamePassGame.Icon = string.Format("{0}.jpg", Guid.NewGuid().ToString());
+                    gamePassGame.IconUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.Logo)?.FirstOrDefault()?.Uri);
+                }
+
+                gamePassGamesList.Add(gamePassGame);
+                var tempGame = DownloadGamePassGameCache(gamePassGame);
+
+                var gameAdded = false;
+                if (addNewGames == true && gamePassGame.ProductType == ProductType.Game)
+                {
+                    gameAdded = xboxLibraryHelper.AddGameToLibrary(tempGame, false);
+                    if (gameAdded == true)
+                    {
+                        playniteApi.Notifications.Add(new NotificationMessage(
+                            Guid.NewGuid().ToString(),
+                            $"{gamePassGame.Name} has been added to the Game Pass catalog and Playnite library",
+                            NotificationType.Info));
+                    }
+                }
+
+                // Notify user that game has been added
+                if (notifyCatalogUpdates == true && gameAdded == false)
+                {
+                    playniteApi.Notifications.Add(new NotificationMessage(
+                        Guid.NewGuid().ToString(),
+                        $"{gamePassGame.Name} has been added to the Game Pass catalog",
+                        NotificationType.Info));
+                }
+            }
+        }
+
         public List<GamePassGame> GetGamePassGamesList()
         {
             // Try to create cache directory in case it doesn't exist
             Directory.CreateDirectory(imageCachePath);
-
-            List<GamePassGame> gamePassGamesList = new List<GamePassGame>();
             var gamePassCatalog = GetGamepassCatalog();
 
             var idsForDataRequest = new List<string>();
@@ -323,75 +457,7 @@ namespace GamePassCatalogBrowser.Services
                     var contents = response.Result.Content.ReadAsStringAsync();
                     if (response.Status == TaskStatus.RanToCompletion)
                     {
-                        var catalogData = JsonConvert.DeserializeObject<CatalogData>(contents.Result);
-                        foreach (CatalogProduct product in catalogData.Products)
-                        {
-                            if (product.Properties.PackageFamilyName == null)
-                            {
-                                continue;
-                            }
-
-                            var gamePassGame = new GamePassGame
-                            {
-                                BackgroundImage = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
-                                BackgroundImageUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.SuperHeroArt)?.FirstOrDefault()?.Uri),
-                                Categories = product.Properties.Categories,
-                                CoverImage = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
-                                CoverImageUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.Poster)?.FirstOrDefault()?.Uri),
-                                CoverImageLowRes = string.Format("{0}.jpg", Guid.NewGuid().ToString()),
-                                Description = product.LocalizedProperties[0].ProductDescription,
-                                GameId = product.Properties.PackageFamilyName,
-                                Name = NormalizeGameName(product.LocalizedProperties[0].ProductTitle),
-                                ProductId = product.ProductId,
-                                Publishers = companiesStringToArray(product.LocalizedProperties[0].PublisherName)
-                            };
-
-                            if (string.IsNullOrEmpty(product.LocalizedProperties[0].DeveloperName))
-                            {
-                                gamePassGame.Developers = gamePassGame.Publishers;
-                            }
-                            else
-                            {
-                                gamePassGame.Developers = companiesStringToArray(product.LocalizedProperties[0].DeveloperName);
-                            }
-
-                            if (product.LocalizedProperties[0].Images.Any(x => x.ImagePurpose == ImagePurpose.BoxArt) == true)
-                            {
-                                gamePassGame.Icon = string.Format("{0}.jpg", Guid.NewGuid().ToString());
-                                gamePassGame.IconUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.BoxArt)?.FirstOrDefault()?.Uri);
-                            }
-                            else if (product.LocalizedProperties[0].Images.Any(x => x.ImagePurpose == ImagePurpose.Logo) == true)
-                            {
-                                gamePassGame.Icon = string.Format("{0}.jpg", Guid.NewGuid().ToString());
-                                gamePassGame.IconUrl = string.Format("https:{0}", product.LocalizedProperties[0].Images.Where(x => x.ImagePurpose == ImagePurpose.Logo)?.FirstOrDefault()?.Uri);
-                            }
-
-                            gamePassGamesList.Add(gamePassGame);
-                            var tempGame = DownloadGamePassGameCache(gamePassGame);
-
-                            var gameAdded = false;
-                            if (addNewGames == true)
-                            {
-                                gameAdded = xboxLibraryHelper.AddGameToLibrary(tempGame, false);
-                                if (gameAdded == true)
-                                {
-                                    playniteApi.Notifications.Add(new NotificationMessage(
-                                        Guid.NewGuid().ToString(),
-                                        $"{gamePassGame.Name} has been added to the Game Pass catalog and Playnite library",
-                                        NotificationType.Info));
-                                }
-                            }
-
-                            // Notify user that game has been added
-                            if (notifyCatalogUpdates == true && gameAdded == false)
-                            {
-                                playniteApi.Notifications.Add(new NotificationMessage(
-                                    Guid.NewGuid().ToString(),
-                                    $"{gamePassGame.Name} has been added to the Game Pass catalog",
-                                    NotificationType.Info));
-                            }
-                        }
-
+                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), true);
                         File.WriteAllText(gameDataCachePath, JsonConvert.SerializeObject(gamePassGamesList));
                     }
                     else
