@@ -305,7 +305,8 @@ namespace GamePassCatalogBrowser.Services
                     Description = product.LocalizedProperties[0].ProductDescription,
                     Name = NormalizeGameName(product.LocalizedProperties[0].ProductTitle),
                     ProductId = product.ProductId,
-                    Publishers = companiesStringToArray(product.LocalizedProperties[0].PublisherName)
+                    Publishers = companiesStringToArray(product.LocalizedProperties[0].PublisherName),
+                    ReleaseDate = product.MarketProperties.FirstOrDefault().OriginalReleaseDate.UtcDateTime
                 };
 
                 if (string.IsNullOrEmpty(product.Properties.PackageFamilyName))

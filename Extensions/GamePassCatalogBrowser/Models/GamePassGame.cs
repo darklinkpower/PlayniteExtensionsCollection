@@ -24,6 +24,7 @@ namespace GamePassCatalogBrowser.Models
         public string ProductId { get; set; }
         public string[] Publishers { get; set; }
         public ProductType ProductType { get; set; }
+        public DateTime ReleaseDate { get; set; }
     }
 
     public enum ProductType { Collection, Game, EaGame };

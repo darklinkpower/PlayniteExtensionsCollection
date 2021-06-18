@@ -223,7 +223,8 @@ namespace GamePassCatalogBrowser
                 PluginId = pluginId,
                 PlatformId = pcPlatform.Id,
                 Description = StringToHtml(game.Description, true),
-                SourceId = source.Id
+                SourceId = source.Id,
+                ReleaseDate = game.ReleaseDate
             };
 
             AddTagToGame(newGame, gameAddedTag);
