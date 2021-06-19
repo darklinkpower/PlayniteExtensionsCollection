@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GamePassCatalogBrowser"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1000">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
@@ -74,16 +74,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
-            <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" MinHeight="40"/>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" FontSize="{DynamicResource FontSizeLargest}" TextWrapping="Wrap" Text="{Binding ElementName=ListBoxGames, Path=SelectedItem.Name}" VerticalAlignment="Center"/>
-                    <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock FontSize="{DynamicResource FontSizeLargest}" TextWrapping="Wrap" Text="{Binding ElementName=ListBoxGames, Path=SelectedItem.Name}" VerticalAlignment="Center"/>
+                    <Grid Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -103,16 +101,17 @@
                         <Label Grid.Row="2" Grid.Column="1" Margin="10,0,0,0"
                                        Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Category}"/>
                     </Grid>
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Button Content="View in Microsoft Store" Command="{Binding StoreViewCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListBoxGames}" DockPanel.Dock="Left" Padding="5"/>
                         <Button Margin="10,0,0,0" Content="Add to Playnite library" Command="{Binding AddGameToLibraryCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListBoxGames}" DockPanel.Dock="Left" Padding="5"/>
                     </StackPanel>
-                    <ScrollViewer Grid.Row="3" Margin="0,10,0,0" VerticalScrollBarVisibility="Visible">
-                        <TextBlock TextWrapping="Wrap"
+                </StackPanel>
+
+                <ScrollViewer  VerticalScrollBarVisibility="Auto" Margin="0,10,0,0" Grid.Row="1">
+                    <TextBlock TextWrapping="Wrap"
                                Text="{Binding ElementName=ListBoxGames, Path=SelectedItem.Description}"/>
-                    </ScrollViewer>
-                </Grid>
-            </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
