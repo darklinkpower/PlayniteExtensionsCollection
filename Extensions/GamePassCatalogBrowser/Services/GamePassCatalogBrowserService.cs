@@ -233,7 +233,7 @@ namespace GamePassCatalogBrowser.Services
             return companiesList.ToArray();
         }
 
-        public void addGamesFromCatalogData(CatalogData catalogData, bool addChildProducts, ProductType gameProductType)
+        public void addGamesFromCatalogData(CatalogData catalogData, bool addChildProducts, ProductType gameProductType, bool isChildProduct, string parentProductId)
         {
             foreach (CatalogProduct product in catalogData.Products)
             {
@@ -247,6 +247,7 @@ namespace GamePassCatalogBrowser.Services
                     continue;
                 }
 
+                var childSubproductsList = new List<string>();
                 if (string.IsNullOrEmpty(product.Properties.PackageFamilyName))
                 {
                     if (addChildProducts == true)
@@ -255,10 +256,12 @@ namespace GamePassCatalogBrowser.Services
                         if (marketProperties != null)
                         {
                             var idsForDataRequest = new List<string>();
+                            
                             foreach (RelatedProduct relatedProduct in marketProperties.RelatedProducts)
                             {
                                 if (relatedProduct.RelationshipType == "Bundle" || relatedProduct.RelationshipType == "Parent")
                                 {
+                                    childSubproductsList.Add(relatedProduct.RelatedProductId);
                                     if (gamePassGamesList.Any(g => g.ProductId.Equals(relatedProduct.RelatedProductId)) == false)
                                     {
                                         idsForDataRequest.Add(relatedProduct.RelatedProductId);
@@ -276,7 +279,7 @@ namespace GamePassCatalogBrowser.Services
                                     var contents = response.Result.Content.ReadAsStringAsync();
                                     if (response.Status == TaskStatus.RanToCompletion)
                                     {
-                                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), false, gameProductType);
+                                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), false, gameProductType, true, product.ProductId);
                                     }
                                     else
                                     {
@@ -309,7 +312,10 @@ namespace GamePassCatalogBrowser.Services
                     Name = NormalizeGameName(product.LocalizedProperties[0].ProductTitle),
                     ProductId = product.ProductId,
                     Publishers = companiesStringToArray(product.LocalizedProperties[0].PublisherName),
-                    ReleaseDate = product.MarketProperties.FirstOrDefault().OriginalReleaseDate.UtcDateTime
+                    ReleaseDate = product.MarketProperties.FirstOrDefault().OriginalReleaseDate.UtcDateTime,
+                    ChildProducts = childSubproductsList,
+                    IsChildProduct = isChildProduct,
+                    ParentProductId = parentProductId
                 };
 
                 if (string.IsNullOrEmpty(product.Properties.PackageFamilyName))
@@ -409,7 +415,17 @@ namespace GamePassCatalogBrowser.Services
                     }
                 }
 
-                if (gamePassCatalog.Any(x => x.Id == game.ProductId) == false)
+                var gameMatched = false;
+                if (game.IsChildProduct == false)
+                {
+                    gameMatched = gamePassCatalog.Any(x => x.Id == game.ProductId);
+                }
+                else
+                {
+                    gameMatched = gamePassCatalog.Any(x => x.Id == game.ParentProductId);
+                }
+
+                if (gameMatched == false)
                 {
                     var gameFilesPaths = new List<string>()
                     {
@@ -482,7 +498,7 @@ namespace GamePassCatalogBrowser.Services
                     var contents = response.Result.Content.ReadAsStringAsync();
                     if (response.Status == TaskStatus.RanToCompletion)
                     {
-                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), true, gameProductType);
+                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), true, gameProductType, false, string.Empty);
                         File.WriteAllText(gameDataCachePath, JsonConvert.SerializeObject(gamePassGamesList));
                     }
                     else
