@@ -81,7 +81,7 @@ namespace GamePassCatalogBrowser
         public void ResetCache()
         {
             UpdateGamePassCatalog(true);
-            PlayniteApi.Dialogs.ShowMessage("Game Pass catalog refreshed", "Game Pass Catalog Browser");
+            PlayniteApi.Dialogs.ShowMessage("Game Pass catalog has been reset", "Game Pass Catalog Browser");
         }
 
         public void AddAllGamePassCatalog()
