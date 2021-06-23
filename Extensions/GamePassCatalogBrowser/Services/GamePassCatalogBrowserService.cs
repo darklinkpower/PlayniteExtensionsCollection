@@ -78,7 +78,7 @@ namespace GamePassCatalogBrowser.Services
             ClearFolder(cachePath);
         }
 
-        public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, bool _addExpiredTagToGames, bool _addNewGames, bool _removeExpiredGames, string _languageCode = "en-us", string _countryCode = "US")
+        public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, bool _addExpiredTagToGames, bool _addNewGames, bool _removeExpiredGames, string _countryCode, string _languageCode = "en-us")
         {
             playniteApi = api;
             userDataPath = dataPath;

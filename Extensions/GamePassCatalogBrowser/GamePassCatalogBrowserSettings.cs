@@ -17,6 +17,7 @@ namespace GamePassCatalogBrowser
         public bool AddExpiredTagToGames { get; set; } = true;
         public bool AddNewGames { get; set; } = false;
         public bool RemoveExpiredGames { get; set; } = false;
+        public string RegionCode { get; set; } = "US";
 
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
@@ -45,6 +46,7 @@ namespace GamePassCatalogBrowser
                 AddExpiredTagToGames = savedSettings.AddExpiredTagToGames;
                 AddNewGames = savedSettings.AddNewGames;
                 RemoveExpiredGames = savedSettings.RemoveExpiredGames;
+                RegionCode = savedSettings.RegionCode;
             }
         }
 
