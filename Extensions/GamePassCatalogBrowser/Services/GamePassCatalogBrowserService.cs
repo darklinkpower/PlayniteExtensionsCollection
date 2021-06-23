@@ -109,7 +109,7 @@ namespace GamePassCatalogBrowser.Services
                 var contents = response.Result.Content.ReadAsStringAsync();
                 if (string.IsNullOrEmpty(contents.Result))
                 {
-                    return gamePassGames;
+                    return null;
                 }
                 var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(contents.Result);
                 foreach (GamePassCatalogProduct gamePassProduct in gamePassCatalog)
@@ -125,7 +125,7 @@ namespace GamePassCatalogBrowser.Services
             catch (Exception e)
             {
                 logger.Error(e, $"Error in ApiRequest {gamepassCatalogApiUrl}");
-                return gamePassGames;
+                return null;
             }
         }
        
@@ -387,9 +387,17 @@ namespace GamePassCatalogBrowser.Services
                 gamePassGamesList = JsonConvert.DeserializeObject<List<GamePassGame>>(File.ReadAllText(gameDataCachePath));
             }
 
-            ProcessGamePassCatalog(GetGamepassCatalog(gamepassCatalogApiUrl), ProductType.Game);
-            ProcessGamePassCatalog(GetGamepassCatalog(gamepassEaCatalogApiUrl), ProductType.EaGame);
-
+            var gamePassCatalogDownload = GetGamepassCatalog(gamepassCatalogApiUrl);
+            if (gamePassCatalogDownload != null)
+            {
+                ProcessGamePassCatalog(GetGamepassCatalog(gamepassCatalogApiUrl), ProductType.Game);
+            }
+            var gamePassEaCatalogDownload = GetGamepassCatalog(gamepassCatalogApiUrl);
+            if (gamePassEaCatalogDownload != null)
+            {
+                ProcessGamePassCatalog(GetGamepassCatalog(gamepassEaCatalogApiUrl), ProductType.EaGame);
+            }
+            
             return SetGamePassListFullPaths(gamePassGamesList);
         }
 
