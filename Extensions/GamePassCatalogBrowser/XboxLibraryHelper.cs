@@ -23,6 +23,7 @@ namespace GamePassCatalogBrowser
         private Tag gameExpiredTag;
         private Tag gameAddedTag;
         private GameSource source;
+        private GameSource sourceXbox;
         public IEnumerable<Game> LibraryGames;
         public HashSet<string> GameIdsInLibrary;
 
@@ -42,6 +43,7 @@ namespace GamePassCatalogBrowser
             gameExpiredTag = PlayniteApi.Database.Tags.Add("Game Pass (Formerly on)");
             gameAddedTag = PlayniteApi.Database.Tags.Add("Game Pass");
             source = PlayniteApi.Database.Sources.Add("Xbox Game Pass");
+            sourceXbox = PlayniteApi.Database.Sources.Add("Xbox");
         }
 
         public async Task DownloadFile(string requestUri, string path)
@@ -140,12 +142,23 @@ namespace GamePassCatalogBrowser
 
         public bool RemoveGamePassGame(GamePassGame gamePassGame)
         {
+
             var game = GetLibraryGameFromGamePassGame(gamePassGame);
             if (game != null)
             {
-                PlayniteApi.Database.Games.Remove(game.Id);
-                GameIdsInLibrary.Remove(game.GameId);
-                return true;
+                if (game.Playtime > 0)
+                {
+                    game.SourceId = sourceXbox.Id;
+                    PlayniteApi.Database.Games.Update(game);
+                    return false;
+                }
+                else
+                {
+                    PlayniteApi.Database.Games.Remove(game.Id);
+                    GameIdsInLibrary.Remove(game.GameId);
+                    return true;
+                }
+
             }
             return false;
         }
@@ -156,6 +169,8 @@ namespace GamePassCatalogBrowser
             if (game != null)
             {
                 AddTagToGame(game, gameExpiredTag);
+                game.SourceId = sourceXbox.Id;
+                PlayniteApi.Database.Games.Update(game);
             }
         }
 
