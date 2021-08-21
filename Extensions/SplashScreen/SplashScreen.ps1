@@ -612,6 +612,27 @@ function Get-SplashImagePath
     }
 }
 
+function Get-SplashLogoPath
+{
+    param(
+        [Playnite.SDK.Models.Game] $game,
+        $useIcon
+    )
+    
+    $logo = ""
+    if ($useIcon -eq $false)
+    {
+        $__logger.Info(("Found extra metadata logo"))
+        $logo = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
+    } 
+    elseif($($game.Icon) -and $($game.Icon -notmatch "^http"))
+    {
+        $__logger.Info(("Found game icon logo"))
+        $logo = $PlayniteApi.Database.GetFullFilePath($game.Icon)
+    }
+    return $logo
+}
+
 function OnGameStarting
 {
     param(
@@ -670,12 +691,7 @@ function OnGameStarting
         $logoPath = ""
         if ($settings.showLogoInSplashscreen -eq $true)
         {
-            if ($settings.useIconAsLogo -eq $true)
-            {
-                $logoPath = $PlayniteApi.Database.GetFullFilePath($game.Icon)
-            } else {
-                $logoPath = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
-            }
+            $logoPath = Get-SplashLogoPath $game $settings.useIconAsLogo
         }
 
         @($splashImage, $logoPath, $closeSplashScreenAutomatic, $settings.logoPosition, $settings.logoVerticalAlignment) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
