@@ -150,6 +150,7 @@ function Get-SteamTags
     param (
         [int]$tagsLimit
     )
+    
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -eq 0)
     {

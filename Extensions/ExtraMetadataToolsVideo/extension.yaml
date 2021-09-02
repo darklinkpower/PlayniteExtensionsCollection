@@ -2,7 +2,7 @@
 Name: Extra Metadata Tools Video
 Author: darklinkpower
 Version: 1.2
-Module: ExtraMetadataToolsVideo.ps1
+Module: ExtraMetadataToolsVideo.psm1
 Type: Script
 Icon: icon.png
 Links:

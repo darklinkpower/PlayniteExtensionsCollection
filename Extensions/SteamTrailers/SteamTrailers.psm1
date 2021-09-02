@@ -174,11 +174,28 @@ function Get-SteamVideo
         $videoQuality
     )
 
-    if ($game.platform.name -ne "PC")
+    $isTargetSpecification = $false
+    if ($null -ne $game.Platforms)
+    {
+        $isTargetSpecification = $false
+        foreach ($platform in $game.Platforms) {
+            if ($null -eq $platform.SpecificationId)
+            {
+                continue
+            }
+            if ($plaform.SpecificationId -eq "pc_windows")
+            {
+                $isTargetSpecification = $true
+                break
+            }
+        }
+    }
+    if ($isTargetSpecification -eq $false)
     {
         $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCPcGameNotSelectedMessage"), "Steam Trailers")
         exit
     }
+
     $appId = Get-SteamAppId $game
 
     if ($appId)

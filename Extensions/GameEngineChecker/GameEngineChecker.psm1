@@ -41,12 +41,46 @@ function Add-EngineTag
     }
     [object]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
     
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.name -eq "PC"}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     foreach ($game in $gameDatabase) {
 
-        if ($game.tags.Name -match "Engine: ")
+        if ($null -eq $game.Platforms)
         {
             continue
+        }
+        else
+        {
+            $isTargetSpecification = $false
+            foreach ($platform in $game.Platforms) {
+                if ($null -eq $platform.SpecificationId)
+                {
+                    continue
+                }
+                if ($plaform.SpecificationId -eq "pc_windows")
+                {
+                    $isTargetSpecification = $true
+                    break
+                }
+            }
+            if ($isTargetSpecification -eq $false)
+            {
+                continue
+            }
+        }
+
+        if ($null -ne $game.Tags)
+        {
+            $engineTagPresent = $false
+            foreach ($tag in $game.Tags) {
+                if ($tag -match "^[Engine]")
+                {
+                    break
+                }
+            }
+            if ($engineTagPresent -eq $true)
+            {
+                continue
+            }
         }
 
         $gameLibraryPlugin = [Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId)
@@ -92,10 +126,10 @@ function Add-EngineTag
         $printouts = $gameInfo.query.results[0].PSObject.Properties.Value.printouts
         if ($printouts.Uses_engine.Count -gt 0)
         {
-            $engineName = $printouts.Uses_engine[0].fulltext -replace "Engine:", "Engine: "
-            if (($engineName -eq "Engine: Unity") -and ($printouts.Unity_engine_build.Count -gt 0))
+            $engineName = $printouts.Uses_engine[0].fulltext -replace "Engine:", "[Engine] "
+            if (($engineName -eq "[Engine] Unity") -and ($printouts.Unity_engine_build.Count -gt 0))
             {
-                $engineName = "Engine: Unity {0}" -f $printouts.Unity_engine_build[-1].split('.')[0]
+                $engineName = "[Engine] Unity {0}" -f $printouts.Unity_engine_build[-1].split('.')[0]
             }
         }
         else

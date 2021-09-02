@@ -24,18 +24,13 @@ function Format-SteamDescription
     )
     
     $descriptionChangedCount = 0
-    if ($null -eq $game.Description)
-    {
-        return $descriptionChangedCount
-    }
-
     $regex = '(?:[\s\S]+)<h1>About the Game<\/h1>([\s\S]+)'
     $RegexMatch = ([regex]$regex).Matches($game.description)
     if ($RegexMatch.count -eq 1)
     {
         $game.description = '<h1>About the Game</h1>' + $RegexMatch.groups[1].value
         $PlayniteApi.Database.Games.Update($game)
-        $descriptionChangedCount++
+        $descriptionChangedCount = 1
         $__logger.Info("Cleaned description of `"$($game.name)`"")
     }
     return $descriptionChangedCount
@@ -49,6 +44,34 @@ function Invoke-FormatGamesCollectionDescription
 
     $descriptionChangedCount = 0
     foreach ($game in $gameCollection) {
+        if ($null -eq $game.Description)
+        {
+            continue
+        }
+        if ($null -eq $game.Platforms)
+        {
+            continue
+        }
+        else
+        {
+            $isTargetSpecification = $false
+            foreach ($platform in $game.Platforms) {
+                if ($null -eq $platform.SpecificationId)
+                {
+                    continue
+                }
+                if ($plaform.SpecificationId -eq "pc_windows")
+                {
+                    $isTargetSpecification = $true
+                    break
+                }
+            }
+            if ($isTargetSpecification -eq $false)
+            {
+                continue
+            }
+        }
+
         $descriptionChanged = Format-SteamDescription $gameCollection
         $descriptionChangedCount += $descriptionChanged
     }
@@ -63,8 +86,7 @@ function Invoke-FormatAllGameDescriptions
         $scriptMainMenuItemActionArgs
     )
     
-    $gameCollection = $PlayniteApi.Database.Games | Where-Object { ($_.description) -and ($_.platform.name -eq "PC") }
-    Invoke-FormatGamesCollectionDescription $gameCollection
+    Invoke-FormatGamesCollectionDescription $PlayniteApi.Database.Games
 }
 
 function Invoke-FormatSelectedGameDescriptions
@@ -72,7 +94,6 @@ function Invoke-FormatSelectedGameDescriptions
     param(
         $scriptMainMenuItemActionArgs
     )
-    
-    $gameCollection = $PlayniteApi.Mainview.Selectedgames | Where-Object { ($_.description) -and ($_.platform.name -eq "PC") }
-    Invoke-FormatGamesCollectionDescription $gameCollection
+
+    Invoke-FormatGamesCollectionDescription $PlayniteApi.Mainview.Selectedgames
 }

@@ -1,6 +1,8 @@
-function global:GetMainMenuItems
+function GetMainMenuItems
 {
-    param($menuArgs)
+    param(
+        $menuArgs
+    )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddLinkSelectedGamesAutomaticDescription")
@@ -35,7 +37,7 @@ function Add-TwitchLink
         
         # Download headers
         try {
-            $GameName = $game.name.Replace("™","").Replace("’","`'").Replace("?","%3F").Replace("#","%23")
+            $GameName = $game.name.Replace(([char]8482).ToString(),"").Replace("’","`'").Replace("?","%3F").Replace("#","%23")
             $Uri = 'https://static-cdn.jtvnw.net/ttv-boxart/' + "$GameName" + '.jpg'
             $webrequest = Invoke-WebRequest $Uri -Method Head
         } catch {

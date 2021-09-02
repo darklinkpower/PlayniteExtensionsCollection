@@ -25,7 +25,7 @@ function Invoke-AddToSelectedGames
         $scriptMainMenuItemActionArgs
     )
 
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.name -eq "PC"}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     Add-NexusFeatureLinks $gameDatabase
 }
 
@@ -35,7 +35,7 @@ function Invoke-AddToAllGames
         $scriptMainMenuItemActionArgs
     )
 
-    $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.Platform.name -eq "PC"}
+    $gameDatabase = $PlayniteApi.Database.Games
     Add-NexusFeatureLinks $gameDatabase
 }
 
@@ -98,7 +98,30 @@ function Add-NexusFeatureLinks
     $CounterFeatureAdded = 0
     $nexusLinkAdded = 0
     foreach ($game in $gameDatabase) {
-
+        if ($null -eq $game.Platforms)
+        {
+            continue
+        }
+        else
+        {
+            $isTargetSpecification = $false
+            foreach ($platform in $game.Platforms) {
+                if ($null -eq $platform.SpecificationId)
+                {
+                    continue
+                }
+                if ($plaform.SpecificationId -eq "pc_windows")
+                {
+                    $isTargetSpecification = $true
+                    break
+                }
+            }
+            if ($isTargetSpecification -eq $false)
+            {
+                continue
+            }
+        }
+        
         $gameNameMatching = $game.Name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         foreach ($nexusGame in $nexusGames) {
             if ($nexusGame.name -eq $gameNameMatching)

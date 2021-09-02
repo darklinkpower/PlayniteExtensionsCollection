@@ -506,10 +506,25 @@ function Get-SteamLogos
     )
     
     # Set GameDatabase
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.Platform.Name -eq "PC"}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     $logoUriTemplate = "https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png"
     $counter = 0
     foreach ($game in $gameDatabase) {
+        if ($null -eq $game.Platforms)
+        {
+            continue
+        }
+        else
+        {
+            foreach ($platform in $game.Platforms) {
+                if ($plaform.SpecificationId -eq "pc_windows")
+                {
+                    break
+                }
+                continue
+            }
+        }
+
         $extraMetadataDirectory = Set-GameDirectory $game
         $logoPath = Join-Path $extraMetadataDirectory -ChildPath "Logo.png"
         if (Test-Path $logoPath)
@@ -755,16 +770,27 @@ function Get-SgdbRequestUrl
     }
     else
     {
-        if ($game.Platform.Name -eq "PC")
+        if ($null -ne $game.Platforms)
         {
-            $steamAppId = Get-SteamAppId $game
-            if ($null -ne $steamAppId)
-            {
-                $requestUri = "https://www.steamgriddb.com/api/v2/logos/steam/{0}" -f $steamAppId
-                return $requestUri
+            foreach ($platform in $game.Platforms) {
+                if ($null -eq $platform.SpecificationId)
+                {
+                    continue
+                }
+
+                if ($plaform.SpecificationId -eq "pc_windows")
+                {
+                    $steamAppId = Get-SteamAppId $game
+                    if ($null -ne $steamAppId)
+                    {
+                        $requestUri = "https://www.steamgriddb.com/api/v2/logos/steam/{0}" -f $steamAppId
+                        return $requestUri
+                    }
+                    break
+                }
             }
         }
-
+        
         try {
             $requestUri = "https://www.steamgriddb.com/api/v2/search/autocomplete/{0}" -f [uri]::EscapeDataString($game.name)
             $webClient = New-Object System.Net.WebClient

@@ -2,7 +2,7 @@
 Name: Steam Tags Importer
 Author: darklinkpower
 Version: 1.1
-Module: SteamTagsImporter.ps1
+Module: SteamTagsImporter.psm1
 Type: Script
 Icon: icon.png
 Links:

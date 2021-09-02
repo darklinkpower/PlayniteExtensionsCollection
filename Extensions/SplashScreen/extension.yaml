@@ -2,7 +2,7 @@
 Name: Splash Screen
 Author: darklinkpower
 Version: 1.3
-Module: SplashScreen.ps1
+Module: SplashScreen.psm1
 Type: Script
 Icon: icon.png
 Links:

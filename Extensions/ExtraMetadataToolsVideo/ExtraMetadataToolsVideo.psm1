@@ -798,11 +798,19 @@ function Set-YouTubeVideo
 
     foreach ($game in $gameDatabase)
     {
+        $search = "`"ytsearch1:{0} {1}`"" -f $game.Name, "trailer"
+        if ($null -ne $game.Platforms)
+        {
+            if ([string]::IsNullOrEmpty($game.Platforms[0].Name) -eq $false)
+            {
+                $search = "`"ytsearch1:{0} {1} {2}`"" -f $game.Name, $game.Platforms[0].Name, "trailer"
+            }
+        }
+
         $extraMetadataDirectory = Set-GameDirectory $game
         $videoPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTrailer.mp4"
         $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
         $youtubedl = $settings.youtubedlPath
-        $search = "`"ytsearch1:{0} {1} {2}`"" -f $game.Name, $game.Platform.Name, "trailer"
         if (Test-Path $videoTempPath)
         {
             try {
@@ -964,7 +972,14 @@ function Invoke-YoutubeSearchWindow
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
 
     # Set items sources of controls
-    $query = "{0} {1} Trailer" -f $game.Name, $game.Platform.Name
+    $query = "{0} Trailer" -f $game.Name
+    if ($null -ne $game.Platforms)
+    {
+        if ([string]::IsNullOrEmpty($game.Platforms[0].Name) -eq $false)
+        {
+            $query = "{0} {1} Trailer" -f $game.Name, $game.Platforms[0].Name
+        }
+    }
     $TextboxSearch.Text = $query
     $ListBoxVideos.ItemsSource = Get-YoutubeResultsArray $query
 

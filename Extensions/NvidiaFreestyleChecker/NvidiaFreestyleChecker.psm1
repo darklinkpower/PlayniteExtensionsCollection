@@ -55,9 +55,32 @@ function Update-IsFreestyleEnabled
         exit
     }
 
-    $GameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.Platform.name -eq "PC"}
+    $GameDatabase = $PlayniteApi.Database.Games
     foreach ($Game in $GameDatabase) {
-
+        if ($null -eq $game.Platforms)
+        {
+            continue
+        }
+        else
+        {
+            $isTargetSpecification = $false
+            foreach ($platform in $game.Platforms) {
+                if ($null -eq $platform.SpecificationId)
+                {
+                    continue
+                }
+                if ($plaform.SpecificationId -eq "pc_windows")
+                {
+                    $isTargetSpecification = $true
+                    break
+                }
+            }
+            if ($isTargetSpecification -eq $false)
+            {
+                continue
+            }
+        }
+        
         if ($Game.Features.Name -contains $featureName)
         {
             $FreestyleEnabled++

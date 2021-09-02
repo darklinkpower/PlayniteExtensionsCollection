@@ -16,7 +16,6 @@
     <sys:String x:Key="LOCLicensesExportChoiceMessage" xml:space="preserve">Found {0} licenses.
 Do you want to export your found {1} licenses?</sys:String>
     <sys:String x:Key="LOCLicensesExportSuccessMessage">Licenses exported succesfully.</sys:String>
-        <sys:String x:Key="LOCLoginNotifyMessage">A web browser window will be opened, please close the window after login in.</sys:String>
     <sys:String x:Key="LOCResultsExportChoiceMessage" xml:space="preserve">Library: {0}
 Processed games: {1}
 Games with date found: {2}
