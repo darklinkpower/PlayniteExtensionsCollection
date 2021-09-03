@@ -553,9 +553,9 @@ function Get-SplashVideoPath
         }
     }
     
-    if ($null -ne $game.Platform)
+    if ($null -ne $game.Platforms)
     {
-        $splashVideo = $videoPathTemplate -f "platforms", $game.Platform.Id.ToString()
+        $splashVideo = $videoPathTemplate -f "platforms", $game.Platforms[0].Id.ToString()
         if ([System.IO.File]::Exists($splashVideo))
         {
             $__logger.Info(("Platform video found in {0}." -f $splashVideo))
@@ -589,12 +589,12 @@ function Get-SplashImagePath
         }
     }
 
-    if ($game.Platform)
+    if ($game.Platforms)
     {
-        if ($game.Platform.Background)
+        if ($game.Platforms[0].Background)
         {
             $__logger.Info(("Found platform background image"))
-            return $PlayniteApi.Database.GetFullFilePath($game.Platform.Background)
+            return $PlayniteApi.Database.GetFullFilePath($game.Platforms[0].Background)
         }
     }
 
@@ -616,7 +616,7 @@ function OnGameStarting
         $OnGameStartingEventArgs
     )
 
-    $game = $OnGameStartingEventArgs
+    $game = $OnGameStartingEventArgs.Game
     $settings = Get-Settings
     
     if (($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.executeInDesktopMode -eq $false))
