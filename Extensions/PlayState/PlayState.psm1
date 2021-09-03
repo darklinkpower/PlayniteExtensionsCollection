@@ -25,7 +25,6 @@ function Add-PlaystateBlacklist
     
     $featureName = "PlayState blacklist"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
-    [guid[]]$featureIds = $feature.Id
     
     $GameDatabase = $PlayniteApi.MainView.SelectedGames
     
@@ -39,12 +38,12 @@ function Add-PlaystateBlacklist
         {
             if ($game.FeatureIds) 
             {
-                $game.FeatureIds += $featureIds
+                $game.FeatureIds += $feature.Id
             } 
             else
             {
                 # Fix in case game has null FeatureIds
-                $game.FeatureIds = $featureIds
+                $game.FeatureIds = $feature.Id
             }
             
             $PlayniteApi.Database.Games.Update($game)
@@ -64,15 +63,15 @@ function Remove-PlaystateBlacklist
     
     $featureName = "PlayState blacklist"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
-    [guid[]]$featureIds = $feature.Id
     
     $GameDatabase = $PlayniteApi.MainView.SelectedGames
     
     $CountInList = 0
+    
     foreach ($game in $GameDatabase) {
         if ($game.Features.name -contains $featureName)
         {
-            $game.FeatureIds.Remove($featureIds)
+            $game.FeatureIds.Remove($feature.Id)
             $PlayniteApi.Database.Games.Update($game)
             $CountInList++
             $__logger.Info("$($game.name) was removed from PlayState blacklist")
