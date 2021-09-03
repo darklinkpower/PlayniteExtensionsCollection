@@ -294,7 +294,7 @@ function Get-GoogleLogo
         # Create window
         $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
         $window.Content = $XMLForm
-        $window.Width = 830
+        $window.Width = 900
         $window.Height = 600
         $window.Title = "Extra Metadata Tools - Google Logo Search"
         $window.WindowStartupLocation = "CenterScreen"
