@@ -37,8 +37,8 @@ function GetGameMenuItems
     $menuItem14.FunctionName = "Start-ComponentSettings"
     $menuItem14.MenuSection = "$extensionName|$subSection"
 
-    $game = $menuArgs.Games | Select-Object -last 1
-    if ($game.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab")
+    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
+    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -eq "SteamLibrary")
     {
         $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
         $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameStorePageDescription")
