@@ -23,33 +23,20 @@ function Add-PlaystateBlacklist
         $scriptMainMenuItemActionArgs
     )
     
-    # Set Log Path
-    $playstateLogPath = Join-Path -Path $($PlayniteApi.Paths.ApplicationPath) -ChildPath "PlayState.log"
-    
-    # Log Startup
-    "-------------------------- $(Get-Date -Format $DateFormat) | INFO: PlayState 2.0 Add game to blacklist runtime started --------------------------"  | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
-    
-    # PlayState blacklist Feature
     $featureName = "PlayState blacklist"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
     [guid[]]$featureIds = $feature.Id
     
-    # Set GameDatabase
     $GameDatabase = $PlayniteApi.MainView.SelectedGames
     
-    # Set counters for added/already in list count
     $CountNotInList = 0
-    
-    # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
         if ($game.Features.name -contains $featureName)
         {
-            # Game in blacklist: increase count and log game
-            "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was already in PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+            $__logger.Info("$($game.name) was already in PlayState blacklist")
         }
         else
         {
-            # Game not in blacklist: add PlayState blacklist feature id, increase count and log game
             if ($game.FeatureIds) 
             {
                 $game.FeatureIds += $featureIds
@@ -60,14 +47,12 @@ function Add-PlaystateBlacklist
                 $game.FeatureIds = $featureIds
             }
             
-            # Update game in database
             $PlayniteApi.Database.Games.Update($game)
             $CountNotInList++
-            "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was added to PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+            $__logger.Info("$($game.name) was added to PlayState blacklist")
         }
     }
     
-    # Show finish dialogue with number of games added and games that already were in blacklist
     $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCBlacklistAddedResultsMessage") -f $CountNotInList), "PlayState")
 }
 
@@ -77,42 +62,37 @@ function Remove-PlaystateBlacklist
         $scriptMainMenuItemActionArgs
     )
     
-    # Set Log Path
-    $playstateLogPath = Join-Path -Path $($PlayniteApi.Paths.ApplicationPath) -ChildPath "PlayState.log"
-    
-    # Log Startup
-    "------------------------ $(Get-Date -Format $DateFormat) | INFO: PlayState 1.7 Remove game from blacklist runtime started -----------------------"  | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
-
-    # PlayState blacklist Feature
     $featureName = "PlayState blacklist"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
     [guid[]]$featureIds = $feature.Id
     
-    # Set GameDatabase
     $GameDatabase = $PlayniteApi.MainView.SelectedGames
     
-    # Set counters for removed/already in list count
     $CountInList = 0
-    
-    # Start Execution for each game in the database
     foreach ($game in $GameDatabase) {
         if ($game.Features.name -contains $featureName)
         {
-            # Game in blacklist: remove PlayState blacklist feature id, increase count and log game
             $game.FeatureIds.Remove($featureIds)
             $PlayniteApi.Database.Games.Update($game)
             $CountInList++
-            "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was removed from PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+            $__logger.Info("$($game.name) was removed from PlayState blacklist")
         }
         else
         {
-            # Game not in blacklist: increase count and log game
-            "$(Get-Date -Format $DateFormat) | INFO: $($game.name) was already in PlayState blacklist"  | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+            $__logger.Info("$($game.name) was already in PlayState blacklist")
         }
     }
     
-    # Show finish dialogue with number of games added and games that already were in blacklist
     $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCBlacklistRemovedResultsMessage") -f $CountInList), "PlayState")
+}
+
+function Write-ToLog
+{
+    param(
+        [string] $message
+    )
+
+    "$(Get-Date -Format 'yyyy/MM/dd HH:mm:ss:fff') | INFO: $message" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
 }
 
 function OnGameStarted
@@ -123,9 +103,7 @@ function OnGameStarted
     
     $game = $OnGameStartedEventArgs.Game
 
-    $global:playstateLogPath = Join-Path -Path $PlayniteApi.Paths.ApplicationPath -ChildPath "PlayState.log"
-    $global:DateFormat = 'yyyy/MM/dd HH:mm:ss:fff'
-    
+    $global:playstateLogPath = Join-Path -Path $PlayniteApi.Paths.ApplicationPath -ChildPath "PlayState.log"    
     $global:AhkScriptPath = Join-Path -Path $env:temp -ChildPath PlayState.ahk
     $global:AhkPidPath = Join-Path -Path $env:temp -ChildPath "PlayStatePID.txt"
 
@@ -133,18 +111,17 @@ function OnGameStarted
     if (Test-Path $ahkPidPath)
     {
         $processId = Get-Content $ahkPidPath
-        $processId = Get-Content $ahkPidPath
         Get-WmiObject -Class Win32_Process | Where-Object {$_.ProcessId -eq $processId} | ForEach-Object {
             try {
                 $_.Terminate() | Out-Null
+                Write-ToLog "AutoHotKey process stopped"
             } catch {
                 continue
             }
         }
         
-        "$(Get-Date -Format $DateFormat) | INFO: AutoHotKey process stopped" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
         Remove-Item -Path $ahkPidPath -Force -ErrorAction 'SilentlyContinue'
-        "$(Get-Date -Format $DateFormat) | INFO: Deleted $ahkPidPath" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+        Write-ToLog "Deleted $ahkPidPath"
     }
 
     # Check PlayState.log size and delete if bigger or equal than 50kb
@@ -153,19 +130,19 @@ function OnGameStarted
         if ($((Get-Item $playstateLogPath).length/1KB) -gt 50)
         {
             Remove-Item -Path $playstateLogPath -Force -ErrorAction 'SilentlyContinue'
-            "$(Get-Date -Format $DateFormat) | INFO: Deleted PlayState.log since size was equal or bigger than 50kb " | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+            Write-ToLog "Deleted PlayState.log since size was equal or bigger than 50kb"
         }
     }
     
-    "------------------------------------ $(Get-Date -Format $DateFormat) | INFO: PlayState 2.0 runtime started ------------------------------------" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
-    "$(Get-Date -Format $DateFormat) | INFO: Started OnGameStarted function" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
-    "$(Get-Date -Format $DateFormat) | INFO: Game launched: $($game.name). Plugin: $([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId))" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+    Write-ToLog "-----------------------PlayState 2.0 runtime started-----------------------"
+    Write-ToLog "Started OnGameStarted function"
+    Write-ToLog "Game launched: $($game.name). Plugin: $([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId))"
     
     $global:featureName = "PlayState blacklist"
     if ($game.Features.name -eq $featureName)
     {
-        "$(Get-Date -Format $DateFormat) | INFO: $($game.name) is in PlayState blacklist. Extension execution stopped" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
-        exit
+        Write-ToLog "$($game.name) is in PlayState blacklist. Extension execution stopped"
+        return
     }
     
     $emulatorExecutablePath = [string]::Empty
@@ -252,11 +229,11 @@ function OnGameStarted
                 "ENBInjector.exe",
                 "HavokBehaviorPostProcess.exe",
                 "*help*",
-                "instal",
+                "*instal*",
                 "LangSelect.exe",
                 "Language.exe",
                 "*Launch*",
-                "*loader",
+                "*loader*",
                 "MapCreator.exe",
                 "master_dat_fix_up.exe",
                 "md5sum.exe",
@@ -268,31 +245,31 @@ function OnGameStarted
                 "oalinst.exe",
                 "PalettestealerSuspender.exe",
                 "pak*.exe",
-                "patch",
+                "*patch*",
                 "planet_mapgen.exe",
                 "Papyrus*.exe",
                 "RADTools.exe",
                 "readspr.exe",
                 "register.exe",
                 "SekiroFPSUnlocker*",
-                "settings",
-                "setup",
+                "*settings*",
+                "*setup*",
                 "SCUEx64.exe",
                 "synchronicity.exe",
                 "syscheck.exe",
                 "SystemSurvey.exe",
                 "TES Construction Set.exe",
                 "Texmod.exe",
-                "uninstall",
-                "UnityCrashHandler*",
-                "x360ce",
-                "*Unpack",
+                "*unins*",
+                "*UnityCrashHandler*",
+                "*x360ce*",
+                "*Unpack*",
                 "*UnX_Calibrate*",
-                "update",
+                "*update*",
                 "UnrealCEFSubProcess.exe",
                 "url.exe",
-                "versioned_json.exe",
-                "vcredist*",
+                "*versioned_json.exe",
+                "*vcredist*",
                 "xtexconv.exe",
                 "xwmaencode.exe",
                 "Website.exe",
@@ -314,6 +291,7 @@ function OnGameStarted
             $lookupPath = Join-Path $gameDirectory.TrimEnd('\') -ChildPath "\*"
             Write-ToLog "Starting process detection. Lookup path: $LookupPath. Use exclusion: $($useExclusionList.ToString())"
             while ((Get-Date) -lt $LoopDateLimit) {
+                # Get-CimInstance is used because Get-Process can't obtain certain properties like the Path
                 $activeProcesses = Get-CimInstance -Class Win32_Process | Where-Object {$_.Path -like $LookupPath}
                 if ($activeProcesses.count -eq 0)
                 {
@@ -333,6 +311,7 @@ function OnGameStarted
                         foreach ($executable in $exesExclusionList) {
                             if ($_.Name -like $executable)
                             {
+                                $exclude = $true
                                 Write-ToLog "Process `"$($_.Name)`" excluded by `"$executable`""
                                 continue
                             }
@@ -531,10 +510,10 @@ function OnGameStopped
     
     $game = $OnGameStoppedEventArgs.Game
     
-    "$(Get-Date -Format $DateFormat) | INFO: Started OnGameStopped function" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+    Write-ToLog "Started OnGameStopped function"
     if ($game.Features.Name -eq $featureName)
     {
-        "$(Get-Date -Format $DateFormat) | INFO: $($game.name) is in PlayState blacklist. Extension execution stopped" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+        Write-ToLog "$($game.name) is in PlayState blacklist. Extension execution stopped"
         exit
     }
     
@@ -542,7 +521,7 @@ function OnGameStopped
     if (Test-Path $env:temp\PlayState.ahk)
     {
         Remove-Item $env:temp\PlayState.ahk -Force -ErrorAction 'SilentlyContinue'
-        "$(Get-Date -Format $DateFormat) | INFO: AutoHotKey PlayState.ahk temporal file deleted" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+        Write-ToLog "AutoHotKey PlayState.ahk temporal file deleted"
     }
     if (Test-Path $ahkPidPath)
     {
@@ -550,16 +529,16 @@ function OnGameStopped
         Get-WmiObject -Class Win32_Process | Where-Object {$_.ProcessId -eq $processId} | ForEach-Object {
             try {
                 $_.Terminate() | Out-Null
+                Write-ToLog "AutoHotKey process stopped"
             } catch {
                 continue
             }
         }
         
-        "$(Get-Date -Format $DateFormat) | INFO: AutoHotKey process stopped" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
         Remove-Item -Path $ahkPidPath -Force -ErrorAction 'SilentlyContinue'
-        "$(Get-Date -Format $DateFormat) | INFO: Deleted $ahkPidPath" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+        Write-ToLog "Deleted $ahkPidPath"
     }
     
     
-    "$(Get-Date -Format $DateFormat) | INFO: Finished OnGameStopped function" | Out-File -Encoding 'UTF8' -FilePath $playstateLogPath -Append
+    Write-ToLog "Finished OnGameStopped function"
 }
