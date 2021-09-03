@@ -613,11 +613,12 @@ function Get-SplashImagePath
 function OnGameStarting
 {
     param(
-        $game
+        $OnGameStartingEventArgs
     )
 
+    $game = $OnGameStartingEventArgs
     $settings = Get-Settings
-
+    
     if (($PlayniteApi.ApplicationInfo.Mode -eq "Desktop") -and ($settings.executeInDesktopMode -eq $false))
     {
         $__logger.Info(("Execution disabled for Desktop mode in settings" -f $game.Name))
@@ -848,6 +849,10 @@ function Invoke-VideoSplashScreen
 
 function OnGameStopped
 {
+    param(
+        $OnGameStoppedEventArgs
+    )
+    
     # Close splash window in case game was closed before maximum time limit
     Start-Job {
         $splashsScreenWindow = Get-Process | Where-Object {$_.MainWindowTitle -eq "PlayniteSplashScreenExtension"}
