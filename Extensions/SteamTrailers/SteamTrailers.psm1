@@ -5,17 +5,17 @@ function GetGameMenuItems
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSteamSdTrailerDescription")
+    $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuItemSteamSdTrailerDescription")
     $menuItem.FunctionName = "SteamTrailers480p"
     $menuItem.MenuSection = "Video"
    
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSteamHDTrailerDescription")
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuItemSteamHDTrailerDescription")
     $menuItem2.FunctionName = "SteamTrailersMax"
     $menuItem2.MenuSection = "Video"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSteamMicroTrailerDescription")
+    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription")
     $menuItem3.FunctionName = "SteamTrailersMicro"
     $menuItem3.MenuSection = "Video"
 
@@ -39,7 +39,7 @@ function Get-RequestStatusCode
         $__logger.Info("Error connecting to server. Error: $errorMessage")
         if ($statusCode -ne 'NotFound')
         {
-            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericConnectionErrorMessage") -f $ErrorMessage))
+            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_GenericConnectionErrorMessage") -f $ErrorMessage))
         }
         return $statusCode
     }
@@ -59,7 +59,7 @@ function Get-UriHeaders
     } catch {
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading headers. Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericGetHeadersErrorMessage") -f $ErrorMessage))
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_GenericGetHeadersErrorMessage") -f $ErrorMessage))
         return
     }
 }
@@ -79,7 +79,7 @@ function Get-DownloadString
     } catch {
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericFileDownloadError") -f $url, $errorMessage))
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_GenericFileDownloadError") -f $url, $errorMessage))
         return
     }
 }
@@ -191,7 +191,7 @@ function Get-SteamVideo
     }
     if ($isTargetSpecification -eq $false)
     {
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCPcGameNotSelectedMessage") -f $game.Name), "Steam Trailers")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_PcGameNotSelectedMessage") -f $game.Name), "Steam Trailers")
         exit
     }
 
@@ -205,7 +205,7 @@ function Get-SteamVideo
             $json = Get-DownloadString $steamApi | ConvertFrom-Json
         } catch {
             $ErrorMessage = $_.Exception.Message
-            $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGameInformationDownloadFailMessage") -f $appId, $errorMessage), "Steam Trailers")
+            $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_GameInformationDownloadFailMessage") -f $appId, $errorMessage), "Steam Trailers")
             exit
         }
         # Check if json has 'movie' information
@@ -227,14 +227,14 @@ function Get-SteamVideo
         else
         {
             # Error message if no video found
-            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoVideoAvailableMessage"), "Steam Trailers")
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_NoVideoAvailableMessage"), "Steam Trailers")
             exit
         }
     }
     else
     {
         # Error message if no Steam AppId and no steam link for games from other sources
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNoAppIdFoundMessage") -f $game.name), "Steam Trailers")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_NoAppIdFoundMessage") -f $game.name), "Steam Trailers")
         exit
     }
 }
@@ -321,6 +321,6 @@ function SteamTrailersMicro
     }
     elseif ($statusCode -ne 'NotFound')
     {
-        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoVideoAvailableMessage"), "Steam Trailers")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_NoVideoAvailableMessage"), "Steam Trailers")
     }
 }

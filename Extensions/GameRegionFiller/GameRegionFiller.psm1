@@ -5,7 +5,7 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemFillRegionAllGamesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCGame_Region_Filler_MenuItemFillRegionAllGamesDescription")
     $menuItem1.FunctionName = "GameRegionFiller"
     $menuItem1.MenuSection = "@Game Region Filler"
     
@@ -167,7 +167,7 @@ function GameRegionFiller
     # Show finish dialogue with results and ask if user wants to export results
     if ($RegionAdded -gt 0)
     {
-        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsRegionAddedMessage") -f $RegionAdded), "Game Region Filler", 4)
+        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Region_Filler_ResultsRegionAddedMessage") -f $RegionAdded), "Game Region Filler", 4)
         if ($ExportChoice -eq "Yes")
         {
             $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -181,12 +181,12 @@ function GameRegionFiller
                 {
                     $GamesProcessed | Select-Object Name, GameImagePath, Region, Platform | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
                 }
-                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExportSuccessMessage"), "Game Region Filler")
+                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Region_Filler_ExportSuccessMessage"), "Game Region Filler")
             }
         }
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCResultsNoRegionAddedMessage"))
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Region_Filler_ResultsNoRegionAddedMessage"))
     }
 }

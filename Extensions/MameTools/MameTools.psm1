@@ -5,27 +5,27 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemRenameRegionInNameDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MenuItemRenameRegionInNameDescription")
     $menuItem1.FunctionName = "Rename-WithInfo"
     $menuItem1.MenuSection = "@Mame Tools"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemRenameNoRegionInNameDescription")
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MenuItemRenameNoRegionInNameDescription")
     $menuItem2.FunctionName = "Rename-NoInfo"
     $menuItem2.MenuSection = "@Mame Tools"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetSnapAsBackgroundDescription")
+    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MenuItemSetSnapAsBackgroundDescription")
     $menuItem3.FunctionName = "Set-SnapshotAsCoverImage"
     $menuItem3.MenuSection = "@Mame Tools"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetSnapAsCoverDescription")
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MenuItemSetSnapAsCoverDescription")
     $menuItem4.FunctionName = "Set-SnapshotAsBackgroundImage"
     $menuItem4.MenuSection = "@Mame Tools"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemSetSnapAsCoverDescription")
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MenuItemSetSnapAsCoverDescription")
     $menuItem4.FunctionName = "Set-SnapshotAsBackgroundImage"
     $menuItem4.MenuSection = "@Mame Tools"
 
@@ -70,7 +70,7 @@ function Get-MamePath
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMameExecutableSelectMessage"), "MAME Tools")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MameExecutableSelectMessage"), "MAME Tools")
         $mamePath = $PlayniteApi.Dialogs.SelectFile("MAME executable|mame*.exe")
         if (!$mamePath)
         {
@@ -78,14 +78,14 @@ function Get-MamePath
         }
         [System.IO.File]::WriteAllLines($mameSavedPath, $mamePath)
         $__logger.Info("MAME renamer - Saved `"$mamePath`" executable path.")
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameExecutablePathSavedMessage") -f $mamePath), "MAME Tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MameExecutablePathSavedMessage") -f $mamePath), "MAME Tools")
     }
 
     if (!(Test-Path $mamePath))
     {
         [System.IO.File]::Delete($mameSavedPath)
         $__logger.Info("MAME renamer - Executable not found in `"$mamePath`" and saved path was deleted.")
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameExecutableNotFoundMessage") -f $mamePath), "MAME Tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_MameExecutableNotFoundMessage") -f $mamePath), "MAME Tools")
         return
     }
     return $mamePath
@@ -140,7 +140,7 @@ function Rename-SelectedMameGames
         }
     }
     
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $nameChanged), "MAME Tools")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_ResultsMessage") -f $nameChanged), "MAME Tools")
     $__logger.Info("Changed the name of $nameChanged games.")
 }
 
@@ -247,7 +247,7 @@ function Set-MameSnapshotToPlayniteMedia
 
     }
 
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSnapshotsImportResultsMessage") -f $snapshotsImportCount, $snapshotsMissingCount), "MAME Tools")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMameRenamer_SnapshotsImportResultsMessage") -f $snapshotsImportCount, $snapshotsMissingCount), "MAME Tools")
 }
 
 function Set-SnapshotAsCoverImage

@@ -1,4 +1,4 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMenuItemSearchSection">Search</sys:String>
-    <sys:String x:Key="LOCNoPcGamesSelectedMessage">No PC games selected.</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_MenuItemSearchSection">Search</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_NoPcGamesSelectedMessage">No PC games selected.</sys:String>
 </ResourceDictionary>

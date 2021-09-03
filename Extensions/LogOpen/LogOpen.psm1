@@ -5,7 +5,7 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemOpenLogDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCLog_Open_MenuItemOpenLogDescription")
     $menuItem1.FunctionName = "Open-Log"
 
     return $menuItem1

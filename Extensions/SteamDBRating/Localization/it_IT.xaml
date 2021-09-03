@@ -1,6 +1,0 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMenuItemGetRatingSelectedGamesDescription">Get rating for selected games</sys:String>
-    <sys:String x:Key="LOCResultsMessage" xml:space="preserve">Number of processed games: {0}
-Games that had a new Community Score added: {1}</sys:String>
-</ResourceDictionary>

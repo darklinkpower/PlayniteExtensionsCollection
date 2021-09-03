@@ -5,22 +5,22 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemPathUpdaterDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_MenuItemPathUpdaterDescription")
     $menuItem1.FunctionName = "InstallationPathUpdater"
     $menuItem1.MenuSection = "@Installation Status Updater"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemStatusUpdaterDescription")
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription")
     $menuItem2.FunctionName = "InstallationStatusUpdater"
     $menuItem2.MenuSection = "@Installation Status Updater"
     
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuAddIgnoreFeatureDescription")
+    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription")
     $menuItem3.FunctionName = "Add-IgnoreFeature"
     $menuItem3.MenuSection = "@Installation Status Updater"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuRemoveIgnoreFeatureDescription")
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription")
     $menuItem4.FunctionName = "Remove-IgnoreFeature"
     $menuItem4.MenuSection = "@Installation Status Updater"
 
@@ -111,7 +111,7 @@ function InstallationStatusUpdater
     # Show finish dialogue with results and ask if user wants to export results
     if ($GamesProcessed.count -gt 0)
     {
-        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCStatusUpdaterExportChoiceMessage") -f $MarkedUninstalled, $MarkedInstalled), "Installation Status Updater", 4)
+        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_StatusUpdaterExportChoiceMessage") -f $MarkedUninstalled, $MarkedInstalled), "Installation Status Updater", 4)
         if ($ExportChoice -eq "Yes")
         {
             $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -125,13 +125,13 @@ function InstallationStatusUpdater
                 {
                     $GamesProcessed | Select-Object Name, GameImagePath, InstallationStatus, Platform | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
                 }
-                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExportSuccessMessage"), "Installation Status Updater");
+                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_ExportSuccessMessage"), "Installation Status Updater");
             }
         }
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoChangesResultsMessage"), "Installation Status Updater")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_NoChangesResultsMessage"), "Installation Status Updater")
     }
 }
 
@@ -151,7 +151,7 @@ function InstallationPathUpdater
     [System.Collections.Generic.List[Object]]$GamesProcessed = @()
     
     # Select new directory to point installations
-    $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCPathUpdaterSelectDirectoryMessage"), "Installation Path Updater")
+    $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_PathUpdaterSelectDirectoryMessage"), "Installation Path Updater")
     $NewDir = $PlayniteApi.Dialogs.SelectFolder()
     if (!$NewDir)
     {
@@ -185,7 +185,7 @@ function InstallationPathUpdater
     # Show finish dialogue with results and ask if user wants to export results
     if ($countPathChanged -gt 0)
     {
-        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCPathUpdaterExportChoiceMessage") -f $countPathChanged), "Installation Path Updater", 4)
+        $ExportChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_PathUpdaterExportChoiceMessage") -f $countPathChanged), "Installation Path Updater", 4)
         if ($ExportChoice -eq "Yes")
         {
             $ExportPath = $PlayniteApi.Dialogs.SaveFile("CSV|*.csv|Formated TXT|*.txt")
@@ -199,13 +199,13 @@ function InstallationPathUpdater
                 {
                     $GamesProcessed | Select-Object Name, PathOld, PathNew | Format-Table -AutoSize | Out-File $ExportPath -Encoding 'UTF8'
                 }
-                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExportSuccessMessage"), "Installation Path Updater")
+                $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_ExportSuccessMessage"), "Installation Path Updater")
             }
         }
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoChangesResultsMessage"), "Installation Path Updater")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_NoChangesResultsMessage"), "Installation Path Updater")
     }
     Invoke-InstallationStatusCheck
 }
@@ -254,7 +254,7 @@ function Add-IgnoreFeature
     }
     
     # Show finish dialogue
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCStatusUpdaterAddIgnoreFeatureMessage") -f $featureName, $featureAdded),"Installation Status Updater")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage") -f $featureName, $featureAdded),"Installation Status Updater")
 }
 
 function Remove-IgnoreFeature
@@ -291,5 +291,5 @@ function Remove-IgnoreFeature
     }
     
     # Show results dialogue
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCStatusUpdaterRemoveIgnoreFeatureMessage") -f $featureName, $featureRemoved),"Installation Status Updater")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage") -f $featureName, $featureRemoved),"Installation Status Updater")
 }

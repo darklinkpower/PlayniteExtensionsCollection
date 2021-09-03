@@ -1,22 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMenuItemPathUpdaterDescription">Path Updater - Point to new path of selected games</sys:String>
-    <sys:String x:Key="LOCMenuItemStatusUpdaterDescription">Status Updater - Check installation status</sys:String>
-    <sys:String x:Key="LOCMenuAddIgnoreFeatureDescription">Status Updater - Add selected games to ignore list</sys:String>
-    <sys:String x:Key="LOCMenuRemoveIgnoreFeatureDescription">Status Updater - Remove selected games from ignore list</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemPathUpdaterDescription">Path Updater - Point to new path of selected games</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Status Updater - Check installation status</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Status Updater - Add selected games to ignore list</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Status Updater - Remove selected games from ignore list</sys:String>
 
-    <sys:String x:Key="LOCNoChangesResultsMessage" xml:space="preserve">Finished.
+    <sys:String x:Key="LOCInstallation_Status_Updater_NoChangesResultsMessage" xml:space="preserve">Finished.
 No changes were made.</sys:String>
-    <sys:String x:Key="LOCStatusUpdaterExportChoiceMessage" xml:space="preserve">Previously installed games were set as uninstalled: {0}
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterExportChoiceMessage" xml:space="preserve">Previously installed games were set as uninstalled: {0}
 Previously uninstalled games were set as installed: {1}
 
 Do you want to export results?</sys:String>
 
 
-    <sys:String x:Key="LOCExportSuccessMessage">Results exported successfully.</sys:String>
-    <sys:String x:Key="LOCPathUpdaterSelectDirectoryMessage">Select the new folder path to point the selected games.</sys:String>
-    <sys:String x:Key="LOCPathUpdaterExportChoiceMessage" xml:space="preserve">Changed install path of {0} games
+    <sys:String x:Key="LOCInstallation_Status_Updater_ExportSuccessMessage">Results exported successfully.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_PathUpdaterSelectDirectoryMessage">Select the new folder path to point the selected games.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_PathUpdaterExportChoiceMessage" xml:space="preserve">Changed install path of {0} games
 
 Do you want to export results?</sys:String>
-    <sys:String x:Key="LOCStatusUpdaterAddIgnoreFeatureMessage">Added "{0}" feature to {1} game(s).</sys:String>
-    <sys:String x:Key="LOCStatusUpdaterRemoveIgnoreFeatureMessage">Removed "{0}" feature from {1} game(s).</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Added "{0}" feature to {1} game(s).</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Removed "{0}" feature from {1} game(s).</sys:String>
 </ResourceDictionary>

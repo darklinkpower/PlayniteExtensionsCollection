@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMenuItemYoutubeReviewDescription">Youtube Review</sys:String>
-    <sys:String x:Key="LOCMenuItemYoutubeTrailerDescription">Youtube Trailer</sys:String>
-    <sys:String x:Key="LOCGenericFileDownloadErrorMessage">Error downloading file from url "{0}". Error: {1}</sys:String>
-    <sys:String x:Key="LOCNoVideoFoundMessage">No video found in Youtube search.</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemYoutubeReviewDescription">Youtube Review</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemYoutubeTrailerDescription">Youtube Trailer</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_GenericFileDownloadErrorMessage">Error downloading file from url "{0}". Error: {1}</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_NoVideoFoundMessage">No video found in Youtube search.</sys:String>
 </ResourceDictionary>

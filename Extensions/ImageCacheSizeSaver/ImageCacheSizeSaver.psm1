@@ -5,7 +5,7 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemProcessImagesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription")
     $menuItem1.FunctionName = "Invoke-ImageCacheSizeSaver"
     $menuItem1.MenuSection = "@Image Cache Size Saver"
 
@@ -57,7 +57,7 @@ function Invoke-ImageCacheSizeSaver
         }
         else
         {
-            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMagickExecutableSelectMessage"), "Image Cache Size Saver")
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage"), "Image Cache Size Saver")
             $MagickExecutablePath = $PlayniteApi.Dialogs.SelectFile("magick|magick.exe")
             if (!$MagickExecutablePath)
             {
@@ -65,14 +65,14 @@ function Invoke-ImageCacheSizeSaver
             }
             [System.IO.File]::WriteAllLines($MagickConfigPath, $MagickExecutablePath)
             $__logger.Info("Image Cache Size Saver - Saved executable Path via user input in `"$MagickExecutablePath`".")
-            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCMagickExecutablePathSavedMessage"), "Image Cache Size Saver")
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage"), "Image Cache Size Saver")
         }
 
         if (!(Test-Path $MagickExecutablePath))
         {
             [System.IO.File]::Delete($MagickConfigPath)
             $__logger.Info("Image Cache Size Saver - Executable not found in user configured path `"$MagickExecutablePath`".")
-            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCMagickExecutableNotFoundMessage") -f $MagickExecutablePath), "Image Cache Size Saver")
+            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage") -f $MagickExecutablePath), "Image Cache Size Saver")
             exit
         }
     }
@@ -150,5 +150,5 @@ function Invoke-ImageCacheSizeSaver
     
     [string]$ImagesSizeAfter = "{0:N2}" -f ((Get-ChildItem -path $PathCacheDirectory -Include $ImageExtensions | Measure-Object -Sum Length).Sum / 1MB)
     $__logger.Info("Image Cache Size Saver - Image processing finished. Images Processed: $processedImagesCount. Images that had size reduced: $ProcessedLessSize. Errors: $ProcessedError. Image Cache Size Before: $ImagesSizeBefore MB. Image Cache Size After: $ImagesSizeAfter MB")
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $processedImagesCount, $ProcessedLessSize, $ProcessedError, $ImagesSizeBefore, $ImagesSizeAfter), "Image Cache Size Saver")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCImage_Cache_Size_Saver_ResultsMessage") -f $processedImagesCount, $ProcessedLessSize, $ProcessedError, $ImagesSizeBefore, $ImagesSizeAfter), "Image Cache Size Saver")
 }

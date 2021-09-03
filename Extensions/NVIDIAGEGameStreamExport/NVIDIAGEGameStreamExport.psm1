@@ -5,7 +5,7 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemExportSelectedGamesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_GE_GameStream_Export_MenuItemExportSelectedGamesDescription")
     $menuItem1.FunctionName = "NVIDIAGameStreamExport"
     $menuItem1.MenuSection = "@NVIDIA GE GameStream Export"
     
@@ -103,5 +103,5 @@ function NVIDIAGameStreamExport
     }
 
     # Show finish dialogue with shortcut creation count
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $ShortcutsCreatedCount), "NVIDIA GameStream Export")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_GE_GameStream_Export_ResultsMessage") -f $ShortcutsCreatedCount), "NVIDIA GameStream Export")
 }

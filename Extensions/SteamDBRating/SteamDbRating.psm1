@@ -5,7 +5,7 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGetRatingSelectedGamesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_DB_Rating_MenuItemGetRatingSelectedGamesDescription")
     $menuItem1.FunctionName = "SteamDbRating"
     $menuItem1.MenuSection = "@SteamDB Rating"
 
@@ -95,5 +95,5 @@ function SteamDbRating
     }
     
     # Show finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $GameDatabase.Count, $CountScoreAdded), "SteamDB Rating")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_DB_Rating_ResultsMessage") -f $GameDatabase.Count, $CountScoreAdded), "SteamDB Rating")
 }

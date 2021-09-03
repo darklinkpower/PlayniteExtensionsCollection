@@ -5,12 +5,12 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemFormatSelectedDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCLinks_Sorter_MenuItemFormatSelectedDescription")
     $menuItem1.FunctionName = "Format-SelectedGames"
     $menuItem1.MenuSection = "@Links Sorter"
     
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemFormatAllDescription")
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCLinks_Sorter_MenuItemFormatAllDescription")
     $menuItem2.FunctionName = "Format-AllGames"
     $menuItem2.MenuSection = "@Links Sorter"
     
@@ -37,7 +37,7 @@ function Format-Links
     }
     
     # Show finish dialogue with shortcut creation count
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $SortedGames), "Links Sorter");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCLinks_Sorter_ResultsMessage") -f $SortedGames), "Links Sorter");
 }
 
 function Format-SelectedGames

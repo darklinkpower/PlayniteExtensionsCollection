@@ -7,7 +7,7 @@ function GetMainMenuItems
     $ExtensionName = "Game Engine Checker"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddTagSelectedGamesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCGame_Engine_Checker_MenuItemAddTagSelectedGamesDescription")
     $menuItem1.FunctionName = "Add-EngineTag"
     $menuItem1.MenuSection = "@$ExtensionName"
 
@@ -119,7 +119,7 @@ function Add-EngineTag
             $gameInfo = $DownloadedString | ConvertFrom-Json
         } catch {
             $ErrorMessage = $_.Exception.Message
-            $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCDownloadErrorMessage") -f $game.name, $ErrorMessage), $ExtensionName)
+            $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Engine_Checker_DownloadErrorMessage") -f $game.name, $ErrorMessage), $ExtensionName)
             break
         }
 
@@ -161,7 +161,7 @@ function Add-EngineTag
     }
 
     # Show finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $CountertagAdded), $ExtensionName)
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Engine_Checker_ResultsMessage") -f $CountertagAdded), $ExtensionName)
 }
 
 function Get-SteamAppList
@@ -188,7 +188,7 @@ function Get-SteamAppList
     } catch {
         $ErrorMessage = $_.Exception.Message
         $__logger.Error("$ExtensionName - Error downloading Steam AppList database. Error: $ErrorMessage")
-        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteamAppListDownloadErrorMessage") -f $ErrorMessage), $ExtensionName)
+        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Engine_Checker_SteamAppListDownloadErrorMessage") -f $ErrorMessage), $ExtensionName)
         exit
     }
 }

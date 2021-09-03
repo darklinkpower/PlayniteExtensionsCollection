@@ -5,7 +5,7 @@ function GetMainMenuItems
     )
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemCheckFreestyleEnabledGamesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_MenuItemCheckFreestyleEnabledGamesDescription")
     $menuItem1.FunctionName = "Update-IsFreestyleEnabled"
     $menuItem1.MenuSection = "@NVIDIA Freestyle checker"
 
@@ -35,7 +35,7 @@ function Update-IsFreestyleEnabled
     } catch {
         $webClient.Dispose()
         $errorMessage = $_.Exception.Message
-        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNvidiaJsonDownloadFailErrorMessage") -f $errorMessage), $ExtensionName)
+        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage") -f $errorMessage), $ExtensionName)
         exit
     }
     
@@ -50,7 +50,7 @@ function Update-IsFreestyleEnabled
     }
     if ($SupportedGames.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoSupportedGamesErrorMessage"), $ExtensionName)
+        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage"), $ExtensionName)
         exit
     }
 
@@ -109,5 +109,5 @@ function Update-IsFreestyleEnabled
     }
 
     # Show finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $FreestyleEnabled, $featureName, $CounterFeatureAdded), $ExtensionName)
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_ResultsMessage") -f $FreestyleEnabled, $featureName, $CounterFeatureAdded), $ExtensionName)
 }

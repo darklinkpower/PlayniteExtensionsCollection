@@ -5,35 +5,35 @@ function GetGameMenuItems
     )
 
     $extensionName = "Steam Viewer"
-    $subSection = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemComponentsSection")
+    $subSection = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentsSection")
     
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem9.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemComponentActivateProductDescription")
+    $menuItem9.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentActivateProductDescription")
     $menuItem9.FunctionName = "Start-ComponentActivateProduct"
     $menuItem9.MenuSection = "$extensionName|$subSection"
 
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemComponentDownloadsDescription")
+    $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentDownloadsDescription")
     $menuItem10.FunctionName = "Start-ComponentDownloads"
     $menuItem10.MenuSection = "$extensionName|$subSection"
     
     $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem11.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemComponentFriendsDescription")
+    $menuItem11.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentFriendsDescription")
     $menuItem11.FunctionName = "Start-ComponentFriends"
     $menuItem11.MenuSection = "$extensionName|$subSection"
 
     $menuItem12 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem12.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemNewsDescription")
+    $menuItem12.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemNewsDescription")
     $menuItem12.FunctionName = "Start-ComponentNews"
     $menuItem12.MenuSection = "$extensionName|$subSection"
 
     $menuItem13 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem13.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemComponentScreenshotsDescription")
+    $menuItem13.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentScreenshotsDescription")
     $menuItem13.FunctionName = "Start-ComponentScreenshots"
     $menuItem13.MenuSection = "$extensionName|$subSection"
 
     $menuItem14 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem14.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemComponentSettingsDescription")
+    $menuItem14.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentSettingsDescription")
     $menuItem14.FunctionName = "Start-ComponentSettings"
     $menuItem14.MenuSection = "$extensionName|$subSection"
 
@@ -41,42 +41,42 @@ function GetGameMenuItems
     if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -eq "SteamLibrary")
     {
         $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameStorePageDescription")
+        $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameStorePageDescription")
         $menuItem1.FunctionName = "Start-StorePage"
         $menuItem1.MenuSection = $extensionName
 
         $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameCommunityHubDescription")
+        $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameCommunityHubDescription")
         $menuItem2.FunctionName = "Start-CommunityHub"
         $menuItem2.MenuSection = $extensionName
 
         $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameDiscussionsDescription")
+        $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameDiscussionsDescription")
         $menuItem3.FunctionName = "Start-Discussions"
         $menuItem3.MenuSection = $extensionName
 
         $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameGuidesDescription")
+        $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameGuidesDescription")
         $menuItem4.FunctionName = "Start-Guides"
         $menuItem4.MenuSection = $extensionName
         
         $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameNewsDescription")
+        $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameNewsDescription")
         $menuItem5.FunctionName = "Start-News"
         $menuItem5.MenuSection = $extensionName
 
         $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameAchievementsDescription")
+        $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameAchievementsDescription")
         $menuItem6.FunctionName = "Start-Achievements"
         $menuItem6.MenuSection = $extensionName
 
         $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGamePointsShopDescription")
+        $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGamePointsShopDescription")
         $menuItem7.FunctionName = "Start-PointsShop"
         $menuItem7.MenuSection = $extensionName
 
         $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemGameLibraryDescription")
+        $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameLibraryDescription")
         $menuItem8.FunctionName = "Start-Library"
         $menuItem8.MenuSection = $extensionName
 

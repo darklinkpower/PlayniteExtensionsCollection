@@ -5,12 +5,12 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddGamesIdUrlDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_MenuItemAddGamesIdUrlDescription")
     $menuItem1.FunctionName = "SteamGameImporter"
     $menuItem1.MenuSection = "@Steam Game Importer"
     
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddGamesDepressurizerDescription")
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription")
     $menuItem2.FunctionName = "DepressurizerProfileImporter"
     $menuItem2.MenuSection = "@Steam Game Importer"
 
@@ -75,7 +75,7 @@ function DepressurizerProfileImporter
         }
     }
     # Show dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $AddedGamesCount), "Steam Game Importer")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_ResultsMessage") -f $AddedGamesCount), "Steam Game Importer")
 }
 
 function SteamGameImporter
@@ -103,7 +103,7 @@ function SteamGameImporter
     $UrlRegex = "https?:\/\/store.steampowered.com\/app\/(\d+)"
     
     # Input window for Steam Store URL or Steam AppId
-    $UserInput = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCRequestInputSteamIdUrlMessage"), "Steam Game Importer", "")
+    $UserInput = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage"), "Steam Game Importer", "")
     if ($UserInput.SelectedString)
     {
         # Create AppIds Collection
@@ -164,7 +164,7 @@ function SteamGameImporter
                     {
                         if (!$AddUnknownChoice)
                         {
-                            $AddUnknownChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCInvalidSteamIdWarningMessage") -f $AppId), "Steam Game Importer", 4)
+                            $AddUnknownChoice = $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_InvalidSteamIdWarningMessage") -f $AppId), "Steam Game Importer", 4)
                         }
                         if ($AddUnknownChoice -ne "Yes")
                         {
@@ -174,7 +174,7 @@ function SteamGameImporter
                     }
                 } catch {
                     $errorMessage = $_.Exception.Message
-                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $AppId, $errorMessage), "Steam Game Importer")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_ResultsMessage") -f $AppId, $errorMessage), "Steam Game Importer")
                     break
                 }
                 
@@ -193,11 +193,11 @@ function SteamGameImporter
         }	
         else
         {
-            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCInputNoValidAppIdsMessage"), "Steam Game Importer")
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_InputNoValidAppIdsMessage"), "Steam Game Importer")
         }
 
         # Show dialogue with results
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $AddedGamesCount), "Steam Game Importer")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Game_Importer_ResultsMessage") -f $AddedGamesCount), "Steam Game Importer")
         
     }
 }

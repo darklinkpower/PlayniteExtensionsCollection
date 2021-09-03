@@ -5,12 +5,12 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddToBlacklistDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCPlayState_MenuItemAddToBlacklistDescription")
     $menuItem1.FunctionName = "Add-PlaystateBlacklist"
     $menuItem1.MenuSection = "@PlayState"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemRemoveFromBlacklistDescription")
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCPlayState_MenuItemRemoveFromBlacklistDescription")
     $menuItem2.FunctionName = "Remove-PlaystateBlacklist"
     $menuItem2.MenuSection = "@PlayState"
     
@@ -52,7 +52,7 @@ function Add-PlaystateBlacklist
         }
     }
     
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCBlacklistAddedResultsMessage") -f $CountNotInList), "PlayState")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCPlayState_BlacklistAddedResultsMessage") -f $CountNotInList), "PlayState")
 }
 
 function Remove-PlaystateBlacklist
@@ -82,7 +82,7 @@ function Remove-PlaystateBlacklist
         }
     }
     
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCBlacklistRemovedResultsMessage") -f $CountInList), "PlayState")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCPlayState_BlacklistRemovedResultsMessage") -f $CountInList), "PlayState")
 }
 
 function Write-ToLog

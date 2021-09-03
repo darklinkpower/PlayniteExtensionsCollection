@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMenuItemFillRegionAllGamesDescription">Fill Region of games</sys:String>
-    <sys:String x:Key="LOCResultsRegionAddedMessage" xml:space="preserve">Added region to {0} game(s).
+    <sys:String x:Key="LOCGame_Region_Filler_MenuItemFillRegionAllGamesDescription">Fill Region of games</sys:String>
+    <sys:String x:Key="LOCGame_Region_Filler_ResultsRegionAddedMessage" xml:space="preserve">Added region to {0} game(s).
 
 Do you want to export results?</sys:String>
-    <sys:String x:Key="LOCResultsNoRegionAddedMessage">No region information was added to any game.</sys:String>
-    <sys:String x:Key="LOCExportSuccessMessage">Results exported successfully.</sys:String>
+    <sys:String x:Key="LOCGame_Region_Filler_ResultsNoRegionAddedMessage">No region information was added to any game.</sys:String>
+    <sys:String x:Key="LOCGame_Region_Filler_ExportSuccessMessage">Results exported successfully.</sys:String>
 </ResourceDictionary>

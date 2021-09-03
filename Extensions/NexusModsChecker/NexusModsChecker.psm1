@@ -7,12 +7,12 @@ function GetMainMenuItems
     $ExtensionName = "Nexus Mods checker"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddLinkSelectedGamesDescription")
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription")
     $menuItem1.FunctionName = "Invoke-AddToSelectedGames"
     $menuItem1.MenuSection = "@$ExtensionName"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemAddLinkAllGamesDescription")
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription")
     $menuItem2.FunctionName = "Invoke-AddToAllGames"
     $menuItem2.MenuSection = "@$ExtensionName"
 
@@ -54,7 +54,7 @@ function Get-DownloadString
     } catch {
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGenericFileDownloadError") -f $url, $errorMessage))
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_GenericFileDownloadError") -f $url, $errorMessage))
         return
     }
 }
@@ -69,7 +69,7 @@ function Add-NexusFeatureLinks
     
     if ($gameDatabase.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoGamesInSelectionMessage"), $ExtensionName)
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_NoGamesInSelectionMessage"), $ExtensionName)
     }
 
     $featureName = "Nexus Mods"
@@ -90,7 +90,7 @@ function Add-NexusFeatureLinks
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNoGamesFoundInNexusErrorMessage"), $ExtensionName)
+        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage"), $ExtensionName)
         exit
     }
 
@@ -171,5 +171,5 @@ function Add-NexusFeatureLinks
     }
 
     # Show finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCResultsMessage") -f $modsAvailable, $featureName, $CounterFeatureAdded, $nexusLinkAdded), $ExtensionName)
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_ResultsMessage") -f $modsAvailable, $featureName, $CounterFeatureAdded, $nexusLinkAdded), $ExtensionName)
 }
