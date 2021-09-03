@@ -1,7 +1,7 @@
 function GetGameMenuItems
 {
     param(
-        $menuArgs
+        $scriptGameMenuItemActionArgs
     )
 
     $extensionName = "Steam Viewer"

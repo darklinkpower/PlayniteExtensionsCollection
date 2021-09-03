@@ -1,7 +1,7 @@
 function GetMainMenuItems
 {
     param(
-        $menuArgs
+        $getMainMenuItemsArgs
     )
 
     $ExtensionName = "Nexus Mods checker"

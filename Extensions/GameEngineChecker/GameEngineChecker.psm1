@@ -1,7 +1,7 @@
 function GetMainMenuItems
 {
     param(
-        $menuArgs
+        $getMainMenuItemsArgs
     )
 
     $ExtensionName = "Game Engine Checker"

@@ -1,7 +1,7 @@
 function GetMainMenuItems
 {
     param(
-        $menuArgs
+        $getMainMenuItemsArgs
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
@@ -157,7 +157,10 @@ function Get-SteamTags
         $PlayniteApi.Dialogs.ShowMessage("No games selected")
         return
     }
-    Set-GlobalAppList $false
+    if ($null -eq $appList)
+    {
+        Set-GlobalAppList $false
+    }
     $regex = 'InitAppTagModal\([^[]+([^\n]+)'
     $CountertagsAdded = 0
 

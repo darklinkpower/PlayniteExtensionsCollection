@@ -1,7 +1,7 @@
 function GetGameMenuItems
 {
     param(
-        $menuArgs
+        $scriptGameMenuItemActionArgs
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
@@ -458,7 +458,10 @@ function Set-SteamVideo
     )
     
     $settings = Get-Settings
-    Set-GlobalAppList $false
+    if ($null -eq $appList)
+    {
+        Set-GlobalAppList $false
+    }
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     $global:appListDownloaded = $false
     $videoSetCount = 0

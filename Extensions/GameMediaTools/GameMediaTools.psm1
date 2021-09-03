@@ -1,7 +1,7 @@
 function GetMainMenuItems
 {
     param(
-        $menuArgs
+        $getMainMenuItemsArgs
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
@@ -25,7 +25,7 @@ function GetMainMenuItems
 function GetGameMenuItems
 {
     param(
-        $menuArgs
+        $scriptGameMenuItemActionArgs
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
@@ -37,6 +37,11 @@ function GetGameMenuItems
 
 function OpenMetadataFolder
 {
+    
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+
     # Set GameDatabase
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     
@@ -72,6 +77,9 @@ function Get-MissingMediaStats
 
 function MissingMediaStatsSelection
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
     
     # Get information of missing media
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
@@ -88,6 +96,10 @@ function MissingMediaStatsSelection
 
 function MissingMediaStatsAll
 {   
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     # Get information of missing media
     $gameDatabase = $PlayniteApi.Database.Games
     $selection = "all games"
@@ -96,6 +108,10 @@ function MissingMediaStatsAll
 
 function OpenMenu
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+
     # Load assemblies
     Add-Type -AssemblyName PresentationCore
     Add-Type -AssemblyName PresentationFramework

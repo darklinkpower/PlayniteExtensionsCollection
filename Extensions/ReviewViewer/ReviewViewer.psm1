@@ -1,7 +1,7 @@
 function GetGameMenuItems
 {
     param(
-      $menuArgs
+        $getGameMenuItemsArgs
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
@@ -24,7 +24,7 @@ function GetGameMenuItems
 function Invoke-ReviewViewer
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
 
     Get-YoutubeVideoId "Review"
@@ -223,6 +223,10 @@ function Get-SteamReviewsSummary
 
 function Invoke-ReviewReader
 {   
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     # Set GameDatabase
     $game = $PlayniteApi.MainView.SelectedGames[-1]
 
@@ -624,7 +628,11 @@ function Get-SteamAppId
         }
     }
 
-    Set-GlobalAppList
+    if ($null -eq $appList)
+    {
+        Set-GlobalAppList $false
+    }
+    
     $gameName = $game.Name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
     if ($null -ne $appList[$gameName])
     {

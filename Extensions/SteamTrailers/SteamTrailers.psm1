@@ -1,7 +1,7 @@
 function GetGameMenuItems
 {
     param(
-        $menuArgs
+        $scriptGameMenuItemActionArgs
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
