@@ -655,7 +655,7 @@ function Get-VideoMicrotrailerFromVideo
 function Get-VideoMicrotrailerFromTrailer
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -791,7 +791,7 @@ function Remove-DownloadedVideos
 function Set-YouTubeVideo
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -914,7 +914,7 @@ function Invoke-TempFilesCleanup
 function Invoke-YoutubeSearchWindow
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1094,7 +1094,7 @@ function Set-YouTubeVideoManual
 function Remove-VideoTrailer
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1104,7 +1104,7 @@ function Remove-VideoTrailer
 function Remove-VideoMicrotrailer
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1114,7 +1114,7 @@ function Remove-VideoMicrotrailer
 function Set-VideoManuallyTrailer
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1124,7 +1124,7 @@ function Set-VideoManuallyTrailer
 function Set-VideoManuallyMicrotrailer
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1134,7 +1134,7 @@ function Set-VideoManuallyMicrotrailer
 function Get-SteamVideoSd
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1144,7 +1144,7 @@ function Get-SteamVideoSd
 function Get-SteamVideoHd
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1154,7 +1154,7 @@ function Get-SteamVideoHd
 function Get-SteamVideoMicro
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Set-MandatorySettings
@@ -1317,7 +1317,7 @@ function Update-CollectionExtraAssetsStatus
 function Update-AssetsStatusGameDatabase
 {
     param(
-        $scriptMainMenuItemActionArgs
+        $scriptGameMenuItemActionArgs
     )
     
     Update-CollectionExtraAssetsStatus $PlayniteApi.Database.Games $true

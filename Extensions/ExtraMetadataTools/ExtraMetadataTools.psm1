@@ -64,7 +64,7 @@ function GetGameMenuItems
     $menuItem12.FunctionName = "Get-GoogleLogo"
     $menuItem12.MenuSection = "Extra Metadata tools|Logos"
 
-    return $menuItem, $menuItem2, $menuItem11, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10
+    return $menuItem, $menuItem2, $menuItem11, $menuItem3, $menuItem4, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem12
 }
 
 function OnApplicationStarted
@@ -197,7 +197,11 @@ function Get-GoogleResultsArray
 
 function Get-GoogleLogo
 {
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
+    $gameDatabase = $scriptGameMenuItemActionArgs.Games
     if ($gameDatabase.count -gt 1)
     {
         $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
@@ -334,8 +338,7 @@ function Invoke-DirectoryOpen
         $scriptGameMenuItemActionArgs
     )
     
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    foreach ($game in $gameDatabase) {
+    foreach ($game in $scriptGameMenuItemActionArgs.Games) {
         $directory = Set-GameDirectory $game
         Invoke-Item $Directory
     }
@@ -358,6 +361,10 @@ function Set-GameDirectory
 
 function Invoke-ThemesDirectoryRootOpen
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $directory = $PlayniteApi.Paths.ConfigurationPath + "\ExtraMetadata\Themes"
     if(!(Test-Path $directory))
     {
@@ -506,10 +513,9 @@ function Get-SteamLogos
     )
     
     # Set GameDatabase
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     $logoUriTemplate = "https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png"
     $counter = 0
-    foreach ($game in $gameDatabase) {
+    foreach ($game in $scriptGameMenuItemActionArgs.Games) {
         if ($null -eq $game.Platforms)
         {
             continue
@@ -834,6 +840,10 @@ function Get-SgdbRequestUrl
 
 function Get-SgdbLogo
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $sgdbApiKey = Get-SgdbApiKey
     if ([string]::IsNullOrEmpty($sgdbApiKey))
     {
