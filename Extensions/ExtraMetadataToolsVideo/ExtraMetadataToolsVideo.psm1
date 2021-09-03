@@ -302,7 +302,7 @@ function Get-DownloadFile
 function Get-SteamAppList
 {
     param (
-        $appListPath
+        $steamAppListPath
     )
 
     $uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
@@ -313,9 +313,9 @@ function Get-SteamAppList
         foreach ($steamApp in $appListContent) {
             $steamApp.name = $steamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         }
-        ConvertTo-Json $appListContent -Depth 2 -Compress | Out-File -Encoding 'UTF8' -FilePath $appListPath
+        ConvertTo-Json $appListContent -Depth 2 -Compress | Out-File -Encoding 'UTF8' -FilePath $steamAppListPath
         $__logger.Info("Downloaded AppList")
-        $global:appListDownloaded = $true
+        $global:steamAppListDownloaded = $true
     }
     else
     {
@@ -330,21 +330,21 @@ function Set-GlobalAppList
     )
     
     # Get Steam AppList
-    $appListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
-    if (!(Test-Path $appListPath) -or ($forceDownload -eq $true))
+    $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
+    if (!(Test-Path $steamAppListPath) -or ($forceDownload -eq $true))
     {
-        Get-SteamAppList -AppListPath $appListPath
+        Get-SteamAppList -AppListPath $steamAppListPath
     }
-    $global:appList = @{}
-    [object]$appListJson = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
+    $global:steamAppList = @{}
+    [object]$appListJson = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
     foreach ($steamApp in $appListJson) {
         # Use a try block in case multple apps use the same name
         try {
-            $appList.add($steamApp.name, $steamApp.appid)
+            $steamAppList.add($steamApp.name, $steamApp.appid)
         } catch {}
     }
 
-    $__logger.Info(("Global applist set from {0}" -f $appListPath))
+    $__logger.Info(("Global applist set from {0}" -f $steamAppListPath))
 }
 
 function Get-SteamAppId
@@ -375,9 +375,9 @@ function Get-SteamAppId
     }
 
     $gameName = $game.Name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
-    if ($null -ne $appList[$gameName])
+    if ($null -ne $steamAppList[$gameName])
     {
-        $appId = $appList[$gameName].ToString()
+        $appId = $steamAppList[$gameName].ToString()
         $__logger.Info(("Game: {0}, appId {1} found via AppList" -f $game.Name, $appId))
         return $appId
     }
@@ -385,15 +385,15 @@ function Get-SteamAppId
     if ((!$appId) -and ($appListDownloaded -eq $false))
     {
         # Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
-        $appListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
-        $AppListLastWrite = (Get-Item $appListPath).LastWriteTime
+        $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
+        $AppListLastWrite = (Get-Item $steamAppListPath).LastWriteTime
         $timeSpan = New-Timespan -days 2
         if (((Get-date) - $AppListLastWrite) -gt $timeSpan)
         {
             Set-GlobalAppList $true
-            if ($null -ne $appList[$gameName])
+            if ($null -ne $steamAppList[$gameName])
             {
-                $appId = $appList[$gameName].ToString()
+                $appId = $steamAppList[$gameName].ToString()
                 $__logger.Info(("Game: {0}, appId {1} found via AppList" -f $game.Name, $appId))
                 return $appId
             }
@@ -458,12 +458,12 @@ function Set-SteamVideo
     )
     
     $settings = Get-Settings
-    if ($null -eq $appList)
+    if ($null -eq $steamAppList)
     {
         Set-GlobalAppList $false
     }
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    $global:appListDownloaded = $false
+    $global:steamAppListDownloaded = $false
     $videoSetCount = 0
 
     switch ($videoQuality) {

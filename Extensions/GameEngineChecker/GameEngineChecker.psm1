@@ -25,21 +25,21 @@ function Add-EngineTag
     $pcgwApiTemplateGog = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom+ID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
     $CountertagAdded = 0
    
-    $AppListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
-    if (Test-Path $AppListPath)
+    $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
+    if (Test-Path $steamAppListPath)
     {
-        $AppListLastWrite = (get-item $AppListPath).LastWriteTime
+        $AppListLastWrite = (get-item $steamAppListPath).LastWriteTime
         $TimeSpan = new-timespan -days 1
         if (((get-date) - $AppListLastWrite) -gt $TimeSpan)
         {
-            Get-SteamAppList -AppListPath $AppListPath
+            Get-SteamAppList -AppListPath $steamAppListPath
         }
     }
     else
     {
-        Get-SteamAppList -AppListPath $AppListPath
+        Get-SteamAppList -AppListPath $steamAppListPath
     }
-    [object]$AppList = [System.IO.File]::ReadAllLines($AppListPath) | ConvertFrom-Json
+    [object]$steamAppList = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
     
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     foreach ($game in $gameDatabase) {
@@ -96,10 +96,10 @@ function Add-EngineTag
         {
             $steamAppId = $null
             $gameName = $game.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
-            foreach ($SteamApp in $AppList) {
-                if ($SteamApp.name -eq $gameName) 
+            foreach ($steamApp in $steamAppList) {
+                if ($steamApp.name -eq $gameName) 
                 {
-                    $steamAppId = $SteamApp.appid
+                    $steamAppId = $steamApp.appid
                     break
                 }
             }
@@ -167,7 +167,7 @@ function Add-EngineTag
 function Get-SteamAppList
 {
     param (
-        [string]$AppListPath
+        [string]$steamAppListPath
     )
 
     $ExtensionName = "Game Engine Checker"
@@ -179,11 +179,11 @@ function Get-SteamAppList
         $downloadedString = $webClient.DownloadString($uri)
         $webClient.Dispose()
         [array]$AppListContent = ($downloadedString | ConvertFrom-Json).applist.apps
-        foreach ($SteamApp in $AppListContent) {
-            $SteamApp.name = $SteamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
+        foreach ($steamApp in $AppListContent) {
+            $steamApp.name = $steamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         }
         
-        ConvertTo-Json $AppListContent -Depth 2  -Compress | Out-File -Encoding 'UTF8' -FilePath $AppListPath
+        ConvertTo-Json $AppListContent -Depth 2  -Compress | Out-File -Encoding 'UTF8' -FilePath $steamAppListPath
         $__logger.Info("$ExtensionName - Downloaded AppList")
     } catch {
         $ErrorMessage = $_.Exception.Message

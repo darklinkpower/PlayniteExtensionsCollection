@@ -87,7 +87,7 @@ function Get-DownloadString
 function Get-SteamAppList
 {
     param (
-        $appListPath
+        $steamAppListPath
     )
 
     $uri = 'https://api.steampowered.com/ISteamApps/GetAppList/v2/'
@@ -98,7 +98,7 @@ function Get-SteamAppList
         foreach ($steamApp in $appListContent) {
             $steamApp.name = $steamApp.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
         }
-        ConvertTo-Json $appListContent -Depth 2 -Compress | Out-File -Encoding 'UTF8' -FilePath $appListPath
+        ConvertTo-Json $appListContent -Depth 2 -Compress | Out-File -Encoding 'UTF8' -FilePath $steamAppListPath
         $__logger.Info("Steam Trailers - Downloaded AppList")
     }
     else
@@ -132,16 +132,16 @@ function Get-SteamAppId
     if (!$AppId)
     {
         # Get Steam AppList
-        $appListPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'AppList.json'
-        if (!(Test-Path $appListPath))
+        $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
+        if (!(Test-Path $steamAppListPath))
         {
-            Get-SteamAppList -AppListPath $appListPath
+            Get-SteamAppList -AppListPath $steamAppListPath
         }
 
         # Try to search for AppId by searching in local Steam AppList database
-        [object]$AppList = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
+        [object]$steamAppList = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
         $gameName = $game.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
-        foreach ($steamApp in $AppList) {
+        foreach ($steamApp in $steamAppList) {
             if ($steamApp.name -eq $gameName) 
             {
                 return $steamApp.appid
@@ -150,16 +150,16 @@ function Get-SteamAppId
         if (!$AppId)
         {
             # Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
-            $AppListLastWrite = (Get-Item $appListPath).LastWriteTime
+            $AppListLastWrite = (Get-Item $steamAppListPath).LastWriteTime
             $TimeSpan = New-Timespan -days 2
             if (((Get-date) - $AppListLastWrite) -gt $TimeSpan)
             {
-                Get-SteamAppList -AppListPath $appListPath
-                [object]$AppList = [System.IO.File]::ReadAllLines($appListPath) | ConvertFrom-Json
-                foreach ($SteamApp in $AppList) {
-                    if ($SteamApp.name -eq $Gamename) 
+                Get-SteamAppList -AppListPath $steamAppListPath
+                [object]$steamAppList = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
+                foreach ($steamApp in $steamAppList) {
+                    if ($steamApp.name -eq $Gamename) 
                     {
-                        return $SteamApp.appid
+                        return $steamApp.appid
                     }
                 }
             }
