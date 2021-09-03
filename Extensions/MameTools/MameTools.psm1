@@ -29,12 +29,7 @@ function GetMainMenuItems
     $menuItem4.FunctionName = "Set-SnapshotAsBackgroundImage"
     $menuItem4.MenuSection = "@Mame Tools"
 
-    $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem5.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemRemoveBiosEntriesDescription")
-    $menuItem5.FunctionName = "Remove-MameBiosEntries"
-    $menuItem5.MenuSection = "@MAME Tools"
-
-    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
 }
 
 
@@ -108,11 +103,23 @@ function Rename-SelectedMameGames
         return
     }
 
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     $nameChanged = 0
     foreach ($game in $gameDatabase) {
+        if ($null -eq $game.GameActions)
+        {
+            continue
+        }
+        elseif ($game.GameActions[0].Type -ne [Playnite.SDK.Models.GameActionType]::Emulator)
+        {
+            continue
+        }
+        elseif ($null -eq $game.Roms)
+        {
+            continue
+        }
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.Roms[0].Path)
         try {
-            $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
             $arguments = @("-listxml", $fileName)
             [xml]$output = Get-ProcessOutput $mamePath $arguments
             $nameInXml = $output.mame.machine[0].description
@@ -128,7 +135,7 @@ function Rename-SelectedMameGames
         {
             $game.Name = $nameInXml
             $PlayniteApi.Database.Games.Update($game)
-            $__logger.Info("Changed name of `"$($game.GameImagePath)`" to `"$nameInXml`".")
+            $__logger.Info("Changed name of `"$fileName`" to `"$nameInXml`".")
             $nameChanged++
         }
     }
@@ -168,11 +175,23 @@ function Set-MameSnapshotToPlayniteMedia
     }
 
     $mameDirectory = [System.IO.Path]::GetDirectoryName($mamePath)
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames
     $snapshotsImportCount = 0
     $snapshotsMissingCount = 0
     foreach ($game in $gameDatabase) {
-        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
+        if ($null -eq $game.GameActions)
+        {
+            continue
+        }
+        elseif ($game.GameActions[0].Type -ne [Playnite.SDK.Models.GameActionType]::Emulator)
+        {
+            continue
+        }
+        elseif ($null -eq $game.Roms)
+        {
+            continue
+        }
+        $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.Roms[0].Path)
         $sourceScreenshotPath = [System.IO.Path]::Combine($mameDirectory, "Snap", $fileName + ".png")
         if (![System.IO.File]::Exists($sourceScreenshotPath))
         {
@@ -247,38 +266,4 @@ function Set-SnapshotAsBackgroundImage
     )
     
     Set-MameSnapshotToPlayniteMedia "Cover Image"
-}
-
-function Remove-MameBiosEntries
-{
-    $mamePath = Get-MamePath
-    if ($null -eq $mamePath)
-    {
-        return
-    }
-
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
-    $entriesRemoved = 0
-    foreach ($game in $gameDatabase) {
-        try {
-            $fileName = [System.IO.Path]::GetFileNameWithoutExtension($game.GameImagePath)
-            $arguments = @("-listxml", $fileName)
-            [xml]$output = Get-ProcessOutput $mamePath $arguments
-            
-            if ($output.mame.machine.isdevice -eq "yes")
-            {
-                $PlayniteApi.Database.Games.Remove($game.Id)
-                $entriesRemoved++
-            }
-            elseif ($output.mame.machine[0].isbios -eq "yes")
-            {
-                $PlayniteApi.Database.Games.Remove($game.Id)
-                $entriesRemoved++
-            }
-        } catch {
-            continue
-        }
-    }
-
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCRemoveBiosResultsMessage") -f $entriesRemoved), "MAME Tools")
 }

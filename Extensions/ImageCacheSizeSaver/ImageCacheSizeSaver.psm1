@@ -87,7 +87,7 @@ function Invoke-ImageCacheSizeSaver
             $processedImagesHashtable.add($_, "")
         }
     }
-
+    
     # Set Counters
     $processedError = 0
     $processedLessSize = 0

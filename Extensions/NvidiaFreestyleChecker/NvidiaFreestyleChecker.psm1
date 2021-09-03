@@ -3,13 +3,11 @@ function GetMainMenuItems
     param(
         $menuArgs
     )
-
-    $ExtensionName = "NVIDIA Freestyle checker"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCMenuItemCheckFreestyleEnabledGamesDescription")
     $menuItem1.FunctionName = "Update-IsFreestyleEnabled"
-    $menuItem1.MenuSection = "@$ExtensionName"
+    $menuItem1.MenuSection = "@NVIDIA Freestyle checker"
 
     return $menuItem1
 }
@@ -35,6 +33,7 @@ function Update-IsFreestyleEnabled
         $WebContent = $webClient.DownloadString($uri)
         $webClient.Dispose()
     } catch {
+        $webClient.Dispose()
         $errorMessage = $_.Exception.Message
         $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNvidiaJsonDownloadFailErrorMessage") -f $errorMessage), $ExtensionName)
         exit
