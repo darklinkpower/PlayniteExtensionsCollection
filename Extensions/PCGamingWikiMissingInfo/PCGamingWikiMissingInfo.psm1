@@ -55,7 +55,7 @@ function PCGamingWikiMissingInfo
                 {
                     continue
                 }
-                if ($plaform.SpecificationId -eq "pc_windows")
+                if ($platform.SpecificationId -eq "pc_windows")
                 {
                     $isTargetSpecification = $true
                     break

@@ -517,7 +517,7 @@ function Get-SteamLogos
         else
         {
             foreach ($platform in $game.Platforms) {
-                if ($plaform.SpecificationId -eq "pc_windows")
+                if ($platform.SpecificationId -eq "pc_windows")
                 {
                     break
                 }
@@ -711,6 +711,10 @@ function Set-BackgroundVideo
 
 function Set-SgdbApiKey
 {
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+    
     $sgdbApiKeyPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'sgdbApiKey.json'
     Start-Process "https://www.steamgriddb.com/profile/preferences"
     $userInput = $PlayniteApi.Dialogs.SelectString("Enter a valid SteamGridDB API Key:", "Extra Metadata tools", "");
@@ -778,7 +782,7 @@ function Get-SgdbRequestUrl
                     continue
                 }
 
-                if ($plaform.SpecificationId -eq "pc_windows")
+                if ($platform.SpecificationId -eq "pc_windows")
                 {
                     $steamAppId = Get-SteamAppId $game
                     if ($null -ne $steamAppId)
