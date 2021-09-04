@@ -19,7 +19,8 @@
             <CheckBox Name="ImportAnimeLibrary" Margin="0,10,0,0" IsChecked="{Binding ImportAnimeLibrary}" Content="Import anime library during library update"/>
             <CheckBox Name="ImportMangaLibrary" Margin="0,10,0,0" IsChecked="{Binding ImportMangaLibrary}" Content="Import manga library during library update"/>
             <CheckBox Name="UpdateUserScoreOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateUserScoreOnLibUpdate}" Content="Update user score from AniList account during library update"/>
-            <CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateCompletionStatusOnLibUpdate}" Content="Update completion status from AniList account during library update"/>
+            <!--TODO Completion Status matching-->
+            <!--<CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateCompletionStatusOnLibUpdate}" Content="Update completion status from AniList account during library update"/>-->
             <CheckBox Name="UpdateProgressOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateProgressOnLibUpdate}" Content="Update progress from AniList account during library update (&quot;Version&quot; field is used)"/>
         </StackPanel>
     </Grid>

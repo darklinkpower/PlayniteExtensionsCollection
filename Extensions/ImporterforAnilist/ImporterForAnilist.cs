@@ -50,22 +50,22 @@ namespace ImporterforAnilist
             }
         }
 
-        public GameInfo EntryToGameInfo(Entry entry, string propertiesPrefix)
+        public GameMetadata EntryToGameMetadata(Entry entry, string propertiesPrefix)
         {
-            var game = new GameInfo()
+            var game = new GameMetadata()
             {
-                Source = "Anilist",
+                Source = new MetadataNameProperty("Anilist"),
                 GameId = entry.Media.Id.ToString(),
                 Name = entry.Media.Title.Romaji ?? entry.Media.Title.English ?? entry.Media.Title.Native ?? string.Empty,
                 IsInstalled = true,
-                PlayAction = new GameAction()
-                {
-                    Type = GameActionType.URL,
-                    Path = entry.Media.SiteUrl.ToString(),
-                    IsHandledByPlugin = false
+                GameActions = new List<GameAction> {
+                    new GameAction
+                    {
+                        Type = GameActionType.URL,
+                        Path = entry.Media.SiteUrl.ToString()
+                    }
                 },
-                Platform = string.Format("AniList {0}", entry.Media.Type.ToString()),
-
+                Platforms = new List<MetadataProperty> { new MetadataNameProperty(string.Format("AniList {0}", entry.Media.Type.ToString())) },
                 //Description
                 Description = entry.Media.Description ?? string.Empty,
             };
@@ -80,68 +80,69 @@ namespace ImporterforAnilist
             //Genres
             if (entry.Media.Genres != null)
             {
-                game.Genres = entry.Media.Genres.Select(a => string.Format("{0}{1}", propertiesPrefix, a)).ToList();
+                game.Genres = entry.Media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a))).ToList();
             }
 
             //ReleaseDate
             if (entry.Media.StartDate.Year != null && entry.Media.StartDate.Month != null && entry.Media.StartDate.Day != null)
             {
-                game.ReleaseDate = new DateTime((int)entry.Media.StartDate.Year, (int)entry.Media.StartDate.Month, (int)entry.Media.StartDate.Day);
+                game.ReleaseDate = new ReleaseDate(new DateTime((int)entry.Media.StartDate.Year, (int)entry.Media.StartDate.Month, (int)entry.Media.StartDate.Day));
             }
 
             //Developers and Publishers
             if (entry.Media.Type == TypeEnum.Manga)
             {
                 game.Developers = entry.Media.Staff.Nodes.
-                    Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name.Full)).ToList();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name.Full))).ToList();
             }
             else if (entry.Media.Type == TypeEnum.Anime)
             {
                 game.Developers = entry.Media.Studios.Nodes.Where(s => s.IsAnimationStudio == true).
-                    Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
                 game.Publishers = entry.Media.Studios.Nodes.Where(s => s.IsAnimationStudio == false).
-                    Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
             }
 
             //Tags
             var tags = entry.Media.Tags.
                 Where(s => s.IsMediaSpoiler == false).
                 Where(s => s.IsGeneralSpoiler == false).
-                Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
+                Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
 
             if (entry.Media.Season != null)
             {
-                tags.Add(string.Format("{0}Season: {1}", propertiesPrefix, entry.Media.Season.ToString()));
+                tags.Add(new MetadataNameProperty(string.Format("{0}Season: {1}", propertiesPrefix, entry.Media.Season.ToString())));
             }
-            tags.Add(string.Format("{0}Status: {1}", propertiesPrefix, entry.Media.Status.ToString()));
-            tags.Add(string.Format("{0}Format: {1}", propertiesPrefix, entry.Media.Format.ToString()));
+            tags.Add(new MetadataNameProperty(string.Format("{0}Status: {1}", propertiesPrefix, entry.Media.Status.ToString())));
+            tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", propertiesPrefix, entry.Media.Format.ToString())));
             game.Tags = tags;
 
-            //CompletionStatus
-            switch (entry.Status)
-            {
-                case EntryStatus.Current:
-                    game.CompletionStatus = CompletionStatus.Playing;
-                    break;
-                case EntryStatus.Planning:
-                    game.CompletionStatus = CompletionStatus.PlanToPlay;
-                    break;
-                case EntryStatus.Completed:
-                    game.CompletionStatus = CompletionStatus.Completed;
-                    break;
-                case EntryStatus.Dropped:
-                    game.CompletionStatus = CompletionStatus.Abandoned;
-                    break;
-                case EntryStatus.Paused:
-                    game.CompletionStatus = CompletionStatus.OnHold;
-                    break;
-                case EntryStatus.Repeating:
-                    game.CompletionStatus = CompletionStatus.Playing;
-                    break;
-                default:
-                    game.CompletionStatus = CompletionStatus.NotPlayed;
-                    break;
-            }
+            ////CompletionStatus
+            ////TODO Completion Status matching
+            //switch (entry.Status)
+            //{
+            //    case EntryStatus.Current:
+            //        game.CompletionStatus = CompletionStatus.Playing;
+            //        break;
+            //    case EntryStatus.Planning:
+            //        game.CompletionStatus = CompletionStatus.PlanToPlay;
+            //        break;
+            //    case EntryStatus.Completed:
+            //        game.CompletionStatus = CompletionStatus.Completed;
+            //        break;
+            //    case EntryStatus.Dropped:
+            //        game.CompletionStatus = CompletionStatus.Abandoned;
+            //        break;
+            //    case EntryStatus.Paused:
+            //        game.CompletionStatus = CompletionStatus.OnHold;
+            //        break;
+            //    case EntryStatus.Repeating:
+            //        game.CompletionStatus = CompletionStatus.Playing;
+            //        break;
+            //    default:
+            //        game.CompletionStatus = CompletionStatus.NotPlayed;
+            //        break;
+            //}
 
             if (settings.UpdateProgressOnLibUpdate == true)
             {
@@ -178,27 +179,28 @@ namespace ImporterforAnilist
             return game;
         }
 
-        public void overrideGameProperties(GameInfo gameInfo)
+        public void overrideGameProperties(GameMetadata gameMetadata)
         {
-            var game = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).Where(g => g.GameId == gameInfo.GameId).FirstOrDefault();
+            var game = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).Where(g => g.GameId == gameMetadata.GameId).FirstOrDefault();
             if (game != null)
             {
                 var updateGame = false;
-                if (settings.UpdateUserScoreOnLibUpdate == true && gameInfo.UserScore != 0 && gameInfo.UserScore != game.UserScore)
+                if (settings.UpdateUserScoreOnLibUpdate == true && gameMetadata.UserScore != 0 && gameMetadata.UserScore != game.UserScore)
                 {
-                    game.UserScore = gameInfo.UserScore;
+                    game.UserScore = gameMetadata.UserScore;
                     updateGame = true;
                 }
 
-                if (settings.UpdateCompletionStatusOnLibUpdate == true && gameInfo.CompletionStatus != game.CompletionStatus)
-                {
-                    game.CompletionStatus = gameInfo.CompletionStatus;
-                    updateGame = true;
-                }
+                ////TODO Completion Status matching
+                //if (settings.UpdateCompletionStatusOnLibUpdate == true && gameMetadata.CompletionStatus != game.CompletionStatus)
+                //{
+                //    game.CompletionStatus = gameMetadata.CompletionStatus;
+                //    updateGame = true;
+                //}
 
-                if (settings.UpdateProgressOnLibUpdate == true && gameInfo.Version != game.Version)
+                if (settings.UpdateProgressOnLibUpdate == true && gameMetadata.Version != game.Version)
                 {
-                    game.Version = gameInfo.Version;
+                    game.Version = gameMetadata.Version;
                     updateGame = true;
                 }
 
@@ -209,10 +211,10 @@ namespace ImporterforAnilist
             }
         }
 
-        public override IEnumerable<GameInfo> GetGames()
+        public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
 
-            var gamesList = new List<GameInfo>() { }; 
+            var gamesList = new List<GameMetadata>() { }; 
             
             if (string.IsNullOrEmpty(settings.AccountAccessCode))
             {
@@ -247,7 +249,7 @@ namespace ImporterforAnilist
                         logger.Debug($"Found {animeEntries.Count} Anime items");
                         foreach (var entry in animeEntries)
                         {
-                            var gameInfo = EntryToGameInfo(entry, propertiesPrefix);
+                            var gameInfo = EntryToGameMetadata(entry, propertiesPrefix);
                             gamesList.Add(gameInfo);
                             overrideGameProperties(gameInfo);
 
@@ -260,7 +262,7 @@ namespace ImporterforAnilist
                         logger.Debug($"Found {mangaEntries.Count} Manga items");
                         foreach (var entry in mangaEntries)
                         {
-                            var gameInfo = EntryToGameInfo(entry, propertiesPrefix);
+                            var gameInfo = EntryToGameMetadata(entry, propertiesPrefix);
                             gamesList.Add(gameInfo);
                             overrideGameProperties(gameInfo);
                         }

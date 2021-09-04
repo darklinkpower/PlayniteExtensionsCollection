@@ -1,16 +1,14 @@
-﻿using ImporterforAnilist.Models;
-using Newtonsoft.Json;
+﻿using Playnite.SDK.Plugins;
 using Playnite.SDK;
-using Playnite.SDK.Data;
-using Playnite.SDK.Metadata;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using ImporterforAnilist.Models;
+using Newtonsoft.Json;
+using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 
@@ -92,25 +90,27 @@ namespace ImporterforAnilist
                 }";
         }
 
-        public GameInfo MediaToGameInfo(Media media, string propertiesPrefix)
+        public GameMetadata MediaToGameMetadata(Media media, string propertiesPrefix)
         {
-            var game = new GameInfo()
+            var game = new GameMetadata()
             {
-                Source = "AniList",
+                Source = new MetadataNameProperty("Anilist"),
                 GameId = media.Id.ToString(),
                 Name = media.Title.Romaji ?? media.Title.English ?? media.Title.Native ?? string.Empty,
                 IsInstalled = true,
-                Platform = string.Format("AniList {0}", media.Type.ToString()),
+                Platforms = new List<MetadataProperty> { new MetadataNameProperty(string.Format("AniList {0}", media.Type.ToString())) },
                 CommunityScore = media.AverageScore ?? null,
                 Description = media.Description ?? string.Empty,
-                Links = new List<Link>()
-            };
+                Links = new List<Link>(),
+                BackgroundImage = new MetadataFile(media.BannerImage ?? string.Empty),
+                CoverImage = new MetadataFile(media.CoverImage.ExtraLarge ?? string.Empty)
+        };
 
             //Links
             game.Links.Add(new Link("AniList", media.SiteUrl.ToString()));
             if (media.Genres != null)
             {
-                game.Genres = media.Genres.Select(a => string.Format("{0}{1}", propertiesPrefix, a)).ToList();
+                game.Genres = media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a))).ToList();
             }
             if (media.IdMal != null)
             {
@@ -120,36 +120,35 @@ namespace ImporterforAnilist
             //ReleaseDate
             if (media.StartDate.Year != null && media.StartDate.Month != null && media.StartDate.Day != null)
             {
-                game.ReleaseDate = new DateTime((int)media.StartDate.Year, (int)media.StartDate.Month, (int)media.StartDate.Day);
+                game.ReleaseDate = new ReleaseDate(new DateTime((int)media.StartDate.Year, (int)media.StartDate.Month, (int)media.StartDate.Day));
             }
 
             //Developers and Publishers
             if (media.Type == TypeEnum.Manga)
             {
                 game.Developers = media.Staff.Nodes.
-                    Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name.Full)).ToList();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name.Full))).ToList();
             }
             else if (media.Type == TypeEnum.Anime)
             {
                 game.Developers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == true).
-                    Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
                 game.Publishers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == false).
-                    Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
             }
 
             //Tags
             var tags = media.Tags.
                 Where(s => s.IsMediaSpoiler == false).
                 Where(s => s.IsGeneralSpoiler == false).
-                Select(a => string.Format("{0}{1}", propertiesPrefix, a.Name)).ToList();
+                Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
 
             if (media.Season != null)
             {
-                tags.Add(string.Format("{0}Season: {1}", propertiesPrefix, media.Season.ToString()));
+                tags.Add(new MetadataNameProperty(string.Format("{0}Season: {1}", propertiesPrefix, media.Season.ToString())));
             }
-            tags.Add(string.Format("{0}Status: {1}", propertiesPrefix, media.Status.ToString()));
-            tags.Add(string.Format("{0}Format: {1}", propertiesPrefix, media.Format.ToString()));
-
+            tags.Add(new MetadataNameProperty(string.Format("{0}Status: {1}", propertiesPrefix, media.Status.ToString())));
+            tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", propertiesPrefix, media.Format.ToString())));
             game.Tags = tags;
 
             return game;
@@ -176,9 +175,7 @@ namespace ImporterforAnilist
                 var contents = response.Result.Content.ReadAsStringAsync();
 
                 var mediaEntryData = JsonConvert.DeserializeObject<MediaEntryData>(contents.Result);
-                metadata.GameInfo = MediaToGameInfo(mediaEntryData.Data.Media, propertiesPrefix);
-                metadata.BackgroundImage = new MetadataFile(mediaEntryData.Data.Media.BannerImage ?? string.Empty);
-                metadata.CoverImage = new MetadataFile(mediaEntryData.Data.Media.CoverImage.ExtraLarge ?? string.Empty);
+                metadata = MediaToGameMetadata(mediaEntryData.Data.Media, propertiesPrefix);
                 type = mediaEntryData.Data.Media.Type.ToString().ToLower() ?? string.Empty;
                 idMal = mediaEntryData.Data.Media.IdMal.ToString().ToLower() ?? string.Empty;
             }
@@ -224,7 +221,7 @@ namespace ImporterforAnilist
                                     {
                                         string str = item.First().ToString();
                                         var malSyncItem = JsonConvert.DeserializeObject<MalSyncSiteItem>(str);
-                                        metadata.GameInfo.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
+                                        metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
                                     }
                                 }
                             }
