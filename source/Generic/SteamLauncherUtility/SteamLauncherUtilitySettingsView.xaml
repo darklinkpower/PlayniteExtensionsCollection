@@ -11,30 +11,30 @@
                        ToolTip="Global Mode: Actions are done on all Steam games except blocked games.
                        &#10;Selective Mode: Actions are done only on games that have been allowed.
                        &#10;&#10;Use the plugin functions from the extensions submenu to add the filtering features."/>
-            <ComboBox Name="ComboModeSelection" SelectedIndex="{Binding LaunchMode}" MinHeight="25" MinWidth="140" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <ComboBox Name="ComboModeSelection" SelectedIndex="{Binding Settings.LaunchMode}" MinHeight="25" MinWidth="140" HorizontalAlignment="Left" Margin="10,0,0,0">
                 <ComboBoxItem Content="Global Mode" HorizontalAlignment="Stretch"/>
                 <ComboBoxItem Content="Selective Mode" HorizontalAlignment="Stretch"/>
             </ComboBox>
         </StackPanel>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxSteamWebBrowserDesktopMode"
                   Margin="0,0,0,15"
-                  IsChecked="{Binding DisableSteamWebBrowserOnDesktopMode}"
+                  IsChecked="{Binding Settings.DisableSteamWebBrowserOnDesktopMode}"
                   Content="Disable Steam web browser when starting a game on Desktop Mode"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxLaunchBpmDesktopMode"
                   Margin="0,0,0,15"
-                  IsChecked="{Binding LaunchSteamBpmOnDesktopMode}"
+                  IsChecked="{Binding Settings.LaunchSteamBpmOnDesktopMode}"
                   Content="Launch Steam in Big Picture Mode when starting a game on Desktop Mode"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxSteamWebBrowserFullscreenMode"
                   Margin="0,0,0,15"
-                  IsChecked="{Binding DisableSteamWebBrowserOnFullscreenMode}"
+                  IsChecked="{Binding Settings.DisableSteamWebBrowserOnFullscreenMode}"
                   Content="Disable Steam web browser when starting a game on Fullscreen Mode"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxLaunchFullscreenDesktopMode"
                   Margin="0,0,0,15"
-                  IsChecked="{Binding LaunchSteamBpmOnFullscreenMode}"
+                  IsChecked="{Binding Settings.LaunchSteamBpmOnFullscreenMode}"
                   Content="Launch Steam in Big Picture Mode when starting a game on Fullscreen Mode"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxCloseSteamIfRunning"
                   Margin="0,0,0,15"
-                  IsChecked="{Binding CloseSteamIfRunning}"
+                  IsChecked="{Binding Settings.CloseSteamIfRunning}"
                   Content="Close Steam if it's detected as running before launching the game"/>
     </StackPanel>
 </UserControl>

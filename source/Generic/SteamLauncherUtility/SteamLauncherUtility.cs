@@ -1,36 +1,40 @@
-﻿using Playnite.SDK;
+﻿using Microsoft.Win32;
+using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Microsoft.Win32;
-using System.IO;
-using System.Diagnostics;
-using System.Threading;
 
 namespace SteamLauncherUtility
 {
-    public class SteamLauncherUtility : Plugin
+    public class SteamLauncherUtility : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private SteamLauncherUtilitySettings settings { get; set; }
+        private SteamLauncherUtilitySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("31a65402-5b0c-44f0-9fc2-44b22ca4263c");
 
         public SteamLauncherUtility(IPlayniteAPI api) : base(api)
         {
-            settings = new SteamLauncherUtilitySettings(this);
+            settings = new SteamLauncherUtilitySettingsViewModel(this);
+            Properties = new GenericPluginProperties
+            {
+                HasSettings = true
+            };
         }
 
-
-        public override void OnGameStarting(Game game)
+        public override void OnGameStarted(OnGameStartedEventArgs args)
         {
-
+            var game = args.Game;
             if (game.IsInstalled == false)
             {
                 return;
@@ -45,12 +49,12 @@ namespace SteamLauncherUtility
             if (game.Features != null)
             {
                 var matchingFeature = game.Features.Where(f => f.Name == modeFeatureName);
-                if (settings.LaunchMode == 0 && matchingFeature.Count() > 0)
+                if (settings.Settings.LaunchMode == 0 && matchingFeature.Count() > 0)
                 {
                     logger.Info(String.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
-                else if (settings.LaunchMode == 1 && matchingFeature.Count() == 0)
+                else if (settings.Settings.LaunchMode == 1 && matchingFeature.Count() == 0)
                 {
                     logger.Info(String.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
                     return;
@@ -58,11 +62,6 @@ namespace SteamLauncherUtility
             }
 
             LaunchSteam();
-        }
-
-        public override void OnGameStopped(Game game, long elapsedSeconds)
-        {
-            // Add code to be executed when game is preparing to be started.
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -75,7 +74,7 @@ namespace SteamLauncherUtility
             return new SteamLauncherUtilitySettingsView();
         }
 
-        public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs menuArgs)
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return new List<MainMenuItem>
             {
@@ -83,7 +82,7 @@ namespace SteamLauncherUtility
                 {
                     Description = "Launch Steam with configured actions",
                     MenuSection = "@Steam Launcher Utility",
-                    Action = args => {
+                    Action = a => {
                         LaunchSteam();
                     }
                 },
@@ -91,7 +90,7 @@ namespace SteamLauncherUtility
                 {
                     Description = "Add mode filter feature to selected games",
                     MenuSection = "@Steam Launcher Utility",
-                    Action = args => {
+                    Action = a => {
                         AddModeFeature();
                     }
                 },
@@ -99,7 +98,7 @@ namespace SteamLauncherUtility
                 {
                     Description = "Remove mode filter feature from selected games",
                     MenuSection = "@Steam Launcher Utility",
-                    Action = args => {
+                    Action = a => {
                         RemoveModeFeature();
                     }
                 },
@@ -121,7 +120,7 @@ namespace SteamLauncherUtility
 
         public string GetModeFeatureName()
         {
-            if (settings.LaunchMode == 0)
+            if (settings.Settings.LaunchMode == 0)
             {
                 return "[SLU] Global Mode block";
             }
@@ -150,11 +149,11 @@ namespace SteamLauncherUtility
             string arguments = "";
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                if (settings.DisableSteamWebBrowserOnDesktopMode == true)
+                if (settings.Settings.DisableSteamWebBrowserOnDesktopMode == true)
                 {
                     arguments = arguments + " -no-browser";
                 }
-                if (settings.LaunchSteamBpmOnDesktopMode == true)
+                if (settings.Settings.LaunchSteamBpmOnDesktopMode == true)
                 {
                     arguments = arguments + " -bigpicture";
                 }
@@ -165,11 +164,11 @@ namespace SteamLauncherUtility
             }
             else if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
-                if (settings.DisableSteamWebBrowserOnFullscreenMode == true)
+                if (settings.Settings.DisableSteamWebBrowserOnFullscreenMode == true)
                 {
                     arguments = arguments + " -no-browser";
                 }
-                if (settings.LaunchSteamBpmOnFullscreenMode == true)
+                if (settings.Settings.LaunchSteamBpmOnFullscreenMode == true)
                 {
                     arguments = arguments + " -bigpicture";
                 }
@@ -192,7 +191,7 @@ namespace SteamLauncherUtility
             }
 
             bool isSteamRunning = GetIsSteamRunning();
-            if (isSteamRunning == true && settings.CloseSteamIfRunning == true)
+            if (isSteamRunning == true && settings.Settings.CloseSteamIfRunning == true)
             {
                 Process.Start(steamInstallationPath, "-shutdown");
                 logger.Info("Steam detected running. Closing via command line.");

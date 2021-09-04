@@ -68,7 +68,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="icon.png">
+    <None Include="icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
