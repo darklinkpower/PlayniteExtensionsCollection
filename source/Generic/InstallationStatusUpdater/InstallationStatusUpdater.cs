@@ -199,7 +199,6 @@ namespace InstallationStatusUpdater
         {
             var gameCollection = PlayniteApi.Database.Games;
             string skipFeatureName = "[Status Updater] Ignore";
-            var genericPluginId = Guid.Parse("00000000-0000-0000-0000-000000000000");
             int markedInstalled = 0;
             int markedUninstalled = 0;
             foreach (Game game in gameCollection)
