@@ -1,17 +1,16 @@
-﻿using Newtonsoft.Json;
-using Playnite.SDK;
+﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace GamePassCatalogBrowser
 {
-    public class GamePassCatalogBrowserSettings : ISettings
+    public class GamePassCatalogBrowserSettings
     {
-        private readonly GamePassCatalogBrowser plugin;
-
         public bool UpdateCatalogOnLibraryUpdate { get; set; } = true;
         public bool NotifyCatalogUpdates { get; set; } = true;
         public bool AddExpiredTagToGames { get; set; } = true;
@@ -19,18 +18,29 @@ namespace GamePassCatalogBrowser
         public bool RemoveExpiredGames { get; set; } = false;
         public string RegionCode { get; set; } = "US";
 
-
         // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonIgnore` ignore attribute.
-        [JsonIgnore]
+        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
+        [DontSerialize]
         public bool OptionThatWontBeSaved { get; set; } = false;
+    }
 
-        // Parameterless constructor must exist if you want to use LoadPluginSettings method.
-        public GamePassCatalogBrowserSettings()
+    public class GamePassCatalogBrowserSettingsViewModel : ObservableObject, ISettings
+    {
+        private readonly GamePassCatalogBrowser plugin;
+        private GamePassCatalogBrowserSettings editingClone { get; set; }
+
+        private GamePassCatalogBrowserSettings settings;
+        public GamePassCatalogBrowserSettings Settings
         {
+            get => settings;
+            set
+            {
+                settings = value;
+                OnPropertyChanged();
+            }
         }
 
-        public GamePassCatalogBrowserSettings(GamePassCatalogBrowser plugin)
+        public GamePassCatalogBrowserSettingsViewModel(GamePassCatalogBrowser plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
@@ -41,31 +51,32 @@ namespace GamePassCatalogBrowser
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
-                UpdateCatalogOnLibraryUpdate = savedSettings.UpdateCatalogOnLibraryUpdate;
-                NotifyCatalogUpdates = savedSettings.NotifyCatalogUpdates;
-                AddExpiredTagToGames = savedSettings.AddExpiredTagToGames;
-                AddNewGames = savedSettings.AddNewGames;
-                RemoveExpiredGames = savedSettings.RemoveExpiredGames;
-                RegionCode = savedSettings.RegionCode;
+                Settings = savedSettings;
+            }
+            else
+            {
+                Settings = new GamePassCatalogBrowserSettings();
             }
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
+            editingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
+            Settings = editingClone;
         }
 
         public void EndEdit()
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(this);
+            plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
