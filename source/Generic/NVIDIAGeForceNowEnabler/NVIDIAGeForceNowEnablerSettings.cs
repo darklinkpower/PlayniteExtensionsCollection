@@ -13,6 +13,7 @@ namespace NVIDIAGeForceNowEnabler
         public bool ExecuteOnStartup { get; set; } = false;
         public bool ExecuteOnLibraryUpdate { get; set; } = false;
         public bool UpdatePlayActions { get; set; } = false;
+        public bool SetActionsAsPlayAction { get; set; } = true;
         public bool SetEnabledGamesAsInstalled { get; set; } = false;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.

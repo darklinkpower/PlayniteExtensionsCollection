@@ -18,6 +18,11 @@
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.UpdatePlayActions}"
                   Content="Update Play actions when updating enabled status of games"/>
+        <CheckBox DockPanel.Dock="Top" Name="SetActionsAsPlayAction"
+                  Margin="40,0,0,15"
+                  IsChecked="{Binding Settings.SetActionsAsPlayAction}"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckUpdatePlayActions}"
+                  Content="Set added Actions as Play Action"/>
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.SetEnabledGamesAsInstalled}"

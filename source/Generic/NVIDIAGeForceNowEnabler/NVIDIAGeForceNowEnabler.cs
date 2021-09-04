@@ -18,6 +18,9 @@ namespace NVIDIAGeForceNowEnabler
     public class NVIDIAGeForceNowEnabler : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly string geforceNowWorkingPath;
+        private readonly string geforceNowExecutablePath;
+
         private NVIDIAGeForceNowEnablerSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("5f2dfd12-5f13-46fe-bcdd-64eb53ace26a");
@@ -25,6 +28,8 @@ namespace NVIDIAGeForceNowEnabler
         public NVIDIAGeForceNowEnabler(IPlayniteAPI api) : base(api)
         {
             settings = new NVIDIAGeForceNowEnablerSettingsViewModel(this);
+            geforceNowWorkingPath = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "NVIDIA Corporation", "GeForceNOW", "CEF");
+            geforceNowExecutablePath = Path.Combine(geforceNowWorkingPath, "GeForceNOWStreamer.exe");
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -88,19 +93,16 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     game.FeatureIds.Remove(feature.Id);
                     PlayniteApi.Database.Games.Update(game);
-                    bool featureRemoved = true;
-                    return featureRemoved;
+                    return true;
                 }
                 else
                 {
-                    bool featureRemoved = false; 
-                    return featureRemoved;
+                    return false;
                 }
             }
             else
             {
-                bool featureRemoved = false;
-                return featureRemoved;
+                return false;
             }
         }
 
@@ -110,39 +112,21 @@ namespace NVIDIAGeForceNowEnabler
             {
                 game.FeatureIds = new List<Guid> { feature.Id };
                 PlayniteApi.Database.Games.Update(game);
-                bool featureAdded = true;
-                return featureAdded;
+                return true;
             }
             else if (game.FeatureIds.Contains(feature.Id) == false)
             {
                 game.FeatureIds.AddMissing(feature.Id);
                 PlayniteApi.Database.Games.Update(game);
-                bool featureAdded = true;
-                return featureAdded;
+                return true;
             }
             else
             {
-                bool featureAdded = false;
-                return featureAdded;
+                return false;
             }
         }
 
-        public void AddOtherAction(Game game, GameAction gameAction)
-        {
-            if (game.GameActions == null)
-            {
-                game.GameActions = new System.Collections.ObjectModel.ObservableCollection<GameAction> { gameAction };
-            }
-            else
-            {
-                //TODO fix error: This type of CollectionView does not admit changes to the SourceCollection of a subprocess other than the Dispatcher subprocess.
-                //Error: Game has a GameAction- > Delete it from Edit Window -> Try to add the GameAction with extension -> Triggers the error
-                //No error: Game has a GameAction -> Delete it from Edit Window -> Reboot Playnite -> Try to add the GameAction with extension -> Error doesn't trigger
-                game.GameActions.Add(gameAction);
-            }
-        }
-
-        public string UpdateNvidiaAction(Game game, GeforceGame supportedGame, string geforceNowWorkingPath, string geforceNowExecutableName)
+        public string UpdateNvidiaAction(Game game, GeforceGame supportedGame)
         {
             GameAction geforceNowAction = null;
             if (game.GameActions != null)
@@ -157,7 +141,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 game.GameActions.Remove(geforceNowAction);
                 PlayniteApi.Database.Games.Update(game);
-                return "playActionRemoved";
+                return "ActionRemoved";
             }
             else if (supportedGame != null && geforceNowAction == null)
             {
@@ -165,21 +149,39 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     Name = "Launch in Nvidia GeForce NOW",
                     Arguments = String.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGame.Id),
-                    Path = geforceNowExecutableName,
-                    WorkingDir = geforceNowWorkingPath
-                    ////TODO Figure correct tracking mode
-                    //IsPlayAction = true,
-                    //TrackingMode = TrackingMode.Default
+                    Path = geforceNowExecutablePath,
+                    WorkingDir = geforceNowWorkingPath,
+                    IsPlayAction = settings.Settings.SetActionsAsPlayAction,
+                    TrackingMode = TrackingMode.Process
                 };
 
-                AddOtherAction(game, nvidiaGameAction);
-                PlayniteApi.Database.Games.Update(game);
-                return "playActionAdded";
+                if (game.GameActions == null)
+                {
+                    game.GameActions = new System.Collections.ObjectModel.ObservableCollection<GameAction> { nvidiaGameAction };
+                }
+                else
+                {
+                    //TODO figure why error happens: This type of CollectionView does not admit changes to the SourceCollection of a subprocess other than the Dispatcher subprocess.
+                    //Error: Game has a GameAction- > Delete it from Edit Window -> Try to add the GameAction with extension -> Triggers the error
+                    //No error: Game has a GameAction -> Delete it from Edit Window -> Reboot Playnite -> Try to add the GameAction with extension -> Error doesn't trigger
+
+                    //game.GameActions.Add(nvidiaGameAction);
+
+                    //The workaround fix is to create a new collection, add all the current game GameActions
+                    // and the new GameAction and finally set this new collection to the game GameActions
+                    var newCollection = new System.Collections.ObjectModel.ObservableCollection<GameAction> { };
+                    foreach (GameAction gameAction in game.GameActions)
+                    {
+                        newCollection.Add(gameAction);
+                    }
+                    newCollection.Add(nvidiaGameAction);
+                    game.GameActions = newCollection;
+                    PlayniteApi.Database.Games.Update(game);
+                    return "ActionAdded";
+                }
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
 
         public List<GeforceGame> DownloadGameList(string uri, bool showDialogs)
@@ -233,12 +235,11 @@ namespace NVIDIAGeForceNowEnabler
             string featureName = "NVIDIA GeForce NOW";
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
 
-            string geforceNowWorkingPath = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "NVIDIA Corporation", "GeForceNOW", "CEF");
-            string geforceNowExecutableName = "GeForceNOWStreamer.exe";
-            
             var supportedGames = DownloadGameList("https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json", showDialogs);
             if (supportedGames.Count() == 0)
             {
+                // In case download failed.
+                // Also sometimes there are issues with the api and it doesn't return any games in the response
                 return;
             }
             var supportedSteamGames = supportedGames.Where(g => g.Store == "Steam");
@@ -321,13 +322,13 @@ namespace NVIDIAGeForceNowEnabler
 
                 if (settings.Settings.UpdatePlayActions == true)
                 {
-                    string updatePlayAction = UpdateNvidiaAction(game, supportedGame, geforceNowWorkingPath, geforceNowExecutableName);
-                    if (updatePlayAction == "playActionAdded")
+                    var updatePlayAction = UpdateNvidiaAction(game, supportedGame);
+                    if (updatePlayAction == "ActionAdded")
                     {
-                        playActionAddedCount++; 
+                        playActionAddedCount++;
                         logger.Info(String.Format("Play Action added to \"{0}\"", game.Name));
                     }
-                    else if (updatePlayAction == "playActionRemoved")
+                    else if (updatePlayAction == "ActionRemoved")
                     {
                         playActionRemovedCount++; 
                         logger.Info(String.Format("Play Action removed from \"{0}\"", game.Name));
