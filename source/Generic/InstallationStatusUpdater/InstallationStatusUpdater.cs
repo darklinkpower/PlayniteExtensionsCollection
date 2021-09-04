@@ -19,6 +19,8 @@ namespace InstallationStatusUpdater
 
         private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
 
+        private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
+
         private InstallationStatusUpdaterSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("ed9c467f-5ab5-478f-a09f-936146188ad0");
@@ -105,7 +107,14 @@ namespace InstallationStatusUpdater
             string romFullPath = rom.Path;
             if (!string.IsNullOrEmpty(installDirectory))
             {
-                romFullPath = Path.Combine(installDirectory, rom.Path);
+                if (installDirVarRegex.IsMatch(rom.Path))
+                {
+                    romFullPath = rom.Path.Replace("{InstallDir}", installDirectory);
+                }
+                else
+                {
+                    romFullPath = Path.Combine(installDirectory, rom.Path);
+                }
             }
 
             return File.Exists(romFullPath);
@@ -156,7 +165,14 @@ namespace InstallationStatusUpdater
             var fullfilePath = gameAction.Path;
             if (!string.IsNullOrEmpty(installDirectory))
             {
-                fullfilePath = Path.Combine(installDirectory, fullfilePath);
+                if (installDirVarRegex.IsMatch(gameAction.Path))
+                {
+                    fullfilePath = gameAction.Path.Replace("{InstallDir}", installDirectory);
+                }
+                else
+                {
+                    fullfilePath = Path.Combine(installDirectory, gameAction.Path);
+                }
             }
 
             return File.Exists(fullfilePath);
