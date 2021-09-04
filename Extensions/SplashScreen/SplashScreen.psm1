@@ -3,7 +3,7 @@ function GetMainMenuItems
     param(
         $getMainMenuItemsArgs
     )
-    
+
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem1.Description = "Open video manager"
     $menuItem1.FunctionName = "Invoke-OpenVideoManagerWindow"
@@ -53,26 +53,26 @@ function Invoke-ViewSettings
         </DockPanel>
         <StackPanel Grid.Row="0" DockPanel.Dock="Top">
             <CheckBox Name="CBexecuteInDesktopMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBviewImageSplashscreenDesktopMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBviewVideoDesktopMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBcloseSplashScreenDesktopMode" Margin="0,10,0,0"/>
+            <CheckBox Name="CBviewImageSplashscreenDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
+            <CheckBox Name="CBviewVideoDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
+            <CheckBox Name="CBcloseSplashScreenDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
             <CheckBox Name="CBexecuteInFullscreenMode" Margin="0,20,0,0"/>
-            <CheckBox Name="CBviewImageSplashscreenFullscreenMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBviewVideoFullscreenMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,0,0"/>
+            <CheckBox Name="CBviewImageSplashscreenFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
+            <CheckBox Name="CBviewVideoFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
+            <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
             <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
-            <CheckBox Name="CBuseIconAsLogo" Margin="0,10,0,0"/>
-            <DockPanel Margin="0,10,0,0">
+            <CheckBox Name="CBuseIconAsLogo" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}"/>
+            <DockPanel Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}">
                 <TextBlock Name="TextBlockLogoPosition" DockPanel.Dock="Left" VerticalAlignment="Center"/>
                 <ComboBox Name="ComboBoxLogoPosition" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
                         HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="Value" Margin="10,0,0,0"/>
             </DockPanel>
-            <DockPanel Margin="0,10,0,0">
+            <DockPanel Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}">
                 <TextBlock Name="TextBlockLogoVerticalAlignment" VerticalAlignment="Center"/>
                 <ComboBox Name="ComboBoxLogoVerticalAlignment" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
                         HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="Value" Margin="10,0,0,0"/>
             </DockPanel>
-            <CheckBox Name="CBuseBlackSplashscreen" Margin="0,20,0,0"/>
+            <CheckBox Name="CBuseBlackSplashscreen" Margin="40,20,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}"/>
         </StackPanel>
     </DockPanel>
 </Grid>
@@ -84,53 +84,6 @@ function Invoke-ViewSettings
 
     # Make variables for each control
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
-
-    # Control IsEnabled events
-    $CBexecuteInDesktopMode.Add_Checked(
-    {
-        $CBviewImageSplashscreenDesktopMode.IsEnabled = $true
-        $CBviewVideoDesktopMode.IsEnabled = $true
-        $CBcloseSplashScreenDesktopMode.IsEnabled = $true
-    })
-
-    $CBexecuteInDesktopMode.Add_Unchecked(
-    {
-        $CBviewImageSplashscreenDesktopMode.IsEnabled = $false
-        $CBviewVideoDesktopMode.IsEnabled = $false
-        $CBcloseSplashScreenDesktopMode.IsEnabled = $false
-    })
-
-    $CBexecuteInFullscreenMode.Add_Checked(
-    {
-        $CBviewImageSplashscreenFullscreenMode.IsEnabled = $true
-        $CBviewVideoFullscreenMode.IsEnabled = $true
-        $CBcloseSplashScreenFullscreenMode.IsEnabled = $true
-    })
-
-    $CBexecuteInFullscreenMode.Add_Unchecked(
-    {
-        $CBviewImageSplashscreenFullscreenMode.IsEnabled = $false
-        $CBviewVideoFullscreenMode.IsEnabled = $false
-        $CBcloseSplashScreenFullscreenMode.IsEnabled = $false
-    })
-
-    $CBshowLogoInSplashscreen.Add_Checked(
-    {
-        $CBuseIconAsLogo.IsEnabled = $true
-        $TextBlockLogoPosition.IsEnabled = $true
-        $ComboBoxLogoPosition.IsEnabled = $true
-        $TextBlockLogoVerticalAlignment.IsEnabled = $true
-        $ComboBoxLogoVerticalAlignment.IsEnabled = $true
-    })
-
-    $CBshowLogoInSplashscreen.Add_Unchecked(
-    {
-        $CBuseIconAsLogo.IsEnabled = $false
-        $TextBlockLogoPosition.IsEnabled = $false
-        $ComboBoxLogoPosition.IsEnabled = $false
-        $TextBlockLogoVerticalAlignment.IsEnabled = $false
-        $ComboBoxLogoVerticalAlignment.IsEnabled = $false
-    })
 
     # Set items sources of controls
     $CBexecuteInDesktopMode.Content = "Execute extension in Desktop Mode"
@@ -220,7 +173,7 @@ function Invoke-ViewSettings
     # Create window
     $window = $PlayniteApi.Dialogs.CreateWindow($windowCreationOptions)
     $window.Content = $XMLForm
-    $window.Width = 800
+    $window.Width = 850
     $window.Height = 550
     $window.Title = "Splash Screen - Settings"
     $window.WindowStartupLocation = "CenterScreen"
