@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -15,6 +16,8 @@ namespace InstallationStatusUpdater
     public class InstallationStatusUpdater : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+
+        private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
 
         private InstallationStatusUpdaterSettingsViewModel settings { get; set; }
 
@@ -94,13 +97,15 @@ namespace InstallationStatusUpdater
                 return false;
             }
 
+            if (driveRegex.IsMatch(rom.Path))
+            {
+                return File.Exists(rom.Path);
+            }
+
             string romFullPath = rom.Path;
             if (!string.IsNullOrEmpty(installDirectory))
             {
-                if (!rom.Path.ToLower().StartsWith(installDirectory))
-                {
-                    romFullPath = Path.Combine(installDirectory, rom.Path);
-                }
+                romFullPath = Path.Combine(installDirectory, rom.Path);
             }
 
             return File.Exists(romFullPath);
@@ -143,13 +148,15 @@ namespace InstallationStatusUpdater
                 return false;
             }
 
+            if (driveRegex.IsMatch(gameAction.Path))
+            {
+                return File.Exists(gameAction.Path);
+            }
+
             var fullfilePath = gameAction.Path;
             if (!string.IsNullOrEmpty(installDirectory))
             {
-                if (!fullfilePath.ToLower().StartsWith(installDirectory))
-                {
-                    fullfilePath = Path.Combine(installDirectory, fullfilePath);
-                }
+                fullfilePath = Path.Combine(installDirectory, fullfilePath);
             }
 
             return File.Exists(fullfilePath);
