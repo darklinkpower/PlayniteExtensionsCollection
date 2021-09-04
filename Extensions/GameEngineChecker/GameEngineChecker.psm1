@@ -32,12 +32,12 @@ function Add-EngineTag
         $TimeSpan = new-timespan -days 1
         if (((get-date) - $AppListLastWrite) -gt $TimeSpan)
         {
-            Get-SteamAppList -AppListPath $steamAppListPath
+            Get-SteamAppList $steamAppListPath
         }
     }
     else
     {
-        Get-SteamAppList -AppListPath $steamAppListPath
+        Get-SteamAppList $steamAppListPath
     }
     [object]$steamAppList = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
     

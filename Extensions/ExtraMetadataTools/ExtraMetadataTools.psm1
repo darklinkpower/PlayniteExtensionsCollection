@@ -474,7 +474,7 @@ function Get-SteamAppId
         $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
         if (!(Test-Path $steamAppListPath))
         {
-            Get-SteamAppList -AppListPath $steamAppListPath
+            Get-SteamAppList $steamAppListPath
         }
 
         # Try to search for AppId by searching in local Steam AppList database
@@ -493,7 +493,7 @@ function Get-SteamAppId
             $TimeSpan = New-Timespan -days 2
             if (((Get-date) - $AppListLastWrite) -gt $TimeSpan)
             {
-                Get-SteamAppList -AppListPath $steamAppListPath
+                Get-SteamAppList $steamAppListPath
                 [object]$steamAppList = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
                 foreach ($steamApp in $steamAppList) {
                     if ($steamApp.name -eq $Gamename) 

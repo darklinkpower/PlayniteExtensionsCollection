@@ -695,7 +695,7 @@ function Set-GlobalAppList
     $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
     if (!(Test-Path $steamAppListPath) -or ($forceDownload -eq $true))
     {
-        Get-SteamAppList -AppListPath $steamAppListPath
+        Get-SteamAppList $steamAppListPath
     }
     $global:steamAppList = @{}
     [object]$appListJson = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
