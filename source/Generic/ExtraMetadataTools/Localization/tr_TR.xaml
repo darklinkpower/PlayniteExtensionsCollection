@@ -1,0 +1,38 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeExtraDirectoryDescription">Open extra metadata directory</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetSteamLogosDescription">Download Steam logos for selected games</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription">Download logos for selected games from SteamGridDB</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetSgdbApiKeyDescription">Set SteamGridDB API Key</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Download logo for selected game from Google</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Add logo from local file of selected game</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetUrlLogoDescription">Add logo from url of selected game</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Convert icons to custom logos asset</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemoveLogosSelectedGamesDescription">Delete logos of selected games</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeThemesDirectoryDescription">Open themes directory</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Set profile picture</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Set background music</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Set background video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme &quot;{0}&quot; updated.
+Please restart Playnite to make changes take effect.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GetSteamLogosResultsMessage">Downloaded logo of {0} game(s).</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Added logo file to &quot;{0}&quot;.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_EnterUrlMessage">Enter logo Url:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ConvertIconsChoiceMessage" xml:space="preserve">This function will convert the icons of the selected games to logos for use in compatible themes.
+This is intended to use in case you have used a theme that has used the icons asset as a replacement for logos.
+For safety it will only process icons that have the &quot;.png&quot; file extension.
+Changes are not reversible.
+
+Do you wish to continue?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_RemoveLogosChoiceMessage" xml:space="preserve">This function will delete the logos for the selected games.
+Changes are not reversible.
+
+Do you wish to continue?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_RemoveLogosResultsMessage">Removed logos of {0} game(s).</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Error converting image file to png. Error: &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Profile Picture set.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundMusicResultsMessage">Background music set.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Background video set.</sys:String>
+</ResourceDictionary>
