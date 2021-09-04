@@ -1,12 +1,14 @@
 ﻿Id: Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac
 Name: Steam Viewer
 Author: darklinkpower
-Version: 1.1
+Version: 2.0
 Module: SteamViewer.psm1
 Type: Script
 Icon: icon.png
 Links:
-    - Name: Github
+    - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-506.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi

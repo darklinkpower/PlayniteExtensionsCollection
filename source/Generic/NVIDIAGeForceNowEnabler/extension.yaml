@@ -1,12 +1,14 @@
 ﻿Id: NVIDIA_GeForce_Now_Enabler
 Name: NVIDIA GeForce NOW Enabler
 Author: darklinkpower
-Version: 1.6
+Version: 2.0
 Module: NVIDIAGeForceNowEnabler.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
-    - Name: Github
+    - Name: GitHub
       Url: https://github.com/darklinkpower/PlaynitePlugin-NVIDIAGeForceNowEnabler
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-298.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi

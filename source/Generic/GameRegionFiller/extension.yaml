@@ -6,7 +6,7 @@ Module: GameRegionFiller.psm1
 Type: Script
 Icon: icon.png
 Links:
-    - Name: Github
+    - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-369.html

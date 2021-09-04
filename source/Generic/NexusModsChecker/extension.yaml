@@ -1,7 +1,7 @@
 ﻿Id: Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85
 Name: Nexus Mods checker
 Author: darklinkpower
-Version: 1.0.2
+Version: 2.0
 Module: NexusModsChecker.psm1
 Type: Script
 Icon: icon.png
@@ -10,3 +10,5 @@ Links:
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-533.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi

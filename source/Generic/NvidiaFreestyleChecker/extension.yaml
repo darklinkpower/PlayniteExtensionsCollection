@@ -1,7 +1,7 @@
 ﻿Id: NVIDIA_Freestyle_Checker
 Name: NVIDIA Freestyle checker
 Author: darklinkpower
-Version: 1.0.1
+Version: 2.0
 Module: NvidiaFreestyleChecker.psm1
 Type: Script
 Icon: icon.png
@@ -10,3 +10,5 @@ Links:
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-503.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi

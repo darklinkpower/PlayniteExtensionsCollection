@@ -1,12 +1,14 @@
 ﻿Id: Twitch_Add_Link
 Name: Twitch Add Link
 Author: darklinkpower
-Version: 1.1
+Version: 2.0
 Module: TwitchAddLink.psm1
 Type: Script
 Icon: icon.png
 Links:
-    - Name: Github
+    - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-364.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensihtml

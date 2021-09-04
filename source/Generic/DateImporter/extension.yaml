@@ -1,7 +1,7 @@
 ﻿Id: Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e
 Name: Date Importer
 Author: darklinkpower
-Version: 1.2.2
+Version: 2.0
 Module: DateImporter.psm1
 Type: Script
 Icon: icon.jpg
@@ -10,3 +10,5 @@ Links:
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Playnite Forums thread
       Url: https://playnite.link/forum/thread-376.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
