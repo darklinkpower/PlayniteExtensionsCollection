@@ -15,10 +15,9 @@ namespace ImporterforAnilist
     public class ImporterForAnilist : LibraryPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly IPlayniteAPI playniteApi;
         private const string dbImportMessageId = "anilistlibImportError";
 
-        private ImporterForAnilistSettings settings { get; set; }
+        private ImporterForAnilistSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("2366fb38-bf25-45ea-9a78-dcc797ee83c3");
 
@@ -30,8 +29,11 @@ namespace ImporterforAnilist
 
         public ImporterForAnilist(IPlayniteAPI api) : base(api)
         {
-            playniteApi = api; 
-            settings = new ImporterForAnilistSettings(this);
+            settings = new ImporterForAnilistSettingsViewModel(this);
+            Properties = new LibraryPluginProperties
+            {
+                HasSettings = true
+            };
         }
 
         public string intToThreeDigitsString(int number)
@@ -144,7 +146,7 @@ namespace ImporterforAnilist
             //        break;
             //}
 
-            if (settings.UpdateProgressOnLibUpdate == true)
+            if (settings.Settings.UpdateProgressOnLibUpdate == true)
             {
                 //Version (Used for progress)
                 var totalLength = 0;
@@ -185,7 +187,7 @@ namespace ImporterforAnilist
             if (game != null)
             {
                 var updateGame = false;
-                if (settings.UpdateUserScoreOnLibUpdate == true && gameMetadata.UserScore != 0 && gameMetadata.UserScore != game.UserScore)
+                if (settings.Settings.UpdateUserScoreOnLibUpdate == true && gameMetadata.UserScore != 0 && gameMetadata.UserScore != game.UserScore)
                 {
                     game.UserScore = gameMetadata.UserScore;
                     updateGame = true;
@@ -198,7 +200,7 @@ namespace ImporterforAnilist
                 //    updateGame = true;
                 //}
 
-                if (settings.UpdateProgressOnLibUpdate == true && gameMetadata.Version != game.Version)
+                if (settings.Settings.UpdateProgressOnLibUpdate == true && gameMetadata.Version != game.Version)
                 {
                     game.Version = gameMetadata.Version;
                     updateGame = true;
@@ -216,26 +218,27 @@ namespace ImporterforAnilist
 
             var gamesList = new List<GameMetadata>() { }; 
             
-            if (string.IsNullOrEmpty(settings.AccountAccessCode))
+            if (string.IsNullOrEmpty(settings.Settings.AccountAccessCode))
             {
-                playniteApi.Notifications.Add(new NotificationMessage(
+                PlayniteApi.Notifications.Add(new NotificationMessage(
                     dbImportMessageId,
                     "AniList access code has not been configured in the library settings",
                     NotificationType.Error));
             }
             else
             {
-                string propertiesPrefix = settings.PropertiesPrefix;
+                string propertiesPrefix = settings.Settings.PropertiesPrefix;
                 if (!string.IsNullOrEmpty(propertiesPrefix))
                 {
                     propertiesPrefix = string.Format("{0} ", propertiesPrefix);
                 }
 
-                var accountApi = new AnilistAccountClient(playniteApi, settings.AccountAccessCode);
+                var accountApi = new AnilistAccountClient(PlayniteApi, settings.Settings.AccountAccessCode);
                 if (string.IsNullOrEmpty(accountApi.anilistUsername))
                 {
+
                     //Username could not be obtained
-                    playniteApi.Notifications.Add(new NotificationMessage(
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
                         dbImportMessageId,
                         "Could not obtain AniList username. Verify that the configured access code is valid",
                         NotificationType.Error));
@@ -243,7 +246,7 @@ namespace ImporterforAnilist
                 else
                 {
                     logger.Info($"AniList username: {accountApi.anilistUsername}");
-                    if (settings.ImportAnimeLibrary == true)
+                    if (settings.Settings.ImportAnimeLibrary == true)
                     {
                         var animeEntries = accountApi.GetEntries("ANIME");
                         logger.Debug($"Found {animeEntries.Count} Anime items");
@@ -256,7 +259,7 @@ namespace ImporterforAnilist
                         }
                     }
 
-                    if (settings.ImportMangaLibrary == true)
+                    if (settings.Settings.ImportMangaLibrary == true)
                     {
                         var mangaEntries = accountApi.GetEntries("MANGA");
                         logger.Debug($"Found {mangaEntries.Count} Manga items");
@@ -285,7 +288,7 @@ namespace ImporterforAnilist
 
         public override LibraryMetadataProvider GetMetadataDownloader()
         {
-            string propertiesPrefix = settings.PropertiesPrefix;
+            string propertiesPrefix = settings.Settings.PropertiesPrefix;
             if (!string.IsNullOrEmpty(propertiesPrefix))
             {
                 propertiesPrefix = string.Format("{0} ", propertiesPrefix);
