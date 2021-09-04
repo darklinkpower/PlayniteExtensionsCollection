@@ -19,7 +19,7 @@ namespace GamePassCatalogBrowser
         private ILogger logger = LogManager.GetLogger();
         private HttpClient client;
         private Guid pluginId;
-        private Platform pcPlatform;
+        private List<Guid> platformsList;
         private Tag gameExpiredTag;
         private Tag gameAddedTag;
         private GameSource source;
@@ -39,7 +39,8 @@ namespace GamePassCatalogBrowser
             pluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary);
             RefreshLibraryItems();
 
-            pcPlatform = PlayniteApi.Database.Platforms.Add("PC");
+            var pcPlatform = PlayniteApi.Database.Platforms.Add("PC (Windows)");
+            platformsList = new List<Guid> { pcPlatform.Id };
             gameExpiredTag = PlayniteApi.Database.Tags.Add("Game Pass (Formerly on)");
             gameAddedTag = PlayniteApi.Database.Tags.Add("Game Pass");
             source = PlayniteApi.Database.Sources.Add("Xbox Game Pass");
@@ -236,10 +237,10 @@ namespace GamePassCatalogBrowser
                 DeveloperIds = arrayToCompanyGuids(game.Developers),
                 PublisherIds = arrayToCompanyGuids(game.Publishers),
                 PluginId = pluginId,
-                PlatformId = pcPlatform.Id,
+                PlatformIds = platformsList,
                 Description = StringToHtml(game.Description, true),
                 SourceId = source.Id,
-                ReleaseDate = game.ReleaseDate
+                ReleaseDate = new ReleaseDate(game.ReleaseDate) 
             };
 
             AddTagToGame(newGame, gameAddedTag);

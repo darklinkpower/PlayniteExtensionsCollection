@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -16,7 +17,7 @@ using GamePassCatalogBrowser.Views;
 
 namespace GamePassCatalogBrowser
 {
-    public class GamePassCatalogBrowser : Plugin
+    public class GamePassCatalogBrowser : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
@@ -29,7 +30,7 @@ namespace GamePassCatalogBrowser
             settings = new GamePassCatalogBrowserSettings(this);
         }
 
-        public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs menuArgs)
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return new List<MainMenuItem>
             {
@@ -37,7 +38,7 @@ namespace GamePassCatalogBrowser
                 {
                     Description = "Browse Game Pass Catalog",
                     MenuSection = "@Game Pass Catalog Browser",
-                    Action = args => {
+                    Action = o => {
                         InvokeViewWindow();
                     }
                 },
@@ -45,7 +46,7 @@ namespace GamePassCatalogBrowser
                 {
                     Description = "Add all Catalog to the Playnite library",
                     MenuSection = "@Game Pass Catalog Browser",
-                    Action = args => {
+                    Action = o => {
                         AddAllGamePassCatalog();
                     }
                 },
@@ -53,14 +54,14 @@ namespace GamePassCatalogBrowser
                 {
                     Description = "Reset Cache",
                     MenuSection = "@Game Pass Catalog Browser",
-                    Action = args => {
+                    Action = o => {
                         ResetCache();
                     }
                 }
             };
         }
 
-        public override void OnLibraryUpdated()
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
             if (settings.UpdateCatalogOnLibraryUpdate == true)
             {
