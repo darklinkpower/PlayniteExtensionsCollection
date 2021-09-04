@@ -1,0 +1,12 @@
+﻿Id: Installation_Status_Updater
+Name: Installation Status Updater
+Author: darklinkpower
+Version: 2.0
+Module: InstallationStatusUpdater.dll
+Type: GenericPlugin
+Icon: icon.ico
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-316.html
