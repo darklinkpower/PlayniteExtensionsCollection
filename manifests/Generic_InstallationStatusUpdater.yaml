@@ -9,3 +9,9 @@ Packages:
       - Translations support
       - Added several settings to make it configurable
       - New functionality to add a tag with the drive letter the game is installed on
+  - Version: 2.0.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Installation_Status_Updater_2_0_1.pext
+    Changelog:
+      - Fix localization strings not loading
