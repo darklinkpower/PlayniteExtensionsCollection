@@ -1,0 +1,9 @@
+AddonId: ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

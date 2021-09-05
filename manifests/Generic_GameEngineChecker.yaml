@@ -1,0 +1,9 @@
+AddonId: Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

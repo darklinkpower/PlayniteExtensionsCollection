@@ -1,0 +1,9 @@
+AddonId: ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

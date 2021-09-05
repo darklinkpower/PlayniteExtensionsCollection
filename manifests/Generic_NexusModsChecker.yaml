@@ -1,0 +1,9 @@
+AddonId: Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

@@ -1,0 +1,9 @@
+AddonId: SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

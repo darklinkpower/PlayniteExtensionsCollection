@@ -1,0 +1,11 @@
+AddonId: Installation_Status_Updater
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Installation_Status_Updater_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support
+      - Added several settings to make it configurable
+      - New functionality to add a tag with the drive letter the game is installed on

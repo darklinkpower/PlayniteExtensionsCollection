@@ -1,0 +1,9 @@
+AddonId: SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

@@ -1,0 +1,9 @@
+AddonId: Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

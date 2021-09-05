@@ -1,0 +1,9 @@
+AddonId: Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support

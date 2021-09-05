@@ -1,0 +1,9 @@
+AddonId: Log_Open_a755c30f-580a-491e-9584-6c5314f6e254
+Packages:
+  - Version: 2.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta/Log_Open_a755c30f-580a-491e-9584-6c5314f6e254_2_0.pext
+    Changelog:
+      - Playnite 9 support
+      - Translations support
