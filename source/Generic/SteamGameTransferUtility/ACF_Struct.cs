@@ -1,4 +1,4 @@
-﻿/* From https://stackoverflow.com/a/42876399 */
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +7,7 @@ using System.IO;
 
 namespace SteamGameTransferUtility
 {
+    //From https://stackoverflow.com/a/42876399
     class AcfReader
     {
         public string FileLocation { get; private set; }

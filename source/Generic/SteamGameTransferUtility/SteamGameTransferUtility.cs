@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -6,23 +7,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows;
-using System.IO;
+using System.Windows.Controls;
 
 namespace SteamGameTransferUtility
 {
-    public class SteamGameTransferUtility : Plugin
+    public class SteamGameTransferUtility : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private SteamGameTransferUtilitySettings settings { get; set; }
+        private SteamGameTransferUtilitySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("c2dac2df-44c9-4f47-8555-c8d134c4f400");
 
         public SteamGameTransferUtility(IPlayniteAPI api) : base(api)
         {
-            settings = new SteamGameTransferUtilitySettings(this);
+            settings = new SteamGameTransferUtilitySettingsViewModel(this);
+            Properties = new GenericPluginProperties
+            {
+                HasSettings = true
+            };
         }
         public override ISettings GetSettings(bool firstRunSettings)
         {
@@ -34,15 +38,15 @@ namespace SteamGameTransferUtility
             return new SteamGameTransferUtilitySettingsView();
         }
 
-        public override void OnLibraryUpdated()
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            if (settings.UpdateLocTagsOnLibUpdate == true)
+            if (settings.Settings.UpdateLocTagsOnLibUpdate == true)
             {
                 UpdateInstallDirTags();
             }
         }
 
-        public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs menuArgs)
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return new List<MainMenuItem>
             {
@@ -50,7 +54,7 @@ namespace SteamGameTransferUtility
                 {
                     Description = "Launch menu window",
                     MenuSection = "@Steam Game Transfer Utility",
-                    Action = args => {
+                    Action = a => {
                         WindowMethod();
                     }
                 },
@@ -58,7 +62,7 @@ namespace SteamGameTransferUtility
                 {
                     Description = "Update installation drive tag in all games",
                     MenuSection = "@Steam Game Transfer Utility",
-                    Action = args => {
+                    Action = a => {
                         UpdateInstallDirTagsMenu();
                     }
                 }
