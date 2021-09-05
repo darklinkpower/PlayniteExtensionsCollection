@@ -17,6 +17,7 @@ namespace InstallationStatusUpdater
         public bool OnlyUsePlayActionGameActions { get; set; } = false;
         public bool UpdateOnStartup { get; set; } = true;
         public bool UpdateOnLibraryUpdate { get; set; } = true;
+        public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]

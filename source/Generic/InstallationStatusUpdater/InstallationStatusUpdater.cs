@@ -48,6 +48,10 @@ namespace InstallationStatusUpdater
             {
                 DetectInstallationStatus(false);
             }
+            if (settings.Settings.UpdateLocTagsOnLibUpdate == true)
+            {
+                UpdateInstallDirTags();
+            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -69,7 +73,7 @@ namespace InstallationStatusUpdater
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription"),
                     MenuSection = "@Installation Status Updater",
-                    Action = o => {
+                    Action = a => {
                         DetectInstallationStatus(true);
                     }
                 },
@@ -77,7 +81,7 @@ namespace InstallationStatusUpdater
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription"),
                     MenuSection = "@Installation Status Updater",
-                    Action = o => {
+                    Action = a => {
                         AddIgnoreFeature();
                     }
                 },
@@ -85,8 +89,17 @@ namespace InstallationStatusUpdater
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
                     MenuSection = "@Installation Status Updater",
-                    Action = o => {
+                    Action = a => {
                         RemoveIgnoreFeature();
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
+                    MenuSection = "@Installation Status Updater",
+                    Action = a => {
+                        UpdateInstallDirTags();
+                        PlayniteApi.Dialogs.ShowMessage("Finished updating installation drive tags.", "Steam Game Transfer Utility");
                     }
                 }
             };
@@ -364,6 +377,94 @@ namespace InstallationStatusUpdater
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage"), 
                 featureRemovedCount.ToString()), "Installation Status Updater"
             );
+        }
+
+        public void UpdateInstallDirTags()
+        {
+            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                var gameDatabase = PlayniteApi.Database.Games;
+                string driveTagPrefix = "[Install Drive]";
+                foreach (Game game in gameDatabase)
+                {
+                    string tagName = string.Empty;
+                    if (!string.IsNullOrEmpty(game.InstallDirectory) && game.IsInstalled == true)
+                    {
+                        FileInfo s = new FileInfo(game.InstallDirectory);
+                        string sourceDrive = System.IO.Path.GetPathRoot(s.FullName).ToUpper();
+                        tagName = string.Format("{0} {1}", driveTagPrefix, sourceDrive);
+                        Tag driveTag = PlayniteApi.Database.Tags.Add(tagName);
+                        AddTag(game, driveTag);
+                    }
+
+                    if (game.Tags == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (Tag tag in game.Tags.Where(x => x.Name.StartsWith(driveTagPrefix)))
+                    {
+                        if (!string.IsNullOrEmpty(tagName))
+                        {
+                            if (tag.Name != tagName)
+                            {
+                                RemoveTag(game, tag);
+                            }
+                        }
+                        else
+                        {
+                            RemoveTag(game, tag);
+                        }
+                    }
+                }
+            }, new GlobalProgressOptions("Setting installation drive tags..."));
+        }
+
+        public bool RemoveTag(Game game, Tag tag)
+        {
+            if (game.TagIds != null)
+            {
+                if (game.TagIds.Contains(tag.Id))
+                {
+                    game.TagIds.Remove(tag.Id);
+                    PlayniteApi.Database.Games.Update(game);
+                    bool tagRemoved = true;
+                    return tagRemoved;
+                }
+                else
+                {
+                    bool tagRemoved = false;
+                    return tagRemoved;
+                }
+            }
+            else
+            {
+                bool tagRemoved = false;
+                return tagRemoved;
+            }
+        }
+
+        public bool AddTag(Game game, Tag tag)
+        {
+            if (game.TagIds == null)
+            {
+                game.TagIds = new List<Guid> { tag.Id };
+                PlayniteApi.Database.Games.Update(game);
+                bool tagAdded = true;
+                return tagAdded;
+            }
+            else if (game.TagIds.Contains(tag.Id) == false)
+            {
+                game.TagIds.AddMissing(tag.Id);
+                PlayniteApi.Database.Games.Update(game);
+                bool tagAdded = true;
+                return tagAdded;
+            }
+            else
+            {
+                bool tagAdded = false;
+                return tagAdded;
+            }
         }
     }
 }
