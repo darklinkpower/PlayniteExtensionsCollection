@@ -25,9 +25,10 @@ namespace SteamGameTransferUtility
             settings = new SteamGameTransferUtilitySettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
         }
+
         public override ISettings GetSettings(bool firstRunSettings)
         {
             return settings;

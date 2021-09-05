@@ -6,7 +6,5 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <CheckBox IsChecked="{Binding UpdateLocTagsOnLibUpdate}" 
-                  Content="Update installation location tags on library update"/>
     </StackPanel>
 </UserControl>

@@ -95,11 +95,11 @@ namespace InstallationStatusUpdater
                 },
                 new MainMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
+                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription"),
                     MenuSection = "@Installation Status Updater",
                     Action = a => {
                         UpdateInstallDirTags();
-                        PlayniteApi.Dialogs.ShowMessage("Finished updating installation drive tags.", "Steam Game Transfer Utility");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage"), "Installation Status Updater");
                     }
                 }
             };
@@ -417,7 +417,7 @@ namespace InstallationStatusUpdater
                         }
                     }
                 }
-            }, new GlobalProgressOptions("Setting installation drive tags..."));
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage")));
         }
 
         public bool RemoveTag(Game game, Tag tag)
