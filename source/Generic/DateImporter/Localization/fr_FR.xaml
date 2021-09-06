@@ -12,22 +12,22 @@
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Importer les dates des jeux Epic sélectionnés</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Importer les dates de tous les jeux Epic</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Exporter la liste de licences Epic</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">A web browser window will be opened, please close the window after login in.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">No licenses were found.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Found {0} licenses.
-Do you want to export your found {1} licenses?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Licenses exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Library: {0}
-Processed games: {1}
-Games with date found: {2}
-Games without date found: {3}
-Games that had the added date changed: {4}
+    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">Une fenêtre de navigateur web sera ouverte, veuillez fermer la fenêtre après vous être connecté.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">Aucune licence n'a été trouvé.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">{0} licences trouvées.
+Voulez-vous exporter vos {1} licences trouvées ?</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Licences exportées avec succès.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Bibliothèque : {0}
+Jeux traités : {1}
+Jeux avec date trouvée : {2}
+Jeux sans date trouvée : {3}
+Jeux dont la date ajoutée a été modifiée : {4}
 
-Do you want to export results?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Results exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Enter date to import in the format &quot;dd/MM/yyyy HH:mm&quot;:</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">Error.
-&quot;{0}&quot; is in the wrong format.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Changed the added date of {0} games.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">User is not logged in to {0}.</sys:String>
+Voulez-vous exporter les résultats ?</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Résultats exportés avec succès.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Entrez la date à importer dans le format &quot;jj/MM/aaaa HH:mm&quot; :</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">Erreur.
+&quot;{0}&quot; est dans le mauvais format.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Date d'ajout de {0} jeux modifiée.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">L'utilisateur n'est pas connecté à {0}.</sys:String>
 </ResourceDictionary>
