@@ -390,12 +390,12 @@ namespace GamePassCatalogBrowser.Services
             var gamePassCatalogDownload = GetGamepassCatalog(gamepassCatalogApiUrl);
             if (gamePassCatalogDownload != null)
             {
-                ProcessGamePassCatalog(GetGamepassCatalog(gamepassCatalogApiUrl), ProductType.Game);
+                ProcessGamePassCatalog(gamePassCatalogDownload, ProductType.Game);
             }
-            var gamePassEaCatalogDownload = GetGamepassCatalog(gamepassCatalogApiUrl);
+            var gamePassEaCatalogDownload = GetGamepassCatalog(gamepassEaCatalogApiUrl);
             if (gamePassEaCatalogDownload != null)
             {
-                ProcessGamePassCatalog(GetGamepassCatalog(gamepassEaCatalogApiUrl), ProductType.EaGame);
+                ProcessGamePassCatalog(gamePassEaCatalogDownload, ProductType.EaGame);
             }
             
             return SetGamePassListFullPaths(gamePassGamesList);
