@@ -5,17 +5,17 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Import Steam Tags for selected games (Maximum 5 tags)"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_MenuItemGet-SteamTagsDefaultDescription")
     $menuItem1.FunctionName = "Get-SteamTagsDefault"
     $menuItem1.MenuSection = "@Steam Tags Importer"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "Import Steam Tags for selected games (All available tags)"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_MenuItemGet-SteamTagsAllDescription")
     $menuItem2.FunctionName = "Get-SteamTagsAll"
     $menuItem2.MenuSection = "@Steam Tags Importer"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Import Steam Tags for selected games (Select maximum tags)"
+    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_MenuItemGet-SteamTagsManualDescription")
     $menuItem3.FunctionName = "Get-SteamTagsManual"
     $menuItem3.MenuSection = "@Steam Tags Importer"
 
@@ -37,7 +37,7 @@ function Get-DownloadString
     } catch {
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage") -f $url, $errorMessage));
         return
     }
 }
@@ -154,7 +154,7 @@ function Get-SteamTags
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowMessage("No games selected")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_NoGamesSelectedMessage"))
         return
     }
     if ($null -eq $steamAppList)
@@ -162,7 +162,7 @@ function Get-SteamTags
         Set-GlobalAppList $false
     }
     $regex = 'InitAppTagModal\([^[]+([^\n]+)'
-    $CountertagsAdded = 0
+    $counterTagsAdded = 0
 
     foreach ($game in $gameDatabase) {
         # Wait time to prevent reaching requests limit
@@ -198,7 +198,9 @@ function Get-SteamTags
         } catch {
             $errorMessage = $_.Exception.Message
             $__logger.Info("Error downloading file `"$steamStoreUrl`". Error: $errorMessage")
-            $PlayniteApi.Dialogs.ShowMessage("Error downloading page `"$steamStoreUrl`". Error: $errorMessage");
+            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage") -f $steamStoreUrl, $errorMessage));
+            $response.Close()
+            $streamReader.Close()
             break
         }
 
@@ -226,7 +228,7 @@ function Get-SteamTags
                     $game.tagIds = $tag.Id
                 }
                 $tagsAdded = $true
-                $CountertagsAdded++
+                $counterTagsAdded++
             }
         }
         if ($tagsAdded -eq $true)
@@ -235,7 +237,7 @@ function Get-SteamTags
         }  
     }
 
-    $PlayniteApi.Dialogs.ShowMessage("Added $CountertagsAdded tags to $($gameDatabase.Count) game(s).", "Steam Tags Importer")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_TagsAddedResultsMessage") -f $counterTagsAdded, $($gameDatabase.Count)), "Steam Tags Importer")
 }
 
 function Get-SteamTagsDefault
@@ -262,19 +264,19 @@ function Get-SteamTagsManual
         $scriptMainMenuItemActionArgs
     )
     
-    $userInput = $PlayniteApi.Dialogs.SelectString("Enter number of tags to download", "Steam Tags Importer", "5")
+    $userInput = $PlayniteApi.Dialogs.SelectString(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage")), "Steam Tags Importer", "5")
     
     if ($userInput.result -eq "True")
     {
         try {
             $number = [System.Int32]::Parse($userInput.SelectedString)
         } catch {
-            $PlayniteApi.Dialogs.ShowMessage("Invalid input", "Steam Tags Importer")
+            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_InvalidInputErrorMessage")), "Steam Tags Importer")
             return
         }
         if ($userInput.SelectedString -eq 0)
         {
-            $PlayniteApi.Dialogs.ShowMessage("Invalid input", "Steam Tags Importer")
+            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_InvalidInputErrorMessage")), "Steam Tags Importer")
             return
         }
         Get-SteamTags $number

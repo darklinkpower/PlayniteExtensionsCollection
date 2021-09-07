@@ -5,17 +5,17 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Open Tools Menu"
+    $menuItem1.Description = ([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_MenuItemOpenMenuDescription"))
     $menuItem1.FunctionName = "OpenMenu"
     $menuItem1.MenuSection = "@Game Media Tools"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "See missing media statistics (All games)"
+    $menuItem2.Description = ([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription"))
     $menuItem2.FunctionName = "MissingMediaStatsAll"
     $menuItem2.MenuSection = "@Game Media Tools"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "See missing media statistics (Selected games)"
+    $menuItem3.Description = ([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription"))
     $menuItem3.FunctionName = "MissingMediaStatsSelection"
     $menuItem3.MenuSection = "@Game Media Tools"
 
@@ -90,7 +90,7 @@ function MissingMediaStatsSelection
     }
     else 
     {
-        $PlayniteApi.Dialogs.ShowMessage("No games are selected", "Game Media Tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_NoSelectedGamesMessage")), "Game Media Tools")
     }
 }
 
@@ -325,7 +325,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$toolTargetWidth`", `"$toolTargetHeight`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_InvalidInputHeightErrorMessage")), "Game Media Tools")
                 }
             }
             3 { # Tool #3: Resolution
@@ -356,7 +356,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$toolTargetWidth`", `"$toolTargetHeight`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in Width and height Input boxes.", "Game Media Tools")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_InvalidInputHeightErrorMessage")), "Game Media Tools")
                 }
             }
             4 { # Tool #4: Image Size
@@ -385,7 +385,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$toolTargetMaximumSize`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in size input box.", "Game Media Tools")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_InvalidInputSizeErrorMessage")), "Game Media Tools")
                 }
             }
             5 { # Tool #5: Extension
@@ -414,7 +414,7 @@ function OpenMenu
                 else
                 {
                     $__logger.Info("Game Media Tools - Invalid Input `"$toolTargetImageExtension`"")
-                    $PlayniteApi.Dialogs.ShowMessage("Invalid Input in extension input box.", "Game Media Tools")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_InvaludInputExtensionErrorMessage")), "Game Media Tools")
                 }
             }
         }
@@ -521,13 +521,13 @@ function Invoke-GameMediaTools
     
     # Generate results of missing media in selection
     $GamesNoMediaSelection = $gameDatabase | Where-Object {$_.TagIds -contains $tagNoMediaIds.Guid}
-    $results = "Finished. Games in selection: $($gameDatabase.count)`n`nSelected Media: $mediaType`nGames missing selected media in selection: $($GamesNoMediaSelection.Count)"
+    $results = ([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_Results1Message") -f $($gameDatabase.count.ToString()), $mediaType, $($GamesNoMediaSelection.Count.ToString()) )
 
     # Get information of games with missing media in all database and add to results
     $gamesNoCoverAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.CoverImage}).count
     $gamesNoBackgroundAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.BackgroundImage}).count
     $gamesNoIconAll = ($PlayniteApi.Database.Games | Where-Object {$null -eq $_.Icon}).count
-    $results += "`n`nMissing Media in all database`nCovers: $gamesNoCoverAll games`nBackground Images: $gamesNoBackgroundAll games`nIcons: $gamesNoIconAll games"
+    $results += ([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_Results2Message") -f $gamesNoCoverAll, $gamesNoBackgroundAll, $gamesNoIconAll)
 
     # Get information of tool Tag
     if ($tagName)
@@ -535,7 +535,7 @@ function Invoke-GameMediaTools
         $GamesToolTagSelection = $gameDatabase | Where-Object {$_.TagIds -contains $ToolTagId.Guid}
         $GamesToolTagAll = $PlayniteApi.Database.Games | Where-Object {$_.TagIds -contains $ToolTagId.Guid}
         $__logger.Info("Game Media Tools - Games with tool tag `"$tagName`" at finish: Selection $($GamesToolTagSelection.Count), All $($GamesToolTagAll.Count)")
-        $results += "`n`nTool tag name: $tagName`nGames with tag in selection: $($GamesToolTagSelection.Count)`nGames with tag in all games database: $($GamesToolTagAll.count)"
+        $results += ([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Media_Tools_Results3Message") -f $tagName, $($GamesToolTagSelection.Count.ToString()), $($GamesToolTagAll.count.ToString()))
         
         # Remove tool tag from database if 0 games have it
         if (($GamesToolTagAll.count -eq 0) -and ($GamesToolTagSelection.count -eq 0))
@@ -545,7 +545,7 @@ function Invoke-GameMediaTools
         }
     }
     $__logger.Info("Game Media Tools - $($results -replace "`n", ', ')")
-    $PlayniteApi.Dialogs.ShowMessage("$results", "Game Media Tools")
+    $PlayniteApi.Dialogs.ShowMessage($results, "Game Media Tools")
 }
 
 function Get-ImageDimensions

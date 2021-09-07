@@ -204,7 +204,7 @@ function Get-GoogleLogo
     $gameDatabase = $scriptGameMenuItemActionArgs.Games
     if ($gameDatabase.count -gt 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage")), "Extra Metadata tools");
         return
     }
 
@@ -318,11 +318,12 @@ function Get-GoogleLogo
                     $webClient = New-Object System.Net.WebClient
                     $webClient.DownloadFile($logoUri, $logoPath)
                     $webClient.Dispose()
-                    $PlayniteApi.Dialogs.ShowMessage("Added logo file to `"$($game.name)`"", "Extra Metadata tools")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_AddedLogoMessage") -f $game.Name), "Extra Metadata tools")
                 } catch {
+                    $webClient.Dispose()
                     $errorMessage = $_.Exception.Message
                     $__logger.Info("Error downloading file `"$logoUri`". Error: $errorMessage")
-                    $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$logoUri`". Error: $errorMessage")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage") -f $errorMessage), "Extra Metadata tools")
                 }
             }
         })
@@ -847,7 +848,7 @@ function Get-SgdbLogo
     $sgdbApiKey = Get-SgdbApiKey
     if ([string]::IsNullOrEmpty($sgdbApiKey))
     {
-        $PlayniteApi.Dialogs.ShowMessage("Couldn't get SteamGridDB API Key. Please configure it before continuing.", "Extra Metadata tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SgdbApiKeyErrorMessage")), "Extra Metadata tools")
         return
     }
     
@@ -921,5 +922,5 @@ function Get-SgdbLogo
             }
         }
     }
-    $PlayniteApi.Dialogs.ShowMessage("Downloaded $downloadedLogos logos from SteamGridDB.", "Extra Metadata tools")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage")), "Extra Metadata tools")
 }

@@ -5,22 +5,22 @@ function GetMainMenuItems
     )
 
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Open video manager"
+    $menuItem1.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription")
     $menuItem1.FunctionName = "Invoke-OpenVideoManagerWindow"
     $menuItem1.MenuSection = "@Splash Screen"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description = "View settings"
+    $menuItem2.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription")
     $menuItem2.FunctionName = "Invoke-ViewSettings"
     $menuItem2.MenuSection = "@Splash Screen"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem3.Description = "Add image splash screen skip feature to selected games"
+    $menuItem3.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_MenuItemAdd-ImageSkipFeature")
     $menuItem3.FunctionName = "Add-ImageSkipFeature"
     $menuItem3.MenuSection = "@Splash Screen|Exclude functions"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem4.Description = "Remove image splash screen skip feature from selected games"
+    $menuItem4.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_MenuItemRemove-ImageSkipFeature")
     $menuItem4.FunctionName = "Remove-ImageSkipFeature"
     $menuItem4.MenuSection = "@Splash Screen|Exclude functions"
 
@@ -52,27 +52,27 @@ function Invoke-ViewSettings
             <Button Name="ButtonSave" Margin="0,0,0,0" DockPanel.Dock="Right" VerticalAlignment="Bottom"/>
         </DockPanel>
         <StackPanel Grid.Row="0" DockPanel.Dock="Top">
-            <CheckBox Name="CBexecuteInDesktopMode" Margin="0,10,0,0"/>
-            <CheckBox Name="CBviewImageSplashscreenDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
-            <CheckBox Name="CBviewVideoDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
-            <CheckBox Name="CBcloseSplashScreenDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
-            <CheckBox Name="CBexecuteInFullscreenMode" Margin="0,20,0,0"/>
-            <CheckBox Name="CBviewImageSplashscreenFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
-            <CheckBox Name="CBviewVideoFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
-            <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
-            <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
-            <CheckBox Name="CBuseIconAsLogo" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBexecuteInDesktopMode}" Name="CBexecuteInDesktopMode" Margin="0,10,0,0"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode}" Name="CBviewImageSplashscreenDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBviewVideoDesktopMode}" Name="CBviewVideoDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode}" Name="CBcloseSplashScreenDesktopMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInDesktopMode}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBexecuteInFullscreenMode}" Name="CBexecuteInFullscreenMode" Margin="0,20,0,0"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode}" Name="CBviewImageSplashscreenFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBviewVideoFullscreenMode}" Name="CBviewVideoFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode}" Name="CBcloseSplashScreenFullscreenMode" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBexecuteInFullscreenMode}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBshowLogoInSplashscreen}" Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBuseIconAsLogo}" Name="CBuseIconAsLogo" Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}"/>
             <DockPanel Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}">
-                <TextBlock Name="TextBlockLogoPosition" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <TextBlock  Text="{DynamicResource LOCSplashScreen_SettingTextBlockLogoPosition}" Name="TextBlockLogoPosition" DockPanel.Dock="Left" VerticalAlignment="Center"/>
                 <ComboBox Name="ComboBoxLogoPosition" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
                         HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="Value" Margin="10,0,0,0"/>
             </DockPanel>
             <DockPanel Margin="40,10,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}">
-                <TextBlock Name="TextBlockLogoVerticalAlignment" VerticalAlignment="Center"/>
+                <TextBlock  Text="{DynamicResource LOCSplashScreen_SettingTextBlockLogoVerticalAlignment}" Name="TextBlockLogoVerticalAlignment" VerticalAlignment="Center"/>
                 <ComboBox Name="ComboBoxLogoVerticalAlignment" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
                         HorizontalAlignment="Left" VerticalAlignment="Center" DisplayMemberPath="Name" SelectedValuePath="Value" Margin="10,0,0,0"/>
             </DockPanel>
-            <CheckBox Name="CBuseBlackSplashscreen" Margin="40,20,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}"/>
+            <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBuseBlackSplashscreen}" Name="CBuseBlackSplashscreen" Margin="40,20,0,0" IsEnabled="{Binding IsChecked, ElementName=CBshowLogoInSplashscreen}"/>
         </StackPanel>
     </DockPanel>
 </Grid>
@@ -86,41 +86,26 @@ function Invoke-ViewSettings
     $Xaml.FirstChild.SelectNodes("//*[@Name]") | ForEach-Object {Set-Variable -Name $_.Name -Value $XMLForm.FindName($_.Name) }
 
     # Set items sources of controls
-    $CBexecuteInDesktopMode.Content = "Execute extension in Desktop Mode"
-    $CBexecuteInDesktopMode.IsChecked = $true
     $CBexecuteInDesktopMode.IsChecked = $settings.executeInDesktopMode
 
-    $CBviewImageSplashscreenDesktopMode.Content = "View splashscreen images in Desktop Mode"
     $CBviewImageSplashscreenDesktopMode.IsChecked = $settings.viewImageSplashscreenDesktopMode
 
-    $CBviewVideoDesktopMode.Content = "View intro videos in Desktop Mode"
     $CBviewVideoDesktopMode.IsChecked = $settings.viewVideoDesktopMode
 
-    $CBcloseSplashScreenDesktopMode.Content = "Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)"
     $CBcloseSplashScreenDesktopMode.IsChecked = $settings.closeSplashScreenDesktopMode
 
-    $CBexecuteInFullscreenMode.Content = "Execute extension in Fullscreen Mode"
-    $CBexecuteInFullscreenMode.IsChecked = $true
     $CBexecuteInFullscreenMode.IsChecked = $settings.executeInFullscreenMode
 
-    $CBviewImageSplashscreenFullscreenMode.Content = "View splashscreen images in Fullscreen Mode"
     $CBviewImageSplashscreenFullscreenMode.IsChecked = $settings.viewImageSplashscreenFullscreenMode
     
-    $CBviewVideoFullscreenMode.Content = "View intro videos in Fullscreen Mode"
     $CBviewVideoFullscreenMode.IsChecked = $settings.viewVideoFullscreenMode
 
-    $CBcloseSplashScreenFullscreenMode.Content = "Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)"
     $CBcloseSplashScreenFullscreenMode.IsChecked = $settings.closeSplashScreenFullscreenMode
 
-    $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
-    $CBshowLogoInSplashscreen.IsChecked = $true
     $CBshowLogoInSplashscreen.IsChecked = $settings.showLogoInSplashscreen
 
-    $CBuseIconAsLogo.Content = "Use game icon from Metadata as logo"
-    $CBuseIconAsLogo.IsChecked = $false
     $CBuseIconAsLogo.IsChecked = $settings.useIconAsLogo
 
-    $CBuseBlackSplashscreen.Content = "Use black splashscreen instead of the splashscreen image"
     $CBuseBlackSplashscreen.IsChecked = $settings.useBlackSplashscreen
 
     [System.Collections.ArrayList]$ComboBoxLogoPositionSource = @(
@@ -153,11 +138,9 @@ function Invoke-ViewSettings
         }
     )
 
-    $TextBlockLogoPosition.Text = "Logo horizontal position:"
     $ComboBoxLogoPosition.ItemsSource = $ComboBoxLogoPositionSource
     $ComboBoxLogoPosition.SelectedValue = $settings.logoPosition
 
-    $TextBlockLogoVerticalAlignment.Text = "Logo vertical position:"
     $ComboBoxLogoVerticalAlignment.ItemsSource = $ComboBoxLogoVerticalAlignmentSource
     $ComboBoxLogoVerticalAlignment.SelectedValue = $settings.logoVerticalAlignment
 
@@ -279,7 +262,7 @@ function Set-Video
     }
     
     Copy-Item $videoSourcePath $videoDestinationPath -Force
-    $PlayniteApi.Dialogs.ShowMessage("Intro video has been added", "Splash Screen")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_IntroVideoAddedMessage")), "Splash Screen")
 }
 
 function Remove-IntroVideo
@@ -289,7 +272,7 @@ function Remove-IntroVideo
     )
     
     Remove-Item $videoSourcePath -Force
-    $PlayniteApi.Dialogs.ShowMessage("Intro video has been removed.", "Splash Screen")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_IntroVideoRemovedMessage")), "Splash Screen")
 }
 
 function Invoke-OpenVideoManagerWindow
@@ -889,7 +872,7 @@ function Add-ImageSkipFeature
         $__logger.Info(("Added `"{0}`" feature to `"{1}`"." -f $featureName, $game.name))
     }
     
-    $PlayniteApi.Dialogs.ShowMessage(("Added `"{0}`" exclude feature to {1} game(s)" -f $featureName, $featureAdded.Count.ToString()), "Splash Screen")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_ExcludeFeatureAddResultsMessage") -f $featureName, $featureAdded.Count.ToString()), "Splash Screen")
 }
 
 function Remove-ImageSkipFeature
@@ -918,5 +901,5 @@ function Remove-ImageSkipFeature
         }
     }
     
-    $PlayniteApi.Dialogs.ShowMessage(("Removed `"{0}`" exclude feature from {1} game(s)" -f $featureName, $featureRemoved.Count.ToString()), "Splash Screen");
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSplashScreen_ExcludeFeatureRemoveResultsMessage") -f $featureName, $featureRemoved.Count.ToString()), "Splash Screen");
 }

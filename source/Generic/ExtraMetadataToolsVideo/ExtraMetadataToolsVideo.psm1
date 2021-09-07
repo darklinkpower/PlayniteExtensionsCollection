@@ -5,57 +5,57 @@ function GetGameMenuItems
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "[Steam] Download Steam trailer video (SD quality)"
+    $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription")
     $menuItem.FunctionName = "Get-SteamVideoSd"
     $menuItem.MenuSection = "Extra Metadata tools|Video|Trailers"
    
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "[Steam] Download Steam trailer video (HD quality)"
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription")
     $menuItem2.FunctionName = "Get-SteamVideoHd"
     $menuItem2.MenuSection = "Extra Metadata tools|Video|Trailers"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "[Steam] Download Steam microtrailer video"
+    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription")
     $menuItem3.FunctionName = "Get-SteamVideoMicro"
     $menuItem3.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem4.Description =  "Set trailer video for the selected game from file"
+    $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription")
     $menuItem4.FunctionName = "Set-VideoManuallyTrailer"
     $menuItem4.MenuSection = "Extra Metadata tools|Video|Trailers"
 
     $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem5.Description =  "Set microtrailer video for the selected game from file"
+    $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription")
     $menuItem5.FunctionName = "Set-VideoManuallyMicroTrailer"
     $menuItem5.MenuSection = "Extra Metadata tools|Video|Microtrailers"
     
     $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem6.Description =  "Generate microtrailer video from configured trailer video"
+    $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription")
     $menuItem6.FunctionName = "Get-VideoMicrotrailerFromTrailer"
     $menuItem6.MenuSection = "Extra Metadata tools|Video|Microtrailers"
     
     $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem7.Description =  "Delete trailer video of the selected game(s)"
+    $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription")
     $menuItem7.FunctionName = "Remove-VideoTrailer"
     $menuItem7.MenuSection = "Extra Metadata tools|Video|Trailers"
 
     $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem8.Description =  "Delete microtrailer video of the selected game(s)"
+    $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription")
     $menuItem8.FunctionName = "Remove-VideoMicrotrailer"
     $menuItem8.MenuSection = "Extra Metadata tools|Video|Microtrailers"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem9.Description =  "[YouTube] Auto download YouTube trailer video for selected games"
+    $menuItem9.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription")
     $menuItem9.FunctionName = "Set-YouTubeVideo"
     $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
     
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  "[YouTube] Search YouTube video for the selected game"
+    $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription")
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
     $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
 
     $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem11.Description =  "Update assets status tags of all games in database"
+    $menuItem11.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription")
     $menuItem11.FunctionName = "Update-AssetsStatusGameDatabase"
     $menuItem11.MenuSection = "Extra Metadata tools"
 
@@ -144,7 +144,7 @@ function Set-MandatorySettings
 
     if ($null -eq $settings.ffmpegPath)
     {
-        $PlayniteApi.Dialogs.ShowMessage("Select ffmpeg executable", "Extra Metadata Tools")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage"), "Extra Metadata Tools")
         $ffmpegPath = $PlayniteApi.Dialogs.SelectFile("ffmpeg executable|ffmpeg.exe")
         if ($ffmpegPath)
         {
@@ -165,7 +165,7 @@ function Set-MandatorySettings
 
     if ($null -eq $settings.ffprobePath)
     {
-        $PlayniteApi.Dialogs.ShowMessage("Select ffProbe executable", "Extra Metadata Tools")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SelectFfprobeExecutableMessage"), "Extra Metadata Tools")
         $ffProbePath = $PlayniteApi.Dialogs.SelectFile("ffProbe executable|ffProbe.exe")
         if ($ffProbePath)
         {
@@ -186,7 +186,7 @@ function Set-MandatorySettings
 
     if ($null -eq $settings.youtubedlPath)
     {
-        $PlayniteApi.Dialogs.ShowMessage("Select youtube-dl executable", "Extra Metadata Tools")
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SelectYoutubeDlExecutableMessage"), "Extra Metadata Tools")
         $youtubedlPath = $PlayniteApi.Dialogs.SelectFile("youtube-dl executable|youtube-dl.exe")
         if ($youtubedlPath)
         {
@@ -202,7 +202,7 @@ function Set-MandatorySettings
     {
         if ([string]::IsNullOrEmpty($settings.($setting.Name)))
         {
-            $PlayniteApi.Dialogs.ShowMessage("Please configure all requested mandatory settings to continue", "Extra Metadata Tools")
+            $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SetupUnfinishedMessage"), "Extra Metadata Tools")
             exit
         }
     }
@@ -261,7 +261,7 @@ function Get-DownloadString
         $webClient.Dispose()
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
-        $PlayniteApi.Dialogs.ShowMessage("Error downloading file `"$url`". Error: $errorMessage") | Out-Null
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericDownloadErrorMessage") -f $url, $errorMessage)) | Out-Null
         return
     }
 }
@@ -423,8 +423,8 @@ function Get-SteamVideoUrl
     try {
         $json = Get-DownloadString $steamApiUrl | ConvertFrom-Json
     } catch {
-        $ErrorMessage = $_.Exception.Message
-        $PlayniteApi.Dialogs.ShowMessage("Couldn't download game information. Error: $ErrorMessage") | Out-Null
+        $errorMessage = $_.Exception.Message
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_ErrorDownloadGameInformationMessage") -f $errorMessage)) | Out-Null
         exit
     }
 
@@ -696,7 +696,7 @@ function Set-VideoManually
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -ne 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage")), "Extra Metadata tools");
         return
     }
 
@@ -735,11 +735,11 @@ function Set-VideoManually
     }
     if (Test-Path $videoPath)
     {
-        $PlayniteApi.Dialogs.ShowMessage("Finished.", "Extra Metadata tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericFinishedMessage")), "Extra Metadata tools")
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("Selected file could not be processed.", "Extra Metadata tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericErrorProcessingFileMessage")), "Extra Metadata tools")
     }
 
     # Update game assets status
@@ -923,7 +923,7 @@ function Invoke-YoutubeSearchWindow
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -ne 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage")), "Extra Metadata tools");
         return
     }
     $game = $gameDatabase[0]
@@ -1030,7 +1030,7 @@ function Set-YouTubeVideoManual
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
     if ($gameDatabase.count -ne 1)
     {
-        $PlayniteApi.Dialogs.ShowMessage("More than one game is selected, please select only one game.", "Extra Metadata tools");
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage")), "Extra Metadata tools");
         return
     }
 
@@ -1080,11 +1080,11 @@ function Set-YouTubeVideoManual
     }
     if (Test-Path $videoPath)
     {
-        $PlayniteApi.Dialogs.ShowMessage("Finished.", "Extra Metadata tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericFinishedMessage")), "Extra Metadata tools")
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("Selected file could not be processed.", "Extra Metadata tools")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericErrorProcessingFileMessage")), "Extra Metadata tools")
     }
 
     # Update assets status

@@ -277,6 +277,7 @@ function OnGameStarted
 
             return $exesExclusionList
         }
+        
         function Get-GameProcessId
         {
             param(

@@ -5,17 +5,17 @@ function GetGameMenuItems
     )
 
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem.Description =  "Youtube Review"
+    $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCReview_Viewer_MenuItemYoutubeReviewDescription")
     $menuItem.FunctionName = "Invoke-ReviewViewer"
     $menuItem.MenuSection = "Video"
 
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem2.Description =  "Youtube Trailer"
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCReview_Viewer_MenuItemYoutubeTrailerDescription")
     $menuItem2.FunctionName = "Invoke-TrailerViewer"
     $menuItem2.MenuSection = "Video"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  "Review Viewer"
+    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCReview_Viewer_MenuItemReviewViewerDescription")
     $menuItem3.FunctionName = "Invoke-ReviewReader"
 
     return $menuItem, $menuItem2, $menuItem3
@@ -82,7 +82,7 @@ function Get-YoutubeVideoId
     }
     else
     {
-        $PlayniteApi.Dialogs.ShowMessage("No video found in Youtube search.", $ExtensionName);
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCReview_Viewer_NoVideoFoundMessage")), $ExtensionName);
         exit
     }
 }
@@ -299,19 +299,19 @@ function Invoke-ReviewReader
                 <Separator Margin="0,20,0,0" Height="1"/>
                 <TextBlock Name="TextBoxSourceNameReviewsSection" Margin="0,10,0,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                 <GridEx ColumnCount="2" Margin="0,20,0,0" StarColumns="1" RowCount="5" AutoLayoutColumns="2" VerticalAlignment="Top">
-                    <TextBlock Text="Total user reviews" Margin="0,0,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_TotalUserReviews}" Margin="0,0,0,0"/>
                     <TextBlock Name="SourceTotalUserReviews" Text="-" Margin="15,0,0,0"/>
-                    <TextBlock Text="Positive user reviews" Margin="0,0,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_PositiveUserReviews}" Margin="0,0,0,0"/>
                     <TextBlock Name="SourcePositiveUserReviews" Text="-" Margin="15,0,0,0"/>
-                    <TextBlock Text="Negative user reviews" Margin="0,0,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_NegativeUserReviews}" Margin="0,0,0,0"/>
                     <TextBlock Name="SourceNegativeUserReviews" Text="-" Margin="15,0,0,0"/>
-                    <TextBlock Text="Average user score" Margin="0,0,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_AverageUserScore}" Margin="0,0,0,0"/>
                     <TextBlock Name="SourceAverageUserScore" Text="-" Margin="15,0,0,0"/>
-                    <TextBlock Text="SteamDB score" Margin="0,0,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_SteamDbScore}" Margin="0,0,0,0"/>
                     <TextBlock Name="SourceSteamDbScore" Text="-" Margin="15,0,0,0"/>
                 </GridEx>
             </StackPanel>
-            <Button Name="ButtonInvokeYoutubeReview" Grid.Row="3" Margin="0,10,0,0" Width="Auto" VerticalAlignment="Bottom"/>
+            <Button Name="ButtonInvokeYoutubeReview" Grid.Row="3" Margin="0,10,0,0" Width="Auto" VerticalAlignment="Bottom" Content="{DynamicResource LOCReview_Viewer_OpenReview}"/>
         </Grid>
         <Grid Grid.Column="1" Margin="10,0,0,0">
             <Grid.RowDefinitions>
@@ -323,9 +323,9 @@ function Invoke-ReviewReader
             </Grid.RowDefinitions>
             <StackPanel>
                 <DockPanel LastChildFill="False">
-                    <TextBlock Text="Reviews source:" FontWeight="Bold" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewsSource}" FontWeight="Bold" Margin="0,0,0,0" VerticalAlignment="Center"/>
                     <ComboBox Name="CbReviewSources" DisplayMemberPath="Name" Margin="10,0,0,0" Width="Auto" MinWidth="130"/>
-                    <TextBlock Text="Reviews type:" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewsType}" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Center"/>
                     <ComboBox Name="CbReviewTypes" DisplayMemberPath="Name" Margin="10,0,0,0" Width="Auto" MinWidth="180"/>
                 </DockPanel>
                 <DockPanel Margin="0,10,0,0">
@@ -350,7 +350,7 @@ function Invoke-ReviewReader
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
-                    <TextBlock Text="Review:" FontWeight="Bold" Margin="0,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <TextBlock Text="{DynamicResource LOCReview_Viewer_Review}" FontWeight="Bold" Margin="0,0,0,0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
                     <Button DockPanel.Dock="Right" Name="ButtonNextReview" Background="Transparent" BorderThickness="0" Cursor="Hand" Content="&#xEACA;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" Margin="5,0,0,0" Padding="0,0,0,0"/>
                     <Button DockPanel.Dock="Right" Name="ButtonPreviousReview" Background="Transparent" BorderThickness="0" Cursor="Hand" Content="&#xEAC9;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}" HorizontalAlignment="Right" Margin="10,0,0,0" Padding="0,0,0,0"/>
                     <TextBlock DockPanel.Dock="Right" Name="TextBlockReviewsCount" Margin="10,0,0,0" TextWrapping="NoWrap" FontWeight="Bold" VerticalAlignment="Center"/>
@@ -361,7 +361,7 @@ function Invoke-ReviewReader
                 </ScrollViewer>
             </Grid>
             <DockPanel Grid.Row="3" Margin="0,20,0,0">
-                <TextBlock DockPanel.Dock="Right" Name="TextBlockOpenReview" Cursor="Hand" TextWrapping="NoWrap" Text="Open review" VerticalAlignment="Center"/>
+                <TextBlock DockPanel.Dock="Right" Name="TextBlockOpenReview" Cursor="Hand" TextWrapping="NoWrap" Text="{DynamicResource LOCReview_Viewer_OpenReview}" VerticalAlignment="Center"/>
                 <TextBlock FontStyle="Italic" TextWrapping="NoWrap" Margin="0,0,20,0" Text="{Binding ElementName=ListBoxReviews, Path=SelectedItem.ReviewHelpfulness}" VerticalAlignment="Center"/>
             </DockPanel>
             <DockPanel Grid.Row="4" Background="#3A3E44" Margin="0,10,0,0">
@@ -405,7 +405,6 @@ function Invoke-ReviewReader
     }
 
     $TextBoxGameName.Text = $game.Name
-    $ButtonInvokeYoutubeReview.Content = "Watch review video"
     if ($game.CriticScore)
     {
         $TextBoxCriticScore.Text = $game.CriticScore.ToString()
@@ -499,7 +498,7 @@ function Invoke-ReviewReader
                 else
                 {
                     $ListBoxReviews.ItemsSource = $null
-                    $PlayniteApi.Dialogs.ShowMessage(("Steam app Id for {0} could not be obtained. `nYou can add a link to the game with the Steam store link to detect it." -f $game.Name))
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage") -f $game.Name))
                 }
             }
 
