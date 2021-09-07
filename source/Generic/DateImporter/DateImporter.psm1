@@ -69,6 +69,10 @@ function GetMainMenuItems
 
 function Invoke-DateImporterSelected
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     Invoke-SteamDateImporterSelected
     Invoke-GogDateImporterSelected
     Invoke-EpicDateImporterSelected
@@ -76,6 +80,10 @@ function Invoke-DateImporterSelected
 
 function Invoke-DateImporterAll
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     Invoke-SteamDateImporterAll
     Invoke-GogDateImporterAll
     Invoke-EpicDateImporterAll
@@ -83,36 +91,60 @@ function Invoke-DateImporterAll
 
 function Invoke-SteamDateImporterSelected
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
     Add-SteamDates $gameDatabase
 }
 
 function Invoke-SteamDateImporterAll
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "cb91dfc9-b977-43bf-8e70-55f46e410fab"}
     Add-SteamDates $gameDatabase
 }
 
 function Invoke-GogDateImporterSelected
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e"}
     Add-GogDates $gameDatabase
 }
 
 function Invoke-GogDateImporterAll
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e"}
     Add-GogDates $gameDatabase
 }
 
 function Invoke-EpicDateImporterSelected
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "00000002-dbd1-46c6-b5d0-b1ba559d10e4"}
     Add-EpicDates $gameDatabase
 }
 
 function Invoke-EpicDateImporterAll
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "00000002-dbd1-46c6-b5d0-b1ba559d10e4"}
     Add-EpicDates $gameDatabase
 }
@@ -279,6 +311,10 @@ function Export-Results
 
 function Set-DatesFromInput
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $gameDatabase = $PlayniteApi.MainView.SelectedGames
 
     $dateInput = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_ResultsDateInputMessage"), "Date Importer", "")
@@ -449,6 +485,10 @@ function Add-EpicDates
 
 function Export-EpicLicenses
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $libraryName = "Epic"
     
     $LicensesList = Get-EpicLicenses
@@ -532,6 +572,10 @@ function Add-GogDates
 
 function Export-GogLicenses
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $libraryName = "GOG"
     $LicensesList = Get-GogLicenses $libraryName
     if ($LicensesList.count -eq 0)
@@ -613,6 +657,10 @@ function Add-SteamDates
 
 function Export-SteamLicenses
 {
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
     $libraryName = "Steam"
     $LicensesList = Get-SteamLicenses
     if ($LicensesList.count -eq 0)
