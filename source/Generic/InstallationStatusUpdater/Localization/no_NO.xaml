@@ -14,7 +14,7 @@ Tidligere avinstallerte spill ble merket som installert: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Oppdaterer installasjonsstasjon-tagger...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Angi spill med handling av typen &quot;Link&quot; som installert</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Angi spill med handling av typen &quot;Skript&quot; som installert</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Only use the first listed rom when detecting via roms</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Bruk kun den første opplistede rom-filen ved oppdagelse via rom-filer</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Skip games that include the play action of their library</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Only use Actions marked as &quot;Play Action&quot; for detection</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Detect installed games on startup</sys:String>
