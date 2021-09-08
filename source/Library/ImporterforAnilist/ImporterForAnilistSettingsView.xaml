@@ -8,20 +8,23 @@
     <Grid>
         <StackPanel Margin="20">
             <DockPanel>
-                <Button Content="Get access code" DockPanel.Dock="Right"
+                <TextBlock Text="{DynamicResource LOCImporter_For_Anilist_AccountAccessCodeSettingLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <Button Content="{DynamicResource LOCImporter_For_Anilist_AccountAccessCodeSettingButton}" DockPanel.Dock="Right" VerticalAlignment="Center"
                         Command="{Binding LoginCommand}" Margin="10,0,0,0"/>
-                <TextBox Name="AccountAccessCode" Text="{Binding Settings.AccountAccessCode}"/>
+                <TextBox Name="AccountAccessCode" Text="{Binding Settings.AccountAccessCode}" Margin="10,0,0,0" VerticalAlignment="Center"/>
             </DockPanel>
             <DockPanel Margin="0,10,0,0">
-                <TextBlock Text="Metadata properties prefix:" DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                <TextBox Name="PropertiesPrefix" Text="{Binding Settings.PropertiesPrefix}" Width="Auto" MinWidth="15" Margin="10,0,0,0"/>
+                <TextBlock Text="{DynamicResource LOCImporter_For_Anilist_MetadataPrefixSetting}" DockPanel.Dock="Left" VerticalAlignment="Center" 
+                           ToolTip="{DynamicResource LOCImporter_For_Anilist_MetadataPrefixSettingTooltip}"/>
+                <TextBox Name="PropertiesPrefix" Text="{Binding Settings.PropertiesPrefix}" Width="Auto" MinWidth="15" Margin="10,0,0,0"
+                         ToolTip="{DynamicResource LOCImporter_For_Anilist_MetadataPrefixSettingTooltip}"/>
             </DockPanel>
-            <CheckBox Name="ImportAnimeLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportAnimeLibrary}" Content="Import anime library during library update"/>
-            <CheckBox Name="ImportMangaLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportMangaLibrary}" Content="Import manga library during library update"/>
-            <CheckBox Name="UpdateUserScoreOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateUserScoreOnLibUpdate}" Content="Update user score from AniList account during library update"/>
+            <CheckBox Name="ImportAnimeLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportAnimeLibrary}" Content="{DynamicResource LOCImporter_For_Anilist_ImportAnimeSetting}"/>
+            <CheckBox Name="ImportMangaLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportMangaLibrary}" Content="{DynamicResource LOCImporter_For_Anilist_ImportMangaSetting}"/>
+            <CheckBox Name="UpdateUserScoreOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateUserScoreOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdaterUserscoreSetting}"/>
             <!--TODO Completion Status matching-->
-            <!--<CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateCompletionStatusOnLibUpdate}" Content="Update completion status from AniList account during library update"/>-->
-            <CheckBox Name="UpdateProgressOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateProgressOnLibUpdate}" Content="Update progress from AniList account during library update (&quot;Version&quot; field is used)"/>
+            <!--<CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateCompletionStatusOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateCompletionStatusSetting}"/>-->
+            <CheckBox Name="UpdateProgressOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateProgressOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateProgressSetting}"/>
         </StackPanel>
     </Grid>
 </UserControl>
