@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Import dates of selected Epic, GOG and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Import dates of all Epic, GOG and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Set added date of selected games manually</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Import dates of selected Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Import dates of all Steam games</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Importar fechas de juegos seleccionados de Epic, GOG y Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Importar fechas de todos los juegos Epic, GOG y Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Establecer la fecha añadida de los juegos seleccionados manualmente</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Importar fechas de los juegos de Steam seleccionados</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Importar fechas de todos los juegos de Steam</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Export Steam licenses list</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">Import dates of selected GOG games</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">Import dates of all GOG games</sys:String>
