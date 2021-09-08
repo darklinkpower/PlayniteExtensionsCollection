@@ -13,8 +13,17 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Set profile picture</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Set background music</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Set background video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Detect and delete unused data</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Done.
+
+Deleted {0} unused items.</sys:String>
+
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme &quot;{0}&quot; updated.
 Please restart Playnite to make changes take effect.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Added logo file to &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbApiKeyErrorMessage">Couldn't get SteamGridDB API Key. Please configure it before continuing.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage">Downloaded {0} logos from SteamGridDB.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_GetSteamLogosResultsMessage">Downloaded logo of {0} game(s).</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>

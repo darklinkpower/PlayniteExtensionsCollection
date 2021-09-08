@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Import dates of selected Epic, GOG and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Import dates of all Epic, GOG and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Set added date of selected games manually</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Import dates of selected Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Import dates of all Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Export Steam licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">Import dates of selected GOG games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">Import dates of all GOG games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportGogLicencesDescription">Export GOG licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Import dates of selected Epic games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Import dates of all Epic games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Export Epic licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">A web browser window will be opened, please close the window after login in.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">No licenses were found.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Found {0} licenses.
-Do you want to export your found {1} licenses?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Licenses exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Library: {0}
-Processed games: {1}
-Games with date found: {2}
-Games without date found: {3}
-Games that had the added date changed: {4}
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Importar fechas de juegos Epic, GOG y Steam seleccionados</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Importar fechas de todos los juegos Epic, GOG y Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Establecer la fecha añadida de los juegos seleccionados manualmente</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Importar fechas de los juegos de Steam seleccionados</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Importar fechas de todos los juegos de Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Exportar lista de licencias de Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">Importar fechas de los juegos de GOG seleccionados</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">Importar fechas de todos los juegos de GOG</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportGogLicencesDescription">Exportar lista de licencias de GOG</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Importar fechas de juegos Epic seleccionados</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Importar fechas de todos los juegos de Epic</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Exportar lista de licencias de Epic</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">Se abrirá una ventana del navegador web, por favor cierra la ventana después de iniciar sesión.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">No se han encontrado licencias.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Se encontraron {0} licencias.
+¿Deseas exportar las {1} licencias encontradas?</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Licencias exportadas con éxito.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Biblioteca: {0}
+Juegos procesados: {1}
+Juegos con fecha encontrada: {2}
+Juegos sin fecha encontrada: {3}
+Juegos con modificada: {4}
 
-Do you want to export results?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Results exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Enter date to import in the format &quot;dd/MM/yyyy HH:mm&quot;:</sys:String>
+¿Deseas exportar los resultados?</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Resultados exportados con éxito.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Introduce la fecha para importar en el formato &quot;dd/MM/aaaa HH:mm&quot;:</sys:String>
     <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">Error.
-&quot;{0}&quot; is in the wrong format.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Changed the added date of {0} games.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">User is not logged in to {0}.</sys:String>
+&quot;{0}&quot; está en el formato incorrecto.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Se cambió la fecha añadida de {0} juegos.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">El usuario no ha iniciado sesión en {0}.</sys:String>
 </ResourceDictionary>

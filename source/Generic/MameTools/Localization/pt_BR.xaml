@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMameRenamer_MenuItemRenameRegionInNameDescription">Rename selected MAME games</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MenuItemRenameNoRegionInNameDescription">Rename selected MAME games (Without region in game name)</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsBackgroundDescription">Import snapshots of selected game(s) as Background images from MAME into Playnite</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsCoverDescription">Import snapshots of selected game(s) as Cover images from MAME into Playnite</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">Select the MAME executable.</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutablePathSavedMessage">MAME executable path saved.</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">MAME executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCMameRenamer_ResultsMessage">Changed the name of {0} game(s).</sys:String>
-    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Imported snapshots of {0} game(s) to Playnite. 
-{0} gamee(s) have a missing snapshot or are not MAME games.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemRenameRegionInNameDescription">Renomear jogos de MAME selecionados</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemRenameNoRegionInNameDescription">Renomear jogos selecionados (sem região no nome do jogo)</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsBackgroundDescription">Importar capturas de tela do(s) jogo(s) selecionado(s) como imagens de segundo plano do MAME para o Playnite</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsCoverDescription">Importar capturas de tela do(s) jogo(s) selecionado(s) como imagens de capa do MAME para o Playnite</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">Selecione o executável do MAME.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutablePathSavedMessage">Caminho do executável do MAME salvo.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">O executável do MAME não foi encontrado em {0}. 
+Por favor, execute a extensão novamente para configurá-lo com o local correto.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_ResultsMessage">Alterado o nome de {0} jogo(s).</sys:String>
+    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Importou capturas de tela de {0} jogo(s) para o Playnite. 
+{0} jogo(s) tem uma captura de tela faltando ou não são jogos do MAME.</sys:String>
 </ResourceDictionary>

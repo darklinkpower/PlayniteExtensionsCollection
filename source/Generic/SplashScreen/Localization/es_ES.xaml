@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Abrir gestor de vídeo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription">Ver ajustes</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Añadir la característica para saltar la imágen splashscreen a los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Quitar característica de exclusión para utilizar la imágen splashscreen de los juegos seleccionados</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Se ha añadido el vídeo de introducción</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Se ha eliminado el vídeo de introducción</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Se añadió la característica &quot;{0}&quot; para excluir a {1} juego(s)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Se removio la característica de exclusión &quot;{0}&quot; de {1} juego(s)</sys:String>
+    
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Ejecutar extensión en modo de escritorio</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Ver imágen splashscreen en modo escritorio</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Ver videos de introducción en modo de escritorio</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Cerrar automáticamente la imágen splashscreen en el modo de escritorio (Desactivar oculta el escritorio cuando se cierra el juego, pero puede causar problemas)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Ejecutar extensión en modo pantalla completa</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Ver imagen splashscreen en modo pantalla completa</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">Ver videos de introducción en modo pantalla completa</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Cerrar automáticamente la imagen splashscreen en el modo pantalla completa (Desactivar esconde el escritorio cuando el juego se cierra pero puede causar problemas)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Añadir logo del juego en la imagen splashscreen si está disponible</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Usar icono del juego de Metadatos como logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Usar pantalla negra en lugar de la imagen splashscreen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Posición horizontal del logo:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Posición vertical del Logo:</sys:String>
+</ResourceDictionary>

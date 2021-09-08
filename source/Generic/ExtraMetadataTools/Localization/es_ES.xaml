@@ -1,38 +1,47 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeExtraDirectoryDescription">Open extra metadata directory</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetSteamLogosDescription">Download Steam logos for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription">Download logos for selected games from SteamGridDB</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetSgdbApiKeyDescription">Set SteamGridDB API Key</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Download logo for selected game from Google</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Add logo from local file of selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetUrlLogoDescription">Add logo from url of selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Convert icons to custom logos asset</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemoveLogosSelectedGamesDescription">Delete logos of selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeThemesDirectoryDescription">Open themes directory</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Set profile picture</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Set background music</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Set background video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme &quot;{0}&quot; updated.
-Please restart Playnite to make changes take effect.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GetSteamLogosResultsMessage">Downloaded logo of {0} game(s).</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Added logo file to &quot;{0}&quot;.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_EnterUrlMessage">Enter logo Url:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ConvertIconsChoiceMessage" xml:space="preserve">This function will convert the icons of the selected games to logos for use in compatible themes.
-This is intended to use in case you have used a theme that has used the icons asset as a replacement for logos.
-For safety it will only process icons that have the &quot;.png&quot; file extension.
-Changes are not reversible.
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeExtraDirectoryDescription">Abrir el directorio de extra metadata</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetSteamLogosDescription">Descargar logos de Steam para los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription">Descargar logos para juegos seleccionados de SteamGridDB</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetSgdbApiKeyDescription">Establecer clave API de SteamGridDB</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Descargar logo del juego seleccionado desde Google</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Agregar logo desde archivo local del juego seleccionado</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetUrlLogoDescription">Añadir logo desde un url al juego seleccionado</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Convertir iconos a logos</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemoveLogosSelectedGamesDescription">Eliminar logos de los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeThemesDirectoryDescription">Abrir directorio de temas</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Establecer foto de perfil</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Establecer música de fondo</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Establecer vídeo de fondo</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Detectar y eliminar datos no utilizados</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Finalizado.
 
-Do you wish to continue?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_RemoveLogosChoiceMessage" xml:space="preserve">This function will delete the logos for the selected games.
-Changes are not reversible.
+Se han eliminado {0} elementos sin usar.</sys:String>
 
-Do you wish to continue?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_RemoveLogosResultsMessage">Removed logos of {0} game(s).</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Error converting image file to png. Error: &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Profile Picture set.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundMusicResultsMessage">Background music set.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Background video set.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Configuración de metadatos extra para el tema &quot;{0}&quot; actualizado.
+Por favor, reinicia Playnite para que los cambios surtan efecto.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Más de un juego ha sido seleccionado, por favor seleccione sólo un juego.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Añadido archivo de logo a &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbApiKeyErrorMessage">No se pudo obtener la clave API SteamGridDB. Por favor, configúrela antes de continuar.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage">Descargados {0} logos de SteamGridDB.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Error al descargar el archivo desde la url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GetSteamLogosResultsMessage">Logo descargado de {0} juego(s).</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">Más de un juego ha sido seleccionado, por favor seleccione sólo un juego.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Se añadió un archivo de logo a &quot;{0}&quot;.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_EnterUrlMessage">Introduce Url del Logo:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ConvertIconsChoiceMessage" xml:space="preserve">Esta función convertirá los iconos de los juegos seleccionados a logos para su uso en temas compatibles.
+Esto está pensado para usarlo en caso de que haya utilizado un tema que ha utilizado los iconos activos como un sustituto de logotipos.
+Por seguridad, solo procesará iconos que tengan la extensión de archivo &quot;.png&quot;.
+Los cambios no son reversibles.
+
+¿Desea continuar?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_RemoveLogosChoiceMessage" xml:space="preserve">Esta función eliminará los logos de los juegos seleccionados.
+Los cambios no son reversibles.
+
+¿Deseas continuar?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_RemoveLogosResultsMessage">Se eliminaron los logos de {0} juego(s).</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Error al convertir archivo de imagen a png. Error: &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Imágen de perfil establecida.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundMusicResultsMessage">Música de fondo establecida.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Video de fondo establecido.</sys:String>
 </ResourceDictionary>

@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Check installation status of all games</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Add selected games to ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Update tag with drive where games are installed on</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Remove selected games from ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Done.
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Sjekk installasjonsstatus for alle spill</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Legg til valgte spill til ignoreringslisten</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Oppdater tag med disk hvor spill er installert</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Fjern valgte spill fra ignoreringslisten</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Ferdig.
 
-Previously installed games were set as uninstalled: {0}
-Previously uninstalled games were set as installed: {1}</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Added ignore feature to {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Removed ignore feature from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Finished updating installation drive tags.</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Updating installation drive tags...</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Detect games with an action of type &quot;Link&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Detect games with an action of type &quot;Script&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Only use the first listed rom when detecting via roms</sys:String>
+Tidligere installerte spill ble merket som avinstallert: {0}
+Tidligere avinstallerte spill ble merket som installert: {1}</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">La til ignoreringsfunksjon til {0} spill.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Fjernet ignoreringsfunksjon fra {0} spill.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Ferdig med oppdatering av installasjonsstasjon-tagger.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Oppdaterer installasjonsstasjon-tagger...</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Angi spill med handling av typen &quot;Link&quot; som installert</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Angi spill med handling av typen &quot;Skript&quot; som installert</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Bruk kun den første opplistede rom-filen ved oppdagelse via rom-filer</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Skip games that include the play action of their library</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Only use Actions marked as &quot;Play Action&quot; for detection</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Detect installed games on startup</sys:String>

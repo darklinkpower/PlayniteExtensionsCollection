@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Check installation status of all games</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Add selected games to ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Update tag with drive where games are installed on</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Remove selected games from ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Done.
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Prüfe Installations-Status aller Spiele</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Füge ausgewählte Spiele der Ausschlussliste hinzu</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Aktualisiere Tag mit Laufwerk, auf dem Spiele installiert sind</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Entferne ausgwählte Spiele von der Ausschlussliste</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Fertig.
 
-Previously installed games were set as uninstalled: {0}
-Previously uninstalled games were set as installed: {1}</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Added ignore feature to {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Removed ignore feature from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Finished updating installation drive tags.</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Updating installation drive tags...</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Detect games with an action of type &quot;Link&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Detect games with an action of type &quot;Script&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Only use the first listed rom when detecting via roms</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Skip games that include the play action of their library</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Only use Actions marked as &quot;Play Action&quot; for detection</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Detect installed games on startup</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Detect installed games on library update</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Update tag with drive the game is installed on library update</sys:String>
+Zuvor installierte Spiele wurden als deinstalliert markiert: {0} 
+Zuvor deinstallierte Spiele wurden als installiert markiert: {1}</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Ausschluss-Feature zu {0} Spiel(en) hinzugefügt.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Ausschluss-Feature von {0} Spiel(en) entfernt.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Aktualisierung der Installations-Laufwerk-Tags abgeschlossen.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Aktualisiere Installations-Laufwerk-Tags...</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Erkenne Spiele mit dem Aktionstypen &quot;Link&quot; als installiert</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Erkenne Spiele mit dem Aktionstypen &quot;Skript&quot; als installiert</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Nutze nur die erste ROM bei Erkennung über ROMs</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Überspringe Spiele, die die Spielen-Aktion ihrer Bibliothek enthalten</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Nutze nur Aktionen, die als &quot;Spielen-Aktion&quot; gekennzeichnet sind, zum erkennen</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Erkenne installierte Spiele beim Starten</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Erkenne installierte Spiele beim Aktualisieren der Bibliothek</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Aktualisiere Tag mit Laufwerk, auf dem Spiele installiert sind, beim Aktualisieren der Bibliothek</sys:String>
 </ResourceDictionary>

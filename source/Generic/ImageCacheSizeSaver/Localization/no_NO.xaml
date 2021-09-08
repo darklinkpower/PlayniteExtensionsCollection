@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Process Images in Cache</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Select ImageMagick executable</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick executable path saved</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Behandle bilder i hurtiglager</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Velg programfil for ImageMagick</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Bane til programfil for ImageMagick ble lagret</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Programfilen til Magick ble ikke funnet i {0}.
+Vennligst kjør utvidelsen på nytt og velg riktig plassering.</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Bildeprosessering er ferdig. Resultater:
 
-Images Processed: {0}
+Bilder prosessert: {0}
 
-Images that had size reduced: {1}
-Errors: {2}
+Bilder som ble forminsket: {1}
+Feil: {2}
 
-Image Cache Size Before: {3} MB
-Image Cache Size After: {4} MB</sys:String>
+Størrelse på bildehurtiglager før: {3} MB
+Størrelse på bildehurtiglager etter: {4} MB</sys:String>
 </ResourceDictionary>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription">Iniciar Steam con acciones configuradas</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemAddFilterFeatureDescription">Añadir característica de filtro del modo a los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Quitar característica de filtrado del modo de los juegos seleccionados</sys:String>
+
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSetting">Modo de utilidad de lanzamiento de Steam:</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeTooltip" xml:space="preserve">Modo global: Las acciones se realizan en todos los juegos de Steam excepto en juegos excluidos.
+Modo selectivo: Las acciones se realizan solo en juegos permitidos.
+
+Utiliza las funciones del plugin del submenú de extensiones para añadir las características de filtrado.</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnDesktopModeSetting">Desactivar el navegador web de Steam al iniciar un juego en el modo de escritorio</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Iniciar Steam en el modo de Big Picture al iniciar un juego en el modo de escritorio</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Desactivar el navegador web de Steam al iniciar un juego en modo pantalla completa</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Iniciar Steam en el modo de Big Picture al iniciar un juego en modo pantalla completa</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Cerrar Steam si es detectado como ejecutando antes de iniciar el juego</sys:String>
+    
+</ResourceDictionary>
