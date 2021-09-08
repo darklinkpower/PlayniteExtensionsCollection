@@ -68,7 +68,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 new MainMenuItem
                 {
-                    Description = "Update enabled status of games",
+                    Description = ResourceProvider.GetString("LOCNgfn_Enabler_MenuItemUpdateStatusDescription"),
                     MenuSection = "@NVIDIA GeForce NOW Enabler",
                     Action = o => {
                         MainMethod(true);
@@ -76,7 +76,7 @@ namespace NVIDIAGeForceNowEnabler
                 },
                 new MainMenuItem
                 {
-                    Description = "Remove Play Action from all games",
+                    Description = ResourceProvider.GetString("LOCNgfn_Enabler_MenuItemRemoveGameActionDescription"),
                     MenuSection = "@NVIDIA GeForce NOW Enabler",
                     Action = o => {
                         LibraryRemoveAllPlayActions();
@@ -334,20 +334,20 @@ namespace NVIDIAGeForceNowEnabler
                         logger.Info(String.Format("Play Action removed from \"{0}\"", game.Name));
                     }
                 }
-            } }, new GlobalProgressOptions("Updating NVIDIA GeForce NOW Enabled games"));
+            } }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_UpdatingProgressMessage")));
 
             if (showDialogs == true)
             {
-                string results = String.Format("NVIDIA GeForce NOW enabled games in library: {0}\n\nAdded \"{1}\" feature to {2} games.\nRemoved \"{3}\" feature from {4} games.",
+                string results = String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
                     enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
                 if (settings.Settings.UpdatePlayActions == true)
                 {
-                    results += String.Format("\n\nPlay Action added to {0} games.\nPlay Action removed from {1} games.",
+                    results += String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults2Message"),
                         playActionAddedCount, playActionRemovedCount);
                 }
                 if (settings.Settings.SetEnabledGamesAsInstalled == true)
                 {
-                    results += String.Format("\n\nSet {0} games as Installed.\nSet {1} games as uninstalled.", setAsInstalledCount, setAsUninstalledCount);
+                    results += String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults3Message"), setAsInstalledCount, setAsUninstalledCount);
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
             }
@@ -376,7 +376,7 @@ namespace NVIDIAGeForceNowEnabler
                     logger.Info(String.Format("Play Action removed from \"{0}\"", game.Name));
                 }
             }
-            string results = String.Format("Play Action removed from {0} games", playActionRemovedCount);
+            string results = String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_GameActionsRemoveResultsMessage"), playActionRemovedCount);
             PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
         }
     }

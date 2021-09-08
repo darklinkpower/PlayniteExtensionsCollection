@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Update enabled status of games</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Remove Geforce NOW Game Action from all games</sys:String>
+
+	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Updating NVIDIA GeForce NOW Enabled games...</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW enabled games in library: {0}
+
+Added &quot;{1}&quot; feature to {2} games.
+Removed &quot;{3}&quot; feature from {4} games.</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults2Message" xml:space="preserve">
+	
+Play Action added to {0} games.
+Play Action removed from {1} games.</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
+
+Set {0} games as Installed.
+Set {1} games as uninstalled.</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Game Action removed from {0} games</sys:String>
+	
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Update enabled status of games on Playnite startup</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Update enabled status of games on library update</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_UpdatePlayActionsSetting">Update Play actions when updating enabled status of games</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_SetActionsAsPlayActionSetting">Set added Actions as Play Action</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Set enabled games as installed when updating enabled status of games</sys:String>
+</ResourceDictionary>

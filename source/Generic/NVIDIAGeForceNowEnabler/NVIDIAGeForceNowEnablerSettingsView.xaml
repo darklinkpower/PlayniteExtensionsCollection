@@ -9,23 +9,23 @@
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnStartup"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.ExecuteOnStartup}"
-                  Content="Update enabled status of games on Playnite startup"/>
+                  Content="{DynamicResource LOCNgfn_Enabler_ExecuteOnStartupSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnLibraryUpdate"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.ExecuteOnLibraryUpdate}"
-                  Content="Update enabled status of games on library update"/>
+                  Content="{DynamicResource LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckUpdatePlayActions"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.UpdatePlayActions}"
-                  Content="Update Play actions when updating enabled status of games"/>
+                  Content="{DynamicResource LOCNgfn_Enabler_UpdatePlayActionsSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="SetActionsAsPlayAction"
                   Margin="40,0,0,15"
                   IsChecked="{Binding Settings.SetActionsAsPlayAction}"
                   IsEnabled="{Binding IsChecked, ElementName=CheckUpdatePlayActions}"
-                  Content="Set added Actions as Play Action"/>
+                  Content="{DynamicResource LOCNgfn_Enabler_SetActionsAsPlayActionSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.SetEnabledGamesAsInstalled}"
-                  Content="Set enabled games as installed when updating enabled status of games"/>
+                  Content="{DynamicResource LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting}"/>
     </StackPanel>
 </UserControl>
