@@ -12,23 +12,23 @@
     <StackPanel Margin="20">
         <CheckBox DockPanel.Dock="Top" Name="cbRestartSteam"
                   IsChecked="False"
-                  Content="Restart Steam after processing games to reflect changes on Steam if necessary"/>
+                  Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel}"/>
         <CheckBox Margin="0,10,0,0" DockPanel.Dock="Top" Name="cbDeleteSourceGame"
                   IsChecked="False"
-                  Content="Delete source game after copying game or if game is detected in target library"/>
+                  Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel}"/>
         <Grid Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Target Library:" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="0" Text="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel}" VerticalAlignment="Center"/>
             <ComboBox Grid.Column="1" x:Name="cmbTargetLibrarySelection"
                 SelectedIndex="0" Margin="10,0,0,0" HorizontalAlignment="Stretch"/>
             <Button Grid.Column="2" x:Name="BtnOpenLibrary" Click="BtnOpenLibrary_Click"
-                Content="Open" Margin="10,0,0,0" Padding="10,0,10,0" HorizontalAlignment="Right"/>
+                Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel}" Margin="10,0,0,0" Padding="10,0,10,0" HorizontalAlignment="Right"/>
         </Grid>
         <Button VerticalAlignment="Bottom" x:Name="BtnProcess" Click="BtnProcess_Click" 
-                Content="Copy selected Steam games to the selected Steam library" Margin="0,10,0,0"/>
+                Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>

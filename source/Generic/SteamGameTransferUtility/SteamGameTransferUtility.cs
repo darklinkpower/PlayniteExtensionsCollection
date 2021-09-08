@@ -45,7 +45,7 @@ namespace SteamGameTransferUtility
             {
                 new MainMenuItem
                 {
-                    Description = "Launch menu window",
+                    Description = ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription"),
                     MenuSection = "@Steam Game Transfer Utility",
                     Action = a => {
                         WindowMethod();
