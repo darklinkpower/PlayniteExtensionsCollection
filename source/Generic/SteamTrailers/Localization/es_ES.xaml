@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; is not a PC Game. 
-The extension is only compatible with PC Games&quot;</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video not available.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; is not a Steam game and Steam AppId was not found to obtain video data.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Error connecting to server. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Error downloading headers. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Trailer SD de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Trailer HD de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Trailer micro de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; no es un juego de PC. 
+La extensión sólo es compatible con juegos de PC&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Error al descargar información del juego para AppId &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video no disponible.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; no es un juego de Steam y no se encontró un Steam AppId para obtener datos de vídeo.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Error al conectar al servidor. Error: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Error al descargar los encabezados. Error: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Error al descargar el archivo desde la url &quot;{0}&quot;. Error: {1}</sys:String>
 </ResourceDictionary>
