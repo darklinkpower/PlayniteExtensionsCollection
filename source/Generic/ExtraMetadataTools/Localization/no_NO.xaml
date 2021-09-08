@@ -13,6 +13,10 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Velg profilbilde</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Velg bakgrunnsmusikk</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Velg bakgrunnsvideo</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Detect and delete unused data</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Done.
+
+Deleted {0} unused items.</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra metadata-konfigurasjon for temaet &quot;{0}&quot; er oppdatert.
 Start Playnite på nytt for at endringene skal tre i kraft.</sys:String>
@@ -20,7 +24,6 @@ Start Playnite på nytt for at endringene skal tre i kraft.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Added logo file to &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SgdbApiKeyErrorMessage">Couldn't get SteamGridDB API Key. Please configure it before continuing.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage">Downloaded $downloadedLogos logos from SteamGridDB.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Nedlasting av fil fra URL-en &quot;{0}&quot; mislyktes. Feilmelding: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_GetSteamLogosResultsMessage">Lastet ned logo for {0} spill.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">Mer enn ett spill er valgt. Vennligst velg kun ett spill.</sys:String>
