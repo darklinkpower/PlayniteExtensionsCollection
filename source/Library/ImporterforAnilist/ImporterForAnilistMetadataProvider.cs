@@ -98,7 +98,7 @@ namespace ImporterforAnilist
                 GameId = media.Id.ToString(),
                 Name = media.Title.Romaji ?? media.Title.English ?? media.Title.Native ?? string.Empty,
                 IsInstalled = true,
-                Platforms = new List<MetadataProperty> { new MetadataNameProperty(string.Format("AniList {0}", media.Type.ToString())) },
+                Platforms = new HashSet<MetadataProperty> { new MetadataNameProperty(string.Format("AniList {0}", media.Type.ToString())) },
                 CommunityScore = media.AverageScore ?? null,
                 Description = media.Description ?? string.Empty,
                 Links = new List<Link>(),
@@ -110,7 +110,7 @@ namespace ImporterforAnilist
             game.Links.Add(new Link("AniList", media.SiteUrl.ToString()));
             if (media.Genres != null)
             {
-                game.Genres = media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a))).ToList();
+                game.Genres = media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a))).Cast<MetadataProperty>().ToHashSet();
             }
             if (media.IdMal != null)
             {
@@ -126,22 +126,22 @@ namespace ImporterforAnilist
             //Developers and Publishers
             if (media.Type == TypeEnum.Manga)
             {
-                game.Developers = media.Staff.Nodes.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name.Full))).ToList();
+                game.Developers = media.Staff.Nodes?.
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name.Full))).Cast<MetadataProperty>().ToHashSet();
             }
             else if (media.Type == TypeEnum.Anime)
             {
-                game.Developers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == true).
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
-                game.Publishers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == false).
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
+                game.Developers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == true)?.
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
+                game.Publishers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == false)?.
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
             }
 
             //Tags
             var tags = media.Tags.
                 Where(s => s.IsMediaSpoiler == false).
-                Where(s => s.IsGeneralSpoiler == false).
-                Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).ToList();
+                Where(s => s.IsGeneralSpoiler == false)?.
+                Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
 
             if (media.Season != null)
             {
