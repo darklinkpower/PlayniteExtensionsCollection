@@ -275,7 +275,7 @@ namespace GamePassCatalogBrowser
 
             if (showGameAddDialog == true)
             {
-                PlayniteApi.Dialogs.ShowMessage($"{game.Name} added to the Playnite library");
+                PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_AddGameResultsMessage"), game.Name));
             }
             return true;
         }

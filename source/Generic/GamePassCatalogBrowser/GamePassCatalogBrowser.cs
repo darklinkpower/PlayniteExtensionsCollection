@@ -50,7 +50,7 @@ namespace GamePassCatalogBrowser
             {
                 new MainMenuItem
                 {
-                    Description = "Browse Game Pass Catalog",
+                    Description = ResourceProvider.GetString("LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription"),
                     MenuSection = "@Game Pass Catalog Browser",
                     Action = o => {
                         InvokeViewWindow();
@@ -58,7 +58,7 @@ namespace GamePassCatalogBrowser
                 },
                 new MainMenuItem
                 {
-                    Description = "Add all Catalog to the Playnite library",
+                    Description = ResourceProvider.GetString("LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription"),
                     MenuSection = "@Game Pass Catalog Browser",
                     Action = o => {
                         AddAllGamePassCatalog();
@@ -66,7 +66,7 @@ namespace GamePassCatalogBrowser
                 },
                 new MainMenuItem
                 {
-                    Description = "Reset Cache",
+                    Description = ResourceProvider.GetString("LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription"),
                     MenuSection = "@Game Pass Catalog Browser",
                     Action = o => {
                         ResetCache();
@@ -86,12 +86,12 @@ namespace GamePassCatalogBrowser
         public void ResetCache()
         {
             UpdateGamePassCatalog(true);
-            PlayniteApi.Dialogs.ShowMessage("Game Pass catalog has been reset", "Game Pass Catalog Browser");
+            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_ResetCacheResultsMessage"), "Game Pass Catalog Browser");
         }
 
         public void AddAllGamePassCatalog()
         {
-            var choice = PlayniteApi.Dialogs.ShowMessage("Are you sure you want to add all the Game Pass catalog to your library?", "Game Catalog Importer", MessageBoxButton.YesNo);
+            var choice = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage"), "Game Catalog Importer", MessageBoxButton.YesNo);
             if (choice == MessageBoxResult.Yes)
             {
                 
@@ -102,15 +102,15 @@ namespace GamePassCatalogBrowser
                     gamePassGamesList = service.GetGamePassGamesList();
                     if (gamePassGamesList.Count == 0)
                     {
-                        PlayniteApi.Dialogs.ShowMessage("Could not obtain Game Pass catalog", "Game Pass Catalog Browser");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage"), "Game Pass Catalog Browser");
                     }
                     else
                     {
                         var addedGames = service.xboxLibraryHelper.AddGamePassListToLibrary(gamePassGamesList);
-                        PlayniteApi.Dialogs.ShowMessage($"Added {addedGames} new games to the Playnite library", "Game Pass Catalog Browser");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage"), addedGames.ToString()), "Game Pass Catalog Browser");
                     }
                     service.Dispose();
-                }, new GlobalProgressOptions("Updating Game Pass Catalog and adding games..."));
+                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage")));
             }
         }
 
@@ -126,7 +126,7 @@ namespace GamePassCatalogBrowser
                 }
                 gamePassGamesList = service.GetGamePassGamesList();
                 service.Dispose();
-            }, new GlobalProgressOptions("Updating Game Pass Catalog..."));
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage")));
 
             return gamePassGamesList;
         }
@@ -137,7 +137,7 @@ namespace GamePassCatalogBrowser
 
             if (gamePassGamesList.Count == 0)
             {
-                PlayniteApi.Dialogs.ShowMessage("Could not obtain Game Pass catalog", "Game Pass Catalog Browser");
+                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage"), "Game Pass Catalog Browser");
                 return;
             }
 
