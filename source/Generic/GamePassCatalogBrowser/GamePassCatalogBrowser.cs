@@ -110,7 +110,7 @@ namespace GamePassCatalogBrowser
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage"), addedGames.ToString()), "Game Pass Catalog Browser");
                     }
                     service.Dispose();
-                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage")));
+                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage")));
             }
         }
 

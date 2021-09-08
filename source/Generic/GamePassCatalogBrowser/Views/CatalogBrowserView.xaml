@@ -75,6 +75,15 @@
                 </ListBox>
             </Grid>
             <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=ListBoxGames, Path=SelectedItem}" Value="{x:Null}" >
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -91,15 +100,15 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel}"/>
+                        <Label Grid.Row="0" Grid.Column="0" Name="OverviewDeveloperLabel"  Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel}"/>
                         <Label Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"
-                                       Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Developers, Converter={StaticResource ListToStringConverter}}"/>
-                        <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewPublisherLabel}"/>
+                                Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Developers, Converter={StaticResource ListToStringConverter}}"/>
+                        <Label Grid.Row="1" Grid.Column="0" Name="OverviewPublisherLabel" Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewPublisherLabel}"/>
                         <Label Grid.Row="1" Grid.Column="1" Margin="10,0,0,0"
-                                       Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Publishers, Converter={StaticResource ListToStringConverter}}"/>
-                        <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewCategoryLabel}"/>
+                                Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Publishers, Converter={StaticResource ListToStringConverter}}"/>
+                        <Label Grid.Row="2" Grid.Column="0" Name="OverviewCategoryLabel" Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewCategoryLabel}"/>
                         <Label Grid.Row="2" Grid.Column="1" Margin="10,0,0,0"
-                                       Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Category}"/>
+                                Content="{Binding ElementName=ListBoxGames, Path=SelectedItem.Category}"/>
                     </Grid>
                     <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                         <Button Content="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewOpenInStore}" Command="{Binding StoreViewCommand}" CommandParameter="{Binding SelectedItem, ElementName=ListBoxGames}" DockPanel.Dock="Left" Padding="5"/>

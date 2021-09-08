@@ -10,8 +10,9 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Could not obtain Game Pass catalog.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Added {0} new games to the Playnite library.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} added to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
-
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
+    
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
