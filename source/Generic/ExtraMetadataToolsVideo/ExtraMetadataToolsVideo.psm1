@@ -891,6 +891,7 @@ function Get-YoutubeResultsArray
                 Name = $searchItem.videoRenderer.title.runs.text
                 Value = $searchItem.videoRenderer.videoId
                 Lenght = $searchItem.videoRenderer.lengthText.simpleText
+                ChannelName = $searchItem.videoRenderer.ownerText.runs.text
                 Thumbnail = $thumbnailUrl
             }
             $searchResults.Add($searchResult) | Out-Null
@@ -956,7 +957,10 @@ function Invoke-YoutubeSearchWindow
                         <Image Margin="3" Height="80" Source="{Binding Thumbnail}"/>
                         <StackPanel Margin="5,0,0,0">
                             <TextBlock Margin="3" Text="{Binding Name}"/>
-                            <TextBlock Margin="3" Text="{Binding Lenght}"/>
+                            <DockPanel Margin="3">
+                                <TextBlock Margin="0" Text="{Binding ChannelName}" DockPanel.Dock="Left"/>
+                                <TextBlock Margin="15,0,0,0" Text="{Binding Lenght}"/>
+                            </DockPanel>
                         </StackPanel>
                     </DockPanel>
                 </DataTemplate>
