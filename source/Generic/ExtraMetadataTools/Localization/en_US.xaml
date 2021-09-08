@@ -15,7 +15,7 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Detect and delete unused data</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Done.
 
-Delete {0} unused items.</sys:String>
+Deleted {0} unused items.</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme "{0}" updated.
 Please restart Playnite to make changes take effect.</sys:String>
