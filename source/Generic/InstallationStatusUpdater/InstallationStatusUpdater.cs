@@ -217,13 +217,10 @@ namespace InstallationStatusUpdater
                 }
                 else if (gameAction.Type == GameActionType.File)
                 {
-                    if (settings.Settings.ScriptActionIsInstalled == true)
+                    isInstalled = DetectIsFileActionInstalled(gameAction, installDirectory);
+                    if (isInstalled == true)
                     {
-                        isInstalled = DetectIsFileActionInstalled(gameAction, installDirectory);
-                        if (isInstalled == true)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }
