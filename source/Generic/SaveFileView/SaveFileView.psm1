@@ -335,11 +335,11 @@ function Invoke-OpenDirectories
     {
         foreach ($game in $gameCollection.ToArray()) {
             $plugin = [Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId)
-            if ($plugin -ne [Playnite.SDK.BuiltinExtension]::SteamLibrary)
+            if ($plugin -eq [Playnite.SDK.BuiltinExtension]::SteamLibrary)
             {
                 continue
             }
-            elseif ($plugin -ne [Playnite.SDK.BuiltinExtension]::GogLibrary)
+            elseif ($plugin -eq [Playnite.SDK.BuiltinExtension]::GogLibrary)
             {
                 continue
             }
