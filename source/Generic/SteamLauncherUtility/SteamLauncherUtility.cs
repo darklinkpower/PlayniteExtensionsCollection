@@ -80,7 +80,7 @@ namespace SteamLauncherUtility
             {
                 new MainMenuItem
                 {
-                    Description = "Launch Steam with configured actions",
+                    Description = ResourceProvider.GetString("LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription"),
                     MenuSection = "@Steam Launcher Utility",
                     Action = a => {
                         LaunchSteam();
@@ -88,7 +88,7 @@ namespace SteamLauncherUtility
                 },
                 new MainMenuItem
                 {
-                    Description = "Add mode filter feature to selected games",
+                    Description = ResourceProvider.GetString("LOCSteam_Launcher_UtilityMenuItemAddFilterFeatureDescription"),
                     MenuSection = "@Steam Launcher Utility",
                     Action = a => {
                         AddModeFeature();
@@ -96,7 +96,7 @@ namespace SteamLauncherUtility
                 },
                 new MainMenuItem
                 {
-                    Description = "Remove mode filter feature from selected games",
+                    Description = ResourceProvider.GetString("LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription"),
                     MenuSection = "@Steam Launcher Utility",
                     Action = a => {
                         RemoveModeFeature();
@@ -112,10 +112,7 @@ namespace SteamLauncherUtility
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public string GetModeFeatureName()
@@ -134,12 +131,10 @@ namespace SteamLauncherUtility
         {
             using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam"))
             {
-
                 if (key?.GetValueNames().Contains("SteamExe") == true)
                 {
                     return key.GetValue("SteamExe")?.ToString().Replace('/', '\\') ?? "C:\\Program Files (x86)\\Steam\\steam.exe";
                 }
-                
             }
             return "C:\\Program Files (x86)\\Steam\\steam.exe";
         }

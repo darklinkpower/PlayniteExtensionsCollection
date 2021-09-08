@@ -7,11 +7,10 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-            <TextBlock TextWrapping="Wrap" Text="Steam Launch Utility mode:" VerticalAlignment="Center" MinWidth="140"
-                       ToolTip="Global Mode: Actions are done on all Steam games except blocked games.
-                       &#10;Selective Mode: Actions are done only on games that have been allowed.
-                       &#10;&#10;Use the plugin functions from the extensions submenu to add the filtering features."/>
-            <ComboBox Name="ComboModeSelection" SelectedIndex="{Binding Settings.LaunchMode}" MinHeight="25" MinWidth="140" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <TextBlock TextWrapping="Wrap" Text="{DynamicResource LOCSteam_Launcher_UtilityUtilityModeSetting}" VerticalAlignment="Center" MinWidth="140"
+                       ToolTip="{DynamicResource LOCSteam_Launcher_UtilityUtilityModeTooltip}"/>
+            <ComboBox Name="ComboModeSelection" SelectedIndex="{Binding Settings.LaunchMode}" MinHeight="25" MinWidth="140" HorizontalAlignment="Left" Margin="10,0,0,0"
+                      ToolTip="{DynamicResource LOCSteam_Launcher_UtilityUtilityModeTooltip}">
                 <ComboBoxItem Content="Global Mode" HorizontalAlignment="Stretch"/>
                 <ComboBoxItem Content="Selective Mode" HorizontalAlignment="Stretch"/>
             </ComboBox>
@@ -19,22 +18,22 @@
         <CheckBox DockPanel.Dock="Top" Name="CheckboxSteamWebBrowserDesktopMode"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.DisableSteamWebBrowserOnDesktopMode}"
-                  Content="Disable Steam web browser when starting a game on Desktop Mode"/>
+                  Content="{DynamicResource LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnDesktopModeSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxLaunchBpmDesktopMode"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.LaunchSteamBpmOnDesktopMode}"
-                  Content="Launch Steam in Big Picture Mode when starting a game on Desktop Mode"/>
+                  Content="{DynamicResource LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxSteamWebBrowserFullscreenMode"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.DisableSteamWebBrowserOnFullscreenMode}"
-                  Content="Disable Steam web browser when starting a game on Fullscreen Mode"/>
+                  Content="{DynamicResource LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxLaunchFullscreenDesktopMode"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.LaunchSteamBpmOnFullscreenMode}"
-                  Content="Launch Steam in Big Picture Mode when starting a game on Fullscreen Mode"/>
+                  Content="{DynamicResource LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxCloseSteamIfRunning"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.CloseSteamIfRunning}"
-                  Content="Close Steam if it's detected as running before launching the game"/>
+                  Content="{DynamicResource LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting}"/>
     </StackPanel>
 </UserControl>
