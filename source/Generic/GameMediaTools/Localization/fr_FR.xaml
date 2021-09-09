@@ -5,19 +5,19 @@
     <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">Voir les statistiques des média manquantes (Jeux sélectionnés)</sys:String>
 
     <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">Aucune jeu sélectionné</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Invalid input in Width and height input boxes.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Invalid input in size input box.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Invalid input in extension input box.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Entrée invalide dans les zones de saisie de la largeur et de la hauteur.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Entrée invalide dans la zone de saisie des dimensions.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Entrée invalide dans la zone de saisie de l'extension.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results1Message" xml:space="preserve">Finished. Games in selection: {0}
 
 Selected Media: {1}
 Games missing selected media in selection: {2}</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results2Message" xml:space="preserve">
 
-Missing Media in all database
-Covers: {0} games
-Background Images: {1} games
-Icons: {2} games</sys:String>
+Média manquant dans toutes les bases de données
+Couvertures : {0} jeux
+Images de fond : {1} jeux
+Icônes : {2} jeux</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results3Message" xml:space="preserve">
 
 Tool tag name: {0}
