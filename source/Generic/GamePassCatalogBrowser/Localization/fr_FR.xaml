@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Browse Game Pass Catalog</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Add all Catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Reset Cache</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Parcourir le catalogue Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Ajouter tous le catalogue à la bibliothèque Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Réinitialiser le Cache</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass catalog has been reset.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Are you sure you want to add all the Game Pass catalog to your library?</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Could not obtain Game Pass catalog.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Added {0} new games to the Playnite library.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} added to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Le catalogue Game Pass a été réinitialisé.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Êtes-vous sûr de vouloir ajouter tout le catalogue Game Pass à votre bibliothèque ?</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Impossible d'obtenir le catalogue Game Pass.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">{0} nouveaux jeux ont été ajoutés à la bibliothèque Playnite.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} ajouté à la bibliothèque Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Mise à jour du catalogue Game Pass...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Mise à jour du catalogue Game Pass et ajout de jeux en cours...</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection :</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Catégorie :</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Rechercher :</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Développeur :</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Éditeur :</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">View in Microsoft Store</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Add to Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Voir dans le Microsoft Store</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Ajouter à la bibliothèque Playnite</sys:String>
 </ResourceDictionary>
