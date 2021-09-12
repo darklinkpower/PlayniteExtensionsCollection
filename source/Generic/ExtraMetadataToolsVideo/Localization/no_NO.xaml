@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription">[Steam] Download Steam trailer video (SD quality)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription">[Steam] Download Steam trailer video (HD quality)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription">[Steam] Download Steam microtrailer video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription">Set trailer video for the selected game from file</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription">Set microtrailer video for the selected game from file</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription">Generate microtrailer video from configured trailer video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription">Delete trailer video of the selected game(s)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription">[Steam] Last ned trailer-video fra Steam (SD-kvalitet)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription">[Steam] Last ned trailer-video fra Steam (HD-kvalitet)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription">[Steam] Last ned microtrailer fra Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription">Angi trailer-video for det valgte spillet fra fil</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription">Angi mikrotrailer-video for det valgte spillet fra fil</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription">Generer mikrotrailer-video fra konfigurert trailer-video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription">Slett trailer-video av valgt(e) spill</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Delete microtrailer video of the selected game(s)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Auto download YouTube trailer video for selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Search YouTube video for the selected game</sys:String>
