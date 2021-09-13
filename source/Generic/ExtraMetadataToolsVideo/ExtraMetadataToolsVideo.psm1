@@ -477,6 +477,11 @@ function Set-SteamVideo
     {
         $extraMetadataDirectory = Set-GameDirectory $game
         $videoPath = Join-Path $extraMetadataDirectory -ChildPath $videoName
+        if (Test-Path $videoPath)
+        {
+            continue
+        }
+        
         $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
         $videoUrl = Get-SteamVideoUrl -Game $game -VideoQuality $videoQuality
         if ($null -eq $videoUrl)
@@ -814,6 +819,11 @@ function Set-YouTubeVideo
         $videoPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTrailer.mp4"
         $videoTempPath = Join-Path $extraMetadataDirectory -ChildPath "VideoTemp.mp4"
         $youtubedl = $settings.youtubedlPath
+
+        if (Test-Path $videoPath)
+        {
+            continue
+        }
         if (Test-Path $videoTempPath)
         {
             try {
@@ -823,7 +833,7 @@ function Set-YouTubeVideo
         
         $trailerdownloadparams = @{
             'FilePath'     = $youtubedl
-            'ArgumentList' = '-o ' + $videoTempPath, '-f "mp4"', $search
+            'ArgumentList' = '-o ' + "`"$videoTempPath`"", '-f "mp4"', $search
             'Wait'         = $true
             'PassThru'     = $true
         }
@@ -1048,7 +1058,7 @@ function Set-YouTubeVideoManual
     
     $trailerdownloadparams = @{
         'FilePath'     = $youtubedl
-        'ArgumentList' = '-v -o ' + $videoTempPath, '-f "mp4"', $search
+        'ArgumentList' = '-v -o ' + "`"$videoTempPath`"", '-f "mp4"', $search
         'Wait'         = $true
         'PassThru'     = $true
     }
