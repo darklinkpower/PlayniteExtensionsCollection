@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription">[Steam] Download Steam trailer video (SD quality)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription">[Steam] Download Steam trailer video (HD quality)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription">[Steam] Download Steam microtrailer video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription">Set trailer video for the selected game from file</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription">Set microtrailer video for the selected game from file</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription">Generate microtrailer video from configured trailer video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription">Delete trailer video of the selected game(s)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Delete microtrailer video of the selected game(s)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Auto download YouTube trailer video for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Search YouTube video for the selected game</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription">[Steam] Télécharger la bande-annonce (qualité SD)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription">[Steam] Télécharger la bande-annonce (qualité HD)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription">[Steam] Télécharger la micro bande-annonce</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription">Définir la bande-annonce pour le jeu sélectionné à partir d'un fichier</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription">Définir la micro bande-annonce pour le jeu sélectionné à partir d'un fichier</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription">Générer une vidéo micro bande-annonce à partir d'une vidéo de trailer configurée</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription">Supprimer la bande-annonce des jeux sélectionnées</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Supprimer la micro bande-annonce des jeux sélectionnées</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Télécharger automatiquement la bande-annonce pour les jeux sélectionnés</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Rechercher une vidéo pour le jeu sélectionné</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription">Update assets status tags of all games in database</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage">Select ffmpeg executable.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfprobeExecutableMessage">Select ffProbe executable.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectYoutubeDlExecutableMessage">Select youtube-dl executable.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetupUnfinishedMessage">Please configure all requested mandatory settings to continue.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericDownloadErrorMessage">Error downloading file {0}. Error: {1}.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ErrorDownloadGameInformationMessage">Couldn't download game information. Error: {0}.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFinishedMessage">Finished.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericErrorProcessingFileMessage">Selected file could not be processed.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage">Sélectionner l'exécutable ffmpeg.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfprobeExecutableMessage">Sélectionner l'exécutable ffProbe.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SelectYoutubeDlExecutableMessage">Sélectionner l'exécutable youtube-dl.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetupUnfinishedMessage">Veuillez configurer tous les paramètres obligatoires demandés pour continuer.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GenericDownloadErrorMessage">Erreur lors du téléchargement du fichier {0}. Erreur : {1}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ErrorDownloadGameInformationMessage">Impossible de télécharger les informations du jeu. Erreur : {0}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Plus d'un jeu est sélectionné, veuillez en sélectionner qu'un seul.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFinishedMessage">Terminé.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_GenericErrorProcessingFileMessage">Le fichier sélectionné n'a pas pu être traité.</sys:String>
 </ResourceDictionary>

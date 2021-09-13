@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Add Nexus Mods feature and links to selected games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Add Nexus Mods feature and links to all games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">There are no games in selection.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games where found on Nexus.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Games with mods available on Nexus Mods: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Ajouter la fonctionnalité Mods Nexus et des liens pour les jeux sélectionnés</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Ajouter la fonctionnalité Mods Nexus et des liens pour tous les jeux</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Erreur lors du téléchargement du fichier à partir de l'url &quot;{0}&quot;. Erreur: {1}</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">Il n'y a aucun jeu dans la sélection.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Aucun jeu trouvé sur Nexus.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Jeux avec mods disponibles sur Nexus Mods : {0}
 
-Added `&quot;{1}`&quot; feature to {2} game(s).
-Added Nexus Mods links to {3} game(s).</sys:String>
+Ajout de la fonctionnalité `&quot;{1}`&quot; à {2} jeu(s).
+Ajout de liens pour {3} jeu(s).</sys:String>
 </ResourceDictionary>

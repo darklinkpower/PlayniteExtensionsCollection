@@ -7,7 +7,7 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Lade Logos für ausgewählte Spiele von Google herunter</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Füge Logo aus lokaler Datei des ausgewählten Spiels hinzu</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetUrlLogoDescription">Füge Logo aus URL für ausgewähltes Spiel hinzu</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Wandle Icons in Custom-Logo-Assets um</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Wandle Symbole in Custom-Logo-Assets um</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemoveLogosSelectedGamesDescription">Lösche Logos ausgewählter Spiele</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeThemesDirectoryDescription">Öffne Theme-Verzeichnis</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Lege Profilbild fest</sys:String>
@@ -29,7 +29,7 @@ Bitte starte Playnite neu damit die Änderungen wirksam werden.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">Mehr als ein Spiel ist ausgewählt, bitte wähle nur eines aus.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Logo-Datei zu &quot;{0}&quot; hinzugefügt.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_EnterUrlMessage">Logo URL eingeben:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ConvertIconsChoiceMessage" xml:space="preserve">Diese Funktion wird die Icons der ausgewählten Spiele in Logos zur Nutzung in kompatiblem Themes umwandeln.
+    <sys:String x:Key="LOCExtra_Metadata_tools_ConvertIconsChoiceMessage" xml:space="preserve">Diese Funktion wird die Symbole der ausgewählten Spiele in Logos zur Nutzung in kompatiblem Themes umwandeln.
 Dies ist für den Fall gedacht, dass Du ein Theme benutzt hast, das die Icon-Assets als Ersatz für Logos benutzt hat.
 Zur Sicherheit werden nur Icons mit &quot;.png&quot; Endung verarbeitet.
 Änderungen sind irreversibel.
