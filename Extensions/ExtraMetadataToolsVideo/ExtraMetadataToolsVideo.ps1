@@ -814,7 +814,7 @@ function Set-YouTubeVideo
         
         $trailerdownloadparams = @{
             'FilePath'     = $youtubedl
-            'ArgumentList' = '-o ' + $videoTempPath, '-f "mp4"', $search
+            'ArgumentList' = '-o ' + "`"$videoTempPath`"", '-f "mp4"', $search
             'Wait'         = $true
             'PassThru'     = $true
         }
@@ -1024,7 +1024,7 @@ function Set-YouTubeVideoManual
     
     $trailerdownloadparams = @{
         'FilePath'     = $youtubedl
-        'ArgumentList' = '-v -o ' + $videoTempPath, '-f "mp4"', $search
+        'ArgumentList' = '-v -o ' + "`"$videoTempPath`"", '-f "mp4"', $search
         'Wait'         = $true
         'PassThru'     = $true
     }
