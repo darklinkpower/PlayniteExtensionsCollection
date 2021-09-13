@@ -57,6 +57,7 @@ function Invoke-ViewSettings
             <CheckBox Name="CBviewVideoFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBcloseSplashScreenFullscreenMode" Margin="0,10,0,0"/>
             <CheckBox Name="CBshowLogoInSplashscreen" Margin="0,20,0,0"/>
+            <CheckBox Name="CBuseIconAsLogo" Margin="0,10,0,0"/>
             <DockPanel Margin="0,10,0,0">
                 <TextBlock Name="TextBlockLogoPosition" DockPanel.Dock="Left" VerticalAlignment="Center"/>
                 <ComboBox Name="ComboBoxLogoPosition" DockPanel.Dock="Left" Width="Auto" MinWidth="150" 
@@ -111,6 +112,7 @@ function Invoke-ViewSettings
 
     $CBshowLogoInSplashscreen.Add_Checked(
     {
+        $CBuseIconAsLogo.IsEnabled = $true
         $TextBlockLogoPosition.IsEnabled = $true
         $ComboBoxLogoPosition.IsEnabled = $true
         $TextBlockLogoVerticalAlignment.IsEnabled = $true
@@ -119,6 +121,7 @@ function Invoke-ViewSettings
 
     $CBshowLogoInSplashscreen.Add_Unchecked(
     {
+        $CBuseIconAsLogo.IsEnabled = $false
         $TextBlockLogoPosition.IsEnabled = $false
         $ComboBoxLogoPosition.IsEnabled = $false
         $TextBlockLogoVerticalAlignment.IsEnabled = $false
@@ -155,6 +158,10 @@ function Invoke-ViewSettings
     $CBshowLogoInSplashscreen.Content = "Add game logo in splashscreen image if available"
     $CBshowLogoInSplashscreen.IsChecked = $true
     $CBshowLogoInSplashscreen.IsChecked = $settings.showLogoInSplashscreen
+
+    $CBuseIconAsLogo.Content = "Use game icon from Metadata as logo"
+    $CBuseIconAsLogo.IsChecked = $false
+    $CBuseIconAsLogo.IsChecked = $settings.useIconAsLogo
 
     $CBuseBlackSplashscreen.Content = "Use black splashscreen instead of the splashscreen image"
     $CBuseBlackSplashscreen.IsChecked = $settings.useBlackSplashscreen
@@ -232,6 +239,7 @@ function Invoke-ViewSettings
         $settings.viewVideoFullscreenMode = $CBviewVideoFullscreenMode.IsChecked
         $settings.closeSplashScreenFullscreenMode = $CBcloseSplashScreenFullscreenMode.IsChecked
         $settings.showLogoInSplashscreen = $CBshowLogoInSplashscreen.IsChecked
+        $settings.useIconAsLogo = $CBuseIconAsLogo.IsChecked
         $settings.logoPosition = $ComboBoxLogoPosition.SelectedValue
         $settings.logoVerticalAlignment = $ComboBoxLogoVerticalAlignment.SelectedValue
         $settings.useBlackSplashscreen = $CBuseBlackSplashscreen.IsChecked
@@ -269,6 +277,7 @@ function Get-Settings
         "viewVideoFullscreenMode" = $true
         "closeSplashScreenFullscreenMode" = $true
         "showLogoInSplashscreen" = $false
+        "useIconAsLogo" = $false
         "logoPosition" = "Center"
         "logoVerticalAlignment" = "Center"
         "useBlackSplashscreen" = $false
@@ -603,6 +612,27 @@ function Get-SplashImagePath
     }
 }
 
+function Get-SplashLogoPath
+{
+    param(
+        [Playnite.SDK.Models.Game] $game,
+        $useIcon
+    )
+    
+    $logo = ""
+    if ($useIcon -eq $false)
+    {
+        $__logger.Info(("Found extra metadata logo"))
+        $logo = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
+    } 
+    elseif($($game.Icon) -and $($game.Icon -notmatch "^http"))
+    {
+        $__logger.Info(("Found game icon logo"))
+        $logo = $PlayniteApi.Database.GetFullFilePath($game.Icon)
+    }
+    return $logo
+}
+
 function OnGameStarting
 {
     param(
@@ -661,7 +691,7 @@ function OnGameStarting
         $logoPath = ""
         if ($settings.showLogoInSplashscreen -eq $true)
         {
-            $logoPath = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", $game.Id, "Logo.png")
+            $logoPath = Get-SplashLogoPath $game $settings.useIconAsLogo
         }
 
         @($splashImage, $logoPath, $closeSplashScreenAutomatic, $settings.logoPosition, $settings.logoVerticalAlignment) | ConvertTo-Json | Out-File (Join-Path $env:TEMP -ChildPath "SplashScreen.json")
