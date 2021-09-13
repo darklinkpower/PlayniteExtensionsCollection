@@ -161,21 +161,7 @@ namespace NVIDIAGeForceNowEnabler
                 }
                 else
                 {
-                    //TODO figure why error happens: This type of CollectionView does not admit changes to the SourceCollection of a subprocess other than the Dispatcher subprocess.
-                    //Error: Game has a GameAction- > Delete it from Edit Window -> Try to add the GameAction with extension -> Triggers the error
-                    //No error: Game has a GameAction -> Delete it from Edit Window -> Reboot Playnite -> Try to add the GameAction with extension -> Error doesn't trigger
-
-                    //game.GameActions.Add(nvidiaGameAction);
-
-                    //The workaround fix is to create a new collection, add all the current game GameActions
-                    // and the new GameAction and finally set this new collection to the game GameActions
-                    var newCollection = new System.Collections.ObjectModel.ObservableCollection<GameAction> { };
-                    foreach (GameAction gameAction in game.GameActions)
-                    {
-                        newCollection.Add(gameAction);
-                    }
-                    newCollection.Add(nvidiaGameAction);
-                    game.GameActions = newCollection;
+                    game.GameActions.Add(nvidiaGameAction);
                     PlayniteApi.Database.Games.Update(game);
                     return "ActionAdded";
                 }
