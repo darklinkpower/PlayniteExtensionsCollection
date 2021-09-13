@@ -14,10 +14,10 @@ function GetGameMenuItems
     $menuItem2.FunctionName = "Get-SteamLogos"
     $menuItem2.MenuSection = "Extra Metadata tools|Logos"
 
-    $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem11.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription")
-    $menuItem11.FunctionName = "Get-SgdbLogo"
-    $menuItem11.MenuSection = "Extra Metadata tools|Logos"
+    $menuItem14 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem14.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription")
+    $menuItem14.FunctionName = "Get-SgdbLogo"
+    $menuItem14.MenuSection = "Extra Metadata tools|Logos"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription")
@@ -69,7 +69,7 @@ function GetGameMenuItems
     $menuItem13.FunctionName = "Invoke-DetectAndDeleteUnused"
     $menuItem13.MenuSection = "Extra Metadata tools|Other"
 
-    return $menuItem, $menuItem2, $menuItem11, $menuItem3, $menuItem4, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem12, $menuItem13
+    return $menuItem, $menuItem2, $menuItem14, $menuItem3, $menuItem4, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13
 }
 
 function Invoke-DetectAndDeleteUnused
@@ -797,8 +797,8 @@ function Set-SgdbApiKey
     )
     
     $sgdbApiKeyPath = Join-Path -Path $CurrentExtensionDataPath -ChildPath 'sgdbApiKey.json'
-    Start-Process "https://www.steamgriddb.com/profile/preferences"
-    $userInput = $PlayniteApi.Dialogs.SelectString("Enter a valid SteamGridDB API Key:", "Extra Metadata tools", "");
+    Start-Process "https://www.steamgriddb.com/profile/preferences/api"
+    $userInput = $PlayniteApi.Dialogs.SelectString("SteamGridDB API Key:", "Extra Metadata tools", "");
     if ($userInput.Result -eq $true)
     {
         @{'ApiKey'=$userInput.SelectedString} | ConvertTo-Json | Out-File $sgdbApiKeyPath
@@ -996,5 +996,5 @@ function Get-SgdbLogo
             }
         }
     }
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage")), "Extra Metadata tools")
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage") -f $downloadedLogos), "Extra Metadata tools")
 }
