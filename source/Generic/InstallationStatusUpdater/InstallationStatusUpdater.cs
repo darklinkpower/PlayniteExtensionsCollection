@@ -196,7 +196,7 @@ namespace InstallationStatusUpdater
             var isInstalled = false;
             foreach (GameAction gameAction in game.GameActions)
             {
-                if (gameAction.IsPlayAction = false && settings.Settings.OnlyUsePlayActionGameActions == true)
+                if (gameAction.IsPlayAction == false && settings.Settings.OnlyUsePlayActionGameActions == true)
                 {
                     continue;
                 }
