@@ -1,7 +1,7 @@
-﻿Id: Steam_Trailers
+Id: Steam_Trailers
 Name: Steam Trailers
 Author: darklinkpower
-Version: 2.0
+Version: 2.1
 Module: SteamTrailers.psm1
 Type: Script
 Icon: icon.png

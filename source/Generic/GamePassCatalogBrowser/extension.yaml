@@ -1,7 +1,7 @@
-﻿Id: GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
+Id: GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
 Name: Game Pass Catalog Browser
 Author: darklinkpower
-Version: 2.0
+Version: 2.1
 Module: GamePassCatalogBrowser.dll
 Type: GenericPlugin
 Icon: icon.png

@@ -1,7 +1,7 @@
-﻿Id: Image_Cache_Size_Saver
+Id: Image_Cache_Size_Saver
 Name: Image Cache Size Saver
 Author: darklinkpower
-Version: 2.0
+Version: 2.1
 Module: ImageCacheSizeSaver.psm1
 Type: Script
 Icon: icon.png

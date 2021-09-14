@@ -1,7 +1,7 @@
-﻿Id: Installation_Status_Updater
+Id: Installation_Status_Updater
 Name: Installation Status Updater
 Author: darklinkpower
-Version: 2.0.1
+Version: 2.1
 Module: InstallationStatusUpdater.dll
 Type: GenericPlugin
 Icon: icon.ico
