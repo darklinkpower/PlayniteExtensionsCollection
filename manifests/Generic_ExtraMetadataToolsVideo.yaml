@@ -7,3 +7,11 @@ Packages:
     Changelog:
       - Playnite 9 support
       - Translations support
+  - Version: 2.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta2/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_1.pext
+    Changelog:
+      - Updated localizations
+      - Fix youtube video downloads failing if user paths contained spaces
+      - Add channel name to Youtube search

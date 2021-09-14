@@ -7,3 +7,12 @@ Packages:
     Changelog:
       - Playnite 9 support
       - Translations support
+  - Version: 2.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta2/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_1.pext
+    Changelog:
+      - Updated localizations
+      - Fix overview showing when no game is selected
+      - Fix using an incorrect localization string during certain dialogs
+      - Fix requesting the same catalog data twice
