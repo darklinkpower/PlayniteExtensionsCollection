@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
+    <StackPanel Margin="20">
+        <CheckBox IsChecked="{Binding Settings.AutoPlayVideos}" Content="Autoplay videos" Margin="0,0,0,10"/>
+        <CheckBox IsChecked="{Binding Settings.StartNoSound}" Content="Play videos initially without sound" Margin="0,0,0,10"/>
+        <CheckBox IsChecked="{Binding Settings.seMicrotrailersDefault}" Content="Use micro videos as the default video instead of full videos" Margin="0,0,0,10"/>
+        <CheckBox IsChecked="{Binding Settings.FallbackVideoSource}" Content="Use other video type if selected type is not found" Margin="0,0,0,10"/>
+        <CheckBox IsChecked="{Binding Settings.ShowControls}" Content="Show playback controls" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Label Content="Default audio volume" Margin="0,0,10,0"/>
+            <Slider Value="{Binding Settings.DefaultVolume}" Width="150" Minimum="0" Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

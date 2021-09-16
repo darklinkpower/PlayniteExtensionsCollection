@@ -15,7 +15,8 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid>
                     <MediaElement Name="player" MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
-                              LoadedBehavior="Manual" ScrubbingEnabled="True" MinWidth="320" MinHeight="240" />
+                              LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top"
+                              MinHeight="240" />
                 </Grid>
                 <Border Padding="10,5,10,5">
                     <Border.Style>
@@ -35,9 +36,11 @@
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
                         <Button DockPanel.Dock="Left" Name="MuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB8;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>
                         <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Button DockPanel.Dock="Right" Name="SwitchVideoSourceButton" FontSize="24" Command="{Binding SwitchVideoSourceCommand}" Content="&#xEB2C;"
+                            FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
                         <Grid DockPanel.Dock="Right" Margin="0,0,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="4*"/>
@@ -51,7 +54,7 @@
                             <DockPanel Grid.Column="1">
                                 <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="IcoFont" VerticalAlignment="Center" Margin="0,0,5,0"/>
                                 <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                        Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.05"/>
+                                        Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.025"/>
                             </DockPanel>
                         </Grid>
                     </DockPanel>

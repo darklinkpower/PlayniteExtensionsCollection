@@ -26,7 +26,7 @@ namespace SimplePlayer
     /// <summary>
     /// Interaction logic for PlayerControl.xaml
     /// </summary>
-    public partial class PlayerControl : PluginUserControl
+    public partial class PlayerControl : PluginUserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -34,13 +34,36 @@ namespace SimplePlayer
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         
-        SimplePlayerSettings Settings;
+        SimplePlayerSettings settings;
         IPlayniteAPI PlayniteApi;
         bool isDragging;
-        public bool isPlaying;
-        Uri videoSource;
+        private bool useMicrovideosSource;
+        private bool isPlaying;
+        private bool repeatVideo;
+        public bool IsPlaying
+        {
+            get => isPlaying;
+            set
+            {
+                isPlaying = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Game currentGame;
+        private Uri videoSource;
+        public Uri VideoSource
+        {
+            get => videoSource;
+            set
+            {
+                videoSource = value;
+                OnPropertyChanged();
+            }
+        }
+
         DispatcherTimer timer;
-        private string playbackTimeProgress;
+        private string playbackTimeProgress = "00:00";
         public string PlaybackTimeProgress
         {
             get => playbackTimeProgress;
@@ -50,7 +73,7 @@ namespace SimplePlayer
                 OnPropertyChanged();
             }
         }
-        private string playbackTimeTotal;
+        private string playbackTimeTotal = "00:00";
         public string PlaybackTimeTotal
         {
             get => playbackTimeTotal;
@@ -63,21 +86,26 @@ namespace SimplePlayer
 
         public PlayerControl(IPlayniteAPI PlayniteApi, SimplePlayerSettingsViewModel PluginSettings)
         {
+            this.PlayniteApi = PlayniteApi; 
             isPlaying = false;
+            settings = PluginSettings.Settings;
+            useMicrovideosSource = settings.UseMicrotrailersDefault;
             InitializeComponent();
-            
-            this.PlayniteApi = PlayniteApi;
-            Settings = PluginSettings.Settings;
-            
+       
             player.Volume = 1;
-            volumeSlider.Value = 1;
+            volumeSlider.Value = 0;
+            if (settings.DefaultVolume != 0)
+            {
+                volumeSlider.Value = settings.DefaultVolume / 100;
+            }
+            if (settings.StartNoSound)
+            {
+                player.Volume = 0;
+            }
             volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
-            
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(timer_Tick);
-            playbackTimeProgress = "Start";
-            playbackTimeTotal = "End";
             DataContext = this;
         }
 
@@ -87,7 +115,7 @@ namespace SimplePlayer
             {
                 timelineSlider.Value = player.Position.TotalSeconds;
             }
-            PlaybackTimeProgress = player.Position.TotalSeconds.ToString(@"mm\:ss") ?? "0:00";
+            PlaybackTimeProgress = player.Position.ToString(@"mm\:ss") ?? "00:00";
             playbackProgressBar.Value = player.Position.TotalSeconds;
         }
 
@@ -113,12 +141,14 @@ namespace SimplePlayer
             {
                 MediaPlay();
                 isPlaying = true;
-            }, (a) => !isPlaying && videoSource != null);
+            }, (a) => !IsPlaying && VideoSource != null);
         }
 
         void MediaPlay()
         {
             player.Play();
+            timer.Start();
+            IsPlaying = true;
         }
 
         public RelayCommand<object> VideoPauseCommand
@@ -127,12 +157,14 @@ namespace SimplePlayer
             {
                 MediaPause();
                 isPlaying = false;
-            }, (a) => isPlaying && videoSource != null);
+            }, (a) => IsPlaying && VideoSource != null);
         }
 
         void MediaPause()
         {
             player.Pause();
+            timer.Stop();
+            IsPlaying = false;
         }
 
         public RelayCommand<object> VideoMuteCommand
@@ -155,7 +187,21 @@ namespace SimplePlayer
             }
         }
 
+        public RelayCommand<object> SwitchVideoSourceCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SwitchVideoSource();
+            });
+        }
 
+        void SwitchVideoSource()
+        {
+            ResetPlayerValues();
+            useMicrovideosSource = !useMicrovideosSource;
+            playingContextChanged();
+        }
+        
         private void player_MediaOpened(object sender, EventArgs e)
         {
             if (player.NaturalDuration.HasTimeSpan)
@@ -165,47 +211,98 @@ namespace SimplePlayer
                 timelineSlider.LargeChange = Math.Min(10, ts.Seconds / 10);
                 timelineSlider.Maximum = ts.TotalSeconds;
                 playbackProgressBar.Maximum = ts.TotalSeconds;
-                PlaybackTimeTotal = ts.TotalSeconds.ToString(@"mm\:ss");
+                PlaybackTimeTotal = ts.ToString(@"mm\:ss");
             }
-
-            timer.Start();
         }
 
         private void player_MediaEnded(object sender, EventArgs e)
         {
             player.Stop();
-            isPlaying = false;
+            timer.Stop();
+            IsPlaying = false;
+            player.Position = new TimeSpan(0, 0, 1);
+            if (repeatVideo)
+            {
+
+                player.Position = new TimeSpan(0, 0, 1); 
+                MediaPlay();
+            }
+        }
+
+        private void ResetPlayerValues()
+        {
+            player.Source = null;
+            VideoSource = null;
+            IsPlaying = false;
+            timelineSlider.Value = 0;
+            playbackProgressBar.Value = 0;
+            PlaybackTimeProgress = "00:00";
+            PlaybackTimeTotal = "00:00";
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
-            player.Source = null;
-            videoSource = null;
-            isPlaying = false;
-            if (newContext == null)
+            ResetPlayerValues();
+            currentGame = null;
+            if (newContext != null)
             {
-                return;
+                currentGame = newContext;
+                playingContextChanged();
             }
+            
+        }
 
-            SetTrailerPath(newContext);
+        public void playingContextChanged()
+        {
+            SetTrailerPath(currentGame);
             if (videoSource != null)
             {
                 player.Source = videoSource;
-
-                //This is to get the first frame of the video
-                player.Play();
-                player.Pause();
-                isPlaying = false;
+                if (settings.AutoPlayVideos)
+                {
+                    MediaPlay();
+                    isPlaying = true;
+                }
+                else
+                {
+                    //This is to get the first frame of the video
+                    MediaPlay();
+                    MediaPause();
+                }
             }
         }
 
         public void SetTrailerPath(Game game)
         {
             var videoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoTrailer.mp4");
-            if (File.Exists(videoPath))
+            var videoMicroPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoMicrotrailer.mp4");
+            if (useMicrovideosSource)
             {
-                videoSource = new Uri(videoPath);
+                if (File.Exists(videoMicroPath))
+                {
+                    videoSource = new Uri(videoMicroPath);
+                    repeatVideo = true;
+                }
+                else if (File.Exists(videoPath) && settings.FallbackVideoSource)
+                {
+                    videoSource = new Uri(videoPath);
+                    repeatVideo = false;
+                }
             }
+            else
+            {
+                if (File.Exists(videoPath))
+                {
+                    videoSource = new Uri(videoPath);
+                    repeatVideo = false;
+                }
+                else if (File.Exists(videoMicroPath) && settings.FallbackVideoSource)
+                {
+                    videoSource = new Uri(videoMicroPath);
+                    repeatVideo = true;
+                }
+            }
+
             return;
         }
 

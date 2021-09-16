@@ -10,8 +10,12 @@ namespace SimplePlayer
 {
     public class SimplePlayerSettings
     {
-        public string Option1 { get; set; } = string.Empty;
-        public bool Option2 { get; set; } = false;
+        public bool AutoPlayVideos { get; set; } = false;
+        public bool StartNoSound { get; set; } = false;
+        public bool UseMicrotrailersDefault { get; set; } = false;
+        public bool FallbackVideoSource { get; set; } = true;
+        public bool ShowControls { get; set; } = true;
+        public double DefaultVolume { get; set; } = 100;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
