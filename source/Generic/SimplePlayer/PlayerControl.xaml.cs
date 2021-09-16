@@ -146,7 +146,7 @@ namespace SimplePlayer
 
         void MediaPlay()
         {
-            player.Play();
+            //player.Play();
             timer.Start();
             IsPlaying = true;
         }
@@ -223,15 +223,13 @@ namespace SimplePlayer
             player.Position = new TimeSpan(0, 0, 1);
             if (repeatVideo)
             {
-
-                player.Position = new TimeSpan(0, 0, 1); 
                 MediaPlay();
             }
         }
 
         private void ResetPlayerValues()
         {
-            player.Source = null;
+            
             VideoSource = null;
             IsPlaying = false;
             timelineSlider.Value = 0;
@@ -257,7 +255,7 @@ namespace SimplePlayer
             SetTrailerPath(currentGame);
             if (videoSource != null)
             {
-                player.Source = videoSource;
+                
                 if (settings.AutoPlayVideos)
                 {
                     MediaPlay();

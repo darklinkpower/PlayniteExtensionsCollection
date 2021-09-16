@@ -12,55 +12,69 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
         </Grid.Resources>
         <Grid>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid>
+            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <Grid MinHeight="120">
                     <MediaElement Name="player" MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
-                              LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top"
-                              MinHeight="240" />
-                </Grid>
-                <Border Padding="10,5,10,5">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="Gray" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding isPlaying}" Value="True">
-                                    <Setter Property="Background" Value="Red" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <DockPanel VerticalAlignment="Center">
-                        <Button DockPanel.Dock="Left" Name="PlayButton" FontSize="24" Command="{Binding VideoPlayCommand}" Content="&#xECA7;"
+                              LoadedBehavior="Play" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <MediaElement.Style>
+                            <Style>
+                                <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=Default}" />
+                                <Style.Triggers>
+                                    <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
+                                        <Setter Property="MediaElement.Source" Value="{x:Null}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_ControlGameView, Path=IsVisible}" Value="False">
+                                        <Setter Property="MediaElement.Source" Value="{x:Null}" />
+                                    </DataTrigger>-->
+                                </Style.Triggers>
+                            </Style>
+                        </MediaElement.Style>
+                    </MediaElement>
+                    <Border Padding="10,5,10,10" VerticalAlignment="Bottom">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Opacity" Value="0.3" />
+                                <Style.Triggers>
+                                    <!--<DataTrigger Binding="{Binding IsPlaying}" Value="False">
+                                        <Setter Property="Opacity" Value="1.0" />
+                                    </DataTrigger>-->
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Opacity" Value="1.0" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <DockPanel VerticalAlignment="Center">
+                            <Button DockPanel.Dock="Left" Name="PlayButton" FontSize="24" Command="{Binding VideoPlayCommand}" Content="&#xECA7;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
-                        <Button DockPanel.Dock="Left" Name="PauseButton" FontSize="24" Command="{Binding VideoPauseCommand}" Content="&#xECA5;"
+                            <Button DockPanel.Dock="Left" Name="PauseButton" FontSize="24" Command="{Binding VideoPauseCommand}" Content="&#xECA5;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
-                        <Button DockPanel.Dock="Left" Name="MuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB8;"
+                            <Button DockPanel.Dock="Left" Name="MuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB8;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                        <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <Button DockPanel.Dock="Right" Name="SwitchVideoSourceButton" FontSize="24" Command="{Binding SwitchVideoSourceCommand}" Content="&#xEB2C;"
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <Button DockPanel.Dock="Right" Name="SwitchVideoSourceButton" FontSize="24" Command="{Binding SwitchVideoSourceCommand}" Content="&#xEB2C;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
-                        <Grid DockPanel.Dock="Right" Margin="0,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Name="SliderGrid" Grid.Column="0" Margin="0,0,10,0">
-                                <ProgressBar x:Name="playbackProgressBar" Height="20" Padding="0" Width="{Binding ElementName=SliderGrid, Path=Width}"/>
-                                <Slider x:Name="timelineSlider" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Stretch"
+                            <Grid DockPanel.Dock="Right" Margin="0,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Name="SliderGrid" Grid.Column="0" Margin="0,0,10,0">
+                                    <ProgressBar x:Name="playbackProgressBar" Height="20" Padding="0" Width="{Binding ElementName=SliderGrid, Path=Width}"/>
+                                    <Slider x:Name="timelineSlider" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Center"
                                         Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" />
-                            </Grid>
-                            <DockPanel Grid.Column="1">
-                                <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="IcoFont" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                </Grid>
+                                <DockPanel Grid.Column="1">
+                                    <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="IcoFont" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                         Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.025"/>
-                            </DockPanel>
-                        </Grid>
-                    </DockPanel>
-                </Border>
-
-
+                                </DockPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                </Grid>
             </StackPanel>
         </Grid>
     </Grid>
