@@ -24,9 +24,9 @@ using System.Windows.Threading;
 namespace SimplePlayer
 {
     /// <summary>
-    /// Interaction logic for PlayerControl.xaml
+    /// Interaction logic for VideoPlayerControl.xaml
     /// </summary>
-    public partial class PlayerControl : PluginUserControl, INotifyPropertyChanged
+    public partial class VideoPlayerControl : PluginUserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -84,7 +84,7 @@ namespace SimplePlayer
             }
         }
 
-        public PlayerControl(IPlayniteAPI PlayniteApi, SimplePlayerSettingsViewModel PluginSettings)
+        public VideoPlayerControl(IPlayniteAPI PlayniteApi, SimplePlayerSettingsViewModel PluginSettings)
         {
             this.PlayniteApi = PlayniteApi; 
             isPlaying = false;

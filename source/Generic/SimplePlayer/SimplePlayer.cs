@@ -29,17 +29,16 @@ namespace SimplePlayer
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "PlayerControl" },
+                ElementList = new List<string> { "VideoPlayerControl" },
                 SourceName = "SimplePlayer"
             });
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name == "PlayerControl")
+            if (args.Name == "VideoPlayerControl")
             {
-                var control = new PlayerControl(PlayniteApi, settings);
-                return new PlayerControl(PlayniteApi, settings);
+                return new VideoPlayerControl(PlayniteApi, settings);
             }
 
             return null;
