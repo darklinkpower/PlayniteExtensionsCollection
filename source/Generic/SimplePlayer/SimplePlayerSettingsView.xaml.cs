@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows;
 
 namespace SimplePlayer
 {
@@ -20,6 +21,20 @@ namespace SimplePlayer
         public SimplePlayerSettingsView()
         {
             InitializeComponent();
+
+            cmbHorizontalLogoAlignment.ItemsSource = new Dictionary<HorizontalAlignment, string>
+            {
+                { HorizontalAlignment.Left, "Left" },
+                { HorizontalAlignment.Center, "Center" },
+                { HorizontalAlignment.Right, "Right" },
+            };
+
+            cmbVerticalLogoAlignment.ItemsSource = new Dictionary<VerticalAlignment, string>
+            {
+                { VerticalAlignment.Top, "Top" },
+                { VerticalAlignment.Center, "Center" },
+                { VerticalAlignment.Bottom, "Bottom" },
+            };
         }
     }
 }

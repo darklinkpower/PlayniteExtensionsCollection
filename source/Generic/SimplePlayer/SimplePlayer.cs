@@ -29,7 +29,7 @@ namespace SimplePlayer
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "VideoPlayerControl" },
+                ElementList = new List<string> { "VideoPlayerControl", "LogoLoaderControl" },
                 SourceName = "SimplePlayer"
             });
         }
@@ -40,7 +40,10 @@ namespace SimplePlayer
             {
                 return new VideoPlayerControl(PlayniteApi, settings);
             }
-
+            if (args.Name == "LogoLoaderControl")
+            {
+                return new LogoLoaderControl(PlayniteApi, settings);
+            }
             return null;
         }
 

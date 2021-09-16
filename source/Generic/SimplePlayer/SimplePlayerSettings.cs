@@ -5,17 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SimplePlayer
 {
     public class SimplePlayerSettings
     {
+        public bool EnableVideoPlayer { get; set; } = true;
         public bool AutoPlayVideos { get; set; } = false;
         public bool StartNoSound { get; set; } = false;
         public bool UseMicrotrailersDefault { get; set; } = false;
         public bool FallbackVideoSource { get; set; } = true;
         public bool ShowControls { get; set; } = true;
         public double DefaultVolume { get; set; } = 100;
+        public bool EnableLogos { get; set; } = true;
+        public double LogoMaxWidth { get; set; } = 600;
+        public double LogoMaxHeight { get; set; } = 200;
+        public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
+        public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Center;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.

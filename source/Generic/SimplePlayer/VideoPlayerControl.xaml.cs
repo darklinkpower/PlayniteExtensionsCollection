@@ -247,7 +247,6 @@ namespace SimplePlayer
                 currentGame = newContext;
                 playingContextChanged();
             }
-            
         }
 
         public void playingContextChanged()
@@ -255,7 +254,6 @@ namespace SimplePlayer
             SetTrailerPath(currentGame);
             if (videoSource != null)
             {
-                
                 if (settings.AutoPlayVideos)
                 {
                     MediaPlay();
