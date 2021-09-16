@@ -31,8 +31,19 @@ namespace SimplePlayer
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        SimplePlayerSettings settings;
+
         IPlayniteAPI PlayniteApi;
+
+        private SimplePlayerSettings settings;
+        public SimplePlayerSettings Settings
+        {
+            get => settings;
+            set
+            {
+                settings = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string logoSource;
         public string LogoSource
@@ -45,61 +56,12 @@ namespace SimplePlayer
             }
         }
 
-        private VerticalAlignment logoVerticalAlignment;
-        public VerticalAlignment LogoVerticalAlignment
-        {
-            get => logoVerticalAlignment;
-            set
-            {
-                logoVerticalAlignment = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private HorizontalAlignment logoHorizontalAlignment;
-        public HorizontalAlignment LogoHorizontalAlignment
-        {
-            get => logoHorizontalAlignment;
-            set
-            {
-                logoHorizontalAlignment = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double logoMaxWidth;
-        public double LogoMaxWidth
-        {
-            get => logoMaxWidth;
-            set
-            {
-                logoMaxWidth = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private double logoMaxHeight;
-        public double LogoMaxHeight
-        {
-            get => logoMaxHeight;
-            set
-            {
-                logoMaxHeight = value;
-                OnPropertyChanged();
-            }
-        }
-
         public LogoLoaderControl(IPlayniteAPI PlayniteApi, SimplePlayerSettingsViewModel PluginSettings)
         {
             this.PlayniteApi = PlayniteApi;
-            settings = PluginSettings.Settings;
             InitializeComponent();
             DataContext = this;
-
-            LogoHorizontalAlignment = settings.LogoHorizontalAlignment; 
-            LogoVerticalAlignment = settings.LogoVerticalAlignment;
-            LogoMaxWidth = settings.LogoMaxWidth;
-            LogoMaxHeight = settings.LogoMaxHeight;
+            Settings = PluginSettings.Settings;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)

@@ -33,9 +33,19 @@ namespace SimplePlayer
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        
-        SimplePlayerSettings settings;
+
         IPlayniteAPI PlayniteApi;
+        private SimplePlayerSettings settings;
+        public SimplePlayerSettings Settings
+        {
+            get => settings;
+            set
+            {
+                settings = value;
+                OnPropertyChanged();
+            }
+        }
+        
         bool isDragging;
         private bool useMicrovideosSource;
         private bool isPlaying;
@@ -88,12 +98,13 @@ namespace SimplePlayer
         {
             this.PlayniteApi = PlayniteApi; 
             isPlaying = false;
-            settings = PluginSettings.Settings;
+            Settings = PluginSettings.Settings;
             useMicrovideosSource = settings.UseMicrotrailersDefault;
             InitializeComponent();
        
             player.Volume = 1;
             volumeSlider.Value = 0;
+            
             if (settings.DefaultVolume != 0)
             {
                 volumeSlider.Value = settings.DefaultVolume / 100;

@@ -8,10 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid x:Name="ControlGrid">
         <Image Name="LogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
-               VerticalAlignment="{Binding LogoVerticalAlignment}"
-               HorizontalAlignment="{Binding LogoHorizontalAlignment}"
-               MaxWidth="{Binding LogoMaxWidth}"
-               MaxHeight="{Binding LogoMaxHeight}"
+               VerticalAlignment="{Binding Settings.LogoVerticalAlignment}"
+               HorizontalAlignment="{Binding Settings.LogoHorizontalAlignment}"
+               MaxWidth="{Binding Settings.LogoMaxWidth}"
+               MaxHeight="{Binding Settings.LogoMaxHeight}"
                StretchDirection="Both">
             <Image.Effect>
                 <DropShadowEffect Direction="0" Color="#66000000" ShadowDepth="0" BlurRadius="20" />
