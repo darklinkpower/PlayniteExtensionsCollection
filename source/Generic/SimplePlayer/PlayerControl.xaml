@@ -18,7 +18,7 @@
                               LoadedBehavior="Play" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <MediaElement.Style>
                             <Style>
-                                <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=Default}" />
+                                <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}" />
                                 <Style.Triggers>
                                     <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
                                         <Setter Property="MediaElement.Source" Value="{x:Null}" />
