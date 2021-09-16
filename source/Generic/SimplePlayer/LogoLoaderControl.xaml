@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SimplePlayer"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid x:Name="ControlGrid">
         <Image Name="LogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
                VerticalAlignment="{Binding LogoVerticalAlignment}"
                HorizontalAlignment="{Binding LogoHorizontalAlignment}"

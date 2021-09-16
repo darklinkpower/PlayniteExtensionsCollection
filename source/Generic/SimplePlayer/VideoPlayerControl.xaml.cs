@@ -242,6 +242,14 @@ namespace SimplePlayer
         {
             ResetPlayerValues();
             currentGame = null;
+            if (settings.EnableVideoPlayer)
+            {
+                ControlGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ControlGrid.Visibility = Visibility.Collapsed;
+            }
             if (newContext != null)
             {
                 currentGame = newContext;

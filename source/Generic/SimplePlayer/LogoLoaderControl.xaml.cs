@@ -105,6 +105,14 @@ namespace SimplePlayer
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             LogoSource = null;
+            if (settings.EnableLogos)
+            {
+                ControlGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ControlGrid.Visibility = Visibility.Collapsed;
+            }
             if (newContext != null)
             {
                 var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
