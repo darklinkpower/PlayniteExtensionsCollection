@@ -15,17 +15,21 @@
             <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <Grid MinHeight="120">
                     <MediaElement Name="player" MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
-                              LoadedBehavior="Play" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top">
+                              LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <MediaElement.Style>
                             <Style>
                                 <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}" />
                                 <Style.Triggers>
-                                    <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
+                                    <!--This is to prevent files from locking while they are being played. Activating any window or minimizing
+                                    Playnite will free the file-->
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
                                         <Setter Property="MediaElement.Source" Value="{x:Null}" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=PART_ControlGameView, Path=IsVisible}" Value="False">
+                                    <!--This trigger is because of issue https://github.com/JosefNemec/Playnite/issues/2326
+                                    Currently views stay alive and causes for videos to keep playing even if the view has been switched-->
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="False">
                                         <Setter Property="MediaElement.Source" Value="{x:Null}" />
-                                    </DataTrigger>-->
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </MediaElement.Style>

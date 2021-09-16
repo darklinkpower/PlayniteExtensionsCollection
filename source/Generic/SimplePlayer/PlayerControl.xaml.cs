@@ -146,7 +146,7 @@ namespace SimplePlayer
 
         void MediaPlay()
         {
-            //player.Play();
+            player.Play();
             timer.Start();
             IsPlaying = true;
         }
@@ -278,12 +278,12 @@ namespace SimplePlayer
             {
                 if (File.Exists(videoMicroPath))
                 {
-                    videoSource = new Uri(videoMicroPath);
+                    VideoSource = new Uri(videoMicroPath);
                     repeatVideo = true;
                 }
                 else if (File.Exists(videoPath) && settings.FallbackVideoSource)
                 {
-                    videoSource = new Uri(videoPath);
+                    VideoSource = new Uri(videoPath);
                     repeatVideo = false;
                 }
             }
@@ -291,12 +291,12 @@ namespace SimplePlayer
             {
                 if (File.Exists(videoPath))
                 {
-                    videoSource = new Uri(videoPath);
+                    VideoSource = new Uri(videoPath);
                     repeatVideo = false;
                 }
                 else if (File.Exists(videoMicroPath) && settings.FallbackVideoSource)
                 {
-                    videoSource = new Uri(videoMicroPath);
+                    VideoSource = new Uri(videoMicroPath);
                     repeatVideo = true;
                 }
             }
