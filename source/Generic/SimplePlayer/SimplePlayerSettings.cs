@@ -9,8 +9,9 @@ using System.Windows;
 
 namespace SimplePlayer
 {
-    public class SimplePlayerSettings
+    public class SimplePlayerSettings : ObservableObject
     {
+
         public bool EnableVideoPlayer { get; set; } = true;
         public bool AutoPlayVideos { get; set; } = false;
         public bool StartNoSound { get; set; } = false;
@@ -27,11 +28,54 @@ namespace SimplePlayer
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
-        public bool IsLogoAvailable { get; set; } = false;
-        public bool IsTrailerAvailable { get; set; } = false;
-        public bool IsMicrotrailerAvailable { get; set; } = false;
-        public bool IsAnyVideoAvailable { get; set; } = false;
-        
+        private bool isLogoAvailable { get; set; } = true;
+        [DontSerialize]
+        public bool IsLogoAvailable
+        {
+            get => isLogoAvailable;
+            set
+            {
+                isLogoAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        private bool isTrailerAvailable { get; set; } = false;
+        [DontSerialize]
+        public bool IsTrailerAvailable
+        {
+            get => isTrailerAvailable;
+            set
+            {
+                isTrailerAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        private bool isMicrotrailerAvailable { get; set; } = false;
+        [DontSerialize]
+        public bool IsMicrotrailerAvailable
+        {
+            get => isMicrotrailerAvailable;
+            set
+            {
+                isMicrotrailerAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        private bool isAnyVideoAvailable { get; set; } = false;
+        [DontSerialize]
+        public bool IsAnyVideoAvailable
+        {
+            get => isAnyVideoAvailable;
+            set
+            {
+                isAnyVideoAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 
     public class SimplePlayerSettingsViewModel : ObservableObject, ISettings

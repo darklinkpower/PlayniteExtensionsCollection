@@ -15,7 +15,7 @@ namespace SimplePlayer
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private SimplePlayerSettingsViewModel settings { get; set; }
+        public SimplePlayerSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("c64bcd9e-fcc5-44ca-bd73-ad46470bd534");
 
@@ -31,6 +31,12 @@ namespace SimplePlayer
             {
                 ElementList = new List<string> { "VideoPlayerControl", "LogoLoaderControl" },
                 SourceName = "SimplePlayer"
+            });
+
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
+                SourceName = "ExtraMetadataLoader",
+                SettingsRoot = "settings.Settings"
             });
         }
 
