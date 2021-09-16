@@ -27,7 +27,11 @@ namespace SimplePlayer
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
+        public bool IsLogoAvailable { get; set; } = false;
+        public bool IsTrailerAvailable { get; set; } = false;
+        public bool IsMicrotrailerAvailable { get; set; } = false;
+        public bool IsAnyVideoAvailable { get; set; } = false;
+        
     }
 
     public class SimplePlayerSettingsViewModel : ObservableObject, ISettings
