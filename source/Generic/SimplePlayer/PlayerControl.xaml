@@ -1,0 +1,64 @@
+﻿<PluginUserControl x:Class="SimplePlayer.PlayerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimplePlayer"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                   mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        </Grid.Resources>
+        <Grid>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid>
+                    <MediaElement Name="player" MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
+                              LoadedBehavior="Manual" ScrubbingEnabled="True" MinWidth="320" MinHeight="240" />
+                </Grid>
+                <Border Padding="10,5,10,5">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Gray" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding isPlaying}" Value="True">
+                                    <Setter Property="Background" Value="Red" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <DockPanel VerticalAlignment="Center">
+                        <Button DockPanel.Dock="Left" Name="PlayButton" FontSize="24" Command="{Binding VideoPlayCommand}" Content="&#xECA7;"
+                            FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
+                        <Button DockPanel.Dock="Left" Name="PauseButton" FontSize="24" Command="{Binding VideoPauseCommand}" Content="&#xECA5;"
+                            FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
+                        <Button DockPanel.Dock="Left" Name="MuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB8;"
+                            FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <Grid DockPanel.Dock="Right" Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Name="SliderGrid" Grid.Column="0" Margin="0,0,10,0">
+                                <ProgressBar x:Name="playbackProgressBar" Height="20" Padding="0" Width="{Binding ElementName=SliderGrid, Path=Width}"/>
+                                <Slider x:Name="timelineSlider" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Stretch"
+                                        Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" />
+                            </Grid>
+                            <DockPanel Grid.Column="1">
+                                <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="IcoFont" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                        Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.05"/>
+                            </DockPanel>
+                        </Grid>
+                    </DockPanel>
+                </Border>
+
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</PluginUserControl>

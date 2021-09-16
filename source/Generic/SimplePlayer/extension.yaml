@@ -1,0 +1,7 @@
+﻿Id: SimplePlayer_c64bcd9e-fcc5-44ca-bd73-ad46470bd534
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: SimplePlayer.dll
+Type: GenericPlugin
+Icon: icon.png
