@@ -57,7 +57,7 @@
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
                             <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                             <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>
-                            <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                            <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                             <Button DockPanel.Dock="Right" Name="SwitchVideoSourceButton" FontSize="24" Command="{Binding SwitchVideoSourceCommand}" Content="&#xEB2C;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
                             <Grid DockPanel.Dock="Right" Margin="0,0,0,0">
