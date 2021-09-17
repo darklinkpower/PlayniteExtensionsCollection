@@ -1,0 +1,7 @@
+﻿Id: ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: ExtraMetadataLoader.dll
+Type: GenericPlugin
+Icon: icon.png
