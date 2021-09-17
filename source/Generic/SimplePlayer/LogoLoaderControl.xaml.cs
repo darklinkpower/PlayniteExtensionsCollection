@@ -41,7 +41,6 @@ namespace SimplePlayer
             set
             {
                 settings = value;
-                OnPropertyChanged();
             }
         }
 
@@ -67,7 +66,7 @@ namespace SimplePlayer
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             LogoSource = null;
-            //settings.IsLogoAvailable = false;
+            settings.IsLogoAvailable = false;
             if (settings.EnableLogos)
             {
                 ControlGrid.Visibility = Visibility.Visible;
@@ -82,7 +81,7 @@ namespace SimplePlayer
                 if (File.Exists(logoPath))
                 {
                     LogoSource = logoPath;
-                    //settings.IsLogoAvailable = true;
+                    settings.IsLogoAvailable = true;
                 }
             }
         }
