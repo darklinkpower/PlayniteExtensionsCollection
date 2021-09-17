@@ -27,6 +27,7 @@ namespace ExtraMetadataLoader
     /// </summary>
     public partial class VideoPlayerControl : PluginUserControl, INotifyPropertyChanged
     {
+        public enum ActiveVideoType { Microtrailer, Trailer, None }; 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -37,7 +38,7 @@ namespace ExtraMetadataLoader
         bool isDragging;
         private bool useMicrovideosSource;
         private bool isPlaying = false;
-        private bool repeatVideo;
+        private ActiveVideoType activeVideoType;
         public bool IsPlaying
         {
             get => isPlaying;
@@ -215,13 +216,17 @@ namespace ExtraMetadataLoader
 
         private void player_MediaEnded(object sender, EventArgs e)
         {
-            player.Stop();
-            timer.Stop();
-            IsPlaying = false;
-            player.Position = new TimeSpan(0, 0, 1);
-            if (repeatVideo)
+            if (activeVideoType == ActiveVideoType.Trailer && SettingsModel.Settings.RepeatTrailerVideos
+                || activeVideoType == ActiveVideoType.Microtrailer)
             {
+                player.Position = new TimeSpan(0, 0, 1);
                 MediaPlay();
+            }
+            else
+            {
+                player.Stop();
+                timer.Stop();
+                IsPlaying = false;
             }
         }
 
@@ -230,6 +235,7 @@ namespace ExtraMetadataLoader
 
             VideoSource = null;
             IsPlaying = false;
+            activeVideoType = ActiveVideoType.None;
             timelineSlider.Value = 0;
             playbackProgressBar.Value = 0;
             PlaybackTimeProgress = "00:00";
@@ -284,12 +290,12 @@ namespace ExtraMetadataLoader
                 if (File.Exists(videoMicroPath))
                 {
                     VideoSource = new Uri(videoMicroPath);
-                    repeatVideo = true;
+                    activeVideoType = ActiveVideoType.Microtrailer;
                 }
                 else if (File.Exists(videoPath) && SettingsModel.Settings.FallbackVideoSource)
                 {
                     VideoSource = new Uri(videoPath);
-                    repeatVideo = false;
+                    activeVideoType = ActiveVideoType.Trailer;
                 }
             }
             else
@@ -297,12 +303,12 @@ namespace ExtraMetadataLoader
                 if (File.Exists(videoPath))
                 {
                     VideoSource = new Uri(videoPath);
-                    repeatVideo = false;
+                    activeVideoType = ActiveVideoType.Trailer;
                 }
                 else if (File.Exists(videoMicroPath) && SettingsModel.Settings.FallbackVideoSource)
                 {
                     VideoSource = new Uri(videoMicroPath);
-                    repeatVideo = true;
+                    activeVideoType = ActiveVideoType.Microtrailer;
                 }
             }
 

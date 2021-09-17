@@ -11,8 +11,8 @@ namespace ExtraMetadataLoader
 {
     public class ExtraMetadataLoaderSettings : ObservableObject
     {
-        [DontSerialize] 
-        public bool enableVideoPlayer { get; set; } = true;
+        [DontSerialize]
+        private bool enableVideoPlayer { get; set; } = true;
         public bool EnableVideoPlayer
         {
             get => enableVideoPlayer;
@@ -23,7 +23,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public bool autoPlayVideos { get; set; } = false;
+        private bool autoPlayVideos { get; set; } = false;
         public bool AutoPlayVideos
         {
             get => autoPlayVideos;
@@ -34,7 +34,18 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public bool startNoSound { get; set; } = false;
+        private bool repeatTrailerVideos { get; set; } = false;
+        public bool RepeatTrailerVideos
+        {
+            get => repeatTrailerVideos;
+            set
+            {
+                repeatTrailerVideos = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        private bool startNoSound { get; set; } = false;
         public bool StartNoSound
         {
             get => startNoSound;
@@ -45,7 +56,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public bool useMicrotrailersDefault { get; set; } = false;
+        private bool useMicrotrailersDefault { get; set; } = false;
         public bool UseMicrotrailersDefault
         {
             get => useMicrotrailersDefault;
@@ -56,7 +67,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public bool fallbackVideoSource { get; set; } = true;
+        private bool fallbackVideoSource { get; set; } = true;
         public bool FallbackVideoSource
         {
             get => fallbackVideoSource;
@@ -67,7 +78,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public bool showControls { get; set; } = true;
+        private bool showControls { get; set; } = true;
         public bool ShowControls
         {
             get => showControls;
@@ -78,7 +89,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public double defaultVolume { get; set; } = 100;
+        private double defaultVolume { get; set; } = 100;
         public double DefaultVolume
         {
             get => defaultVolume;
@@ -89,7 +100,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public bool enableLogos { get; set; } = true;
+        private bool enableLogos { get; set; } = true;
         public bool EnableLogos
         {
             get => enableLogos;
@@ -100,7 +111,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public double logoMaxWidth { get; set; } = 600;
+        private double logoMaxWidth { get; set; } = 600;
         public double LogoMaxWidth
         {
             get => logoMaxWidth;
@@ -111,7 +122,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public double logoMaxHeight { get; set; } = 200;
+        private double logoMaxHeight { get; set; } = 200;
         public double LogoMaxHeight
         {
             get => logoMaxHeight;
@@ -122,7 +133,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public HorizontalAlignment logoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
+        private HorizontalAlignment logoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
         public HorizontalAlignment LogoHorizontalAlignment
         {
             get => logoHorizontalAlignment;
@@ -133,7 +144,7 @@ namespace ExtraMetadataLoader
             }
         }
         [DontSerialize]
-        public VerticalAlignment logoVerticalAlignment { get; set; } = VerticalAlignment.Center;
+        private VerticalAlignment logoVerticalAlignment { get; set; } = VerticalAlignment.Center;
         public VerticalAlignment LogoVerticalAlignment
         {
             get => logoVerticalAlignment;
