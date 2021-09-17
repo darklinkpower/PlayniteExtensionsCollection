@@ -351,7 +351,6 @@ namespace ExtraMetadataLoader
                 multipleSourcesAvailable = true;
             }
 
-
             if (useMicrovideosSource)
             {
                 if (microVideoPath != null)
