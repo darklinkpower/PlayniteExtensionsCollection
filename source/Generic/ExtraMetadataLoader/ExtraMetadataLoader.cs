@@ -28,7 +28,7 @@ namespace ExtraMetadataLoader
             };
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "TestUserControl" },
+                ElementList = new List<string> { "LogoLoaderControl" },
                 SourceName = "ExtraMetadataLoader",
             });
 
@@ -41,9 +41,9 @@ namespace ExtraMetadataLoader
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name == "TestUserControl")
+            if (args.Name == "LogoLoaderControl")
             {
-                return new TestPluginUserControl(settings);
+                return new LogoLoaderControl(PlayniteApi, settings);
             }
 
             return null;

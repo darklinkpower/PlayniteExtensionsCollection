@@ -7,8 +7,8 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel>
         <DockPanel>
-            <TextBox Text="{Binding Settings.Option1, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top"/>
-            <Slider Value="{Binding Settings.Option2, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top"
+            <TextBox Text="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top"/>
+            <Slider Value="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top"
                 Minimum="0" Maximum="1000"/>
         </DockPanel>
     </StackPanel>

@@ -41,7 +41,16 @@ namespace ExtraMetadataLoader
         public bool ShowControls { get; set; } = true;
         public double DefaultVolume { get; set; } = 100;
         public bool EnableLogos { get; set; } = true;
-        public double LogoMaxWidth { get; set; } = 600;
+        public double logoMaxWidth { get; set; } = 600;
+        public double LogoMaxWidth
+        {
+            get => logoMaxWidth;
+            set
+            {
+                logoMaxWidth = value;
+                OnPropertyChanged();
+            }
+        }
         public double LogoMaxHeight { get; set; } = 200;
         public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
         public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Center;
