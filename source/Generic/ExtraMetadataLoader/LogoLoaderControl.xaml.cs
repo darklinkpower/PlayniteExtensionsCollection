@@ -23,7 +23,7 @@ namespace ExtraMetadataLoader
     /// <summary>
     /// Interaction logic for LogoLoaderControl.xaml
     /// </summary>
-    public partial class LogoLoaderControl : PluginUserControl
+    public partial class LogoLoaderControl : PluginUserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

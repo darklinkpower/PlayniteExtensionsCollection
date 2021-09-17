@@ -7,27 +7,26 @@
              xmlns:sdk="clr-namespace:Playnite.SDK.Controls;assembly=Playnite.SDK"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <TextBlock Text="{Binding SettingsModel.Settings.Option2, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   Foreground="LimeGreen" DockPanel.Dock="Top" />
-        <Button Content="{Binding GameContext.Name}" Foreground="LimeGreen" DockPanel.Dock="Top" />
-        <Grid x:Name="ControlGrid" Background="Green">
-            <Image Name="LogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" Width="200" Height="200"
+    <Grid x:Name="ControlGrid">
+        <Image Name="LogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
+               VerticalAlignment="{Binding SettingsModel.Settings.LogoVerticalAlignment}"
+               HorizontalAlignment="{Binding SettingsModel.Settings.LogoHorizontalAlignment}"
+               MaxWidth="{Binding SettingsModel.Settings.LogoMaxWidth}"
+               MaxHeight="{Binding SettingsModel.Settings.LogoMaxHeight}"
                StretchDirection="Both">
-                <Image.Effect>
-                    <DropShadowEffect Direction="0" Color="#66000000" ShadowDepth="0" BlurRadius="20" />
-                </Image.Effect>
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Setter Property="Source" Value="{Binding LogoSource, Converter={StaticResource ImageStringToImageConverter}}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding LogoSource}" Value="{x:Null}">
-                                <Setter Property="Source" Value="{x:Null}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
-        </Grid>
-    </StackPanel>
+            <Image.Effect>
+                <DropShadowEffect Direction="0" Color="#66000000" ShadowDepth="0" BlurRadius="20" />
+            </Image.Effect>
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="Source" Value="{Binding LogoSource, Converter={StaticResource ImageStringToImageConverter}}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding LogoSource}" Value="{x:Null}">
+                            <Setter Property="Source" Value="{x:Null}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+    </Grid>
 </PluginUserControl>
