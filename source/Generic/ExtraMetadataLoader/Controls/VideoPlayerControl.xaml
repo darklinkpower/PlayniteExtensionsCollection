@@ -33,7 +33,7 @@
                             </Style>
                         </MediaElement.Style>
                     </MediaElement>
-                    <Border Padding="10,5,10,10" VerticalAlignment="Bottom">
+                    <Border Padding="10,5,10,10" VerticalAlignment="{Binding SettingsModel.Settings.VideoControlsVerticalAlignment}">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="Opacity" Value="{Binding SettingsModel.Settings.VideoControlsOpacity}" />
@@ -47,7 +47,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Border.Style>
-                        <DockPanel VerticalAlignment="Center">
+                        <WrapPanel>
                             <Button DockPanel.Dock="Left" Name="PlayButton" FontSize="24" Command="{Binding VideoPlayCommand}" Content="&#xECA7;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
                             <Button DockPanel.Dock="Left" Name="PauseButton" FontSize="24" Command="{Binding VideoPauseCommand}" Content="&#xECA5;"
@@ -59,7 +59,7 @@
                             <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                             <Button DockPanel.Dock="Right" Name="SwitchVideoSourceButton" FontSize="24" Command="{Binding SwitchVideoSourceCommand}" Content="&#xEB2C;"
                             FontFamily="IcoFont" Margin="0,0,10,0" Padding="5" />
-                            <Grid DockPanel.Dock="Right" Margin="0,0,0,0">
+                            <Grid Margin="0,0,0,0" MinWidth="300" MaxWidth="600">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*"/>
                                     <ColumnDefinition Width="2*"/>
@@ -70,12 +70,12 @@
                                         Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" />
                                 </Grid>
                                 <DockPanel Grid.Column="1">
-                                    <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="IcoFont" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="IcoFont" VerticalAlignment="Center" Margin="0,0,8,0"/>
                                     <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                         Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.025"/>
                                 </DockPanel>
                             </Grid>
-                        </DockPanel>
+                        </WrapPanel>
                     </Border>
                 </Grid>
             </StackPanel>

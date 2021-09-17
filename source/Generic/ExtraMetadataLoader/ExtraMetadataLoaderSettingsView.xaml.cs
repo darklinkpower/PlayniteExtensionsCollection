@@ -21,18 +21,24 @@ namespace ExtraMetadataLoader
         public ExtraMetadataLoaderSettingsView()
         {
             InitializeComponent();
-            cmbHorizontalLogoAlignment.ItemsSource = new Dictionary<HorizontalAlignment, string>
+            cmbLogoHorizontalAlignment.ItemsSource = new Dictionary<HorizontalAlignment, string>
             {
                 { HorizontalAlignment.Left, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft") },
                 { HorizontalAlignment.Center, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter") },
                 { HorizontalAlignment.Right, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight") },
             };
 
-            cmbVerticalLogoAlignment.ItemsSource = new Dictionary<VerticalAlignment, string>
+            cmbLogoVerticalAlignment.ItemsSource = new Dictionary<VerticalAlignment, string>
             {
-                { VerticalAlignment.Top, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentTop") },
-                { VerticalAlignment.Center, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentCenter") },
-                { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentRight") },
+                { VerticalAlignment.Top, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop") },
+                { VerticalAlignment.Center, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter") },
+                { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom") },
+            };
+
+            cmbVideoVerticalAlignment.ItemsSource = new Dictionary<VerticalAlignment, string>
+            {
+                { VerticalAlignment.Top, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop") },
+                { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom") },
             };
         }
     }

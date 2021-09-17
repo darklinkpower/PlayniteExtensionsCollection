@@ -27,6 +27,13 @@
                 <TextBlock Text="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cmbVideoVerticalAlignment" MinWidth="150" HorizontalAlignment="Left"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding Settings.VideoControlsVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
                 <Slider Value="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" VerticalAlignment="Center"
                         Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
@@ -50,14 +57,14 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmbHorizontalLogoAlignment" MinWidth="150" HorizontalAlignment="Left"
+                <ComboBox x:Name="cmbLogoHorizontalAlignment" MinWidth="150" HorizontalAlignment="Left"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.LogoHorizontalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmbVerticalLogoAlignment" MinWidth="150" HorizontalAlignment="Left"
+                <ComboBox x:Name="cmbLogoVerticalAlignment" MinWidth="150" HorizontalAlignment="Left"
                         DisplayMemberPath="Value"
                         SelectedValuePath="Key"
                         SelectedValue="{Binding Settings.LogoVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>

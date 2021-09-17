@@ -125,6 +125,18 @@ namespace ExtraMetadataLoader
         }
 
         [DontSerialize]
+        private VerticalAlignment videoControlsVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
+        public VerticalAlignment VideoControlsVerticalAlignment
+        {
+            get => videoControlsVerticalAlignment;
+            set
+            {
+                videoControlsVerticalAlignment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
         private bool enableLogos { get; set; } = true;
         public bool EnableLogos
         {
