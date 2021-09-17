@@ -4,9 +4,9 @@
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Zugangscode abrufen</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Präfix für Metadaten-Eigenschaften:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Fügt den eingegebenen Text vor jedem importierten Metadatennamen hinzu</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Import anime library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Import manga library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Update user score from AniList account during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Update completion status from AniList account during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Update progress from AniList account during library update (&quot;Version&quot; field is used)</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Anime-Bibliothek bei Bibliothek-Aktualisierung importieren</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Manga-Bibliothek bei Bibliothek-Aktualisierung importieren</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Benutzer-Bewertung des AniList-Kontos während der Bibliotheks-Aktualisierung aktualisieren</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Fertigstellungs-Status des AniList-Kontos während der Bibliotheks-Aktualisierung aktualisieren</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Fortschritt des AniList-Kontos während der Bibliotheks-Aktualisierung aktualisieren (&quot;Version&quot;-Feld wird benutzt)</sys:String>
 </ResourceDictionary>
