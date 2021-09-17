@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,16 +24,16 @@ namespace SimplePlayer
 
             cmbHorizontalLogoAlignment.ItemsSource = new Dictionary<HorizontalAlignment, string>
             {
-                { HorizontalAlignment.Left, "Left" },
-                { HorizontalAlignment.Center, "Center" },
-                { HorizontalAlignment.Right, "Right" },
+                { HorizontalAlignment.Left, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft") },
+                { HorizontalAlignment.Center, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter") },
+                { HorizontalAlignment.Right, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight") },
             };
 
             cmbVerticalLogoAlignment.ItemsSource = new Dictionary<VerticalAlignment, string>
             {
-                { VerticalAlignment.Top, "Top" },
-                { VerticalAlignment.Center, "Center" },
-                { VerticalAlignment.Bottom, "Bottom" },
+                { VerticalAlignment.Top, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentTop") },
+                { VerticalAlignment.Center, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentCenter") },
+                { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentRight") },
             };
         }
     }
