@@ -22,4 +22,6 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentCenter">Center</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentRight">Bottom</sys:String>
 
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_GenericVideoLabel">Video</sys:String>
+
 </ResourceDictionary>
