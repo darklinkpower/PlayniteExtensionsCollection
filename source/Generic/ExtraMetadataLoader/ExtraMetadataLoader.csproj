@@ -54,6 +54,9 @@
       <DependentUpon>ExtraMetadataLoaderSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestPluginUserControl.xaml.cs">
+      <DependentUpon>TestPluginUserControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -63,6 +66,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ExtraMetadataLoaderSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestPluginUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

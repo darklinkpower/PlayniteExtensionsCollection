@@ -15,7 +15,7 @@ namespace ExtraMetadataLoader
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private ExtraMetadataLoaderSettingsViewModel settings { get; set; }
+        public ExtraMetadataLoaderSettingsViewModel settings { get; private set; }
 
         public override Guid Id { get; } = Guid.Parse("705fdbca-e1fc-4004-b839-1d040b8b4429");
 
@@ -26,6 +26,27 @@ namespace ExtraMetadataLoader
             {
                 HasSettings = true
             };
+            AddCustomElementSupport(new AddCustomElementSupportArgs
+            {
+                ElementList = new List<string> { "TestUserControl" },
+                SourceName = "ExtraMetadataLoader",
+            });
+
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
+                SourceName = "ExtraMetadataLoader",
+                SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
+            });
+        }
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            if (args.Name == "TestUserControl")
+            {
+                return new TestPluginUserControl(settings);
+            }
+
+            return null;
         }
 
         public override void OnGameInstalled(OnGameInstalledEventArgs args)
