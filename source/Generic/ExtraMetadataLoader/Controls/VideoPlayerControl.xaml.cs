@@ -35,10 +35,11 @@ namespace ExtraMetadataLoader
         }
         IPlayniteAPI PlayniteApi; public ExtraMetadataLoaderSettingsViewModel SettingsModel { get; set; }
 
-        bool isDragging;
+        
         private bool useMicrovideosSource;
-        private bool isPlaying = false;
         private ActiveVideoType activeVideoType;
+        private bool isDragging;
+        private bool isPlaying = false;
         public bool IsPlaying
         {
             get => isPlaying;
@@ -79,6 +80,17 @@ namespace ExtraMetadataLoader
             set
             {
                 playbackTimeTotal = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility controlVisibility = Visibility.Collapsed;
+        public Visibility ControlVisibility
+        {
+            get => controlVisibility;
+            set
+            {
+                controlVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -248,7 +260,7 @@ namespace ExtraMetadataLoader
             currentGame = null;
             if (!SettingsModel.Settings.EnableVideoPlayer)
             {
-                ControlGrid.Visibility = Visibility.Collapsed;
+                ControlVisibility = Visibility.Collapsed;
                 return;
             }
 
@@ -264,7 +276,7 @@ namespace ExtraMetadataLoader
             SetTrailerPath(currentGame);
             if (videoSource == null)
             {
-                ControlGrid.Visibility = Visibility.Collapsed;
+                ControlVisibility = Visibility.Collapsed;
                 return;
             }
 
@@ -279,6 +291,7 @@ namespace ExtraMetadataLoader
                 MediaPlay();
                 MediaPause();
             }
+            ControlVisibility = Visibility.Visible;
         }
 
         public void SetTrailerPath(Game game)
@@ -311,8 +324,6 @@ namespace ExtraMetadataLoader
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
             }
-
-            return;
         }
     }
 }

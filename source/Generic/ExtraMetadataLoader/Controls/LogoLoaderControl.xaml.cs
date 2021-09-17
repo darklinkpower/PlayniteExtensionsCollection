@@ -32,6 +32,17 @@ namespace ExtraMetadataLoader
         }
         IPlayniteAPI PlayniteApi; public ExtraMetadataLoaderSettingsViewModel SettingsModel { get; set; }
 
+        private Visibility controlVisibility = Visibility.Collapsed;
+        public Visibility ControlVisibility
+        {
+            get => controlVisibility;
+            set
+            {
+                controlVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string logoSource { get; set; }
         public string LogoSource
         {
@@ -55,14 +66,13 @@ namespace ExtraMetadataLoader
         {
             LogoSource = null;
             SettingsModel.Settings.IsLogoAvailable = false;
-            if (SettingsModel.Settings.EnableLogos)
+            
+            if (!SettingsModel.Settings.EnableLogos)
             {
-                ControlGrid.Visibility = Visibility.Visible;
+                ControlVisibility = Visibility.Collapsed;
+                return;
             }
-            else
-            {
-                ControlGrid.Visibility = Visibility.Collapsed;
-            }
+
             if (newContext != null)
             {
                 var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
@@ -70,6 +80,7 @@ namespace ExtraMetadataLoader
                 {
                     LogoSource = logoPath;
                     SettingsModel.Settings.IsLogoAvailable = true;
+                    ControlVisibility = Visibility.Visible;
                 }
             }
         }

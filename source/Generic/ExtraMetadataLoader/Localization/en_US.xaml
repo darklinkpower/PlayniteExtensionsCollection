@@ -15,12 +15,10 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Horizontal alignment of logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Vertical alignment of logos</sys:String>
 
-
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Left</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Center</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Right</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentTop">Top</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentCenter">Center</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentAlignmentRight">Bottom</sys:String>
-
 </ResourceDictionary>

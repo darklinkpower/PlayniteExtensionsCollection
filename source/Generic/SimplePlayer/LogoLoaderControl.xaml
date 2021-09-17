@@ -14,7 +14,7 @@
                MaxHeight="{Binding Settings.LogoMaxHeight}"
                StretchDirection="Both">
             <Image.Effect>
-                <DropShadowEffect Direction="0" Color="#66000000" ShadowDepth="0" BlurRadius="20" />
+                <DropShadowEffect Direction="0" Color="#b3000000" ShadowDepth="0" BlurRadius="20" />
             </Image.Effect>
             <Image.Style>
                 <Style TargetType="Image">
