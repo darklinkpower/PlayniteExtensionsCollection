@@ -209,20 +209,31 @@ namespace ExtraMetadataLoader
 
         void SwitchVideoSource()
         {
+            var activeVideoTypeSender = activeVideoType;
+            var sourceSwitched = false;
             ResetPlayerValues();
-            if (activeVideoType == ActiveVideoType.Trailer)
+
+            
+
+            // Paths need to be revaluated in case videos were deleted since video playing started
+            UpdateGameVideoSources();
+            if (activeVideoTypeSender == ActiveVideoType.Trailer && microVideoPath != null)
             {
                 VideoSource = microVideoPath;
                 activeVideoType = ActiveVideoType.Microtrailer;
+                
             }
-            else if (activeVideoType == ActiveVideoType.Microtrailer)
+            else if (activeVideoTypeSender == ActiveVideoType.Microtrailer && trailerVideoPath != null)
             {
                 VideoSource = trailerVideoPath;
                 activeVideoType = ActiveVideoType.Trailer;
             }
 
-            useMicrovideosSource = !useMicrovideosSource;
-            playingContextChanged();
+            if (sourceSwitched)
+            {
+                useMicrovideosSource = !useMicrovideosSource;
+                playingContextChanged();
+            }
         }
 
         private void player_MediaOpened(object sender, EventArgs e)
@@ -262,11 +273,6 @@ namespace ExtraMetadataLoader
             playbackProgressBar.Value = 0;
             PlaybackTimeProgress = "00:00";
             PlaybackTimeTotal = "00:00";
-        }
-
-        public override void GameContextChanged(Game oldContext, Game newContext)
-        {
-            ResetPlayerValues();
             activeVideoType = ActiveVideoType.None;
             SettingsModel.Settings.IsAnyVideoAvailable = false;
             SettingsModel.Settings.IsTrailerAvailable = false;
@@ -274,7 +280,11 @@ namespace ExtraMetadataLoader
             microVideoPath = null;
             trailerVideoPath = null;
             multipleSourcesAvailable = false;
+        }
 
+        public override void GameContextChanged(Game oldContext, Game newContext)
+        {
+            ResetPlayerValues();
             currentGame = null;
             if (!SettingsModel.Settings.EnableVideoPlayer)
             {
@@ -285,7 +295,7 @@ namespace ExtraMetadataLoader
             if (newContext != null)
             {
                 currentGame = newContext;
-                SetTrailerPath(currentGame);
+                UpdateGameVideoSources();
                 playingContextChanged();
             }
         }
@@ -312,8 +322,14 @@ namespace ExtraMetadataLoader
             ControlVisibility = Visibility.Visible;
         }
 
-        public void SetTrailerPath(Game game)
+        public void UpdateGameVideoSources()
         {
+            if (currentGame == null)
+            {
+                return;
+            }
+
+            var game = currentGame;
             var videoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoTrailer.mp4");
             if (File.Exists(videoPath))
             {
