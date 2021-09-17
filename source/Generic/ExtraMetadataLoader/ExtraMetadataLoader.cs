@@ -28,7 +28,7 @@ namespace ExtraMetadataLoader
             };
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "LogoLoaderControl" },
+                ElementList = new List<string> { "VideoLoaderControl", "LogoLoaderControl" },
                 SourceName = "ExtraMetadataLoader",
             });
 
@@ -44,6 +44,10 @@ namespace ExtraMetadataLoader
             if (args.Name == "LogoLoaderControl")
             {
                 return new LogoLoaderControl(PlayniteApi, settings);
+            }
+            if (args.Name == "VideoLoaderControl")
+            {
+                return new VideoPlayerControl(PlayniteApi, settings);
             }
 
             return null;
