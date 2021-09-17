@@ -11,36 +11,95 @@ namespace ExtraMetadataLoader
 {
     public class ExtraMetadataLoaderSettings : ObservableObject
     {
-        private string option1 = "test default";
-        public string Option1
+        [DontSerialize] 
+        public bool enableVideoPlayer { get; set; } = true;
+        public bool EnableVideoPlayer
         {
-            get => option1;
+            get => enableVideoPlayer;
             set
             {
-                option1 = value;
+                enableVideoPlayer = value;
                 OnPropertyChanged();
             }
         }
-
-        private int option2 = 666;
-        public int Option2
+        [DontSerialize]
+        public bool autoPlayVideos { get; set; } = false;
+        public bool AutoPlayVideos
         {
-            get => option2;
+            get => autoPlayVideos;
             set
             {
-                option2 = value;
+                autoPlayVideos = value;
                 OnPropertyChanged();
             }
         }
-    
-        public bool EnableVideoPlayer { get; set; } = true;
-        public bool AutoPlayVideos { get; set; } = false;
-        public bool StartNoSound { get; set; } = false;
-        public bool UseMicrotrailersDefault { get; set; } = false;
-        public bool FallbackVideoSource { get; set; } = true;
-        public bool ShowControls { get; set; } = true;
-        public double DefaultVolume { get; set; } = 100;
-        public bool EnableLogos { get; set; } = true;
+        [DontSerialize]
+        public bool startNoSound { get; set; } = false;
+        public bool StartNoSound
+        {
+            get => startNoSound;
+            set
+            {
+                startNoSound = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public bool useMicrotrailersDefault { get; set; } = false;
+        public bool UseMicrotrailersDefault
+        {
+            get => useMicrotrailersDefault;
+            set
+            {
+                useMicrotrailersDefault = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public bool fallbackVideoSource { get; set; } = true;
+        public bool FallbackVideoSource
+        {
+            get => fallbackVideoSource;
+            set
+            {
+                fallbackVideoSource = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public bool showControls { get; set; } = true;
+        public bool ShowControls
+        {
+            get => showControls;
+            set
+            {
+                showControls = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public double defaultVolume { get; set; } = 100;
+        public double DefaultVolume
+        {
+            get => defaultVolume;
+            set
+            {
+                defaultVolume = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public bool enableLogos { get; set; } = true;
+        public bool EnableLogos
+        {
+            get => enableLogos;
+            set
+            {
+                enableLogos = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
         public double logoMaxWidth { get; set; } = 600;
         public double LogoMaxWidth
         {
@@ -51,9 +110,39 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
-        public double LogoMaxHeight { get; set; } = 200;
-        public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
-        public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Center;
+        [DontSerialize]
+        public double logoMaxHeight { get; set; } = 200;
+        public double LogoMaxHeight
+        {
+            get => logoMaxHeight;
+            set
+            {
+                logoMaxHeight = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public HorizontalAlignment logoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
+        public HorizontalAlignment LogoHorizontalAlignment
+        {
+            get => logoHorizontalAlignment;
+            set
+            {
+                logoHorizontalAlignment = value;
+                OnPropertyChanged();
+            }
+        }
+        [DontSerialize]
+        public VerticalAlignment logoVerticalAlignment { get; set; } = VerticalAlignment.Center;
+        public VerticalAlignment LogoVerticalAlignment
+        {
+            get => logoVerticalAlignment;
+            set
+            {
+                logoVerticalAlignment = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.

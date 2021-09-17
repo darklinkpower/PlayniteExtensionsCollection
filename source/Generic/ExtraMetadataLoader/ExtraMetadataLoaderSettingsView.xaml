@@ -5,11 +5,51 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <DockPanel>
-            <TextBox Text="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top"/>
-            <Slider Value="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top"
-                Minimum="0" Maximum="1000"/>
-        </DockPanel>
+    <StackPanel Margin="20">
+        <CheckBox Name="EnableVideo" IsChecked="{Binding Settings.EnableVideoPlayer, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel}" Margin="0,0,0,10"/>
+        <StackPanel IsEnabled="{Binding ElementName=EnableVideo, Path=IsChecked}" Margin="40,0,0,10">
+            <CheckBox IsChecked="{Binding Settings.AutoPlayVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel}" Margin="0,0,0,10"/>
+            <CheckBox IsChecked="{Binding Settings.StartNoSound, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel}" Margin="0,0,0,10"/>
+            <CheckBox IsChecked="{Binding Settings.UseMicrotrailersDefault, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel}" Margin="0,0,0,10"/>
+            <CheckBox IsChecked="{Binding Settings.FallbackVideoSource, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel}" Margin="0,0,0,10"/>
+            <!--<CheckBox IsChecked="{Binding Settings.ShowControls}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel}" Margin="0,0,0,10"/>-->
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                <Slider Value="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" VerticalAlignment="Center"
+                        Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                <TextBlock Text="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <CheckBox Name="EnableLogo" IsChecked="{Binding Settings.EnableLogos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel}" Margin="0,0,0,10"/>
+        <StackPanel IsEnabled="{Binding ElementName=EnableLogo, Path=IsChecked}" Margin="40,0,0,0">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <Slider Value="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="300" VerticalAlignment="Center"
+                        Maximum="900" TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                <TextBlock Text="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <Slider Value="{Binding Settings.LogoMaxHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="50" VerticalAlignment="Center"
+                        Maximum="450" TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                <TextBlock Text="{Binding Settings.LogoMaxHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cmbHorizontalLogoAlignment" MinWidth="150" HorizontalAlignment="Left"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding Settings.LogoHorizontalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cmbVerticalLogoAlignment" MinWidth="150" HorizontalAlignment="Left"
+                        DisplayMemberPath="Value"
+                        SelectedValuePath="Key"
+                        SelectedValue="{Binding Settings.LogoVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>
