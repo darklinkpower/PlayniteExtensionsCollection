@@ -50,6 +50,9 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private Uri microVideoPath;
+        private Uri trailerVideoPath;
+        private bool multipleSourcesAvailable = false;
         private Game currentGame;
         private Uri videoSource;
         public Uri VideoSource
@@ -151,7 +154,6 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 MediaPlay();
-                isPlaying = true;
             }, (a) => !IsPlaying && VideoSource != null);
         }
 
@@ -167,7 +169,6 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 MediaPause();
-                isPlaying = false;
             }, (a) => IsPlaying && VideoSource != null);
         }
 
@@ -203,12 +204,23 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 SwitchVideoSource();
-            });
+            }, (a) => multipleSourcesAvailable == true);
         }
 
         void SwitchVideoSource()
         {
             ResetPlayerValues();
+            if (activeVideoType == ActiveVideoType.Trailer)
+            {
+                VideoSource = microVideoPath;
+                activeVideoType = ActiveVideoType.Microtrailer;
+            }
+            else if (activeVideoType == ActiveVideoType.Microtrailer)
+            {
+                VideoSource = trailerVideoPath;
+                activeVideoType = ActiveVideoType.Trailer;
+            }
+
             useMicrovideosSource = !useMicrovideosSource;
             playingContextChanged();
         }
@@ -244,10 +256,8 @@ namespace ExtraMetadataLoader
 
         private void ResetPlayerValues()
         {
-
-            VideoSource = null;
+            VideoSource = null; 
             IsPlaying = false;
-            activeVideoType = ActiveVideoType.None;
             timelineSlider.Value = 0;
             playbackProgressBar.Value = 0;
             PlaybackTimeProgress = "00:00";
@@ -257,6 +267,14 @@ namespace ExtraMetadataLoader
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             ResetPlayerValues();
+            activeVideoType = ActiveVideoType.None;
+            SettingsModel.Settings.IsAnyVideoAvailable = false;
+            SettingsModel.Settings.IsTrailerAvailable = false;
+            SettingsModel.Settings.IsMicrotrailerAvailable = false;
+            microVideoPath = null;
+            trailerVideoPath = null;
+            multipleSourcesAvailable = false;
+
             currentGame = null;
             if (!SettingsModel.Settings.EnableVideoPlayer)
             {
@@ -267,13 +285,13 @@ namespace ExtraMetadataLoader
             if (newContext != null)
             {
                 currentGame = newContext;
+                SetTrailerPath(currentGame);
                 playingContextChanged();
             }
         }
 
         public void playingContextChanged()
         {
-            SetTrailerPath(currentGame);
             if (videoSource == null)
             {
                 ControlVisibility = Visibility.Collapsed;
@@ -297,30 +315,50 @@ namespace ExtraMetadataLoader
         public void SetTrailerPath(Game game)
         {
             var videoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoTrailer.mp4");
+            if (File.Exists(videoPath))
+            {
+                SettingsModel.Settings.IsAnyVideoAvailable = true;
+                SettingsModel.Settings.IsTrailerAvailable = true;
+                trailerVideoPath = new Uri(videoPath);
+            }
+
             var videoMicroPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoMicrotrailer.mp4");
+            if (File.Exists(videoMicroPath))
+            {
+                SettingsModel.Settings.IsAnyVideoAvailable = true;
+                SettingsModel.Settings.IsMicrotrailerAvailable = true;
+                microVideoPath = new Uri(videoMicroPath);
+            }
+
+            if (trailerVideoPath != null && microVideoPath != null)
+            {
+                multipleSourcesAvailable = true;
+            }
+
+
             if (useMicrovideosSource)
             {
-                if (File.Exists(videoMicroPath))
+                if (microVideoPath != null)
                 {
-                    VideoSource = new Uri(videoMicroPath);
+                    VideoSource = microVideoPath;
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
-                else if (File.Exists(videoPath) && SettingsModel.Settings.FallbackVideoSource)
+                else if (trailerVideoPath != null && SettingsModel.Settings.FallbackVideoSource)
                 {
-                    VideoSource = new Uri(videoPath);
+                    VideoSource = trailerVideoPath;
                     activeVideoType = ActiveVideoType.Trailer;
                 }
             }
             else
             {
-                if (File.Exists(videoPath))
+                if (trailerVideoPath != null)
                 {
-                    VideoSource = new Uri(videoPath);
+                    VideoSource = trailerVideoPath;
                     activeVideoType = ActiveVideoType.Trailer;
                 }
-                else if (File.Exists(videoMicroPath) && SettingsModel.Settings.FallbackVideoSource)
+                else if (microVideoPath != null && SettingsModel.Settings.FallbackVideoSource)
                 {
-                    VideoSource = new Uri(videoMicroPath);
+                    VideoSource = microVideoPath;
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
             }
