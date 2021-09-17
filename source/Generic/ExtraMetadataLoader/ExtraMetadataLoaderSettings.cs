@@ -99,6 +99,31 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private double videoControlsOpacity { get; set; } = 0.3;
+        public double VideoControlsOpacity
+        {
+            get => videoControlsOpacity;
+            set
+            {
+                videoControlsOpacity = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private double videoControlsOpacityMouseOver { get; set; } = 1.0;
+        public double VideoControlsOpacityMouseOver
+        {
+            get => videoControlsOpacityMouseOver;
+            set
+            {
+                videoControlsOpacityMouseOver = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DontSerialize]
         private bool enableLogos { get; set; } = true;
         public bool EnableLogos

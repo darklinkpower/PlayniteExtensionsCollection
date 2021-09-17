@@ -15,6 +15,18 @@
             <CheckBox IsChecked="{Binding Settings.FallbackVideoSource, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel}" Margin="0,0,0,10"/>
             <!--<CheckBox IsChecked="{Binding Settings.ShowControls}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel}" Margin="0,0,0,10"/>-->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                <Slider Value="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.0" Maximum="1.0" VerticalAlignment="Center"
+                        TickFrequency=".05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                <TextBlock Text="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                <Slider Value="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.1" Maximum="1.0" VerticalAlignment="Center"
+                        TickFrequency=".05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                <TextBlock Text="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
                 <Slider Value="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" VerticalAlignment="Center"
                         Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
