@@ -2,15 +2,22 @@
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace SimplePlayer
 {
-    public class SimplePlayerSettings : ObservableObject
+    public class SimplePlayerSettings
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         public bool EnableVideoPlayer { get; set; } = true;
         public bool AutoPlayVideos { get; set; } = false;
