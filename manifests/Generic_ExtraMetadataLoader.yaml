@@ -6,3 +6,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_0.pext
     Changelog:
     - Initial release
+  - Version: 1.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_1.pext
+    Changelog:
+    - Updated localizations
+    - Fix videos starting playing at second 1 when repeating
