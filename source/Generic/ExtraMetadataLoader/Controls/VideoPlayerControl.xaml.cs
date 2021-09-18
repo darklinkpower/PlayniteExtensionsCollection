@@ -39,17 +39,6 @@ namespace ExtraMetadataLoader
         private bool useMicrovideosSource;
         private ActiveVideoType activeVideoType;
         private bool isDragging;
-        private bool isPlaying = false;
-        public bool IsPlaying
-        {
-            get => isPlaying;
-            set
-            {
-                isPlaying = value;
-                OnPropertyChanged();
-            }
-        }
-
         private Uri microVideoPath;
         private Uri trailerVideoPath;
         private bool multipleSourcesAvailable = false;
@@ -154,14 +143,14 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 MediaPlay();
-            }, (a) => !IsPlaying && VideoSource != null);
+            }, (a) => !SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
         }
 
         void MediaPlay()
         {
             player.Play();
             timer.Start();
-            IsPlaying = true;
+            SettingsModel.Settings.IsVideoPlaying = true;
         }
 
         public RelayCommand<object> VideoPauseCommand
@@ -169,14 +158,14 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 MediaPause();
-            }, (a) => IsPlaying && VideoSource != null);
+            }, (a) => SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
         }
 
         void MediaPause()
         {
             player.Pause();
             timer.Stop();
-            IsPlaying = false;
+            SettingsModel.Settings.IsVideoPlaying = false;
         }
 
         public RelayCommand<object> VideoMuteCommand
@@ -213,20 +202,19 @@ namespace ExtraMetadataLoader
             var sourceSwitched = false;
             ResetPlayerValues();
 
-            
-
             // Paths need to be revaluated in case videos were deleted since video playing started
             UpdateGameVideoSources();
             if (activeVideoTypeSender == ActiveVideoType.Trailer && microVideoPath != null)
             {
                 VideoSource = microVideoPath;
                 activeVideoType = ActiveVideoType.Microtrailer;
-                
+                sourceSwitched = true;
             }
             else if (activeVideoTypeSender == ActiveVideoType.Microtrailer && trailerVideoPath != null)
             {
                 VideoSource = trailerVideoPath;
                 activeVideoType = ActiveVideoType.Trailer;
+                sourceSwitched = true;
             }
 
             if (sourceSwitched)
@@ -261,14 +249,14 @@ namespace ExtraMetadataLoader
             {
                 player.Stop();
                 timer.Stop();
-                IsPlaying = false;
+                SettingsModel.Settings.IsVideoPlaying = false;
             }
         }
 
         private void ResetPlayerValues()
         {
-            VideoSource = null; 
-            IsPlaying = false;
+            VideoSource = null;
+            SettingsModel.Settings.IsVideoPlaying = false;
             timelineSlider.Value = 0;
             playbackProgressBar.Value = 0;
             PlaybackTimeProgress = "00:00";
@@ -286,38 +274,38 @@ namespace ExtraMetadataLoader
         {
             ResetPlayerValues();
             currentGame = null;
-            if (!SettingsModel.Settings.EnableVideoPlayer)
-            {
-                ControlVisibility = Visibility.Collapsed;
-                return;
-            }
-
-            if (newContext != null)
+            if (SettingsModel.Settings.EnableVideoPlayer && newContext != null)
             {
                 currentGame = newContext;
                 UpdateGameVideoSources();
                 playingContextChanged();
+                return;
             }
+
+            ControlVisibility = Visibility.Collapsed;
+            SettingsModel.Settings.NewContextVideoAvailable = false;
         }
 
         public void playingContextChanged()
         {
             if (videoSource == null)
             {
+                SettingsModel.Settings.NewContextVideoAvailable = false;
                 ControlVisibility = Visibility.Collapsed;
                 return;
             }
 
+            SettingsModel.Settings.NewContextVideoAvailable = true;
             if (SettingsModel.Settings.AutoPlayVideos)
             {
                 MediaPlay();
-                isPlaying = true;
             }
             else
             {
                 //This is to get the first frame of the video
                 player.Play();
                 player.Pause();
+                SettingsModel.Settings.IsVideoPlaying = false;
             }
             ControlVisibility = Visibility.Visible;
         }

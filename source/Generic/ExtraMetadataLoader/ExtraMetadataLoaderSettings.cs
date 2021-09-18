@@ -242,6 +242,32 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool newContextVideoAvailable { get; set; } = false;
+        [DontSerialize]
+        public bool NewContextVideoAvailable
+        {
+            get => newContextVideoAvailable;
+            set
+            {
+                newContextVideoAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool isVideoPlaying { get; set; } = false;
+        [DontSerialize]
+        public bool IsVideoPlaying
+        {
+            get => isVideoPlaying;
+            set
+            {
+                isVideoPlaying = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings
