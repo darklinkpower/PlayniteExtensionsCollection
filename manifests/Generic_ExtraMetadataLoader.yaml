@@ -19,3 +19,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_2.pext
     Changelog:
     - Fix icons in buttons of video player not showing if font is not installed
+  - Version: 1.3
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_3.pext
+    Changelog:
+    - Add NewContextVideoAvailable and IsPlaying settings path available for theme developers
+    - Fix source switch button changes not applying when selecting a new game
