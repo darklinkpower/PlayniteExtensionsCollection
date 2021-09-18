@@ -195,7 +195,7 @@ namespace ExtraMetadataLoader
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
-        private bool isLogoAvailable { get; set; } = true;
+        private bool isLogoAvailable { get; set; } = false;
         [DontSerialize]
         public bool IsLogoAvailable
         {

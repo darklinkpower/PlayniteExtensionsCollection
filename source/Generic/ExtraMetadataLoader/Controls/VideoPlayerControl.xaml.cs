@@ -254,7 +254,7 @@ namespace ExtraMetadataLoader
             if (activeVideoType == ActiveVideoType.Trailer && SettingsModel.Settings.RepeatTrailerVideos
                 || activeVideoType == ActiveVideoType.Microtrailer)
             {
-                player.Position = new TimeSpan(0, 0, 1);
+                player.Position = new TimeSpan(0, 0, 0);
                 MediaPlay();
             }
             else
@@ -316,8 +316,8 @@ namespace ExtraMetadataLoader
             else
             {
                 //This is to get the first frame of the video
-                MediaPlay();
-                MediaPause();
+                player.Play();
+                player.Pause();
             }
             ControlVisibility = Visibility.Visible;
         }
