@@ -19,3 +19,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_2.pext
     Changelog:
     - Updated localizations
+  - Version: 2.3
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_3.pext
+    Changelog:
+    - Updated localizations
+    - Fix localization file not loading due to duplicate localization key

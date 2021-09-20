@@ -26,3 +26,9 @@ Packages:
     Changelog:
     - Add NewContextVideoAvailable and IsPlaying settings path available for theme developers
     - Fix source switch button changes not applying when selecting a new game
+  - Version: 1.4
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_4.pext
+    Changelog:
+    - Updated localizations
