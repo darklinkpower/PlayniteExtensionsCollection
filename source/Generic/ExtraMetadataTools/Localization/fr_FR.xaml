@@ -5,24 +5,24 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription">Télécharger les logos des jeux sélectionnés depuis SteamGridDB</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetSgdbApiKeyDescription">Définir la clé API SteamGridDB</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Télécharger les logos des jeux sélectionnés depuis Google</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Add logo from local file of selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetUrlLogoDescription">Add logo from url of selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Convert icons to custom logos asset</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Ajouter le logo du jeu depuis un fichier local</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetUrlLogoDescription">Ajouter le logo du jeu depuis une url</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemConvertIconsToLogosDescription">Convertir les icônes en logos personnalisés</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemoveLogosSelectedGamesDescription">Supprimer le logo des jeux sélectionnés</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeThemesDirectoryDescription">Ouvrir le répertoire des thèmes</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Définir la photo de profil</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Définir la musique de fond</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Définir la vidéo de fond</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Detect and delete unused data</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Done.
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Détecter et supprimer les données inutilisées</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Terminé.
 
-Deleted {0} unused items.</sys:String>
+Suppression de {0} éléments inutilisés.</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">La configuration des métadonnées supplémentaires pour le thème &quot;{0}&quot; a été mise à jour.
 Veuillez redémarrer Playnite pour que les modifications prennent effet.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">More than one game is selected, please select only one game.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Added logo file to &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbApiKeyErrorMessage">Couldn't get SteamGridDB API Key. Please configure it before continuing.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Plusieurs jeux sélectionnés, veuillez en sélectionner un seul.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Logo ajouté pour &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbApiKeyErrorMessage">Impossible de récupérer la clé API SteamGridDB. Veuillez la configurer avant de continuer.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage">{0} logos téléchargés depuis SteamGridDB.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Erreur lors du téléchargement du fichier à partir de l'url &quot;{0}&quot;. Erreur: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_GetSteamLogosResultsMessage">Logo téléchargé pour {0} jeu(s).</sys:String>
