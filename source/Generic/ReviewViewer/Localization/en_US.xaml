@@ -17,7 +17,6 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_OpenReview">Open review</sys:String>
     <sys:String x:Key="LOCReview_Viewer_WatchReviewVideo">Watch review video</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SteamIdNotFound" xml:space="preserve">Steam app Id for {0} could not be obtained.
 You can add a link to the game with the Steam store link to detect it.</sys:String>
 </ResourceDictionary>
