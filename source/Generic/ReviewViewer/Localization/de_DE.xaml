@@ -18,7 +18,6 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_OpenReview">Öffne Review</sys:String>
     <sys:String x:Key="LOCReview_Viewer_WatchReviewVideo">Schaue Review-Video</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SteamIdNotFound" xml:space="preserve">Steam-App-Id für {0} konnte nicht abgerufen werden.
 Du kannst einen Link zum Spiel mit dem Steam-Shop-Link hinzufügen, um ihn zu finden.</sys:String>
 </ResourceDictionary>
