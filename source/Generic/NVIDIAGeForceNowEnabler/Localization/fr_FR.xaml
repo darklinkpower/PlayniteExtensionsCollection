@@ -4,23 +4,23 @@
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Retirer l'action Geforce NOW de tous les jeux</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Mise à jour des jeux disponibles sur NVIDIA GeForce NOW...</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW enabled games in library: {0}
+	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW activé pour {0} jeux dans la bibliothèque
 
-Added &quot;{1}&quot; feature to {2} games.
-Removed &quot;{3}&quot; feature from {4} games.</sys:String>
+Ajout de la fonction &quot;{1}&quot; à {2} jeux.
+Retrait de la fonction &quot;{3}&quot; à {4} jeux.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults2Message" xml:space="preserve">
 	
-Play Action added to {0} games.
-Play Action removed from {1} games.</sys:String>
+Action Jouer ajoutée à {0} jeux.
+Action Jouer supprimée de {1} jeux.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Set {0} games as Installed.
-Set {1} games as uninstalled.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Game Action removed from {0} games</sys:String>
+Définir {0} jeux comme installés.
+Définir {1} jeux comme désinstallés.</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Action de jeu supprimée de {0} jeux</sys:String>
 	
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Update enabled status of games on Playnite startup</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Update enabled status of games on library update</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdatePlayActionsSetting">Update Play actions when updating enabled status of games</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_SetActionsAsPlayActionSetting">Set added Actions as Play Action</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Set enabled games as installed when updating enabled status of games</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Mettre à jour le statut des jeux au démarrage de Playnite</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Mettre à jour le statut des jeux lors de la mise à jour de la bibliothèque</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_UpdatePlayActionsSetting">Mettre à jour les actions Jouer lors de la mise à jour du statut des jeux</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_SetActionsAsPlayActionSetting">Définir les actions ajoutées comme action Jouer</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Définir les jeux activés comme installés lors de la mise à jour de l'état des jeux</sys:String>
 </ResourceDictionary>
