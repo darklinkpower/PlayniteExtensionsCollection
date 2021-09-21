@@ -21,7 +21,7 @@ namespace ReviewViewer
 
         private ReviewViewerSettingsViewModel settings { get; set; }
 
-        public override Guid Id { get; } = Guid.Parse("d9abd792-3a46-4b08-92be-dd411e1b471c");
+        public override Guid Id { get; } = Guid.Parse("ca24e37a-76d9-49bf-89ab-d3cba4a54bd1");
 
         public ReviewViewer(IPlayniteAPI api) : base(api)
         {

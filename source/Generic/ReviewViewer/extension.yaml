@@ -1,7 +1,14 @@
-﻿Id: ReviewViewer_d9abd792-3a46-4b08-92be-dd411e1b471c
-Name: Generic Plugin
-Author: John Doe
-Version: 1.0
+﻿Id: Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1
+Name: Review Viewer
+Author: darklinkpower
+Version: 2.3
 Module: ReviewViewer.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-550.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
