@@ -13,7 +13,9 @@
 
     <sys:String x:Key="LOCReview_Viewer_ReviewsSource">Reviews source:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsType">Reviews type:</sys:String>
-
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypeAll">All</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypePositive">Positive</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">Negative</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Review</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommended</sys:String>

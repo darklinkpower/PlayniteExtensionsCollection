@@ -92,25 +92,32 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="170">
             <TextBlock Text="{Binding SelectedReview.ReviewReview}" TextWrapping="Wrap"/>
         </ScrollViewer>
-        <Grid Name="SummaryGrid" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_AverageUserScore}" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CalculatedScore}" Margin="10,0,0,0" />
-            <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_TotalUserReviews}" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Reviews.QuerySummary.TotalReviews}" Margin="10,0,0,0" />
-            <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_PositiveUserReviews}" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Reviews.QuerySummary.TotalPositive}" Margin="10,0,0,0" />
-            <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_NegativeUserReviews}" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Reviews.QuerySummary.TotalNegative}" Margin="10,0,0,0" />
-        </Grid>
+        <DockPanel>
+            <StackPanel>
+                <Button Content="{DynamicResource LOCReview_Viewer_ReviewTypeAll}" MinWidth="60" Margin="5" Command="{Binding SwitchAllReviewsCommand}"/>
+                <Button Content="{DynamicResource LOCReview_Viewer_ReviewTypePositive}" MinWidth="60" Margin="5" Command="{Binding SwitchPositiveReviewsCommand}"/>
+                <Button Content="{DynamicResource LOCReview_Viewer_ReviewTypeNegative}" MinWidth="60" Margin="5" Command="{Binding SwitchNegativeReviewsCommand}"/>
+            </StackPanel>
+            <Grid Name="SummaryGrid" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_AverageUserScore}" />
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CalculatedScore}" Margin="10,0,0,0" />
+                <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_TotalUserReviews}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Reviews.QuerySummary.TotalReviews}" Margin="10,0,0,0" />
+                <Label Grid.Row="2" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_PositiveUserReviews}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Reviews.QuerySummary.TotalPositive}" Margin="10,0,0,0" />
+                <Label Grid.Row="3" Grid.Column="0" Content="{DynamicResource LOCReview_Viewer_NegativeUserReviews}" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Reviews.QuerySummary.TotalNegative}" Margin="10,0,0,0" />
+            </Grid>
+        </DockPanel>
     </StackPanel>
 </PluginUserControl>

@@ -38,13 +38,30 @@ namespace ReviewViewer.Controls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        private string currentSteamId;
+
+        public enum ReviewSearchType { All, Positive, Negative };
+        private ReviewSearchType selectedReviewSearch = ReviewSearchType.All;
+        public ReviewSearchType SelectedReviewSearch
+        {
+            get => selectedReviewSearch;
+            set
+            {
+                selectedReviewSearch = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ILogger logger = LogManager.GetLogger();
         private HttpClient client;
         private string pluginUserDataPath;
 
-        string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language=english&review_type={1}&playtime_filter_min=0&filter=summary";
+        string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
+        private string searchLanguage;
 
         private bool multipleReviewsAvailable = false;
+
+        public Dictionary<string, string> ReviewTypesSource;
 
         private ReviewsResponse reviews;
         public ReviewsResponse Reviews
@@ -171,6 +188,51 @@ namespace ReviewViewer.Controls
             SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
         }
 
+        public RelayCommand<object> SwitchAllReviewsCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SwitchAllReviews();
+            }, (a) => selectedReviewSearch != ReviewSearchType.All);
+        }
+
+        void SwitchAllReviews()
+        {
+            selectedReviewSearch = ReviewSearchType.All;
+            SummaryGrid.Visibility = Visibility.Visible;
+            UpdateReviewsContext();
+        }
+
+        public RelayCommand<object> SwitchPositiveReviewsCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SwitchPositiveReviews();
+            }, (a) => selectedReviewSearch != ReviewSearchType.Positive);
+        }
+
+        void SwitchPositiveReviews()
+        {
+            selectedReviewSearch = ReviewSearchType.Positive;
+            SummaryGrid.Visibility = Visibility.Collapsed;
+            UpdateReviewsContext();
+        }
+
+        public RelayCommand<object> SwitchNegativeReviewsCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SwitchNegativeReviews();
+            }, (a) => selectedReviewSearch != ReviewSearchType.Negative);
+        }
+
+        void SwitchNegativeReviews()
+        {
+            selectedReviewSearch = ReviewSearchType.Negative;
+            SummaryGrid.Visibility = Visibility.Collapsed;
+            UpdateReviewsContext();
+        }
+
         public ReviewsControl(string pluginUserDataPath)
         {
             InitializeComponent();
@@ -178,6 +240,8 @@ namespace ReviewViewer.Controls
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             this.pluginUserDataPath = pluginUserDataPath;
+            searchLanguage = "english";
+            selectedReviewSearch = ReviewSearchType.All;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -191,16 +255,30 @@ namespace ReviewViewer.Controls
                 return;
             }
 
-            UpdateReviewsContext(newContext.GameId.ToString());
+            currentSteamId = newContext.GameId;
+            UpdateReviewsContext();
         }
 
-        public void UpdateReviewsContext(string steamGameId)
+        public void UpdateReviewsContext()
         {
-            var reviewType = "all";
-            var gameDataPath = Path.Combine(pluginUserDataPath, $"{steamGameId}_{reviewType}.json");
+            string reviewSearchType;
+            switch (selectedReviewSearch)
+            {
+                case ReviewSearchType.Positive:
+                    reviewSearchType = "positive";
+                    break;
+                case ReviewSearchType.Negative:
+                    reviewSearchType = "negative";
+                    break;
+                default:
+                    reviewSearchType = "all";
+                    break;
+            }
+
+            var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentSteamId}_{reviewSearchType}.json");
             if (!File.Exists(gameDataPath))
             {
-                var uri = string.Format(reviewsApiMask, steamGameId, reviewType);
+                var uri = string.Format(reviewsApiMask, currentSteamId, searchLanguage, reviewSearchType);
                 DownloadFile(uri, gameDataPath).GetAwaiter().GetResult();
                 if (!File.Exists(gameDataPath))
                 {
