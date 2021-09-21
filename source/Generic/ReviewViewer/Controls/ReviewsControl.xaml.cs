@@ -39,6 +39,7 @@ namespace ReviewViewer.Controls
         }
 
         private string currentSteamId;
+        private Game currentGame;
 
         public enum ReviewSearchType { All, Positive, Negative };
         private ReviewSearchType selectedReviewSearch = ReviewSearchType.All;
@@ -255,7 +256,8 @@ namespace ReviewViewer.Controls
                 return;
             }
 
-            currentSteamId = newContext.GameId;
+            currentGame = newContext;
+            currentSteamId = currentGame.GameId;
             UpdateReviewsContext();
         }
 
@@ -275,7 +277,7 @@ namespace ReviewViewer.Controls
                     break;
             }
 
-            var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentSteamId}_{reviewSearchType}.json");
+            var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
             if (!File.Exists(gameDataPath))
             {
                 var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
