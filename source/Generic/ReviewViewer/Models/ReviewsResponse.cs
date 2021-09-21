@@ -59,7 +59,7 @@ namespace ReviewViewer.Models
         public Author Author { get; set; }
 
         [JsonProperty("language")]
-        public Language Language { get; set; }
+        public string Language { get; set; }
 
         [JsonProperty("review")]
         public string ReviewReview { get; set; }

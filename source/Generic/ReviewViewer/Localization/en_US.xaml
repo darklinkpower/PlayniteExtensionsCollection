@@ -5,6 +5,7 @@
     <sys:String x:Key="LOCReview_Viewer_GenericFileDownloadErrorMessage">Error downloading file from url "{0}". Error: {1}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NoVideoFoundMessage">No video found in Youtube search.</sys:String>
 
+    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Use language used by Playnite to search for reviews if it's available on Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Total user reviews</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive user reviews</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative user reviews</sys:String>

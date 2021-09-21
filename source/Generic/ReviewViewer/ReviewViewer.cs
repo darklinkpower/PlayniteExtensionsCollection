@@ -45,14 +45,19 @@ namespace ReviewViewer
             });
 
             pluginInstallationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            steamApiLanguage = GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
+
+            steamApiLanguage = "english";
+            if (settings.Settings.UseMatchingSteamApiLang)
+            {
+                steamApiLanguage = GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
+            }
         }
 
         public string GetSteamApiMatchingLanguage(string playniteLanguage)
         {
             // From https://partner.steamgames.com/doc/store/localization
 
-            switch (playniteLanguage.ToLower())
+            switch (playniteLanguage)
             {
                 case "en_US":
                     return "english";

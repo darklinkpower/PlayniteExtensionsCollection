@@ -10,8 +10,7 @@ namespace ReviewViewer
 {
     public class ReviewViewerSettings
     {
-        public string Option1 { get; set; } = string.Empty;
-        public bool Option2 { get; set; } = false;
+        public bool UseMatchingSteamApiLang { get; set; } = true;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
