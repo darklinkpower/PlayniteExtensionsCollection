@@ -18,7 +18,6 @@ namespace ReviewViewer
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private string steamApiLanguage;
-        private string pluginInstallationPath;
 
         private ReviewViewerSettingsViewModel settings { get; set; }
 
@@ -43,8 +42,6 @@ namespace ReviewViewer
                 SourceName = "ReviewViewer",
                 SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
             });
-
-            pluginInstallationPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             steamApiLanguage = "english";
             if (settings.Settings.UseMatchingSteamApiLang)

@@ -43,6 +43,19 @@ namespace ReviewViewer.Controls
         private Game currentGame;
 
         public enum ReviewSearchType { All, Positive, Negative };
+
+
+        private Visibility mainPanelVisibility = Visibility.Collapsed;
+        public Visibility MainPanelVisibility
+        {
+            get => mainPanelVisibility;
+            set
+            {
+                mainPanelVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ReviewSearchType selectedReviewSearch = ReviewSearchType.All;
         public ReviewSearchType SelectedReviewSearch
         {
@@ -290,6 +303,7 @@ namespace ReviewViewer.Controls
                         GetSteamIdFromLinks(currentGame);
                         if (currentSteamId == null)
                         {
+                            MainPanelVisibility = Visibility.Collapsed;
                             return;
                         }
                     }
@@ -303,6 +317,7 @@ namespace ReviewViewer.Controls
                 }
             }
 
+            MainPanelVisibility = Visibility.Visible;
             try
             {
                 Reviews = JsonConvert.DeserializeObject<ReviewsResponse>(File.ReadAllText(gameDataPath));
