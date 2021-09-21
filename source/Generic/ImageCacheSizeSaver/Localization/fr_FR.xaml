@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Process Images in Cache</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Lancer Images in Cache</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Sélectionner l'exécutable ImageMagick</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Chemin de l'exécutable Magick sauvegardé</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">L'exécutable Magick est introuvable dans {0}. 
 Veuillez relancer l'extension pour la configurer à l'emplacement correct.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Traitement de l'image terminé. Résultats :
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Traitement des images terminé. Résultats :
 
 Images traitées : {0}
 
 Images dont la taille a été réduite : {1}
 Erreurs : {2}
 
-Taille du cache image avant : {3} Mo
-Taille du cache des images après : {4} Mo</sys:String>
+Taille du cache images avant : {3} Mo
+Taille du cache images après : {4} Mo</sys:String>
 </ResourceDictionary>
