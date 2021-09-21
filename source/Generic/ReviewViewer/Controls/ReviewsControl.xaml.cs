@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +38,7 @@ namespace ReviewViewer.Controls
             
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
+        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         private string currentSteamId;
         private Game currentGame;
 
@@ -247,17 +248,14 @@ namespace ReviewViewer.Controls
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
+            currentSteamId = null;
+            multipleReviewsAvailable = false;
             if (newContext == null)
-            {
-                return;
-            }
-            if (newContext.PluginId != Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
             {
                 return;
             }
 
             currentGame = newContext;
-            currentSteamId = currentGame.GameId;
             UpdateReviewsContext();
         }
 
@@ -280,6 +278,23 @@ namespace ReviewViewer.Controls
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
             if (!File.Exists(gameDataPath))
             {
+                
+                if (currentSteamId == null)
+                {
+                    if (currentGame.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
+                    {
+                        currentSteamId = currentGame.GameId;
+                    }
+                    else
+                    {
+                        GetSteamIdFromLinks(currentGame);
+                        if (currentSteamId == null)
+                        {
+                            return;
+                        }
+                    }
+                }
+
                 var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
                 DownloadFile(uri, gameDataPath).GetAwaiter().GetResult();
                 if (!File.Exists(gameDataPath))
@@ -288,11 +303,25 @@ namespace ReviewViewer.Controls
                 }
             }
 
-            var reviews = JsonConvert.DeserializeObject<ReviewsResponse>(File.ReadAllText(gameDataPath));
-            Reviews = reviews;
-            if (Reviews.QuerySummary.NumReviews == 0)
+            try
             {
-                return;
+                Reviews = JsonConvert.DeserializeObject<ReviewsResponse>(File.ReadAllText(gameDataPath));
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error deserializing file {gameDataPath}. Error: {e.Message}.");
+            }
+            
+            try
+            {
+                if (Reviews.QuerySummary.NumReviews == 0)
+                {
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error obtaining reviews number for file {gameDataPath}. Error: {e.Message}.");
             }
 
             multipleReviewsAvailable = false;
@@ -304,6 +333,24 @@ namespace ReviewViewer.Controls
             SelectedReviewIndex = 0;
             SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
             CalculateUserScore();
+        }
+
+        private void GetSteamIdFromLinks(Game game)
+        {
+            if (game.Links == null)
+            {
+                return;
+            }
+
+            foreach (Link gameLink in game.Links)
+            {
+                var linkMatch = steamLinkRegex.Match(gameLink.Url);
+                if (linkMatch.Success)
+                {
+                    currentSteamId = linkMatch.Groups[1].Value;
+                    return;
+                }
+            }
         }
 
         private void CalculateUserScore()
