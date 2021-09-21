@@ -1,0 +1,7 @@
+﻿Id: ReviewViewer_d9abd792-3a46-4b08-92be-dd411e1b471c
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: ReviewViewer.dll
+Type: GenericPlugin
+Icon: icon.png
