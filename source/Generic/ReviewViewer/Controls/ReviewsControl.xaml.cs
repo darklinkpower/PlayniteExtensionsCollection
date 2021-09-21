@@ -57,7 +57,7 @@ namespace ReviewViewer.Controls
         private string pluginUserDataPath;
 
         string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
-        private string searchLanguage;
+        private string steamApiLanguage;
 
         private bool multipleReviewsAvailable = false;
 
@@ -233,14 +233,14 @@ namespace ReviewViewer.Controls
             UpdateReviewsContext();
         }
 
-        public ReviewsControl(string pluginUserDataPath)
+        public ReviewsControl(string pluginUserDataPath, string steamApiLanguage)
         {
             InitializeComponent();
             DataContext = this;
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             this.pluginUserDataPath = pluginUserDataPath;
-            searchLanguage = "english";
+            this.steamApiLanguage = steamApiLanguage;
             selectedReviewSearch = ReviewSearchType.All;
         }
 
@@ -278,7 +278,7 @@ namespace ReviewViewer.Controls
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentSteamId}_{reviewSearchType}.json");
             if (!File.Exists(gameDataPath))
             {
-                var uri = string.Format(reviewsApiMask, currentSteamId, searchLanguage, reviewSearchType);
+                var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
                 DownloadFile(uri, gameDataPath).GetAwaiter().GetResult();
                 if (!File.Exists(gameDataPath))
                 {
