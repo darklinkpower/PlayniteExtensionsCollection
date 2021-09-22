@@ -7,9 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ReviewViewer
@@ -17,6 +21,7 @@ namespace ReviewViewer
     public class ReviewViewer : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         private string steamApiLanguage;
 
         private ReviewViewerSettingsViewModel settings { get; set; }
@@ -144,5 +149,111 @@ namespace ReviewViewer
         {
             return new ReviewViewerSettingsView();
         }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            return new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCReview_Viewer_MenuItemUpdateDataDescription"),
+                    MenuSection = "Review Viewer",
+                    Action = a => {
+                       RefreshGameData(args.Games);
+                    }
+                }
+            };
+        }
+
+        public void RefreshGameData(List<Game> games)
+        {
+            var userOverwriteChoice = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogOverwriteChoiceMessage"), "Review Viewer", MessageBoxButton.YesNo);
+            var reviewSearchTypes = new string[] { "all", "positive", "negative" };
+            var pluginDataPath = GetPluginUserDataPath();
+            var steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
+            var reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Clear();
+                    httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                    httpClient.Timeout = TimeSpan.FromMilliseconds(2000);
+                    foreach (Game game in games)
+                    {
+                        string steamId;
+                        if (game.PluginId == steamPluginId)
+                        {
+                            steamId = game.GameId;
+                        }
+                        else
+                        {
+                            steamId = GetSteamIdFromLinks(game);
+                            if (steamId == null)
+                            {
+                                continue;
+                            }
+                        }
+
+                        foreach (string reviewSearchType in reviewSearchTypes)
+                        {
+                            var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_{reviewSearchType}.json");
+                            if (File.Exists(gameDataPath))
+                            {
+                                if (userOverwriteChoice != MessageBoxResult.Yes)
+                                {
+                                    continue;
+                                }
+                            }
+                            var uri = string.Format(reviewsApiMask, steamId, steamApiLanguage, reviewSearchType);
+
+                            // To prevent being rate limited
+                            Thread.Sleep(200);
+                            DownloadFile(httpClient, uri, gameDataPath).GetAwaiter().GetResult();
+                        }
+                    }
+                }
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCReview_Viewer_DialogDataUpdateProgressMessage")));
+
+            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LLOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Review Viewer");
+        }
+
+        public async Task DownloadFile(HttpClient client, string requestUri, string fileToWriteTo)
+        {
+            try
+            {
+                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
+                {
+                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
+                    {
+                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error during file download, url {requestUri}. Error: {e.Message}.");
+            }
+        }
+
+        private string GetSteamIdFromLinks(Game game)
+        {
+            if (game.Links == null)
+            {
+                return null;
+            }
+
+            foreach (Link gameLink in game.Links)
+            {
+                var linkMatch = steamLinkRegex.Match(gameLink.Url);
+                if (linkMatch.Success)
+                {
+                    return linkMatch.Groups[1].Value;
+                }
+            }
+            return null;
+        }
+
     }
 }

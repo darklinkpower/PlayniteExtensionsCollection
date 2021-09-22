@@ -254,6 +254,7 @@ namespace ReviewViewer.Controls
             DataContext = this;
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.Timeout = TimeSpan.FromMilliseconds(2000);
             this.pluginUserDataPath = pluginUserDataPath;
             this.steamApiLanguage = steamApiLanguage;
             selectedReviewSearch = ReviewSearchType.All;
