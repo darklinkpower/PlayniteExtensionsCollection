@@ -216,7 +216,10 @@ namespace ReviewViewer.Controls
         void SwitchAllReviews()
         {
             selectedReviewSearch = ReviewSearchType.All;
-            SummaryGrid.Visibility = Visibility.Visible;
+            if (mainPanelVisibility == Visibility.Visible)
+            {
+                SummaryGrid.Visibility = Visibility.Visible;
+            }
             UpdateReviewsContext();
         }
 
@@ -297,6 +300,7 @@ namespace ReviewViewer.Controls
             {
                 if (!SettingsModel.Settings.DownloadDataOnGameSelection)
                 {
+                    MainPanelVisibility = Visibility.Collapsed;
                     return;
                 }
                 
