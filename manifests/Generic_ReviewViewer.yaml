@@ -33,3 +33,9 @@ Packages:
     Changelog:
     - Rewritten as plugin extension. Work in progress and certain previous available features missing.
     - Added control to display steam reviews in compatible themes
+  - Version: 2.5
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-22
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta4/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_5.pext
+    Changelog:
+    - Updated extension icon
