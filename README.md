@@ -1,3 +1,4 @@
+[![Crowdin](https://badges.crowdin.net/darklinkpower-playnite-extensi/localized.svg)](https://crowdin.com/project/darklinkpower-playnite-extensi)
 # Playnite Extensions Collection
 
 Collection of extensions made for [Playnite](https://github.com/JosefNemec/Playnite).
