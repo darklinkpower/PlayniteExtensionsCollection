@@ -34,3 +34,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/Installation_Status_Updater_2_3.pext
     Changelog:
     - Updated localizations
+  - Version: 2.4
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-22
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta4/Installation_Status_Updater_2_4.pext
+    Changelog:
+    - Updated localizations

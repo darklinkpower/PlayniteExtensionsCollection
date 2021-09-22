@@ -1,7 +1,7 @@
 Id: Game_Media_Tools
 Name: Game Media Tools
 Author: darklinkpower
-Version: 2.1
+Version: 2.2
 Module: GameMediaTools.psm1
 Type: Script
 Icon: icon.png

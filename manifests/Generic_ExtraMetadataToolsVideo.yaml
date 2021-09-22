@@ -15,3 +15,9 @@ Packages:
       - Updated localizations
       - Fix youtube video downloads failing if user paths contained spaces
       - Add channel name to Youtube search
+  - Version: 2.2
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-22
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta4/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_2.pext
+    Changelog:
+    - Updated localizations
