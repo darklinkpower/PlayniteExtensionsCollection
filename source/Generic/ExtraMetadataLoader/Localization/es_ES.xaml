@@ -17,6 +17,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Alineación horizontal de los logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Alineación vertical de los logos</sys:String>
 
+    <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
+
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Izquierda</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Centro</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Derecha</sys:String>
