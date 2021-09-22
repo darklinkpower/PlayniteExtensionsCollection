@@ -33,6 +33,18 @@ namespace ReviewViewer
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private double descriptionHeight { get; set; } = 180;
+        public double DescriptionHeight
+        {
+            get => descriptionHeight;
+            set
+            {
+                descriptionHeight = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ReviewViewerSettingsViewModel : ObservableObject, ISettings

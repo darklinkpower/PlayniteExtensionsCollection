@@ -11,6 +11,7 @@
 
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Use language used by Playnite to search for reviews if it's available on Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Download review data on game selection if it's missing</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Description height</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Total user reviews</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive user reviews</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative user reviews</sys:String>

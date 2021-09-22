@@ -7,8 +7,14 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
         <CheckBox IsChecked="{Binding Settings.UseMatchingSteamApiLang}"
-                  Content="{DynamicResource LOCReview_Viewer_SettingUseMatchingSteamApiLang}" Margin="0,10,0,0"/>
+                  Content="{DynamicResource LOCReview_Viewer_SettingUseMatchingSteamApiLang}" Margin="0,0,0,10"/>
         <CheckBox IsChecked="{Binding Settings.DownloadDataOnGameSelection}"
-                  Content="{DynamicResource LOCReview_Viewer_SettingDownloadOnGameSelectionDescription}"/>
+                  Content="{DynamicResource LOCReview_Viewer_SettingDownloadOnGameSelectionDescription}" Margin="0,0,0,10"/>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Label Content="{DynamicResource LOCReview_Viewer_SettingDescriptionHeightDescription}" Margin="0,0,0,0" VerticalAlignment="Center" />
+            <Slider Value="{Binding Settings.DescriptionHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="50" Maximum="400" VerticalAlignment="Center"
+                        TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+            <TextBlock Text="{Binding Settings.DescriptionHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

@@ -40,7 +40,7 @@ namespace ReviewViewer.Controls
         }
         private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         IPlayniteAPI PlayniteApi;
-        private ReviewViewerSettingsViewModel SettingsModel { get; }
+        public ReviewViewerSettingsViewModel SettingsModel { get; }
         
         private string currentSteamId;
         private Game currentGame;

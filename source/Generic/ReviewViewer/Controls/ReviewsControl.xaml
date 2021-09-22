@@ -88,7 +88,7 @@
                 <Button Name="ButtonNextReview" Background="Transparent" BorderThickness="0" Content="&#xEACA;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
                             Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
             </StackPanel>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="180">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
                 <TextBlock Text="{Binding SelectedReview.ReviewReview}" TextWrapping="Wrap"/>
             </ScrollViewer>
         </StackPanel>
