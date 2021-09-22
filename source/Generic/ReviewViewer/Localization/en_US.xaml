@@ -25,6 +25,7 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">Negative</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Review</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Reviews</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Not recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} hours {1} minutes at review time</sys:String>
