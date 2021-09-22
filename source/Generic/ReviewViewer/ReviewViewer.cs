@@ -134,7 +134,7 @@ namespace ReviewViewer
         {
             if (args.Name == "ReviewsControl")
             {
-                return new ReviewsControl(GetPluginUserDataPath(), steamApiLanguage);
+                return new ReviewsControl(GetPluginUserDataPath(), steamApiLanguage, settings);
             }
 
             return null;

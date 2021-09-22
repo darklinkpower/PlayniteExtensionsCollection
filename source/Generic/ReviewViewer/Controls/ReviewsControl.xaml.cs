@@ -39,6 +39,9 @@ namespace ReviewViewer.Controls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
+        IPlayniteAPI PlayniteApi;
+        private ReviewViewerSettingsViewModel SettingsModel { get; }
+        
         private string currentSteamId;
         private Game currentGame;
 
@@ -110,7 +113,6 @@ namespace ReviewViewer.Controls
                 OnPropertyChanged();
             }
         }
-
 
         private string formattedPlaytime;
         public string FormattedPlaytime
@@ -248,16 +250,17 @@ namespace ReviewViewer.Controls
             UpdateReviewsContext();
         }
 
-        public ReviewsControl(string pluginUserDataPath, string steamApiLanguage)
+        public ReviewsControl(string pluginUserDataPath, string steamApiLanguage, ReviewViewerSettingsViewModel settings)
         {
             InitializeComponent();
-            DataContext = this;
+            SettingsModel = settings;
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             client.Timeout = TimeSpan.FromMilliseconds(2000);
+            selectedReviewSearch = ReviewSearchType.All;
             this.pluginUserDataPath = pluginUserDataPath;
             this.steamApiLanguage = steamApiLanguage;
-            selectedReviewSearch = ReviewSearchType.All;
+            DataContext = this;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -292,6 +295,10 @@ namespace ReviewViewer.Controls
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
             if (!File.Exists(gameDataPath))
             {
+                if (!SettingsModel.Settings.DownloadDataOnGameSelection)
+                {
+                    return;
+                }
                 
                 if (currentSteamId == null)
                 {

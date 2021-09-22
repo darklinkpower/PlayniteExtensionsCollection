@@ -7,6 +7,8 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
         <CheckBox IsChecked="{Binding Settings.UseMatchingSteamApiLang}"
-                  Content="{DynamicResource LOCReview_Viewer_SettingUseMatchingSteamApiLang}"/>
+                  Content="{DynamicResource LOCReview_Viewer_SettingUseMatchingSteamApiLang}" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.DownloadDataOnGameSelection}"
+                  Content="{DynamicResource LOCReview_Viewer_SettingDownloadOnGameSelectionDescription}"/>
     </StackPanel>
 </UserControl>

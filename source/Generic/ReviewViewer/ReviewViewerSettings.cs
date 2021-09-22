@@ -8,14 +8,31 @@ using System.Threading.Tasks;
 
 namespace ReviewViewer
 {
-    public class ReviewViewerSettings
+    public class ReviewViewerSettings : ObservableObject
     {
-        public bool UseMatchingSteamApiLang { get; set; } = true;
-
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
+        private bool useMatchingSteamApiLang { get; set; } = true;
+        public bool UseMatchingSteamApiLang
+        {
+            get => useMatchingSteamApiLang;
+            set
+            {
+                useMatchingSteamApiLang = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool downloadDataOnGameSelection { get; set; } = false;
+        public bool DownloadDataOnGameSelection
+        {
+            get => downloadDataOnGameSelection;
+            set
+            {
+                downloadDataOnGameSelection = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ReviewViewerSettingsViewModel : ObservableObject, ISettings
