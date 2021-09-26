@@ -20,4 +20,12 @@ Os jogos anteriormente desinstalados foram definidos como instalados: {1}</sys:S
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Detectar jogos instalados na inicialização</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Detectar jogos instalados na atualização da biblioteca</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Atualizar os marcadores com a unidade que o jogo está instalado na atualização da biblioteca</sys:String>
+
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Update installation status when files change in directories (Changes require restart)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Include subdirectories for detection</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Detection directories</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Enabled</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Path</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Add</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Remove</sys:String>
 </ResourceDictionary>
