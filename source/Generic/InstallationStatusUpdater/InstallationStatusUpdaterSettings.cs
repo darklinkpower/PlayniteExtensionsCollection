@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InstallationStatusUpdater
 {
-    public class InstallationStatusUpdaterSettings
+    public class InstallationStatusUpdaterSettings : ObservableObject
     {
         public bool UrlActionIsInstalled { get; set; } = true;
         public bool ScriptActionIsInstalled { get; set; } = true;
@@ -18,6 +18,19 @@ namespace InstallationStatusUpdater
         public bool UpdateOnStartup { get; set; } = true;
         public bool UpdateOnLibraryUpdate { get; set; } = true;
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
+        public bool UpdateStatusOnDirChanges { get; set; } = false;
+        [DontSerialize]
+        private List<SelectableDirectory> detectionDirectories { get; set; } = new List<SelectableDirectory>();
+        public List<SelectableDirectory> DetectionDirectories
+        {
+            get => detectionDirectories;
+            set
+            {
+                detectionDirectories = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool UpdateStatusOnDirChangesIncludeSubDirs { get; set; } = false;
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
@@ -26,6 +39,7 @@ namespace InstallationStatusUpdater
 
     public class InstallationStatusUpdaterSettingsViewModel : ObservableObject, ISettings
     {
+        private IPlayniteAPI PlayniteApi;
         private readonly InstallationStatusUpdater plugin;
         private InstallationStatusUpdaterSettings editingClone { get; set; }
 
@@ -40,7 +54,7 @@ namespace InstallationStatusUpdater
             }
         }
 
-        public InstallationStatusUpdaterSettingsViewModel(InstallationStatusUpdater plugin)
+        public InstallationStatusUpdaterSettingsViewModel(InstallationStatusUpdater plugin, IPlayniteAPI playniteApi)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
@@ -57,6 +71,8 @@ namespace InstallationStatusUpdater
             {
                 Settings = new InstallationStatusUpdaterSettings();
             }
+
+            PlayniteApi = playniteApi;
         }
 
         public void BeginEdit()
@@ -86,6 +102,42 @@ namespace InstallationStatusUpdater
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        public RelayCommand<object> AddDetectionDirectoryCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var newDir = PlayniteApi.Dialogs.SelectFolder();
+                if (string.IsNullOrEmpty(newDir))
+                {
+                    return;
+                }
+                if (Settings.DetectionDirectories.FirstOrDefault(s => s.DirectoryPath.Equals(newDir, StringComparison.OrdinalIgnoreCase)) != null)
+                {
+                    return;
+                }
+
+                var newDetectionDirectory = new SelectableDirectory
+                {
+                    DirectoryPath = newDir,
+                    Selected = true
+                };
+                Settings.DetectionDirectories.Add(newDetectionDirectory);
+                Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
+            });
+        }
+
+        public RelayCommand<IList<object>> RemoveDetectionDirectoryCommand
+        {
+            get => new RelayCommand<IList<object>>((items) =>
+            {
+                foreach (SelectableDirectory item in items.ToList())
+                {
+                    Settings.DetectionDirectories.Remove(item);
+                }
+                Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
+            }, (items) => items != null && items.Count > 0);
         }
     }
 }

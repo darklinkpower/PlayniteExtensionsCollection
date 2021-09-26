@@ -4,12 +4,13 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace InstallationStatusUpdater
 {
@@ -20,6 +21,9 @@ namespace InstallationStatusUpdater
         private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
 
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
+        private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
+        private DispatcherTimer timer;
+        private bool canUpdateByWatcher;
 
         private InstallationStatusUpdaterSettingsViewModel settings { get; set; }
 
@@ -27,11 +31,86 @@ namespace InstallationStatusUpdater
 
         public InstallationStatusUpdater(IPlayniteAPI api) : base(api)
         {
-            settings = new InstallationStatusUpdaterSettingsViewModel(this);
+            settings = new InstallationStatusUpdaterSettingsViewModel(this, PlayniteApi);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
             };
+
+            if (settings.Settings.UpdateStatusOnDirChanges && settings.Settings.DetectionDirectories.Count > 0)
+            {
+                SetDirWatchers();
+            }
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1200);
+            timer.Tick += new EventHandler(timer_Tick);
+            canUpdateByWatcher = true;
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            canUpdateByWatcher = true;
+            timer.Stop();
+        }
+
+        public void SetDirWatchers()
+        {
+            foreach (SelectableDirectory dir in settings.Settings.DetectionDirectories)
+            {
+                if (!dir.Selected)
+                {
+                    continue;
+                }
+
+                var watcher = new FileSystemWatcher(dir.DirectoryPath);
+                watcher.NotifyFilter = NotifyFilters.Attributes
+                                     | NotifyFilters.CreationTime
+                                     | NotifyFilters.DirectoryName
+                                     | NotifyFilters.FileName
+                                     | NotifyFilters.LastWrite
+                                     | NotifyFilters.Size;
+
+                watcher.Filter = "*.*";
+
+                watcher.Created += OnCreated;
+                watcher.Deleted += OnDeleted;
+                watcher.Renamed += OnRenamed;
+
+                watcher.IncludeSubdirectories = settings.Settings.UpdateStatusOnDirChangesIncludeSubDirs;
+                watcher.EnableRaisingEvents = true;
+                dirWatchers.Add(watcher);
+            }
+        }
+
+        private void OnCreated(object sender, FileSystemEventArgs e)
+        {
+            watcherEventHandler(e.FullPath);
+        }
+
+        private void OnDeleted(object sender, FileSystemEventArgs e)
+        {
+            watcherEventHandler(e.FullPath);
+        }
+
+        private void OnRenamed(object sender, RenamedEventArgs e)
+        {
+            watcherEventHandler(e.FullPath);
+        }
+
+        public void watcherEventHandler(string invokerPath)
+        {
+            if (canUpdateByWatcher == false)
+            {
+                logger.Info(string.Format("Watcher invoked by path {0} but update by watcher is disabled", invokerPath)); 
+                return;
+            }
+
+            logger.Info(string.Format("Watcher invoked by path {0}", invokerPath));
+            canUpdateByWatcher = false;
+            DetectInstallationStatus(false);
+            timer.Start();
+            logger.Info(string.Format("Finished watcher event", invokerPath));
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
