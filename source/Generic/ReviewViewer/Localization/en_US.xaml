@@ -23,4 +23,5 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Not recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} hours {1} minutes at review time</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} hours {1} minutes of total play time</sys:String>
 </ResourceDictionary>

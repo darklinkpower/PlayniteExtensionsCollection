@@ -73,6 +73,7 @@
                         <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewNotRecommendedLabel}"
                                    Visibility="{Binding SelectedReview.VotedUp, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
                         <TextBlock Text="{Binding FormattedPlaytime}" Opacity="0.75" />
+                        <TextBlock Text="{Binding TotalFormattedPlaytime}" Opacity="0.75" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -89,7 +90,7 @@
                             Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
-                <TextBlock Text="{Binding SelectedReview.ReviewReview}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding SelectedReview.ReviewReview}" TextWrapping="Wrap" Opacity="0.75"/>
             </ScrollViewer>
         </StackPanel>
         
