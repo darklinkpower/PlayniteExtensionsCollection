@@ -64,7 +64,22 @@ function GetMainMenuItems
     $menuItem12.FunctionName = "Export-EpicLicenses"
     $menuItem12.MenuSection = "@Date Importer|Epic"
 
-    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12
+    $menuItem13 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem13.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription")
+    $menuItem13.FunctionName = "Invoke-OriginDateImporterSelected"
+    $menuItem13.MenuSection = "@Date Importer|Origin"
+
+    $menuItem14 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem14.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportAllOriginDatesDescription")
+    $menuItem14.FunctionName = "Invoke-OriginDateImporterAll"
+    $menuItem14.MenuSection = "@Date Importer|Origin"
+
+    $menuItem15 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem15.Description = [Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemExportOriginLicencesDescription")
+    $menuItem15.FunctionName = "Export-OriginLicenses"
+    $menuItem15.MenuSection = "@Date Importer|Origin"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13, $menuItem14, $menuItem15
 }
 
 function Invoke-DateImporterSelected
@@ -76,6 +91,7 @@ function Invoke-DateImporterSelected
     Invoke-SteamDateImporterSelected
     Invoke-GogDateImporterSelected
     Invoke-EpicDateImporterSelected
+    Invoke-OriginDateImporterSelected
 }
 
 function Invoke-DateImporterAll
@@ -87,6 +103,7 @@ function Invoke-DateImporterAll
     Invoke-SteamDateImporterAll
     Invoke-GogDateImporterAll
     Invoke-EpicDateImporterAll
+    Invoke-OriginDateImporterAll
 }
 
 function Invoke-SteamDateImporterSelected
@@ -147,6 +164,26 @@ function Invoke-EpicDateImporterAll
     
     $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "00000002-dbd1-46c6-b5d0-b1ba559d10e4"}
     Add-EpicDates $gameDatabase
+}
+
+function Invoke-OriginDateImporterSelected
+{
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
+    $gameDatabase = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.PluginId -eq "85dd7072-2f20-4e76-a007-41035e390724"}
+    Add-OriginDates $gameDatabase
+}
+
+function Invoke-OriginDateImporterAll
+{
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
+    $gameDatabase = $PlayniteApi.Database.Games | Where-Object {$_.PluginId -eq "85dd7072-2f20-4e76-a007-41035e390724"}
+    Add-OriginDates $gameDatabase
 }
 
 function Get-JsonFromPageSource
@@ -846,5 +883,122 @@ function Get-SteamLicenses
         }
         $LicensesList.Add($License)
     }
+    return $LicensesList
+}
+
+function Export-OriginLicenses
+{
+    param(
+        $scriptMainMenuItemActionArgs
+    )
+    
+    $libraryName = "Origin"
+    
+    $LicensesList = Get-OriginLicenses $libraryName
+    if ($LicensesList.count -eq 0)
+    {
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_LicensesNotFoundMessage"), "$libraryName Date Importer")
+        return
+    }
+    Export-Licenses $libraryName $LicensesList
+}
+
+function Add-OriginDates
+{
+    param (
+        $gameDatabase
+    )
+
+    if ($gameDatabase.count -eq 0)
+    {
+        return
+    }
+
+    $libraryName = "Origin"
+    $LicensesList = Get-OriginLicenses $libraryName
+    if ($LicensesList.count -eq 0)
+    {
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_LicensesNotFoundMessage"), "$libraryName Date Importer")
+        return
+    }
+
+    Set-DatesFromLicenses $libraryName $LicensesList $gameDatabase
+}
+
+function Get-OriginLicenses
+{
+    param (
+        $libraryName
+    )
+    
+    [System.Collections.Generic.List[object]]$LicensesList = @()
+
+    $authUrl = "https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none"
+    $loginStatus = Get-LoginStatusViaJson $authUrl
+    if ($loginStatus -eq $false)
+    {
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_UsetNotLoggedMessage") -f $libraryName), "$libraryName Date Importer")
+        return $LicensesList
+    }
+
+    $webView = $PlayniteApi.WebViews.CreateOffscreenView()
+    $webView.NavigateAndWait($authUrl)
+    $pageSource = $webView.GetPageSource()
+    $webView.Dispose()
+
+    $jsonValid = Get-IsJsonValidFromPage $pageSource
+
+    if($jsonValid -eq $false) {
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginInvalidJson"), "$libraryName Date Importer")
+        return $LicensesList
+    }
+
+    $authJson = Get-JsonFromPageSource $pageSource
+    $token = $authJson.access_token
+
+
+    $idUrl = "https://gateway.ea.com/proxy/identity/pids/me"
+    $headers = @{
+        Authorization = "Bearer {0}" -f $token
+    }
+    $idResponse = $null
+    try {
+        $idResponse = Invoke-RestMethod -Method "GET" -Uri $idUrl -Headers $headers -ContentType "application/json"
+    } catch {
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginErrorMessage"), "$libraryName Date Importer")
+        return $LicensesList
+    }
+    $id = $idResponse.pid.pidId
+
+
+    $licenseTemplate = "https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1"
+    $licenseUrl = $licenseTemplate -f $id 
+    $headers = @{
+        authtoken = $token
+    }
+    $xml = $null
+    try {
+        $xml = Invoke-RestMethod -Method "GET" -Uri $licenseUrl -Headers $headers -ContentType "application/xml"
+    } catch {
+        $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginErrorMessage"), "$libraryName Date Importer")
+        return $LicensesList
+    }
+
+
+    $licenses = Select-Xml $xml -XPath '/entitlements/entitlement'
+    foreach ($license in $licenses) {
+        $type = $license.Node.offer.offerType.ToLower() -replace " ", ""
+        if($($type -eq "basegame") -or $($type -eq "demo")) 
+        {
+            $date = Get-Date $license.Node.grantDate
+            $product = [PSCustomObject]@{
+                LicenseName = $license.Node.offer.localizableAttributes.displayName
+                LicenseNameMatch = $license.Node.offer.localizableAttributes.displayName.ToLower() -replace '[^\p{L}\p{Nd}]', ''
+                LicenseDate = $date
+            }
+            $LicensesList.Add($product)
+        }
+    }
+    
     return $LicensesList
 }
