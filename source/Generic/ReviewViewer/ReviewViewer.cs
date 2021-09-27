@@ -215,7 +215,7 @@ namespace ReviewViewer
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCReview_Viewer_DialogDataUpdateProgressMessage")));
 
-            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LLOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Review Viewer");
+            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Review Viewer");
         }
 
         public async Task DownloadFile(HttpClient client, string requestUri, string fileToWriteTo)
