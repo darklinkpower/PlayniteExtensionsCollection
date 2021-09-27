@@ -948,7 +948,8 @@ function Get-OriginLicenses
 
     $jsonValid = Get-IsJsonValidFromPage $pageSource
 
-    if($jsonValid -eq $false) {
+    if($jsonValid -eq $false) 
+    {
         $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginInvalidJson"), "$libraryName Date Importer")
         return $LicensesList
     }
