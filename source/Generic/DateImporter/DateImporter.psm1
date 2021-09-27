@@ -948,7 +948,7 @@ function Get-OriginLicenses
 
     $jsonValid = Get-IsJsonValidFromPage $pageSource
 
-    if($jsonValid -eq $false) 
+    if ($jsonValid -eq $false) 
     {
         $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginInvalidJson"), "$libraryName Date Importer")
         return $LicensesList
@@ -989,7 +989,7 @@ function Get-OriginLicenses
     $licenses = Select-Xml $xml -XPath '/entitlements/entitlement'
     foreach ($license in $licenses) {
         $type = $license.Node.offer.offerType.ToLower() -replace " ", ""
-        if($($type -eq "basegame") -or $($type -eq "demo")) 
+        if ($($type -eq "basegame") -or $($type -eq "demo")) 
         {
             $date = Get-Date $license.Node.grantDate
             $product = [PSCustomObject]@{
