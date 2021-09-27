@@ -64,25 +64,28 @@ namespace ExtraMetadataLoader
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
-            LogoSource = null;
-            SettingsModel.Settings.IsLogoAvailable = false;
+            Task.Run(() =>
+            {
+                LogoSource = null;
+                SettingsModel.Settings.IsLogoAvailable = false;
             
-            if (!SettingsModel.Settings.EnableLogos)
-            {
-                ControlVisibility = Visibility.Collapsed;
-                return;
-            }
-
-            if (newContext != null)
-            {
-                var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
-                if (File.Exists(logoPath))
+                if (!SettingsModel.Settings.EnableLogos)
                 {
-                    LogoSource = logoPath;
-                    SettingsModel.Settings.IsLogoAvailable = true;
-                    ControlVisibility = Visibility.Visible;
+                    ControlVisibility = Visibility.Collapsed;
+                    return;
                 }
-            }
+
+                if (newContext != null)
+                {
+                    var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
+                    if (File.Exists(logoPath))
+                    {
+                        LogoSource = logoPath;
+                        SettingsModel.Settings.IsLogoAvailable = true;
+                        ControlVisibility = Visibility.Visible;
+                    }
+                }
+            });
         }
     }
 }
