@@ -141,7 +141,7 @@ namespace ReviewViewer.Controls
         private void SetFormattedPlaytime()
         {
             char separator = ':';
-            var playtime = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeForever).ToString("hh\\:mm").Split(separator);
+            var playtime = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeAtReview).ToString("hh\\:mm").Split(separator);
             FormattedPlaytime = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewPlaytimeFormat"), playtime[0], playtime[1]);
         }
 
