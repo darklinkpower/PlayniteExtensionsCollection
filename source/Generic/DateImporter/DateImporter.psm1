@@ -964,7 +964,7 @@ function Get-OriginLicenses
     }
     $idResponse = $null
     try {
-        $idResponse = Invoke-RestMethod -Method "GET" -Uri $idUrl -Headers $headers -ContentType "application/json"
+        $idResponse = Invoke-RestMethod -Method "GET" -Uri $idUrl -Headers $headers -ContentType "application/json" -UseBasicParsing
     } catch {
         $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginErrorMessage"), "$libraryName Date Importer")
         return $LicensesList
@@ -979,7 +979,7 @@ function Get-OriginLicenses
     }
     $xml = $null
     try {
-        $xml = Invoke-RestMethod -Method "GET" -Uri $licenseUrl -Headers $headers -ContentType "application/xml"
+        $xml = Invoke-RestMethod -Method "GET" -Uri $licenseUrl -Headers $headers -ContentType "application/xml" -UseBasicParsing
     } catch {
         $PlayniteApi.Dialogs.ShowMessage([Playnite.SDK.ResourceProvider]::GetString("LOCDate_Importer_MenuItemImportOriginErrorMessage"), "$libraryName Date Importer")
         return $LicensesList
