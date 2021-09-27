@@ -45,6 +45,18 @@ namespace ReviewViewer
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool displayHelpfulnessData { get; set; } = true;
+        public bool DisplayHelpfulnessData
+        {
+            get => displayHelpfulnessData;
+            set
+            {
+                displayHelpfulnessData = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ReviewViewerSettingsViewModel : ObservableObject, ISettings

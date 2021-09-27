@@ -136,6 +136,28 @@ namespace ReviewViewer.Controls
             }
         }
 
+        private string reviewHelpfulnessHelpful;
+        public string ReviewHelpfulnessHelpful
+        {
+            get => reviewHelpfulnessHelpful;
+            set
+            {
+                reviewHelpfulnessHelpful = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string reviewHelpfulnessFunny;
+        public string ReviewHelpfulnessFunny
+        {
+            get => reviewHelpfulnessFunny;
+            set
+            {
+                reviewHelpfulnessFunny = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int selectedReviewIndex;
         public int SelectedReviewIndex
         {
@@ -145,23 +167,20 @@ namespace ReviewViewer.Controls
                 selectedReviewIndex = value;
                 OnPropertyChanged();
                 SelectedReview = reviews.Reviews[selectedReviewIndex];
-                SetFormattedPlaytime();
-                SetTotalFormattedPlaytime();
+                SetReviewInfo();
             }
         }
 
-        private void SetFormattedPlaytime()
+        private void SetReviewInfo()
         {
             var time = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeAtReview);
-            var minutes = time.ToString("mm");
-            FormattedPlaytime = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewPlaytimeFormat"), Math.Floor(time.TotalHours), minutes);
-        }
+            FormattedPlaytime = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewPlaytimeFormat"), Math.Floor(time.TotalHours), time.ToString("mm"));
 
-        private void SetTotalFormattedPlaytime()
-        {
-            var time = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeForever);
-            var minutes = time.ToString("mm");
-            TotalFormattedPlaytime = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewTotalPlaytimeFormat"), Math.Floor(time.TotalHours), minutes);
+            time = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeForever);
+            TotalFormattedPlaytime = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewTotalPlaytimeFormat"), Math.Floor(time.TotalHours), time.ToString("mm"));
+
+            ReviewHelpfulnessHelpful = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat"), SelectedReview.VotesUp);
+            ReviewHelpfulnessFunny = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewHelpfulnessFunnyFormat"), SelectedReview.VotesFunny);
         }
 
         private Review selectedReview;

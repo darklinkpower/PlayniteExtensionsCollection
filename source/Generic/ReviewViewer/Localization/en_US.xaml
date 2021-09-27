@@ -8,6 +8,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Use language used by Playnite to search for reviews if it's available on Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Download review data on game selection if it's missing</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Description height</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Display review helpfulness</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Total reviews:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive reviews:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative reviews:</sys:String>
@@ -24,4 +25,6 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Not recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} hours {1} minutes at review time</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} hours {1} minutes of total play time</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} people found this review helpful</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} people found this review funny</sys:String>
 </ResourceDictionary>

@@ -92,15 +92,18 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
                 <TextBlock Text="{Binding SelectedReview.ReviewReview}" TextWrapping="Wrap" Opacity="0.75"/>
             </ScrollViewer>
+            <StackPanel Margin="0,0,0,10" Visibility="{Binding SettingsModel.Settings.DisplayHelpfulnessData, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="{Binding ReviewHelpfulnessHelpful}" Opacity="0.75" />
+                <TextBlock Text="{Binding ReviewHelpfulnessFunny}" Opacity="0.75" />
+            </StackPanel>
         </StackPanel>
-        
         <DockPanel>
             <StackPanel>
                 <Button Content="{DynamicResource LOCReview_Viewer_ReviewTypeAll}" MinWidth="60" Margin="5" Command="{Binding SwitchAllReviewsCommand}"/>
                 <Button Content="{DynamicResource LOCReview_Viewer_ReviewTypePositive}" MinWidth="60" Margin="5" Command="{Binding SwitchPositiveReviewsCommand}"/>
                 <Button Content="{DynamicResource LOCReview_Viewer_ReviewTypeNegative}" MinWidth="60" Margin="5" Command="{Binding SwitchNegativeReviewsCommand}"/>
             </StackPanel>
-            <Grid Name="SummaryGrid" Margin="0,0,0,10" Visibility="{Binding MainPanelVisibility, Mode=OneWay}">
+            <Grid Name="SummaryGrid" Margin="0,0,0,10" Visibility="{Binding MainPanelVisibility, Mode=OneWay}" Opacity="0.75">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
