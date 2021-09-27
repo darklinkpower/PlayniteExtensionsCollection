@@ -24,7 +24,6 @@ namespace InstallationStatusUpdater
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
         private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
         private DispatcherTimer timer;
-        private bool canUpdateByWatcher;
 
         private InstallationStatusUpdaterSettingsViewModel settings { get; set; }
 
@@ -41,13 +40,10 @@ namespace InstallationStatusUpdater
             SetDirWatchers();
             timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(1200)
+                Interval = TimeSpan.FromMilliseconds(5000)
             };
             timer.Tick += new EventHandler(Timer_Tick);
 
-            //Indicates if events can start method to detect installation status.
-            //Used to prevent multiple sequential events from starting it closely from each other
-            canUpdateByWatcher = true;
             if (settings.Settings.UpdateStatusOnUsbChanges)
             {
                 CreateUsbWatchers();
@@ -56,8 +52,10 @@ namespace InstallationStatusUpdater
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            canUpdateByWatcher = true;
+            // Timer is used to ensure multiple executions are not triggered
+            // when there are multiple changes in bulk
             timer.Stop();
+            DetectInstallationStatus(false);
         }
 
         private void CreateUsbWatchers()
@@ -76,8 +74,6 @@ namespace InstallationStatusUpdater
         private void DeviceInsertedEvent(object sender, EventArrivedEventArgs e)
         {
             logger.Info(string.Format("Watcher invoked by device insertion"));
-            canUpdateByWatcher = false;
-            DetectInstallationStatus(false);
             SetDirWatchers();
             timer.Start();
         }
@@ -85,8 +81,6 @@ namespace InstallationStatusUpdater
         private void DeviceRemovedEvent(object sender, EventArrivedEventArgs e)
         {
             logger.Info(string.Format("Watcher invoked by device removal"));
-            canUpdateByWatcher = false;
-            DetectInstallationStatus(false);
             SetDirWatchers();
             timer.Start();
         }
@@ -165,17 +159,9 @@ namespace InstallationStatusUpdater
 
         public void WatcherEventHandler(string invokerPath)
         {
-            if (canUpdateByWatcher == false)
-            {
-                logger.Info(string.Format("Watcher invoked by path {0} but update by watcher is disabled", invokerPath)); 
-                return;
-            }
-
             logger.Info(string.Format("Watcher invoked by path {0}", invokerPath));
-            canUpdateByWatcher = false;
-            DetectInstallationStatus(false);
+            timer.Stop();
             timer.Start();
-            logger.Info(string.Format("Finished watcher event", invokerPath));
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
