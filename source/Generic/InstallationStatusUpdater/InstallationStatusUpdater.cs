@@ -22,6 +22,8 @@ namespace InstallationStatusUpdater
         private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
 
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
+        private DispatcherTimer usbSearchertimer;
+        private string currentDevices;
         private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
         private DispatcherTimer timer;
 
@@ -38,15 +40,17 @@ namespace InstallationStatusUpdater
             };
 
             SetDirWatchers();
-            timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(5000)
-            };
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(5000);
             timer.Tick += new EventHandler(Timer_Tick);
 
             if (settings.Settings.UpdateStatusOnUsbChanges)
             {
-                CreateUsbWatchers();
+                currentDevices = GetUSBDevices();
+                usbSearchertimer = new DispatcherTimer();
+                usbSearchertimer.Interval = TimeSpan.FromMilliseconds(5000);
+                usbSearchertimer.Tick += new EventHandler(UsbTimer_Tick);
+                usbSearchertimer.Start();
             }
         }
 
@@ -58,31 +62,27 @@ namespace InstallationStatusUpdater
             DetectInstallationStatus(false);
         }
 
-        private void CreateUsbWatchers()
+        private void UsbTimer_Tick(object sender, EventArgs e)
         {
-            WqlEventQuery insertQuery = new WqlEventQuery("SELECT * FROM __InstanceCreationEvent WITHIN 20 WHERE TargetInstance ISA 'Win32_USBHub'");
-            ManagementEventWatcher insertWatcher = new ManagementEventWatcher(insertQuery);
-            insertWatcher.EventArrived += new EventArrivedEventHandler(DeviceInsertedEvent);
-            insertWatcher.Start();
-
-            WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 20 WHERE TargetInstance ISA 'Win32_USBHub'");
-            ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
-            removeWatcher.EventArrived += new EventArrivedEventHandler(DeviceRemovedEvent);
-            removeWatcher.Start();
+            var newDevices = GetUSBDevices();
+            if (currentDevices != newDevices)
+            {
+                logger.Info(string.Format("Usb device changes detected. Old: \"{0}\", New: \"{1}\"", currentDevices, newDevices));
+                currentDevices = newDevices;
+                timer.Stop();
+                timer.Start();
+                SetDirWatchers();
+            }
         }
 
-        private void DeviceInsertedEvent(object sender, EventArrivedEventArgs e)
+        public string GetUSBDevices()
         {
-            logger.Info(string.Format("Watcher invoked by device insertion"));
-            SetDirWatchers();
-            timer.Start();
-        }
-
-        private void DeviceRemovedEvent(object sender, EventArrivedEventArgs e)
-        {
-            logger.Info(string.Format("Watcher invoked by device removal"));
-            SetDirWatchers();
-            timer.Start();
+            var devices = new StringBuilder("Devices_");
+            foreach (DriveInfo drive in DriveInfo.GetDrives())
+            {
+                devices.Append($"{drive.RootDirectory}_{drive.VolumeLabel}-");
+            }
+            return devices.ToString();
         }
 
         public void SetDirWatchers()
