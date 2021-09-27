@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Importiere Daten der ausgewählten Epic-, GOG- und Steam-Spiele</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Importiere Daten aller Epic-, GOG- und Steam-Spiele</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Import dates of selected Epic, GOG, Origin and Steam games</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Import dates of all Epic, GOG, Origin and Steam games</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Setze Hinzufügedatum der ausgewählten Spiele manuell</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Importiere Daten der ausgewählten Steam-Spiele</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Importiere Daten aller Steam-Spiele</sys:String>
@@ -12,6 +12,11 @@
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Importiere Daten der ausgewählten Epic-Spiele</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Importiere Daten aller Epic-Spiele</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Exportiere Epic-Lizenz-Liste</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription">Import dates of selected Origin games</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllOriginDatesDescription">Import dates of all Origin games</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginErrorMessage">Error retrieving data from Origin</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginInvalidJson">Origin data is invalid</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportOriginLicencesDescription">Export Origin licenses list</sys:String>
     <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">Ein Webbrowserfenster wird geöffnet, bitte nach dem Einloggen schließen.</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">Keine Lizenzen gefunden.</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">{0} Lizenzen gefunden.
