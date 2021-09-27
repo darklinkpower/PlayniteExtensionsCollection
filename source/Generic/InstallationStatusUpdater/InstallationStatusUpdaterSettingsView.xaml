@@ -13,27 +13,34 @@
         <CheckBox Margin="0,20,0,0" IsChecked="{Binding Settings.UseOnlyFirstRomDetection}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection}" />
         <CheckBox Margin="0,20,0,0" IsChecked="{Binding Settings.UpdateOnStartup}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup}" />
         <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateOnLibraryUpdate}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate}" />
+        <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateOnUsbChanges}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges}" />
         <CheckBox Margin="0,20,0,0" IsChecked="{Binding Settings.UpdateLocTagsOnLibUpdate}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate}" />
 
         <CheckBox Name="CbUpdateOnDirChanges" Margin="0,20,0,0" IsChecked="{Binding Settings.UpdateStatusOnDirChanges}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges}" />
         <StackPanel Margin="0,0,0,0" IsEnabled="{Binding ElementName=CbUpdateOnDirChanges, Path=IsChecked}">
-            <CheckBox Margin="40,10,0,0" IsChecked="{Binding Settings.UpdateStatusOnDirChangesIncludeSubDirs}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs}" />
             <TextBlock Margin="0,10,0,0" Text="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel}" />
             <ListView Name="ListDetectionDirs" SelectionMode="Extended" Height="200" Margin="0,10,0,0"
                   ItemsSource="{Binding Settings.DetectionDirectories}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="90" Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel}">
+                        <GridViewColumn Width="Auto" Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Selected}" />
+                                    <CheckBox IsChecked="{Binding Enabled}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Width="400" Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel}">
+                        <GridViewColumn Width="Auto" Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding DirectoryPath}" Padding="0,1,0,1"/>
+                                    <CheckBox IsChecked="{Binding ScanSubDirs}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="250"  Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DirectoryPath}" VerticalAlignment="Center"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

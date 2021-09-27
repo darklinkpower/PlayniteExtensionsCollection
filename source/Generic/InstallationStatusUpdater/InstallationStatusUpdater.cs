@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Management;
 
 namespace InstallationStatusUpdater
 {
@@ -37,68 +38,132 @@ namespace InstallationStatusUpdater
                 HasSettings = true
             };
 
-            if (settings.Settings.UpdateStatusOnDirChanges && settings.Settings.DetectionDirectories.Count > 0)
+            SetDirWatchers();
+            timer = new DispatcherTimer
             {
-                SetDirWatchers();
-            }
+                Interval = TimeSpan.FromMilliseconds(1200)
+            };
+            timer.Tick += new EventHandler(Timer_Tick);
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1200);
-            timer.Tick += new EventHandler(timer_Tick);
+            //Indicates if events can start method to detect installation status.
+            //Used to prevent multiple sequential events from starting it closely from each other
             canUpdateByWatcher = true;
+            if (settings.Settings.UpdateStatusOnUsbChanges)
+            {
+                CreateUsbWatchers();
+            }
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             canUpdateByWatcher = true;
             timer.Stop();
         }
 
+        private void CreateUsbWatchers()
+        {
+            WqlEventQuery insertQuery = new WqlEventQuery("SELECT * FROM __InstanceCreationEvent WITHIN 20 WHERE TargetInstance ISA 'Win32_USBHub'");
+            ManagementEventWatcher insertWatcher = new ManagementEventWatcher(insertQuery);
+            insertWatcher.EventArrived += new EventArrivedEventHandler(DeviceInsertedEvent);
+            insertWatcher.Start();
+
+            WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 20 WHERE TargetInstance ISA 'Win32_USBHub'");
+            ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
+            removeWatcher.EventArrived += new EventArrivedEventHandler(DeviceRemovedEvent);
+            removeWatcher.Start();
+        }
+
+        private void DeviceInsertedEvent(object sender, EventArrivedEventArgs e)
+        {
+            logger.Info(string.Format("Watcher invoked by device insertion"));
+            canUpdateByWatcher = false;
+            DetectInstallationStatus(false);
+            SetDirWatchers();
+            timer.Start();
+        }
+
+        private void DeviceRemovedEvent(object sender, EventArrivedEventArgs e)
+        {
+            logger.Info(string.Format("Watcher invoked by device removal"));
+            canUpdateByWatcher = false;
+            DetectInstallationStatus(false);
+            SetDirWatchers();
+            timer.Start();
+        }
+
         public void SetDirWatchers()
         {
+            if (dirWatchers.Count > 0)
+            {
+                foreach (FileSystemWatcher watcher in dirWatchers)
+                {
+                    watcher.Dispose();
+                }
+            }
+
+            dirWatchers = new List<FileSystemWatcher>();
+            if (!settings.Settings.UpdateStatusOnDirChanges || settings.Settings.DetectionDirectories.Count == 0)
+            {
+                return;
+            }
+
             foreach (SelectableDirectory dir in settings.Settings.DetectionDirectories)
             {
-                if (!dir.Selected)
+                if (!dir.Enabled)
                 {
                     continue;
                 }
 
-                var watcher = new FileSystemWatcher(dir.DirectoryPath);
-                watcher.NotifyFilter = NotifyFilters.Attributes
-                                     | NotifyFilters.CreationTime
-                                     | NotifyFilters.DirectoryName
-                                     | NotifyFilters.FileName
-                                     | NotifyFilters.LastWrite
-                                     | NotifyFilters.Size;
+                if (!Directory.Exists(dir.DirectoryPath))
+                {
+                    logger.Warn($"Directory {dir.DirectoryPath} for watcher doesn't exist");
+                    continue;
+                }
 
-                watcher.Filter = "*.*";
+                var watcher = new FileSystemWatcher(dir.DirectoryPath)
+                {
+                    NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Size,
 
+                    Filter = "*.*"
+                };
+
+                watcher.Changed += OnChanged;
                 watcher.Created += OnCreated;
                 watcher.Deleted += OnDeleted;
                 watcher.Renamed += OnRenamed;
 
-                watcher.IncludeSubdirectories = settings.Settings.UpdateStatusOnDirChangesIncludeSubDirs;
+                watcher.IncludeSubdirectories = dir.ScanSubDirs;
                 watcher.EnableRaisingEvents = true;
                 dirWatchers.Add(watcher);
             }
         }
 
+        private void OnChanged(object sender, FileSystemEventArgs e)
+        {
+            WatcherEventHandler(e.FullPath);
+        }
+
         private void OnCreated(object sender, FileSystemEventArgs e)
         {
-            watcherEventHandler(e.FullPath);
+            WatcherEventHandler(e.FullPath);
         }
 
         private void OnDeleted(object sender, FileSystemEventArgs e)
         {
-            watcherEventHandler(e.FullPath);
+            WatcherEventHandler(e.FullPath);
         }
 
         private void OnRenamed(object sender, RenamedEventArgs e)
         {
-            watcherEventHandler(e.FullPath);
+            WatcherEventHandler(e.FullPath);
         }
 
-        public void watcherEventHandler(string invokerPath)
+        public void WatcherEventHandler(string invokerPath)
         {
             if (canUpdateByWatcher == false)
             {
@@ -131,6 +196,7 @@ namespace InstallationStatusUpdater
             {
                 UpdateInstallDirTags();
             }
+            SetDirWatchers();
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -224,11 +290,9 @@ namespace InstallationStatusUpdater
             }
             if (game.Roms.Count > 1 && settings.Settings.UseOnlyFirstRomDetection == false)
             {
-                var isInstalled = false;
                 foreach (GameRom rom in game.Roms)
                 {
-                    isInstalled = DetectIsRomInstalled(rom, installDirectory);
-                    if (isInstalled == true)
+                    if (DetectIsRomInstalled(rom, installDirectory))
                     {
                         return true;
                     }
@@ -272,7 +336,6 @@ namespace InstallationStatusUpdater
 
         public bool DetectIsAnyActionInstalled(Game game, string installDirectory)
         {
-            var isInstalled = false;
             foreach (GameAction gameAction in game.GameActions)
             {
                 if (gameAction.IsPlayAction == false && settings.Settings.OnlyUsePlayActionGameActions == true)
@@ -296,8 +359,7 @@ namespace InstallationStatusUpdater
                 }
                 else if (gameAction.Type == GameActionType.File)
                 {
-                    isInstalled = DetectIsFileActionInstalled(gameAction, installDirectory);
-                    if (isInstalled == true)
+                    if (DetectIsFileActionInstalled(gameAction, installDirectory))
                     {
                         return true;
                     }

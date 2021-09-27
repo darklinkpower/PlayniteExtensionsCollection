@@ -8,13 +8,23 @@ namespace InstallationStatusUpdater
 {
     public class SelectableDirectory
     {
-        private bool selected = false;
-        public bool Selected
+        private bool enabled = false;
+        public bool Enabled
         {
-            get => selected;
+            get => enabled;
             set
             {
-                selected = value;
+                enabled = value;
+            }
+        }
+
+        private bool scanSubDirs = false;
+        public bool ScanSubDirs
+        {
+            get => scanSubDirs;
+            set
+            {
+                scanSubDirs = value;
             }
         }
 

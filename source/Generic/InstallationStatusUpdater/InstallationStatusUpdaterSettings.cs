@@ -18,6 +18,7 @@ namespace InstallationStatusUpdater
         public bool UpdateOnStartup { get; set; } = true;
         public bool UpdateOnLibraryUpdate { get; set; } = true;
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
+        public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
         [DontSerialize]
         private List<SelectableDirectory> detectionDirectories { get; set; } = new List<SelectableDirectory>();
@@ -30,7 +31,6 @@ namespace InstallationStatusUpdater
                 OnPropertyChanged();
             }
         }
-        public bool UpdateStatusOnDirChangesIncludeSubDirs { get; set; } = false;
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         [DontSerialize]
@@ -121,7 +121,8 @@ namespace InstallationStatusUpdater
                 var newDetectionDirectory = new SelectableDirectory
                 {
                     DirectoryPath = newDir,
-                    Selected = true
+                    Enabled = true,
+                    ScanSubDirs = false
                 };
                 Settings.DetectionDirectories.Add(newDetectionDirectory);
                 Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
