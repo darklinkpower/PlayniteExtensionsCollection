@@ -23,7 +23,7 @@ namespace ReviewViewer
         }
 
         [DontSerialize]
-        private bool downloadDataOnGameSelection { get; set; } = false;
+        private bool downloadDataOnGameSelection { get; set; } = true;
         public bool DownloadDataOnGameSelection
         {
             get => downloadDataOnGameSelection;

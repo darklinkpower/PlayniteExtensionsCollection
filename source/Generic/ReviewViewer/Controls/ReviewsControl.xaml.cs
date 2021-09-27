@@ -235,7 +235,7 @@ namespace ReviewViewer.Controls
         {
             selectedReviewSearch = ReviewSearchType.Positive;
             SummaryGrid.Visibility = Visibility.Collapsed;
-            UpdateReviewsContext();
+            Task.Run(() => UpdateReviewsContext());
         }
 
         public RelayCommand<object> SwitchNegativeReviewsCommand
@@ -250,7 +250,7 @@ namespace ReviewViewer.Controls
         {
             selectedReviewSearch = ReviewSearchType.Negative;
             SummaryGrid.Visibility = Visibility.Collapsed;
-            UpdateReviewsContext();
+            Task.Run(() => UpdateReviewsContext());
         }
 
         public ReviewsControl(string pluginUserDataPath, string steamApiLanguage, ReviewViewerSettingsViewModel settings)
@@ -276,7 +276,7 @@ namespace ReviewViewer.Controls
             }
 
             currentGame = newContext;
-            UpdateReviewsContext();
+            Task.Run(() => UpdateReviewsContext());
         }
 
         public void UpdateReviewsContext()
