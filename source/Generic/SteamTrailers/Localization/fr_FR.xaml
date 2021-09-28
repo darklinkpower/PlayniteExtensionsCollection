@@ -7,7 +7,7 @@
 L'extension n'est compatible qu'avec les jeux PC&quot;</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Erreur lors du téléchargement des informations du jeu pour AppId &quot;{0}&quot;. Erreur: {1}</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Vidéo non disponible.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">«{0}» n'est pas un jeu Steam et l'AppId Steam n'a pas pu trouver de données vidéo.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage"></sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Erreur de connexion au serveur. Erreur: {0}</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Erreur lors du téléchargement des en-têtes. Erreur: {0}</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Erreur lors du téléchargement du fichier à partir de l'URL &quot;{0}&quot;. Erreur: {1}</sys:String>
