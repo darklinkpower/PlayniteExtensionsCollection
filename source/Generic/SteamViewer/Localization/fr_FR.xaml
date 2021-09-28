@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Captures d'écran</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Réglages</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Page du magasin</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Communauté</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Communaut</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussions</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">Actualités</sys:String>
