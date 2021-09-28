@@ -22,8 +22,8 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Évaluations :</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Évaluation</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Évaluations</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommandé</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Non recommandé</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommand</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Non recommand</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} heures {1} minutes au moment de l'évaluation</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} hours {1} minutes of total play time</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} people found this review helpful</sys:String>
