@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription">Launch Steam with configured actions</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemAddFilterFeatureDescription">Add mode filter feature to selected games</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Remove mode filter feature from selected games</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription">Lancer Steam avec les actions configurées</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemAddFilterFeatureDescription">Ajouter un mode de filtre aux jeux sélectionnés</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Retirer le mode de filtre des jeux sélectionnés</sys:String>
 
-    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSetting">Steam Launch Utility mode:</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeTooltip" xml:space="preserve">Global Mode: Actions are done on all Steam games except blocked games.
-Selective Mode: Actions are done only on games that have been allowed.
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSetting">Mode Steam Launch Utility :</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeTooltip" xml:space="preserve">Mode global : Les actions sont effectuées sur tous les jeux Steam sauf les jeux bloqués.
+Mode sélectif : Les actions sont effectuées uniquement sur les jeux autorisés.
 
-Use the plugin functions from the extensions submenu to add the filtering features.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnDesktopModeSetting">Disable Steam web browser when starting a game on Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Launch Steam in Big Picture Mode when starting a game on Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Disable Steam web browser when starting a game on Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Launch Steam in Big Picture Mode when starting a game on Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Close Steam if it's detected as running before launching the game</sys:String>
+Utilisez les fonctions du plugin à partir du sous-menu des extensions pour ajouter les fonctionnalités de filtrage.</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnDesktopModeSetting">Désactiver le navigateur Web Steam lorsque vous démarrez un jeu en mode bureau</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Lancez Steam en mode Big Picture lorsque vous démarrez un jeu en mode bureau</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Désactiver le navigateur Web Steam lorsque vous démarrez un jeu en mode plein écran</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Lancez Steam en mode Big Picture lorsque vous démarrez un jeu en mode plein écran</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Fermer Steam s'il est détecté comme en cours d'exécution avant de lancer le jeu</sys:String>
     
 </ResourceDictionary>
