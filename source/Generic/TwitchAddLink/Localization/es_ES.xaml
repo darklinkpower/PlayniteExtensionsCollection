@@ -4,6 +4,6 @@
     <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesSemiAutomaticDescription">Añadir enlaces de Twitch a los juegos seleccionados (Semi-Automático)</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_GenericGameInformationDownloadFailMessage">Error al descargar la información del juego de &quot;{0}&quot;.</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">Url inválida.</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">¿Quieres continuar con la ejecución de la extensión para los juegos restantes?</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage"></sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">Enlace de Twitch añadido a {0} juego(s).</sys:String>
 </ResourceDictionary>
