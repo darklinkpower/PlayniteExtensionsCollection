@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Open video manager</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription">View settings</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Ouvrir le gestionnaire de vidéos</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription">Afficher les paramètres</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Add image splash screen skip feature to selected games</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Remove image splash screen skip feature from selected games</sys:String>
 
