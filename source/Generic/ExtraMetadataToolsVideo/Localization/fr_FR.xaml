@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription">Supprimer la bande-annonce des jeux sélectionnées</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Supprimer la micro bande-annonce des jeux sélectionnées</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Télécharger automatiquement la bande-annonce pour les jeux sélectionnés</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Rechercher une vidéo pour le jeu sélectionné</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Rechercher une vidéo pour le jeu sélectionn</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription">Rechercher le statut des médias de tous les jeux dans la base de données</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage">Sélectionner l'exécutable ffmpeg.</sys:String>
