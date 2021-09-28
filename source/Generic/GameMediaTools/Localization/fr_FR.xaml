@@ -4,7 +4,7 @@
     <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">Voir les statistiques des médias manquants (Tous les jeux)</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">Voir les statistiques des médias manquants (Jeux sélectionnés)</sys:String>
 
-    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">Aucune jeu sélectionn</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">Aucune jeu sélectionné</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Entrée invalide dans les zones de saisie de la largeur et de la hauteur.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Entrée invalide dans la zone de saisie des dimensions.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Entrée invalide dans la zone de saisie de l'extension.</sys:String>
