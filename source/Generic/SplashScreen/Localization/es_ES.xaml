@@ -22,5 +22,5 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Usar icono del juego de Metadatos como logo</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Usar pantalla negra en lugar de la imagen splashscreen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Posición horizontal del logo:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Posición vertical del Logo:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Posición vertical del logo:</sys:String>
 </ResourceDictionary>
