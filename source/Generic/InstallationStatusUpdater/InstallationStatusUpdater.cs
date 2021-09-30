@@ -80,8 +80,12 @@ namespace InstallationStatusUpdater
             var devices = new StringBuilder("Devices_");
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
-                devices.Append($"{drive.RootDirectory}_{drive.VolumeLabel}-");
+                if (drive.IsReady)
+                {
+                    devices.Append($"{drive.RootDirectory}_{drive.VolumeLabel}-");
+                }
             }
+
             return devices.ToString();
         }
 
