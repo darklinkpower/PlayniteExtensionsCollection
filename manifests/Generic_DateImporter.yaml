@@ -14,3 +14,11 @@ Packages:
     Changelog:
       - Updated localizations
       - Fix functions not working due to not having args parameter
+  - Version: 2.2
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_2.pext
+    Changelog:
+    - Updated localizations
+    - Add import of Origin dates
+    - Add export of Origin licences

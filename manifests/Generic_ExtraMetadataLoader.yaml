@@ -44,3 +44,14 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta4/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_6.pext
     Changelog:
     - Updated localizations
+  - Version: 1.7
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_7.pext
+    Changelog:
+    - Updated localizations
+    - Update to PlayniteSDK.6.0.0
+    - Option to stream trailer videos from Steam on demand
+    - Split logo and video settings in tabs
+    - Options to enable or disable logo effect and configure its depth, direction, blur radius and opacity
+    - Fix small unresponsiveness when loading logos

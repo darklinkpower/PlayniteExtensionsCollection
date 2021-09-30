@@ -16,3 +16,10 @@ Packages:
       - Fix overview showing when no game is selected
       - Fix using an incorrect localization string during certain dialogs
       - Fix requesting the same catalog data twice
+  - Version: 2.2
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_2.pext
+    Changelog:
+    - Updated localizations
+    - Update to PlayniteSDK.6.0.0

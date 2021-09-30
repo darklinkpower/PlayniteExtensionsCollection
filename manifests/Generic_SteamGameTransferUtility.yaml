@@ -13,3 +13,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta2/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_1.pext
     Changelog:
       - Updated localizations
+  - Version: 2.2
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_2.pext
+    Changelog:
+    - Updated localizations
+    - Update to PlayniteSDK.6.0.0

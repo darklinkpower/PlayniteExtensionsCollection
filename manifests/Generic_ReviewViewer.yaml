@@ -39,3 +39,16 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta4/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_5.pext
     Changelog:
     - Updated extension icon
+  - Version: 2.6
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_6.pext
+    Changelog:
+    - Updated localizations
+    - Update to PlayniteSDK.6.0.0
+    - Show total play time in reviews
+    - Option to show reviews helpfulness
+    - Fix not correctly showing results dialogue when updating reviews
+    - Fix showing forever playtime instead of playtime at review
+    - Fix small unresponsiveness when switching games
+    - Fix displaying incorrect number of hours when time exceeds 24 hours

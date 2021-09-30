@@ -14,3 +14,9 @@ Packages:
     Changelog:
       - Updated localizations
       - Fix error during detection of games not from Steam or GOG
+  - Version: 2.2
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_2.pext
+    Changelog:
+    - Updated localizations
