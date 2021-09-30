@@ -22,6 +22,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private bool autoPlayVideos { get; set; } = false;
         public bool AutoPlayVideos
@@ -33,6 +34,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private bool repeatTrailerVideos { get; set; } = false;
         public bool RepeatTrailerVideos
@@ -44,6 +46,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private bool startNoSound { get; set; } = false;
         public bool StartNoSound
@@ -55,6 +58,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private bool useMicrotrailersDefault { get; set; } = false;
         public bool UseMicrotrailersDefault
@@ -66,6 +70,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private bool fallbackVideoSource { get; set; } = true;
         public bool FallbackVideoSource
@@ -77,6 +82,31 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool streamSteamVideosOnDemand { get; set; } = true;
+        public bool StreamSteamVideosOnDemand
+        {
+            get => streamSteamVideosOnDemand;
+            set
+            {
+                streamSteamVideosOnDemand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool streamSteamHighQuality { get; set; } = false;
+        public bool StreamSteamHighQuality
+        {
+            get => streamSteamHighQuality;
+            set
+            {
+                streamSteamHighQuality = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DontSerialize]
         private bool showControls { get; set; } = true;
         public bool ShowControls

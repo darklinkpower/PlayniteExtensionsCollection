@@ -13,7 +13,8 @@
             <CheckBox IsChecked="{Binding Settings.StartNoSound, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel}" Margin="0,0,0,10"/>
             <CheckBox IsChecked="{Binding Settings.UseMicrotrailersDefault, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel}" Margin="0,0,0,10"/>
             <CheckBox IsChecked="{Binding Settings.FallbackVideoSource, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel}" Margin="0,0,0,10"/>
-            <!--<CheckBox IsChecked="{Binding Settings.ShowControls}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel}" Margin="0,0,0,10"/>-->
+            <CheckBox IsChecked="{Binding Settings.StreamSteamVideosOnDemand, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel}" Margin="0,0,0,10"/>
+            <CheckBox IsEnabled="{Binding Settings.StreamSteamVideosOnDemand}" IsChecked="{Binding Settings.StreamSteamHighQuality, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel}" Margin="20,0,0,10"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
                 <Slider Value="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.0" Maximum="1.0" VerticalAlignment="Center"

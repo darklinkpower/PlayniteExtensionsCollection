@@ -47,7 +47,7 @@ namespace ExtraMetadataLoader
             }
             if (args.Name == "VideoLoaderControl")
             {
-                return new VideoPlayerControl(PlayniteApi, settings);
+                return new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
             }
 
             return null;

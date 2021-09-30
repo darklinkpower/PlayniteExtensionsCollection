@@ -1,13 +1,18 @@
-﻿using Playnite.SDK;
+﻿using ExtraMetadataLoader.Models;
+using Playnite.SDK;
 using Playnite.SDK.Controls;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,6 +32,9 @@ namespace ExtraMetadataLoader
     /// </summary>
     public partial class VideoPlayerControl : PluginUserControl, INotifyPropertyChanged
     {
+        private static readonly ILogger logger = LogManager.GetLogger(); 
+        private HttpClient client;
+        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         public enum ActiveVideoType { Microtrailer, Trailer, None }; 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -37,6 +45,7 @@ namespace ExtraMetadataLoader
 
         
         private bool useMicrovideosSource;
+        private readonly string pluginDataPath;
         private ActiveVideoType activeVideoType;
         private bool isDragging;
         private Uri microVideoPath;
@@ -87,9 +96,12 @@ namespace ExtraMetadataLoader
             }
         }
 
-        public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings)
+        public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings, string pluginDataPath)
         {
             InitializeComponent();
+            client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            this.pluginDataPath = pluginDataPath;
             this.PlayniteApi = PlayniteApi;
             SettingsModel = settings;
             DataContext = this;
@@ -334,6 +346,58 @@ namespace ExtraMetadataLoader
                 microVideoPath = new Uri(videoMicroPath);
             }
 
+            if (SettingsModel.Settings.StreamSteamVideosOnDemand && trailerVideoPath == null)
+            {
+                var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_SteamAppDetails.json");
+                if (!File.Exists(gameDataPath))
+                {
+                    string steamId = GetSteamId(game);
+                    if (steamId != null)
+                    {
+                        var url = string.Format(@"https://store.steampowered.com/api/appdetails?appids={0}", steamId);
+                        DownloadFile(url, gameDataPath).GetAwaiter().GetResult();
+                    }
+                }
+                if (File.Exists(gameDataPath))
+                {
+                    var jsonString = File.ReadAllText(gameDataPath);
+                    var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(jsonString);
+                    if (parsedData.Keys?.Any() == true)
+                    {
+                        var response = parsedData[parsedData.Keys.First()];
+                        if (response.success == true && response.data != null)
+                        {
+                            if (trailerVideoPath == null)
+                            {
+                                if (SettingsModel.Settings.StreamSteamHighQuality)
+                                {
+                                    trailerVideoPath = response.data.Movies?[0].Mp4.Max;
+                                }
+                                else
+                                {
+                                    trailerVideoPath = response.data.Movies?[0].Mp4.Q480;
+                                }
+                                SettingsModel.Settings.IsAnyVideoAvailable = true;
+                                SettingsModel.Settings.IsTrailerAvailable = true;
+                            }
+
+                            // Checking if micro videos exist takes too long
+                            // and some videos have issues playing
+                            //if (microVideoPath == null)
+                            //{
+                            //    var microvideoUrl = string.Format(@"https://steamcdn-a.akamaihd.net/steam/apps/{0}/microtrailer.mp4", response.data.Movies?[0].Id.ToString());
+                            //    if (GetResponseCode(microvideoUrl) == HttpStatusCode.OK)
+                            //    {
+                            //        microVideoPath = new Uri(microvideoUrl);
+                            //        SettingsModel.Settings.IsAnyVideoAvailable = true;
+                            //        SettingsModel.Settings.IsMicrotrailerAvailable = true;
+                            //    }
+                            //}
+                        }
+                    }
+                }
+            }
+
             if (trailerVideoPath != null && microVideoPath != null)
             {
                 multipleSourcesAvailable = true;
@@ -364,6 +428,65 @@ namespace ExtraMetadataLoader
                     VideoSource = microVideoPath;
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
+            }
+        }
+
+        public async Task DownloadFile(string requestUri, string path)
+        {
+            try
+            {
+                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
+                {
+                    string fileToWriteTo = path;
+                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
+                    {
+                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error during file download, url {requestUri}");
+            }
+        }
+
+        public HttpStatusCode GetResponseCode(string url)
+        {
+            try
+            {
+                var response = client.GetAsync(url).GetAwaiter().GetResult();
+                return response.StatusCode;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Failed to get HTTP response for {url}.");
+                return HttpStatusCode.ServiceUnavailable;
+            }
+        }
+
+        private string GetSteamId(Game game)
+        {
+            if (game.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
+            {
+                return game.GameId;
+            }
+            else
+            {
+                if (game.Links == null)
+                {
+                    return null;
+                }
+
+                foreach (Link gameLink in game.Links)
+                {
+                    var linkMatch = steamLinkRegex.Match(gameLink.Url);
+                    if (linkMatch.Success)
+                    {
+                        return linkMatch.Groups[1].Value;
+                    }
+                }
+                return null;
             }
         }
     }
