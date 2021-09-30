@@ -49,3 +49,9 @@ Packages:
     - Update to PlayniteSDK.6.0.0
     - Add functionality to update installation statuses when files in directories change
     - Add functionality to update installation statuses when storage devices are inserted or removed
+  - Version: 2.6
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/Installation_Status_Updater_2_6.pext
+    Changelog:
+    - Fix in case drive is not ready when scanning connected drives
