@@ -1,22 +1,30 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Videos settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">Video-Player aktivieren</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">Videos automatisch abspielen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel">Videos wiederholen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel">Videos zunächst ohne Ton abspielen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel">Standardmäßig Mikro-Videos statt voller Videos verwenden</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">Anderen Video-Typ verwenden, wenn der ausgewählte Typ nicht gefunden wird</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">Stream trailer videos from Steam on demand if available</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">Stream videos in High Definition quality</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">Wiedergabe-Steuerelemente anzeigen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel">Deckkraft der Videosteuerung</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">Deckkraft der Videosteuerung beim Überfahren des Videos mit der Maus</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel">Vertikale Ausrichtung der Videosteuerung</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">Standardlautstärke</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel">Logos settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel">Logos aktivieren</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel">Maximale Logo-Breite</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel">Maximale Logo-Höhe</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Horizontale Logo-Ausrichtung</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Vertikale Logo-Ausrichtung</sys:String>
-
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">Enable shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Depth of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direction of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Blur radius of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacity of shadow effect</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Links</sys:String>
