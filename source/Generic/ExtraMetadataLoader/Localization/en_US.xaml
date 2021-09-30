@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Videos settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">Enable video player</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">Autoplay videos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel">Repeat videos</sys:String>
@@ -14,12 +15,17 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">Opacity of video controls when hovering video</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel">Vertical alignment of video controls</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">Default audio volume</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel">Logos settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel">Enable logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel">Maximum width of logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel">Maximum height of logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Horizontal alignment of logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Vertical alignment of logos</sys:String>
-
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">Enable shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Depth of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direction of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Blur radius of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacity of shadow effect</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Left</sys:String>

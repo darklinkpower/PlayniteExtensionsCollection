@@ -8,21 +8,27 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Visibility="{Binding ControlVisibility}">
+        <Grid.Resources>
+            <DropShadowEffect x:Key="LogoEffect" Direction="{Binding SettingsModel.Settings.LogosShadowDirection}"
+                              Opacity="{Binding SettingsModel.Settings.LogosEffectOpacity}" Color="#000000"
+                              ShadowDepth="{Binding SettingsModel.Settings.LogosShadowDepth}" BlurRadius="{Binding SettingsModel.Settings.LogosBlurRadius}" />
+        </Grid.Resources>
         <Image Name="LogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
                VerticalAlignment="{Binding SettingsModel.Settings.LogoVerticalAlignment}"
                HorizontalAlignment="{Binding SettingsModel.Settings.LogoHorizontalAlignment}"
                MaxWidth="{Binding SettingsModel.Settings.LogoMaxWidth}"
                MaxHeight="{Binding SettingsModel.Settings.LogoMaxHeight}"
                StretchDirection="Both">
-            <Image.Effect>
-                <DropShadowEffect Direction="0" Color="#66000000" ShadowDepth="0" BlurRadius="20" />
-            </Image.Effect>
             <Image.Style>
                 <Style TargetType="Image">
+                    <Setter Property="Effect" Value="{x:Null}"/>
                     <Setter Property="Source" Value="{Binding LogoSource, Converter={StaticResource ImageStringToImageConverter}}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding LogoSource}" Value="{x:Null}">
                             <Setter Property="Source" Value="{x:Null}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SettingsModel.Settings.LogosEnableShadowEffect}" Value="true">
+                            <Setter Property="Effect" Value="{DynamicResource LogoEffect}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

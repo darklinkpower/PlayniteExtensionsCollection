@@ -177,6 +177,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private double logoMaxWidth { get; set; } = 600;
         public double LogoMaxWidth
@@ -188,6 +189,7 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
         [DontSerialize]
         private double logoMaxHeight { get; set; } = 200;
         public double LogoMaxHeight
@@ -199,6 +201,67 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool logosEnableShadowEffect { get; set; } = true;
+        public bool LogosEnableShadowEffect
+        {
+            get => logosEnableShadowEffect;
+            set
+            {
+                logosEnableShadowEffect = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private double logosShadowDepth { get; set; } = 0;
+        public double LogosShadowDepth
+        {
+            get => logosShadowDepth;
+            set
+            {
+                logosShadowDepth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private double logosShadowDirection { get; set; } = 0;
+        public double LogosShadowDirection
+        {
+            get => logosShadowDirection;
+            set
+            {
+                logosShadowDirection = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private double logosBlurRadius { get; set; } = 20;
+        public double LogosBlurRadius
+        {
+            get => logosBlurRadius;
+            set
+            {
+                logosBlurRadius = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private double logosEffectOpacity { get; set; } = 0.75;
+        public double LogosEffectOpacity
+        {
+            get => logosEffectOpacity;
+            set
+            {
+                logosEffectOpacity = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DontSerialize]
         private HorizontalAlignment logoHorizontalAlignment { get; set; } = HorizontalAlignment.Center;
         public HorizontalAlignment LogoHorizontalAlignment
