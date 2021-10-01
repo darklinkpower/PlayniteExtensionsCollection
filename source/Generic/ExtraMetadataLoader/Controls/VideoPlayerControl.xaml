@@ -66,7 +66,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid Name="SliderGrid" Grid.Column="0" Margin="0,0,10,0">
                                     <ProgressBar x:Name="playbackProgressBar" Height="20" Padding="0" Width="{Binding ElementName=SliderGrid, Path=Width}"/>
-                                    <Slider x:Name="timelineSlider" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Center"
+                                    <Slider x:Name="timelineSlider" Height="{Binding ElementName=playbackProgressBar, Path=ActualHeight}" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Center"
                                         Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" />
                                 </Grid>
                                 <DockPanel Grid.Column="1">
