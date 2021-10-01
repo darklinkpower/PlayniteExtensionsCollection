@@ -55,3 +55,9 @@ Packages:
     - Split logo and video settings in tabs
     - Options to enable or disable logo effect and configure its depth, direction, blur radius and opacity
     - Fix small unresponsiveness when loading logos
+  - Version: 1.8
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_8.pext
+    Changelog:
+    - Fix playback bar and slider progress being misaligned
