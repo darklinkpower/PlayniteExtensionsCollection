@@ -3,24 +3,24 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Ouvrir le gestionnaire de vidéos</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription">Afficher les paramètres</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Ajouter la fonction ignorer l'écran de démarrage aux jeux sélectionnés</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Remove image splash screen skip feature from selected games</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Retirer la fonction ignorer l'écran de démarrage aux jeux sélectionnés</sys:String>
 
-    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro video has been added</sys:String>
-    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro video has been removed</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Added &quot;{0}&quot; exclude feature to {1} game(s)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Removed &quot;{0}&quot; exclude feature to {1} game(s)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">La vidéo de démarrage a été ajoutée</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">La vidéo de démarrage a été supprimée</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Ajout de la fonction d'exclusion &quot;{0}&quot; à {1} jeu(x)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Suppression de la fonction d'exclusion &quot;{0}&quot; à {1} jeu(x)</sys:String>
     
-    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Execute extension in Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">View splashscreen images in Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">View intro videos in Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Execute extension in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">View splashscreen images in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">View intro videos in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Add game logo in splashscreen image if available</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Use game icon from Metadata as logo</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Use black splashscreen instead of the splashscreen image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Exécuter l'extension en mode bureau</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Afficher les images de démarrage en mode bureau</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Voir les vidéos de démarrage en mode bureau</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Fermer automatiquement l'image de démarrage en mode bureau (désactiver ceci masque le bureau lorsque le jeu s’arrête mais peut causer des problèmes)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Exécuter l'extension en mode plein écran</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Afficher les images de démarrage en mode plein écran</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">Voir les vidéos de démarrage en mode plein écran</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Fermer automatiquement l'image de démarrage en mode plein écran (désactiver ceci masque le bureau lorsque le jeu s’arrête mais peut causer des problèmes)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Ajouter le logo du jeu dans l'image de démarrage si disponible</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Utiliser l'icône du jeu des médias comme logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Utiliser un écran noir de démarrage au lieu de l'image de démarrage</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Position horizontale du logo:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Position verticale du logo:</sys:String>
 </ResourceDictionary>
