@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Video-Manager öffnen</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription">Einstellungen anzeigen</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Füge Bild-Splashscreen-Überspringen-Funktion ausgewählten Spielen hinzu</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Entferne Bild-Splashscreen-Überspringen-Funktion von ausgewählten Spielen</sys:String>
 
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro-Video wurde hinzugefügt</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro-Video wurde entfernt</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">&quot;{0}&quot;-Ausschluss-Funktion zu {1} Spiel(en) hinzugefügt</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">&quot;{0}&quot;-Ausschluss-Funktion von {1} Spiel(en) entfernt</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Removed &quot;{0}&quot; exclude feature from {1} game(s)</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Erweiterung im Desktop-Modus ausführen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Splashscreen-Bilder im Desktop-Modus anzeigen</sys:String>
@@ -23,4 +22,22 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Schwarzen Splashscreen anstelle des Splashscreen-Bildes verwenden</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Logo horizontale Position:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Logo vertikale Position:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">Left</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">Center</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">Right</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Top</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Center</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Bottom</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Video manager</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Selected games</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">Sources</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Plaforms</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlayniteModeLabel">Playnite Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionLabel">Collection:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerSearchLabel">Search:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Video not available</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Add video</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Remove video</sys:String>
+
 </ResourceDictionary>
