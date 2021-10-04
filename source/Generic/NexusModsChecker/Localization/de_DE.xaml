@@ -4,7 +4,7 @@
     <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Nexus-Mods-Funktion und Links zu allen Spielen hinzufügen</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Fehler beim Herunterladen von &quot;{0}&quot;. Fehler: {1}</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">Es sind keine Spiele ausgewählt.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games where found on Nexus.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games were found on Nexus Mods.</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Spiele mit Mods auf Nexus Mods: {0}
 
 Funktion `&quot;{1}`&quot; zu {2} Spiel(en) hinzugefügt.
