@@ -367,7 +367,7 @@ namespace InstallationStatusUpdater
             int markedUninstalled = 0;
             foreach (Game game in gameCollection)
             {
-                if (game.IncludeLibraryPluginAction == true && settings.Settings.SkipHandledByPlugin == true)
+                if (game.IncludeLibraryPluginAction == true && settings.Settings.SkipHandledByPlugin == true && game.PluginId != Guid.Empty)
                 {
                     continue;
                 }
