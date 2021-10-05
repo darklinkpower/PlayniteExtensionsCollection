@@ -17,45 +17,42 @@ function Update-IsFreestyleEnabled
     param(
         $scriptMainMenuItemActionArgs
     )
-    
-    $ExtensionName = "NVIDIA Freestyle checker"
-    
-    $featureName = "NVIDIA Freestyle"
-    $feature = $PlayniteApi.Database.Features.Add($featureName)
 
-    $FreestyleEnabled = 0
-    $CounterFeatureAdded = 0
+    $feature = $PlayniteApi.Database.Features.Add("NVIDIA Freestyle")
+
+    $freestyleEnabled = 0
+    $counterFeatureAdded = 0
     
     try {
         $uri = "https://www.nvidia.com/es-la/geforce/geforce-experience/games/"
         $webClient = New-Object System.Net.WebClient
         $webClient.Encoding = [System.Text.Encoding]::UTF8
-        $WebContent = $webClient.DownloadString($uri)
+        $webContent = $webClient.DownloadString($uri)
         $webClient.Dispose()
     } catch {
         $webClient.Dispose()
         $errorMessage = $_.Exception.Message
-        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage") -f $errorMessage), $ExtensionName)
-        exit
+        $PlayniteApi.Dialogs.ShowErrorMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage") -f $errorMessage), "NVIDIA Freestyle checker")
+        return
     }
     
     # Use regex to get supported games
     $regex = '(?:<div class="gameName(?:.*?(?=freestyle))freestyle(?:.*?(?=">))">\s+)([^\n]+)'
-    $UrlMatches = ([regex]$regex).Matches($WebContent)
+    $urlMatches = ([regex]$regex).Matches($webContent)
 
-    [System.Collections.Generic.List[string]]$SupportedGames = @()
-    foreach ($Match in $UrlMatches) {
-        $SupportedGame = $Match.Groups[1].Value -replace '[^\p{L}\p{Nd}]', ''
-        $SupportedGames.Add($SupportedGame)
+    [System.Collections.Generic.List[string]]$supportedGames = @()
+    foreach ($match in $urlMatches) {
+        $supportedGame = $match.Groups[1].Value -replace '[^\p{L}\p{Nd}]', ''
+        $supportedGames.Add($SupportedGame)
     }
-    if ($SupportedGames.count -eq 0)
+    if ($supportedGames.count -eq 0)
     {
-        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage"), $ExtensionName)
-        exit
+        $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage"), "NVIDIA Freestyle checker")
+        return
     }
 
-    $GameDatabase = $PlayniteApi.Database.Games
-    foreach ($Game in $GameDatabase) {
+    $gameDatabase = $PlayniteApi.Database.Games
+    foreach ($game in $GameDatabase) {
         if ($null -eq $game.Platforms)
         {
             continue
@@ -80,34 +77,34 @@ function Update-IsFreestyleEnabled
             }
         }
         
-        if ($Game.Features.Name -contains $featureName)
+        if ($game.Features.Name -contains $featureName)
         {
-            $FreestyleEnabled++
+            $freestyleEnabled++
             continue
         }
 
-        $GameName = $($Game.name) -replace '[^\p{L}\p{Nd}]', ''
-        if ($SupportedGames -contains $GameName)
+        $gameName = $($game.name) -replace '[^\p{L}\p{Nd}]', ''
+        if ($supportedGames -contains $gameName)
         {
             # Add feature Id to game
-            if ($Game.FeatureIds) 
+            if ($game.FeatureIds) 
             {
-                $Game.FeatureIds += $feature.Id
+                $game.FeatureIds += $feature.Id
             }
             else 
             {
                 # Fix in case game has null FeatureIds
-                $Game.FeatureIds = $feature.Id
+                $game.FeatureIds = $feature.Id
             }
 
             # Update game in database
-            $PlayniteApi.Database.Games.Update($Game)
-            $__logger.Info("$ExtensionName - Feature added to `"$($Game.name)`"")
-            $CounterFeatureAdded++
-            $FreestyleEnabled++
+            $PlayniteApi.Database.Games.Update($game)
+            $__logger.Info("Feature added to `"$($game.name)`"")
+            $counterFeatureAdded++
+            $freestyleEnabled++
         }
     }
 
     # Show finish dialogue with results
-    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_ResultsMessage") -f $FreestyleEnabled, $featureName, $CounterFeatureAdded), $ExtensionName)
+    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCNVIDIA_Freestyle_Checker_ResultsMessage") -f $freestyleEnabled, $featureName, $counterFeatureAdded), "NVIDIA Freestyle checker")
 }
