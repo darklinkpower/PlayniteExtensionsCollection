@@ -4,7 +4,7 @@ Author: darklinkpower
 Version: 2.1
 Module: LogOpen.psm1
 Type: Script
-Icon: icon.jpg
+Icon: icon.png
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
