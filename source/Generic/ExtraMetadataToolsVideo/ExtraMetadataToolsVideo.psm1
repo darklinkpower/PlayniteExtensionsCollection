@@ -529,6 +529,12 @@ function Get-IsConversionNeeded
     )
     
     $videoInformation = Get-VideoInformation $videoPath
+
+    if ($null -eq $videoInformation)
+    {
+        return "invalidFile"
+    }
+
     if ($null -eq $videoInformation)
     {
         $__logger.Info(("File {0} is invalid, could not obtain video information" -f $videoPath))
@@ -575,6 +581,18 @@ function Get-VideoInformation
     # Restore ErrorActionPreference
     $ErrorActionPreference = "Stop"
     
+    if ($null -eq $output.streams)
+    {
+        $__logger.Info(("File {0} is invalid. Couldn't obtain any output with ffprobe" -f $videoPath))
+        return $null
+    }
+
+    if ($output.streams.Count -eq 0)
+    {
+        $__logger.Info(("File {0} is invalid. Obtained number of streams was 0" -f $videoPath))
+        return $null
+    }
+
     $propertiesString = @(
         "Video Path: $videoPath"
     )
@@ -599,6 +617,11 @@ function Get-VideoMicrotrailerFromVideo
 
     $settings = Get-Settings
     $videoInformation = Get-VideoInformation $videoSourcePath
+
+    if ($null -eq $videoInformation)
+    {
+        return $null
+    }
 
     if ($null -eq $videoInformation.pix_fmt)
     {
