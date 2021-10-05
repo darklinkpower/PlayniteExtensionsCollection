@@ -397,7 +397,7 @@ function Get-GoogleLogo
                     $webClient.Dispose()
                     $errorMessage = $_.Exception.Message
                     $__logger.Info("Error downloading file `"$logoUri`". Error: $errorMessage")
-                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage") -f $errorMessage), "Extra Metadata tools")
+                    $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage") -f $logoUri, $errorMessage), "Extra Metadata tools")
                 }
             }
         })
