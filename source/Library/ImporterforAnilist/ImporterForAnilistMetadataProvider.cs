@@ -25,18 +25,19 @@ namespace ImporterforAnilist
         public const string MalSyncAnilistEndpoint = @"https://api.malsync.moe/mal/{0}/anilist:{1}";
         public const string MalSyncMyanimelistEndpoint = @"https://api.malsync.moe/mal/{0}/{1}";
         private readonly string propertiesPrefix = @"";
-        public int malsyncRequestsCount = 0;
+        private MalSyncRateLimiter malSyncRateLimiter;
 
         public override void Dispose()
         {
             client.Dispose();
         }
 
-        public AnilistMetadataProvider(ImporterForAnilist library, IPlayniteAPI PlayniteApi, string propertiesPrefix)
+        public AnilistMetadataProvider(ImporterForAnilist library, IPlayniteAPI PlayniteApi, string propertiesPrefix, MalSyncRateLimiter malSyncRateLimiter)
         {
             this.PlayniteApi = PlayniteApi;
             this.library = library;
             this.propertiesPrefix = propertiesPrefix;
+            this.malSyncRateLimiter = malSyncRateLimiter;
             this.client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             this.apiListQueryString = @"
@@ -186,13 +187,6 @@ namespace ImporterforAnilist
 
             if (!string.IsNullOrEmpty(type))
             {
-                //malSync allows 20 requests without limits. After 20 it opens a new request slot each 5 seconds. Using 10 for safety.
-                if (malsyncRequestsCount > 10)
-                {
-                    Thread.Sleep(5000);
-                }
-                malsyncRequestsCount++;
-
                 string queryUri = string.Empty;
                 if (!string.IsNullOrEmpty(idMal))
                 {
@@ -204,6 +198,11 @@ namespace ImporterforAnilist
                 }
                 try
                 {
+                    if (malSyncRateLimiter.ApiReqRemaining == 0)
+                    {
+                        Thread.Sleep(5000);
+                    }
+                    malSyncRateLimiter.Decrease();
                     var response = client.GetAsync(string.Format(queryUri));
                     var contents = response.Result.Content.ReadAsStringAsync();
                     if (contents.Result != "Not found in the fire")

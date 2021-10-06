@@ -58,6 +58,7 @@
     <Compile Include="ImporterForAnilistSettingsView.xaml.cs">
       <DependentUpon>ImporterForAnilistSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MalSyncRateLimiter.cs" />
     <Compile Include="Models\AnilistUserResponse.cs" />
     <Compile Include="Models\MalSyncSiteItem.cs" />
     <Compile Include="Models\MediaEntryResponse.cs" />

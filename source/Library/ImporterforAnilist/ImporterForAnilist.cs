@@ -27,6 +27,8 @@ namespace ImporterforAnilist
         // Implementing Client adds ability to open it via special menu in playnite.
         public override LibraryClient Client { get; } = new ImporterForAnilistClient();
 
+        public MalSyncRateLimiter MalSyncRateLimiter { get; } = new MalSyncRateLimiter();
+
         public ImporterForAnilist(IPlayniteAPI api) : base(api)
         {
             settings = new ImporterForAnilistSettingsViewModel(this);
@@ -294,7 +296,7 @@ namespace ImporterforAnilist
                 propertiesPrefix = string.Format("{0} ", propertiesPrefix);
             }
             
-            return new AnilistMetadataProvider(this, PlayniteApi, propertiesPrefix);
+            return new AnilistMetadataProvider(this, PlayniteApi, propertiesPrefix, MalSyncRateLimiter);
         }
     }
 }
