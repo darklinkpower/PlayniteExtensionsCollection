@@ -114,11 +114,16 @@ namespace SplashScreen
                 else if (skipSplashImage == false)
                 {
                     CreateSplashImageWindow();
+
+                    // To make sure splash window shows at least for a few seconds
+                    Task.Delay(10000);
                 }
             }
             else if (skipSplashImage == false)
             {
                 CreateSplashImageWindow();
+                // To make sure splash window shows at least for a few seconds
+                Task.Delay(10000);
             }
         }
 
@@ -134,55 +139,50 @@ namespace SplashScreen
                 Content = content
             };
 
-            content.VideoPlayer.MediaEnded += new RoutedEventHandler(delegate (object o, RoutedEventArgs a)
+            content.VideoPlayer.MediaEnded += async (src, args) =>
             {
                 content.VideoPlayer.Source = null;
                 if (!skipSplashImage)
                 {
                     CreateSplashImageWindow();
-                    System.Threading.Thread.Sleep(3000);
+                    await Task.Delay(3000);
                 }
                 window.Close();
-            });
+                return;
+            };
 
+            // Using ShowDialog method makes the window lock Playnite main window
+            // This ensures that the whole video is played before game is launched
             window.ShowDialog();
         }
 
         private void CreateSplashImageWindow()
         {
-            Task.Run(() =>
+            var window = new Window
             {
-                Application.Current.Dispatcher.Invoke(delegate
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                WindowState = WindowState.Maximized,
+                Title = "PlayniteSplashScreenExtension",
+                Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath),
+                Owner = null
+            };
+
+            if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
+                (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
+            {
+                var timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(30);
+                timer.Tick += (src, args) =>
                 {
-                    var window = new Window
-                    {
-                        WindowStyle = WindowStyle.None,
-                        ResizeMode = ResizeMode.NoResize,
-                        WindowState = WindowState.Maximized,
-                        Title = "PlayniteSplashScreenExtension",
-                        Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath)
-                    };
+                    timer.Stop();
+                    window.Close();
+                    return;
+                };
+                timer.Start();
+            }
 
-                    if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
-                        (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
-                    {
-                        var timer = new DispatcherTimer();
-                        timer.Interval = TimeSpan.FromSeconds(30);
-                        timer.Tick += new EventHandler(delegate (object o, EventArgs a)
-                        {
-                            window.Close();
-                            timer.Stop();
-                            return;
-                        });
-                        timer.Start();
-                    }
-
-                    window.Owner = null;
-                    window.ShowDialog();
-                });
-            });
-
-            Task.Delay(2000);
+            window.Show();
         }
 
         private string GetSplashVideoPath(Game game)
@@ -222,30 +222,33 @@ namespace SplashScreen
 
         private string GetSplashLogoPath(Game game)
         {
-            var logoPath = string.Empty;
             if (settings.Settings.UseIconAsLogo)
             {
                 if (game.Icon != null)
                 {
                     if (!game.Icon.StartsWith("http"))
                     {
-                        logger.Info("Found game icon");
-                        return PlayniteApi.Database.GetFullFilePath(game.Icon);
+                        var iconPath = PlayniteApi.Database.GetFullFilePath(game.Icon);
+                        if (File.Exists(iconPath))
+                        {
+                            logger.Info(string.Format("Found game icon in {0}", iconPath));
+                            return iconPath;
+                        }
                     }
                 }
             }
             else
             {
-                logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "Logo.png");
-                if (File.Exists(logoPath))
+                var logoPathSearch = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "Logo.png");
+                if (File.Exists(logoPathSearch))
                 {
-                    logger.Info(string.Format("Specific game logo found in {0}", logoPath));
-                    return logoPath;
+                    logger.Info(string.Format("Specific game logo found in {0}", logoPathSearch));
+                    return logoPathSearch;
                 }
             }
 
-            logger.Info("logo not found");
-            return logoPath;
+            logger.Info("Logo not found");
+            return string.Empty;
         }
 
         private string GetSplashImagePath(Game game)
