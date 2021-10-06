@@ -3,9 +3,9 @@
     <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesIdUrlDescription">Spiel(e) mit Steam-Id oder URL importieren</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription">Spiel(e) aus Depressurizer-Profil importieren</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_ResultsMessage">{0} neue Steam-Spiele hinzugefügt.</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">Enter Steam game Id or URL:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Warning. Couldn't verify if obtained AppId &quot;{0}&quot; is valid.
-Add this and all unknown AppIds?</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">Could not obtain any valid Steam AppId.</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">Steam-Spiel-Id oder URL eingeben:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Warnung. Konnte nicht überprüfen, ob AppId &quot;{0}&quot; gültig ist.
+Füge diese und alle unbekannten AppIds hinzu?</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">Fehler beim Herunterladen der Spielinformationen für AppId &quot;{0}&quot;. Fehler: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">Konnte keine gültige Steam-AppID finden.</sys:String>
 </ResourceDictionary>
