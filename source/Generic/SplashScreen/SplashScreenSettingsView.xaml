@@ -34,16 +34,16 @@
                 <DockPanel Margin="0,10,0,0">
                     <TextBlock  Text="{DynamicResource LOCSplashScreen_SettingTextBlockLogoPosition}"
                                     DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="cbLogoHorizontalAlignment" DockPanel.Dock="Left" Width="Auto" MinWidth="150"
-                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <ComboBox DockPanel.Dock="Left" Width="Auto" MinWidth="150"
+                              HorizontalAlignment="Left" VerticalAlignment="Center" ItemsSource="{Binding Settings.LogoHorizontalSource}"
                               DisplayMemberPath="Value" SelectedValue="{Binding Settings.LogoHorizontalAlignment}"
                               SelectedValuePath="Key" Margin="10,0,0,0" />
                 </DockPanel>
                 <DockPanel Margin="0,10,0,0">
                     <TextBlock Text="{DynamicResource LOCSplashScreen_SettingTextBlockLogoVerticalAlignment}"
                                    DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="cbLogoVerticalAlignment" DockPanel.Dock="Left" Width="Auto" MinWidth="150"
-                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <ComboBox DockPanel.Dock="Left" Width="Auto" MinWidth="150"
+                              HorizontalAlignment="Left" VerticalAlignment="Center" ItemsSource="{Binding Settings.LogoVerticalSource}"
                               DisplayMemberPath="Value" SelectedValue="{Binding Settings.LogoVerticalAlignment}"
                               SelectedValuePath="Key" Margin="10,0,0,0" />
                 </DockPanel>

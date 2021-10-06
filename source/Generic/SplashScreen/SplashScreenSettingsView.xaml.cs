@@ -21,20 +21,6 @@ namespace SplashScreen
         public SplashScreenSettingsView()
         {
             InitializeComponent();
-
-            cbLogoHorizontalAlignment.ItemsSource = new Dictionary<HorizontalAlignment, string>
-            {
-                { HorizontalAlignment.Left, ResourceProvider.GetString("LOCSplashScreen_SettingHorizontalAlignmentLeftLabel") },
-                { HorizontalAlignment.Center, ResourceProvider.GetString("LOCSplashScreen_SettingHorizontalAlignmentCenterLabel") },
-                { HorizontalAlignment.Right, ResourceProvider.GetString("LOCSplashScreen_SettingHorizontalAlignmentRightLabel") },
-            };
-
-            cbLogoVerticalAlignment.ItemsSource = new Dictionary<VerticalAlignment, string>
-            {
-                { VerticalAlignment.Top, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentTopLabel") },
-                { VerticalAlignment.Center, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentCenterLabel") },
-                { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentBottomLabel") },
-            };
         }
     }
 }
