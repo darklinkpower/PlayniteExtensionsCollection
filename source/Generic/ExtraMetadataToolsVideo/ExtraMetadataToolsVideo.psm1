@@ -48,7 +48,7 @@ function GetGameMenuItems
     $menuItem9.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription")
     $menuItem9.FunctionName = "Set-YouTubeVideo"
     $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
-    
+	
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription")
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
@@ -59,7 +59,12 @@ function GetGameMenuItems
     $menuItem11.FunctionName = "Update-AssetsStatusGameDatabase"
     $menuItem11.MenuSection = "Extra Metadata tools"
 
-    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem11
+    $menuItem12 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem12.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoId")
+    $menuItem12.FunctionName = "Set-YouTubeVideoID"
+    $menuItem12.MenuSection = "Extra Metadata tools|Video|Trailers"
+    
+    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem12, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem11
 }
 
 function Get-MandatorySettingsList
@@ -814,6 +819,23 @@ function Remove-DownloadedVideos
     # Update assets status of collection
     Update-CollectionExtraAssetsStatus $gameDatabase $false
     $PlayniteApi.Dialogs.ShowMessage(("Done.`n`nDeleted videos: {0}" -f $deletedVideos.ToString()), "Extra Metadata Tools")
+}
+
+function Set-YouTubeVideoID
+{
+    param(
+        $scriptGameMenuItemActionArgs
+    )
+
+    $Result = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_EnterYoutubeIdMessage"), "Extra Metadata Tools", "")
+
+    if($Result.result)
+    {
+        if ($Result.selectedString -ne "")
+        {
+            Set-YouTubeVideoManual $Result.selectedString
+        }
+    }
 }
 
 function Set-YouTubeVideo
