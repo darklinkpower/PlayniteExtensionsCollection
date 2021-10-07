@@ -10,8 +10,9 @@
     <Grid Visibility="{Binding ControlVisibility}">
         <Grid.Resources>
             <DropShadowEffect x:Key="LogoEffect" Direction="{Binding SettingsModel.Settings.LogosShadowDirection}"
-                              Opacity="{Binding SettingsModel.Settings.LogosEffectOpacity}" Color="#000000"
-                              ShadowDepth="{Binding SettingsModel.Settings.LogosShadowDepth}" BlurRadius="{Binding SettingsModel.Settings.LogosBlurRadius}" />
+                              Opacity="{Binding SettingsModel.Settings.LogosEffectOpacity}" Color="#808080"
+                              ShadowDepth="{Binding SettingsModel.Settings.LogosShadowDepth}"
+                              BlurRadius="{Binding SettingsModel.Settings.LogosBlurRadius}" />
         </Grid.Resources>
         <Image Name="LogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
                VerticalAlignment="{Binding SettingsModel.Settings.LogoVerticalAlignment}"
