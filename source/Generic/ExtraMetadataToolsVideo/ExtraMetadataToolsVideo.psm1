@@ -827,13 +827,13 @@ function Set-YouTubeVideoID
         $scriptGameMenuItemActionArgs
     )
 
-    $Result = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_EnterYoutubeIdMessage"), "Extra Metadata Tools", "")
+    $result = $PlayniteApi.Dialogs.SelectString([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_EnterYoutubeIdMessage"), "Extra Metadata Tools", "")
 
-    if ($Result.result)
+    if ($result.result)
     {
-        if ($Result.selectedString -ne "")
+        if ($result.selectedString -ne "")
         {
-            Set-YouTubeVideoManual $Result.selectedString
+            Set-YouTubeVideoManual $result.selectedString
         }
     }
 }
