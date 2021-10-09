@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,11 @@ namespace SplashScreen.Views
         public SplashScreenImage(SplashScreenSettings settings, string splashImagePath, string logoPath)
         {
             InitializeComponent();
-            if (!string.IsNullOrEmpty(splashImagePath))
+            if (!string.IsNullOrEmpty(splashImagePath) && File.Exists(splashImagePath))
             {
                 BackgroundImage.Source = new BitmapImage(new Uri(splashImagePath));
             }
-            if (!string.IsNullOrEmpty(logoPath))
+            if (!string.IsNullOrEmpty(logoPath) && File.Exists(logoPath))
             {
                 LogoImage.Source = new BitmapImage(new Uri(logoPath));
                 LogoImage.VerticalAlignment = settings.LogoVerticalAlignment;
