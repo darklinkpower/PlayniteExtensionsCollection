@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Process Images in Cache</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Select ImageMagick executable</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick executable path saved</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Afbeeldingen in de cache verwerken</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Selecteer ImageMagick programma</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick pad opgeslagen</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick programma niet gevonden in {0}. 
+Voer de extensie opnieuw uit om deze naar de juiste locatie te configureren.</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Afbeeldingsverwerking voltooid. Resultaten:
 
-Images Processed: {0}
+Afbeeldingen verwerkt: {0}
 
-Images that had size reduced: {1}
-Errors: {2}
+Afbeeldingen met verminderde grootte: {1}
+Fouten: {2}
 
-Image Cache Size Before: {3} MB
-Image Cache Size After: {4} MB</sys:String>
+Grootte Afbeelding Cache Voordien: {3} MB
+Grootte Afbeelding Cache Nadien: {4} MB</sys:String>
 </ResourceDictionary>
