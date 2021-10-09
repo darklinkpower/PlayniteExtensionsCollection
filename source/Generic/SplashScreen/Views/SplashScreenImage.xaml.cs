@@ -25,11 +25,11 @@ namespace SplashScreen.Views
         public SplashScreenImage(SplashScreenSettings settings, string splashImagePath, string logoPath)
         {
             InitializeComponent();
-            if (!string.IsNullOrEmpty(splashImagePath) && File.Exists(splashImagePath))
+            if (!string.IsNullOrEmpty(splashImagePath))
             {
                 BackgroundImage.Source = new BitmapImage(new Uri(splashImagePath));
             }
-            if (!string.IsNullOrEmpty(logoPath) && File.Exists(logoPath))
+            if (!string.IsNullOrEmpty(logoPath))
             {
                 LogoImage.Source = new BitmapImage(new Uri(logoPath));
                 LogoImage.VerticalAlignment = settings.LogoVerticalAlignment;

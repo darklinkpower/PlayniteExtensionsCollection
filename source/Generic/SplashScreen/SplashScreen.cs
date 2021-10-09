@@ -56,6 +56,7 @@ namespace SplashScreen
             {
                 // Dispatcher is needed since the window is created on a different thread
                 currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
+                currentSplashWindow = null;
             }
 
             currentSplashWindow = null;
@@ -144,8 +145,6 @@ namespace SplashScreen
                 content.VideoPlayer.MediaEnded += async (_, __) =>
                 {
                     content.VideoPlayer.Source = null;
-                    // Unblock main thread and let Playnite start a game.
-                    stopBlockingEvent.Set();
                     if (!skipSplashImage)
                     {
                         currentSplashWindow.Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath);
@@ -153,9 +152,14 @@ namespace SplashScreen
                         await Task.Delay(3000);
                     }
 
+                    // Unblock main thread and let Playnite start a game.
+                    stopBlockingEvent.Set();
+
                     if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                         (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
                     {
+                        // Closes splash screen after another 30 seconds, but the game is already starting.
+                        await Task.Delay(30000);
                         currentSplashWindow.Close();
                         currentSplashWindow = null;
                     }
@@ -175,8 +179,52 @@ namespace SplashScreen
 
         private void CreateSplashImageWindow(string splashImagePath, string logoPath)
         {
+            var stopBlockingEvent = new AutoResetEvent(false);
+            var splashWindowThread = new Thread(new ThreadStart(() =>
+            {
+                currentSplashWindow = new Window
+                {
+                    WindowStyle = WindowStyle.None,
+                    ResizeMode = ResizeMode.NoResize,
+                    WindowState = WindowState.Maximized,
+                    Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath)
+                };
+
+                currentSplashWindow.Closed += (_, __) => currentSplashWindow.Dispatcher.InvokeShutdown();
+                Task.Delay(3000).ContinueWith(_ =>
+                {
+                    stopBlockingEvent.Set();
+                });
+
+                if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
+                    (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
+                {
+                    Task.Delay(30000).ContinueWith(_ =>
+                    {
+                        // It needs to be checked if window still exists, in case it was closed manually or
+                        // closed by the extension with game close
+                        if (currentSplashWindow != null)
+                        {
+                            currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
+                            currentSplashWindow = null;
+                        }
+                    });
+                }
+
+                currentSplashWindow.Show();
+                System.Windows.Threading.Dispatcher.Run();
+            }));
+
+            splashWindowThread.SetApartmentState(ApartmentState.STA);
+            splashWindowThread.IsBackground = true;
+            splashWindowThread.Start();
+            stopBlockingEvent.WaitOne();
+        }
+
+        private void CreateSplashImageWindowss(string splashImagePath, string logoPath)
+        {
             // We don't need to do the same threading stuff here like for a video since we are not blocking Playnite
-            // and letting it start the game immidietely.
+            // and letting it start the game immediately.
             currentSplashWindow = new Window
             {
                 WindowStyle = WindowStyle.None,
@@ -186,16 +234,22 @@ namespace SplashScreen
             };
 
             currentSplashWindow.Show();
+
             if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                 (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
             {
                 // This is non-blocking wait that will close our window after some time.
-                Task.Delay(3000).ContinueWith(_ =>
+                Task.Delay(30000).ContinueWith(_ =>
                 {
-                    // Dispatcher needed here since Task.Delay continues from different thread compared to
-                    // where we created the window.
-                    currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
-                    currentSplashWindow = null;
+                    // It needs to be checked if window still exists, in case it was closed manually or
+                    // closed by the extension with game close
+                    if (currentSplashWindow != null)
+                    {
+                        // Dispatcher needed here since Task.Delay continues from different thread compared to
+                        // where we created the window.
+                        currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
+                        currentSplashWindow = null;
+                    }
                 });
             }
         }
@@ -237,7 +291,6 @@ namespace SplashScreen
 
         private string GetSplashLogoPath(Game game)
         {
-            var logoPathSearch = string.Empty;
             if (settings.Settings.UseIconAsLogo)
             {
                 if (game.Icon != null)
@@ -251,7 +304,7 @@ namespace SplashScreen
             }
             else
             {
-                logoPathSearch = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "Logo.png");
+                var logoPathSearch = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "Logo.png");
                 if (File.Exists(logoPathSearch))
                 {
                     logger.Info(string.Format("Specific game logo found in {0}", logoPathSearch));
@@ -260,7 +313,7 @@ namespace SplashScreen
             }
 
             logger.Info("logo not found");
-            return logoPathSearch;
+            return string.Empty;
         }
 
         private string GetSplashImagePath(Game game)
@@ -299,6 +352,7 @@ namespace SplashScreen
             if (currentSplashWindow != null)
             {
                 currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
+                currentSplashWindow = null;
             }
         }
 
