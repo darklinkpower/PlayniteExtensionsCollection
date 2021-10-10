@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesAutomaticDescription">Add Twitch links to selected games (Automatic)</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesSemiAutomaticDescription">Add Twitch links to selected games (Semi-Automatic)</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_GenericGameInformationDownloadFailMessage">Error downloading game information of &quot;{0}&quot;.</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">Invalid Url.</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">Do you want to continue the extension execution for the remaining games?</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">Twitch link added to {0} game(s).</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesAutomaticDescription">Voeg Twitch-links toe aan geselecteerde spellen (Automatisch)</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesSemiAutomaticDescription">Voeg Twitch-links toe aan geselecteerde spellen (Semi-Automatisch)</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_GenericGameInformationDownloadFailMessage">Fout bij het downloaden van spel informatie van &quot;{0}&quot;.</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">Ongeldige Url.</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">Wil je doorgaan met het uitvoeren van de extensie voor de resterende spellen?</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">Twitch-link toegevoegd aan {0} spel(len).</sys:String>
 </ResourceDictionary>
