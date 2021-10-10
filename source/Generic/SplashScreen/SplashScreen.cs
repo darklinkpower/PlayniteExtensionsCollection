@@ -164,6 +164,8 @@ namespace SplashScreen
                     currentSplashWindow = null;
                 };
 
+
+
                 content.VideoPlayer.MediaEnded += async (_, __) =>
                 {
                     content.VideoPlayer.Source = null;
@@ -173,15 +175,24 @@ namespace SplashScreen
                         // This needs to run async otherwise we would block our UI thread and prevent splash image from showing
                         await Task.Delay(3000);
 
+                        // Unblock main thread and let Playnite start a game.
+                        stopBlockingEvent.Set();
+
                         if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                             (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
                         {
                             // Closes splash screen after another 30 seconds, but the game is already starting.
                             await Task.Delay(30000);
+                            currentSplashWindow.Close();
+                            currentSplashWindow = null;
                         }
                     }
-
-                    currentSplashWindow.Close();
+                    else
+                    {
+                        // Unblock main thread and let Playnite start a game.
+                        stopBlockingEvent.Set();
+                        currentSplashWindow.Close();
+                    }
                 };
 
                 currentSplashWindow.Show();
