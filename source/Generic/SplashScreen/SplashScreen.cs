@@ -151,8 +151,18 @@ namespace SplashScreen
                     Content = content
                 };
 
-                // Apparently necessary to properly cleanup UI thread we created for this window.
-                currentSplashWindow.Closed += (_, __) => currentSplashWindow.Dispatcher.InvokeShutdown();
+                currentSplashWindow.Closed += (_, __) =>
+                {
+                    // To prevent video sound from playing in case window was closed manually
+                    content.VideoPlayer.Source = null;
+
+                    // Apparently necessary to properly cleanup UI thread we created for this window.
+                    currentSplashWindow.Dispatcher.InvokeShutdown();
+
+                    // Unblock main thread and let Playnite start a game. Works if window is closed manually or by event
+                    stopBlockingEvent.Set();
+                    currentSplashWindow = null;
+                };
 
                 content.VideoPlayer.MediaEnded += async (_, __) =>
                 {
@@ -168,18 +178,10 @@ namespace SplashScreen
                         {
                             // Closes splash screen after another 30 seconds, but the game is already starting.
                             await Task.Delay(30000);
-                            currentSplashWindow.Close();
-                            currentSplashWindow = null;
                         }
                     }
-                    else
-                    {
-                        currentSplashWindow.Close();
-                        currentSplashWindow = null;
-                    }
 
-                    // Unblock main thread and let Playnite start a game.
-                    stopBlockingEvent.Set();
+                    currentSplashWindow.Close();
                 };
 
                 currentSplashWindow.Show();
@@ -207,7 +209,16 @@ namespace SplashScreen
                     Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath)
                 };
 
-                currentSplashWindow.Closed += (_, __) => currentSplashWindow.Dispatcher.InvokeShutdown();
+                currentSplashWindow.Closed += (_, __) =>
+                {
+                    // Apparently necessary to properly cleanup UI thread we created for this window.
+                    currentSplashWindow.Dispatcher.InvokeShutdown();
+
+                    // Unblock main thread and let Playnite start a game. Works if window is closed manually or by event
+                    stopBlockingEvent.Set();
+                    currentSplashWindow = null;
+                };
+
                 Task.Delay(3000).ContinueWith(_ =>
                 {
                     stopBlockingEvent.Set();
