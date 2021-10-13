@@ -164,8 +164,6 @@ namespace SplashScreen
                     currentSplashWindow = null;
                 };
 
-
-
                 content.VideoPlayer.MediaEnded += async (_, __) =>
                 {
                     content.VideoPlayer.Source = null;
