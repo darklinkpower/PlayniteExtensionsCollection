@@ -23,7 +23,7 @@ function GetGameMenuItems
     $menuItem11.MenuSection = "$extensionName|$subSection"
 
     $menuItem12 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem12.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemNewsDescription")
+    $menuItem12.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemComponentNewsDescription")
     $menuItem12.FunctionName = "Start-ComponentNews"
     $menuItem12.MenuSection = "$extensionName|$subSection"
 
