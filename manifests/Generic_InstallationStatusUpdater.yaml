@@ -55,3 +55,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/Installation_Status_Updater_2_6.pext
     Changelog:
     - Fix in case drive is not ready when scanning connected drives
+  - Version: 2.7
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Installation_Status_Updater_2_7.pext
+    Changelog:
+    - Updated localizations
+    - Fix all games added in Playnite 9 version being skipped if option to skip games handled by library plugins has been enabled

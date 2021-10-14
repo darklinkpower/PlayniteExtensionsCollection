@@ -22,3 +22,9 @@ Packages:
     - Updated localizations
     - Add import of Origin dates
     - Add export of Origin licences
+  - Version: 2.3
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_3.pext
+    Changelog:
+    - Updated localizations

@@ -26,3 +26,10 @@ Packages:
     Changelog:
     - Updated localizations
     - Update to PlayniteSDK.6.0.0
+  - Version: 2.4
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_4.pext
+    Changelog:
+    - Updated localizations
+    - Improved rate limit handling for metadata requests

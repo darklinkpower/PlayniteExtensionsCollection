@@ -20,3 +20,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Update to PlayniteSDK.6.0.0
+  - Version: 2.3
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_3.pext
+    Changelog:
+    - Updated localizations

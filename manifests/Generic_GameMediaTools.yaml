@@ -19,3 +19,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta4/Game_Media_Tools_2_2.pext
     Changelog:
     - Updated localizations
+  - Version: 2.3
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Game_Media_Tools_2_3.pext
+    Changelog:
+    - Updated localizations

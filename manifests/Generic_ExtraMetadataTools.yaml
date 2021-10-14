@@ -21,3 +21,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/v2.0-beta3/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_2.pext
     Changelog:
     - Updated localizations
+  - Version: 2.3
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_3.pext
+    Changelog:
+    - Updated localizations
+    - Fix error when trying to display a specific dialog

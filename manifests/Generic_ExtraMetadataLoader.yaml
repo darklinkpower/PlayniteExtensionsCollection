@@ -61,3 +61,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_8.pext
     Changelog:
     - Fix playback bar and slider progress being misaligned
+  - Version: 1.9
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_9.pext
+    Changelog:
+    - Updated localizations
+    - Changed color of logo shadow effect
