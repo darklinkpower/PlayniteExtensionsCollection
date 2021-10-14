@@ -11,7 +11,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using System.Management;
 
 namespace InstallationStatusUpdater
 {
@@ -372,21 +371,9 @@ namespace InstallationStatusUpdater
                     continue;
                 }
                 
-                if (game.Features != null)
+                if (game.Features != null && game.Features.Any(x => x.Name == skipFeatureName))
                 {
-                    var skipGame = false;
-                    foreach (GameFeature gameFeature in game.Features)
-                    {
-                        if (gameFeature.Name == skipFeatureName)
-                        {
-                            skipGame = true;
-                            break;
-                        }
-                    }
-                    if (skipGame == true)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
                 
                 var isInstalled = false;
@@ -396,11 +383,7 @@ namespace InstallationStatusUpdater
                     installDirectory = game.InstallDirectory.ToLower();
                 }
 
-                if (game.GameActions == null)
-                {
-                    isInstalled = false;
-                }
-                else if (game.GameActions.Count > 0)
+                if (game.GameActions != null && game.GameActions.Count > 0)
                 {
                     isInstalled = DetectIsAnyActionInstalled(game, installDirectory);
                 }
