@@ -12,6 +12,11 @@
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Importer les dates des jeux Epic sélectionnés</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Importer les dates de tous les jeux Epic</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Exporter la liste de licences Epic</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription">Importer les dates des jeux Origin sélectionnés</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllOriginDatesDescription">Importer les dates de tous les jeux Origin</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginErrorMessage">Erreur de récupération des données depuis Origin</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginInvalidJson">Les données Origin sont invalides</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportOriginLicencesDescription">Exporter la liste de licences Origin</sys:String>
     <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">Une fenêtre de navigateur web sera ouverte, veuillez fermer la fenêtre après vous être connecté.</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">Aucune licence n'a été trouvé.</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">{0} licences trouvées.

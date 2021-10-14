@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Visionneuse d'avis</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Update review data of selected games</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Visionneuse d'évaluation</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Mettre à jour les données d'évaluation des jeux sélectionnés</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">Voulez-vous télécharger à nouveau les données pour les jeux qui en ont déjà ?</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Mise à jour en cours des données d'évaluation...</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Mise à jour des données terminée.</sys:String>
@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Utiliser la langue utilisée par Playnite pour rechercher des évaluations si disponible sur Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Télécharger les données d'évaluation manquantes pour la sélection de jeu</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Hauteur de la description</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Display review helpfulness</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Afficher l'utilité de l'évaluation</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Total des évaluations :</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Avis positifs :</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Avis négatifs:</sys:String>
@@ -25,7 +25,7 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommandé</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Non recommandé</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} heures {1} minutes au moment de l'évaluation</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} hours {1} minutes of total play time</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} people found this review helpful</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} people found this review funny</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} heures {1} minutes de temps de jeu total</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} personnes ont trouvé cette évaluation utile</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} personnes ont trouvé cette évaluation amusante</sys:String>
 </ResourceDictionary>

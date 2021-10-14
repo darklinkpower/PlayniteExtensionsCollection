@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Video-Manager öffnen</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-ViewSettingsDescription">Einstellungen anzeigen</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Füge Bild-Splashscreen-Überspringen-Funktion ausgewählten Spielen hinzu</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Entferne Bild-Splashscreen-Überspringen-Funktion von ausgewählten Spielen</sys:String>
 
@@ -23,4 +22,22 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Schwarzen Splashscreen anstelle des Splashscreen-Bildes verwenden</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Logo horizontale Position:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Logo vertikale Position:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">Links</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">Mitte</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">Rechts</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Oben</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Mitte</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Unten</sys:String>
+
+    <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Videoverwaltung</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Ausgewählte Spiele</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">Quellen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Plaformen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlayniteModeLabel">Playnite-Modus</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionLabel">Sammlung:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerSearchLabel">Suchen:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Video nicht verfügbar</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Video hinzufügen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Video entfernen</sys:String>
+
 </ResourceDictionary>

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Add Nexus Mods feature and links to selected games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Add Nexus Mods feature and links to all games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">There are no games in selection.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games where found on Nexus.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Games with mods available on Nexus Mods: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Nexus-Mods-Funktion und Links zu ausgewählten Spielen hinzufügen</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Nexus-Mods-Funktion und Links zu allen Spielen hinzufügen</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Fehler beim Herunterladen von &quot;{0}&quot;. Fehler: {1}</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">Es sind keine Spiele ausgewählt.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Keine Spiele auf Nexus-Mods gefunden.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Spiele mit Mods auf Nexus Mods: {0}
 
-Added `&quot;{1}`&quot; feature to {2} game(s).
-Added Nexus Mods links to {3} game(s).</sys:String>
+Funktion `&quot;{1}`&quot; zu {2} Spiel(en) hinzugefügt.
+Mod-Links zu {3} Spiel(en) hinzugefügt.</sys:String>
 </ResourceDictionary>
