@@ -77,12 +77,12 @@ namespace InstallationStatusUpdater
 
         public string GetUSBDevices()
         {
-            var devices = new StringBuilder("Devices_");
+            var devices = new StringBuilder("Devices:");
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
                 if (drive.IsReady)
                 {
-                    devices.Append($"Root: {drive.RootDirectory}. Label: {drive.VolumeLabel}|");
+                    devices.Append($" Root: {drive.RootDirectory}. Label: {drive.VolumeLabel} |");
                 }
             }
 
