@@ -82,7 +82,7 @@ namespace InstallationStatusUpdater
             {
                 if (drive.IsReady)
                 {
-                    devices.Append($"{drive.RootDirectory}_{drive.VolumeLabel}-");
+                    devices.Append($"Root: {drive.RootDirectory}. Label: {drive.VolumeLabel}|");
                 }
             }
 
