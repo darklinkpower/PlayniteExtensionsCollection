@@ -24,6 +24,7 @@ namespace SplashScreen
         private static readonly ILogger logger = LogManager.GetLogger();
         private string pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private Window currentSplashWindow;
+        private bool? isMusicMutedBackup;
 
         private SplashScreenSettingsViewModel settings { get; set; }
 
@@ -36,6 +37,34 @@ namespace SplashScreen
             {
                 HasSettings = true
             };
+        }
+
+        private void MuteBackgroundMusic()
+        {
+            if (PlayniteApi.ApplicationInfo.Mode != ApplicationMode.Fullscreen)
+            {
+                return;
+            }
+
+            if (PlayniteApi.ApplicationSettings.Fullscreen.IsMusicMuted == false)
+            {
+                PlayniteApi.ApplicationSettings.Fullscreen.IsMusicMuted = true;
+                isMusicMutedBackup = false;
+            }
+        }
+
+        private void RestoreBackgroundMusic()
+        {
+            if (PlayniteApi.ApplicationInfo.Mode != ApplicationMode.Fullscreen)
+            {
+                return;
+            }
+
+            if (isMusicMutedBackup != null && isMusicMutedBackup == false)
+            {
+                PlayniteApi.ApplicationSettings.Fullscreen.IsMusicMuted = false;
+                isMusicMutedBackup = null;
+            }
         }
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
@@ -57,6 +86,7 @@ namespace SplashScreen
                 // Dispatcher is needed since the window is created on a different thread
                 currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
                 currentSplashWindow = null;
+                RestoreBackgroundMusic();
             }
 
             currentSplashWindow = null;
@@ -135,6 +165,10 @@ namespace SplashScreen
 
         private void CreateSplashVideoWindow(bool showSplashImage, string videoPath, string splashImagePath, string logoPath)
         {
+            // Mutes Playnite Background music to make sure its not playing when video or splash screen image
+            // is active and prevents music not stopping when game is already running
+            MuteBackgroundMusic();
+
             // This will tell them main (Playnite) thread when to continue later
             var stopBlockingEvent = new AutoResetEvent(false);
 
@@ -207,6 +241,10 @@ namespace SplashScreen
 
         private void CreateSplashImageWindow(string splashImagePath, string logoPath)
         {
+            // Mutes Playnite Background music to make sure its not playing when video or splash screen image
+            // is active and prevents music not stopping when game is already running
+            MuteBackgroundMusic();
+
             var stopBlockingEvent = new AutoResetEvent(false);
             var splashWindowThread = new Thread(new ThreadStart(() =>
             {
@@ -358,6 +396,7 @@ namespace SplashScreen
                 currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
                 currentSplashWindow = null;
             }
+            RestoreBackgroundMusic();
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
