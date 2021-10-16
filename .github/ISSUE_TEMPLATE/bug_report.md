@@ -23,4 +23,4 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Extensions log**
-Attach Playnite's `Extensions.log` file. It is located in Playnite's installation directory in the portable version or in `%AppData\Playnite` (Can be pasted in Explorer) in the installed version
+Attach Playnite's `Extensions.log` file. It is located in Playnite's installation directory in the portable version or in `%AppData%\Playnite` (Can be pasted in Explorer) in the installed version
