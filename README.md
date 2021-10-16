@@ -41,8 +41,8 @@ Get-Service | Where {$_.Status -eq "Stopped"}
 ```
 
 ### C# extensions rules
-- private fields and properties should use camelCase (without underscore)
-- all methods (private and public) should use PascalCase
+- Private fields and properties should use camelCase (without underscore)
+- All methods (private and public) should use PascalCase
 
 ## Questions, suggestions and Issues
 
