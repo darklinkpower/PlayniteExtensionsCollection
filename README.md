@@ -21,7 +21,7 @@ If possible, please contact me before working on a new PR to make sure that the 
 
 ### General rules
 - Indentation must use 4 spaces. No tabs.
-- always encapsulate the code body after *if, for, foreach, while* etc. with curly braces, for example:
+- Always encapsulate the code body after *if, for, foreach, while* etc. with curly braces, for example:
 ```csharp
 if (true)
 {
