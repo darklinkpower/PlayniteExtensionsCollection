@@ -33,3 +33,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Improved rate limit handling for metadata requests
+  - Version: 2.5
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/<ReleaseName>/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_5.pext
+    Changelog:
+    - Fix in case entry status returned by AniList is null
