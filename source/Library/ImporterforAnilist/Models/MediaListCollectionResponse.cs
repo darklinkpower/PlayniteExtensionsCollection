@@ -30,7 +30,7 @@ namespace ImporterforAnilist.Models
     public class ListElement
     {
         [JsonProperty("status")]
-        public EntryStatus Status { get; set; }
+        public EntryStatus? Status { get; set; }
 
         [JsonProperty("entries")]
         public List<Entry> Entries { get; set; }
@@ -48,7 +48,7 @@ namespace ImporterforAnilist.Models
         public int Score { get; set; }
 
         [JsonProperty("status")]
-        public EntryStatus Status { get; set; }
+        public EntryStatus? Status { get; set; }
 
         [JsonProperty("updatedAt")]
         public int UpdatedAt { get; set; }
