@@ -1,2 +1,8 @@
 AddonId: SteamDescriptionCleaner_7793f6ec-83c9-4094-9d1c-e0c2280a0496
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/SteamDescriptionCleaner_7793f6ec-83c9-4094-9d1c-e0c2280a0496_1_0.pext
+    Changelog:
+    - Updated localizations
