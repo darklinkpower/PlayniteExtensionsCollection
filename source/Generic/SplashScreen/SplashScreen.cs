@@ -182,6 +182,7 @@ namespace SplashScreen
                     WindowStyle = WindowStyle.None,
                     ResizeMode = ResizeMode.NoResize,
                     WindowState = WindowState.Maximized,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
                     Content = content
                 };
 
@@ -253,6 +254,7 @@ namespace SplashScreen
                     WindowStyle = WindowStyle.None,
                     ResizeMode = ResizeMode.NoResize,
                     WindowState = WindowState.Maximized,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
                     Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath)
                 };
 
