@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Account access code:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Get access code</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Metadata properties prefix:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Adds the entered string before any imported metadata name</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Import anime library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Import manga library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Update user score from AniList account during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Update completion status from AniList account during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Update progress from AniList account during library update (&quot;Version&quot; field is used)</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Codice di accesso all'account:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Ottieni codice di accesso</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Prefisso delle proprietà dei metadati:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Aggiunge la stringa inserita prima di qualsiasi nome di metadato importato</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Importa libreria anime durante l'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Importa libreria manga durante l'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Aggiorna il punteggio utente dall'account AniList durante l'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Aggiorna lo stato di completamento dall'account AniList durante l'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Aggiorna i progressi dall'account AniList durante l'aggiornamento della libreria (viene utilizzato il campo &quot;Versione&quot;)</sys:String>
 </ResourceDictionary>
