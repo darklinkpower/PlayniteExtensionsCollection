@@ -3,6 +3,6 @@
     <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_MenuItemCheckFreestyleEnabledGamesDescription">Controlla i giochi supportati da Freestyle nella libreria</sys:String>
     <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage">Impossibile scaricare il database NVIDIA Freestyle. Errore: {0}</sys:String>
     <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage">Errore: Non sono state trovate partite supportate da Freestyle.</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">NVIDIA Freestyle supported games in library: {0}
-Added &quot;{1}&quot; feature to {2} game(s).</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">NVIDIA Freestyle ha giochi supportati nella libreria: {0}
+Aggiunta la funzione &quot;{1}&quot; a {2} giochi.</sys:String>
 </ResourceDictionary>
