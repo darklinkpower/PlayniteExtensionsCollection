@@ -25,3 +25,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85_2_3.pext
     Changelog:
     - Updated localizations
+  - Version: 2.4
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85_2_4.pext
+    Changelog:
+    - Updated localizations

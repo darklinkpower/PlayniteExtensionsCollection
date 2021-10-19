@@ -20,3 +20,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix extension icon not showing
+  - Version: 2.3
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Log_Open_a755c30f-580a-491e-9584-6c5314f6e254_2_3.pext
+    Changelog:
+    - Updated localizations

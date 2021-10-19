@@ -62,3 +62,10 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix all games added in Playnite 9 version being skipped if option to skip games handled by library plugins has been enabled
+  - Version: 2.8
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Installation_Status_Updater_2_8.pext
+    Changelog:
+    - Updated localizations
+    - Updated to Playnite SDK 6.1.0

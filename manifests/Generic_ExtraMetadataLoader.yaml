@@ -68,3 +68,10 @@ Packages:
     Changelog:
     - Updated localizations
     - Changed color of logo shadow effect
+  - Version: 1.10
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_9.pext
+    Changelog:
+    - Updated localizations
+    - Updated to Playnite SDK 6.1.0

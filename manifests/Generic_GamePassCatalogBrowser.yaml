@@ -23,3 +23,10 @@ Packages:
     Changelog:
     - Updated localizations
     - Update to PlayniteSDK.6.0.0
+  - Version: 2.3
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_3.pext
+    Changelog:
+    - Updated localizations
+    - Updated to Playnite SDK 6.1.0

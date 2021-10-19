@@ -26,3 +26,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix using incorrect localization string
+  - Version: 2.4
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_2_4.pext
+    Changelog:
+    - Updated localizations
