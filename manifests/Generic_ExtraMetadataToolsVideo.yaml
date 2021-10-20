@@ -28,3 +28,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Improved error handling for invalid videos
+  - Version: 2.4
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_4.pext
+    Changelog:
+    - Updated localizations
