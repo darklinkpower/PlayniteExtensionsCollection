@@ -32,7 +32,7 @@ namespace SteamLauncherUtility
             };
         }
 
-        public override void OnGameStarted(OnGameStartedEventArgs args)
+        public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
             if (game.IsInstalled == false)
