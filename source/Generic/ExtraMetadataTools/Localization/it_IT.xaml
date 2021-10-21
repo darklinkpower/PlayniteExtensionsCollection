@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeExtraDirectoryDescription">Open extra metadata directory</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetSteamLogosDescription">Download Steam logos for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription">Download logos for selected games from SteamGridDB</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvokeExtraDirectoryDescription">Apri cartella metadata extra</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetSteamLogosDescription">Scarica loghi Steam per i giochi selezionati</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromSgdbDescription">Scarica loghi per giochi selezionati da SteamGridDB</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetSgdbApiKeyDescription">Set SteamGridDB API Key</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Download logo for selected game from Google</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Add logo from local file of selected game</sys:String>
