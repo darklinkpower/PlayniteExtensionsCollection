@@ -7,6 +7,6 @@
     <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Жодних ігор не знайдено на Nexus Mods.</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Ігри з модифікаціями, доступні на Nexus Mods: {0}
 
-Додано особливість `&quot;{1}`&quot; до {2} ігри/ігор.
+Додано особливість &quot;{1}&quot; до {2} гри/ігор.
 Додано посилання на Nexus Mods до {3} гри/ігор.</sys:String>
 </ResourceDictionary>
