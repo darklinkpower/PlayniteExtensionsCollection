@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Actualizar la puntuación del usuario desde la cuenta de AniList durante la actualización de la biblioteca</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Actualizar el estado de finalización de la cuenta de AniList durante la actualización de la biblioteca</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Actualizar el progreso de la cuenta AniList durante la actualización de la biblioteca (Se utiliza el campo &quot;Versión&quot;)</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Si está configurado, los enlaces abiertos por la Acción de Juego se abrirán en el navegador configurado.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Ruta del navegador:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Seleccionar navegador</sys:String>
 </ResourceDictionary>
