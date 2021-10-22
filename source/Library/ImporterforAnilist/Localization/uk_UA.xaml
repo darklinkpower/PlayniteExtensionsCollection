@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Оновити оцінку користувачів з облікового запису AniList під час оновлення бібліотеки</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Оновити статус завершення з облікового запису AniList під час оновлення бібліотеки</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Оновити прогрес з облікового запису AniList під час оновлення бібліотеки (використовується поле &quot;Версія&quot;) </sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Якщо налаштовано, посилання, відкриті програмою будуть відкриті в налаштованому браузері.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Шлях до браузера:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Виберіть браузер</sys:String>
 </ResourceDictionary>
