@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ImporterforAnilist
 {
-    public class ImporterForAnilistSettings
+    public class ImporterForAnilistSettings : ObservableObject
     {
         public string AccountAccessCode { get; set; } = string.Empty;
         public string PropertiesPrefix { get; set; } = string.Empty;
@@ -17,11 +17,8 @@ namespace ImporterforAnilist
         public bool UpdateUserScoreOnLibUpdate { get; set; } = true;
         public bool UpdateCompletionStatusOnLibUpdate { get; set; } = true;
         public bool UpdateProgressOnLibUpdate { get; set; } = false;
-
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
+        private string browserPath = string.Empty;
+        public string BrowserPath { get => browserPath; set => SetValue(ref browserPath, value); }
     }
 
     public class ImporterForAnilistSettingsViewModel : ObservableObject, ISettings
@@ -40,10 +37,13 @@ namespace ImporterforAnilist
             }
         }
 
-        public ImporterForAnilistSettingsViewModel(ImporterForAnilist plugin)
+        private IPlayniteAPI playniteApi;
+
+        public ImporterForAnilistSettingsViewModel(ImporterForAnilist plugin, IPlayniteAPI playniteApi)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
+            this.playniteApi = playniteApi;
 
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<ImporterForAnilistSettings>();
@@ -100,6 +100,22 @@ namespace ImporterforAnilist
         {
             string url = string.Format("https://anilist.co/api/v2/oauth/authorize?client_id={0}&response_type=token", "5706");
             System.Diagnostics.Process.Start(url);
+        }
+
+        public RelayCommand<object> SelectBrowserExecutableCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SelectBrowserExecutable();
+            });
+        }
+        private void SelectBrowserExecutable()
+        {
+            var executablePath = playniteApi.Dialogs.SelectFile("Exe|*.exe");
+            if (!string.IsNullOrEmpty(executablePath))
+            {
+                settings.BrowserPath = executablePath;
+            }
         }
     }
 }

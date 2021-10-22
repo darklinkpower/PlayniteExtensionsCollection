@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace ImporterforAnilist
 {
@@ -16,6 +18,8 @@ namespace ImporterforAnilist
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private const string dbImportMessageId = "anilistlibImportError";
+        private static readonly Regex mangadexIdRegex = new Regex(@"^https:\/\/mangadex\.org\/title\/([^\/]+)", RegexOptions.Compiled);
+        private static readonly Regex mangaseeIdRegex = new Regex(@"^https:\/\/mangasee123\.com\/manga\/([^\/]+)", RegexOptions.Compiled);
 
         private ImporterForAnilistSettingsViewModel settings { get; set; }
 
@@ -31,7 +35,7 @@ namespace ImporterforAnilist
 
         public ImporterForAnilist(IPlayniteAPI api) : base(api)
         {
-            settings = new ImporterForAnilistSettingsViewModel(this);
+            settings = new ImporterForAnilistSettingsViewModel(this, PlayniteApi);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
@@ -62,13 +66,6 @@ namespace ImporterforAnilist
                 GameId = entry.Media.Id.ToString(),
                 Name = entry.Media.Title.Romaji ?? entry.Media.Title.English ?? entry.Media.Title.Native ?? string.Empty,
                 IsInstalled = true,
-                GameActions = new List<GameAction> {
-                    new GameAction
-                    {
-                        Type = GameActionType.URL,
-                        Path = entry.Media.SiteUrl.ToString()
-                    }
-                },
                 Platforms = new HashSet<MetadataProperty> { new MetadataNameProperty(string.Format("AniList {0}", entry.Media.Type.ToString())) },
                 //Description
                 Description = entry.Media.Description ?? string.Empty,
@@ -238,7 +235,6 @@ namespace ImporterforAnilist
                 var accountApi = new AnilistAccountClient(PlayniteApi, settings.Settings.AccountAccessCode);
                 if (string.IsNullOrEmpty(accountApi.anilistUsername))
                 {
-
                     //Username could not be obtained
                     PlayniteApi.Notifications.Add(new NotificationMessage(
                         dbImportMessageId,
@@ -297,6 +293,100 @@ namespace ImporterforAnilist
             }
             
             return new AnilistMetadataProvider(this, PlayniteApi, propertiesPrefix, MalSyncRateLimiter);
+        }
+
+        public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
+        {
+            var game = args.Game;
+            if (game.PluginId != Id)
+            {
+                yield break;
+            }
+
+            if (game.Links == null || game.Links.Count == 0)
+            {
+                PlayniteApi.Dialogs.ShowMessage("Game doesn't have links available. Download metadata.");
+                yield break;
+            }
+
+            var browserPath = string.Empty;
+            if (!string.IsNullOrEmpty(settings.Settings.BrowserPath) && File.Exists(settings.Settings.BrowserPath))
+            {
+                browserPath = settings.Settings.BrowserPath;
+            }
+
+            var cubariLinks = new List<Link>();
+            foreach (Link link in game.Links)
+            {
+                if (link.Name == string.Empty || link.Name == "AniList" || link.Name == "MyAnimeList")
+                {
+                    continue;
+                }
+
+                if (link.Name.StartsWith("Mangadex"))
+                {
+                    var match = mangadexIdRegex.Match(link.Url);
+                    if (match.Success)
+                    {
+                        var actionName = string.Format("Cubari (MangaDex) {0}", link.Name.Replace("Mangadex - ", ""));
+                        var actionUrl = string.Format(@"https://cubari.moe/read/mangadex/{0}/", match.Groups[1]);
+                        cubariLinks.Add(new Link { Name = actionName, Url = actionUrl });
+                    }
+                }
+                else if (link.Name.StartsWith("MangaSee"))
+                {
+                    var match = mangaseeIdRegex.Match(link.Url);
+                    if (match.Success)
+                    {
+                        var actionName = string.Format("Cubari (MangaSee) {0}", link.Name.Replace("MangaSee - ", ""));
+                        var actionUrl = string.Format(@"https://cubari.moe/read/mangasee/{0}/", match.Groups[1]);
+                        cubariLinks.Add(new Link { Name = actionName, Url = actionUrl });
+                    }
+                }
+
+                yield return CreatePlayController(game, link.Name, link.Url, browserPath);
+            }
+
+            foreach (Link link in cubariLinks)
+            {
+                yield return CreatePlayController(game, link.Name, link.Url, browserPath);
+            }
+        }
+
+        public AutomaticPlayController CreatePlayController(Game game, string name, string url, string browserPath)
+        {
+            if (browserPath != string.Empty)
+            {
+                return CreateBrowserPlayController(game, name, url);
+            }
+            else
+            {
+                return CreateUrlPlayController(game, name, url);
+            }
+        }
+
+        public AutomaticPlayController CreateBrowserPlayController(Game game, string name, string url)
+        {
+            return new AutomaticPlayController(game)
+            {
+                Name = $"Open link \"{name}\"",
+                Path = settings.Settings.BrowserPath,
+                Type = AutomaticPlayActionType.File,
+                Arguments = url,
+                WorkingDir = Path.GetDirectoryName(settings.Settings.BrowserPath),
+                TrackingMode = TrackingMode.Process
+            };
+        }
+
+        public AutomaticPlayController CreateUrlPlayController(Game game, string name, string url)
+        {
+            return new AutomaticPlayController(game)
+            {
+                Name = $"Open link \"{name}\"",
+                Path = url,
+                Type = AutomaticPlayActionType.Url,
+                TrackingMode = TrackingMode.Default
+            };
         }
     }
 }

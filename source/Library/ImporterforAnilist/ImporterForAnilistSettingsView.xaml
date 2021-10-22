@@ -25,6 +25,13 @@
             <!--TODO Completion Status matching-->
             <!--<CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateCompletionStatusOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateCompletionStatusSetting}"/>-->
             <CheckBox Name="UpdateProgressOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateProgressOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateProgressSetting}"/>
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Text="{DynamicResource LOCImporter_For_Anilist_SettingBrowserPathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <Button Content="{DynamicResource LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel}" DockPanel.Dock="Right" VerticalAlignment="Center"
+                        Command="{Binding SelectBrowserExecutableCommand}" Margin="10,0,0,0"/>
+                <TextBox Text="{Binding Settings.BrowserPath}" DockPanel.Dock="Left" VerticalAlignment="Center" IsReadOnly="True"
+                         ToolTip="{DynamicResource LOCImporter_For_Anilist_BrowserExecutableTooltip}" Margin="10,0,0,0" />
+            </DockPanel>
         </StackPanel>
     </Grid>
 </UserControl>
