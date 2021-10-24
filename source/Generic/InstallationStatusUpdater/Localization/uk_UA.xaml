@@ -16,12 +16,12 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Визначати ігри з дією типу &quot;Сценарій&quot; як встановлені</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Використовувати лише перший ром у списку при виявленні через роми</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Пропустити ігри які включають дію &quot;Грати&quot; їх бібліотеки</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Використовати лише дії, відмічені як &quot;Дія Грати&quot; для виявлення</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Використовувати лише дії, відмічені як &quot;Дія Грати&quot; для виявлення</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Оновити статус встановлення при запуску</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Оновити статус встановлення при оновленні бібліотеки</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Оновити тег з диском, де встановлено ігри при оновленні бібліотеки</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Оновити статус встановлення, коли вставляється або виймається запам'ятовуючий пристрій (зміни вимагають перезапуску)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Оновити статус встановлення, коли вставляється або виймається пристрій зберігання даних (зміни вимагають перезапуску)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Оновити статус встановлення при зміні файлів у каталогах (зміни вимагають перезапуску)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Включати підкаталоги для виявлення</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Виявлення каталогів</sys:String>
