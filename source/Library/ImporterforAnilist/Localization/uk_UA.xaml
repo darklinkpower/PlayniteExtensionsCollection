@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Account access code:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Get access code</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Metadata properties prefix:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Adds the entered string before any imported metadata name</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Import anime library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Import manga library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Update user score from AniList account during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Update completion status from AniList account during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Update progress from AniList account during library update (&quot;Version&quot; field is used)</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Код доступу до облікового запису:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Отримати код доступу</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Префікс властивостей метаданих:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Додає вказаний рядок перед будь-яким імпортованим ім'ям метаданих</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Імпортувати бібліотеку аніме під час оновлення бібліотеки</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Імпортувати бібліотеку манги під час оновлення бібліотеки</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Оновити оцінку користувачів з облікового запису AniList під час оновлення бібліотеки</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Оновити статус завершення з облікового запису AniList під час оновлення бібліотеки</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Оновити прогрес з облікового запису AniList під час оновлення бібліотеки (використовується поле &quot;Версія&quot;) </sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Якщо налаштовано, посилання, відкриті програмою будуть відкриті в налаштованому браузері.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Шлях до браузера:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Виберіть браузер</sys:String>
 </ResourceDictionary>

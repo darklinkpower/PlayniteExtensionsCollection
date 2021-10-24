@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Process Images in Cache</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Select ImageMagick executable</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick executable path saved</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Обробити зображення в кеші</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Виберіть виконуваний файл ImageMagick</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Шлях виконуваного файлу Magick збережено</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Виконаний файл Magick не знайдено у {0}.
+Будь ласка, запустіть розширення ще раз, щоб налаштувати його у правильному місці.</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Обробка зображення завершена. Результати:
 
-Images Processed: {0}
+Оброблені зображення: {0}
 
-Images that had size reduced: {1}
-Errors: {2}
+Зображення зі зменшеним розміром: {1}
+Помилки: {2}
 
-Image Cache Size Before: {3} MB
-Image Cache Size After: {4} MB</sys:String>
+Розмір кешу зображення до: {3} МБ
+Розмір кешу зображення після: {4} МБ</sys:String>
 </ResourceDictionary>

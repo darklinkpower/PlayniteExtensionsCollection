@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Components</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Activate product</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">Downloads</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Friends</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Screenshots</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Settings</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Store Page</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Community Hub</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussions</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Achievements</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">View in Steam Library</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Компоненти</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Активувати продукт</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">Завантаження</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Друзі</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">Новини</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Знімки екрану</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Налаштування</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Сторінка в крамниці</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Центр спільноти</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Обговорення</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Посібники</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">Новини</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Досягнення</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Крамниця жетонів</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Переглянути в бібліотеці Steam</sys:String>
 </ResourceDictionary>

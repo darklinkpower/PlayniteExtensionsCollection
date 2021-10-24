@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Check installation status of all games</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Add selected games to ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Update tag with drive where games are installed on</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Remove selected games from ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Done.
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Перевіряти стан встановлення усіх ігор</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Додати обрані ігри до списку ігнорованих</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Оновити тег з диском, де встановлено ігри</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Видалити обрані ігри зі списку ігнорованих</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Готово.
 
-Previously installed games were set as uninstalled: {0}
-Previously uninstalled games were set as installed: {1}</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Added ignore feature to {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Removed ignore feature from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Finished updating installation drive tags.</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Updating installation drive tags...</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Detect games with an action of type &quot;Link&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Detect games with an action of type &quot;Script&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Only use the first listed rom when detecting via roms</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Skip games that include the play action of their library</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Only use Actions marked as &quot;Play Action&quot; for detection</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Update installation status on startup</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Update installation status on library update</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Update tag with drive the game is installed on library update</sys:String>
+Раніше встановлених ігор позначено як видалених: {0}
+Раніше видалених ігор позначено встановлених: {1}</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Додано можливість ігнорування до {0} гри/ігор.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Прибрано можливість ігнорування до {0} гри/ігор.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Завершено оновлення тегів з диском, де встановлено ігри.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Оновлення тегів з диском, де встановлено ігри...</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Визначати ігри з дією типу &quot;Посилання&quot; як встановлені</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Визначати ігри з дією типу &quot;Сценарій&quot; як встановлені</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Використовувати лише перший ром у списку при виявленні через роми</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Пропустити ігри які включають дію &quot;Грати&quot; їх бібліотеки</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Використовати лише дії, відмічені як &quot;Дія Грати&quot; для виявлення</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Оновити статус встановлення при запуску</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Оновити статус встановлення при оновленні бібліотеки</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Оновити тег з диском, де встановлено ігри при оновленні бібліотеки</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Update installation status when a storage device is inserted or removed (Changes require restart)</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Update installation status when files change in directories (Changes require restart)</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Include subdirectories for detection</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Detection directories</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Enabled</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Scan subdirectories</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Path</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Add</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Remove</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Оновити статус встановлення, коли вставляється або виймається запам'ятовуючий пристрій (зміни вимагають перезапуску)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Оновити статус встановлення при зміні файлів у каталогах (зміни вимагають перезапуску)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Включати підкаталоги для виявлення</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Виявлення каталогів</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Ввімкнено</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Сканувати підкаталоги</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Шлях</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Додати</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Вилучити</sys:String>
 </ResourceDictionary>

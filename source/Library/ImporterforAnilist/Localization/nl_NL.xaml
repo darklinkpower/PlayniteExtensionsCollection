@@ -9,4 +9,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Bijwerken gebruikersscore uit AniList account tijdens bijwerken bibliotheek</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Update voltooiingsstatus van AniList account tijdens bijwerken bibliotheek</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Update voortgang van AniList account tijdens bijwerken bibliotheek (&quot;Versie&quot; veld wordt gebruikt)</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
 </ResourceDictionary>

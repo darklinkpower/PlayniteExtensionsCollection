@@ -28,9 +28,9 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Sinistra</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Centro</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Al centro</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Destra</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">In alto</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">Al centro</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Sotto</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">In basso</sys:String>
 </ResourceDictionary>
