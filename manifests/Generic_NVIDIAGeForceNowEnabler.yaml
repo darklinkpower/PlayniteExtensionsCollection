@@ -33,3 +33,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Updated to Playnite SDK 6.1.0
+  - Version: 2.5
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/NVIDIA_GeForce_Now_Enabler_2_5.pext
+    Changelog:
+    - Updated localizations

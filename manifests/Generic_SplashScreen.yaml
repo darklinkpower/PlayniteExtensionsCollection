@@ -35,3 +35,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix splash windows always showing in main screen, even if Playnite is in a secondary monitor
+  - Version: 2.5
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_5.pext
+    Changelog:
+    - Updated localizations

@@ -1,7 +1,7 @@
 Id: PlayState
 Name: PlayState
 Author: darklinkpower
-Version: 2.3
+Version: 2.4
 Module: PlayState.psm1
 Type: Script
 Icon: icon.png
