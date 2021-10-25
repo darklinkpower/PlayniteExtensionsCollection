@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Benutzer-Bewertung des AniList-Kontos während der Bibliotheks-Aktualisierung aktualisieren</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Fertigstellungs-Status des AniList-Kontos während der Bibliotheks-Aktualisierung aktualisieren</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Fortschritt des AniList-Kontos während der Bibliotheks-Aktualisierung aktualisieren (&quot;Version&quot;-Feld wird benutzt)</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Wenn dies konfiguriert ist, werden die Links, die durch die Play Aktion geöffnet werden, im konfigurierten Browser geöffnet.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser Pfad:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Browser auswählen</sys:String>
 </ResourceDictionary>
