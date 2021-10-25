@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Add Nexus Mods feature and links to selected games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Add Nexus Mods feature and links to all games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">There are no games in selection.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games were found on Nexus Mods.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Games with mods available on Nexus Mods: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Legg til Nexus Mods-funksjon og lenker til valgte spill</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Legg til Nexus Mods-funksjon og lenker til alle spill</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Nedlasting av fil fra URL-en &quot;{0}&quot; mislyktes. Feilmelding: {1}</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">Ingen spill er valgt.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Ingen spill ble funnet på Nexus Mods.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Spill med mods som er tilgjengelige på Nexus Mods: {0}
 
-Added `&quot;{1}`&quot; feature to {2} game(s).
-Added Nexus Mods links to {3} game(s).</sys:String>
+La til funksjonen `&quot;{1}`&quot; til {2} spill.
+Lagt til Nexus Mods-lenker til {3} spill.</sys:String>
 </ResourceDictionary>
