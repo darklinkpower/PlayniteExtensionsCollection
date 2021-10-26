@@ -20,6 +20,8 @@ namespace NVIDIAGeForceNowEnabler
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string geforceNowWorkingPath;
         private readonly string geforceNowExecutablePath;
+        private readonly string gfnDatabasePath;
+        private List<GeforceGame> supportedList;
 
         private NVIDIAGeForceNowEnablerSettingsViewModel settings { get; set; }
 
@@ -30,10 +32,23 @@ namespace NVIDIAGeForceNowEnabler
             settings = new NVIDIAGeForceNowEnablerSettingsViewModel(this);
             geforceNowWorkingPath = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "NVIDIA Corporation", "GeForceNOW", "CEF");
             geforceNowExecutablePath = Path.Combine(geforceNowWorkingPath, "GeForceNOWStreamer.exe");
+            gfnDatabasePath = Path.Combine(GetPluginUserDataPath(), "gfnpc.json");
+            UpdateDatabase();
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
             };
+        }
+
+        private void UpdateDatabase()
+        {
+            if (!File.Exists(gfnDatabasePath))
+            {
+                supportedList = new List<GeforceGame>();
+                return;
+            }
+
+            supportedList = JsonConvert.DeserializeObject<List<GeforceGame>>(File.ReadAllText(gfnDatabasePath));
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -84,7 +99,7 @@ namespace NVIDIAGeForceNowEnabler
                 },
             };
         }
-        
+
         public bool RemoveFeature(Game game, GameFeature feature)
         {
             if (game.FeatureIds != null)
@@ -126,65 +141,27 @@ namespace NVIDIAGeForceNowEnabler
             }
         }
 
-        public string UpdateNvidiaAction(Game game, GeforceGame supportedGame)
-        {
-            GameAction geforceNowAction = null;
-            if (game.GameActions != null)
-            {
-                geforceNowAction = game.GameActions
-                    .Where(x => x.Arguments != null)
-                    .Where(x => Regex.IsMatch(x.Arguments, @"--url-route=""#\?cmsId=\d+&launchSource=External&shortName=game_gfn_pc&parentGameId="""))
-                    .FirstOrDefault();
-            }
-
-            if (supportedGame == null && geforceNowAction != null)
-            {
-                game.GameActions.Remove(geforceNowAction);
-                PlayniteApi.Database.Games.Update(game);
-                return "ActionRemoved";
-            }
-            else if (supportedGame != null && geforceNowAction == null)
-            {
-                GameAction nvidiaGameAction = new GameAction()
-                {
-                    Name = "Launch in Nvidia GeForce NOW",
-                    Arguments = String.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGame.Id),
-                    Path = geforceNowExecutablePath,
-                    WorkingDir = geforceNowWorkingPath,
-                    IsPlayAction = settings.Settings.SetActionsAsPlayAction,
-                    TrackingMode = TrackingMode.Process
-                };
-
-                if (game.GameActions == null)
-                {
-                    game.GameActions = new System.Collections.ObjectModel.ObservableCollection<GameAction> { nvidiaGameAction };
-                }
-                else
-                {
-                    game.GameActions.Add(nvidiaGameAction);
-                    PlayniteApi.Database.Games.Update(game);
-                    return "ActionAdded";
-                }
-            }
-            
-            return null;
-        }
-
-        public List<GeforceGame> DownloadGameList(string uri, bool showDialogs)
+        public List<GeforceGame> DownloadGameList(bool showDialogs)
         {
             var supportedGames = new List<GeforceGame>();
 
-            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
+            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
                 using (var webClient = new WebClient())
                 {
                     try
                     {
                         webClient.Encoding = Encoding.UTF8;
-                        string downloadedString = webClient.DownloadString(uri);
+                        string downloadedString = webClient.DownloadString(@"https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json");
                         supportedGames = JsonConvert.DeserializeObject<List<GeforceGame>>(downloadedString);
-                        foreach (var supportedGame in supportedGames)
+                        if (supportedGames.Count >= 0)
                         {
-                            supportedGame.Title = Regex.Replace(supportedGame.Title, @"[^\p{L}\p{Nd}]", "").ToLower();
+                            foreach (var supportedGame in supportedGames)
+                            {
+                                supportedGame.Title = Regex.Replace(supportedGame.Title, @"[^\p{L}\p{Nd}]", "").ToLower();
+                            }
+                            File.WriteAllText(gfnDatabasePath, JsonConvert.SerializeObject(supportedGames));
+                            supportedList = supportedGames;
                         }
                     }
                     catch (Exception e)
@@ -197,19 +174,24 @@ namespace NVIDIAGeForceNowEnabler
                     }
                 }
             }, new GlobalProgressOptions("Downloading NVIDIA GeForce Now database..."));
-            
+
             return supportedGames;
         }
 
         public IEnumerable<Game> GetGamesSupportedLibraries()
         {
-            List<Guid> supportedLibraries = new List<Guid>()
+            var supportedLibraries = new List<Guid>()
             {
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.UplayLibrary),
-                BuiltinExtensions.GetIdFromExtension(BuiltinExtension.GogLibrary)
+                // Steam
+                Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"),
+                // Epic
+                Guid.Parse("00000002-dbd1-46c6-b5d0-b1ba559d10e4"),
+                // Origin
+                Guid.Parse("85dd7072-2f20-4e76-a007-41035e390724"),
+                // Uplay
+                Guid.Parse("c2f038e5-8b92-4877-91f1-da9094155fc5"),
+                // GOG
+                Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e")
             };
 
             var gameDatabase = PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
@@ -221,7 +203,7 @@ namespace NVIDIAGeForceNowEnabler
             string featureName = "NVIDIA GeForce NOW";
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
 
-            var supportedGames = DownloadGameList("https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json", showDialogs);
+            var supportedGames = DownloadGameList(showDialogs);
             if (supportedGames.Count() == 0)
             {
                 // In case download failed.
@@ -234,106 +216,91 @@ namespace NVIDIAGeForceNowEnabler
             var supportedUplayGames = supportedGames.Where(g => g.Store == "Ubisoft Connect");
             var supportedGogGames = supportedGames.Where(g => g.Store == "GOG");
 
-            int enabledGamesCount = 0; 
+            int enabledGamesCount = 0;
             int featureAddedCount = 0;
             int featureRemovedCount = 0;
-            int playActionAddedCount = 0;
-            int playActionRemovedCount = 0;
             int setAsInstalledCount = 0;
             int setAsUninstalledCount = 0;
 
-            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
-
-            var gameDatabase = GetGamesSupportedLibraries();
-            foreach (var game in gameDatabase)
+            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var gameName = Regex.Replace(game.Name, @"[^\p{L}\p{Nd}]", "").ToLower();
-                GeforceGame supportedGame = null;
-                switch (BuiltinExtensions.GetExtensionFromId(game.PluginId))
-                {
-                    case BuiltinExtension.SteamLibrary:
-                        var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
-                        supportedGame = supportedSteamGames.Where(g => g.SteamUrl == steamUrl).FirstOrDefault();
-                        break;
-                    case BuiltinExtension.EpicLibrary:
-                        supportedGame = supportedEpicGames.Where(g => g.Title == gameName).FirstOrDefault();
-                        break;
-                    case BuiltinExtension.OriginLibrary:
-                        supportedGame = supportedOriginGames.Where(g => g.Title == gameName).FirstOrDefault();
-                        break;
-                    case BuiltinExtension.UplayLibrary:
-                        supportedGame = supportedUplayGames.Where(g => g.Title == gameName).FirstOrDefault();
-                        break;
-                    case BuiltinExtension.GogLibrary:
-                        supportedGame = supportedGogGames.Where(g => g.Title == gameName).FirstOrDefault();
-                        break;
-                    default:
-                        break;
-                }
-                
-                if (supportedGame == null)
-                {
-                    bool featureRemoved = RemoveFeature(game, feature);
-                    if (featureRemoved == true)
-                    {
-                        featureRemovedCount++; 
-                        logger.Info(String.Format("Feature removed from \"{0}\"", game.Name));
 
-                        if (settings.Settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == true)
+                var gameDatabase = GetGamesSupportedLibraries();
+                foreach (var game in gameDatabase)
+                {
+                    var gameName = Regex.Replace(game.Name, @"[^\p{L}\p{Nd}]", "").ToLower();
+                    GeforceGame supportedGame = null;
+                    switch (game.PluginId.ToString())
+                    {
+                        case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
+                            //Steam
+                            var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
+                            supportedGame = supportedSteamGames.Where(g => g.SteamUrl == steamUrl).FirstOrDefault();
+                            break;
+                        case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
+                            //Epic
+                            supportedGame = supportedEpicGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            break;
+                        case "85dd7072-2f20-4e76-a007-41035e390724":
+                            //Origin
+                            supportedGame = supportedOriginGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            break;
+                        case "c2f038e5-8b92-4877-91f1-da9094155fc5":
+                            //Uplay
+                            supportedGame = supportedUplayGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            break;
+                        case "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e":
+                            //GOG
+                            supportedGame = supportedGogGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (supportedGame == null)
+                    {
+                        bool featureRemoved = RemoveFeature(game, feature);
+                        if (featureRemoved == true)
+                        {
+                            featureRemovedCount++;
+                            logger.Info(string.Format("Feature removed from \"{0}\"", game.Name));
+
+                            if (settings.Settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == true)
+                            {
+                                game.IsInstalled = true;
+                                setAsUninstalledCount++;
+                                PlayniteApi.Database.Games.Update(game);
+                                logger.Info(string.Format("Set \"{0}\" as uninstalled", game.Name));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        enabledGamesCount++;
+                        bool featureAdded = AddFeature(game, feature);
+                        if (featureAdded == true)
+                        {
+                            featureAddedCount++;
+                            logger.Info(string.Format("Feature added to \"{0}\"", game.Name));
+                        }
+                        if (settings.Settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == false)
                         {
                             game.IsInstalled = true;
-                            setAsUninstalledCount++;
+                            setAsInstalledCount++;
                             PlayniteApi.Database.Games.Update(game);
-                            logger.Info(String.Format("Set \"{0}\" as uninstalled", game.Name));
+                            logger.Info(string.Format("Set \"{0}\" as installed", game.Name));
                         }
                     }
                 }
-                else
-                {
-                    enabledGamesCount++;
-                    bool featureAdded = AddFeature(game, feature);
-                    if (featureAdded == true)
-                    {
-                        featureAddedCount++;
-                        logger.Info(String.Format("Feature added to \"{0}\"", game.Name));
-                    }
-                    if (settings.Settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == false)
-                    {
-                        game.IsInstalled = true;
-                        setAsInstalledCount++;
-                        PlayniteApi.Database.Games.Update(game);
-                        logger.Info(String.Format("Set \"{0}\" as installed", game.Name));
-                    }
-                }
-
-                if (settings.Settings.UpdatePlayActions == true)
-                {
-                    var updatePlayAction = UpdateNvidiaAction(game, supportedGame);
-                    if (updatePlayAction == "ActionAdded")
-                    {
-                        playActionAddedCount++;
-                        logger.Info(String.Format("Play Action added to \"{0}\"", game.Name));
-                    }
-                    else if (updatePlayAction == "ActionRemoved")
-                    {
-                        playActionRemovedCount++; 
-                        logger.Info(String.Format("Play Action removed from \"{0}\"", game.Name));
-                    }
-                }
-            } }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_UpdatingProgressMessage")));
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_UpdatingProgressMessage")));
 
             if (showDialogs == true)
             {
-                string results = String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
+                string results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
                     enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
-                if (settings.Settings.UpdatePlayActions == true)
-                {
-                    results += String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults2Message"),
-                        playActionAddedCount, playActionRemovedCount);
-                }
                 if (settings.Settings.SetEnabledGamesAsInstalled == true)
                 {
-                    results += String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults3Message"), setAsInstalledCount, setAsUninstalledCount);
+                    results += string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults3Message"), setAsInstalledCount, setAsUninstalledCount);
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
             }
@@ -359,11 +326,103 @@ namespace NVIDIAGeForceNowEnabler
                     game.GameActions.Remove(geforceNowAction);
                     PlayniteApi.Database.Games.Update(game);
                     playActionRemovedCount++;
-                    logger.Info(String.Format("Play Action removed from \"{0}\"", game.Name));
+                    logger.Info(string.Format("Play Action removed from \"{0}\"", game.Name));
                 }
             }
-            string results = String.Format(ResourceProvider.GetString("LOCNgfn_Enabler_GameActionsRemoveResultsMessage"), playActionRemovedCount);
+            string results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_GameActionsRemoveResultsMessage"), playActionRemovedCount);
             PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
         }
+
+        public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
+        {
+            if (!settings.Settings.ShowPlayActionsOnLaunch)
+            {
+                return null;
+            }
+            
+            if (supportedList.Count == 0)
+            {
+                logger.Debug("Supported list was no set");
+                return null;
+            }
+
+            if (!File.Exists(geforceNowExecutablePath))
+            {
+                logger.Debug("Geforce Now Executable was not detected");
+                return null;
+            }
+
+            var game = args.Game;
+            if (!string.IsNullOrEmpty(game.InstallDirectory))
+            {
+                logger.Debug("Game install dir was not empty and was skipped");
+                return null;
+            }
+
+            var storeName = string.Empty;
+            switch (game.PluginId.ToString())
+            {
+
+                //Steam
+                case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
+                    storeName = "Steam";
+                    break;
+                //Epic
+                case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
+                    storeName = "Epic";
+                    break;
+                //Origin
+                case "85dd7072-2f20-4e76-a007-41035e390724":
+                    storeName = "Origin";
+                    break;
+                //Uplay
+                case "c2f038e5-8b92-4877-91f1-da9094155fc5":
+                    storeName = "Ubisoft Connect";
+                    break;
+                //GOG
+                case "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e":
+                    storeName = "GOG";
+                    break;
+                default:
+                    break;
+            }
+
+            if (storeName == string.Empty)
+            {
+                return null;
+            }
+            
+            GeforceGame supportedGame;
+            if (storeName == "Steam")
+            {
+                var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
+                supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.SteamUrl == steamUrl);
+            }
+            else
+            {
+                var matchingName = Regex.Replace(game.Name, @"[^\p{L}\p{Nd}]", "").ToLower();
+                supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.Title == matchingName);
+            }
+
+            if (supportedGame != null)
+            {
+                return new List<AutomaticPlayController>
+                {
+                    new AutomaticPlayController(game)
+                    {
+                        Name = "Launch in Nvidia GeForce NOW",
+                        Path = geforceNowExecutablePath,
+                        WorkingDir = geforceNowWorkingPath,
+                        Type = AutomaticPlayActionType.File,
+                        TrackingMode = TrackingMode.Process,
+                        Arguments = string.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGame.Id),
+                    }
+                };
+            }
+
+            return null;
+        }
+
+
     }
 }
