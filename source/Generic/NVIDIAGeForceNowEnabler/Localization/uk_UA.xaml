@@ -4,15 +4,11 @@
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Видалити дію Geforce NOW з усіх ігор</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Оновлення ігор сумісних з NVIDIA GeForce NOW...</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">Ігор сумісних з NVIDIA GeForce NOW в бібліотеці: {0}
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">Ігор сумісних з NVIDIA GeForce NOW в бібліотеці: {0}
 
 Додано особливість &quot;{1}&quot;до {2} ігор.
 Прибрано особливість &quot;{3}&quot; з {4} ігор.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults2Message" xml:space="preserve">
-	
-Дія &quot;Грати&quot; додана до {0} ігор.
-Дія &quot;Грати&quot; вилучена з {1} ігор.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
 Позначено {0} ігор як встановлені.
 Позначено {1} ігор як видалені.</sys:String>
@@ -20,7 +16,7 @@
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Оновлювати статус сумісності ігор при запуску Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Оновлювати статус сумісності ігор при оновленні бібліотеки</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdatePlayActionsSetting">Оновлювати дії &quot;Грати&quot; при оновленні статусу сумісності ігор</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_SetActionsAsPlayActionSetting">Встановити додані дії як дію &quot;Грати&quot;</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch in NVIDIA GeForce NOW for compatible games that have not been installed by their libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Games without a installation directory set are detected as not installed by their libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
 </ResourceDictionary>
