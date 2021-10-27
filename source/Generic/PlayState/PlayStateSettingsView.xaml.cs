@@ -31,7 +31,9 @@ namespace PlayState
                 Key.LeftShift,
                 Key.RightShift,
                 Key.LeftAlt,
-                Key.RightAlt
+                Key.RightAlt,
+                Key.LWin,
+                Key.RWin
             };
 
             if (modifierKeys.Contains(e.Key) || Keyboard.Modifiers == ModifierKeys.None)

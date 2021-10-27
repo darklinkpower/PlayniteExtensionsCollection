@@ -7,12 +7,11 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel>
         <DockPanel>
-            <TextBlock Text="Suspend/Resume key gesture:"/>
+            <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredHotkeyLabel}"/>
             <TextBox x:Name="TbKeyGesture" IsReadOnly="True" Text="{Binding Settings.GestureString}" Margin="10,0,0,0" KeyDown="OnKeyDownHandler" />
-            <TextBox Text="{Binding Answer, Mode=TwoWay}" PreviewMouseDoubleClick="">
+            <TextBox Text="{Binding Answer, Mode=TwoWay}">
                 <TextBox.InputBindings>
                     <KeyBinding Command="ApplicationCommands.Paste" Key="Enter" CommandParameter="{}"/>
-                    <KeyBinding Command="ApplicationCommands.Paste" m />
                 </TextBox.InputBindings>
             </TextBox>
         </DockPanel>

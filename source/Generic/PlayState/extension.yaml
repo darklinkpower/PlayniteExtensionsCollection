@@ -3,7 +3,7 @@ Name: PlayState
 Author: darklinkpower
 Version: 2.4
 Module: PlayState.dll
-Type: Script
+Type: GenericPlugin
 Icon: icon.png
 Links:
     - Name: GitHub

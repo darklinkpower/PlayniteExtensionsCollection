@@ -26,9 +26,6 @@ namespace PlayState
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtResumeProcess(IntPtr processHandle);
-
-        internal ProcessItem ProcessItem { get; private set; }
-
         private static readonly ILogger logger = LogManager.GetLogger();
         private Game currentGame;
         private List<string> exclusionList;
@@ -155,7 +152,7 @@ namespace PlayState
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             var game = args.Game;
-            if (game.Features != null && game.Features.Any(a => a.Name == "PlayState blacklist"))
+            if (game.Features != null && game.Features.Any(a => a.Name == "[PlayState] Blacklist"))
             {
                 logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
                 return;
@@ -167,20 +164,18 @@ namespace PlayState
                 splashWindowViewModel.GameName = currentGame.Name;
                 isSuspended = false;
                 var queryList = new List<ProcessItem>();
-                ProcessItem = null;
                 if (game.GameActions != null && game.GameActions.Count > 0)
                 {
                     if (game.GameActions[0].Type == GameActionType.Emulator)
                     {
                         var emulator = PlayniteApi.Database.Emulators[game.GameActions[0].EmulatorId];
-                        //TODO Somehow get BuiltinProfiles executables
-                        var profile = emulator.CustomProfiles.FirstOrDefault(p => p.Id == game.GameActions[0].EmulatorProfileId);
-                        if (profile != null)
+                        if (emulator != null)
                         {
-                            queryList = GetProcessesWmiQuery(false, profile.Executable);
-                            if (queryList.Count == 1)
+                            //TODO Somehow get BuiltinProfiles executables
+                            var profile = emulator.CustomProfiles.FirstOrDefault(p => p.Id == game.GameActions[0].EmulatorProfileId);
+                            if (profile != null)
                             {
-                                ProcessItem = queryList[0];
+                                queryList = GetProcessesWmiQuery(false, profile.Executable.ToLower());
                             }
                         }
                         return;
@@ -195,10 +190,9 @@ namespace PlayState
                 var executables = Directory.GetFiles(game.InstallDirectory, "*.exe", SearchOption.AllDirectories);
                 if (executables.Count() == 1)
                 {
-                    queryList = GetProcessesWmiQuery(false, executables[0]);
-                    if (queryList.Count == 1)
+                    queryList = GetProcessesWmiQuery(false, executables[0].ToLower());
+                    if (queryList.Count > 0)
                     {
-                        ProcessItem = queryList[0];
                         return;
                     }
                 }
@@ -251,8 +245,6 @@ namespace PlayState
 
             return false;
         }
-
-
 
         private void CreateSplashWindow()
         {
@@ -318,12 +310,12 @@ namespace PlayState
                 if (isSuspended)
                 {
                     isSuspended = false;
-                    ShowSplashWindow("Resumed");
+                    ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
                 }
                 else
                 {
                     isSuspended = true;
-                    ShowSplashWindow("Suspended");
+                    ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
                 }
             }
             catch (Exception e)
@@ -339,7 +331,6 @@ namespace PlayState
             using (var searcher = new ManagementObjectSearcher(wmiQueryString))
             using (var results = searcher.Get())
             {
-                
                 // Unfortunately due to Playnite being a 32 bits process, the GetProcess()
                 // method can't access needed values of 64 bits processes, so it's needed
                 // to correlate with data obtained from a WMI query that is exponentially slower.
@@ -353,13 +344,13 @@ namespace PlayState
                                 Path = (string)mo["ExecutablePath"],
                             };
 
-                var possibleProcesses = new List<ProcessItem>();
+                var gameProcesses = new List<ProcessItem>();
                 if (exactPath != null)
                 {
-                    var item = query.FirstOrDefault(i => i.Path != null && i.Path == exactPath);
+                    var item = query.FirstOrDefault(i => i.Path != null && i.Path.ToLower() == exactPath);
                     if (item != null)
                     {
-                        possibleProcesses.Add(
+                        gameProcesses.Add(
                             new ProcessItem
                             {
                                 ExecutablePath = item.Path,
@@ -370,16 +361,27 @@ namespace PlayState
                 }
                 else
                 {
-                    foreach (var item in query.Where(i => i.Path != null && i.Path.ToLower().StartsWith(gameInstallDir)))
+                    foreach (var item in query)
                     {
+                        if (item.Path == null)
+                        {
+                            continue;
+                        }
+
+                        var pathLower = item.Path.ToLower();
+                        if (!pathLower.StartsWith(gameInstallDir))
+                        {
+                            continue;
+                        }
                         if (filterPaths)
                         {
-                            if (exclusionList.Any(e => Path.GetFileName(item.Path).Contains(e)))
+                            var fileName = Path.GetFileName(pathLower);
+                            if (exclusionList.Any(e => fileName.Contains(e)))
                             {
                                 continue;
                             }
                         }
-                        possibleProcesses.Add(
+                        gameProcesses.Add(
                             new ProcessItem
                             {
                                 ExecutablePath = item.Path,
@@ -389,7 +391,7 @@ namespace PlayState
                     }
                 }
 
-                return possibleProcesses;
+                return gameProcesses;
             }
         }
 
@@ -404,6 +406,73 @@ namespace PlayState
                 currentSplashWindow.Hide();
                 currentSplashWindow.Topmost = false;
             }
+        }
+
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            return new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToBlacklistDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        AddSelectedGamesToBlacklist();
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromBlacklistDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        RemoveSelectedGamesFromBlacklist();
+                    }
+                },
+            };
+        }
+
+        private void RemoveSelectedGamesFromBlacklist()
+        {
+            var feature = PlayniteApi.Database.Features.Add("[PlayState] Blacklist");
+            int featureRemovedCount = 0;
+            foreach (var game in PlayniteApi.MainView.SelectedGames)
+            {
+                if (game.FeatureIds != null && game.FeatureIds.Contains(feature.Id))
+                {
+                    game.FeatureIds.Remove(feature.Id);
+                    PlayniteApi.Database.Games.Update(game);
+                    featureRemovedCount++;
+                    logger.Info(string.Format("Removed blacklist feature from \"{0}\"", game.Name));
+                }
+            }
+            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistRemovedResultsMessage"), featureRemovedCount), "PlayState");
+        }
+
+        public void AddSelectedGamesToBlacklist()
+        {
+            var feature = PlayniteApi.Database.Features.Add("[PlayState] Blacklist");
+            int featureAddedCount = 0;
+            foreach (var game in PlayniteApi.MainView.SelectedGames)
+            {
+                if (game.FeatureIds == null)
+                {
+                    game.FeatureIds = new List<Guid> { feature.Id };
+                    PlayniteApi.Database.Games.Update(game);
+                    featureAddedCount++;
+                }
+                else if (game.FeatureIds.AddMissing(feature.Id))
+                {
+                    PlayniteApi.Database.Games.Update(game);
+                    featureAddedCount++;
+                }
+                else
+                {
+                    continue;
+                }
+                logger.Info(string.Format("Added blacklist feature to \"{0}\"", game.Name));
+            }
+
+            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistAddedResultsMessage"), featureAddedCount), "PlayState");
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
