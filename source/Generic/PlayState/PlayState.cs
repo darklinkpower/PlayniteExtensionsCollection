@@ -163,7 +163,6 @@ namespace PlayState
                 currentGame = game;
                 splashWindowViewModel.GameName = currentGame.Name;
                 isSuspended = false;
-                var queryList = new List<ProcessItem>();
                 if (game.GameActions != null && game.GameActions.Count > 0)
                 {
                     if (game.GameActions[0].Type == GameActionType.Emulator)
@@ -175,7 +174,7 @@ namespace PlayState
                             var profile = emulator.CustomProfiles.FirstOrDefault(p => p.Id == game.GameActions[0].EmulatorProfileId);
                             if (profile != null)
                             {
-                                queryList = GetProcessesWmiQuery(false, profile.Executable.ToLower());
+                                gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
                             }
                         }
                         return;
@@ -190,15 +189,15 @@ namespace PlayState
                 var executables = Directory.GetFiles(game.InstallDirectory, "*.exe", SearchOption.AllDirectories);
                 if (executables.Count() == 1)
                 {
-                    queryList = GetProcessesWmiQuery(false, executables[0].ToLower());
-                    if (queryList.Count > 0)
+                    gameProcesses = GetProcessesWmiQuery(false, executables[0].ToLower());
+                    if (gameProcesses.Count > 0)
                     {
                         return;
                     }
                 }
                 
                 gameProcesses = GetProcessesWmiQuery(true);
-                if (queryList.Count > 0)
+                if (gameProcesses.Count > 0)
                 {
                     return;
                 }
@@ -224,7 +223,7 @@ namespace PlayState
                         filterPaths = false;
                     }
                     gameProcesses = GetProcessesWmiQuery(filterPaths);
-                    if (queryList.Count > 0)
+                    if (gameProcesses.Count > 0)
                     {
                         return;
                     }
