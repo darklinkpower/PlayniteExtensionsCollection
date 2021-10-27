@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="PlayState.PlayStateSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel>
+        <DockPanel>
+            <TextBlock Text="Suspend/Resume key gesture:"/>
+            <TextBox x:Name="TbKeyGesture" IsReadOnly="True" Text="{Binding Settings.GestureString}" Margin="10,0,0,0" KeyDown="OnKeyDownHandler" />
+            <TextBox Text="{Binding Answer, Mode=TwoWay}" PreviewMouseDoubleClick="">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="ApplicationCommands.Paste" Key="Enter" CommandParameter="{}"/>
+                    <KeyBinding Command="ApplicationCommands.Paste" m />
+                </TextBox.InputBindings>
+            </TextBox>
+        </DockPanel>
+    </StackPanel>
+</UserControl>
