@@ -4,15 +4,11 @@
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Retirer l'action Geforce NOW de tous les jeux</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Mise à jour des jeux disponibles sur NVIDIA GeForce NOW...</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW activé pour {0} jeux dans la bibliothèque
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW activé pour {0} jeux dans la bibliothèque
 
 Ajout de la fonction &quot;{1}&quot; à {2} jeux.
 Retrait de la fonction &quot;{3}&quot; à {4} jeux.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults2Message" xml:space="preserve">
-	
-Action Jouer ajoutée à {0} jeux.
-Action Jouer supprimée de {1} jeux.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
 Définir {0} jeux comme installés.
 Définir {1} jeux comme désinstallés.</sys:String>
@@ -20,7 +16,8 @@ Définir {1} jeux comme désinstallés.</sys:String>
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Mettre à jour le statut des jeux au démarrage de Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Mettre à jour le statut des jeux lors de la mise à jour de la bibliothèque</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_UpdatePlayActionsSetting">Mettre à jour les actions Jouer lors de la mise à jour du statut des jeux</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_SetActionsAsPlayActionSetting">Définir les actions ajoutées comme action Jouer</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Définir les jeux activés comme installés lors de la mise à jour de l'état des jeux</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Afficher l'action Lancer avec NVIDIA GeForce NOW pour les jeux compatibles qui n'ont pas été installés par leurs bibliothèques</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Les jeux sans répertoire d'installation sont détectés comme non installés par leurs bibliothèques</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Définir les jeux activés comme installés lors de la mise à jour de l'état des jeux</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Launch in Nvidia GeForce NOW</sys:String>
 </ResourceDictionary>

@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Додати до чорного списку PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Вилучити з чорного списку PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Додати вибрані ігри до чорного списку PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Прибрати вибрані ігри з чорного списку Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Додано {0} ігор до чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Прибрано {0} ігор з чорного списку PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Заморожено</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Поновлено</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Налаштована гаряча клавіша заморозки/поновлення:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Змінити гарячу клавішу</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Натисніть гарячу клавішу</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotesRestartRequired">Примітка: Зміна цього параметру потребує перезавантаження</sys:String>
 </ResourceDictionary>

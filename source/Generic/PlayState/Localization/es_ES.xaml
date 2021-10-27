@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Añadir a la lista de exclusión de PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Eliminar de la lista de exclusión de PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Añadir los juegos seleccionados a la lista de ignorados</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Eliminar los juegos seleccionados de la lista de ignorados</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Se añadieron {0} juego(s) a la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Se removieron {0} juego(s) de la lista de exclusión de PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Suspendido</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Reanudado</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Tecla de suspensión/Reanudación configurada:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambiar teclas</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Pulsa las teclas ahora</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotesRestartRequired">Nota: Cambiar este ajuste requiere reiniciar</sys:String>
 </ResourceDictionary>
