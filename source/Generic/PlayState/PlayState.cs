@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace PlayState
@@ -62,7 +63,20 @@ namespace PlayState
             };
 
             splashWindowViewModel = new SplashWindowViewModel();
-            GlobalHotKey.RegisterHotKey(settings.Settings.HotkeyGesture, () => SwitchGameState());
+            var hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(settings.Settings.HotkeyGesture, () => SwitchGameState());
+            if (!hotkeyRegisterSuccess)
+            {
+                logger.Debug($"Hotkey register failed with hotkey {settings.Settings.HotkeyGesture}. Trying with default key...");
+                hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(new Hotkey(Key.S, ModifierKeys.Shift), () => SwitchGameState());
+                if (hotkeyRegisterSuccess)
+                {
+                    logger.Debug("Hotkey registered with default hotkey.");
+                }
+                else
+                {
+                    logger.Debug("Hotkey register with default hotkey failed.");
+                }
+            }
         }
 
         private void SetExclusionList()
@@ -161,6 +175,8 @@ namespace PlayState
                 currentGame = game;
                 splashWindowViewModel.GameName = currentGame.Name;
                 isSuspended = false;
+                logger.Debug($"Changed game to {currentGame.Name} game processes");
+                
                 if (game.GameActions != null && game.GameActions.Count > 0)
                 {
                     if (game.GameActions[0].Type == GameActionType.Emulator)
@@ -190,6 +206,7 @@ namespace PlayState
                 gameProcesses = GetProcessesWmiQuery(true);
                 if (gameProcesses.Count > 0)
                 {
+                    logger.Debug($"Found {gameProcesses.Count} game processes");
                     return;
                 }
 
@@ -216,6 +233,7 @@ namespace PlayState
                     gameProcesses = GetProcessesWmiQuery(filterPaths);
                     if (gameProcesses.Count > 0)
                     {
+                        logger.Debug($"Found {gameProcesses.Count} game processes");
                         return;
                     }
                     else
@@ -223,6 +241,8 @@ namespace PlayState
                         await Task.Delay(15000);
                     }
                 }
+
+                logger.Debug("Couldn't find any game process");
             });
         }
 
