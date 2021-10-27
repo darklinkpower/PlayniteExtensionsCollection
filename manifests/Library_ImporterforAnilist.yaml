@@ -53,3 +53,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Add Play Action functionality, providing options to open the game links.
+  - Version: 2.8
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_8.pext
+    Changelog:
+    - Updated localizations
