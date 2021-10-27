@@ -19,4 +19,5 @@ Imposta {1} giochi come disinstallati.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Mostra l'azione per avviare in NVIDIA GeForce NOW per i giochi compatibili che non sono stati installati dalle loro librerie</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">I giochi senza un set di cartelle di installazione vengono rilevati come non installati dalle loro librerie</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Imposta i giochi abilitati come installati quando si aggiorna lo stato abilitato dei giochi</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Avvia in Nvidia GeForce NOW</sys:String>
 </ResourceDictionary>
