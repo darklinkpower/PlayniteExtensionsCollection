@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Models\GeforceGame.cs" />
     <Compile Include="NVIDIAGeForceNowEnabler.cs" />
+    <Compile Include="NVIDIAGeForceNowEnablerController.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerSettings.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerSettingsView.xaml.cs">
       <DependentUpon>NVIDIAGeForceNowEnablerSettingsView.xaml</DependentUpon>

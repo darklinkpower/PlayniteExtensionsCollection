@@ -406,18 +406,11 @@ namespace NVIDIAGeForceNowEnabler
 
             if (supportedGame != null)
             {
-                return new List<AutomaticPlayController>
+                return new List<PlayController>()
                 {
-                    new AutomaticPlayController(game)
-                    {
-                        Name = "Launch in Nvidia GeForce NOW",
-                        Path = geforceNowExecutablePath,
-                        WorkingDir = geforceNowWorkingPath,
-                        Type = AutomaticPlayActionType.File,
-                        TrackingMode = TrackingMode.Process,
-                        Arguments = string.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGame.Id),
-                    }
+                    new NVIDIAGeForceNowEnablerPlayController(game, supportedGame.Id.ToString(), geforceNowExecutablePath, geforceNowWorkingPath)
                 };
+
             }
 
             return null;
