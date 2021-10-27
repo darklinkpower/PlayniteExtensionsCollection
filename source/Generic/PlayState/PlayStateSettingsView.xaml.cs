@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Playnite.SDK;
+using PlayState.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,42 +17,75 @@ using System.Windows.Shapes;
 
 namespace PlayState
 {
+    // Obtained from https://github.com/felixkmh/QuickSearch-for-Playnite
     public partial class PlayStateSettingsView : UserControl
     {
         public PlayStateSettingsView()
         {
             InitializeComponent();
+            TbHotkey.PreviewKeyDown += HotkeyTextBox_PreviewKeyDown;
         }
 
-        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        private void HotkeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            var modifierKeys = new List<Key>
+            if (DataContext is PlayStateSettingsViewModel settings)
             {
-                Key.LeftCtrl,
-                Key.RightCtrl,
-                Key.LeftShift,
-                Key.RightShift,
-                Key.LeftAlt,
-                Key.RightAlt,
-                Key.LWin,
-                Key.RWin
-            };
+                e.Handled = true;
+                SetHotkey(e, TbHotkey, SetHotkeyButton, settings.Settings.HotkeyGesture);
+            }
+        }
 
-            if (modifierKeys.Contains(e.Key) || Keyboard.Modifiers == ModifierKeys.None)
+        private void SetHotkeyButton_Click(object sender, RoutedEventArgs e)
+        {
+            TbHotkey.Focusable = true;
+            TbHotkey.Focus();
+            SetHotkeyButton.Content = ResourceProvider.GetString("LOCPlayState_SettingPressHotkeyPromtButtonLabel");
+        }
+
+        private void SetHotkey(KeyEventArgs e, TextBox tbHotkey, Button setHotkeyButton, Hotkey hotkeyGesture)
+        {
+            // Get modifiers and key data
+            var modifiers = Keyboard.Modifiers;
+            var key = e.Key;
+
+            // When Alt is pressed, SystemKey is used instead
+            if (key == Key.System)
+            {
+                key = e.SystemKey;
+            }
+
+            // Pressing delete, backspace or escape without modifiers clears the current value
+            if (modifiers == ModifierKeys.None &&
+                (key == Key.Delete || key == Key.Back || key == Key.Escape))
+            {
+                // Hotkey = null;
+                return;
+            }
+
+            // If no actual key was pressed - return
+            if (key == Key.LeftCtrl ||
+                key == Key.RightCtrl ||
+                key == Key.LeftAlt ||
+                key == Key.RightAlt ||
+                key == Key.LeftShift ||
+                key == Key.RightShift ||
+                key == Key.LWin ||
+                key == Key.RWin ||
+                key == Key.Clear ||
+                key == Key.OemClear ||
+                key == Key.Apps)
             {
                 return;
             }
 
-            try
-            {
-                var keyGesture = new KeyGesture(e.Key, Keyboard.Modifiers);
-                var converter = new KeyGestureConverter();
-                //Settings.GestureString = converter.ConvertToInvariantString(keyGesture);
-            }
-            catch (Exception)
-            {
+            tbHotkey.Text = $"{modifiers} + {key}";
 
-            }
+            hotkeyGesture.Key = key;
+            hotkeyGesture.Modifiers = modifiers;
+            tbHotkey.Focusable = false;
+            setHotkeyButton.Focus();
+            setHotkeyButton.Content = ResourceProvider.GetString("LOCPlayState_SettingChangeHotkeyButtonLabel");
         }
+
     }
 }

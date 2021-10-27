@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayState.Models;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
@@ -11,14 +12,12 @@ namespace PlayState
         /// <summary>
         /// Registers a global hotkey
         /// </summary>
-        /// <param name="aKeyGesture">e.g. Alt + Shift + Control + Win + S</param>
-        /// <param name="aAction">Action to be called when hotkey is pressed</param>
+        /// <param name="hotkey">Hotkey that contains Modifiers and key</param>
+        /// <param name="action">Action to be called when hotkey is pressed</param>
         /// <returns>true, if registration succeeded, otherwise false</returns>
-        public static bool RegisterHotKey(string aKeyGestureString, Action aAction)
+        public static bool RegisterHotKey(Hotkey hotkey, Action aAction)
         {
-            var c = new KeyGestureConverter();
-            KeyGesture aKeyGesture = (KeyGesture)c.ConvertFrom(aKeyGestureString);
-            return RegisterHotKey(aKeyGesture.Modifiers, aKeyGesture.Key, aAction);
+            return RegisterHotKey(hotkey.Modifiers, hotkey.Key, aAction);
         }
 
         public static bool RegisterHotKey(ModifierKeys aModifier, Key aKey, Action aAction)

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalHotKey.cs" />
+    <Compile Include="Models\Hotkey.cs" />
     <Compile Include="Models\ProcessItem.cs" />
     <Compile Include="PlayState.cs" />
     <Compile Include="PlayStateSettings.cs" />

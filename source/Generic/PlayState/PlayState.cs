@@ -62,9 +62,7 @@ namespace PlayState
             };
 
             splashWindowViewModel = new SplashWindowViewModel();
-
-            // TODO Make the HotKey configurable
-            GlobalHotKey.RegisterHotKey("Alt + Shift + S", () => SwitchGameState());
+            GlobalHotKey.RegisterHotKey(settings.Settings.HotkeyGesture, () => SwitchGameState());
         }
 
         private void SetExclusionList()
@@ -186,16 +184,9 @@ namespace PlayState
                     return;
                 }
                 gameInstallDir = game.InstallDirectory.ToLower();
-                var executables = Directory.GetFiles(game.InstallDirectory, "*.exe", SearchOption.AllDirectories);
-                if (executables.Count() == 1)
-                {
-                    gameProcesses = GetProcessesWmiQuery(false, executables[0].ToLower());
-                    if (gameProcesses.Count > 0)
-                    {
-                        return;
-                    }
-                }
-                
+
+                // Fix for some games that take longer to start, even when already detected as running
+                await Task.Delay(5000);
                 gameProcesses = GetProcessesWmiQuery(true);
                 if (gameProcesses.Count > 0)
                 {
@@ -346,16 +337,15 @@ namespace PlayState
                 var gameProcesses = new List<ProcessItem>();
                 if (exactPath != null)
                 {
-                    var item = query.FirstOrDefault(i => i.Path != null && i.Path.ToLower() == exactPath);
-                    if (item != null)
+                    foreach (var fItem in query.Where(i => i.Path != null && i.Path.ToLower() == exactPath))
                     {
                         gameProcesses.Add(
-                            new ProcessItem
-                            {
-                                ExecutablePath = item.Path,
-                                Process = item.Process
-                            }
-                        );
+                           new ProcessItem
+                           {
+                               ExecutablePath = fItem.Path,
+                               Process = fItem.Process
+                           }
+                       );
                     }
                 }
                 else

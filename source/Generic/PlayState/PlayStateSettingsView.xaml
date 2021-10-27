@@ -5,15 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <DockPanel>
-            <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredHotkeyLabel}"/>
-            <TextBox x:Name="TbKeyGesture" IsReadOnly="True" Text="{Binding Settings.GestureString}" Margin="10,0,0,0" KeyDown="OnKeyDownHandler" />
-            <TextBox Text="{Binding Answer, Mode=TwoWay}">
-                <TextBox.InputBindings>
-                    <KeyBinding Command="ApplicationCommands.Paste" Key="Enter" CommandParameter="{}"/>
-                </TextBox.InputBindings>
-            </TextBox>
+    <StackPanel Margin="20">
+        <DockPanel LastChildFill="False">
+            <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredHotkeyLabel}"
+                       DockPanel.Dock="Left"
+                       VerticalAlignment="Center"/>
+            <TextBox x:Name="TbHotkey"
+                     Text="{Binding Settings.HotkeyText}"
+                     DockPanel.Dock="Left"
+                     IsReadOnly="True" MinWidth="200"
+                     VerticalAlignment="Center"
+                     Margin="10,0,0,0" Focusable="False" />
+            <Button x:Name="SetHotkeyButton"
+                    DockPanel.Dock="Left"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
+                    Click="SetHotkeyButton_Click"/>
         </DockPanel>
+        <TextBlock Text="{DynamicResource LOCPlayState_SettingNotesRestartRequired}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>

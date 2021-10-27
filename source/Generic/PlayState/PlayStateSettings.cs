@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using PlayState.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,10 @@ namespace PlayState
     public class PlayStateSettings : ObservableObject
     {
         [DontSerialize]
-        private string gestureString = string.Empty;
+        public string hotkeyText = string.Empty;
         [DontSerialize]
-        public string GestureString { get => gestureString; set => SetValue(ref gestureString, value); }
-        private  KeyGesture keyGesture;
-
-        public KeyGesture KeyGesture { get => keyGesture; set => SetValue(ref keyGesture, value); }
+        public string HotkeyText { get => hotkeyText; set => SetValue(ref hotkeyText, value); }
+        public Hotkey HotkeyGesture { get; set; } = new Hotkey(Key.S, ModifierKeys.Shift);
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
@@ -53,12 +52,14 @@ namespace PlayState
             {
                 Settings = new PlayStateSettings();
             }
+            
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
+            Settings.HotkeyText = $"{Settings.HotkeyGesture.Modifiers} + {Settings.HotkeyGesture.Key}";
         }
 
         public void CancelEdit()
