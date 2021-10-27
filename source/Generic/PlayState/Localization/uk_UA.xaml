@@ -7,4 +7,7 @@
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Заморожено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Поновлено</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Налаштована гаряча клавіша заморозки/поновлення:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotesRestartRequired">Note: Changing this setting requires restart</sys:String>
 </ResourceDictionary>
