@@ -38,7 +38,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +48,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DeviceListenerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Localization\en_US.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -56,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeviceListener.cs" />
+    <Compile Include="DeviceListenerWindow.xaml.cs">
+      <DependentUpon>DeviceListenerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InstallationStatusUpdater.cs" />
     <Compile Include="InstallationStatusUpdaterSettings.cs" />
     <Compile Include="InstallationStatusUpdaterSettingsView.xaml.cs">

@@ -17,12 +17,8 @@ namespace InstallationStatusUpdater
     public class InstallationStatusUpdater : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-
         private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
-
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
-        private DispatcherTimer usbSearchertimer;
-        private string currentDevices;
         private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
         private DispatcherTimer timer;
 
@@ -46,11 +42,6 @@ namespace InstallationStatusUpdater
             if (settings.Settings.UpdateStatusOnUsbChanges)
             {
                 DeviceListener.RegisterAction(() => timer.Start());
-                //currentDevices = GetUSBDevices();
-                //usbSearchertimer = new DispatcherTimer();
-                //usbSearchertimer.Interval = TimeSpan.FromMilliseconds(5000);
-                //usbSearchertimer.Tick += new EventHandler(UsbTimer_Tick);
-                //usbSearchertimer.Start();
             }
         }
 
@@ -59,34 +50,8 @@ namespace InstallationStatusUpdater
             // Timer is used to ensure multiple executions are not triggered
             // when there are multiple changes in bulk
             timer.Stop();
+            logger.Debug("Starting detection by timer");
             DetectInstallationStatus(false);
-        }
-
-        private void UsbTimer_Tick(object sender, EventArgs e)
-        {
-            var newDevices = GetUSBDevices();
-            if (currentDevices != newDevices)
-            {
-                logger.Info(string.Format("Usb device changes detected. Old: \"{0}\", New: \"{1}\"", currentDevices, newDevices));
-                currentDevices = newDevices;
-                timer.Stop();
-                timer.Start();
-                SetDirWatchers();
-            }
-        }
-
-        public string GetUSBDevices()
-        {
-            var devices = new StringBuilder("Devices:");
-            foreach (DriveInfo drive in DriveInfo.GetDrives())
-            {
-                if (drive.IsReady)
-                {
-                    devices.Append($" Root: {drive.RootDirectory}. Label: {drive.VolumeLabel} |");
-                }
-            }
-
-            return devices.ToString();
         }
 
         public void SetDirWatchers()
