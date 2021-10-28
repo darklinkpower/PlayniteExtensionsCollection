@@ -23,6 +23,6 @@
                     Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
                     Click="SetHotkeyButton_Click"/>
         </DockPanel>
-        <TextBlock Text="{DynamicResource LOCPlayState_SettingNotesRestartRequired}" Margin="0,10,0,0"/>
+        <TextBlock Text="{DynamicResource LOCPlayState_SettingNotesRestartRequired}" Margin="0,10,0,0" TextWrapping="Wrap"/>
     </StackPanel>
 </UserControl>
