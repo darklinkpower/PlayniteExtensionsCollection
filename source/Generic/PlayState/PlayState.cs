@@ -63,15 +63,15 @@ namespace PlayState
             };
 
             splashWindowViewModel = new SplashWindowViewModel();
-            var hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(settings.Settings.HotkeyGesture, () => SwitchGameState());
+            var hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(settings.Settings.SavedHotkeyGesture, () => SwitchGameState());
             if (hotkeyRegisterSuccess)
             {
-                logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.HotkeyGesture}.");
+                logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.SavedHotkeyGesture}.");
 
             }
             else
             {
-                logger.Debug($"Hotkey register failed with hotkey {settings.Settings.HotkeyGesture}. Trying with default key...");
+                logger.Debug($"Hotkey register failed with hotkey {settings.Settings.SavedHotkeyGesture}. Trying with default key...");
                 hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(new Hotkey(Key.A, (ModifierKeys)5), () => SwitchGameState());
                 if (hotkeyRegisterSuccess)
                 {

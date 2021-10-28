@@ -16,7 +16,7 @@ namespace PlayState
         public string hotkeyText = string.Empty;
         [DontSerialize]
         public string HotkeyText { get => hotkeyText; set => SetValue(ref hotkeyText, value); }
-        public Hotkey HotkeyGesture { get; set; } = new Hotkey(Key.A, (ModifierKeys)5);
+        public Hotkey SavedHotkeyGesture { get; set; } = new Hotkey(Key.A, (ModifierKeys)5);
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
@@ -59,7 +59,7 @@ namespace PlayState
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
-            Settings.HotkeyText = $"{Settings.HotkeyGesture.Modifiers} + {Settings.HotkeyGesture.Key}";
+            Settings.HotkeyText = $"{Settings.SavedHotkeyGesture.Modifiers} + {Settings.SavedHotkeyGesture.Key}";
         }
 
         public void CancelEdit()

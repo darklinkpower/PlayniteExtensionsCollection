@@ -31,7 +31,7 @@ namespace PlayState
             if (DataContext is PlayStateSettingsViewModel settings)
             {
                 e.Handled = true;
-                SetHotkey(e, TbHotkey, SetHotkeyButton, settings.Settings.HotkeyGesture);
+                SetHotkey(e, TbHotkey, SetHotkeyButton, settings.Settings.SavedHotkeyGesture);
             }
         }
 
