@@ -66,6 +66,11 @@ namespace PlayState
             var hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(settings.Settings.HotkeyGesture, () => SwitchGameState());
             if (hotkeyRegisterSuccess)
             {
+                logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.HotkeyGesture}.");
+
+            }
+            else
+            {
                 logger.Debug($"Hotkey register failed with hotkey {settings.Settings.HotkeyGesture}. Trying with default key...");
                 hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(new Hotkey(Key.A, (ModifierKeys)5), () => SwitchGameState());
                 if (hotkeyRegisterSuccess)
@@ -76,10 +81,6 @@ namespace PlayState
                 {
                     logger.Debug("Hotkey register with default hotkey failed.");
                 }
-            }
-            else
-            {
-                logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.HotkeyGesture}.");
             }
         }
 

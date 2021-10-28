@@ -3,43 +3,56 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace PlayState
 {
     // From https://stackoverflow.com/a/65412682
     public class GlobalHotKey : IDisposable
     {
+        // Registers a hot key with Windows.
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+        // Unregisters the hot key with Windows.
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        private static readonly ListenerWindow window = new ListenerWindow();
+        private IntPtr windowHandle = new WindowInteropHelper(window).Handle;
+        private static int currentID;
+        private static uint MOD_NOREPEAT = 0x4000;
+        private static List<HotKeyWithAction> registeredHotKeys = new List<HotKeyWithAction>();
+
         /// <summary>
         /// Registers a global hotkey
         /// </summary>
         /// <param name="hotkey">Hotkey that contains Modifiers and key</param>
         /// <param name="action">Action to be called when hotkey is pressed</param>
         /// <returns>true, if registration succeeded, otherwise false</returns>
-        public static bool RegisterHotKey(Hotkey hotkey, Action aAction)
+        public static bool RegisterHotKey(Hotkey hotkey, Action action)
         {
-            return RegisterHotKey(hotkey.Modifiers, hotkey.Key, aAction);
+            return RegisterHotKey(hotkey.Modifiers, hotkey.Key, action);
         }
 
-        public static bool RegisterHotKey(ModifierKeys aModifier, Key aKey, Action aAction)
+        public static bool RegisterHotKey(ModifierKeys aModifier, Key aKey, Action action)
         {
             if (aModifier == ModifierKeys.None)
             {
                 throw new ArgumentException("Modifier must not be ModifierKeys.None");
             }
-            if (aAction is null)
+            if (action is null)
             {
-                throw new ArgumentNullException(nameof(aAction));
+                throw new ArgumentNullException(nameof(action));
             }
 
-            System.Windows.Forms.Keys aVirtualKeyCode = (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(aKey);
+            var aVirtualKeyCode = KeyInterop.VirtualKeyFromKey(aKey);
             currentID = currentID + 1;
-            bool aRegistered = RegisterHotKey(window.Handle, currentID,
+            bool aRegistered = RegisterHotKey(new WindowInteropHelper(window).Handle, currentID,
                                         (uint)aModifier | MOD_NOREPEAT,
                                         (uint)aVirtualKeyCode);
 
             if (aRegistered)
             {
-                registeredHotKeys.Add(new HotKeyWithAction(aModifier, aKey, aAction));
+                registeredHotKeys.Add(new HotKeyWithAction(aModifier, aKey, action));
             }
             return aRegistered;
         }
@@ -49,7 +62,7 @@ namespace PlayState
             // unregister all the registered hot keys.
             for (int i = currentID; i > 0; i--)
             {
-                UnregisterHotKey(window.Handle, i);
+                UnregisterHotKey(windowHandle, i);
             }
 
             // dispose the inner native window.
@@ -70,10 +83,7 @@ namespace PlayState
             };
         }
 
-        private static readonly InvisibleWindowForMessages window = new InvisibleWindowForMessages();
-        private static int currentID;
-        private static uint MOD_NOREPEAT = 0x4000;
-        private static List<HotKeyWithAction> registeredHotKeys = new List<HotKeyWithAction>();
+
 
         private class HotKeyWithAction
         {
@@ -90,69 +100,5 @@ namespace PlayState
             public Action Action { get; }
         }
 
-        // Registers a hot key with Windows.
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-        // Unregisters the hot key with Windows.
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        private class InvisibleWindowForMessages : System.Windows.Forms.NativeWindow, IDisposable
-        {
-            public InvisibleWindowForMessages()
-            {
-                CreateHandle(new System.Windows.Forms.CreateParams());
-            }
-
-            private static int WM_HOTKEY = 0x0312;
-            protected override void WndProc(ref System.Windows.Forms.Message m)
-            {
-                base.WndProc(ref m);
-
-                if (m.Msg == WM_HOTKEY)
-                {
-                    var aWPFKey = KeyInterop.KeyFromVirtualKey(((int)m.LParam >> 16) & 0xFFFF);
-                    ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
-                    if (KeyPressed != null)
-                    {
-                        KeyPressed(this, new HotKeyPressedEventArgs(modifier, aWPFKey));
-                    }
-                }
-            }
-
-            public class HotKeyPressedEventArgs : EventArgs
-            {
-                private ModifierKeys _modifier;
-                private Key _key;
-
-                internal HotKeyPressedEventArgs(ModifierKeys modifier, Key key)
-                {
-                    _modifier = modifier;
-                    _key = key;
-                }
-
-                public ModifierKeys Modifier
-                {
-                    get { return _modifier; }
-                }
-
-                public Key Key
-                {
-                    get { return _key; }
-                }
-            }
-
-
-            public event EventHandler<HotKeyPressedEventArgs> KeyPressed;
-
-            #region IDisposable Members
-
-            public void Dispose()
-            {
-                this.DestroyHandle();
-            }
-
-            #endregion
-        }
     }
 }
