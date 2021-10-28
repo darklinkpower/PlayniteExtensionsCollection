@@ -41,3 +41,11 @@ Packages:
     - Suspend/Resume hotkey is configurable in settings
     - 'Game skip feature changed to "[PlayState] Blacklist"'
     - General fixes and improvements as part of the extension rewrite
+  - Version: 2.6
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/PlayState_2_6.pext
+    Changelog:
+    - Updated localizations
+    - "Add note in settings that indicates that used hotkey can't be used in other applications"
+    - Changed default hotkey combination to Shift+Alt+A
