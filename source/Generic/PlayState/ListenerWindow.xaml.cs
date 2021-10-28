@@ -16,10 +16,13 @@ namespace PlayState
             InitializeComponent();
 
             //Hack to raise the OnSourceInitialize event
-            this.ShowInTaskbar = false;
-            this.Visibility = Visibility.Collapsed;
-            this.Show();
-            this.Hide();
+            Width = 0;
+            Height = 0;
+            WindowStyle = WindowStyle.None;
+            ShowInTaskbar = false;
+            ShowActivated = false;
+            Show();
+            Hide();
         }
 
         protected override void OnSourceInitialized(EventArgs e)

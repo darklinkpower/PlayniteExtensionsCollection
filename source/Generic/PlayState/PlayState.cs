@@ -269,6 +269,7 @@ namespace PlayState
                 ResizeMode = ResizeMode.NoResize,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 Topmost = false,
+                ShowActivated = false,
                 SizeToContent = SizeToContent.WidthAndHeight,
                 ShowInTaskbar = false,
                 Content = new SplashWindow(),
