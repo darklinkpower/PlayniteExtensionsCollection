@@ -45,11 +45,12 @@ namespace InstallationStatusUpdater
 
             if (settings.Settings.UpdateStatusOnUsbChanges)
             {
-                currentDevices = GetUSBDevices();
-                usbSearchertimer = new DispatcherTimer();
-                usbSearchertimer.Interval = TimeSpan.FromMilliseconds(5000);
-                usbSearchertimer.Tick += new EventHandler(UsbTimer_Tick);
-                usbSearchertimer.Start();
+                DeviceListener.RegisterAction(() => timer.Start());
+                //currentDevices = GetUSBDevices();
+                //usbSearchertimer = new DispatcherTimer();
+                //usbSearchertimer.Interval = TimeSpan.FromMilliseconds(5000);
+                //usbSearchertimer.Tick += new EventHandler(UsbTimer_Tick);
+                //usbSearchertimer.Start();
             }
         }
 
