@@ -64,10 +64,10 @@ namespace PlayState
 
             splashWindowViewModel = new SplashWindowViewModel();
             var hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(settings.Settings.HotkeyGesture, () => SwitchGameState());
-            if (!hotkeyRegisterSuccess)
+            if (hotkeyRegisterSuccess)
             {
                 logger.Debug($"Hotkey register failed with hotkey {settings.Settings.HotkeyGesture}. Trying with default key...");
-                hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(new Hotkey(Key.S, ModifierKeys.Shift), () => SwitchGameState());
+                hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(new Hotkey(Key.A, (ModifierKeys)5), () => SwitchGameState());
                 if (hotkeyRegisterSuccess)
                 {
                     logger.Debug("Hotkey registered with default hotkey.");
@@ -76,6 +76,10 @@ namespace PlayState
                 {
                     logger.Debug("Hotkey register with default hotkey failed.");
                 }
+            }
+            else
+            {
+                logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.HotkeyGesture}.");
             }
         }
 
@@ -147,8 +151,8 @@ namespace PlayState
                 "unins",
                 "UnityCrashHandler",
                 "x360ce",
-                "*Unpack",
-                "*UnX_Calibrate",
+                "Unpack",
+                "UnX_Calibrate",
                 "update",
                 "UnrealCEFSubProcess.exe",
                 "url.exe",
