@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,19 @@ namespace ImporterforAnilist
         public bool UpdateProgressOnLibUpdate { get; set; } = false;
         private string browserPath = string.Empty;
         public string BrowserPath { get => browserPath; set => SetValue(ref browserPath, value); }
+        public Guid PlanWatchId { get; set; } = Guid.Empty;
+        public Guid WatchingId { get; set; } = Guid.Empty;
+        public Guid PausedId { get; set; } = Guid.Empty;
+        public Guid DroppedId { get; set; } = Guid.Empty;
+        public Guid CompletedId { get; set; } = Guid.Empty;
+        public Guid RewatchingId { get; set; } = Guid.Empty;
     }
 
     public class ImporterForAnilistSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ImporterForAnilist plugin;
         private ImporterForAnilistSettings editingClone { get; set; }
-
+        private IPlayniteAPI playniteApi;
         private ImporterForAnilistSettings settings;
         public ImporterForAnilistSettings Settings
         {
@@ -36,8 +43,16 @@ namespace ImporterforAnilist
                 OnPropertyChanged();
             }
         }
-
-        private IPlayniteAPI playniteApi;
+        private List<CompletionStatus> completionStatuses;
+        public List<CompletionStatus> CompletionStatuses
+        {
+            get => completionStatuses;
+            set
+            {
+                completionStatuses = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ImporterForAnilistSettingsViewModel(ImporterForAnilist plugin, IPlayniteAPI playniteApi)
         {
@@ -63,6 +78,7 @@ namespace ImporterforAnilist
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
+            CompletionStatuses = playniteApi.Database.CompletionStatuses.OrderBy(x => x.Name).ToList();
         }
 
         public void CancelEdit()

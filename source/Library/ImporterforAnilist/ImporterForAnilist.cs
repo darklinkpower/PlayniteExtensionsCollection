@@ -33,6 +33,15 @@ namespace ImporterforAnilist
 
         public MalSyncRateLimiter MalSyncRateLimiter { get; } = new MalSyncRateLimiter();
 
+        private Dictionary<string, Guid> completionStatusesDict;
+
+        public CompletionStatus CompletionStatusPlanWatch { get; private set; }
+        public CompletionStatus CompletionStatusWatching { get; private set; }
+        public CompletionStatus CompletionStatusPaused { get; private set; }
+        public CompletionStatus CompletionStatusDropped { get; private set; }
+        public CompletionStatus CompletionStatusCompleted { get; private set; }
+        public CompletionStatus CompletionStatusRewatching { get; private set; }
+
         public ImporterForAnilist(IPlayniteAPI api) : base(api)
         {
             settings = new ImporterForAnilistSettingsViewModel(this, PlayniteApi);
@@ -118,32 +127,49 @@ namespace ImporterforAnilist
             tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", propertiesPrefix, entry.Media.Format.ToString())));
             game.Tags = tags;
 
-            ////CompletionStatus
-            ////TODO Completion Status matching
-            //switch (entry.Status)
-            //{
-            //    case EntryStatus.Current:
-            //        game.CompletionStatus = CompletionStatus.Playing;
-            //        break;
-            //    case EntryStatus.Planning:
-            //        game.CompletionStatus = CompletionStatus.PlanToPlay;
-            //        break;
-            //    case EntryStatus.Completed:
-            //        game.CompletionStatus = CompletionStatus.Completed;
-            //        break;
-            //    case EntryStatus.Dropped:
-            //        game.CompletionStatus = CompletionStatus.Abandoned;
-            //        break;
-            //    case EntryStatus.Paused:
-            //        game.CompletionStatus = CompletionStatus.OnHold;
-            //        break;
-            //    case EntryStatus.Repeating:
-            //        game.CompletionStatus = CompletionStatus.Playing;
-            //        break;
-            //    default:
-            //        game.CompletionStatus = CompletionStatus.NotPlayed;
-            //        break;
-            //}
+            //CompletionStatus
+            //TODO Completion Status matching
+            switch (entry.Status)
+            {
+                case EntryStatus.Current:
+                    if (CompletionStatusWatching != null)
+                    {
+                        game.CompletionStatus = new MetadataNameProperty(CompletionStatusWatching.Name);
+                    }
+                    break;
+                case EntryStatus.Planning:
+                    if (CompletionStatusPlanWatch != null)
+                    {
+                        game.CompletionStatus = new MetadataNameProperty(CompletionStatusPlanWatch.Name);
+                    }
+                    break;
+                case EntryStatus.Completed:
+                    if (CompletionStatusCompleted != null)
+                    {
+                        game.CompletionStatus = new MetadataNameProperty(CompletionStatusCompleted.Name);
+                    }
+                    break;
+                case EntryStatus.Dropped:
+                    if (CompletionStatusDropped != null)
+                    {
+                        game.CompletionStatus = new MetadataNameProperty(CompletionStatusDropped.Name);
+                    }
+                    break;
+                case EntryStatus.Paused:
+                    if (CompletionStatusPaused != null)
+                    {
+                        game.CompletionStatus = new MetadataNameProperty(CompletionStatusPaused.Name);
+                    }
+                    break;
+                case EntryStatus.Repeating:
+                    if (CompletionStatusRewatching != null)
+                    {
+                        game.CompletionStatus = new MetadataNameProperty(CompletionStatusRewatching.Name);
+                    }
+                    break;
+                default:
+                    break;
+            }
 
             if (settings.Settings.UpdateProgressOnLibUpdate == true)
             {
@@ -182,6 +208,11 @@ namespace ImporterforAnilist
 
         public void overrideGameProperties(GameMetadata gameMetadata)
         {
+            if (gameMetadata.GameId == "1698")
+            {
+                var asd = "SD";
+            }
+
             var game = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).Where(g => g.GameId == gameMetadata.GameId).FirstOrDefault();
             if (game != null)
             {
@@ -192,12 +223,17 @@ namespace ImporterforAnilist
                     updateGame = true;
                 }
 
-                ////TODO Completion Status matching
-                //if (settings.UpdateCompletionStatusOnLibUpdate == true && gameMetadata.CompletionStatus != game.CompletionStatus)
-                //{
-                //    game.CompletionStatus = gameMetadata.CompletionStatus;
-                //    updateGame = true;
-                //}
+                //TODO Completion Status matching
+                if (settings.Settings.UpdateCompletionStatusOnLibUpdate == true && gameMetadata.CompletionStatus != null)
+                {
+                    var ss = gameMetadata.CompletionStatus.ToString();
+                    var completionStatusId = completionStatusesDict[gameMetadata.CompletionStatus.ToString()];
+                    if (game.CompletionStatusId == null || game.CompletionStatusId != completionStatusId)
+                    {
+                        game.CompletionStatusId = completionStatusId;
+                        updateGame = true;
+                    }
+                }
 
                 if (settings.Settings.UpdateProgressOnLibUpdate == true && gameMetadata.Version != game.Version)
                 {
@@ -212,9 +248,51 @@ namespace ImporterforAnilist
             }
         }
 
+        private void InitializeStatuses()
+        {
+            completionStatusesDict = new Dictionary<string, Guid>();
+
+            CompletionStatusPlanWatch = PlayniteApi.Database.CompletionStatuses[settings.Settings.PlanWatchId];
+            CompletionStatusWatching = PlayniteApi.Database.CompletionStatuses[settings.Settings.WatchingId];
+            CompletionStatusPaused = PlayniteApi.Database.CompletionStatuses[settings.Settings.PausedId];
+            CompletionStatusDropped = PlayniteApi.Database.CompletionStatuses[settings.Settings.DroppedId];
+            CompletionStatusCompleted = PlayniteApi.Database.CompletionStatuses[settings.Settings.CompletedId];
+            CompletionStatusRewatching = PlayniteApi.Database.CompletionStatuses[settings.Settings.RewatchingId];
+
+            if (CompletionStatusPlanWatch != null)
+            {
+                completionStatusesDict.Add(CompletionStatusPlanWatch.Name, CompletionStatusPlanWatch.Id);
+            }
+            
+            if (CompletionStatusWatching != null && !completionStatusesDict.ContainsKey(CompletionStatusWatching.Name))
+            {
+                completionStatusesDict.Add(CompletionStatusWatching.Name, CompletionStatusWatching.Id);
+            }
+            
+            if (CompletionStatusPaused != null && !completionStatusesDict.ContainsKey(CompletionStatusPaused.Name))
+            {
+                completionStatusesDict.Add(CompletionStatusPaused.Name, CompletionStatusPaused.Id);
+            }
+            
+            if (CompletionStatusDropped != null && !completionStatusesDict.ContainsKey(CompletionStatusDropped.Name))
+            {
+                completionStatusesDict.Add(CompletionStatusDropped.Name, CompletionStatusDropped.Id);
+            }
+            
+            if (CompletionStatusCompleted != null && !completionStatusesDict.ContainsKey(CompletionStatusCompleted.Name))
+            {
+                completionStatusesDict.Add(CompletionStatusCompleted.Name, CompletionStatusCompleted.Id);
+            }
+            
+            if (CompletionStatusRewatching != null && !completionStatusesDict.ContainsKey(CompletionStatusRewatching.Name))
+            {
+                completionStatusesDict.Add(CompletionStatusRewatching.Name, CompletionStatusRewatching.Id);
+            }
+        }
+
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
-
+            InitializeStatuses();
             var gamesList = new List<GameMetadata>() { }; 
             
             if (string.IsNullOrEmpty(settings.Settings.AccountAccessCode))
@@ -323,23 +401,20 @@ namespace ImporterforAnilist
                     continue;
                 }
 
-                if (link.Name.StartsWith("Mangadex"))
+                var match = mangadexIdRegex.Match(link.Url);
+                if (match.Success)
                 {
-                    var match = mangadexIdRegex.Match(link.Url);
-                    if (match.Success)
-                    {
-                        var actionName = string.Format("Cubari (MangaDex) {0}", link.Name.Replace("Mangadex - ", ""));
-                        var actionUrl = string.Format(@"https://cubari.moe/read/mangadex/{0}/", match.Groups[1]);
-                        cubariLinks.Add(new Link { Name = actionName, Url = actionUrl });
-                    }
+                    var actionName = string.Format("Cubari (MangaDex) {0}", link.Name.Replace("Mangadex - ", ""));
+                    var actionUrl = string.Format(@"https://cubari.moe/read/mangadex/{0}/", match.Groups[1]);
+                    cubariLinks.Add(new Link { Name = actionName, Url = actionUrl });
                 }
-                else if (link.Name.StartsWith("MangaSee"))
+                else
                 {
-                    var match = mangaseeIdRegex.Match(link.Url);
-                    if (match.Success)
+                    var match2 = mangaseeIdRegex.Match(link.Url);
+                    if (match2.Success)
                     {
                         var actionName = string.Format("Cubari (MangaSee) {0}", link.Name.Replace("MangaSee - ", ""));
-                        var actionUrl = string.Format(@"https://cubari.moe/read/mangasee/{0}/", match.Groups[1]);
+                        var actionUrl = string.Format(@"https://cubari.moe/read/mangasee/{0}/", match2.Groups[1]);
                         cubariLinks.Add(new Link { Name = actionName, Url = actionUrl });
                     }
                 }

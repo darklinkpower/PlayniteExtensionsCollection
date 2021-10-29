@@ -22,8 +22,56 @@
             <CheckBox Name="ImportAnimeLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportAnimeLibrary}" Content="{DynamicResource LOCImporter_For_Anilist_ImportAnimeSetting}"/>
             <CheckBox Name="ImportMangaLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportMangaLibrary}" Content="{DynamicResource LOCImporter_For_Anilist_ImportMangaSetting}"/>
             <CheckBox Name="UpdateUserScoreOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateUserScoreOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdaterUserscoreSetting}"/>
-            <!--TODO Completion Status matching-->
-            <!--<CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding UpdateCompletionStatusOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateCompletionStatusSetting}"/>-->
+            <CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateCompletionStatusOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateCompletionStatusSetting}"/>
+            <StackPanel Margin="40,10,0,0" IsEnabled="{Binding ElementName=UpdateCompletionStatusOnLibUpdate, Path=IsChecked}">
+                <Grid IsEnabled="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Content="AniList status" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0"/>
+                    <Label Content="Completion status" Margin="0,0,0,5" Grid.Column="1" Grid.Row="0"/>
+                    <TextBlock Text="Plan to watch/read" Margin="0,0,10,0" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" />
+                    <TextBlock Text="Watching/Reading" Margin="0,0,10,0" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" />
+                    <TextBlock Text="Paused" Margin="0,0,10,0" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" />
+                    <TextBlock Text="Dropped" Margin="0,0,10,0" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" />
+                    <TextBlock Text="Completed" Margin="0,0,10,0" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" />
+                    <TextBlock Text="Rewatching/Rereading" Margin="0,0,10,0" Grid.Column="0" Grid.Row="6" VerticalAlignment="Center" />
+                    <ComboBox Grid.Column="1" Grid.Row="1" Margin="0,5,0,0"
+                              ItemsSource="{Binding CompletionStatuses}"
+                              DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Settings.PlanWatchId}"
+                              MinWidth="220" />
+                    <ComboBox Grid.Column="1" Grid.Row="2" Margin="0,5,0,0"
+                              ItemsSource="{Binding CompletionStatuses}"
+                              DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Settings.WatchingId}"
+                              MinWidth="220" />
+                    <ComboBox Grid.Column="1" Grid.Row="3" Margin="0,5,0,0"
+                              ItemsSource="{Binding CompletionStatuses}"
+                              DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Settings.PausedId}"
+                              MinWidth="220" />
+                    <ComboBox Grid.Column="1" Grid.Row="4" Margin="0,5,0,0"
+                              ItemsSource="{Binding CompletionStatuses}"
+                              DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Settings.DroppedId}"
+                              MinWidth="220" />
+                    <ComboBox Grid.Column="1" Grid.Row="5" Margin="0,5,0,0"
+                              ItemsSource="{Binding CompletionStatuses}"
+                              DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Settings.CompletedId}"
+                              MinWidth="220" />
+                    <ComboBox Grid.Column="1" Grid.Row="6" Margin="0,5,0,0"
+                              ItemsSource="{Binding CompletionStatuses}"
+                              DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding Settings.RewatchingId}"
+                              MinWidth="220" />
+                </Grid>
+            </StackPanel>
             <CheckBox Name="UpdateProgressOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateProgressOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateProgressSetting}"/>
             <DockPanel Margin="0,10,0,0">
                 <TextBlock Text="{DynamicResource LOCImporter_For_Anilist_SettingBrowserPathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
