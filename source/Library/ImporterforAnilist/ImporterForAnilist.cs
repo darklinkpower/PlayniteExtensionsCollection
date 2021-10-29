@@ -446,7 +446,7 @@ namespace ImporterforAnilist
         {
             return new AutomaticPlayController(game)
             {
-                Name = $"Open link \"{name}\"",
+                Name = $"{ResourceProvider.GetString("LOCImporter_For_Anilist_PlayActionOpenLinkLabel")} \"{name}\"",
                 Path = settings.Settings.BrowserPath,
                 Type = AutomaticPlayActionType.File,
                 Arguments = url,
@@ -459,7 +459,7 @@ namespace ImporterforAnilist
         {
             return new AutomaticPlayController(game)
             {
-                Name = $"Open link \"{name}\"",
+                Name = $"{ResourceProvider.GetString("LOCImporter_For_Anilist_PlayActionOpenLinkLabel")} \"{name}\"",
                 Path = url,
                 Type = AutomaticPlayActionType.Url,
                 TrackingMode = TrackingMode.Default

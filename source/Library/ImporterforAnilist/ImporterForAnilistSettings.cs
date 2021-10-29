@@ -133,5 +133,18 @@ namespace ImporterforAnilist
                 settings.BrowserPath = executablePath;
             }
         }
+
+        public RelayCommand<object> RemoveBrowserCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                RemoveBrowser();
+            });
+        }
+
+        private void RemoveBrowser()
+        {
+            settings.BrowserPath = string.Empty;
+        }
     }
 }

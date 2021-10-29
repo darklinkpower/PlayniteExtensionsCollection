@@ -13,4 +13,14 @@
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Remove</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Open link</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">AniList status</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Completion status</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Plan to watch/read</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">Watching/Reading</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">Paused</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Dropped</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Completed</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Rewatching/Rereading</sys:String>
 </ResourceDictionary>
