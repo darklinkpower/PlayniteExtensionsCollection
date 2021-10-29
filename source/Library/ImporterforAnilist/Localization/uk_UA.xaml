@@ -12,4 +12,14 @@
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Якщо налаштовано, посилання, відкриті програмою будуть відкриті в налаштованому браузері.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Шлях до браузера:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Виберіть браузер</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Вилучити</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Відкрити посилання</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">Статус AniList</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Статус завершення</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Планую дивитись/читати</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">Дивлюся/Читаю</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">На паузі</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Покинуто</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Завершено</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Rewatching/Rereading</sys:String>
 </ResourceDictionary>
