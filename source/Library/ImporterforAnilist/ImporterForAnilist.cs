@@ -20,20 +20,12 @@ namespace ImporterforAnilist
         private const string dbImportMessageId = "anilistlibImportError";
         private static readonly Regex mangadexIdRegex = new Regex(@"^https:\/\/mangadex\.org\/title\/([^\/]+)", RegexOptions.Compiled);
         private static readonly Regex mangaseeIdRegex = new Regex(@"^https:\/\/mangasee123\.com\/manga\/([^\/]+)", RegexOptions.Compiled);
-
         private ImporterForAnilistSettingsViewModel settings { get; set; }
-
         public override Guid Id { get; } = Guid.Parse("2366fb38-bf25-45ea-9a78-dcc797ee83c3");
-
-        // Change to something more appropriate
         public override string Name => "Importer for AniList";
-
-        // Implementing Client adds ability to open it via special menu in playnite.
         public override LibraryClient Client { get; } = new ImporterForAnilistClient();
-
         public MalSyncRateLimiter MalSyncRateLimiter { get; } = new MalSyncRateLimiter();
 
-        private Dictionary<string, Guid> completionStatusesDict;
 
         public CompletionStatus CompletionStatusPlanWatch { get; private set; }
         public CompletionStatus CompletionStatusWatching { get; private set; }
@@ -47,7 +39,8 @@ namespace ImporterforAnilist
             settings = new ImporterForAnilistSettingsViewModel(this, PlayniteApi);
             Properties = new LibraryPluginProperties
             {
-                HasSettings = true
+                HasSettings = true,
+                HasCustomizedGameImport = true
             };
         }
 
@@ -67,11 +60,11 @@ namespace ImporterforAnilist
             }
         }
 
-        public GameMetadata EntryToGameMetadata(Entry entry, string propertiesPrefix)
+        public GameMetadata EntryToGameMetadata(Entry entry)
         {
             var game = new GameMetadata()
             {
-                Source = new MetadataNameProperty("Anilist"),
+                Source = new MetadataNameProperty("AniList"),
                 GameId = entry.Media.Id.ToString(),
                 Name = entry.Media.Title.Romaji ?? entry.Media.Title.English ?? entry.Media.Title.Native ?? string.Empty,
                 IsInstalled = true,
@@ -90,7 +83,7 @@ namespace ImporterforAnilist
             //Genres
             if (entry.Media.Genres != null)
             {
-                game.Genres = entry.Media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a))).Cast<MetadataProperty>().ToHashSet();
+                game.Genres = entry.Media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", settings.Settings.PropertiesPrefix, a))).Cast<MetadataProperty>().ToHashSet();
             }
 
             //ReleaseDate
@@ -103,32 +96,30 @@ namespace ImporterforAnilist
             if (entry.Media.Type == TypeEnum.Manga)
             {
                 game.Developers = entry.Media.Staff.Nodes?.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name.Full))).Cast<MetadataProperty>().ToHashSet();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", settings.Settings.PropertiesPrefix, a.Name.Full))).Cast<MetadataProperty>().ToHashSet();
             }
             else if (entry.Media.Type == TypeEnum.Anime)
             {
                 game.Developers = entry.Media.Studios.Nodes.Where(s => s.IsAnimationStudio == true)?.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", settings.Settings.PropertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
                 game.Publishers = entry.Media.Studios.Nodes.Where(s => s.IsAnimationStudio == false)?.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
+                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", settings.Settings.PropertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
             }
 
             //Tags
             var tags = entry.Media.Tags.
                 Where(s => s.IsMediaSpoiler == false).
                 Where(s => s.IsGeneralSpoiler == false)?.
-                Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
+                Select(a => new MetadataNameProperty(string.Format("{0}{1}", settings.Settings.PropertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
 
             if (entry.Media.Season != null)
             {
-                tags.Add(new MetadataNameProperty(string.Format("{0}Season: {1}", propertiesPrefix, entry.Media.Season.ToString())));
+                tags.Add(new MetadataNameProperty(string.Format("{0}Season: {1}", settings.Settings.PropertiesPrefix, entry.Media.Season.ToString())));
             }
-            tags.Add(new MetadataNameProperty(string.Format("{0}Status: {1}", propertiesPrefix, entry.Media.Status.ToString())));
-            tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", propertiesPrefix, entry.Media.Format.ToString())));
+            tags.Add(new MetadataNameProperty(string.Format("{0}Status: {1}", settings.Settings.PropertiesPrefix, entry.Media.Status.ToString())));
+            tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", settings.Settings.PropertiesPrefix, entry.Media.Format.ToString())));
             game.Tags = tags;
 
-            //CompletionStatus
-            //TODO Completion Status matching
             switch (entry.Status)
             {
                 case EntryStatus.Current:
@@ -173,127 +164,57 @@ namespace ImporterforAnilist
 
             if (settings.Settings.UpdateProgressOnLibUpdate == true)
             {
-                //Version (Used for progress)
-                var totalLength = 0;
-                var progressPercentageString = string.Empty;
-                var progressPercentageFormat = string.Empty;
-                var totalLenghtString = "??";
-                if (entry.Media.Type == TypeEnum.Manga)
-                {
-                    if (entry.Media.Chapters != null)
-                    {
-                        totalLength = (int)entry.Media.Chapters;
-                        totalLenghtString = intToThreeDigitsString(totalLength);
-                    }
-                }
-                else if (entry.Media.Type == TypeEnum.Anime)
-                {
-                    if (entry.Media.Episodes != null)
-                    {
-                        totalLength = (int)entry.Media.Episodes;
-                        totalLenghtString = intToThreeDigitsString(totalLength);
-                    }
-                }
-                if (totalLength != 0)
-                {
-                    int percentage = Convert.ToInt32((entry.Progress * 100) / totalLength);
-                    progressPercentageFormat = string.Format("({0}%) ", intToThreeDigitsString(percentage));
-                }
-
-                game.Version = string.Format("{0}{1}/{2}", progressPercentageFormat, intToThreeDigitsString(entry.Progress), totalLenghtString);
+                game.Version = GetEntryVersionString(entry);
             }
 
             return game;
         }
 
-        public void overrideGameProperties(GameMetadata gameMetadata)
+        private string GetEntryVersionString(Entry entry)
         {
-            if (gameMetadata.GameId == "1698")
+            //Version (Used for progress)
+            var totalLength = 0;
+            var progressPercentageFormat = string.Empty;
+            var totalLenghtString = "??";
+            if (entry.Media.Type == TypeEnum.Manga)
             {
-                var asd = "SD";
-            }
-
-            var game = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).Where(g => g.GameId == gameMetadata.GameId).FirstOrDefault();
-            if (game != null)
-            {
-                var updateGame = false;
-                if (settings.Settings.UpdateUserScoreOnLibUpdate == true && gameMetadata.UserScore != 0 && gameMetadata.UserScore != game.UserScore)
+                if (entry.Media.Chapters != null)
                 {
-                    game.UserScore = gameMetadata.UserScore;
-                    updateGame = true;
-                }
-
-                //TODO Completion Status matching
-                if (settings.Settings.UpdateCompletionStatusOnLibUpdate == true && gameMetadata.CompletionStatus != null)
-                {
-                    var ss = gameMetadata.CompletionStatus.ToString();
-                    var completionStatusId = completionStatusesDict[gameMetadata.CompletionStatus.ToString()];
-                    if (game.CompletionStatusId == null || game.CompletionStatusId != completionStatusId)
-                    {
-                        game.CompletionStatusId = completionStatusId;
-                        updateGame = true;
-                    }
-                }
-
-                if (settings.Settings.UpdateProgressOnLibUpdate == true && gameMetadata.Version != game.Version)
-                {
-                    game.Version = gameMetadata.Version;
-                    updateGame = true;
-                }
-
-                if (updateGame == true)
-                {
-                    PlayniteApi.Database.Games.Update(game);
+                    totalLength = (int)entry.Media.Chapters;
+                    totalLenghtString = intToThreeDigitsString(totalLength);
                 }
             }
+            else if (entry.Media.Type == TypeEnum.Anime)
+            {
+                if (entry.Media.Episodes != null)
+                {
+                    totalLength = (int)entry.Media.Episodes;
+                    totalLenghtString = intToThreeDigitsString(totalLength);
+                }
+            }
+            if (totalLength != 0)
+            {
+                int percentage = Convert.ToInt32((entry.Progress * 100) / totalLength);
+                progressPercentageFormat = string.Format("({0}%) ", intToThreeDigitsString(percentage));
+            }
+
+            return string.Format("{0}{1}/{2}", progressPercentageFormat, intToThreeDigitsString(entry.Progress), totalLenghtString);
         }
 
         private void InitializeStatuses()
         {
-            completionStatusesDict = new Dictionary<string, Guid>();
-
             CompletionStatusPlanWatch = PlayniteApi.Database.CompletionStatuses[settings.Settings.PlanWatchId];
             CompletionStatusWatching = PlayniteApi.Database.CompletionStatuses[settings.Settings.WatchingId];
             CompletionStatusPaused = PlayniteApi.Database.CompletionStatuses[settings.Settings.PausedId];
             CompletionStatusDropped = PlayniteApi.Database.CompletionStatuses[settings.Settings.DroppedId];
             CompletionStatusCompleted = PlayniteApi.Database.CompletionStatuses[settings.Settings.CompletedId];
             CompletionStatusRewatching = PlayniteApi.Database.CompletionStatuses[settings.Settings.RewatchingId];
-
-            if (CompletionStatusPlanWatch != null)
-            {
-                completionStatusesDict.Add(CompletionStatusPlanWatch.Name, CompletionStatusPlanWatch.Id);
-            }
-            
-            if (CompletionStatusWatching != null && !completionStatusesDict.ContainsKey(CompletionStatusWatching.Name))
-            {
-                completionStatusesDict.Add(CompletionStatusWatching.Name, CompletionStatusWatching.Id);
-            }
-            
-            if (CompletionStatusPaused != null && !completionStatusesDict.ContainsKey(CompletionStatusPaused.Name))
-            {
-                completionStatusesDict.Add(CompletionStatusPaused.Name, CompletionStatusPaused.Id);
-            }
-            
-            if (CompletionStatusDropped != null && !completionStatusesDict.ContainsKey(CompletionStatusDropped.Name))
-            {
-                completionStatusesDict.Add(CompletionStatusDropped.Name, CompletionStatusDropped.Id);
-            }
-            
-            if (CompletionStatusCompleted != null && !completionStatusesDict.ContainsKey(CompletionStatusCompleted.Name))
-            {
-                completionStatusesDict.Add(CompletionStatusCompleted.Name, CompletionStatusCompleted.Id);
-            }
-            
-            if (CompletionStatusRewatching != null && !completionStatusesDict.ContainsKey(CompletionStatusRewatching.Name))
-            {
-                completionStatusesDict.Add(CompletionStatusRewatching.Name, CompletionStatusRewatching.Id);
-            }
         }
 
-        public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
+        public override IEnumerable<Game> ImportGames(LibraryImportGamesArgs args)
         {
+            var importedGames = new List<Game>();
             InitializeStatuses();
-            var gamesList = new List<GameMetadata>() { }; 
             
             if (string.IsNullOrEmpty(settings.Settings.AccountAccessCode))
             {
@@ -304,12 +225,6 @@ namespace ImporterforAnilist
             }
             else
             {
-                string propertiesPrefix = settings.Settings.PropertiesPrefix;
-                if (!string.IsNullOrEmpty(propertiesPrefix))
-                {
-                    propertiesPrefix = string.Format("{0} ", propertiesPrefix);
-                }
-
                 var accountApi = new AnilistAccountClient(PlayniteApi, settings.Settings.AccountAccessCode);
                 if (string.IsNullOrEmpty(accountApi.anilistUsername))
                 {
@@ -328,10 +243,15 @@ namespace ImporterforAnilist
                         logger.Debug($"Found {animeEntries.Count} Anime items");
                         foreach (var entry in animeEntries)
                         {
-                            var gameInfo = EntryToGameMetadata(entry, propertiesPrefix);
-                            gamesList.Add(gameInfo);
-                            overrideGameProperties(gameInfo);
-
+                            var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
+                            if (existingEntry != null)
+                            {
+                                UpdateExistingEntry(entry, existingEntry);
+                            }
+                            else
+                            {
+                                importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
+                            }
                         }
                     }
 
@@ -341,15 +261,103 @@ namespace ImporterforAnilist
                         logger.Debug($"Found {mangaEntries.Count} Manga items");
                         foreach (var entry in mangaEntries)
                         {
-                            var gameInfo = EntryToGameMetadata(entry, propertiesPrefix);
-                            gamesList.Add(gameInfo);
-                            overrideGameProperties(gameInfo);
+                            var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
+                            if (existingEntry != null)
+                            {
+                                UpdateExistingEntry(entry, existingEntry);
+                            }
+                            else
+                            {
+                                importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
+                            }
                         }
                     }
                 }
             }
 
-            return gamesList;
+            return importedGames;
+        }
+
+        private void UpdateExistingEntry(Entry entry, Game existingEntry)
+        {
+            var updateGame = false;
+            if (settings.Settings.UpdateUserScoreOnLibUpdate == true && entry.Score != 0 && entry.Score != existingEntry.UserScore)
+            {
+                existingEntry.UserScore = entry.Score;
+                updateGame = true;
+            }
+            if (settings.Settings.UpdateProgressOnLibUpdate == true)
+            {
+                var versionString = GetEntryVersionString(entry);
+                if (existingEntry.Version != versionString)
+                {
+                    existingEntry.Version = versionString;
+                    updateGame = true;
+                }
+
+            }
+
+            if (!existingEntry.IsInstalled)
+            {
+                existingEntry.IsInstalled = true;
+                updateGame = true;
+            }
+
+            if (settings.Settings.UpdateCompletionStatusOnLibUpdate == true && entry.Status != null)
+            {
+                switch (entry.Status)
+                {
+                    case EntryStatus.Current:
+                        if (CompletionStatusWatching != null && existingEntry.CompletionStatusId != CompletionStatusWatching.Id)
+                        {
+                            existingEntry.CompletionStatusId = CompletionStatusWatching.Id;
+                            updateGame = true;
+                        }
+                        break;
+                    case EntryStatus.Planning:
+                        if (CompletionStatusPlanWatch != null && existingEntry.CompletionStatusId != CompletionStatusPlanWatch.Id)
+                        {
+                            existingEntry.CompletionStatusId = CompletionStatusPlanWatch.Id;
+                            updateGame = true;
+                        }
+                        break;
+                    case EntryStatus.Completed:
+                        if (CompletionStatusCompleted != null && existingEntry.CompletionStatusId != CompletionStatusCompleted.Id)
+                        {
+                            existingEntry.CompletionStatusId = CompletionStatusCompleted.Id;
+                            updateGame = true;
+                        }
+                        break;
+                    case EntryStatus.Dropped:
+                        if (CompletionStatusDropped != null && existingEntry.CompletionStatusId != CompletionStatusDropped.Id)
+                        {
+                            existingEntry.CompletionStatusId = CompletionStatusDropped.Id;
+                            updateGame = true;
+                        }
+                        break;
+                    case EntryStatus.Paused:
+                        if (CompletionStatusPaused != null && existingEntry.CompletionStatusId != CompletionStatusPaused.Id)
+                        {
+                            existingEntry.CompletionStatusId = CompletionStatusPaused.Id;
+                            updateGame = true;
+                        }
+                        break;
+                    case EntryStatus.Repeating:
+                        if (CompletionStatusRewatching != null && existingEntry.CompletionStatusId != CompletionStatusRewatching.Id)
+                        {
+                            existingEntry.CompletionStatusId = CompletionStatusRewatching.Id;
+                            updateGame = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (updateGame == true)
+            {
+                PlayniteApi.Database.Games.Update(existingEntry);
+            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -364,13 +372,7 @@ namespace ImporterforAnilist
 
         public override LibraryMetadataProvider GetMetadataDownloader()
         {
-            string propertiesPrefix = settings.Settings.PropertiesPrefix;
-            if (!string.IsNullOrEmpty(propertiesPrefix))
-            {
-                propertiesPrefix = string.Format("{0} ", propertiesPrefix);
-            }
-            
-            return new AnilistMetadataProvider(this, PlayniteApi, propertiesPrefix, MalSyncRateLimiter);
+            return new AnilistMetadataProvider(this, PlayniteApi, settings.Settings.PropertiesPrefix, MalSyncRateLimiter);
         }
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
