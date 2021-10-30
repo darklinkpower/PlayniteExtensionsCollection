@@ -18,7 +18,8 @@ function Update-IsFreestyleEnabled
         $scriptMainMenuItemActionArgs
     )
 
-    $feature = $PlayniteApi.Database.Features.Add("NVIDIA Freestyle")
+    $featureName = "NVIDIA Freestyle"
+    $feature = $PlayniteApi.Database.Features.Add($featureName)
 
     $freestyleEnabled = 0
     $counterFeatureAdded = 0
