@@ -220,7 +220,7 @@ namespace ImporterforAnilist
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     dbImportMessageId,
-                    "AniList access code has not been configured in the library settings",
+                    ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured"),
                     NotificationType.Error));
             }
             else
@@ -231,7 +231,7 @@ namespace ImporterforAnilist
                     //Username could not be obtained
                     PlayniteApi.Notifications.Add(new NotificationMessage(
                         dbImportMessageId,
-                        "Could not obtain AniList username. Verify that the configured access code is valid",
+                        ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained"),
                         NotificationType.Error));
                 }
                 else
@@ -294,7 +294,6 @@ namespace ImporterforAnilist
                     existingEntry.Version = versionString;
                     updateGame = true;
                 }
-
             }
 
             if (!existingEntry.IsInstalled)
@@ -385,7 +384,7 @@ namespace ImporterforAnilist
 
             if (game.Links == null || game.Links.Count == 0)
             {
-                PlayniteApi.Dialogs.ShowMessage("Game doesn't have links available. Download metadata.");
+                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel"));
                 yield break;
             }
 
