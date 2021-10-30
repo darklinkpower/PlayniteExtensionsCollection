@@ -101,7 +101,7 @@ function Invoke-ImageCacheSizeSaver
 
     # Set images to be processed and get current cache size
     $imagesObjectList = Get-ChildItem -path $PathCacheDirectory -Include $ImageExtensions
-    [string]$ImagesSizeBefore = "{0:N2}" -f (($ImagesAll | Measure-Object -Sum Length).Sum / 1MB)
+    [string]$ImagesSizeBefore = "{0:N2}" -f (($imagesObjectList | Measure-Object -Sum Length).Sum / 1MB)
     $ImageTempPath = Join-Path -Path $env:temp -ChildPath 'ImageCacheSizeSaver.tmp'
     
     foreach ($imageObject in $imagesObjectList)
