@@ -13,6 +13,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Percorso del browser:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Seleziona browser</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Rimuovi</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList game entry doesn't have links available, please download metadata using the &quot;Official store&quot; opton to get links from different providers.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Apri link</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">Stato di AniList</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Stato completamento</sys:String>
@@ -22,4 +23,6 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Abbandonato</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Completato</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Stai riguardando/rileggendo</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">Could not obtain AniList username. Verify that the configured access code is valid</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">AniList access code has not been configured in the library settings</sys:String>
 </ResourceDictionary>
