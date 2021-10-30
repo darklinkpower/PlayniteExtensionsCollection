@@ -12,14 +12,14 @@
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Si está configurado, los enlaces abiertos por la Acción de Juego se abrirán en el navegador configurado.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Ruta del navegador:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Seleccionar navegador</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Remove</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Open link</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">AniList status</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Completion status</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Plan to watch/read</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">Watching/Reading</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">Paused</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Dropped</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Completed</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Rewatching/Rereading</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Quitar</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Abrir enlace</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">Estado de AniList</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Estado de finalización</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Planificado ver/leer</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">Viendo/Leyendo</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">En pausa</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Abandonado</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Completado</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Viendo/Leyendo nuevamente</sys:String>
 </ResourceDictionary>
