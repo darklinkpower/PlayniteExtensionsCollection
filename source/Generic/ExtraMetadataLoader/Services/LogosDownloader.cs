@@ -18,6 +18,7 @@ namespace ExtraMetadataLoader.Services
     public class LogosDownloader
     {
         private readonly IPlayniteAPI playniteApi;
+        private static readonly ILogger logger = LogManager.GetLogger();
         private readonly ExtraMetadataLoaderSettings settings;
         private readonly ExtraMetadataHelper extraMetadataHelper;
         private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
@@ -39,12 +40,14 @@ namespace ExtraMetadataLoader.Services
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
             if (File.Exists(logoPath) && !overwrite)
             {
+                logger.Debug("Logo exists and overwrite is set to false, skipping");
                 return true;
             }
 
             var steamId = string.Empty;
             if (game.PluginId == steamPluginId)
             {
+                logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
             else
@@ -76,6 +79,7 @@ namespace ExtraMetadataLoader.Services
 
             if (steamId.IsNullOrEmpty())
             {
+                logger.Debug("Steam id not found");
                 return false;
             }
 
@@ -115,6 +119,7 @@ namespace ExtraMetadataLoader.Services
                 }
             }
 
+            logger.Debug($"Obtained {results.Count} games from Steam search term {searchTerm}");
             return results;
         }
 
