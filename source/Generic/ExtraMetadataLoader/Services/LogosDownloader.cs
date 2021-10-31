@@ -134,6 +134,7 @@ namespace ExtraMetadataLoader.Services
             else if (settings.SgdbApiKey.IsNullOrEmpty())
             {
                 logger.Debug("SteamGridDB API Key has not been configured in settings.");
+                playniteApi.Notifications.Add(new NotificationMessage("emtSgdbNoApiKey", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing"), NotificationType.Error));
                 return false;
             }
 
