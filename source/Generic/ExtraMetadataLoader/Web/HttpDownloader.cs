@@ -18,7 +18,7 @@ namespace ExtraMetadataLoader.Web
 
         public static async Task<bool> DownloadFileAsync(string requestUri, string fileToWriteTo)
         {
-            logger.Debug($"DownloadFileAsync method with url ${requestUri} and file to write {fileToWriteTo}");
+            logger.Debug($"DownloadFileAsync method with url {requestUri} and file to write {fileToWriteTo}");
             try
             {
                 using (HttpResponseMessage response = await httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
@@ -50,7 +50,7 @@ namespace ExtraMetadataLoader.Web
 
         public static async Task<string> DownloadStringAsync(string requestUri)
         {
-            logger.Debug($"DownloadStringAsync method with url ${requestUri}");
+            logger.Debug($"DownloadStringAsync method with url {requestUri}");
             try
             {
                 using (HttpResponseMessage response = await httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
@@ -71,7 +71,7 @@ namespace ExtraMetadataLoader.Web
 
         public static async Task<bool> DownloadFileWithHeadersAsync(string requestUri, string fileToWriteTo, Dictionary<string, string> headersDictionary)
         {
-            logger.Debug($"DownloadFileWithHeadersAsync method with url ${requestUri} and file to write {fileToWriteTo}");
+            logger.Debug($"DownloadFileWithHeadersAsync method with url {requestUri} and file to write {fileToWriteTo}");
             using (var request = new HttpRequestMessage(HttpMethod.Put, requestUri))
             {
                 foreach (var pair in headersDictionary)
@@ -110,7 +110,7 @@ namespace ExtraMetadataLoader.Web
 
         public static async Task<string> DownloadStringWithHeadersAsync(string requestUri, Dictionary<string, string> headersDictionary)
         {
-            logger.Debug($"DownloadStringWithHeadersAsync method with url ${requestUri}");
+            logger.Debug($"DownloadStringWithHeadersAsync method with url {requestUri}");
             using (var request = new HttpRequestMessage(HttpMethod.Get, requestUri))
             {
                 foreach (var pair in headersDictionary)
