@@ -34,7 +34,7 @@ namespace ExtraMetadataLoader.Services
             this.extraMetadataHelper = extraMetadataHelper;
         }
 
-        public bool DownloadSteamLogo(Game game, bool overwrite, bool isBackgroundDownload, string steamId)
+        public bool DownloadSteamLogo(Game game, bool overwrite, bool isBackgroundDownload)
         {
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
             if (File.Exists(logoPath) && !overwrite)
@@ -42,7 +42,12 @@ namespace ExtraMetadataLoader.Services
                 return true;
             }
 
-            if (steamId == null)
+            var steamId = string.Empty;
+            if (game.PluginId == steamPluginId)
+            {
+                steamId = game.GameId;
+            }
+            else
             {
                 var normalizedName = game.Name.NormalizeGameName();
                 var results = GetSteamSearchResults(normalizedName);
@@ -69,7 +74,7 @@ namespace ExtraMetadataLoader.Services
                 }
             }
 
-            if (steamId == null)
+            if (steamId.IsNullOrEmpty())
             {
                 return false;
             }

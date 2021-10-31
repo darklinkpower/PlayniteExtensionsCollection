@@ -93,10 +93,11 @@ namespace ExtraMetadataLoader
                             a.ProgressMaxValue = games.Count();
                             foreach (var game in games)
                             {
-                                logosDownloader.DownloadSteamLogo(game, overwrite, false, GetSteamId(game));
+                                logosDownloader.DownloadSteamLogo(game, overwrite, false);
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
                 new GameMenuItem
@@ -117,12 +118,13 @@ namespace ExtraMetadataLoader
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames"),
-                    MenuSection = $"ExtraMetadataLoader",
+                    MenuSection = $"ExtraMetadataLoader|{logosSection}",
                     Action = _ => {
                         foreach (var game in args.Games.Distinct())
                         {
@@ -160,18 +162,6 @@ namespace ExtraMetadataLoader
             }
         }
 
-        private string GetSteamId(Game game)
-        {
-            if (game.PluginId == steamPluginId)
-            {
-                return game.GameId;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
             // This needs to be done in this event because the ItemCollectionChanged raises the event
@@ -187,7 +177,7 @@ namespace ExtraMetadataLoader
                     a.ProgressMaxValue = games.Count();
                     foreach (var game in games)
                     {
-                        if (!logosDownloader.DownloadSteamLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically, GetSteamId(game)))
+                        if (!logosDownloader.DownloadSteamLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically))
                         {
                             logosDownloader.DownloadSgdbLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically);
                         }
