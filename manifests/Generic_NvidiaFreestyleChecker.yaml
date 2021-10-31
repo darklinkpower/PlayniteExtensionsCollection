@@ -49,3 +49,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/NVIDIA_Freestyle_Checker_2_7.pext
     Changelog:
     - Updated localizations
+  - Version: 2.8
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/NVIDIA_Freestyle_Checker_2_8.pext
+    Changelog:
+    - Fix feature being added each time the function was used.
+    - Fix showing incorrect dialog message after function completion.

@@ -59,3 +59,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_8.pext
     Changelog:
     - Updated localizations
+  - Version: 2.9
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_9.pext
+    Changelog:
+    - Updated localizations
+    - Add functionality to sync Read/Watch status on library update
