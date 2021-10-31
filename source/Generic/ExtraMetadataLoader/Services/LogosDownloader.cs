@@ -128,7 +128,13 @@ namespace ExtraMetadataLoader.Services
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
             if (File.Exists(logoPath) && !overwrite)
             {
+                logger.Debug("Logo exists and overwrite is set to false, skipping");
                 return true;
+            }
+            else if (settings.SgdbApiKey.IsNullOrEmpty())
+            {
+                logger.Debug("SteamGridDB API Key has not been configured in settings.");
+                return false;
             }
 
             var requestString = GetSgdbRequestUrl(game, isBackgroundDownload);
@@ -170,6 +176,10 @@ namespace ExtraMetadataLoader.Services
                                 }
                             }
                         }
+                    }
+                    else if (!response.Success)
+                    {
+                        logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
                     }
                 }
             }
@@ -229,6 +239,10 @@ namespace ExtraMetadataLoader.Services
                 if (response.Success)
                 {
                     return response.Data;
+                }
+                else
+                {
+                    logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
                 }
             }
             return new List<SteamGridDbGameSearchResponse.Data>();

@@ -21,7 +21,6 @@ namespace ExtraMetadataLoader
     public class ExtraMetadataLoader : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         private readonly LogosDownloader logosDownloader;
         private readonly ExtraMetadataHelper extraMetadataHelper;
 
