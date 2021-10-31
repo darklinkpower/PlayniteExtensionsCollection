@@ -12,4 +12,17 @@
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Si está configurado, los enlaces abiertos por la Acción de Juego se abrirán en el navegador configurado.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Ruta del navegador:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Seleccionar navegador</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Quitar</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">La entrada del juego de AniList no tiene enlaces disponibles, por favor descargue los metadatos usando la opción &quot;Tienda Oficial&quot; para obtener enlaces de diferentes proveedores.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Abrir enlace</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">Estado de AniList</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Estado de finalización</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Planificado ver/leer</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">Viendo/Leyendo</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">En pausa</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Abandonado</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Completado</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Viendo/Leyendo nuevamente</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">No se pudo obtener el nombre de usuario de AniList. Verifica que el código de acceso configurado es válido</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">El código de acceso de AniList no ha sido configurado en la configuración de la biblioteca</sys:String>
 </ResourceDictionary>
