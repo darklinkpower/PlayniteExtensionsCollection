@@ -128,6 +128,7 @@ namespace ExtraMetadataLoader
                         {
                             extraMetadataHelper.DeleteGameLogo(game);
                         };
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
                 new GameMenuItem
@@ -167,19 +168,6 @@ namespace ExtraMetadataLoader
             }
             else
             {
-                if (game.Links == null)
-                {
-                    return null;
-                }
-
-                foreach (Link gameLink in game.Links)
-                {
-                    var linkMatch = Regex.Match(gameLink.Url, @"^https?:\/\/store\.steampowered\.com\/app\/(\d+)");
-                    if (linkMatch.Success)
-                    {
-                        return linkMatch.Groups[1].Value;
-                    }
-                }
                 return null;
             }
         }

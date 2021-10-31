@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace ExtraMetadataLoader.Models
 {
+    public class StoreSearchResult : GenericItemOption
+    {
+        public string GameId { get; set; }
+    }
+
     public partial class SteamAppDetails
     {
+
         public class AppDetails
         {
             public class Category
