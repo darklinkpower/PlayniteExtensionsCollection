@@ -105,3 +105,9 @@ Packages:
     - Updated localizations
     - Fix steam searches not working due to using different dependency version than Playnite
     - Notify is SteamGridDB API Key has not been configured during logos download
+  - Version: 1.15
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_15.pext
+    Changelog:
+    - Fix steam manual search not initially using the game name
