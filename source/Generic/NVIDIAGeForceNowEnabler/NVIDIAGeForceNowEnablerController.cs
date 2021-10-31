@@ -13,10 +13,10 @@ namespace NVIDIAGeForceNowEnabler
 {
     public class NVIDIAGeForceNowEnablerPlayController : PlayController
     {
-        private static ILogger logger = LogManager.GetLogger();
-        private string supportedGameId;
-        private string geforceNowExecutablePath;
-        private string geforceNowWorkingPath;
+        private readonly static ILogger logger = LogManager.GetLogger();
+        private readonly string supportedGameId;
+        private readonly string geforceNowExecutablePath;
+        private readonly string geforceNowWorkingPath;
         private Stopwatch stopWatch;
 
         public NVIDIAGeForceNowEnablerPlayController(Game game, string supportedGameId, string geforceNowExecutablePath, string geforceNowWorkingPath) : base(game)
