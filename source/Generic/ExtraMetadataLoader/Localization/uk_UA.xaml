@@ -25,13 +25,13 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Напрямок тіні</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Радіус розмиття тіні</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Прозорість тіні</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload">Logo download settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">Logo loader settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl">Video player settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">SteamGridDB API Key:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">Get API Key</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Download logos of newly added games on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Select logos to download automatically</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload">Налаштування завантаження логотипу</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">Налаштування завантажувача логотипу</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl">Налаштування відеоплеєра</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">API ключ SteamGridDB:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">Отримати API ключ</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Завантажити логотипи нещодавно доданих ігор при оновленні бібліотеки</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Виберіть логотипи, які завантажувати автоматично</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Відео</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Зліва</sys:String>
@@ -41,17 +41,18 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">По центру</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Внизу</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Select game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Select option</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Overwrite logos of games that already have them?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Downloading logos from Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Downloading logos from SteamGridDB...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Downloading logos of newly added games...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Done.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Download logos from Steam for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Download logos from SteamGridDB for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Open Extra Metadata directory</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Delete logos of selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logos</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Виберіть логотип</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Виберіть гру</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Виберіть варіант</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Перезаписати логотипи ігор, які вже їх мають?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Завантаження логотипів із Steam...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Завантаження логотипів із SteamGridDB...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Завантаження логотипів нещодавно доданих ігор...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Готово.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing">API ключ SteamGridDB не налаштовано у налаштуваннях</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Завантажити логотипи із Steam для вибраних ігор</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Завантажити логотипи із SteamGridDB для вибраних ігор</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Відкрити каталог додаткових метаданих</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Видалити логотипи вибраних ігор</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Логотипи</sys:String>
 </ResourceDictionary>
