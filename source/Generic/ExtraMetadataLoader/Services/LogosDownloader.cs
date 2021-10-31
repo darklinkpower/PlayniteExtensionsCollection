@@ -68,7 +68,7 @@ namespace ExtraMetadataLoader.Services
                     var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
                         results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
                         (a) => GetSteamSearchGenericItemOptions(a),
-                        null,
+                        normalizedName,
                         ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
                     if (selectedGame != null)
                     {
