@@ -10,8 +10,8 @@ using Newtonsoft.Json;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Helpers;
 using System.Text;
-using AngleSharp.Html.Parser;
 using System.Web;
+using AngleSharp.Parser.Html;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -99,7 +99,7 @@ namespace ExtraMetadataLoader.Services
             if (!string.IsNullOrEmpty(searchPageSrc))
             {
                 var parser = new HtmlParser();
-                var searchPage = parser.ParseDocument(searchPageSrc);
+                var searchPage = parser.Parse(searchPageSrc);
                 foreach (var gameElem in searchPage.QuerySelectorAll(".search_result_row"))
                 {
                     var title = gameElem.QuerySelector(".title").InnerHtml;
