@@ -97,3 +97,11 @@ Packages:
     - Added functionality to download logos from SteamGridDB
     - Added optional functionality to automatically download logos for newly added games on library update
     - Added functionality to remove Extra Metadata data when a game is removed from Playnite database
+  - Version: 1.14
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_14.pext
+    Changelog:
+    - Updated localizations
+    - Fix steam searches not working due to using different dependency version than Playnite
+    - Notify is SteamGridDB API Key has not been configured during logos download

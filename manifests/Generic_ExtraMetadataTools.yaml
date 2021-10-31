@@ -40,3 +40,4 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_5.pext
     Changelog:
     - Removed deprecated functions and most functions related to logos functionality
+    - 'Note: Functionality of removed functions have been reimplemented in the "Extra Metadata Loader" extension'
