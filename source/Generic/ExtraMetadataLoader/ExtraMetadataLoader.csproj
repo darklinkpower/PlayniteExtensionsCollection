@@ -59,11 +59,16 @@
     <Compile Include="ExtraMetadataLoaderSettingsView.xaml.cs">
       <DependentUpon>ExtraMetadataLoaderSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExtraMetadataHelper.cs" />
     <Compile Include="Models\SteamAppDetailsResponse.cs" />
+    <Compile Include="Models\SteamGridDbGameSearchResponse.cs" />
+    <Compile Include="Models\SteamGridDbLogoResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\LogoLoaderControl.xaml.cs">
       <DependentUpon>LogoLoaderControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\LogosDownloader.cs" />
+    <Compile Include="Web\HttpDownloader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

@@ -361,6 +361,44 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private string sgdbApiKey = string.Empty;
+        public string SgdbApiKey
+        {
+            get => sgdbApiKey;
+            set
+            {
+                sgdbApiKey = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool downloadLogosOnLibUpdate = true;
+        public bool DownloadLogosOnLibUpdate
+        {
+            get => downloadLogosOnLibUpdate;
+            set
+            {
+                downloadLogosOnLibUpdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool libUpdateSelectLogosAutomatically = false;
+        public bool LibUpdateSelectLogosAutomatically
+        {
+            get => libUpdateSelectLogosAutomatically;
+            set
+            {
+                libUpdateSelectLogosAutomatically = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime LastAutoLibUpdateAssetsDownload = DateTime.Now;
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings
@@ -425,6 +463,19 @@ namespace ExtraMetadataLoader
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        public RelayCommand<object> OpenSgdbApiSiteCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                OpenSgdbApiSite();
+            });
+        }
+
+        private void OpenSgdbApiSite()
+        {
+            System.Diagnostics.Process.Start(@"https://www.steamgriddb.com/profile/preferences/api");
         }
     }
 }
