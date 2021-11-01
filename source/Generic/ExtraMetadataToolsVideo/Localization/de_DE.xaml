@@ -10,7 +10,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Lösche Mikro-Vorschau-Videos der ausgewählten Spiele</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Lade YouTube Vorschau-Video automatisch für ausgewählte Spiele herunter</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Suche nach YouTube-Videos für ausgewählte Spiele</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription">Aktualisiere Asset-Status-Tags aller Spiele in der Datenbank</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage">Wähle ffmpeg Programmdatei.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfprobeExecutableMessage">Wähle ffProbe Programmdatei.</sys:String>
