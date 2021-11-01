@@ -51,10 +51,28 @@ namespace ExtraMetadataLoader
             logosDownloader = new LogosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
-                foreach (var removedGame in ItemCollectionChangedArgs.RemovedItems)
+                foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
                 {
-                    // Removed games have their ExtraMetadataDirectory deleted for cleanup
-                    extraMetadataHelper.DeleteGameExtraMetadataDir(removedGame);
+                    // Removed Game items have their ExtraMetadataDirectory deleted for cleanup
+                    extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
+                }
+            };
+
+            PlayniteApi.Database.Platforms.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
+            {
+                foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
+                {
+                    // Removed Platform items have their ExtraMetadataDirectory deleted for cleanup
+                    extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
+                }
+            };
+
+            PlayniteApi.Database.Sources.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
+            {
+                foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
+                {
+                    // Removed Source items have their ExtraMetadataDirectory deleted for cleanup
+                    extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
                 }
             };
         }

@@ -13,15 +13,17 @@ namespace ExtraMetadataLoader.Helpers
     {
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly string baseDirectory;
 
         public ExtraMetadataHelper(IPlayniteAPI playniteApi)
         {
             this.playniteApi = playniteApi;
+            baseDirectory = Path.Combine(playniteApi.Paths.ConfigurationPath, "ExtraMetadata");
         }
 
         public string GetExtraMetadataDirectory(Game game, bool createDirectory = false)
         {
-            var directory = Path.Combine(playniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString());
+            var directory = Path.Combine(baseDirectory, "games", game.Id.ToString());
             if (createDirectory && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -34,19 +36,33 @@ namespace ExtraMetadataLoader.Helpers
             return Path.Combine(GetExtraMetadataDirectory(game, true), "Logo.png");
         }
 
-        public bool DeleteGameExtraMetadataDir(Game game)
+        public bool DeleteExtraMetadataDir(Game game)
         {
-            var extraMetadataDir = GetExtraMetadataDirectory(game);
-            if (Directory.Exists(extraMetadataDir))
+            return DeleteDirectory(GetExtraMetadataDirectory(game));
+        }
+
+        public bool DeleteExtraMetadataDir(Platform platform)
+        {
+            return DeleteDirectory(Path.Combine(baseDirectory, "platforms", platform.Id.ToString()));
+        }
+
+        public bool DeleteExtraMetadataDir(GameSource source)
+        {
+            return DeleteDirectory(Path.Combine(baseDirectory, "sources", source.Id.ToString()));
+        }
+
+        private bool DeleteDirectory(string directoryPath)
+        {
+            if (Directory.Exists(directoryPath))
             {
                 try
                 {
-                    Directory.Delete(extraMetadataDir, true);
+                    Directory.Delete(directoryPath, true);
                     return true;
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, $"Error while deleting removed game extra metadata directory {extraMetadataDir}");
+                    logger.Error(e, $"Error while deleting removed extra metadata directory {directoryPath}");
                     return false;
                 }
             }
