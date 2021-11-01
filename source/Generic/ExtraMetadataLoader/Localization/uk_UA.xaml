@@ -56,12 +56,12 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Видалити логотипи вибраних ігор</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Логотипи</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Process logos after downloading</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Trim Logos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Removes transparent border around image</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Resize down</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Resize down image preserving the aspect ratio if it exceeds any of the configured dimensions.
-Resizing down is recommended because large images can cause Playnite to slowdown.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Max width:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Max height:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Обробляти логотипи після завантаження</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Обрізати логотипи</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Видаляє прозору рамку навколо зображення</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Зменшити розмір</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Зменшує розмір зображення зберігаючи співвідношення сторін у випадку перевищення заданих значень.
+Зменшення рекомендовано, адже великі зображення можуть призвести до уповільнення Playnite.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Макс. ширина:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Макс. висота:</sys:String>
 </ResourceDictionary>
