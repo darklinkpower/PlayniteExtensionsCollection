@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
+             xmlns:conv="clr-namespace:ExtraMetadataLoader.Converters"
              d:DesignHeight="400" d:DesignWidth="600">
     <Grid Margin="20">
         <TabControl>
@@ -63,6 +64,52 @@
                     <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbDownloadLogosOnLibUpdate, Path=IsChecked}" >
                         <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LibUpdateSelectLogosAutomatically}"
                                   Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel}" />
+                    </StackPanel>
+                    <CheckBox Margin="0,0,0,10" Name="CbProcessLogosOnDownload"
+                              IsChecked="{Binding Settings.ProcessLogosOnDownload}"
+                              Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel}" />
+                    <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbProcessLogosOnDownload, Path=IsChecked}" >
+                        <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LogoTrimOnDownload}"
+                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel}"
+                                  ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip}" />
+                        <CheckBox Margin="0,0,0,10" Name="CbSetLogoMaxProcessDimensions"
+                                  IsChecked="{Binding Settings.SetLogoMaxProcessDimensions}"
+                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel}"
+                                  ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip}" />
+                        <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbSetLogoMaxProcessDimensions, Path=IsChecked}" >
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel}" VerticalAlignment="Center" />
+                                <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBox.Text>
+                                        <Binding Path="Settings.MaxLogoProcessWidth"
+                                         UpdateSourceTrigger="PropertyChanged" 
+                                         ValidatesOnDataErrors="True"
+                                         NotifyOnValidationError="True"
+                                         Converter="{conv:NullableIntToStringConverter}">
+                                            <Binding.ValidationRules>
+                                                <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel}" VerticalAlignment="Center" />
+                                <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBox.Text>
+                                        <Binding Path="Settings.MaxLogoProcessHeight"
+                                         UpdateSourceTrigger="PropertyChanged" 
+                                         ValidatesOnDataErrors="True"
+                                         NotifyOnValidationError="True"
+                                         Converter="{conv:NullableIntToStringConverter}">
+                                            <Binding.ValidationRules>
+                                                <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                     <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl}" Margin="0,0,0,5"/>
                     <Separator Margin="0,0,0,5" />

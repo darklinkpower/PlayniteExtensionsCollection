@@ -399,6 +399,66 @@ namespace ExtraMetadataLoader
         }
 
         public DateTime LastAutoLibUpdateAssetsDownload = DateTime.Now;
+
+        [DontSerialize]
+        private bool processLogosOnDownload = true;
+        public bool ProcessLogosOnDownload
+        {
+            get => processLogosOnDownload;
+            set
+            {
+                processLogosOnDownload = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool logoTrimOnDownload = true;
+        public bool LogoTrimOnDownload
+        {
+            get => logoTrimOnDownload;
+            set
+            {
+                logoTrimOnDownload = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool setLogoMaxProcessDimensions = true;
+        public bool SetLogoMaxProcessDimensions
+        {
+            get => setLogoMaxProcessDimensions;
+            set
+            {
+                setLogoMaxProcessDimensions = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private int maxLogoProcessWidth { get; set; } = 640;
+        public int MaxLogoProcessWidth
+        {
+            get => maxLogoProcessWidth;
+            set
+            {
+                maxLogoProcessWidth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private int maxLogoProcessHeight { get; set; } = 640;
+        public int MaxLogoProcessHeight
+        {
+            get => maxLogoProcessHeight;
+            set
+            {
+                maxLogoProcessHeight = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings

@@ -12,6 +12,7 @@ using ExtraMetadataLoader.Helpers;
 using System.Text;
 using System.Web;
 using AngleSharp.Parser.Html;
+using ImageMagick;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -84,7 +85,68 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamUri = string.Format(steamLogoUriTemplate, steamId);
-            return HttpDownloader.DownloadFileAsync(steamUri, logoPath).GetAwaiter().GetResult();
+            var success = HttpDownloader.DownloadFileAsync(steamUri, logoPath).GetAwaiter().GetResult();
+            if (success && settings.ProcessLogosOnDownload)
+            {
+                ProcessLogoImage(logoPath);
+            }
+
+            return success;
+        }
+
+        private bool ProcessLogoImage(string logoPath)
+        {
+            try
+            {
+                using (var image = new MagickImage(logoPath))
+                {
+                    var originalWitdh = image.Width;
+                    var originalHeight = image.Height;
+                    var imageChanged = false;
+                    if (settings.LogoTrimOnDownload)
+                    {
+                        image.Trim();
+                        if (originalWitdh != image.Width || originalHeight != image.Height)
+                        {
+                            imageChanged = true;
+                            originalWitdh = image.Width;
+                            originalHeight = image.Height;
+                        }
+                    }
+
+                    if (settings.SetLogoMaxProcessDimensions)
+                    {
+                        if (settings.MaxLogoProcessWidth < image.Width || settings.MaxLogoProcessHeight < image.Height)
+                        {
+                            var targetWidth = settings.MaxLogoProcessWidth;
+                            var targetHeight = settings.MaxLogoProcessHeight;
+                            MagickGeometry size = new MagickGeometry(targetWidth, targetHeight)
+                            {
+                                IgnoreAspectRatio = false
+                            };
+                            image.Resize(size);
+                            if (originalWitdh != image.Width || originalHeight != image.Height)
+                            {
+                                imageChanged = true;
+                                originalWitdh = image.Width;
+                                originalHeight = image.Height;
+                            }
+                        }
+                    }
+
+                    // Only save new image if dimensions changed
+                    if (imageChanged)
+                    {
+                        image.Write(logoPath);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error while processing logo {logoPath}");
+                return false;
+            }
         }
 
         public List<GenericItemOption> GetSteamSearchGenericItemOptions(string searchTerm)
@@ -151,9 +213,10 @@ namespace ExtraMetadataLoader.Services
                     var response = JsonConvert.DeserializeObject<SteamGridDbLogoResponse.Response>(downloadedString);
                     if (response.Success && response.Data.Count > 0)
                     {
+                        var success = false;
                         if (isBackgroundDownload || response.Data.Count == 1)
                         {
-                            return HttpDownloader.DownloadFileAsync(response.Data[0].Url, logoPath).GetAwaiter().GetResult();
+                            success = HttpDownloader.DownloadFileAsync(response.Data[0].Url, logoPath).GetAwaiter().GetResult();
                         }
                         else
                         {
@@ -173,9 +236,13 @@ namespace ExtraMetadataLoader.Services
                                 {
                                     // Since the ImageFileOption dialog used the thumb url, the full resolution
                                     // image url needs to be retrieved
-                                    return HttpDownloader.DownloadFileAsync(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath).GetAwaiter().GetResult();
+                                    success = HttpDownloader.DownloadFileAsync(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath).GetAwaiter().GetResult();
                                 }
                             }
+                        }
+                        if (success && settings.ProcessLogosOnDownload)
+                        {
+                            ProcessLogoImage(logoPath);
                         }
                     }
                     else if (!response.Success)
