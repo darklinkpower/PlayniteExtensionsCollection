@@ -7,171 +7,172 @@
              xmlns:conv="clr-namespace:ExtraMetadataLoader.Converters"
              d:DesignHeight="400" d:DesignWidth="600">
     <Grid Margin="20">
-        <TabControl>
-            <TabItem Header="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel}">
-                <StackPanel Margin="0,10,0,0">
-                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl}" Margin="0,0,0,5"/>
-                    <Separator Margin="0,0,0,5" />
-                    <CheckBox Name="EnableVideo" IsChecked="{Binding Settings.EnableVideoPlayer, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel}" Margin="0,0,0,10"/>
-                    <StackPanel IsEnabled="{Binding ElementName=EnableVideo, Path=IsChecked}" Margin="40,0,0,10">
-                        <CheckBox IsChecked="{Binding Settings.AutoPlayVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel}" Margin="0,0,0,10"/>
-                        <CheckBox IsChecked="{Binding Settings.RepeatTrailerVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel}" Margin="0,0,0,10"/>
-                        <CheckBox IsChecked="{Binding Settings.StartNoSound, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel}" Margin="0,0,0,10"/>
-                        <CheckBox IsChecked="{Binding Settings.UseMicrotrailersDefault, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel}" Margin="0,0,0,10"/>
-                        <CheckBox IsChecked="{Binding Settings.FallbackVideoSource, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel}" Margin="0,0,0,10"/>
-                        <CheckBox IsChecked="{Binding Settings.StreamSteamVideosOnDemand, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel}" Margin="0,0,0,10"/>
-                        <CheckBox IsEnabled="{Binding Settings.StreamSteamVideosOnDemand}" IsChecked="{Binding Settings.StreamSteamHighQuality, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel}" Margin="20,0,0,10"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                            <Slider Value="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.0" Maximum="1.0" VerticalAlignment="Center"
-                                    TickFrequency=".05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                            <TextBlock Text="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                            <Slider Value="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.1" Maximum="1.0" VerticalAlignment="Center"
-                                    TickFrequency=".05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                            <TextBlock Text="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            <ComboBox x:Name="cmbVideoVerticalAlignment" MinWidth="150" HorizontalAlignment="Left"
-                                    DisplayMemberPath="Value"
-                                    SelectedValuePath="Key"
-                                    SelectedValue="{Binding Settings.VideoControlsVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                            <Slider Value="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" VerticalAlignment="Center"
-                                    Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                            <TextBlock Text="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel}">
-                <StackPanel Margin="0,10,0,0">
-                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload}" Margin="0,0,0,5"/>
-                    <Separator Margin="0,0,0,5" />
-                    <DockPanel Margin="0,0,0,10">
-                        <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel}" DockPanel.Dock="Left"/>
-                        <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel}" Command="{Binding OpenSgdbApiSiteCommand}" />
-                        <TextBox Margin="10,0,0,0" Text="{Binding Settings.SgdbApiKey}" />
-                    </DockPanel>
-                    <CheckBox Margin="0,0,0,10" Name="CbDownloadLogosOnLibUpdate"
-                              IsChecked="{Binding Settings.DownloadLogosOnLibUpdate}"
-                              Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel}" />
-                    <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbDownloadLogosOnLibUpdate, Path=IsChecked}" >
-                        <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LibUpdateSelectLogosAutomatically}"
-                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel}" />
-                    </StackPanel>
-                    <CheckBox Margin="0,0,0,10" Name="CbProcessLogosOnDownload"
-                              IsChecked="{Binding Settings.ProcessLogosOnDownload}"
-                              Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel}" />
-                    <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbProcessLogosOnDownload, Path=IsChecked}" >
-                        <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LogoTrimOnDownload}"
-                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel}"
-                                  ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip}" />
-                        <CheckBox Margin="0,0,0,10" Name="CbSetLogoMaxProcessDimensions"
-                                  IsChecked="{Binding Settings.SetLogoMaxProcessDimensions}"
-                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel}"
-                                  ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip}" />
-                        <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbSetLogoMaxProcessDimensions, Path=IsChecked}" >
+        <ScrollViewer>
+            <TabControl>
+                <TabItem Header="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel}">
+                    <StackPanel Margin="0,10,0,0">
+                        <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl}" Margin="0,0,0,5"/>
+                        <Separator Margin="0,0,0,5" />
+                        <CheckBox Name="EnableVideo" IsChecked="{Binding Settings.EnableVideoPlayer, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel}" Margin="0,0,0,10"/>
+                        <StackPanel IsEnabled="{Binding ElementName=EnableVideo, Path=IsChecked}" Margin="40,0,0,10">
+                            <CheckBox IsChecked="{Binding Settings.AutoPlayVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel}" Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.RepeatTrailerVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel}" Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.StartNoSound, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel}" Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.UseMicrotrailersDefault, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel}" Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.FallbackVideoSource, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel}" Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.StreamSteamVideosOnDemand, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel}" Margin="0,0,0,10"/>
+                            <CheckBox IsEnabled="{Binding Settings.StreamSteamVideosOnDemand}" IsChecked="{Binding Settings.StreamSteamHighQuality, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel}" Margin="20,0,0,10"/>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel}" VerticalAlignment="Center" />
-                                <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
-                                    <TextBox.Text>
-                                        <Binding Path="Settings.MaxLogoProcessWidth"
-                                         UpdateSourceTrigger="PropertyChanged" 
-                                         ValidatesOnDataErrors="True"
-                                         NotifyOnValidationError="True"
-                                         Converter="{conv:NullableIntToStringConverter}">
-                                            <Binding.ValidationRules>
-                                                <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                <Slider Value="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.0" Maximum="1.0" VerticalAlignment="Center"
+                                        TickFrequency=".05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                <TextBlock Text="{Binding Settings.VideoControlsOpacity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel}" VerticalAlignment="Center" />
-                                <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
-                                    <TextBox.Text>
-                                        <Binding Path="Settings.MaxLogoProcessHeight"
-                                         UpdateSourceTrigger="PropertyChanged" 
-                                         ValidatesOnDataErrors="True"
-                                         NotifyOnValidationError="True"
-                                         Converter="{conv:NullableIntToStringConverter}">
-                                            <Binding.ValidationRules>
-                                                <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                <Slider Value="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0.1" Maximum="1.0" VerticalAlignment="Center"
+                                        TickFrequency=".05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                <TextBlock Text="{Binding Settings.VideoControlsOpacityMouseOver, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbVideoVerticalAlignment" MinWidth="150" HorizontalAlignment="Left"
+                                        DisplayMemberPath="Value"
+                                        SelectedValuePath="Key"
+                                        SelectedValue="{Binding Settings.VideoControlsVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                <Slider Value="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" VerticalAlignment="Center"
+                                        Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                <TextBlock Text="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl}" Margin="0,0,0,5"/>
-                    <Separator Margin="0,0,0,5" />
-                    <CheckBox Name="EnableLogo" IsChecked="{Binding Settings.EnableLogos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel}" Margin="0,0,0,10"/>
-                    <StackPanel IsEnabled="{Binding ElementName=EnableLogo, Path=IsChecked}" Margin="40,0,0,0">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            <Slider Value="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="300" VerticalAlignment="Center"
-                                    Maximum="900" TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                            <TextBlock Text="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                </TabItem>
+                <TabItem Header="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel}">
+                    <StackPanel Margin="0,10,0,0">
+                        <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload}" Margin="0,0,0,5"/>
+                        <Separator Margin="0,0,0,5" />
+                        <DockPanel Margin="0,0,0,10">
+                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel}" DockPanel.Dock="Left"/>
+                            <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel}" Command="{Binding OpenSgdbApiSiteCommand}" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.SgdbApiKey}" />
+                        </DockPanel>
+                        <CheckBox Margin="0,0,0,10" Name="CbDownloadLogosOnLibUpdate"
+                                  IsChecked="{Binding Settings.DownloadLogosOnLibUpdate}"
+                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel}" />
+                        <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbDownloadLogosOnLibUpdate, Path=IsChecked}" >
+                            <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LibUpdateSelectLogosAutomatically}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            <Slider Value="{Binding Settings.LogoMaxHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="50" VerticalAlignment="Center"
-                                    Maximum="450" TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                            <TextBlock Text="{Binding Settings.LogoMaxHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                        <CheckBox Margin="0,0,0,10" Name="CbProcessLogosOnDownload"
+                                  IsChecked="{Binding Settings.ProcessLogosOnDownload}"
+                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel}" />
+                        <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbProcessLogosOnDownload, Path=IsChecked}" >
+                            <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.LogoTrimOnDownload}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel}"
+                                      ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip}" />
+                            <CheckBox Margin="0,0,0,10" Name="CbSetLogoMaxProcessDimensions"
+                                      IsChecked="{Binding Settings.SetLogoMaxProcessDimensions}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel}"
+                                      ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip}" />
+                            <StackPanel Margin="40,0,0,10" IsEnabled="{Binding ElementName=CbSetLogoMaxProcessDimensions, Path=IsChecked}" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel}" VerticalAlignment="Center" />
+                                    <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBox.Text>
+                                            <Binding Path="Settings.MaxLogoProcessWidth"
+                                             UpdateSourceTrigger="PropertyChanged" 
+                                             ValidatesOnDataErrors="True"
+                                             NotifyOnValidationError="True"
+                                             Converter="{conv:NullableIntToStringConverter}">
+                                                <Binding.ValidationRules>
+                                                    <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel}" VerticalAlignment="Center" />
+                                    <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBox.Text>
+                                            <Binding Path="Settings.MaxLogoProcessHeight"
+                                             UpdateSourceTrigger="PropertyChanged" 
+                                             ValidatesOnDataErrors="True"
+                                             NotifyOnValidationError="True"
+                                             Converter="{conv:NullableIntToStringConverter}">
+                                                <Binding.ValidationRules>
+                                                    <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            <ComboBox x:Name="cmbLogoHorizontalAlignment" MinWidth="150" HorizontalAlignment="Left"
-                                    DisplayMemberPath="Value"
-                                    SelectedValuePath="Key"
-                                    SelectedValue="{Binding Settings.LogoHorizontalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            <ComboBox x:Name="cmbLogoVerticalAlignment" MinWidth="150" HorizontalAlignment="Left"
-                                    DisplayMemberPath="Value"
-                                    SelectedValuePath="Key"
-                                    SelectedValue="{Binding Settings.LogoVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
-                        </StackPanel>
-                        <CheckBox IsChecked="{Binding Settings.LogosEnableShadowEffect, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel}" Margin="0,0,0,10"/>
-                        <StackPanel IsEnabled="{Binding Settings.LogosEnableShadowEffect, UpdateSourceTrigger=PropertyChanged}" Margin="40,0,0,0">
+                        <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl}" Margin="0,0,0,5"/>
+                        <Separator Margin="0,0,0,5" />
+                        <CheckBox Name="EnableLogo" IsChecked="{Binding Settings.EnableLogos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel}" Margin="0,0,0,10"/>
+                        <StackPanel IsEnabled="{Binding ElementName=EnableLogo, Path=IsChecked}" Margin="40,0,0,0">
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                <Slider Value="{Binding Settings.LogosShadowDepth, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="30" VerticalAlignment="Center"
-                                        TickFrequency="1" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                                <TextBlock Text="{Binding Settings.LogosShadowDepth, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <Slider Value="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="300" VerticalAlignment="Center"
+                                        Maximum="900" TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                <TextBlock Text="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                <Slider Value="{Binding Settings.LogosShadowDirection, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="360" VerticalAlignment="Center"
-                                        TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                                <TextBlock Text="{Binding Settings.LogosShadowDirection, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <Slider Value="{Binding Settings.LogoMaxHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="50" VerticalAlignment="Center"
+                                        Maximum="450" TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                <TextBlock Text="{Binding Settings.LogoMaxHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                <Slider Value="{Binding Settings.LogosBlurRadius, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="40" VerticalAlignment="Center"
-                                        TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                                <TextBlock Text="{Binding Settings.LogosBlurRadius, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbLogoHorizontalAlignment" MinWidth="150" HorizontalAlignment="Left"
+                                        DisplayMemberPath="Value"
+                                        SelectedValuePath="Key"
+                                        SelectedValue="{Binding Settings.LogoHorizontalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
-                                <Slider Value="{Binding Settings.LogosEffectOpacity, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="1.0" VerticalAlignment="Center"
-                                        TickFrequency="0.05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
-                                <TextBlock Text="{Binding Settings.LogosEffectOpacity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <ComboBox x:Name="cmbLogoVerticalAlignment" MinWidth="150" HorizontalAlignment="Left"
+                                        DisplayMemberPath="Value"
+                                        SelectedValuePath="Key"
+                                        SelectedValue="{Binding Settings.LogoVerticalAlignment, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,0,0"/>
+                            </StackPanel>
+                            <CheckBox IsChecked="{Binding Settings.LogosEnableShadowEffect, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel}" Margin="0,0,0,10"/>
+                            <StackPanel IsEnabled="{Binding Settings.LogosEnableShadowEffect, UpdateSourceTrigger=PropertyChanged}" Margin="40,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <Slider Value="{Binding Settings.LogosShadowDepth, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="30" VerticalAlignment="Center"
+                                            TickFrequency="1" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Text="{Binding Settings.LogosShadowDepth, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <Slider Value="{Binding Settings.LogosShadowDirection, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="360" VerticalAlignment="Center"
+                                            TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Text="{Binding Settings.LogosShadowDirection, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <Slider Value="{Binding Settings.LogosBlurRadius, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="40" VerticalAlignment="Center"
+                                            TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Text="{Binding Settings.LogosBlurRadius, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <Slider Value="{Binding Settings.LogosEffectOpacity, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="1.0" VerticalAlignment="Center"
+                                            TickFrequency="0.05" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Text="{Binding Settings.LogosEffectOpacity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
-
+                </TabItem>
+            </TabControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
