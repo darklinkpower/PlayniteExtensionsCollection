@@ -4,11 +4,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Füge Logo aus lokaler Datei des ausgewählten Spiels hinzu</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Lege Profilbild fest</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Lege Hintergrund-Video fest</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Finde und lösche ungenutzte Daten</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Fertig. 
-
-{0} untenutzte Items gelöscht.</sys:String>
-
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata Konfiguration für das Theme &quot;{0}&quot; aktualisiert.
 Bitte starte Playnite neu damit die Änderungen wirksam werden.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Mehr als ein Spiel ausgewählt, bitte wähle nur eins aus.</sys:String>
