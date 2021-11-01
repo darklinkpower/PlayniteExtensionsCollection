@@ -9,11 +9,6 @@ function GetMainMenuItems
     $menuItem1.FunctionName = "Set-ProfilePicture"
     $menuItem1.MenuSection = "@Extra Metadata|Themes"
 
-    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription")
-    $menuItem2.FunctionName = "Invoke-DetectAndDeleteUnused"
-    $menuItem2.MenuSection = "@Extra Metadata"
-
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
     $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription")
     $menuItem3.FunctionName = "Set-ProfilePicture"
@@ -24,7 +19,7 @@ function GetMainMenuItems
     $menuItem4.FunctionName = "Set-BackgroundVideo"
     $menuItem4.MenuSection = "@Extra Metadata|Themes"
 
-    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
+    return $menuItem1, $menuItem3, $menuItem4
 }
 
 function GetGameMenuItems
@@ -44,75 +39,6 @@ function GetGameMenuItems
     $menuItem2.MenuSection = "Extra Metadata|Logos"
     
     return $menuItem1, $menuItem2
-}
-
-function Invoke-DetectAndDeleteUnused
-{
-    param(
-        $scriptGameMenuItemActionArgs
-    )
-
-    $baseDirectory = [System.IO.Path]::Combine($PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata")
-    
-    $deletedCount = 0
-    ### games ###
-    $gamesRoot = [System.IO.Path]::Combine($baseDirectory, "games")
-    if ([System.IO.Directory]::Exists($gamesRoot))
-    {
-        $gameIds = @{}
-        foreach ($game in $PlayniteApi.Database.Games) {
-            $gameIds.add($game.Id.ToString(), "")
-        }
-    
-        foreach ($directory in Get-ChildItem $gamesRoot -Directory) {
-            if ($null -eq $gameIds[$directory.Name])
-            {
-                Remove-Item $directory.FullName -Recurse
-                $deletedCount++
-            }
-        }
-    }
-
-    ### platforms ###
-    $platformsRoot = [System.IO.Path]::Combine($baseDirectory, "platforms")
-    if ([System.IO.Directory]::Exists($platformsRoot))
-    {
-        $platformIds = @{}
-        foreach ($platform in $PlayniteApi.Database.Platforms) {
-            $platformIds.add($platform.Id.ToString(), "")
-        }
-
-        foreach ($directory in Get-ChildItem $platformsRoot -Directory) {
-            if ($null -eq $platformIds[$directory.Name])
-            {
-                Remove-Item $directory.FullName -Recurse
-                $deletedCount++
-            }
-        }
-    }
-    
-    ### source ###
-    $sourcesRoot = [System.IO.Path]::Combine($baseDirectory, "sources")
-    if ([System.IO.Directory]::Exists($sourcesRoot))
-    {
-        $sourceIds = @{}
-        foreach ($source in $PlayniteApi.Database.Sources) {
-            $sourceIds.add($source.Id.ToString(), "")
-        }
-        
-        foreach ($directory in Get-ChildItem $sourcesRoot -Directory)
-        {
-            if ($null -eq $sourceIds[$directory.Name])
-            {
-                Remove-Item $directory.FullName -Recurse
-                $deletedCount++
-            }
-        }
-    }
-
-    $PlayniteApi.Dialogs.ShowMessage(
-        ([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage") -f $deletedCount), 
-        "Extra Metadata Tools")
 }
 
 function OnApplicationStarted
