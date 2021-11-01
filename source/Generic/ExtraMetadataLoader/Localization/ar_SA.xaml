@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">General settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Videos settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">Enable video player</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">Autoplay videos</sys:String>
@@ -64,4 +65,10 @@
 Resizing down is recommended because large images can cause Playnite to slowdown.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Max width:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Max height:</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Updating tags of Extra Metadata assets status...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">A tag will be added to all games in database that are missing the specific asset</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Update tag that indicates if a game is missing logo on library update</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Update tag that indicates if a game is missing video on library update</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Update tag that indicates if a game is missing micro video on library update</sys:String>
 </ResourceDictionary>
