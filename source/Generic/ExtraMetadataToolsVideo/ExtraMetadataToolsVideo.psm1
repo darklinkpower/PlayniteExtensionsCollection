@@ -1,3 +1,17 @@
+function GetMainMenuItems
+{
+    param(
+        $getMainMenuItemsArgs
+    )
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription")
+    $menuItem1.FunctionName = "Update-AssetsStatusGameDatabase"
+    $menuItem1.MenuSection = "@Extra Metadata"
+
+    return $menuItem1
+}
+
 function GetGameMenuItems
 {
     param(
@@ -7,59 +21,54 @@ function GetGameMenuItems
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription")
     $menuItem.FunctionName = "Get-SteamVideoSd"
-    $menuItem.MenuSection = "Extra Metadata tools|Video|Trailers"
+    $menuItem.MenuSection = "Extra Metadata|Video|Trailers"
    
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription")
     $menuItem2.FunctionName = "Get-SteamVideoHd"
-    $menuItem2.MenuSection = "Extra Metadata tools|Video|Trailers"
+    $menuItem2.MenuSection = "Extra Metadata|Video|Trailers"
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription")
     $menuItem3.FunctionName = "Get-SteamVideoMicro"
-    $menuItem3.MenuSection = "Extra Metadata tools|Video|Microtrailers"
+    $menuItem3.MenuSection = "Extra Metadata|Video|Microtrailers"
 
     $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription")
     $menuItem4.FunctionName = "Set-VideoManuallyTrailer"
-    $menuItem4.MenuSection = "Extra Metadata tools|Video|Trailers"
+    $menuItem4.MenuSection = "Extra Metadata|Video|Trailers"
 
     $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription")
     $menuItem5.FunctionName = "Set-VideoManuallyMicroTrailer"
-    $menuItem5.MenuSection = "Extra Metadata tools|Video|Microtrailers"
+    $menuItem5.MenuSection = "Extra Metadata|Video|Microtrailers"
     
     $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription")
     $menuItem6.FunctionName = "Get-VideoMicrotrailerFromTrailer"
-    $menuItem6.MenuSection = "Extra Metadata tools|Video|Microtrailers"
+    $menuItem6.MenuSection = "Extra Metadata|Video|Microtrailers"
     
     $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription")
     $menuItem7.FunctionName = "Remove-VideoTrailer"
-    $menuItem7.MenuSection = "Extra Metadata tools|Video|Trailers"
+    $menuItem7.MenuSection = "Extra Metadata|Video|Trailers"
 
     $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription")
     $menuItem8.FunctionName = "Remove-VideoMicrotrailer"
-    $menuItem8.MenuSection = "Extra Metadata tools|Video|Microtrailers"
+    $menuItem8.MenuSection = "Extra Metadata|Video|Microtrailers"
 
     $menuItem9 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem9.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription")
     $menuItem9.FunctionName = "Set-YouTubeVideo"
-    $menuItem9.MenuSection = "Extra Metadata tools|Video|Trailers"
+    $menuItem9.MenuSection = "Extra Metadata|Video|Trailers"
     
     $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription")
     $menuItem10.FunctionName = "Invoke-YoutubeSearchWindow"
-    $menuItem10.MenuSection = "Extra Metadata tools|Video|Trailers"
+    $menuItem10.MenuSection = "Extra Metadata|Video|Trailers"
 
-    $menuItem11 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem11.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription")
-    $menuItem11.FunctionName = "Update-AssetsStatusGameDatabase"
-    $menuItem11.MenuSection = "Extra Metadata tools"
-
-    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem11
+    return $menuItem, $menuItem2, $menuItem3, $menuItem9, $menuItem10, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8
 }
 
 function Get-MandatorySettingsList

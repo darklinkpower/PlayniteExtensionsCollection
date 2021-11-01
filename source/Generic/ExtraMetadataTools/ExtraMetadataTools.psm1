@@ -1,35 +1,49 @@
+function GetMainMenuItems
+{
+    param(
+        $getMainMenuItemsArgs
+    )
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription")
+    $menuItem1.FunctionName = "Set-ProfilePicture"
+    $menuItem1.MenuSection = "@Extra Metadata|Themes"
+
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription")
+    $menuItem2.FunctionName = "Invoke-DetectAndDeleteUnused"
+    $menuItem2.MenuSection = "@Extra Metadata"
+
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription")
+    $menuItem3.FunctionName = "Set-ProfilePicture"
+    $menuItem3.MenuSection = "@Extra Metadata|Themes"
+
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription")
+    $menuItem4.FunctionName = "Set-BackgroundVideo"
+    $menuItem4.MenuSection = "@Extra Metadata|Themes"
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4
+}
+
 function GetGameMenuItems
 {
     param(
         $scriptGameMenuItemActionArgs
     )
 
-    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription")
-    $menuItem3.FunctionName = "Get-SteamLogosLocal"
-    $menuItem3.MenuSection = "Extra Metadata tools|Logos"
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription")
+    $menuItem1.FunctionName = "Get-SteamLogosLocal"
+    $menuItem1.MenuSection = "Extra Metadata|Logos"
 
-    $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription")
-    $menuItem8.FunctionName = "Set-ProfilePicture"
-    $menuItem8.MenuSection = "Extra Metadata tools|Themes"
-
-    $menuItem10 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem10.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription")
-    $menuItem10.FunctionName = "Set-BackgroundVideo"
-    $menuItem10.MenuSection = "Extra Metadata tools|Themes"
-
-    $menuItem12 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem12.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription")
-    $menuItem12.FunctionName = "Get-GoogleLogo"
-    $menuItem12.MenuSection = "Extra Metadata tools|Logos"
-
-    $menuItem13 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-    $menuItem13.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription")
-    $menuItem13.FunctionName = "Invoke-DetectAndDeleteUnused"
-    $menuItem13.MenuSection = "Extra Metadata tools|Other"
-
-    return $menuItem3, $menuItem8, $menuItem10, $menuItem12, $menuItem13
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription")
+    $menuItem2.FunctionName = "Get-GoogleLogo"
+    $menuItem2.MenuSection = "Extra Metadata|Logos"
+    
+    return $menuItem1, $menuItem2
 }
 
 function Invoke-DetectAndDeleteUnused
