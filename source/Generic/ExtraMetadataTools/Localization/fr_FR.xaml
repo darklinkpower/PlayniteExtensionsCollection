@@ -3,7 +3,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Télécharger les logos des jeux sélectionnés depuis Google</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Ajouter le logo du jeu depuis un fichier local</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Définir la photo de profil</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundMusicDescription">Définir la musique de fond</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Définir la vidéo de fond</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Détecter et supprimer les données inutilisées</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Terminé.
@@ -20,6 +19,5 @@ Veuillez redémarrer Playnite pour que les modifications prennent effet.</sys:St
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Logo ajouté pour &quot;{0}&quot;.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Erreur lors de la conversion du fichier en png. Erreur : &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Photo de Profil définis.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundMusicResultsMessage">Musique de fond définis.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Vidéo de fond définis.</sys:String>
 </ResourceDictionary>
