@@ -4,11 +4,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Додати логотип для вибраної гри з локального файлу</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Встановити зображення профілю</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Встановити фонове відео</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Виявити та видалити невикористані дані</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Готово.
-
-Видалено {0} невикористаних елементів.</sys:String>
-
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Конфігурацію додаткових метаданих для теми &quot;{0}&quot; оновлено.
 Будь ласка, перезавантажте Playnite для того, щоб зміни набрали сили.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Вибрано більше однієї гри, будь ласка, оберіть лише одну гру.</sys:String>
