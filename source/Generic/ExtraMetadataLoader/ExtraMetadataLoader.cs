@@ -205,6 +205,139 @@ namespace ExtraMetadataLoader
 
             settings.Settings.LastAutoLibUpdateAssetsDownload = DateTime.Now;
             SavePluginSettings(settings.Settings);
+            UpdateAssetsTagsStatus();
+        }
+
+        private void UpdateAssetsTagsStatus()
+        {
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                if (settings.Settings.UpdateMissingLogoTagOnLibUpdate ||
+    settings.Settings.UpdateMissingVideoTagOnLibUpdate ||
+    settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate)
+                {
+                    Tag logoMissingTag = null;
+                    Tag videoMissingTag = null;
+                    Tag microvideoMissingTag = null;
+                    if (settings.Settings.UpdateMissingLogoTagOnLibUpdate)
+                    {
+                        logoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Logo Missing");
+                    }
+                    if (settings.Settings.UpdateMissingVideoTagOnLibUpdate)
+                    {
+                        videoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Video missing");
+                    }
+                    if (settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate)
+                    {
+                        microvideoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Video Micro missing");
+                    }
+
+                    foreach (var game in PlayniteApi.Database.Games)
+                    {
+                        var gameUpdated = false;
+                        if (logoMissingTag != null)
+                        {
+                            if (File.Exists(extraMetadataHelper.GetGameLogoPath(game)))
+                            {
+                                var tagRemoved = RemoveTag(game, logoMissingTag, false);
+                                if (tagRemoved)
+                                {
+                                    gameUpdated = true;
+                                }
+                            }
+                            else
+                            {
+                                var tagAdded = AddTag(game, logoMissingTag, false);
+                                if (tagAdded)
+                                {
+                                    gameUpdated = true;
+                                }
+                            }
+                        }
+                        if (videoMissingTag != null)
+                        {
+                            if (File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
+                            {
+                                var tagRemoved = RemoveTag(game, videoMissingTag, false);
+                                if (tagRemoved)
+                                {
+                                    gameUpdated = true;
+                                }
+                            }
+                            else
+                            {
+                                var tagAdded = AddTag(game, videoMissingTag, false);
+                                if (tagAdded)
+                                {
+                                    gameUpdated = true;
+                                }
+                            }
+                        }
+                        if (microvideoMissingTag != null)
+                        {
+                            if (File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
+                            {
+                                var tagRemoved = RemoveTag(game, microvideoMissingTag, false);
+                                if (tagRemoved)
+                                {
+                                    gameUpdated = true;
+                                }
+                            }
+                            else
+                            {
+                                var tagAdded = AddTag(game, microvideoMissingTag, false);
+                                if (tagAdded)
+                                {
+                                    gameUpdated = true;
+                                }
+                            }
+                        }
+                        if (gameUpdated)
+                        {
+                            PlayniteApi.Database.Games.Update(game);
+                        }
+                    }
+                }
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
+        }
+
+        private bool AddTag(Game game, Tag tag, bool updateGame = true)
+        {
+            var tagAdded = false;
+            if (game.TagIds == null)
+            {
+                game.TagIds = new List<Guid> { tag.Id };
+                tagAdded = true;
+            }
+            else if (!game.TagIds.Contains(tag.Id))
+            {
+                game.TagIds.Add(tag.Id);
+                tagAdded = true;
+            }
+            if (tagAdded && updateGame)
+            {
+                PlayniteApi.Database.Games.Update(game);
+            }
+            return tagAdded;
+        }
+
+        private bool RemoveTag(Game game, Tag tag, bool updateGame = true)
+        {
+            var tagRemoved = false;
+            if (game.TagIds == null)
+            {
+                return false;
+            }
+            else if (game.TagIds.Contains(tag.Id))
+            {
+                game.TagIds.Remove(tag.Id);
+                tagRemoved = true;
+            }
+            if (tagRemoved && updateGame)
+            {
+                PlayniteApi.Database.Games.Update(game);
+            }
+            return tagRemoved;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

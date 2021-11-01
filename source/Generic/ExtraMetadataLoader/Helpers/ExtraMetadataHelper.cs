@@ -33,7 +33,17 @@ namespace ExtraMetadataLoader.Helpers
 
         public string GetGameLogoPath(Game game, bool createDirectory = false)
         {
-            return Path.Combine(GetExtraMetadataDirectory(game, true), "Logo.png");
+            return Path.Combine(GetExtraMetadataDirectory(game, createDirectory), "Logo.png");
+        }
+
+        public string GetGameVideoPath(Game game, bool createDirectory = false)
+        {
+            return Path.Combine(GetExtraMetadataDirectory(game, createDirectory), "VideoTrailer.mp4");
+        }
+
+        public string GetGameVideoMicroPath(Game game, bool createDirectory = false)
+        {
+            return Path.Combine(GetExtraMetadataDirectory(game, createDirectory), "VideoMicrotrailer.mp4");
         }
 
         public bool DeleteExtraMetadataDir(Game game)

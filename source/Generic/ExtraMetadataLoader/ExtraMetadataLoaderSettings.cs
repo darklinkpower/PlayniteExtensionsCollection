@@ -459,6 +459,42 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool updateMissingLogoTagOnLibUpdate { get; set; } = false;
+        public bool UpdateMissingLogoTagOnLibUpdate
+        {
+            get => updateMissingLogoTagOnLibUpdate;
+            set
+            {
+                updateMissingLogoTagOnLibUpdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool updateMissingVideoTagOnLibUpdate { get; set; } = false;
+        public bool UpdateMissingVideoTagOnLibUpdate
+        {
+            get => updateMissingVideoTagOnLibUpdate;
+            set
+            {
+                updateMissingVideoTagOnLibUpdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool updateMissingMicrovideoTagOnLibUpdate { get; set; } = false;
+        public bool UpdateMissingMicrovideoTagOnLibUpdate
+        {
+            get => updateMissingMicrovideoTagOnLibUpdate;
+            set
+            {
+                updateMissingMicrovideoTagOnLibUpdate = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings
