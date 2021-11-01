@@ -61,7 +61,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Trim Logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Removes transparent border around image</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Resize down</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Resize down image if it exceeds any of the configured dimensions.
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Resize down image preserving the aspect ratio if it exceeds any of the configured dimensions.
 Resizing down is recommended because large images can cause Playnite to slowdown.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Max width:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Max height:</sys:String>
