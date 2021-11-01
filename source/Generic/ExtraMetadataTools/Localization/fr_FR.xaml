@@ -4,11 +4,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Ajouter le logo du jeu depuis un fichier local</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Définir la photo de profil</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Définir la vidéo de fond</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataDescription">Détecter et supprimer les données inutilisées</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemDetectDeleteUnusedDataResultsMessage" xml:space="preserve">Terminé.
-
-Suppression de {0} éléments inutilisés.</sys:String>
-
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">La configuration des métadonnées supplémentaires pour le thème &quot;{0}&quot; a été mise à jour.
 Veuillez redémarrer Playnite pour que les modifications prennent effet.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Plusieurs jeux sélectionnés, veuillez en sélectionner un seul.</sys:String>
