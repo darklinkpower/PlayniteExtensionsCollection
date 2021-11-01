@@ -99,7 +99,7 @@ namespace ExtraMetadataLoader
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames"),
-                    MenuSection = $"ExtraMetadataLoader|{logosSection}",
+                    MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog();
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam"));
@@ -120,7 +120,7 @@ namespace ExtraMetadataLoader
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames"),
-                    MenuSection = $"ExtraMetadataLoader|{logosSection}",
+                    MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog();
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb"));
@@ -141,7 +141,7 @@ namespace ExtraMetadataLoader
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames"),
-                    MenuSection = $"ExtraMetadataLoader|{logosSection}",
+                    MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
                         foreach (var game in args.Games.Distinct())
                         {
@@ -153,7 +153,7 @@ namespace ExtraMetadataLoader
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory"),
-                    MenuSection = $"ExtraMetadataLoader",
+                    MenuSection = $"Extra Metadata",
                     Action = _ => {
                         foreach (var game in args.Games.Distinct())
                         {
