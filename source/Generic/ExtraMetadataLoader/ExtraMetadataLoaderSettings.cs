@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using ExtraMetadataLoader.Common;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
@@ -495,11 +496,85 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool downloadVideosOnLibUpdate = false;
+        public bool DownloadVideosOnLibUpdate
+        {
+            get => downloadVideosOnLibUpdate;
+            set
+            {
+                downloadVideosOnLibUpdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool downloadVideosMicroOnLibUpdate = false;
+        public bool DownloadVideosMicroOnLibUpdate
+        {
+            get => downloadVideosMicroOnLibUpdate;
+            set
+            {
+                downloadVideosMicroOnLibUpdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool videoSteamDownloadHdQuality { get; set; } = false;
+        public bool VideoSteamDownloadHdQuality
+        {
+            get => videoSteamDownloadHdQuality;
+            set
+            {
+                videoSteamDownloadHdQuality = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private string ffmpegPath = string.Empty;
+        public string FfmpegPath
+        {
+            get => ffmpegPath;
+            set
+            {
+                ffmpegPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private string ffprobePath = string.Empty;
+        public string FfprobePath
+        {
+            get => ffprobePath;
+            set
+            {
+                ffprobePath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private string youtubeDlPath = string.Empty;
+        public string YoutubeDlPath
+        {
+            get => youtubeDlPath;
+            set
+            {
+                youtubeDlPath = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings
     {
         private readonly ExtraMetadataLoader plugin;
+        private readonly IPlayniteAPI playniteApi;
+
         private ExtraMetadataLoaderSettings editingClone { get; set; }
 
         private ExtraMetadataLoaderSettings settings;
@@ -513,11 +588,11 @@ namespace ExtraMetadataLoader
             }
         }
 
-        public ExtraMetadataLoaderSettingsViewModel(ExtraMetadataLoader plugin)
+        public ExtraMetadataLoaderSettingsViewModel(ExtraMetadataLoader plugin, IPlayniteAPI playniteApi)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
-
+            this.playniteApi = playniteApi;
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<ExtraMetadataLoaderSettings>();
 
@@ -565,13 +640,60 @@ namespace ExtraMetadataLoader
         {
             get => new RelayCommand<object>((a) =>
             {
-                OpenSgdbApiSite();
+                ProcessStarter.StartUrl(@"https://www.steamgriddb.com/profile/preferences/api");
             });
         }
 
-        private void OpenSgdbApiSite()
+        public RelayCommand<object> DownloadFfmpegCommand
         {
-            System.Diagnostics.Process.Start(@"https://www.steamgriddb.com/profile/preferences/api");
+            get => new RelayCommand<object>((a) =>
+            {
+                ProcessStarter.StartUrl(@"https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z");
+            });
+        }
+
+        public RelayCommand<object> DownloadYoutubeDlCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                ProcessStarter.StartUrl(@"http://ytdl-org.github.io/youtube-dl/download.html");
+            });
+        }
+
+        public RelayCommand<object> BrowseSelectYoutubeDlCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var filePath = playniteApi.Dialogs.SelectFile("youtube-dl|youtube-dl.exe");
+                if (!filePath.IsNullOrEmpty())
+                {
+                    settings.YoutubeDlPath = filePath;
+                }
+            });
+        }
+
+        public RelayCommand<object> BrowseSelectFfmpegCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var filePath = playniteApi.Dialogs.SelectFile("ffmpeg|ffmpeg.exe");
+                if (!filePath.IsNullOrEmpty())
+                {
+                    settings.FfmpegPath = filePath;
+                }
+            });
+        }
+
+        public RelayCommand<object> BrowseSelectFfprobeCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var filePath = playniteApi.Dialogs.SelectFile("ffProbe|ffProbe.exe");
+                if (!filePath.IsNullOrEmpty())
+                {
+                    settings.FfprobePath = filePath;
+                }
+            });
         }
     }
 }

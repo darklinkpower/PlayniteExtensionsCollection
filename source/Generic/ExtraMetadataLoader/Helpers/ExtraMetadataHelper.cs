@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using ExtraMetadataLoader.Common;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -96,6 +97,35 @@ namespace ExtraMetadataLoader.Helpers
                 }
             }
             return true;
+        }
+
+        public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload)
+        {
+            var normalizedName = game.Name.NormalizeGameName();
+            var results = SteamCommon.GetSteamSearchResults(normalizedName);
+            results.ForEach(a => a.Name = a.Name.NormalizeGameName());
+
+            // Try to see if there's an exact match, to not prompt the user unless needed
+            var matchingGameName = normalizedName.GetMatchModifiedName();
+            var exactMatch = results.FirstOrDefault(x => x.Name.GetMatchModifiedName() == matchingGameName);
+            if (exactMatch != null)
+            {
+                return exactMatch.GameId;
+            }
+            else if (!isBackgroundDownload)
+            {
+                var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
+                    results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
+                    (a) => SteamCommon.GetSteamSearchGenericItemOptions(a),
+                    normalizedName,
+                    ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
+                if (selectedGame != null)
+                {
+                    return selectedGame.Description;
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

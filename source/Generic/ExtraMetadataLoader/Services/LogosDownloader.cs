@@ -4,14 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ExtraMetadataLoader.Web;
 using System.Net;
 using Newtonsoft.Json;
+using ExtraMetadataLoader.Common;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Helpers;
 using System.Text;
-using System.Web;
-using AngleSharp.Parser.Html;
 using ImageMagick;
 
 namespace ExtraMetadataLoader.Services
@@ -22,8 +20,6 @@ namespace ExtraMetadataLoader.Services
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly ExtraMetadataLoaderSettings settings;
         private readonly ExtraMetadataHelper extraMetadataHelper;
-        private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
-        private const string steamGameSearchUrl = @"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998";
         private const string steamLogoUriTemplate = @"https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png";
         private const string sgdbGameSearchUriTemplate = @"https://www.steamgriddb.com/api/v2/search/autocomplete/{0}";
         private const string sgdbLogoRequestEnumUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/{0}/{1}";
@@ -46,36 +42,14 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamId = string.Empty;
-            if (game.PluginId == steamPluginId)
+            if (SteamCommon.IsGameSteamGame(game))
             {
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
             else
             {
-                var normalizedName = game.Name.NormalizeGameName();
-                var results = GetSteamSearchResults(normalizedName);
-                results.ForEach(a => a.Name = a.Name.NormalizeGameName());
-
-                // Try to see if there's an exact match, to not prompt the user unless needed
-                var matchingGameName = normalizedName.GetMatchModifiedName();
-                var exactMatch = results.FirstOrDefault(x => x.Name.GetMatchModifiedName() == matchingGameName);
-                if (exactMatch != null)
-                {
-                    steamId = exactMatch.GameId;
-                }
-                else if (!isBackgroundDownload)
-                {
-                    var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
-                        results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
-                        (a) => GetSteamSearchGenericItemOptions(a),
-                        normalizedName,
-                        ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
-                    if (selectedGame != null)
-                    {
-                        steamId = selectedGame.Description;
-                    }
-                }
+                steamId = extraMetadataHelper.GetSteamIdFromSearch(game, isBackgroundDownload);
             }
 
             if (steamId.IsNullOrEmpty())
@@ -147,42 +121,6 @@ namespace ExtraMetadataLoader.Services
                 logger.Error(e, $"Error while processing logo {logoPath}");
                 return false;
             }
-        }
-
-        public List<GenericItemOption> GetSteamSearchGenericItemOptions(string searchTerm)
-        {
-            return GetSteamSearchResults(searchTerm).Select(x => new GenericItemOption(x.Name, x.GameId)).ToList();
-        }
-
-        public List<StoreSearchResult> GetSteamSearchResults(string searchTerm)
-        {
-            var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpDownloader.DownloadStringAsync(string.Format(steamGameSearchUrl, searchTerm)).GetAwaiter().GetResult();
-            if (!string.IsNullOrEmpty(searchPageSrc))
-            {
-                var parser = new HtmlParser();
-                var searchPage = parser.Parse(searchPageSrc);
-                foreach (var gameElem in searchPage.QuerySelectorAll(".search_result_row"))
-                {
-                    var title = gameElem.QuerySelector(".title").InnerHtml;
-                    var releaseDate = gameElem.QuerySelector(".search_released").InnerHtml;
-                    if (gameElem.HasAttribute("data-ds-packageid"))
-                    {
-                        continue;
-                    }
-
-                    var gameId = gameElem.GetAttribute("data-ds-appid");
-                    results.Add(new StoreSearchResult
-                    {
-                        Name = HttpUtility.HtmlDecode(title),
-                        Description = HttpUtility.HtmlDecode(releaseDate),
-                        GameId = gameId
-                    });
-                }
-            }
-
-            logger.Debug($"Obtained {results.Count} games from Steam search term {searchTerm}");
-            return results;
         }
 
         public bool DownloadSgdbLogo(Game game, bool overwrite, bool isBackgroundDownload)
@@ -257,7 +195,7 @@ namespace ExtraMetadataLoader.Services
 
         private string GetSgdbRequestUrl(Game game, bool isBackgroundDownload)
         {
-            if (game.PluginId == steamPluginId)
+            if (SteamCommon.IsGameSteamGame(game))
             {
                 return string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId.ToString());
             }

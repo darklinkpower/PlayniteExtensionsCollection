@@ -22,6 +22,7 @@ namespace ExtraMetadataLoader
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly LogosDownloader logosDownloader;
+        private readonly VideosDownloader videosDownloader;
         private readonly ExtraMetadataHelper extraMetadataHelper;
 
         public ExtraMetadataLoaderSettingsViewModel settings { get; private set; }
@@ -30,7 +31,7 @@ namespace ExtraMetadataLoader
 
         public ExtraMetadataLoader(IPlayniteAPI api) : base(api)
         {
-            settings = new ExtraMetadataLoaderSettingsViewModel(this);
+            settings = new ExtraMetadataLoaderSettingsViewModel(this, PlayniteApi);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -49,6 +50,7 @@ namespace ExtraMetadataLoader
 
             extraMetadataHelper = new ExtraMetadataHelper(PlayniteApi);
             logosDownloader = new LogosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
+            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
                 foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
@@ -94,6 +96,8 @@ namespace ExtraMetadataLoader
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var logosSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionLogos");
+            var videosSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionVideos");
+            var videosMicroSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos");
             return new List<GameMenuItem>
             {
                 new GameMenuItem
@@ -101,7 +105,7 @@ namespace ExtraMetadataLoader
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames"),
                     MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
-                        var overwrite = GetBoolFromYesNoDialog();
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam"));
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
@@ -122,7 +126,7 @@ namespace ExtraMetadataLoader
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames"),
                     MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
-                        var overwrite = GetBoolFromYesNoDialog();
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb"));
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
@@ -152,6 +156,48 @@ namespace ExtraMetadataLoader
                 },
                 new GameMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Action = _ => {
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
+                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam"));
+                        progressOptions.IsIndeterminate = false;
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            var games = args.Games.Distinct();
+                            a.ProgressMaxValue = games.Count();
+                            foreach (var game in games)
+                            {
+                                videosDownloader.DownloadSteamVideo(game, overwrite, false, true, false);
+                                a.CurrentProgressValue++;
+                            };
+                        }, progressOptions);
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
+                    Action = _ => {
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
+                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam"));
+                        progressOptions.IsIndeterminate = false;
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            var games = args.Games.Distinct();
+                            a.ProgressMaxValue = games.Count();
+                            foreach (var game in games)
+                            {
+                                videosDownloader.DownloadSteamVideo(game, overwrite, false, false, true);
+                                a.CurrentProgressValue++;
+                            };
+                        }, progressOptions);
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory"),
                     MenuSection = $"Extra Metadata",
                     Action = _ => {
@@ -160,13 +206,13 @@ namespace ExtraMetadataLoader
                             Process.Start(extraMetadataHelper.GetExtraMetadataDirectory(game, true));
                         };
                     }
-                },
+                }
             };
         }
 
-        private bool GetBoolFromYesNoDialog()
+        private bool GetBoolFromYesNoDialog(string caption)
         {
-            var selection = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"),
+            var selection = PlayniteApi.Dialogs.ShowMessage(caption,
                 ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectOption"),
                 MessageBoxButton.YesNo);
             if (selection == MessageBoxResult.Yes)

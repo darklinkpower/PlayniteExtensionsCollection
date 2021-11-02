@@ -19,7 +19,34 @@
                         <CheckBox IsChecked="{Binding Settings.UpdateMissingMicrovideoTagOnLibUpdate, UpdateSourceTrigger=PropertyChanged}"
                                   Content="{DynamicResource LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate}" Margin="0,0,0,20"
                                   ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip}" />
-                        <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl}" Margin="0,0,0,5"/>
+                        <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload}" Margin="0,0,0,5"/>
+                        <Separator Margin="0,0,0,5" />
+                        <DockPanel>
+                            
+                        </DockPanel>
+                        <DockPanel Margin="0,0,0,10">
+                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingFfmpegPathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                            <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectFfmpegCommand}" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.FfmpegPath}" IsReadOnly="True" />
+                        </DockPanel>
+                        <DockPanel Margin="0,0,0,10">
+                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingFfprobePathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                            <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectFfprobeCommand}" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.FfprobePath}" IsReadOnly="True" />
+                        </DockPanel>
+                        <DockPanel Margin="0,0,0,10">
+                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                            <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectYoutubeDlCommand}" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeDlPath}" IsReadOnly="True" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <Button HorizontalAlignment="Left" Margin="0,0,0,0" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel}" Command="{Binding DownloadFfmpegCommand}" />
+                            <Button HorizontalAlignment="Left" Margin="10,0,0,0" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel}" Command="{Binding DownloadYoutubeDlCommand}" />
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding Settings.DownloadVideosOnLibUpdate, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel}" Margin="0,0,0,10"/>
+                        <CheckBox IsChecked="{Binding Settings.DownloadVideosMicroOnLibUpdate, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel}" Margin="0,0,0,20"/>
+                        <CheckBox IsChecked="{Binding Settings.VideoSteamDownloadHdQuality, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel}" Margin="0,0,0,10"/>
+                        <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl}" Margin="0,20,0,5"/>
                         <Separator Margin="0,0,0,5" />
                         <CheckBox Name="EnableVideo" IsChecked="{Binding Settings.EnableVideoPlayer, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel}" Margin="0,0,0,10"/>
                         <StackPanel IsEnabled="{Binding ElementName=EnableVideo, Path=IsChecked}" Margin="40,0,0,10">
@@ -68,7 +95,7 @@
                         <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload}" Margin="0,0,0,5"/>
                         <Separator Margin="0,0,0,5" />
                         <DockPanel Margin="0,0,0,10">
-                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel}" DockPanel.Dock="Left"/>
+                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel}" DockPanel.Dock="Left" VerticalAlignment="Center" />
                             <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel}" Command="{Binding OpenSgdbApiSiteCommand}" />
                             <TextBox Margin="10,0,0,0" Text="{Binding Settings.SgdbApiKey}" />
                         </DockPanel>

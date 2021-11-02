@@ -68,6 +68,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\IoHelper.cs" />
+    <Compile Include="Common\ProcessStarter.cs" />
+    <Compile Include="Common\SteamCommon.cs" />
     <Compile Include="Controls\VideoPlayerControl.xaml.cs">
       <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
     </Compile>
@@ -79,6 +82,7 @@
       <DependentUpon>ExtraMetadataLoaderSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExtraMetadataHelper.cs" />
+    <Compile Include="Models\FfprobeVideoInfoOutput.cs" />
     <Compile Include="Models\SteamAppDetailsResponse.cs" />
     <Compile Include="Models\SteamGridDbGameSearchResponse.cs" />
     <Compile Include="Models\SteamGridDbLogoResponse.cs" />
@@ -87,7 +91,8 @@
       <DependentUpon>LogoLoaderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\LogosDownloader.cs" />
-    <Compile Include="Web\HttpDownloader.cs" />
+    <Compile Include="Services\VideosDownloader.cs" />
+    <Compile Include="Common\HttpDownloader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

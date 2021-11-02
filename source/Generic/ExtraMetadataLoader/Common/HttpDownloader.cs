@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ExtraMetadataLoader.Web
+namespace ExtraMetadataLoader.Common
 {
     public class HttpDownloader
     {
