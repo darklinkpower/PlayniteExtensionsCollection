@@ -32,6 +32,7 @@ namespace ExtraMetadataLoader.Services
         }
         public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, bool downloadVideo = false, bool downloadVideoMicro = false)
         {
+            logger.Debug($"DownloadSteamVideo starting for game {game.Name}");
             var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
             var videoMicroPath = extraMetadataHelper.GetGameVideoMicroPath(game, true);
             if (File.Exists(videoPath) && !overwrite)
@@ -53,9 +54,14 @@ namespace ExtraMetadataLoader.Services
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
-            else
+            else if (extraMetadataHelper.IsGamePcGame(game))
             {
                 steamId = extraMetadataHelper.GetSteamIdFromSearch(game, isBackgroundDownload);
+            }
+            else
+            {
+                logger.Debug("Game is not a PC game");
+                return false;
             }
 
             if (steamId.IsNullOrEmpty())

@@ -34,6 +34,7 @@ namespace ExtraMetadataLoader.Services
 
         public bool DownloadSteamLogo(Game game, bool overwrite, bool isBackgroundDownload)
         {
+            logger.Debug($"DownloadSteamLogo starting for game {game.Name}");
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
             if (File.Exists(logoPath) && !overwrite)
             {
@@ -47,9 +48,14 @@ namespace ExtraMetadataLoader.Services
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
-            else
+            else if (extraMetadataHelper.IsGamePcGame(game))
             {
                 steamId = extraMetadataHelper.GetSteamIdFromSearch(game, isBackgroundDownload);
+            }
+            else
+            {
+                logger.Debug("Game is not a PC game");
+                return false;
             }
 
             if (steamId.IsNullOrEmpty())
