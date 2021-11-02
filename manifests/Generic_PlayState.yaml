@@ -49,3 +49,9 @@ Packages:
     - Updated localizations
     - "Add note in settings that indicates that used hotkey can't be used in other applications"
     - Changed default hotkey combination to Shift+Alt+A
+  - Version: 2.7
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/PlayState_2_7.pext
+    Changelog:
+    - Updated localizations

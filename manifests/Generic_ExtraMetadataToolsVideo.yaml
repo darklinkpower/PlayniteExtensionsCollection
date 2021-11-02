@@ -40,3 +40,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_5.pext
     Changelog:
     - Updated localizations
+  - Version: 2.6
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_6.pext
+    Changelog:
+    - Updated localizations
+    - Reorganized menu items
+    - Removed some deprecated functionality
+    - 'Note: Functionality of removed functions have been reimplemented in the "Extra Metadata Loader" extension that needs to be installed separately'

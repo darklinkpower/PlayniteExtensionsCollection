@@ -111,3 +111,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_15.pext
     Changelog:
     - Fix steam manual search not initially using the game name
+  - Version: 1.16
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_16.pext
+    Changelog:
+    - Updated localizations
+    - Remove Extra Metadata directory of Sources and Platforms when they are removed from Playnite
+    - Reorganized menu items
+    - Added options to automatically trim and resize down logos after downloading
+    - Add options to update tags that indicate if a game Extra Metadata asset is missing on library update
