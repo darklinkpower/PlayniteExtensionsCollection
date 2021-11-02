@@ -236,7 +236,7 @@ namespace ExtraMetadataLoader
                 progressOptions.IsIndeterminate = false;
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
-                    var games = PlayniteApi.Database.Games.Where(x => x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
+                    var games = PlayniteApi.Database.Games.Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
                     a.ProgressMaxValue = games.Count();
                     foreach (var game in games)
                     {
@@ -244,6 +244,22 @@ namespace ExtraMetadataLoader
                         {
                             logosDownloader.DownloadSgdbLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically);
                         }
+                        a.CurrentProgressValue++;
+                    };
+                }, progressOptions);
+            }
+
+            if (settings.Settings.DownloadVideosOnLibUpdate || settings.Settings.DownloadVideosMicroOnLibUpdate)
+            {
+                var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos"));
+                progressOptions.IsIndeterminate = false;
+                PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                {
+                    var games = PlayniteApi.Database.Games.Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
+                    a.ProgressMaxValue = games.Count();
+                    foreach (var game in games)
+                    {
+                        videosDownloader.DownloadSteamVideo(game, false, true, settings.Settings.DownloadVideosOnLibUpdate, settings.Settings.DownloadVideosMicroOnLibUpdate);
                         a.CurrentProgressValue++;
                     };
                 }, progressOptions);
