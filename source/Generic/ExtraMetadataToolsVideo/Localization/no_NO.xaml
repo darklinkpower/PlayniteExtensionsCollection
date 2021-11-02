@@ -10,7 +10,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Slett mikrotrailer-video for valgt(e) spill</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Last ned trailer-video for valgte spill fra YouTube automatisk</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Søk etter YouTube-video for det valgte spillet</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemUpdate-AssetsStatusGameDatabaseDescription">Oppdater 'status'-tagger for alle spill i databasen</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage">Angi plassering av programfil for ffmpeg</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfprobeExecutableMessage">Angi plassering av programfil for ffProbe</sys:String>
