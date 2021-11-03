@@ -71,6 +71,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Videos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">Micro videos</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">Generate Micro video from downloaded video for selected games</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Generating Micro videos from videos...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Process logos after downloading</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Trim Logos</sys:String>
