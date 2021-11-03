@@ -75,39 +75,40 @@ namespace ExtraMetadataLoader.Helpers
 
         private bool DeleteDirectory(string directoryPath)
         {
-            if (Directory.Exists(directoryPath))
+
+            try
             {
-                try
-                {
+                if (Directory.Exists(directoryPath))
+                { 
                     Directory.Delete(directoryPath, true);
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error while deleting removed extra metadata directory {directoryPath}");
-                    return false;
-                }
+                }    
+                return true;
             }
-            return true;
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error while deleting removed extra metadata directory {directoryPath}");
+                playniteApi.Notifications.Add(new NotificationMessage(
+                    Guid.NewGuid().ToString(),
+                    string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory"), directoryPath, e.Message),
+                    NotificationType.Error)
+                    );
+                return false;
+            }
         }
 
         public bool DeleteGameLogo(Game game)
         {
-            var logoPath = Path.Combine(GetExtraMetadataDirectory(game), "Logo.png");
-            if (File.Exists(logoPath))
-            {
-                try
-                {
-                    File.Delete(logoPath);
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error while deleting game logo {logoPath}");
-                    return false;
-                }
-            }
-            return true;
+            return DeleteFile(GetGameLogoPath(game));
+        }
+
+        public bool DeleteGameVideo(Game game)
+        {
+            return DeleteFile(GetGameVideoPath(game));
+        }
+
+        public bool DeleteGameVideoMicro(Game game)
+        {
+            return DeleteFile(GetGameVideoMicroPath(game));
         }
 
         public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload)
@@ -138,5 +139,29 @@ namespace ExtraMetadataLoader.Helpers
 
             return string.Empty;
         }
+
+        public bool DeleteFile(string sourcePath)
+        {
+            try
+            {
+                if (File.Exists(sourcePath))
+                {
+                    File.Delete(sourcePath);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error deleting file: {sourcePath}.");
+                playniteApi.Notifications.Add(new NotificationMessage(
+                    Guid.NewGuid().ToString(),
+                    string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile"), sourcePath, e.Message),
+                    NotificationType.Error)
+                    );
+                return false;
+            }
+        }
+
+
     }
 }

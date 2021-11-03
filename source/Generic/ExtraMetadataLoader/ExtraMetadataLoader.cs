@@ -227,6 +227,30 @@ namespace ExtraMetadataLoader
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Action = _ => {
+                        foreach (var game in args.Games.Distinct())
+                        {
+                            extraMetadataHelper.DeleteGameVideo(game);
+                        };
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
+                    Action = _ => {
+                        foreach (var game in args.Games.Distinct())
+                        {
+                            extraMetadataHelper.DeleteGameVideoMicro(game);
+                        };
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
                 }
             };
         }
@@ -293,11 +317,11 @@ namespace ExtraMetadataLoader
 
         private void UpdateAssetsTagsStatus()
         {
-            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            if (settings.Settings.UpdateMissingLogoTagOnLibUpdate ||
+                settings.Settings.UpdateMissingVideoTagOnLibUpdate ||
+                settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate)
             {
-                if (settings.Settings.UpdateMissingLogoTagOnLibUpdate ||
-    settings.Settings.UpdateMissingVideoTagOnLibUpdate ||
-    settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate)
+                PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     Tag logoMissingTag = null;
                     Tag videoMissingTag = null;
@@ -380,8 +404,8 @@ namespace ExtraMetadataLoader
                             PlayniteApi.Database.Games.Update(game);
                         }
                     }
-                }
-            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
+                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
+            }
         }
 
         private bool AddTag(Game game, Tag tag, bool updateGame = true)
