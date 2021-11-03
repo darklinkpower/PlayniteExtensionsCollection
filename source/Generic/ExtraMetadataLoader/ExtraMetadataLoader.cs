@@ -230,6 +230,18 @@ namespace ExtraMetadataLoader
                 },
                 new GameMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Action = _ => {
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            videosDownloader.SelectedDialogFileToVideo(args.Games[0]);
+                        }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile")));
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
                     Action = _ => {

@@ -73,6 +73,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Delete logos of selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">Delete videos of selected games</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">Delete Micro videos of selected games</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">Select video file to set as video for the selected game</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Setting game video from selected video file...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Videos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">Micro videos</sys:String>

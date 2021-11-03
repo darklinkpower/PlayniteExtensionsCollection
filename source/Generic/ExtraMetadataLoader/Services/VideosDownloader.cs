@@ -307,5 +307,23 @@ namespace ExtraMetadataLoader.Services
             return success;
         }
 
+        public bool SelectedDialogFileToVideo(Game game)
+        {
+            logger.Debug($"SelectedDialogFileToVideo starting for game {game.Name}");
+            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            var selectedVideoPath = playniteApi.Dialogs.SelectFile("Video file|*.mp4;*.avi;*.mkv;*.webm;*.flv;*.wmv;*.mov;*.m4v");
+            if (!selectedVideoPath.IsNullOrEmpty())
+            {
+                return ProcessVideo(selectedVideoPath, videoPath, true, false);
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+
+
     }
 }
