@@ -206,6 +206,27 @@ namespace ExtraMetadataLoader
                             Process.Start(extraMetadataHelper.GetExtraMetadataDirectory(game, true));
                         };
                     }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
+                    Action = _ => {
+                        var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
+                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos"));
+                        progressOptions.IsIndeterminate = false;
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            var games = args.Games.Distinct();
+                            a.ProgressMaxValue = games.Count();
+                            foreach (var game in games)
+                            {
+                                videosDownloader.ConvertVideoToMicro(game, overwrite);
+                                a.CurrentProgressValue++;
+                            };
+                        }, progressOptions);
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
                 }
             };
         }

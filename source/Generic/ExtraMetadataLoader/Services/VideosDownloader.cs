@@ -6,6 +6,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -128,7 +129,7 @@ namespace ExtraMetadataLoader.Services
                     {
                         args = $"-y -i \"{videoPath}\" -c:v libx264 -c:a mp3 -vf scale=trunc(iw/2)*2:trunc(ih/2)*2 -pix_fmt yuv420p \"{destinationPath}\"";
                     }
-                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, out var stdOut, out var stdErr);
+                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
                     if (result != 0)
                     {
                         logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
@@ -222,6 +223,89 @@ namespace ExtraMetadataLoader.Services
             return JsonConvert.DeserializeObject<FfprobeVideoInfoOutput>(stdOut);
         }
 
+        public bool ConvertVideoToMicro(Game game, bool overwrite)
+        {
+            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            var videoMicroPath = extraMetadataHelper.GetGameVideoMicroPath(game, true);
+            if (!File.Exists(videoPath) || (File.Exists(videoMicroPath) && !overwrite))
+            {
+                return false;
+            }
+
+            var videoInfo = GetVideoInformation(videoPath);
+            if (videoInfo == null)
+            {
+                return false;
+            }
+            
+            // It's needed to use invariant culture when parsing because ffprobe output durantion
+            // uses a dot as decimal separator and some regions use other symbols for this.
+            var videoDuration = double.Parse(videoInfo.Streams[0].Duration, CultureInfo.InvariantCulture);
+            var success = true;
+            if (videoDuration < 14)
+            {
+                var actionNeeded = GetIsConversionNeeded(videoInfo);
+                if (actionNeeded == VideoActionNeeded.Invalid)
+                {
+                    success = false;
+                }
+                else if (actionNeeded == VideoActionNeeded.Conversion)
+                {
+                    // Scale parameter needs to be used because otherwise ffmpeg
+                    // will fail if a dimension is not divisible by 2.
+                    var args = $"-y -i \"{videoPath}\" -c:v libx264 -c:a mp3 -vf scale=trunc(iw/2)*2:trunc(ih/2)*2 -pix_fmt yuv420p -an \"{videoMicroPath}\"";
+                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                    if (result != 0)
+                    {
+                        logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
+                        success = false;
+                    }
+                }
+                else
+                {
+                    // Scale parameter needs to be used because otherwise ffmpeg
+                    // will fail if a dimension is not divisible by 2.
+                    var args = $"-y -i \"{videoPath}\" -c:v copy -an \"{videoMicroPath}\"";
+                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                    if (result != 0)
+                    {
+                        logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
+                        success = false;
+                    }
+                }
+            }
+            else
+            {
+                var rangeStringList = new List<string>();
+                var clipDuration = 1;
+                int[] startPercentageVideo = {
+                    15,
+                    25,
+                    35,
+                    45,
+                    55,
+                    65
+                };
+
+                foreach (var percentage in startPercentageVideo)
+                {
+                    double clipStart = (percentage * videoDuration) / 100;
+                    double clipEnd = clipStart + clipDuration;
+                    rangeStringList.Add(string.Format("between(t,{0:N2},{1:N2})", clipStart.ToString(CultureInfo.InvariantCulture), clipEnd.ToString(CultureInfo.InvariantCulture)));
+                }
+
+                var selectString = $"\"select = '{string.Join("+", rangeStringList)}', setpts = N / FRAME_RATE / TB, scale = trunc(iw / 2) * 2:trunc(ih / 2) * 2\"";
+                var args = $"-y -i \"{videoPath}\" -vf {selectString} -c:v libx264 -pix_fmt yuv420p -an \"{videoMicroPath}\"";
+                var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                if (result != 0)
+                {
+                    logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
+                    success = false;
+                }
+            }
+
+            return success;
+        }
 
     }
 }
