@@ -71,6 +71,7 @@
     <Compile Include="Common\IoHelper.cs" />
     <Compile Include="Common\ProcessStarter.cs" />
     <Compile Include="Common\SteamCommon.cs" />
+    <Compile Include="Common\YoutubeCommon.cs" />
     <Compile Include="Controls\VideoPlayerControl.xaml.cs">
       <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,8 @@
     <Compile Include="Models\SteamAppDetailsResponse.cs" />
     <Compile Include="Models\SteamGridDbGameSearchResponse.cs" />
     <Compile Include="Models\SteamGridDbLogoResponse.cs" />
+    <Compile Include="Models\YoutubeEmbeddedResponse.cs" />
+    <Compile Include="Models\YoutubeSearchItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\LogoLoaderControl.xaml.cs">
       <DependentUpon>LogoLoaderControl.xaml</DependentUpon>
@@ -93,6 +96,10 @@
     <Compile Include="Services\LogosDownloader.cs" />
     <Compile Include="Services\VideosDownloader.cs" />
     <Compile Include="Common\HttpDownloader.cs" />
+    <Compile Include="ViewModels\YoutubeSearchViewModel.cs" />
+    <Compile Include="Views\YoutubeSearchView.xaml.cs">
+      <DependentUpon>YoutubeSearchView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -114,6 +121,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LogoLoaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\YoutubeSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

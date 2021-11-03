@@ -1,5 +1,7 @@
 ﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Services;
+using ExtraMetadataLoader.ViewModels;
+using ExtraMetadataLoader.Views;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -98,6 +100,8 @@ namespace ExtraMetadataLoader
             var logosSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionLogos");
             var videosSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionVideos");
             var videosMicroSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos");
+            
+            //TODO Move each action to separate methods?
             return new List<GameMenuItem>
             {
                 new GameMenuItem
@@ -173,6 +177,14 @@ namespace ExtraMetadataLoader
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Action = _ => {
+                        CreateYoutubeWindow();
                     }
                 },
                 new GameMenuItem
@@ -265,6 +277,25 @@ namespace ExtraMetadataLoader
                     }
                 }
             };
+        }
+
+        private void CreateYoutubeWindow()
+        {
+            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false
+            });
+
+            window.Height = 650;
+            window.Width = 700;
+            window.Title = ResourceProvider.GetString("LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle");
+
+            window.Content = new YoutubeSearchView();
+            window.DataContext = new YoutubeSearchViewModel(PlayniteApi, PlayniteApi.MainView.SelectedGames.Last(), videosDownloader);
+            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            window.ShowDialog();
         }
 
         private bool GetBoolFromYesNoDialog(string caption)

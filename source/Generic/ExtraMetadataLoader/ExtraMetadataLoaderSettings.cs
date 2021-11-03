@@ -656,7 +656,7 @@ namespace ExtraMetadataLoader
         {
             get => new RelayCommand<object>((a) =>
             {
-                ProcessStarter.StartUrl(@"http://ytdl-org.github.io/youtube-dl/download.html");
+                ProcessStarter.StartUrl(@"https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe");
             });
         }
 
@@ -664,7 +664,7 @@ namespace ExtraMetadataLoader
         {
             get => new RelayCommand<object>((a) =>
             {
-                var filePath = playniteApi.Dialogs.SelectFile("youtube-dl|youtube-dl.exe");
+                var filePath = playniteApi.Dialogs.SelectFile("youtube-dlp|yt-dlp.exe");
                 if (!filePath.IsNullOrEmpty())
                 {
                     settings.YoutubeDlPath = filePath;

@@ -20,8 +20,6 @@ namespace ExtraMetadataLoader.Services
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly ExtraMetadataLoaderSettings settings;
         private readonly ExtraMetadataHelper extraMetadataHelper;
-        private const string steamAppDetailsUrlTemplate = @"https://store.steampowered.com/api/appdetails?appids={0}";
-        private const string steamLogoUriTemplate = @"https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png";
         private const string steamMicrotrailerUrlTemplate = @"https://steamcdn-a.akamaihd.net/steam/apps/{0}/microtrailer.mp4";
         private readonly string tempDownloadPath = Path.Combine(Path.GetTempPath(), "VideoTemp.mp4");
 
@@ -31,6 +29,7 @@ namespace ExtraMetadataLoader.Services
             this.settings = settings;
             this.extraMetadataHelper = extraMetadataHelper;
         }
+
         public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, bool downloadVideo = false, bool downloadVideoMicro = false)
         {
             logger.Debug($"DownloadSteamVideo starting for game {game.Name}");
@@ -111,11 +110,13 @@ namespace ExtraMetadataLoader.Services
             {
                 logger.Debug($"ffmpeg has not been configured");
                 playniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error));
+                return false;
             }
             else if (!File.Exists(settings.FfmpegPath))
             {
                 logger.Debug($"ffmpeg executable not found in {settings.FfmpegPath}");
                 playniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error));
+                return false;
             }
 
             var videoInfo = GetVideoInformation(videoPath);
@@ -204,11 +205,13 @@ namespace ExtraMetadataLoader.Services
             {
                 logger.Debug($"ffprobe has not been configured");
                 playniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error));
+                return null;
             }
             else if (!File.Exists(settings.FfprobePath))
             {
                 logger.Debug($"ffprobe executable not found in {settings.FfprobePath}");
                 playniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error));
+                return null;
             }
 
             logger.Debug($"Obtaining video information: {videoPath}");
@@ -320,10 +323,27 @@ namespace ExtraMetadataLoader.Services
             {
                 return false;
             }
-
-
         }
 
+        public bool DownloadYoutubeVideoById(Game game, string videoId, bool overwrite)
+        {
+            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            if (File.Exists(videoPath) && !overwrite)
+            {
+                return false;
+            }
+            var args = string.Format("-v -o \"{0}\" -f \"mp4\" \"{1}\"", tempDownloadPath, $"https://www.youtube.com/watch?v={videoId}");
+            var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, out var stdOut, out var stdErr);
+            if (result != 0)
+            {
+                logger.Error($"Failed to download video in youtube-dlp: {result}, {stdErr}");
+                return false;
+            }
+            else
+            {
+                return ProcessVideo(tempDownloadPath, videoPath, false, false);
+            }
+        }
 
     }
 }
