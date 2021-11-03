@@ -162,7 +162,12 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
-                    Action = _ => {
+                    Action = _ =>
+                    {
+                        if (!ValidateExecutablesSettings(true, false))
+                        {
+                            return;
+                        }
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam"));
                         progressOptions.IsIndeterminate = false;
@@ -183,7 +188,12 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
-                    Action = _ => {
+                    Action = _ =>
+                    {
+                        if (!ValidateExecutablesSettings(true, true))
+                        {
+                            return;
+                        }
                         CreateYoutubeWindow();
                     }
                 },
@@ -191,7 +201,12 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
-                    Action = _ => {
+                    Action = _ => 
+                    {
+                        if (!ValidateExecutablesSettings(true, false))
+                        {
+                            return;
+                        }
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam"));
                         progressOptions.IsIndeterminate = false;
@@ -212,7 +227,8 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory"),
                     MenuSection = $"Extra Metadata",
-                    Action = _ => {
+                    Action = _ =>
+                    {
                         foreach (var game in args.Games.Distinct())
                         {
                             Process.Start(extraMetadataHelper.GetExtraMetadataDirectory(game, true));
@@ -223,7 +239,12 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
-                    Action = _ => {
+                    Action = _ =>
+                    {
+                        if (!ValidateExecutablesSettings(true, false))
+                        {
+                            return;
+                        }
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos"));
                         progressOptions.IsIndeterminate = false;
@@ -244,7 +265,12 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
-                    Action = _ => {
+                    Action = _ =>
+                    {
+                        if (!ValidateExecutablesSettings(true, false))
+                        {
+                            return;
+                        }
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             videosDownloader.SelectedDialogFileToVideo(args.Games[0]);
@@ -337,7 +363,7 @@ namespace ExtraMetadataLoader
                 }, progressOptions);
             }
 
-            if (settings.Settings.DownloadVideosOnLibUpdate || settings.Settings.DownloadVideosMicroOnLibUpdate)
+            if ((settings.Settings.DownloadVideosOnLibUpdate || settings.Settings.DownloadVideosMicroOnLibUpdate) && ValidateExecutablesSettings(true, false))
             {
                 var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos"));
                 progressOptions.IsIndeterminate = false;
@@ -449,6 +475,60 @@ namespace ExtraMetadataLoader
                     }
                 }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
             }
+        }
+
+        private bool ValidateExecutablesSettings(bool validateFfmpeg, bool validateYtdl)
+        {
+            var success = true;
+            if (validateFfmpeg)
+            {
+                // ffmpeg
+                if (settings.Settings.FfmpegPath.IsNullOrEmpty())
+                {
+                    logger.Debug($"ffmpeg has not been configured");
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error));
+                    success = false;
+                }
+                else if (!File.Exists(settings.Settings.FfmpegPath))
+                {
+                    logger.Debug($"ffmpeg executable not found in {settings.Settings.FfmpegPath}");
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error));
+                    success = false;
+                }
+
+                // ffprobe
+                if (settings.Settings.FfprobePath.IsNullOrEmpty())
+                {
+                    logger.Debug($"ffprobe has not been configured");
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error));
+                    success = false;
+                }
+                else if (!File.Exists(settings.Settings.FfprobePath))
+                {
+                    logger.Debug($"ffprobe executable not found in {settings.Settings.FfprobePath}");
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error));
+                    success = false;
+                }
+            }
+            
+            if (validateYtdl)
+            {
+                // youtube-dl
+                if (settings.Settings.YoutubeDlPath.IsNullOrEmpty())
+                {
+                    logger.Debug($"youtube-dl has not been configured");
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured"), NotificationType.Error));
+                    success = false;
+                }
+                else if (!File.Exists(settings.Settings.YoutubeDlPath))
+                {
+                    logger.Debug($"youtube-dl executable not found in {settings.Settings.YoutubeDlPath}");
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound"), NotificationType.Error));
+                    success = false;
+                }
+            }
+
+            return success;
         }
 
         private bool AddTag(Game game, Tag tag, bool updateGame = true)

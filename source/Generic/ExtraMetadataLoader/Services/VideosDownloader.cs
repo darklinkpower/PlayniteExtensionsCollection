@@ -106,19 +106,6 @@ namespace ExtraMetadataLoader.Services
 
         private bool ProcessVideo(string videoPath, string destinationPath, bool copyOnly, bool deleteSource, string args = null)
         {
-            if (settings.FfmpegPath.IsNullOrEmpty())
-            {
-                logger.Debug($"ffmpeg has not been configured");
-                playniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error));
-                return false;
-            }
-            else if (!File.Exists(settings.FfmpegPath))
-            {
-                logger.Debug($"ffmpeg executable not found in {settings.FfmpegPath}");
-                playniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error));
-                return false;
-            }
-
             var videoInfo = GetVideoInformation(videoPath);
             var neededAction = GetIsConversionNeeded(videoInfo);
             var success = true;
@@ -201,19 +188,6 @@ namespace ExtraMetadataLoader.Services
 
         private FfprobeVideoInfoOutput GetVideoInformation(string videoPath)
         {
-            if (settings.FfprobePath.IsNullOrEmpty())
-            {
-                logger.Debug($"ffprobe has not been configured");
-                playniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error));
-                return null;
-            }
-            else if (!File.Exists(settings.FfprobePath))
-            {
-                logger.Debug($"ffprobe executable not found in {settings.FfprobePath}");
-                playniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error));
-                return null;
-            }
-
             logger.Debug($"Obtaining video information: {videoPath}");
             var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name_name,pix_fmt,duration -of json \"{videoPath}\"";
             var result = ProcessStarter.StartProcessWait(settings.FfprobePath, args, Path.GetDirectoryName(settings.FfprobePath), true, out var stdOut, out var stdErr);
