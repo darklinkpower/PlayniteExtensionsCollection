@@ -568,6 +568,18 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private string youtubeCookiesPath = string.Empty;
+        public string YoutubeCookiesPath
+        {
+            get => youtubeCookiesPath;
+            set
+            {
+                youtubeCookiesPath = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings
@@ -660,6 +672,26 @@ namespace ExtraMetadataLoader
             });
         }
 
+        public RelayCommand<object> OpenCookiesObtainHelpCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                ProcessStarter.StartUrl(@"https://github.com/ytdl-org/youtube-dl/blob/master/README.md#how-do-i-pass-cookies-to-youtube-dl");
+            });
+        }
+
+        public RelayCommand<object> BrowseSelectYoutubeCookiesCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                var filePath = playniteApi.Dialogs.SelectFile("cookies|cookies.txt");
+                if (!filePath.IsNullOrEmpty())
+                {
+                    settings.YoutubeCookiesPath = filePath;
+                }
+            });
+        }
+
         public RelayCommand<object> BrowseSelectYoutubeDlCommand
         {
             get => new RelayCommand<object>((a) =>
@@ -694,6 +726,30 @@ namespace ExtraMetadataLoader
                     settings.FfprobePath = filePath;
                 }
             });
+        }
+
+        public RelayCommand<object> LoginToYoutubeCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                LoginToYoutube();
+            });
+        }
+
+        public void LoginToYoutube()
+        {
+            var webView = playniteApi.WebViews.CreateView(700, 700);
+            webView.LoadingChanged += (s, e) =>
+            {
+                var address = webView.GetCurrentAddress();
+                if (address == "https://www.youtube.com/")
+                {
+                    webView.Close();
+                }
+            };
+            webView.Navigate("https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue");
+            webView.OpenDialog();
+            webView.Dispose();
         }
     }
 }

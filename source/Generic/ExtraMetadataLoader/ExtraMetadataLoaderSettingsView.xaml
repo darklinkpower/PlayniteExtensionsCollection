@@ -39,9 +39,25 @@
                             <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectYoutubeDlCommand}" />
                             <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeDlPath}" IsReadOnly="True" />
                         </DockPanel>
+                        <DockPanel Margin="0,0,0,10">
+                            <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel}"
+                                       ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip}"
+                                       DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                            <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}"
+                                    Command="{Binding BrowseSelectYoutubeCookiesCommand}" />
+                            <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingHelpLabel}"
+                                    Command="{Binding OpenCookiesObtainHelpCommand}"
+                                    ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip}" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeCookiesPath}" IsReadOnly="True"
+                                     ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip}" />
+                        </DockPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                             <Button HorizontalAlignment="Left" Margin="0,0,0,0" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel}" Command="{Binding DownloadFfmpegCommand}" />
                             <Button HorizontalAlignment="Left" Margin="10,0,0,0" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel}" Command="{Binding DownloadYoutubeDlCommand}" />
+                            <Button HorizontalAlignment="Left" Margin="10,0,0,0"
+                                    Content="{DynamicResource LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel}"
+                                    ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip}"
+                                    Command="{Binding LoginToYoutubeCommand}" />
                         </StackPanel>
                         <CheckBox IsChecked="{Binding Settings.DownloadVideosOnLibUpdate, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel}" Margin="0,0,0,10"/>
                         <CheckBox IsChecked="{Binding Settings.DownloadVideosMicroOnLibUpdate, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel}" Margin="0,0,0,20"/>

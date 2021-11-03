@@ -307,6 +307,10 @@ namespace ExtraMetadataLoader.Services
                 return false;
             }
             var args = string.Format("-v -o \"{0}\" -f \"mp4\" \"{1}\"", tempDownloadPath, $"https://www.youtube.com/watch?v={videoId}");
+            if (!settings.YoutubeCookiesPath.IsNullOrEmpty() && File.Exists(settings.YoutubeCookiesPath))
+            {
+                args = string.Format("-v -o \"{0}\" --cookies \"{1}\" -f \"mp4\" \"{2}\"", tempDownloadPath, settings.YoutubeCookiesPath, $"https://www.youtube.com/watch?v={videoId}");
+            }
             var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, out var stdOut, out var stdErr);
             if (result != 0)
             {

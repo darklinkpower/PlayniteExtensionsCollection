@@ -145,7 +145,7 @@ namespace ExtraMetadataLoader.ViewModels
 
         public void ViewSelectedVideo()
         {
-            var youtubeLink = string.Format("https://www.youtube-nocookie.com/embed/{0}", selectedItem.VideoId);
+            var youtubeLink = string.Format("https://www.youtube.com/embed/{0}", selectedItem.VideoId);
             var html = string.Format(@"
                     <head>
                         <title>Extra Metadata</title>
@@ -154,6 +154,19 @@ namespace ExtraMetadataLoader.ViewModels
                     <body style='margin:0'>
                     </body>", youtubeLink);
             var webView = PlayniteApi.WebViews.CreateView(1280, 750);
+
+            // TODO Figure out a way to detect age restricted videos
+            // for some reason the Get Source methods freeze and don't finish
+            // Age restricted videos can only be seen in the full version while logged in
+            //webView.LoadingChanged += (s, e) =>
+            //{
+            //    var source = webView.GetPageSource();
+            //    if (source.Contains("<div class=\"player - unavailable\">"))
+            //    {
+            //        webView.Navigate($"https://www.youtube.com/watch?v={selectedItem.VideoId}");
+            //    }
+            //};
+
             webView.Navigate("data:text/html," + html);
             webView.OpenDialog();
             webView.Dispose();
