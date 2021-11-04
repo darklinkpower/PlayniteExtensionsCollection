@@ -155,17 +155,24 @@ namespace ExtraMetadataLoader.ViewModels
                     </body>", youtubeLink);
             var webView = PlayniteApi.WebViews.CreateView(1280, 750);
 
-            // TODO Figure out a way to detect age restricted videos
-            // for some reason the Get Source methods freeze and don't finish
             // Age restricted videos can only be seen in the full version while logged in
-            //webView.LoadingChanged += (s, e) =>
-            //{
-            //    var source = webView.GetPageSource();
-            //    if (source.Contains("<div class=\"player - unavailable\">"))
-            //    {
-            //        webView.Navigate($"https://www.youtube.com/watch?v={selectedItem.VideoId}");
-            //    }
-            //};
+            // so it's needed to redirect to the full YouTube site to view them
+            var embedLoaded = false;
+            webView.LoadingChanged += async (s, e) =>
+            {
+                if (!embedLoaded)
+                {
+                    if (webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
+                    {
+                        var source = await webView.GetPageSourceAsync();
+                        if (source.Contains("<div class=\"ytp-error-content-wrap\"><div class=\"ytp-error-content-wrap-reason\">"))
+                        {
+                            webView.Navigate($"https://www.youtube.com/watch?v={selectedItem.VideoId}");
+                        }
+                        embedLoaded = true;
+                    }
+                }
+            };
 
             webView.Navigate("data:text/html," + html);
             webView.OpenDialog();
