@@ -65,8 +65,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Zusätzliche Metadaten: ffmpeg ausführbare Datei wurde nicht im konfigurierten Ort gefunden</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured">Zusätzliche Metadaten: ffprobe ausführbarer Pfad wurde in den Erweiterungseinstellungen nicht konfiguriert</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Zusätzliche Metadaten: ffprobe ausführbare Datei wurde nicht im konfigurierten Ort gefunden</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: youtube-dlp executable path has not been configured in the extension settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: youtube-dlp executable was not found in the configured location</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: yt-dlp executable path has not been configured in the extension settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp executable was not found in the configured location</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Zusätzliche Metadaten: Fehler beim Löschen der Datei in {0}. Fehler: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Zusätzliche Metadaten: Fehler beim Löschen des Verzeichnisses in {0}. Fehler: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Videos von Steam für ausgewählte Spiele herunterladen</sys:String>
@@ -102,13 +102,13 @@ Es wird empfohlen die Größe zu reduzieren, da große Bilder Playnite verlangsa
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Tag aktualisieren, der anzeigt ob ein Spiel Mikro Video bei Bibliotheksupdate fehlt</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">ffmpeg Pfad:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">ffprobe Pfad:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">youtube-dl Pfad:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">yt-dlp path:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">Path to YouTube cookies.txt file:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Configuring it allows to download videos that are age restricted</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">Durchsuchen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">Vollständiges ffmpeg Paket herunterladen</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">youtube-dl herunterladen</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Download yt-dlp</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">Login to YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Login in allows to view age restricted videos in the full version site</sys:String>
     
