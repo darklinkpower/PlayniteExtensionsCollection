@@ -121,3 +121,20 @@ Packages:
     - Reorganized menu items
     - Added options to automatically trim and resize down logos after downloading
     - Add options to update tags that indicate if a game Extra Metadata asset is missing on library update
+  - Version: 1.17
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_17.pext
+    Changelog:
+    - Updated localizations
+    - Added menu items with functionality to download videos and micro videos from Steam
+    - Added setting to configure if videos from Steam should be downloaded in High Definition quality
+    - Added option to download Steam videos for newly added games on library update
+    - Optimize media downloads from Steam by not executing them for games that are not from Steam or PC games
+    - Added menu item with functionality to generate micro videos from download game videos
+    - Added menu items to delete downloaded videos and micro videos
+    - Added menu item to search and download videos from YouTube using yt-dlp
+    - 'Added option to configure path to "cookies.txt" file for yt-dlp to allow downloading age restricted videos'
+    - Added button in settings to login to youtube to allow viewing age restricted videos in the full version of the site when using the YouTube search window
+    - Added menu item to search and download logos from Google
+    - General fixes and improvements

@@ -50,3 +50,11 @@ Packages:
     - Reorganized menu items
     - Removed some deprecated functionality
     - 'Note: Functionality of removed functions have been reimplemented in the "Extra Metadata Loader" extension that needs to be installed separately'
+  - Version: 2.7
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_7.pext
+    Changelog:
+    - 'Renamed extension to "Extra Metadata Fullscreen Mode Helper"'
+    - Removed all functionality related to logos download
+    - 'Note: Functionality of removed functions have been reimplemented and improved in the "Extra Metadata Loader" extension that needs to be installed separately'

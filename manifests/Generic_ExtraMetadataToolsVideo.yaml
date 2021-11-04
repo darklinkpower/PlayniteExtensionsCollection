@@ -49,3 +49,10 @@ Packages:
     - Reorganized menu items
     - Removed some deprecated functionality
     - 'Note: Functionality of removed functions have been reimplemented in the "Extra Metadata Loader" extension that needs to be installed separately'
+  - Version: 2.7
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataToolsVideo_008a6f60-9b4e-42b7-a799-18e66a6a7bd6_2_7.pext
+    Changelog:
+    - Removed all functionality in the extension
+    - 'Note: Functionality of removed functions have been reimplemented and improved in the "Extra Metadata Loader" extension that needs to be installed separately. This extension must be uninstalled as it does not provide any functionality anymore.'

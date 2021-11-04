@@ -88,3 +88,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Reworked storage devices insert and removal detection
+  - Version: 2.12
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Installation_Status_Updater_2_12.pext
+    Changelog:
+    - Updated localizations
