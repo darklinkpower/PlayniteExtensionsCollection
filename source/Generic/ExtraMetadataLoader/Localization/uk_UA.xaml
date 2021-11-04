@@ -113,7 +113,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Логін дозволяє переглядати обмежені віком відео на повноцінному сайті</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Завантажувати відео зі Steam у HD якості</sys:String>
-
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining from Steam</sys:String>
+    
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Виберіть відео для завантаження</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Список відео:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Пошук</sys:String>
