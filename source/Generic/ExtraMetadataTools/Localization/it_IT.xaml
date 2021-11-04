@@ -1,17 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Scarica il logo per il gioco selezionato da Google</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Aggiungi logo dal file locale del gioco selezionato</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Imposta immagine del profilo</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Imposta video in background</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Configurazione aggiuntiva dei metadati per il tema &quot;{0}&quot; aggiornato.
 Riavvia Playnite per rendere effettive le modifiche.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">È stato selezionato più di un gioco, selezionare un solo gioco.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Aggiunto il file del logo a &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage">Scaricati {0} loghi da SteamGridDB.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Errore nel download del file dall'url &quot;{0}&quot;. Errore: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">È stato selezionato più di un gioco, selezionare un solo gioco.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Aggiunto il file del logo a &quot;{0}&quot;.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Errore nel convertire il file immagine in png. Errore: &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Immagine di profilo impostata.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Video in background impostato.</sys:String>
