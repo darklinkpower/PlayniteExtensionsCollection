@@ -56,7 +56,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Logos von SteamGridDB herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Video von YouTube herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">Fehler beim Herunterladen des Videos von YouTube. Bitte versuchen Sie es mit einem anderen Video.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from YouTube.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Lade Logos neu hinzugefügter Spiele herunter...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Videos von neu hinzugefügten Spielen herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Fertig.</sys:String>
