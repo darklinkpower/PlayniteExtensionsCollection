@@ -1,23 +1,3 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoSdDescription">[Steam] Scarica il video trailer di Steam (qualità SD)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoHdDescription">[Steam] Scarica il video del trailer di Steam (qualità HD)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-SteamVideoMicroDescription">[Steam] Scarica video del microtrailer di Steam</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyTrailerDescription">Imposta il trailer per il gioco selezionato dal file</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-VideoManuallyMicroTrailerDescription">Imposta il video del microtrailer per il gioco selezionato dal file</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGet-VideoMicrotrailerFromTrailerDescription">Genera video microtrailer dal video trailer configurato</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoTrailerDescription">Elimina il video trailer dei giochi selezionati</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemRemove-VideoMicrotrailerDescription">Elimina il video del microtrailer dei giochi selezionati</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSet-YouTubeVideoDescription">[YouTube] Scaricare automaticamente il video di YouTube trailer per i giochi selezionati</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemInvoke-YoutubeSearchWindowDescription">[YouTube] Cerca video YouTube per il gioco selezionato</sys:String>
-
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfmpegExecutableMessage">Seleziona eseguibile ffmpeg.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectFfprobeExecutableMessage">Seleziona eseguibile ffProbe.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectYoutubeDlExecutableMessage">Seleziona l'eseguibile youtube-dl.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetupUnfinishedMessage">Configura tutte le impostazioni obbligatorie richieste per continuare.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericDownloadErrorMessage">Errore nel download del file {0}. Errore: {1}.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ErrorDownloadGameInformationMessage">Impossibile scaricare le informazioni di gioco. Errore: {0}.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">È stato selezionato più di un gioco, selezionare un solo gioco.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFinishedMessage">Terminato.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericErrorProcessingFileMessage">Impossibile elaborare il file selezionato.</sys:String>
 </ResourceDictionary>
