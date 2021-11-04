@@ -113,7 +113,8 @@ Il ridimensionamento è raccomandato perché le immagini di grandi dimensioni po
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">L'accesso permette di visualizzare i video con limiti di età nel sito della versione completa</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Scarica video da Steam in alta definizione</sys:String>
-
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining from Steam</sys:String>
+    
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Seleziona video da scaricare</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Lista dei video:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Cerca</sys:String>
