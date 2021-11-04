@@ -1,17 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemGetLogosFromGoogleDescription">Descargar logo del juego seleccionado desde Google</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSelectLocalLogoDescription">Agregar logo desde archivo local del juego seleccionado</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Establecer foto de perfil</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Establecer vídeo de fondo</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Configuración de metadatos extra para el tema &quot;{0}&quot; actualizado.
 Por favor, reinicia Playnite para que los cambios surtan efecto.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanSingleGameSelectedMessage">Más de un juego ha sido seleccionado, por favor seleccione sólo un juego.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_AddedLogoMessage">Añadido archivo de logo a &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SgdbLogosDownloadResultsMessage">Descargados {0} logos de SteamGridDB.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_GenericFileDownloadErrorMessage">Error al descargar el archivo desde la url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MoreThanOneGameSelectedMessage">Más de un juego ha sido seleccionado, por favor seleccione sólo un juego.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SelectLogoResultsMessage">Se añadió un archivo de logo a &quot;{0}&quot;.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Error al convertir archivo de imagen a png. Error: &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Imágen de perfil establecida.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Video de fondo establecido.</sys:String>

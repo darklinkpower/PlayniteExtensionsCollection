@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">General settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">Impostazioni generali</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Impostazioni video</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">Abilita lettore video</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">Riproduci automaticamente video</sys:String>
@@ -26,11 +26,14 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direzione dell'effetto ombra</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Raggio di sfocatura dell'effetto ombra</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacità dell'effetto ombra</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">Impostazioni download video</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload">Impostazioni download logo</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">Impostazioni caricatore logo</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl">Impostazioni lettore video</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">Chiave API di SteamGridDB:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">Ottieni la chiave API</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Scarica i video dei nuovi giochi aggiunti all'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Scarica i micro video dei nuovi giochi aggiunti all'aggiornamento della libreria</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Scarica i loghi dei nuovi giochi aggiunti all'aggiornamento della libreria</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Seleziona i loghi da scaricare automaticamente</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
@@ -46,29 +49,79 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Seleziona gioco</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Seleziona opzione</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Sovrascrivere i loghi dei giochi che già li hanno?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">Sovrascrivere i video dei giochi che già li hanno?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Scaricamento video da Steam...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Scaricamento micro video da Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Scaricamento loghi da Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Scaricamento loghi da SteamGridDB...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Scaricamento video da YouTube...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">Impossibile scaricare il video da YouTube. Prova con un video diverso.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Scaricamento dei loghi dei nuovi giochi...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Scaricamento dei video dei nuovi giochi...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Fatto.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing">La chiave API SteamGridDB non è stata configurata nelle impostazioni</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing">Metadati aggiuntivi: la chiave API di SteamGridDB non è stata configurata nelle impostazioni</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured">Metadati aggiuntivi: il percorso eseguibile ffmpeg non è stato configurato nelle impostazioni di estensione</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Metadati aggiuntivi: l'eseguibile ffmpeg non è stato trovato nella posizione configurata</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured">Metadati aggiuntivi: il percorso eseguibile ffprobe non è stato configurato nelle impostazioni di estensione</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Metadati aggiuntivi: l'eseguibile ffprobe non è stato trovato nella posizione configurata</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Metadati aggiuntivi: il percorso eseguibile youtube-dlp non è stato configurato nelle impostazioni dell'estensione</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Metadati aggiuntivi: l'eseguibile youtube-dlp non è stato trovato nella posizione configurata</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Metadati aggiuntivi: Errore nell'eliminazione del file in {0}. Errore: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Metadati aggiuntivi: Errore nell'eliminare la directory in {0}. Errore: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Scarica video da Steam per i giochi selezionati</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Scarica micro video da Steam per i giochi selezionati</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Scarica loghi da Steam per i giochi selezionati</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Scarica loghi da SteamGridDB per i giochi selezionati</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Apri cartella metadata extra</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Elimina i loghi dei giochi selezionati</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">Elimina i video dei giochi selezionati</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">Elimina i micro video dei giochi selezionati</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">Seleziona il file video da impostare come video per il gioco selezionato</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">Scarica video da YouTube</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Impostazione video di gioco dal file video selezionato...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Loghi</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">Micro video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">Genera micro video dal video scaricato per i giochi selezionati</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Generazione di micro video da video...</sys:String>
+    
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Elabora i loghi dopo il download</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Ritaglia loghi</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Rimuove il bordo trasparente attorno all'immagine</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Ridimensiona</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Ridimensiona l'immagine mantenendo le proporzioni se supera una delle dimensioni configurate.
+Il ridimensionamento è raccomandato perché le immagini di grandi dimensioni possono causare un rallentamento di Playnite.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Larghezza max:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Altezza max:</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Process logos after downloading</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Trim Logos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Removes transparent border around image</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Resize down</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Resize down image preserving the aspect ratio if it exceeds any of the configured dimensions.
-Resizing down is recommended because large images can cause Playnite to slowdown.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Max width:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Max height:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Aggiornamento tag dello stato delle risorse aggiuntive dei metadati...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">Un tag verrà aggiunto a tutti i giochi nel database che mancano della risorsa specifica</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Aggiorna il tag che indica se a un gioco manca il logo nell'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Aggiorna il tag che indica se a un gioco manca il video nell'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Aggiorna il tag che indica se a un gioco manca il microvideo nell'aggiornamento della libreria</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">percorso ffmpeg:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">percorso ffprobe:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">percorso youtube-dlp:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">Percorso del file YouTube cookies.txt:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Configurarlo permette di scaricare video che sono limitati all'età</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">Aiuto</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">Sfoglia...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">Scarica pacchetto ffmpeg</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Scarica youtube-dlp</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">Accedi a YouTube</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">L'accesso permette di visualizzare i video con limiti di età nel sito della versione completa</sys:String>
+    
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Scarica video da Steam in alta definizione</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Updating tags of Extra Metadata assets status...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">A tag will be added to all games in database that are missing the specific asset</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Update tag that indicates if a game is missing logo on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Update tag that indicates if a game is missing video on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Update tag that indicates if a game is missing micro video on library update</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Seleziona video da scaricare</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Lista dei video:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Cerca</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">Scarica il video selezionato</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">Visualizza il video selezionato</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">Scarica il logo da Google per il gioco selezionato</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleLogoWindowDownloadTitle">Seleziona il logo da scaricare</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">Scarica il logo selezionato</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Cerca solo trasparente</sys:String>
 </ResourceDictionary>
