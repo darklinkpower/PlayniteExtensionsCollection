@@ -534,6 +534,18 @@ namespace ExtraMetadataLoader
         }
 
         [DontSerialize]
+        private bool steamDlOnlyProcessPcGames = true;
+        public bool SteamDlOnlyProcessPcGames
+        {
+            get => steamDlOnlyProcessPcGames;
+            set
+            {
+                steamDlOnlyProcessPcGames = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
         private string ffmpegPath = string.Empty;
         public string FfmpegPath
         {

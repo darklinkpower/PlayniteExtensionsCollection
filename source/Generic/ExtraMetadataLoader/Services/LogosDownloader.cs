@@ -48,13 +48,13 @@ namespace ExtraMetadataLoader.Services
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
-            else if (extraMetadataHelper.IsGamePcGame(game))
+            else if (!settings.SteamDlOnlyProcessPcGames || extraMetadataHelper.IsGamePcGame(game))
             {
                 steamId = extraMetadataHelper.GetSteamIdFromSearch(game, isBackgroundDownload);
             }
             else
             {
-                logger.Debug("Game is not a PC game");
+                logger.Debug("Game is not a PC game and execution is only allowed for PC games");
                 return false;
             }
 
