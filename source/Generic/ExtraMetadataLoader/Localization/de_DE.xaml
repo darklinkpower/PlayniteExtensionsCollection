@@ -113,7 +113,7 @@ Es wird empfohlen die Größe zu reduzieren, da große Bilder Playnite verlangsa
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Login in allows to view age restricted videos in the full version site</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Videos von Steam in hochauflösender Qualität herunterladen</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining from Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Video zum Herunterladen auswählen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Videoliste:</sys:String>
