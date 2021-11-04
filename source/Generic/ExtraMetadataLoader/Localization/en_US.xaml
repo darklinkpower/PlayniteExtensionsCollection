@@ -114,7 +114,7 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Login in allows to view age restricted videos in the full version site</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Download videos from Steam in High Definition quality</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining from Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Select video to download</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Videos list:</sys:String>
