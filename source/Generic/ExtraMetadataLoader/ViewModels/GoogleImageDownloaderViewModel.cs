@@ -158,18 +158,14 @@ namespace ExtraMetadataLoader.ViewModels
 
         public void DownloadSelectedImage()
         {
-            var success = false;
-            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
-            {
-                success = logosDownloader.DownloadGoogleImage(game, SelectedItem.ImageUrl, true);
-            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube")));
+            var success = logosDownloader.DownloadGoogleImage(game, SelectedItem.ImageUrl, true);
             if (success)
             {
                 PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
             }
             else
             {
-                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError"), "Extra Metadata Loader");
+                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError"), "Extra Metadata Loader");
             }
         }
     }
