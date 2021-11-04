@@ -226,16 +226,24 @@ namespace ExtraMetadataLoader.Services
             }
             else
             {
+                var gamesList = GetSteamGridDbSearchResults(game.Name);
+                // Try to see if there's an exact match, to not prompt the user unless needed
+                var matchingGameName = game.Name.GetMatchModifiedName();
+                var exactMatches = gamesList.Where(x => x.Name.GetMatchModifiedName() == matchingGameName);
                 if (isBackgroundDownload)
                 {
-                    var gamesList = GetSteamGridDbSearchResults(game.Name);
-                    if (gamesList.Count > 0)
+                    if (exactMatches?.ToList().Count > 0)
                     {
-                        return string.Format(sgdbLogoRequestIdUriTemplate, gamesList[0].Id.ToString());
+                        return string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString());
                     }
                 }
                 else
                 {
+                    if (exactMatches?.ToList().Count == 1)
+                    {
+                        return string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString());
+                    }
+
                     var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
                         new List<GenericItemOption>(),
                         (a) => GetSteamGridDbGenericItemOptions(a),
