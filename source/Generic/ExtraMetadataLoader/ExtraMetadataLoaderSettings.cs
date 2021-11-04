@@ -708,7 +708,7 @@ namespace ExtraMetadataLoader
         {
             get => new RelayCommand<object>((a) =>
             {
-                var filePath = playniteApi.Dialogs.SelectFile("youtube-dlp|yt-dlp.exe");
+                var filePath = playniteApi.Dialogs.SelectFile("yt-dlp|yt-dlp.exe");
                 if (!filePath.IsNullOrEmpty())
                 {
                     settings.YoutubeDlPath = filePath;
