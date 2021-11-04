@@ -56,7 +56,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Завантаження логотипів із SteamGridDB...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Завантаження відео з YouTube...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">Не вдалося завантажити відео з YouTube. Будь ласка, спробуйте інше відео.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from YouTube.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Не вдалося завантажити логотип з Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Завантаження логотипів нещодавно доданих ігор...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Завантаження відео нещодавно доданих ігор...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Готово.</sys:String>
