@@ -129,6 +129,25 @@ namespace ExtraMetadataLoader.Services
             }
         }
 
+        public bool DownloadGoogleImage(Game game, string imageUrl, bool overwrite)
+        {
+            logger.Debug($"DownloadGoogleImage starting for game {game.Name}");
+            var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
+            if (File.Exists(logoPath) && !overwrite)
+            {
+                logger.Debug("Logo exists and overwrite is set to false, skipping");
+                return true;
+            }
+
+            var success = HttpDownloader.DownloadFileAsync(imageUrl, logoPath).GetAwaiter().GetResult();
+            if (success && settings.ProcessLogosOnDownload)
+            {
+                ProcessLogoImage(logoPath);
+            }
+
+            return success;
+        }
+
         public bool DownloadSgdbLogo(Game game, bool overwrite, bool isBackgroundDownload)
         {
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);

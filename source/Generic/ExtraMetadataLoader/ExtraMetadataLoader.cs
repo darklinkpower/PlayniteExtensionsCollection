@@ -148,6 +148,15 @@ namespace ExtraMetadataLoader
                 },
                 new GameMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame"),
+                    MenuSection = $"Extra Metadata|{logosSection}",
+                    Action = _ =>
+                    {
+                        CreateGoogleWindow();
+                    }
+                },
+                new GameMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames"),
                     MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
@@ -282,7 +291,8 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
-                    Action = _ => {
+                    Action = _ =>
+                    {
                         foreach (var game in args.Games.Distinct())
                         {
                             extraMetadataHelper.DeleteGameVideo(game);
@@ -294,7 +304,8 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
-                    Action = _ => {
+                    Action = _ =>
+                    {
                         foreach (var game in args.Games.Distinct())
                         {
                             extraMetadataHelper.DeleteGameVideoMicro(game);
@@ -305,6 +316,25 @@ namespace ExtraMetadataLoader
             };
         }
 
+        private void CreateGoogleWindow()
+        {
+            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false
+            });
+
+            window.Height = 600;
+            window.Width = 840;
+            window.Title = ResourceProvider.GetString("LOCExtra_Metadata_Loader_GoogleLogoWindowDownloadTitle");
+
+            window.Content = new GoogleImageDownloaderView();
+            window.DataContext = new GoogleImageDownloaderViewModel(PlayniteApi, PlayniteApi.MainView.SelectedGames.Last(), logosDownloader);
+            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            window.ShowDialog();
+        }
+
         private void CreateYoutubeWindow()
         {
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
@@ -312,8 +342,8 @@ namespace ExtraMetadataLoader
                 ShowMinimizeButton = false
             });
 
-            window.Height = 650;
-            window.Width = 700;
+            window.Height = 600;
+            window.Width = 840;
             window.Title = ResourceProvider.GetString("LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle");
 
             window.Content = new YoutubeSearchView();
