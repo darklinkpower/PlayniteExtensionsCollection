@@ -65,8 +65,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Extra Metadata: застосунок ffmpeg не знайдено у заданому місці</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured">Extra Metadata: шлях до застосунку ffprobe не задано у налаштуваннях розширення</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Extra Metadata: застосунок ffprobe не знайдено у заданому місці</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: шлях до застосунку youtube-dlp не задано у налаштуваннях розширення</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: застосунок youtube-dlp не знайдено у заданому місці</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: шлях до застосунку yt-dlp не задано у налаштуваннях розширення</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: застосунок yt-dlp не знайдено у заданому місці</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: Помилка при видаленні файлу в {0}. Помилка: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: Помилка при видаленні теки в {0}. Помилка: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Завантажити відео зі Steam для вибраних ігор</sys:String>
@@ -102,18 +102,19 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Під час оновлення бібліотеки оновлювати тег, який вказує, що грі бракує мікро-відео</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">Шлях до ffmpeg:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">Шлях до ffprobe:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">Шлях до youtube-dlp:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">Шлях до yt-dlp:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">Шлях до файлу YouTube cookies.txt:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Налаштування дозволяє завантажувати відео, перегляд яких обмежено</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">Огляд...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">Завантажити пакет ffmpeg</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Завантажити youtube-dlp</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Завантажити yt-dlp</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">Увійти на YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Логін дозволяє переглядати обмежені віком відео на повноцінному сайті</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Завантажувати відео зі Steam у HD якості</sys:String>
-
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Обробляти ігри лише зі Steam або ПК ігри при отриманні метаданих від Steam</sys:String>
+    
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Виберіть відео для завантаження</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Список відео:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Пошук</sys:String>

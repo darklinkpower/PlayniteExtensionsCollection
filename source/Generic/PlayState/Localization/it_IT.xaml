@@ -4,8 +4,10 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Rimuove i giochi selezionati dalla blacklist di Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Aggiunto {0} gioco(i) alla blacklist di PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Rimossi {0} gioco(i) dalla blacklist di PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Sospeso</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Ripreso</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tempo di gioco sospeso</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tempo di gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Scorciatoia sospendi/riprendi configurata:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambia scorciatoia</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Premi il tasto di scelta rapida ora</sys:String>
@@ -13,4 +15,11 @@
 
 Il tasto di scelta rapida configurato non potrà essere utilizzato in altre applicazioni.
 La modifica di questa impostazione richiede il riavvio.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Sottrai il tempo in cui il gioco è stato sospeso dal tempo di gioco quando è stato interrotto</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aiuta a mantenere un valore di gioco più preciso nei giochi mantenendo solo il tempo in cui il gioco non è stato sospeso conteggio verso il tempo di gioco</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Esegui solo per i giochi che non sono gestiti dai plugin della libreria</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Sospendi solo il conteggio del tempo di gioco a livello globale e non i processi di gioco</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Abilitando questa opzione, tutti i giochi non saranno sospesi quando si utilizza il tasto di scelta rapida configurato e solo il tempo sarà conteggiato per substrato dal tempo di gioco quando si ferma.
+    
+Questo può anche essere applicato individualmente per ogni gioco aggiungendo una funzione chiamata &quot;[PlayState] Sospendi solo il tempo di gioco&quot; a un gioco</sys:String>
 </ResourceDictionary>

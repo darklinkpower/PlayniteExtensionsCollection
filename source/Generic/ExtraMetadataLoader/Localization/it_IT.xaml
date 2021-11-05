@@ -56,7 +56,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Scaricamento loghi da SteamGridDB...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Scaricamento video da YouTube...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">Impossibile scaricare il video da YouTube. Prova con un video diverso.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from Google.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Impossibile scaricare il logo da Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Scaricamento dei loghi dei nuovi giochi...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Scaricamento dei video dei nuovi giochi...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Fatto.</sys:String>
@@ -65,8 +65,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Metadati aggiuntivi: l'eseguibile ffmpeg non è stato trovato nella posizione configurata</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured">Metadati aggiuntivi: il percorso eseguibile ffprobe non è stato configurato nelle impostazioni di estensione</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Metadati aggiuntivi: l'eseguibile ffprobe non è stato trovato nella posizione configurata</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Metadati aggiuntivi: il percorso eseguibile youtube-dlp non è stato configurato nelle impostazioni dell'estensione</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Metadati aggiuntivi: l'eseguibile youtube-dlp non è stato trovato nella posizione configurata</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Metadati aggiuntivi: il percorso eseguibile yt-dlp non è stato configurato nelle impostazioni dell'estensione</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Metadati aggiuntivi: l'eseguibile yt-dlp non è stato trovato nella posizione configurata</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Metadati aggiuntivi: Errore nell'eliminazione del file in {0}. Errore: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Metadati aggiuntivi: Errore nell'eliminare la directory in {0}. Errore: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Scarica video da Steam per i giochi selezionati</sys:String>
@@ -102,18 +102,19 @@ Il ridimensionamento è raccomandato perché le immagini di grandi dimensioni po
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Aggiorna il tag che indica se a un gioco manca il microvideo nell'aggiornamento della libreria</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">percorso ffmpeg:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">percorso ffprobe:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">percorso youtube-dlp:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">percorso yt-dlp:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">Percorso del file YouTube cookies.txt:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Configurarlo permette di scaricare video che sono limitati all'età</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">Aiuto</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">Sfoglia...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">Scarica pacchetto ffmpeg</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Scarica youtube-dlp</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Scarica yt-dlp</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">Accedi a YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">L'accesso permette di visualizzare i video con limiti di età nel sito della versione completa</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Scarica video da Steam in alta definizione</sys:String>
-
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Elabora solo i giochi da Steam o che sono giochi per PC quando ottengono metadati da Steam</sys:String>
+    
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Seleziona video da scaricare</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Lista dei video:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Cerca</sys:String>
