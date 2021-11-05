@@ -55,3 +55,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/PlayState_2_7.pext
     Changelog:
     - Updated localizations
+  - Version: 2.8
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/PlayState_2_8.pext
+    Changelog:
+    - Updated localizations
+    - Added optional functionality to substract suspended time from game playtime after it is stopped
+    - Added optional functionality to only suspend playtime count when suspending the game. Game processes are not suspended with this suspension mode.
+    - 'Added optional functionality to force the suspend only playtime and not game processes for games that have a feature named "[PlayState] Suspend Playtime only"'
+    - Changed descriptions in suspend dialogs to reflect if game processes or only playtime count was suspended

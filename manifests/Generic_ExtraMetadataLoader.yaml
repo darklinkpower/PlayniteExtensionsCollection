@@ -138,3 +138,14 @@ Packages:
     - Added button in settings to login to youtube to allow viewing age restricted videos in the full version of the site when using the YouTube search window
     - Added menu item to search and download logos from Google
     - General fixes and improvements
+  - Version: 1.18
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_18.pext
+    Changelog:
+    - Updated localizations
+    - Fix using incorrect name of yt-dlp in texts and dialogs
+    - "Automatically redirect to full YouTube site version for videos that can't be viewed in the embedded player"
+    - Added option to configure if only Steam and PC games should be processed when obtaining metadata from Steam
+    - Improved automatic game matching when searching for logos from SteamGridDB
+    - Make certain processes cancelable in progress dialog
