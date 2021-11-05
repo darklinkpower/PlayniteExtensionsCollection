@@ -35,7 +35,7 @@ namespace PlayState
         private Window currentSplashWindow;
         private DispatcherTimer timer;
         private List<ProcessItem> gameProcesses;
-
+        private List<Tuple<Guid, Stopwatch>> stopwatchList;
         private PlayStateSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
@@ -49,6 +49,8 @@ namespace PlayState
                 HasSettings = true
             };
             SetExclusionList();
+
+            stopwatchList = new List<Tuple<Guid, Stopwatch>>();
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1000);
@@ -194,6 +196,10 @@ namespace PlayState
                             if (profile != null)
                             {
                                 gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
+                                if (gameProcesses.Count > 0)
+                                {
+                                    CreateGameStopwatchTuple(game);
+                                }
                             }
                         }
                         return;
@@ -212,6 +218,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0)
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
+                    CreateGameStopwatchTuple(game);
                     return;
                 }
 
@@ -239,6 +246,7 @@ namespace PlayState
                     if (gameProcesses.Count > 0)
                     {
                         logger.Debug($"Found {gameProcesses.Count} game processes");
+                        CreateGameStopwatchTuple(game);
                         return;
                     }
                     else
@@ -327,17 +335,22 @@ namespace PlayState
                 {
                     isSuspended = false;
                     ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                    stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
+                    logger.Debug($"Game {currentGame.Name} resumed");
                 }
                 else
                 {
                     isSuspended = true;
                     ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
+                    stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
+                    logger.Debug($"Game {currentGame.Name} suspended");
                 }
             }
             catch (Exception e)
             {
                 logger.Error(e, "Error while suspending or resuming game");
                 gameProcesses = null;
+                stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
             }
         }
 
@@ -412,7 +425,8 @@ namespace PlayState
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            if (currentGame != null && currentGame.Id == args.Game.Id)
+            var game = args.Game;
+            if (currentGame != null && currentGame.Id == game.Id)
             {
                 gameProcesses = null;
             }
@@ -420,6 +434,72 @@ namespace PlayState
             {
                 currentSplashWindow.Hide();
                 currentSplashWindow.Topmost = false;
+            }
+
+            if (settings.Settings.SubstractSuspendedPlaytimeOnStopped)
+            {
+                if (game.PluginId == Guid.Empty ||
+                    (game.PluginId != Guid.Empty && !settings.Settings.SubstractOnlyNonLibraryGames))
+                {
+                    Task.Run(async () =>
+                    {
+                        // Playnite updates the new game state, including PlayTime, after the OnGameStopped
+                        // event, so it is needed to wait some time for Playnite to update the game and
+                        // update the new playtime afterwards according to the new game item state.
+                        // It needs to be done this way until #2634 is done.
+                        var gameId = game.Id;
+                        await Task.Delay(10000);
+                        
+                        var updatedGame = PlayniteApi.Database.Games[gameId];
+                        var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == gameId)?.Item2.Elapsed;
+
+                        // Check if game still exists for safety, in case game was removed for any reason
+                        if (updatedGame != null && suspendedTime != null)
+                        {
+                            var elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
+                            logger.Debug($"Suspend elapsed seconds for game {updatedGame.Name} was {elapsedSeconds}");
+                            if (elapsedSeconds != 0)
+                            {
+                                var newPlaytime = updatedGame.Playtime > elapsedSeconds ? updatedGame.Playtime - elapsedSeconds : elapsedSeconds - updatedGame.Playtime;
+                                logger.Debug($"Old playtime {updatedGame.Playtime}, new playtime {newPlaytime}");
+                                updatedGame.Playtime = newPlaytime;
+                                PlayniteApi.Database.Games.Update(updatedGame);
+                            }
+                        }
+                        RemoveGameStopwatchTuple(updatedGame);
+                    });
+                }
+                else
+                {
+                    RemoveGameStopwatchTuple(game);
+                }
+            }
+            else
+            {
+                RemoveGameStopwatchTuple(game);
+            }
+        }
+
+        private void CreateGameStopwatchTuple(Game game)
+        {
+            if (stopwatchList.Any(x => x.Item1 == game.Id))
+            {
+                logger.Debug($"A stopwatch for game {game.Name} with id {game.Id} already exists");
+            }
+            else
+            {
+                stopwatchList.Add(new Tuple<Guid, Stopwatch>(game.Id, new Stopwatch()));
+                logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was created");
+            }
+        }
+
+        private void RemoveGameStopwatchTuple(Game game)
+        {
+            var tuple = stopwatchList.FirstOrDefault(x => x.Item1 == game.Id);
+            if (tuple != null)
+            {
+                stopwatchList.Remove(tuple);
+                logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was removed on game stopped");
             }
         }
 

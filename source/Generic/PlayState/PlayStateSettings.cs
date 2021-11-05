@@ -17,6 +17,12 @@ namespace PlayState
         [DontSerialize]
         public string HotkeyText { get => hotkeyText; set => SetValue(ref hotkeyText, value); }
         public Hotkey SavedHotkeyGesture { get; set; } = new Hotkey(Key.A, (ModifierKeys)5);
+        [DontSerialize]
+        public bool substractSuspendedPlaytimeOnStopped = false;
+        public bool SubstractSuspendedPlaytimeOnStopped { get => substractSuspendedPlaytimeOnStopped; set => SetValue(ref substractSuspendedPlaytimeOnStopped, value); }
+        [DontSerialize]
+        public bool substractOnlyNonLibraryGames = true;
+        public bool SubstractOnlyNonLibraryGames { get => substractOnlyNonLibraryGames; set => SetValue(ref substractOnlyNonLibraryGames, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
