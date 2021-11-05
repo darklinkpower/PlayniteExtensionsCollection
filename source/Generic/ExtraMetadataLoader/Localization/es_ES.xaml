@@ -113,7 +113,7 @@ Se recomienda reducir el tamaño porque las imágenes grandes pueden hacer que P
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Iniciar sesión permite ver videos on restrición en la versión completa del sitio</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Descargar videos de Steam en alta definición</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Solo procesar juegos de Steam o que son juegos de PC al obtener metadatos de Steam</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Selecciona el vídeo para descargar</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Lista de vídeos:</sys:String>
