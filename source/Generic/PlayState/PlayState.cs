@@ -36,6 +36,8 @@ namespace PlayState
         private DispatcherTimer timer;
         private List<ProcessItem> gameProcesses;
         private List<Tuple<Guid, Stopwatch>> stopwatchList;
+        private bool suspendPlaytimeOnly;
+
         private PlayStateSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
@@ -171,9 +173,22 @@ namespace PlayState
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             var game = args.Game;
-            if (game.Features != null && game.Features.Any(a => a.Name == "[PlayState] Blacklist"))
+            if (game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Blacklist", StringComparison.OrdinalIgnoreCase)))
             {
                 logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
+                return;
+            }
+
+            suspendPlaytimeOnly = false;
+            if (settings.Settings.SubstractSuspendedPlaytimeOnStopped &&
+                (settings.Settings.GlobalOnlySuspendPlaytime ||
+                game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase))))
+            {
+                suspendPlaytimeOnly = true;
+                currentGame = game;
+                splashWindowViewModel.GameName = currentGame.Name;
+                gameProcesses = null;
+                CreateGameStopwatchTuple(game);
                 return;
             }
 
@@ -308,42 +323,64 @@ namespace PlayState
 
         private void SwitchGameState()
         {
-            if (gameProcesses == null || gameProcesses.Count == 0)
+            if (currentGame == null)
             {
                 return;
             }
-            
+
             try
             {
-                foreach (var gameProcess in gameProcesses)
+                var processesSuspended = false;
+                if (gameProcesses != null && gameProcesses.Count > 0)
                 {
-                    if (gameProcess == null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
+                    foreach (var gameProcess in gameProcesses)
                     {
-                        return;
+                        if (gameProcess == null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
+                        {
+                            return;
+                        }
+                        if (isSuspended)
+                        {
+                            NtResumeProcess(gameProcess.Process.Handle);
+                        }
+                        else
+                        {
+                            NtSuspendProcess(gameProcess.Process.Handle);
+                        }
                     }
+                    processesSuspended = true;
+                }
+
+                if (processesSuspended || suspendPlaytimeOnly)
+                {
                     if (isSuspended)
                     {
-                        NtResumeProcess(gameProcess.Process.Handle);
+                        isSuspended = false;
+                        if (processesSuspended)
+                        {
+                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                        }
+                        else
+                        {
+                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
+                        }
+                        stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
+                        logger.Debug($"Game {currentGame.Name} resumed");
                     }
                     else
                     {
-                        NtSuspendProcess(gameProcess.Process.Handle);
+                        isSuspended = true;
+                        if (processesSuspended)
+                        {
+                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
+                        }
+                        else
+                        {
+                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
+                        }
+                        stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
+                        logger.Debug($"Game {currentGame.Name} suspended");
                     }
-                }
-
-                if (isSuspended)
-                {
-                    isSuspended = false;
-                    ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
-                    stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
-                    logger.Debug($"Game {currentGame.Name} resumed");
-                }
-                else
-                {
-                    isSuspended = true;
-                    ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
-                    stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
-                    logger.Debug($"Game {currentGame.Name} suspended");
                 }
             }
             catch (Exception e)

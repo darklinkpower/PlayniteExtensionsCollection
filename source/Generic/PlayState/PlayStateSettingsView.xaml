@@ -30,7 +30,10 @@
                   Margin="0,0,0,10"/>
         <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="40,0,0,10">
             <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
-                  IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
+                      IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
+            <CheckBox Content="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel}"
+                      ToolTip="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip}"
+                      IsChecked="{Binding Settings.GlobalOnlySuspendPlaytime}" Margin="0,0,0,10"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -13,16 +13,19 @@ namespace PlayState
     public class PlayStateSettings : ObservableObject
     {
         [DontSerialize]
-        public string hotkeyText = string.Empty;
+        private string hotkeyText = string.Empty;
         [DontSerialize]
         public string HotkeyText { get => hotkeyText; set => SetValue(ref hotkeyText, value); }
         public Hotkey SavedHotkeyGesture { get; set; } = new Hotkey(Key.A, (ModifierKeys)5);
         [DontSerialize]
-        public bool substractSuspendedPlaytimeOnStopped = false;
+        private bool substractSuspendedPlaytimeOnStopped = false;
         public bool SubstractSuspendedPlaytimeOnStopped { get => substractSuspendedPlaytimeOnStopped; set => SetValue(ref substractSuspendedPlaytimeOnStopped, value); }
         [DontSerialize]
-        public bool substractOnlyNonLibraryGames = true;
+        private bool substractOnlyNonLibraryGames = true;
         public bool SubstractOnlyNonLibraryGames { get => substractOnlyNonLibraryGames; set => SetValue(ref substractOnlyNonLibraryGames, value); }
+        [DontSerialize]
+        private bool globalOnlySuspendPlaytime = false;
+        public bool GlobalOnlySuspendPlaytime { get => globalOnlySuspendPlaytime; set => SetValue(ref globalOnlySuspendPlaytime, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
