@@ -4,10 +4,10 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Entferne ausgewählte Spiele von der Playstate Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">{0} Spiel(e) auf die PlayState Blacklist gesetzt.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">{0} Spiel(e) von der PlayState Blacklist entfernt.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Spiel unterbrochen</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Spiel fortgesetzt</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Spielzeit unterbrochen</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spielzeit fortgesetzt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfiguriertes Sperren/Fortsetzen Hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
@@ -15,11 +15,11 @@
 
 Konfigurierte Hotkeys können nicht in anderen Anwendungen verwendet werden.
 Die Änderung dieser Einstellung erfordert einen Neustart.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Only suspend playtime count globally and not the game processes</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Nur für Spiele ausführen, die nicht von Bibliothek Plugins verwaltet werden</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Nur die Anzahl der Spielzeiten global und nicht die Spielprozesse unterbrechen</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Wenn Sie diese Option aktivieren, werden nicht alle Spiele unterbrochen, wenn Sie den konfigurierten Hotkey verwenden und es wird nur die Zeit gezählt, die von der Spielzeit abgezogen wird, wenn das Spiel endet.
     
-This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game</sys:String>
+Dies kann auch individuell pro Spiel angewendet werden, indem eine Funktion namens &quot;[PlayState] Nur Spielzeit anhalten&quot; hinzugefügt wird. zu einem Spiel</sys:String>
 </ResourceDictionary>
