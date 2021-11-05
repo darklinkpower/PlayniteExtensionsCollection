@@ -149,3 +149,9 @@ Packages:
     - Added option to configure if only Steam and PC games should be processed when obtaining metadata from Steam
     - Improved automatic game matching when searching for logos from SteamGridDB
     - Make certain processes cancelable in progress dialog
+  - Version: 1.19
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_19.pext
+    Changelog:
+    - Fix detection of micro videos when adding tags not working correctly
