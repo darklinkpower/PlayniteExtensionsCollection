@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Eliminar los juegos seleccionados de la lista de ignorados</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Se añadieron {0} juego(s) a la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Se removieron {0} juego(s) de la lista de exclusión de PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Juego suspendido</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tiempo de juego suspendido</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tiempo de juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Tecla de suspensión/Reanudación configurada:</sys:String>
