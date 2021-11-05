@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Entferne ausgewählte Spiele von der Playstate Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">{0} Spiel(e) auf die PlayState Blacklist gesetzt.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">{0} Spiel(e) von der PlayState Blacklist entfernt.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Gesperrt</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Fortgesetzt</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfiguriertes Sperren/Fortsetzen Hotkey:</sys:String>
