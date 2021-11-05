@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Прибрати вибрані ігри з чорного списку Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Додано {0} ігор до чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Прибрано {0} ігор з чорного списку PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Заморожено</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Поновлено</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Налаштована гаряча клавіша заморозки/поновлення:</sys:String>
