@@ -509,7 +509,7 @@ namespace ExtraMetadataLoader
                         }
                         if (microvideoMissingTag != null)
                         {
-                            if (File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
+                            if (File.Exists(extraMetadataHelper.GetGameVideoMicroPath(game)))
                             {
                                 var tagRemoved = RemoveTag(game, microvideoMissingTag, false);
                                 if (tagRemoved)
