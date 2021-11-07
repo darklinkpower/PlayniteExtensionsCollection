@@ -1,7 +1,7 @@
 Id: Steam_Game_Importer
 Name: Steam Game Importer
 Author: darklinkpower
-Version: 2.4
+Version: 2.5
 Module: SteamGameImporter.psm1
 Type: Script
 Icon: icon.png

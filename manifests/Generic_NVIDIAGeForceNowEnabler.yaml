@@ -59,3 +59,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/NVIDIA_GeForce_Now_Enabler_2_8.pext
     Changelog:
     - Updated localizations
+  - Version: 2.9
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/NVIDIA_GeForce_Now_Enabler_2_9.pext
+    Changelog:
+    - Updated localizations

@@ -65,3 +65,11 @@ Packages:
     - Added optional functionality to only suspend playtime count when suspending the game. Game processes are not suspended with this suspension mode.
     - 'Added optional functionality to force the suspend only playtime and not game processes for games that have a feature named "[PlayState] Suspend Playtime only"'
     - Changed descriptions in suspend dialogs to reflect if game processes or only playtime count was suspended
+  - Version: 2.9
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/PlayState_2_9.pext
+    Changelog:
+    - Updated localizations
+    - Fix being able to save invalid hotkeys without modifiers in settings
+    - Add menu items to configure or remove configuration to force playtime suspend only of selected games
