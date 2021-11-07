@@ -549,7 +549,8 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToBlacklistDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        AddSelectedGamesToBlacklist();
+                        var featureAddedCount = AddFeatureToSelectedGames("[PlayState] Blacklist");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
                 new MainMenuItem
@@ -557,15 +558,34 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromBlacklistDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        RemoveSelectedGamesFromBlacklist();
+                        var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Blacklist");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToPlaytimeSuspendDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        var featureAddedCount = AddFeatureToSelectedGames("[PlayState] Suspend Playtime only");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Suspend Playtime only");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
+                    }
+                }
             };
         }
 
-        private void RemoveSelectedGamesFromBlacklist()
+        private int RemoveFeatureFromSelectedGames(string featureName)
         {
-            var feature = PlayniteApi.Database.Features.Add("[PlayState] Blacklist");
+            var feature = PlayniteApi.Database.Features.Add(featureName);
             int featureRemovedCount = 0;
             foreach (var game in PlayniteApi.MainView.SelectedGames)
             {
@@ -574,15 +594,15 @@ namespace PlayState
                     game.FeatureIds.Remove(feature.Id);
                     PlayniteApi.Database.Games.Update(game);
                     featureRemovedCount++;
-                    logger.Info(string.Format("Removed blacklist feature from \"{0}\"", game.Name));
+                    logger.Info(string.Format("Removed \"{0}\" feature from \"{1}\"", featureName, game.Name));
                 }
             }
-            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistRemovedResultsMessage"), featureRemovedCount), "PlayState");
+            return featureRemovedCount;
         }
 
-        public void AddSelectedGamesToBlacklist()
+        public int AddFeatureToSelectedGames(string featureName)
         {
-            var feature = PlayniteApi.Database.Features.Add("[PlayState] Blacklist");
+            var feature = PlayniteApi.Database.Features.Add(featureName);
             int featureAddedCount = 0;
             foreach (var game in PlayniteApi.MainView.SelectedGames)
             {
@@ -601,10 +621,9 @@ namespace PlayState
                 {
                     continue;
                 }
-                logger.Info(string.Format("Added blacklist feature to \"{0}\"", game.Name));
+                logger.Info(string.Format("Added \"{0}\" feature to \"{1}\"", featureName, game.Name));
             }
-
-            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistAddedResultsMessage"), featureAddedCount), "PlayState");
+            return featureAddedCount;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
