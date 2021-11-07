@@ -2,8 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Añadir los juegos seleccionados a la lista de ignorados</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Eliminar los juegos seleccionados de la lista de ignorados</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configura los juegos seleccionados para forzar que sólo suspendan el tiempo de juego</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Quitar configuración para forzar el suspender sólo el tiempo de juego</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Se añadieron {0} juego(s) a la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Se removieron {0} juego(s) de la lista de exclusión de PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">{0} juego(s) configurado(s) para forzar a suspender el tiempo de juego al usar la teclas configuradas.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Se ha eliminado la configuración para forzar a suspender el tiempo de juego al usar la teclas configuradaw de {0} juego(s).
+
+Los juegos se suspenderán cuando se utilice la teclas configuradas.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Juego suspendido</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tiempo de juego suspendido</sys:String>

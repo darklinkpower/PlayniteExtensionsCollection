@@ -2,10 +2,16 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Aggiungi i giochi selezionati alla blacklist della PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Rimuove i giochi selezionati dalla blacklist di Playstate</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Aggiunto {0} gioco(i) alla blacklist di PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Rimossi {0} gioco(i) dalla blacklist di PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
+
+Games will be suspended when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Gioco sospeso</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tempo di gioco sospeso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tempo di gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Scorciatoia sospendi/riprendi configurata:</sys:String>
