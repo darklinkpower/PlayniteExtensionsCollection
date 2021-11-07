@@ -34,7 +34,7 @@ function DepressurizerProfileImporter
         return
     }
     
-    $steamPluginId = [Playnite.SDK.BuiltinExtensions]::GetIdFromExtension([Playnite.SDK.BuiltinExtension]::SteamLibrary)
+    $steamPluginId = [guid]::Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")
     $source = $PlayniteApi.Database.Sources.Add("Steam")
     $platform = $PlayniteApi.Database.Platforms.Add("PC (Windows)")
     $platformsList = [System.Collections.Generic.List[guid]]($platform.Id)
@@ -45,26 +45,34 @@ function DepressurizerProfileImporter
 
     $addedGamesCount = 0
 
-    foreach ($Game in $DepressurizerXml.profile.games.game) {
+    foreach ($game in $DepressurizerXml.profile.games.game) {
         
-        if ($null -ne $steamGamesInLibrary[$Game.id])
+        if ($null -ne $steamGamesInLibrary[$game.id])
         {
             continue
         }
+        
+        $exclusionItem = $PlayniteApi.Database.ImportExclusions | Where-Object {($_.LibraryId -eq $steamPluginId) -and ($_.GameId -eq $gameid)}
+        if ($null -ne $exclusionItem)
+        {
+            $__logger.Info("Steam game with id $($game.id) is in exclusion list and will be skipped from Depressurizer import")
+            continue
+        }
+        
         # Non game steam apps have an id inferior to 0 in Depressurizer
-        if ([int]$Game.id -lt 0)
+        if ([int]$game.id -lt 0)
         {
             continue
         }
 
         # Set game properties and save to database
-        $NewGame = New-Object "Playnite.SDK.Models.Game"
-        $NewGame.Name = $Game.name
-        $NewGame.GameId = $Game.id
-        $NewGame.SourceId = $Source.Id
-        $NewGame.PlatformIds = $platformsList
-        $NewGame.PluginId = $steamPluginId
-        $PlayniteApi.Database.Games.Add($NewGame)
+        $newGame = New-Object "Playnite.SDK.Models.Game"
+        $newGame.Name = $game.name
+        $newGame.GameId = $game.id
+        $newGame.SourceId = $Source.Id
+        $newGame.PlatformIds = $platformsList
+        $newGame.PluginId = $steamPluginId
+        $PlayniteApi.Database.Games.Add($newGame)
         $addedGamesCount++
     }
 
@@ -75,8 +83,9 @@ function DepressurizerProfileImporter
 function Get-SteamGamesInLibrary
 {
     $steamGamesInLibrary = @{}
+    $steamPluginId = [guid]::Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")
     foreach ($game in $PlayniteApi.Database.Games) {
-        if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -ne [Playnite.SDK.BuiltinExtension]::SteamLibrary)
+        if ($game.PluginId -ne $steamPluginId)
         {
             continue
         }
