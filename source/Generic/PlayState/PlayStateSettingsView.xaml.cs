@@ -55,7 +55,7 @@ namespace PlayState
             }
 
             // Pressing delete, backspace or escape without modifiers clears the current value
-            if (modifiers == ModifierKeys.None &&
+            if (modifiers == ModifierKeys.None ||
                 (key == Key.Delete || key == Key.Back || key == Key.Escape))
             {
                 // Hotkey = null;

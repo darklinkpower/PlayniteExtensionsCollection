@@ -56,6 +56,14 @@ namespace PlayState
             if (savedSettings != null)
             {
                 Settings = savedSettings;
+                if (Settings.SavedHotkeyGesture.Modifiers == ModifierKeys.None)
+                {
+                    // Due to a bug in previous version that allowed 
+                    // to save gestures without modifiers, this
+                    // should be done to restore the default ModifierKeys
+                    Settings.SavedHotkeyGesture.Modifiers = (ModifierKeys)5;
+                    plugin.SavePluginSettings(Settings);
+                }
             }
             else
             {
