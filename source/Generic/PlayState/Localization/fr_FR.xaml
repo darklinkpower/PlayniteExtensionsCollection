@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Ajouter les jeux sélectionnés à la liste noire PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Retirer les jeux sélectionnés de la liste noire PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configurer les jeux sélectionnés pour forcer uniquement la suspension du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">{0} jeu(x) ajouté(s) à la liste noire PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">{0} jeu(x) retiré(s) de la liste noire PlayState.</sys:String>
