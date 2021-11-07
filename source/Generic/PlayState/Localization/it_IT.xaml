@@ -2,14 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Aggiungi i giochi selezionati alla blacklist della PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Rimuove i giochi selezionati dalla blacklist di Playstate</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configura i giochi selezionati per forzare la sospensione solo del tempo di riproduzione</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Rimuovi la configurazione per forzare la sospensione solo dell'ora di riproduzione</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Aggiunto {0} gioco(i) alla blacklist di PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Rimossi {0} gioco(i) dalla blacklist di PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configurato/i {0} gioco/i per forzare a sospendere solo il tempo di gioco quando si utilizza il tasto di scelta rapida configurato.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Rimossa la configurazione per forzare a sospendere solo il tempo di riproduzione quando si utilizza il tasto di scelta rapida configurato da {0} giochi(i).
 
-Games will be suspended when using the configured hotkey.</sys:String>
+I giochi verranno sospesi quando si utilizza il tasto di scelta rapida configurato.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Gioco sospeso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tempo di gioco sospeso</sys:String>
