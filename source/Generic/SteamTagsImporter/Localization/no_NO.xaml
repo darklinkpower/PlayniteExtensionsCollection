@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsDefaultDescription">Import Steam Tags for selected games (Maximum 5 tags)</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsAllDescription">Import Steam Tags for selected games (All available tags)</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsManualDescription">Import Steam Tags for selected games (Select maximum tags)</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsDefaultDescription">Importer Steam-tagger for valgte spill (maksimalt 5 tagger)</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsAllDescription">Importer Steam-tagger for valgte spill (maksimalt 5 tagger)</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsManualDescription">Importer Steam-tagger for valgte spill (velg maksimalt antall tagger)</sys:String>
 
-    <sys:String x:Key="LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_NoGamesSelectedMessage">No games selected</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Error downloading page &quot;{0}&quot;. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_TagsAddedResultsMessage">Added {0} tags to {1} game(s).</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage">Enter number of tags to download</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_InvalidInputErrorMessage">Invalid input</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage">Feil ved nedlasting av fil fra URL-en {0}. Feil: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_NoGamesSelectedMessage">Ingen spill er valgt</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Feil ved nedlasting av siden {0}. Feil: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_TagsAddedResultsMessage">La til {0} tagger til {1} spill.</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage">Velg antall tagger som skal lastes ned</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_InvalidInputErrorMessage">Ugyldig inndata</sys:String>
 </ResourceDictionary>
