@@ -9,6 +9,6 @@ Hentet data for {0} spill.
 Kunne ikke hente data for {1} spill.</sys:String>
     <sys:String x:Key="LOCSaveFileView_GenericFileDownloadErrorMessage">Feil ved nedlasting av fil fra URL-en {0}. Feil: {1}</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">Kunne ikke hente PCGamingWiki-side for {0}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">Couldn't obtain directories for game {0}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Directories not detected for {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">Kunne ikke hente mapper for {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Mapper ikke funnet for {0}</sys:String>
 </ResourceDictionary>
