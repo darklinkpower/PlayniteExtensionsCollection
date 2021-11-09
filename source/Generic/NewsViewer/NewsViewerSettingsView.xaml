@@ -12,5 +12,8 @@
                         TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
             <TextBlock Text="{Binding Settings.DescriptionMaxHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
         </StackPanel>
+        <CheckBox IsChecked="{Binding Settings.UseCompactWebNewsViewer}"
+                  Content="{DynamicResource LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription}"
+                  ToolTip="{DynamicResource LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip}" />
     </StackPanel>
 </UserControl>

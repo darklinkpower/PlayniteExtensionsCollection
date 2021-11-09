@@ -217,13 +217,57 @@ namespace NewsViewer.PluginControls
         {
             if (CurrentNewsNode != null)
             {
-                var linkChild = CurrentNewsNode.SelectSingleNode(@"link");
-                if (linkChild != null)
+                if (SettingsModel.Settings.UseCompactWebNewsViewer)
                 {
-                    var webView = PlayniteApi.WebViews.CreateView(1024, 700);
-                    webView.Navigate(linkChild.InnerText);
+                    var descriptionChild = CurrentNewsNode.SelectSingleNode(@"description");
+                    if (descriptionChild == null)
+                    {
+                        return;
+                    }
+                    var html = @"
+                    <head>
+                        <title>News Viewer</title>
+                        <meta charset=""UTF-8"">
+                        <style type=""text/css"">
+                            html,body
+                            {
+                                color: rgb(207, 210, 211);
+                                margin: 0;
+                                padding: 10;
+                                font-family: ""Arial"";
+                                font-size: 14px;
+                                background-color: rgb(51, 54, 60);
+                            }
+                            a {
+                                color: rgb(147, 179, 200);
+                                text-decoration: none;
+                            }
+                            img {
+                                max-width: 100%;
+                            }
+                        </style>
+                    </head>
+                    <body>";
+                    html += Regex.Replace(CurrentNewsNode.SelectSingleNode(@"pubDate")?.InnerText ?? "", @" \+\d+$", "") + "<br>";
+                    html += "<h1>" + (CurrentNewsNode.SelectSingleNode(@"title")?.InnerText ?? "") + "</h1>" + "<br>";
+                    html += descriptionChild.InnerText;
+                    html += @"</body>";
+
+                    var webView = PlayniteApi.WebViews.CreateView(650, 700);
+                    webView.Navigate("data:text/html," + html);
                     webView.OpenDialog();
                     webView.Dispose();
+                }
+                else
+                {
+                    var linkChild = CurrentNewsNode.SelectSingleNode(@"link");
+                    if (linkChild != null)
+                    {
+                        var webView = PlayniteApi.WebViews.CreateView(1024, 700);
+                        webView.Navigate(linkChild.InnerText);
+                        webView.OpenDialog();
+                        webView.Dispose();
+                    }
                 }
             }
         }
@@ -260,7 +304,7 @@ namespace NewsViewer.PluginControls
                 tokenSource.Cancel();
             }
 
-            if (newContext == null || newContext.PluginId != steamPluginId || IsControlInView.Tag.ToString() == "False")
+            if (newContext == null || newContext.PluginId != steamPluginId)
             {
                 timer.Stop();
             }

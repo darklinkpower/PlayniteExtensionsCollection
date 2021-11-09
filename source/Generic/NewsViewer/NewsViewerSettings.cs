@@ -15,6 +15,9 @@ namespace NewsViewer
         [DontSerialize]
         public bool ReviewsAvailable { get => reviewsAvailable; set => SetValue(ref reviewsAvailable, value); }
         [DontSerialize]
+        private bool useCompactWebNewsViewer = true;
+        public bool UseCompactWebNewsViewer { get => useCompactWebNewsViewer; set => SetValue(ref useCompactWebNewsViewer, value); }
+        [DontSerialize]
         private double descriptionMaxHeight { get; set; } = 220;
         public double DescriptionMaxHeight
         {

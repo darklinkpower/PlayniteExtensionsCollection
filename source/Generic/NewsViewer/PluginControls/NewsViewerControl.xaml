@@ -10,24 +10,6 @@
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
         </Grid.Resources>
-        <TextBlock x:Name="IsControlInView" Height="1" Width="1" Visibility="Collapsed">
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Tag" Value="True" />
-                    <Style.Triggers>
-                        <!--This trigger is because of issue https://github.com/JosefNemec/Playnite/issues/2326
-                        Currently views stay alive even if the view has been switched. This is to prevent the control from processing
-                        if it's not in the active view-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type LibraryDetailsView}}, Path=IsActive}" Value="False">
-                            <Setter Property="Tag" Value="False" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type LibraryGridView}}, Path=IsActive}" Value="False">
-                            <Setter Property="Tag" Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
         <StackPanel Visibility="{Binding ControlVisibility}">
             <DockPanel Margin="0,0,0,10">
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding SwitchNewsVisibility}">
