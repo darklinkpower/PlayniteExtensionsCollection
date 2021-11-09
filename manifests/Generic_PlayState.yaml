@@ -73,3 +73,9 @@ Packages:
     - Updated localizations
     - Fix being able to save invalid hotkeys without modifiers in settings
     - Add menu items to configure or remove configuration to force playtime suspend only of selected games
+  - Version: 2.10
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/PlayState_2_10.pext
+    Changelog:
+    - Updated localizations

@@ -37,3 +37,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_5.pext
     Changelog:
     - Updated localizations
+  - Version: 2.6
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_6.pext
+    Changelog:
+    - Updated localizations
