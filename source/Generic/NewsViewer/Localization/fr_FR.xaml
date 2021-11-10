@@ -2,8 +2,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Actualités Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Hauteur maximale des notes d'actualité</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Use compact news viewer when opening news in browser</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">If enabled, a compact news viewer will be used instead of the full news page version</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Open news</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">News</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Utiliser la visionneuse compacte lors de l'ouverture des actualités dans le navigateur</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">Si activé, une visionneuse compacte sera utilisée à la place de la version complète de la page d'actualité</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Ouvrir les actualités</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Actualités</sys:String>
 </ResourceDictionary>
