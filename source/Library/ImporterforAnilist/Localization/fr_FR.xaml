@@ -21,8 +21,8 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">Watching/Reading</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">Paused</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Dropped</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Completed</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Terminé</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Rewatching/Rereading</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">Could not obtain AniList username. Verify that the configured access code is valid</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">AniList access code has not been configured in the library settings</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">Impossible d'obtenir le nom d'utilisateur AniList. Vérifiez que le code d'accès configuré est valide</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">Le code d'accès AniList n'a pas été configuré dans les paramètres de la bibliothèque</sys:String>
 </ResourceDictionary>
