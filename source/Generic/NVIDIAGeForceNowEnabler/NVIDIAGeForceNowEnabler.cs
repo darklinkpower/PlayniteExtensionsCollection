@@ -180,7 +180,7 @@ namespace NVIDIAGeForceNowEnabler
                         }
                     }
                 }
-            }, new GlobalProgressOptions("Downloading NVIDIA GeForce Now database..."));
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_DownloadingDatabaseProgressMessage")));
 
             return supportedGames;
         }
