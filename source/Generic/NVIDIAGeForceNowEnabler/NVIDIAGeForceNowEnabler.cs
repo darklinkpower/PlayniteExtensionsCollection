@@ -141,6 +141,13 @@ namespace NVIDIAGeForceNowEnabler
             }
         }
 
+        private string SatinizeString(string str)
+        {
+            var satinizedString = str.Replace("Game of the Year Edition", "Game of the Year");
+            satinizedString = Regex.Replace(satinizedString, @"[^\p{L}\p{Nd}]", "").ToLower();
+            return satinizedString;
+        }
+
         public List<GeforceGame> DownloadGameList(bool showDialogs)
         {
             var supportedGames = new List<GeforceGame>();
@@ -158,7 +165,7 @@ namespace NVIDIAGeForceNowEnabler
                         {
                             foreach (var supportedGame in supportedGames)
                             {
-                                supportedGame.Title = Regex.Replace(supportedGame.Title, @"[^\p{L}\p{Nd}]", "").ToLower();
+                                supportedGame.Title = SatinizeString(supportedGame.Title);
                             }
                             File.WriteAllText(gfnDatabasePath, JsonConvert.SerializeObject(supportedGames));
                             supportedList = supportedGames;
@@ -228,30 +235,30 @@ namespace NVIDIAGeForceNowEnabler
                 var gameDatabase = GetGamesSupportedLibraries();
                 foreach (var game in gameDatabase)
                 {
-                    var gameName = Regex.Replace(game.Name, @"[^\p{L}\p{Nd}]", "").ToLower();
+                    var gameName = SatinizeString(game.Name);
                     GeforceGame supportedGame = null;
                     switch (game.PluginId.ToString())
                     {
                         case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
                             //Steam
                             var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
-                            supportedGame = supportedSteamGames.Where(g => g.SteamUrl == steamUrl).FirstOrDefault();
+                            supportedGame = supportedSteamGames.FirstOrDefault(g => g.SteamUrl == steamUrl);
                             break;
                         case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
                             //Epic
-                            supportedGame = supportedEpicGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            supportedGame = supportedEpicGames.FirstOrDefault(g => g.Title == gameName);
                             break;
                         case "85dd7072-2f20-4e76-a007-41035e390724":
                             //Origin
-                            supportedGame = supportedOriginGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            supportedGame = supportedOriginGames.FirstOrDefault(g => g.Title == gameName);
                             break;
                         case "c2f038e5-8b92-4877-91f1-da9094155fc5":
                             //Uplay
-                            supportedGame = supportedUplayGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            supportedGame = supportedUplayGames.FirstOrDefault(g => g.Title == gameName);
                             break;
                         case "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e":
                             //GOG
-                            supportedGame = supportedGogGames.Where(g => g.Title == gameName).FirstOrDefault();
+                            supportedGame = supportedGogGames.FirstOrDefault(g => g.Title == gameName);
                             break;
                         default:
                             break;
@@ -395,12 +402,12 @@ namespace NVIDIAGeForceNowEnabler
             GeforceGame supportedGame;
             if (storeName == "Steam")
             {
-                var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
+                var steamUrl = string.Format("https://store.steampowered.com/app/{0}", game.GameId);
                 supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.SteamUrl == steamUrl);
             }
             else
             {
-                var matchingName = Regex.Replace(game.Name, @"[^\p{L}\p{Nd}]", "").ToLower();
+                var matchingName = SatinizeString(game.Name);
                 supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.Title == matchingName);
             }
 
