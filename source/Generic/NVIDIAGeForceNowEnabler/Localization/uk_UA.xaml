@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Видалити дію Geforce NOW з усіх ігор</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Оновлення ігор сумісних з NVIDIA GeForce NOW...</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Downloading NVIDIA GeForce NOW database...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Завантаження бази даних NVIDIA GeForce NOW...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">Ігор сумісних з NVIDIA GeForce NOW в бібліотеці: {0}
 
 Додано особливість &quot;{1}&quot;до {2} ігор.
