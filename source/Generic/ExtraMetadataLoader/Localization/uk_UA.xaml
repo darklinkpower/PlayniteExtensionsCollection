@@ -45,7 +45,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">По центру</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Внизу</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo to download for {0}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Виберіть який логотип завантажити для {0}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Виберіть гру</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Виберіть варіант</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Перезаписати логотипи ігор, які вже їх мають?</sys:String>
@@ -125,5 +125,5 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">Завантажити вибраний логотип</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Тільки з прозорістю</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">Set logo from file for the selected game</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">Встановити логотип з файлу для вибраної гри</sys:String>
 </ResourceDictionary>
