@@ -77,12 +77,12 @@ function NVIDIAGameStreamExport
                 try {
                     $SourceCover = $PlayniteApi.Database.GetFullFilePath($game.CoverImage)
                     Add-Type -AssemblyName system.drawing
-                    $imageFormat = “System.Drawing.Imaging.ImageFormat” -as [type]
+                    $imageFormat = "System.Drawing.Imaging.ImageFormat" -as [type]
                     $image = [drawing.image]::FromFile($SourceCover)
                     $image.Save($NvidiaGameCoverPath, $imageFormat::png)
                 } catch {
                     $ErrorMessage = $_.Exception.Message
-                    $__logger.Info("NVIDIA GameStream Export - Error converting cover image of `"$($game.name)`". Error: $ErrorMessage")
+                    $__logger.Info("Error converting cover image of `"$($game.name)`". Error: $ErrorMessage")
                     $SourceCover = $null
                 }
             }
