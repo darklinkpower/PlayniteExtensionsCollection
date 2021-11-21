@@ -126,4 +126,6 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleLogoWindowDownloadTitle">Select logo to download</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">Download selected logo</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Search only transparent</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">Set logo from file for the selected game</sys:String>
 </ResourceDictionary>

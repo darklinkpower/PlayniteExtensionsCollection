@@ -1,4 +1,5 @@
-﻿using ExtraMetadataLoader.Helpers;
+﻿using ExtraMetadataLoader.Common;
+using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
 using ExtraMetadataLoader.Views;
@@ -161,6 +162,24 @@ namespace ExtraMetadataLoader
                     Action = _ =>
                     {
                         CreateGoogleWindow();
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile"),
+                    MenuSection = $"Extra Metadata|{logosSection}",
+                    Action = _ => {
+                        var game = args.Games.Last();
+                        var filePath = PlayniteApi.Dialogs.SelectFile("Logo|*.png");
+                        if (!filePath.IsNullOrEmpty())
+                        {
+                            var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
+                            if (settings.Settings.ProcessLogosOnDownload && IoHelper.MoveFile(filePath, logoPath, true))
+                            {
+                                logosDownloader.ProcessLogoImage(logoPath);
+                            }
+                            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
+                        }
                     }
                 },
                 new GameMenuItem

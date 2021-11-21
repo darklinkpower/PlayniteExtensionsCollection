@@ -74,7 +74,7 @@ namespace ExtraMetadataLoader.Services
             return success;
         }
 
-        private bool ProcessLogoImage(string logoPath)
+        public bool ProcessLogoImage(string logoPath)
         {
             try
             {
