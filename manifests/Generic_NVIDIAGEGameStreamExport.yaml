@@ -31,3 +31,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/NVIDIA_GE_GameStream_Export_2_4.pext
     Changelog:
     - Updated localizations
+  - Version: 2.5
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NVIDIA_GE_GameStream_Export_2_5.pext
+    Changelog:
+    - Fix error during image format conversion
+    - Minor fixes and improvements

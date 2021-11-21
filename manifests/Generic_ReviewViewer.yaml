@@ -83,3 +83,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_11.pext
     Changelog:
     - Updated localizations
+  - Version: 2.12
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_12.pext
+    Changelog:
+    - Updated localizations
+    - Fix some display data not properly updating on changes

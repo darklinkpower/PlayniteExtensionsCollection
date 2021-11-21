@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_0.pext
     Changelog:
     - Initial release
+  - Version: 1.1
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_1.pext
+    Changelog:
+    - Updated localizations
