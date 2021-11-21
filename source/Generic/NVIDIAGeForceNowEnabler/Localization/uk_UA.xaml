@@ -18,6 +18,7 @@
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Оновлювати статус сумісності ігор при запуску Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Оновлювати статус сумісності ігор при оновленні бібліотеки</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Показати дію для запуску в NVIDIA GeForce NOW для сумісних ігор, які не були встановлені їхніми бібліотеками</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Enabled games will always be marked as installed when this option is enabled.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Ігри без набору каталогів встановлення визначаються як не встановлені їхніми бібліотеками</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Запустити в Nvidia GeForce NOW</sys:String>
