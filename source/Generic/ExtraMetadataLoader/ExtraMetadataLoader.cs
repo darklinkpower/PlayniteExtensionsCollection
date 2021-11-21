@@ -364,10 +364,11 @@ namespace ExtraMetadataLoader
 
             window.Height = 600;
             window.Width = 840;
-            window.Title = ResourceProvider.GetString("LOCExtra_Metadata_Loader_GoogleLogoWindowDownloadTitle");
+            var game = PlayniteApi.MainView.SelectedGames.Last();
+            window.Title = string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"), game.Name);
 
             window.Content = new GoogleImageDownloaderView();
-            window.DataContext = new GoogleImageDownloaderViewModel(PlayniteApi, PlayniteApi.MainView.SelectedGames.Last(), logosDownloader);
+            window.DataContext = new GoogleImageDownloaderViewModel(PlayniteApi, game, logosDownloader);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 

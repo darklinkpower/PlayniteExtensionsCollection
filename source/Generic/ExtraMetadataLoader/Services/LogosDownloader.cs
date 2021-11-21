@@ -194,7 +194,7 @@ namespace ExtraMetadataLoader.Services
                             if (imageFileOptions.Count > 0)
                             {
                                 var selectedOption = playniteApi.Dialogs.ChooseImageFile(
-                                imageFileOptions, ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"));
+                                imageFileOptions, string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"), game.Name));
                                 if (selectedOption != null)
                                 {
                                     // Since the ImageFileOption dialog used the thumb url, the full resolution

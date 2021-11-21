@@ -46,7 +46,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">Center</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Bottom</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo to download for {0}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Select game</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Select option</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Overwrite logos of games that already have them?</sys:String>
@@ -123,7 +123,6 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">View selected video</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">Download logo from Google for the selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleLogoWindowDownloadTitle">Select logo to download</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">Download selected logo</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Search only transparent</sys:String>
 
