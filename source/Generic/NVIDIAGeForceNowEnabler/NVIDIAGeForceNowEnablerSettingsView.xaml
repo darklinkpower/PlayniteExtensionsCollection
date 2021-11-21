@@ -15,10 +15,12 @@
                   IsChecked="{Binding Settings.ExecuteOnLibraryUpdate}"
                   Content="{DynamicResource LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting}"/>
         <CheckBox DockPanel.Dock="Top"
-                  Margin="0,0,0,15"
+                  Margin="0,0,0,5"
                   IsChecked="{Binding Settings.ShowPlayActionsOnLaunch}"
                   Content="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting}"
                   ToolTip="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip}"/>
+        <TextBlock Margin="20,0,0,15"
+                   Text="{DynamicResource LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel}" />
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.SetEnabledGamesAsInstalled}"

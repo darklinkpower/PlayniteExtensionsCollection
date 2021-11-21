@@ -266,8 +266,7 @@ namespace NVIDIAGeForceNowEnabler
 
                     if (supportedGame == null)
                     {
-                        bool featureRemoved = RemoveFeature(game, feature);
-                        if (featureRemoved == true)
+                        if (RemoveFeature(game, feature))
                         {
                             featureRemovedCount++;
                             logger.Info(string.Format("Feature removed from \"{0}\"", game.Name));
@@ -284,13 +283,13 @@ namespace NVIDIAGeForceNowEnabler
                     else
                     {
                         enabledGamesCount++;
-                        bool featureAdded = AddFeature(game, feature);
-                        if (featureAdded == true)
+                        if (AddFeature(game, feature))
                         {
                             featureAddedCount++;
                             logger.Info(string.Format("Feature added to \"{0}\"", game.Name));
                         }
-                        if (settings.Settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == false)
+                        if ((settings.Settings.SetEnabledGamesAsInstalled || settings.Settings.ShowPlayActionsOnLaunch)
+                            && game.IsInstalled == false)
                         {
                             game.IsInstalled = true;
                             setAsInstalledCount++;
@@ -336,7 +335,8 @@ namespace NVIDIAGeForceNowEnabler
                     logger.Info(string.Format("Play Action removed from \"{0}\"", game.Name));
                 }
             }
-            string results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_GameActionsRemoveResultsMessage"), playActionRemovedCount);
+
+            var results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_GameActionsRemoveResultsMessage"), playActionRemovedCount);
             PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
         }
 
@@ -349,7 +349,7 @@ namespace NVIDIAGeForceNowEnabler
             
             if (supportedList.Count == 0)
             {
-                logger.Debug("Supported list was no set");
+                logger.Debug("Supported list was not set");
                 return null;
             }
 
@@ -360,6 +360,10 @@ namespace NVIDIAGeForceNowEnabler
             }
 
             var game = args.Game;
+
+            // Library plugins set the game installation directory when they are
+            // detected as installed. This is used to detect this and not show the Play
+            // Action if it is detected as installed by the game library plugin.
             if (!string.IsNullOrEmpty(game.InstallDirectory))
             {
                 logger.Debug("Game install dir was not empty and was skipped");
