@@ -14,7 +14,7 @@
             <StackPanel DockPanel.Dock="Left" Margin="0,0,0,10">
                 <StackPanel Orientation="Horizontal" >
                     <Viewbox Stretch="Uniform" Height="50" VerticalAlignment="Center"
-                             Visibility="{Binding SelectedReview.VotedUp, Converter={StaticResource BooleanToVisibilityConverter}}">
+                             Visibility="{Binding ThumbsUpVisibility}">
                         <Canvas Width="256" Height="256" Canvas.Left="0" Canvas.Top="0">
                             <Canvas.Background>
                                 <RadialGradientBrush GradientOrigin="0.06,0.08" Center="0.5, 0.5"
@@ -39,7 +39,7 @@
                     </Viewbox>
 
                     <Viewbox Stretch="Uniform" Height="50" VerticalAlignment="Center" RenderTransformOrigin="0.5, 0.5"
-                             Visibility="{Binding SelectedReview.VotedUp, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                             Visibility="{Binding ThumbsDownVisibility}">
                         <Viewbox.RenderTransform>
                             <ScaleTransform ScaleX="-1" />
                         </Viewbox.RenderTransform>
@@ -69,9 +69,9 @@
 
                     <StackPanel Margin="10,0,0,0">
                         <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewRecommendedLabel}"
-                                   Visibility="{Binding SelectedReview.VotedUp, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                   Visibility="{Binding ThumbsUpVisibility}" />
                         <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewNotRecommendedLabel}"
-                                   Visibility="{Binding SelectedReview.VotedUp, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                                   Visibility="{Binding ThumbsDownVisibility}" />
                         <TextBlock Text="{Binding FormattedPlaytime}" Opacity="0.75" />
                         <TextBlock Text="{Binding TotalFormattedPlaytime}" Opacity="0.75" />
                     </StackPanel>
@@ -82,7 +82,7 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" MinWidth="40">
                     <TextBlock Text="{Binding SelectedReviewDisplayIndex}" Margin="0" VerticalAlignment="Center"/>
                     <TextBlock Text="/" Margin="0" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Reviews.QuerySummary.NumReviews}" Margin="0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding TotalReviewsAvailable}" Margin="0" VerticalAlignment="Center"/>
                 </StackPanel>
                 <Button DockPanel.Dock="Right" Background="Transparent" BorderThickness="0" Content="&#xEAC9;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
                             Command="{Binding PreviousReviewCommand}" Margin="10,0,0,0" Padding="0" VerticalAlignment="Center" />
@@ -90,7 +90,7 @@
                             Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
-                <TextBlock Text="{Binding SelectedReview.ReviewReview}" TextWrapping="Wrap" Opacity="0.75"/>
+                <TextBlock Text="{Binding SelectedReviewText}" TextWrapping="Wrap" Opacity="0.75"/>
             </ScrollViewer>
             <StackPanel Margin="0,0,0,10" Visibility="{Binding SettingsModel.Settings.DisplayHelpfulnessData, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <TextBlock Text="{Binding ReviewHelpfulnessHelpful}" Opacity="0.75" />

@@ -47,6 +47,27 @@ namespace ReviewViewer.Controls
 
         public enum ReviewSearchType { All, Positive, Negative };
 
+        private Visibility thumbsUpVisibility = Visibility.Collapsed;
+        public Visibility ThumbsUpVisibility
+        {
+            get => thumbsUpVisibility;
+            set
+            {
+                thumbsUpVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility thumbsDownVisibility = Visibility.Collapsed;
+        public Visibility ThumbsDownVisibility
+        {
+            get => thumbsDownVisibility;
+            set
+            {
+                thumbsDownVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         private Visibility mainPanelVisibility = Visibility.Collapsed;
         public Visibility MainPanelVisibility
@@ -114,6 +135,17 @@ namespace ReviewViewer.Controls
             }
         }
 
+        private string selectedReviewText;
+        public string SelectedReviewText
+        {
+            get => selectedReviewText;
+            set
+            {
+                selectedReviewText = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string formattedPlaytime;
         public string FormattedPlaytime
         {
@@ -171,6 +203,17 @@ namespace ReviewViewer.Controls
             }
         }
 
+        private long totalReviewsAvailable = 0;
+        public long TotalReviewsAvailable
+        {
+            get => totalReviewsAvailable;
+            set
+            {
+                totalReviewsAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void SetReviewInfo()
         {
             var time = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeAtReview);
@@ -190,6 +233,21 @@ namespace ReviewViewer.Controls
             set
             {
                 selectedReview = value;
+                ThumbsUpVisibility = Visibility.Collapsed;
+                ThumbsDownVisibility = Visibility.Collapsed;
+                if (selectedReview != null)
+                {
+                    if (selectedReview.VotedUp)
+                    {
+                        ThumbsUpVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ThumbsDownVisibility = Visibility.Visible;
+                    }
+                    SelectedReviewText = SelectedReview.ReviewReview;
+                }
+
                 OnPropertyChanged();
             }
         }
@@ -204,16 +262,13 @@ namespace ReviewViewer.Controls
 
         void NextReview()
         {
-            if ((Reviews.QuerySummary.NumReviews - 1) == selectedReviewIndex)
+            if (selectedReviewIndex == (Reviews.QuerySummary.NumReviews - 1))
             {
-                SelectedReview = reviews.Reviews[0];
                 SelectedReviewIndex = 0;
             }
             else
             {
-                var newIndex = selectedReviewIndex + 1;
-                SelectedReview = reviews.Reviews[newIndex];
-                SelectedReviewIndex = newIndex;
+                SelectedReviewIndex = selectedReviewIndex + 1;
             }
             SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
         }
@@ -230,15 +285,11 @@ namespace ReviewViewer.Controls
         {
             if (selectedReviewIndex == 0)
             {
-                var newIndex = Reviews.QuerySummary.NumReviews - 1;
-                SelectedReview = reviews.Reviews[newIndex];
-                SelectedReviewIndex = Convert.ToInt32(newIndex);
+                SelectedReviewIndex = Convert.ToInt32(Reviews.QuerySummary.NumReviews - 1);
             }
             else
             {
-                var newIndex = selectedReviewIndex - 1;
-                SelectedReview = reviews.Reviews[newIndex];
-                SelectedReviewIndex = newIndex;
+                SelectedReviewIndex = selectedReviewIndex - 1;
             }
             SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
         }
@@ -304,12 +355,28 @@ namespace ReviewViewer.Controls
             DataContext = this;
         }
 
+        private void ResetBindingValues()
+        {
+            ThumbsUpVisibility = Visibility.Collapsed;
+            ThumbsDownVisibility = Visibility.Collapsed;
+            MainPanelVisibility = Visibility.Collapsed;
+            multipleReviewsAvailable = false;
+            SelectedReviewDisplayIndex = 0;
+            TotalReviewsAvailable = 0;
+            FormattedPlaytime = string.Empty;
+            TotalFormattedPlaytime = string.Empty;
+            SelectedReviewText = string.Empty;
+            ReviewHelpfulnessHelpful = string.Empty;
+            ReviewHelpfulnessFunny = string.Empty;
+            CalculatedScore = "-";
+        }
+
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             currentSteamId = null;
-            multipleReviewsAvailable = false;
             if (newContext == null)
             {
+                ResetBindingValues();
                 return;
             }
 
@@ -319,6 +386,8 @@ namespace ReviewViewer.Controls
 
         public void UpdateReviewsContext()
         {
+            ResetBindingValues();
+
             string reviewSearchType;
             switch (selectedReviewSearch)
             {
@@ -338,7 +407,6 @@ namespace ReviewViewer.Controls
             {
                 if (!SettingsModel.Settings.DownloadDataOnGameSelection)
                 {
-                    MainPanelVisibility = Visibility.Collapsed;
                     return;
                 }
                 
@@ -367,7 +435,6 @@ namespace ReviewViewer.Controls
                 }
             }
 
-            MainPanelVisibility = Visibility.Visible;
             try
             {
                 Reviews = JsonConvert.DeserializeObject<ReviewsResponse>(File.ReadAllText(gameDataPath));
@@ -389,7 +456,6 @@ namespace ReviewViewer.Controls
                 logger.Error(e, $"Error obtaining reviews number for file {gameDataPath}. Error: {e.Message}.");
             }
 
-            multipleReviewsAvailable = false;
             if (Reviews.QuerySummary.NumReviews > 1)
             {
                 multipleReviewsAvailable = true;
@@ -397,7 +463,9 @@ namespace ReviewViewer.Controls
 
             SelectedReviewIndex = 0;
             SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
+            TotalReviewsAvailable = Reviews.QuerySummary.NumReviews;
             CalculateUserScore();
+            MainPanelVisibility = Visibility.Visible;
         }
 
         private void GetSteamIdFromLinks(Game game)
