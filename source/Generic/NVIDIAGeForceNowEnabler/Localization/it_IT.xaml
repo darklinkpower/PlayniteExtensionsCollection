@@ -4,7 +4,7 @@
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Rimuovi l'azione di gioco Geforce NOW da tutti i giochi</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Aggiornamento dei giochi abilitati a NVIDIA GeForce NOW...</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Downloading NVIDIA GeForce NOW database...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Scaricamento del database NVIDIA GeForce NOW...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">Giochi abilitati a NVIDIA GeForce nella libreria: {0}
 
 Aggiunta la funzione &quot;{1}&quot; a {2} giochi.
