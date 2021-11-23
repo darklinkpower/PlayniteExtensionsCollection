@@ -174,7 +174,8 @@ namespace ExtraMetadataLoader
                         if (!filePath.IsNullOrEmpty())
                         {
                             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
-                            if (settings.Settings.ProcessLogosOnDownload && IoHelper.MoveFile(filePath, logoPath, true))
+                            var fileCopied = IoHelper.MoveFile(filePath, logoPath, true);
+                            if (settings.Settings.ProcessLogosOnDownload && fileCopied)
                             {
                                 logosDownloader.ProcessLogoImage(logoPath);
                             }
