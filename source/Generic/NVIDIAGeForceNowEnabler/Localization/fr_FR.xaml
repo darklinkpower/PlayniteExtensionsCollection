@@ -18,7 +18,7 @@ Définir {1} jeux comme désinstallés.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Mettre à jour le statut des jeux au démarrage de Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Mettre à jour le statut des jeux lors de la mise à jour de la bibliothèque</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Afficher l'action Lancer avec NVIDIA GeForce NOW pour les jeux compatibles qui n'ont pas été installés par leurs bibliothèques</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Enabled games will always be marked as installed when this option is enabled.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Les jeux activés seront toujours marqués comme installés lorsque cette option est activée.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Les jeux sans répertoire d'installation sont détectés comme non installés par leurs bibliothèques</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Définir les jeux activés comme installés lors de la mise à jour de l'état des jeux</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Lancer avec Nvidia GeForce NOW</sys:String>
