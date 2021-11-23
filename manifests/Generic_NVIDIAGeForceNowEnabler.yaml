@@ -73,3 +73,9 @@ Packages:
     - Updated localizations
     - Improve game matching of certain games with database
     - Always mark games as installed when option to show Play Actions is enabled
+  - Version: 2.11
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-11-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NVIDIA_GeForce_Now_Enabler_2_11.pext
+    Changelog:
+    - Updated localizations
