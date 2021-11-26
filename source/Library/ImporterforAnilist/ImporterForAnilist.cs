@@ -117,7 +117,11 @@ namespace ImporterforAnilist
                 tags.Add(new MetadataNameProperty(string.Format("{0}Season: {1}", settings.Settings.PropertiesPrefix, entry.Media.Season.ToString())));
             }
             tags.Add(new MetadataNameProperty(string.Format("{0}Status: {1}", settings.Settings.PropertiesPrefix, entry.Media.Status.ToString())));
-            tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", settings.Settings.PropertiesPrefix, entry.Media.Format.ToString())));
+            if (entry.Media.Format != null)
+            {
+                tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", settings.Settings.PropertiesPrefix, entry.Media.Format.ToString())));
+            }
+            
             game.Tags = tags;
 
             switch (entry.Status)

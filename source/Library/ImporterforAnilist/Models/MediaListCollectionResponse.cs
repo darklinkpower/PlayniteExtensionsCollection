@@ -72,7 +72,7 @@ namespace ImporterforAnilist.Models
         public TypeEnum Type { get; set; }
 
         [JsonProperty("format")]
-        public Format Format { get; set; }
+        public Format? Format { get; set; }
 
         [JsonProperty("episodes")]
         public int? Episodes { get; set; }
