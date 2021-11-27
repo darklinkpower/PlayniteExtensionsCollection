@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGame_Engine_Checker_MenuItemAddTagSelectedGamesDescription">Füge Spiele-Engine Schlagwort zu ausgewählten Spielen hinzu</sys:String>
+    <sys:String x:Key="LOCGame_Engine_Checker_MenuItemAddTagSelectedGamesDescription">Spiele Engine Tag zu ausgewähltem(n) Spiel(en) hinzufügen</sys:String>
     <sys:String x:Key="LOCGame_Engine_Checker_PcgwDownloadErrorMessage">Spieleinformation zu &quot;{0}&quot; konnte nicht von PCGW heruntergeladen werden. Fehler: {1}</sys:String>
-    <sys:String x:Key="LOCGame_Engine_Checker_ResultsMessage" xml:space="preserve">Engine-Schlagwort zu {0} Spiel(en) hinzugefügt.</sys:String>
-    <sys:String x:Key="LOCGame_Engine_Checker_SteamAppListDownloadErrorMessage">Fehler beim Herunterladen der Steam AppList Datenbank. Error:{0}</sys:String>
+    <sys:String x:Key="LOCGame_Engine_Checker_ResultsMessage" xml:space="preserve">Engine Tag zu {0} Spiel(en) hinzugefügt.</sys:String>
+    <sys:String x:Key="LOCGame_Engine_Checker_SteamAppListDownloadErrorMessage">Fehler beim Herunterladen der Steam AppList Datenbank. Fehler:{0}</sys:String>
 </ResourceDictionary>
