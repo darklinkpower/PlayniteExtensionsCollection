@@ -122,6 +122,7 @@ namespace NewsViewer.PluginControls
         private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         const string steamRssTemplate = @"https://store.steampowered.com/feeds/news/app/{0}/l={1}";
         private readonly string steamLanguage;
+        private readonly DesktopView ActiveViewAtCreation;
         private Visibility controlVisibility = Visibility.Collapsed;
         public Visibility ControlVisibility
         {
@@ -282,6 +283,11 @@ namespace NewsViewer.PluginControls
             client.Headers.Add(HttpRequestHeader.Accept, "text/xml");
             client.Encoding = Encoding.UTF8;
             this.steamLanguage = steamLanguage;
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
+            }
+
             DataContext = this;
 
             timer = new DispatcherTimer();
@@ -291,6 +297,17 @@ namespace NewsViewer.PluginControls
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
+            //The GameContextChanged method is rised even when the control
+            //is not in the active view. To prevent unecessary processing we
+            //can stop processing if the active view is not the same one was
+            //the one during creation
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
+                ActiveViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
+            {
+                timer.Stop();
+                return;
+            }
+
             currentGame = newContext;
             newsNodes = null;
             multipleNewsAvailable = false;
