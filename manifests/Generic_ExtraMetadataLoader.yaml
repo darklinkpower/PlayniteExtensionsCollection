@@ -176,3 +176,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix setting logo from file not working if processing of logos is disabled
+  - Version: 1.23
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-11-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_23.pext
+    Changelog:
+    - Optimize extension controls processing by stopping execution if control is not in current active view in Playnite

@@ -90,3 +90,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix some display data not properly updating on changes
+  - Version: 2.13
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-11-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_13.pext
+    Changelog:
+    - Optimize extension controls processing by stopping execution if control is not in current active view in Playnite

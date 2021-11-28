@@ -12,3 +12,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_1.pext
     Changelog:
     - Updated localizations
+  - Version: 1.2
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-11-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_2.pext
+    Changelog:
+    - Optimize extension controls processing by stopping execution if control is not in current active view in Playnite
+    - Added icon
