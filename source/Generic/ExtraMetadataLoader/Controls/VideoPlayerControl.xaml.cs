@@ -40,6 +40,7 @@ namespace ExtraMetadataLoader
         
         private bool useMicrovideosSource;
         private readonly string pluginDataPath;
+        private readonly DesktopView ActiveViewAtCreation;
         private ActiveVideoType activeVideoType;
         private bool isDragging;
         private Uri microVideoPath;
@@ -111,6 +112,10 @@ namespace ExtraMetadataLoader
             if (settings.Settings.StartNoSound)
             {
                 player.Volume = 0;
+            }
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
             volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             timer = new DispatcherTimer();
@@ -278,6 +283,17 @@ namespace ExtraMetadataLoader
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
+            //The GameContextChanged method is rised even when the control
+            //is not in the active view. To prevent unecessary processing we
+            //can stop processing if the active view is not the same one was
+            //the one during creation
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
+                ActiveViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
+            {
+                VideoSource = null;
+                return;
+            }
+
             ResetPlayerValues();
             currentGame = null;
             if (SettingsModel.Settings.EnableVideoPlayer && newContext != null)

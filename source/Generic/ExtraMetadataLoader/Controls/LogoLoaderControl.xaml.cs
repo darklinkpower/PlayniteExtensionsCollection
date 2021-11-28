@@ -54,16 +54,32 @@ namespace ExtraMetadataLoader
             }
         }
 
+        public DesktopView ActiveViewAtCreation { get; }
+
         public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
             SettingsModel = settings;
             DataContext = this;
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
+            }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
+            //The GameContextChanged method is rised even when the control
+            //is not in the active view. To prevent unecessary processing we
+            //can stop processing if the active view is not the same one was
+            //the one during creation
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
+                ActiveViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
+            {
+                return;
+            }
+
             LogoSource = null;
             SettingsModel.Settings.IsLogoAvailable = false;
             
