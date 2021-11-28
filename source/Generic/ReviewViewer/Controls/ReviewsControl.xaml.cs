@@ -39,6 +39,7 @@ namespace ReviewViewer.Controls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
+        private readonly DesktopView ActiveViewAtCreation;
         IPlayniteAPI PlayniteApi;
         public ReviewViewerSettingsViewModel SettingsModel { get; }
         
@@ -342,9 +343,10 @@ namespace ReviewViewer.Controls
             Task.Run(() => UpdateReviewsContext());
         }
 
-        public ReviewsControl(string pluginUserDataPath, string steamApiLanguage, ReviewViewerSettingsViewModel settings)
+        public ReviewsControl(string pluginUserDataPath, string steamApiLanguage, ReviewViewerSettingsViewModel settings, IPlayniteAPI playniteApi)
         {
             InitializeComponent();
+            this.PlayniteApi = playniteApi;
             SettingsModel = settings;
             client = new HttpClient();
             client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -353,6 +355,10 @@ namespace ReviewViewer.Controls
             this.pluginUserDataPath = pluginUserDataPath;
             this.steamApiLanguage = steamApiLanguage;
             DataContext = this;
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
+            }
         }
 
         private void ResetBindingValues()
@@ -373,6 +379,16 @@ namespace ReviewViewer.Controls
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
+            //The GameContextChanged method is rised even when the control
+            //is not in the active view. To prevent unecessary processing we
+            //can stop processing if the active view is not the same one was
+            //the one during creation
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
+                ActiveViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
+            {
+                return;
+            }
+
             currentSteamId = null;
             if (newContext == null)
             {

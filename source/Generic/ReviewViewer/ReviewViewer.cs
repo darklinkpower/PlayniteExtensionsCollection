@@ -134,7 +134,7 @@ namespace ReviewViewer
         {
             if (args.Name == "ReviewsControl")
             {
-                return new ReviewsControl(GetPluginUserDataPath(), steamApiLanguage, settings);
+                return new ReviewsControl(GetPluginUserDataPath(), steamApiLanguage, settings, PlayniteApi);
             }
 
             return null;
