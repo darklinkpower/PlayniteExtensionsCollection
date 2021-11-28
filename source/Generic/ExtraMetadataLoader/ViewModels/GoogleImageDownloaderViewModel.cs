@@ -114,7 +114,6 @@ namespace ExtraMetadataLoader.ViewModels
             var images = new List<GoogleImage>();
             var webViewSettings = new WebViewSettings
             {
-                CacheEnabled = false,
                 JavaScriptEnabled = true
             };
 
