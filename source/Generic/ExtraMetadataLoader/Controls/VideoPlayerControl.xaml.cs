@@ -172,7 +172,7 @@ namespace ExtraMetadataLoader
             }, (a) => SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
         }
 
-        void MediaPause()
+        public void MediaPause()
         {
             player.Pause();
             timer.Stop();
@@ -264,7 +264,7 @@ namespace ExtraMetadataLoader
             }
         }
 
-        private void ResetPlayerValues()
+        public void ResetPlayerValues()
         {
             VideoSource = null;
             SettingsModel.Settings.IsVideoPlaying = false;
@@ -294,21 +294,31 @@ namespace ExtraMetadataLoader
                 return;
             }
 
-            ResetPlayerValues();
             currentGame = null;
-            if (SettingsModel.Settings.EnableVideoPlayer && newContext != null)
+            if (newContext != null)
             {
                 currentGame = newContext;
-                UpdateGameVideoSources();
-                playingContextChanged();
-                return;
             }
 
-            ControlVisibility = Visibility.Collapsed;
-            SettingsModel.Settings.NewContextVideoAvailable = false;
+            RefreshPlayer();
         }
 
-        public void playingContextChanged()
+        public void RefreshPlayer()
+        {
+            ResetPlayerValues();
+            if (SettingsModel.Settings.EnableVideoPlayer && currentGame != null)
+            {
+                UpdateGameVideoSources();
+                playingContextChanged();
+            }
+            else
+            {
+                ControlVisibility = Visibility.Collapsed;
+                SettingsModel.Settings.NewContextVideoAvailable = false;
+            }
+        }
+
+        private void playingContextChanged()
         {
             if (videoSource == null)
             {
@@ -390,19 +400,6 @@ namespace ExtraMetadataLoader
                                 SettingsModel.Settings.IsAnyVideoAvailable = true;
                                 SettingsModel.Settings.IsTrailerAvailable = true;
                             }
-
-                            // Checking if micro videos exist takes too long
-                            // and some videos have issues playing
-                            //if (microVideoPath == null)
-                            //{
-                            //    var microvideoUrl = string.Format(@"https://steamcdn-a.akamaihd.net/steam/apps/{0}/microtrailer.mp4", response.data.Movies?[0].Id.ToString());
-                            //    if (GetResponseCode(microvideoUrl) == HttpStatusCode.OK)
-                            //    {
-                            //        microVideoPath = new Uri(microvideoUrl);
-                            //        SettingsModel.Settings.IsAnyVideoAvailable = true;
-                            //        SettingsModel.Settings.IsMicrotrailerAvailable = true;
-                            //    }
-                            //}
                         }
                     }
                 }

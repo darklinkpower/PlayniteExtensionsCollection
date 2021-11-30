@@ -27,6 +27,9 @@ namespace ExtraMetadataLoader
         private readonly LogosDownloader logosDownloader;
         private readonly VideosDownloader videosDownloader;
         private readonly ExtraMetadataHelper extraMetadataHelper;
+        private VideoPlayerControl detailsVideoControl;
+        private VideoPlayerControl gridVideoControl;
+        private VideoPlayerControl genericVideoControl;
 
         public ExtraMetadataLoaderSettingsViewModel settings { get; private set; }
 
@@ -90,10 +93,60 @@ namespace ExtraMetadataLoader
             }
             if (args.Name == "VideoLoaderControl")
             {
-                return new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                {
+                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details)
+                    {
+                        detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                        return detailsVideoControl;
+                    }
+                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid)
+                    {
+                        gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                        return gridVideoControl;
+                    }
+                }
+
+                genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                return gridVideoControl;
             }
 
             return null;
+        }
+
+        private void ClearVideoSources()
+        {
+            // This is done to free the video files and allow
+            // deleting or overwriting it
+            // Stops video from playing when game is starting
+            detailsVideoControl?.ResetPlayerValues();
+            gridVideoControl?.ResetPlayerValues();
+            genericVideoControl?.ResetPlayerValues();
+        }
+
+        private void UpdatePlayersData()
+        {
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details)
+                {
+                    detailsVideoControl?.RefreshPlayer();
+                }
+                else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid)
+                {
+                    gridVideoControl?.RefreshPlayer();
+                }
+            }
+
+            genericVideoControl?.RefreshPlayer();
+        }
+
+        public override void OnGameStarting(OnGameStartingEventArgs args)
+        {
+            // Stops video from playing when game is starting
+            detailsVideoControl?.MediaPause();
+            gridVideoControl?.MediaPause();
+            genericVideoControl?.MediaPause();
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -208,6 +261,7 @@ namespace ExtraMetadataLoader
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam"), true);
                         progressOptions.IsIndeterminate = false;
+                        ClearVideoSources();
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
@@ -222,6 +276,7 @@ namespace ExtraMetadataLoader
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
+                        UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
@@ -231,11 +286,13 @@ namespace ExtraMetadataLoader
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
                     Action = _ =>
                     {
+                        ClearVideoSources();
                         if (!ValidateExecutablesSettings(true, true))
                         {
                             return;
                         }
                         CreateYoutubeWindow();
+                        UpdatePlayersData();
                     }
                 },
                 new GameMenuItem
@@ -248,6 +305,7 @@ namespace ExtraMetadataLoader
                         {
                             return;
                         }
+                        ClearVideoSources();
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam"), true);
                         progressOptions.IsIndeterminate = false;
@@ -265,6 +323,7 @@ namespace ExtraMetadataLoader
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
+                        UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
@@ -290,6 +349,7 @@ namespace ExtraMetadataLoader
                         {
                             return;
                         }
+                        ClearVideoSources();
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos"), true);
                         progressOptions.IsIndeterminate = false;
@@ -307,6 +367,7 @@ namespace ExtraMetadataLoader
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
+                        UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
@@ -320,10 +381,12 @@ namespace ExtraMetadataLoader
                         {
                             return;
                         }
+                        ClearVideoSources();
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             videosDownloader.SelectedDialogFileToVideo(args.Games[0]);
                         }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile")));
+                        UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
@@ -333,10 +396,12 @@ namespace ExtraMetadataLoader
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
                     Action = _ =>
                     {
+                        ClearVideoSources();
                         foreach (var game in args.Games.Distinct())
                         {
                             extraMetadataHelper.DeleteGameVideo(game);
                         };
+                        UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
@@ -346,10 +411,12 @@ namespace ExtraMetadataLoader
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
                     Action = _ =>
                     {
+                        ClearVideoSources();
                         foreach (var game in args.Games.Distinct())
                         {
                             extraMetadataHelper.DeleteGameVideoMicro(game);
                         };
+                        UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 }
