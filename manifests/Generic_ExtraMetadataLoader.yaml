@@ -182,3 +182,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_23.pext
     Changelog:
     - Optimize extension controls processing by stopping execution if control is not in current active view in Playnite
+  - Version: 1.24
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-11-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_24.pext
+    Changelog:
+    - Updated localizations
+    - Video in player now gets automatically refreshed after using a function in the extension related to videos
+    - Videos no longer stop playing when Playnite is not the top window
+    - Videos now get paused when a game is starting
