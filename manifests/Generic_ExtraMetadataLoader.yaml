@@ -196,5 +196,4 @@ Packages:
     ReleaseDate: 2021-11-30
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_25.pext
     Changelog:
-    - Updated localizations
-    - "Fix to prevent video from playing if theme doesn't initally show the video player"
+    - "Fix to prevent video from playing if theme doesn't initally show the video player when autoplay has been enabled in settings"
