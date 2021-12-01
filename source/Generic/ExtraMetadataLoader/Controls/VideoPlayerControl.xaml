@@ -15,6 +15,14 @@
             <MediaElement.Style>
                 <Style>
                     <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}" />
+                    <Style.Triggers>
+                        <!--This helps to prevent the video from playing in themes that don't have the
+                            video player visible at first, for example, when the video player is only visible
+                            after clicking a button-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="False">
+                            <Setter Property="MediaElement.Source" Value="{x:Null}" />
+                        </DataTrigger>
+                    </Style.Triggers>
                 </Style>
             </MediaElement.Style>
         </MediaElement>
