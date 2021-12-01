@@ -95,20 +95,23 @@ namespace ExtraMetadataLoader
             {
                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                 {
-                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details)
+                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null)
                     {
                         detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
                         return detailsVideoControl;
                     }
-                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid)
+                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null)
                     {
                         gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
                         return gridVideoControl;
                     }
                 }
 
-                genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                return gridVideoControl;
+                if (genericVideoControl == null)
+                {
+                    genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                    return gridVideoControl;
+                }
             }
 
             return null;
@@ -131,10 +134,12 @@ namespace ExtraMetadataLoader
                 if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details)
                 {
                     detailsVideoControl?.RefreshPlayer();
+                    return;
                 }
                 else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid)
                 {
                     gridVideoControl?.RefreshPlayer();
+                    return;
                 }
             }
 
