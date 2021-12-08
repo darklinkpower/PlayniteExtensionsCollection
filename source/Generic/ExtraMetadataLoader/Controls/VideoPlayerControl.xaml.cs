@@ -40,13 +40,24 @@ namespace ExtraMetadataLoader
         
         private bool useMicrovideosSource;
         private readonly string pluginDataPath;
-        private readonly DesktopView ActiveViewAtCreation;
         private ActiveVideoType activeVideoType;
         private bool isDragging;
         private Uri microVideoPath;
         private Uri trailerVideoPath;
         private bool multipleSourcesAvailable = false;
         private Game currentGame;
+
+        private DesktopView activeViewAtCreation;
+        public DesktopView ActiveViewAtCreation
+        {
+            get => activeViewAtCreation;
+            set
+            {
+                activeViewAtCreation = value;
+                OnPropertyChanged();
+            }
+        }
+
         private Uri videoSource;
         public Uri VideoSource
         {
@@ -267,6 +278,7 @@ namespace ExtraMetadataLoader
         public void ResetPlayerValues()
         {
             VideoSource = null;
+            player.Stop();
             SettingsModel.Settings.IsVideoPlaying = false;
             timelineSlider.Value = 0;
             playbackProgressBar.Value = 0;
@@ -334,9 +346,6 @@ namespace ExtraMetadataLoader
             }
             else
             {
-                //This is to get the first frame of the video
-                player.Play();
-                player.Pause();
                 SettingsModel.Settings.IsVideoPlaying = false;
             }
             ControlVisibility = Visibility.Visible;

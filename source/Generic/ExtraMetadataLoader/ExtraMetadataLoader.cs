@@ -44,7 +44,7 @@ namespace ExtraMetadataLoader
             };
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "VideoLoaderControl", "LogoLoaderControl" },
+                ElementList = new List<string> { "VideoLoaderControl", "VideoLoaderControlAlternative", "LogoLoaderControl" },
                 SourceName = "ExtraMetadataLoader",
             });
 
@@ -95,25 +95,48 @@ namespace ExtraMetadataLoader
             {
                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                 {
-                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null)
+                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && !settings.Settings.EnableAlternativeDetailsVideoPlayer)
                     {
                         detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
                         return detailsVideoControl;
                     }
-                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null)
+                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && !settings.Settings.EnableAlternativeGridVideoPlayer)
                     {
                         gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
                         return gridVideoControl;
                     }
                 }
 
-                if (genericVideoControl == null)
+                if (genericVideoControl == null && !settings.Settings.EnableAlternativeGenericVideoPlayer)
                 {
                     genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
                     return gridVideoControl;
                 }
             }
 
+            if (args.Name == "VideoLoaderControlAlternative")
+            {
+                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                {
+                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && settings.Settings.EnableAlternativeDetailsVideoPlayer)
+                    {
+                        detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                        return detailsVideoControl;
+                    }
+                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && settings.Settings.EnableAlternativeGridVideoPlayer)
+                    {
+                        gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                        return gridVideoControl;
+                    }
+
+                    if (genericVideoControl == null && settings.Settings.EnableAlternativeGenericVideoPlayer)
+                    {
+                        genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                        return gridVideoControl;
+                    }
+                }
+            }
+            
             return null;
         }
 

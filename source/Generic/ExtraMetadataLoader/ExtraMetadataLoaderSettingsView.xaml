@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:conv="clr-namespace:ExtraMetadataLoader.Converters"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="1200" d:DesignWidth="600">
     <Grid Margin="20">
         <ScrollViewer>
             <TabControl>
@@ -67,6 +67,8 @@
                         <Separator Margin="0,0,0,5" />
                         <CheckBox Name="EnableVideo" IsChecked="{Binding Settings.EnableVideoPlayer, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel}" Margin="0,0,0,10"/>
                         <StackPanel IsEnabled="{Binding ElementName=EnableVideo, Path=IsChecked}" Margin="40,0,0,10">
+                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel}" Margin="0,10,0,5"/>
+                            <Separator Margin="0,0,0,5" />
                             <CheckBox IsChecked="{Binding Settings.AutoPlayVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel}" Margin="0,0,0,10"/>
                             <CheckBox IsChecked="{Binding Settings.RepeatTrailerVideos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel}" Margin="0,0,0,10"/>
                             <CheckBox IsChecked="{Binding Settings.StartNoSound, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel}" Margin="0,0,0,10"/>
@@ -99,6 +101,30 @@
                                         Maximum="100" TickFrequency="2.5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
                                 <TextBlock Text="{Binding Settings.DefaultVolume, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                             </StackPanel>
+                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView}" Margin="0,10,0,5"/>
+                            <Separator Margin="0,0,0,5" />
+                            <CheckBox IsChecked="{Binding Settings.ShowVideoPreviewNotPlayingDetails, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel}"
+                                      Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.EnableAlternativeDetailsVideoPlayer, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel}"
+                                      Margin="0,0,0,10"/>
+                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView}" Margin="0,10,0,5"/>
+                            <Separator Margin="0,0,0,5" />
+                            <CheckBox IsChecked="{Binding Settings.ShowVideoPreviewNotPlayingGrid, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel}"
+                                      Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.EnableAlternativeGridVideoPlayer, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel}"
+                                      Margin="0,0,0,10"/>
+                            <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView}" Margin="0,10,0,5"/>
+                            <Separator Margin="0,0,0,5" />
+                            <CheckBox IsChecked="{Binding Settings.ShowVideoPreviewNotPlayingGeneric, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel}"
+                                      Margin="0,0,0,10"/>
+                            <CheckBox IsChecked="{Binding Settings.EnableAlternativeGenericVideoPlayer, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel}"
+                                      Margin="0,0,0,10"/>
                         </StackPanel>
                     </StackPanel>
                 </TabItem>

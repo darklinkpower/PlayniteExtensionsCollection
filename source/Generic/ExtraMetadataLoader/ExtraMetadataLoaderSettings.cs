@@ -604,6 +604,78 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool enableAlternativeDetailsVideoPlayer { get; set; } = false;
+        public bool EnableAlternativeDetailsVideoPlayer
+        {
+            get => enableAlternativeDetailsVideoPlayer;
+            set
+            {
+                enableAlternativeDetailsVideoPlayer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool enableAlternativeGridVideoPlayer { get; set; } = false;
+        public bool EnableAlternativeGridVideoPlayer
+        {
+            get => enableAlternativeGridVideoPlayer;
+            set
+            {
+                enableAlternativeGridVideoPlayer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool enableAlternativeGenericVideoPlayer { get; set; } = false;
+        public bool EnableAlternativeGenericVideoPlayer
+        {
+            get => enableAlternativeGenericVideoPlayer;
+            set
+            {
+                enableAlternativeGenericVideoPlayer = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool showVideoPreviewNotPlayingDetails { get; set; } = true;
+        public bool ShowVideoPreviewNotPlayingDetails
+        {
+            get => showVideoPreviewNotPlayingDetails;
+            set
+            {
+                showVideoPreviewNotPlayingDetails = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool showVideoPreviewNotPlayingGrid { get; set; } = true;
+        public bool ShowVideoPreviewNotPlayingGrid
+        {
+            get => showVideoPreviewNotPlayingGrid;
+            set
+            {
+                showVideoPreviewNotPlayingGrid = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool showVideoPreviewNotPlayingGeneric { get; set; } = true;
+        public bool ShowVideoPreviewNotPlayingGeneric
+        {
+            get => showVideoPreviewNotPlayingGeneric;
+            set
+            {
+                showVideoPreviewNotPlayingGeneric = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings

@@ -10,22 +10,55 @@
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
         </Grid.Resources>
-        <MediaElement Name="player" MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
-                      LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <MediaElement.Style>
-                <Style>
-                    <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Visible" />
                     <Style.Triggers>
-                        <!--This helps to prevent the video from playing in themes that don't have the
-                            video player visible at first, for example, when the video player is only visible
-                            after clicking a button-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="False">
-                            <Setter Property="MediaElement.Source" Value="{x:Null}" />
-                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ActiveViewAtCreation, TargetNullValue=None}" Value="Details" />
+                                <Condition Binding="{Binding SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails}" Value="False" />
+                                <Condition Binding="{Binding SettingsModel.Settings.IsVideoPlaying}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ActiveViewAtCreation, TargetNullValue=None}" Value="Grid" />
+                                <Condition Binding="{Binding SettingsModel.Settings.ShowVideoPreviewNotPlayingGrid}" Value="False" />
+                                <Condition Binding="{Binding SettingsModel.Settings.IsVideoPlaying}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ActiveViewAtCreation, TargetNullValue=None}" Value="None" />
+                                <Condition Binding="{Binding SettingsModel.Settings.ShowVideoPreviewNotPlayingGeneric}" Value="False" />
+                                <Condition Binding="{Binding SettingsModel.Settings.IsVideoPlaying}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
-            </MediaElement.Style>
-        </MediaElement>
+            </Grid.Style>
+            <MediaElement Name="player" MediaOpened="player_MediaOpened" MediaEnded="player_MediaEnded"
+                      LoadedBehavior="Manual" ScrubbingEnabled="True" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <MediaElement.Style>
+                    <Style>
+                        <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}" />
+                        <Style.Triggers>
+                            <!--This helps to prevent the video from playing in themes that don't have the
+                            video player visible at first, for example, when the video player is only visible
+                            after clicking a button-->
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="False">
+                                <Setter Property="MediaElement.Source" Value="{x:Null}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </MediaElement.Style>
+            </MediaElement>
+        </Grid>
         <Border Padding="10,5,10,10" VerticalAlignment="{Binding SettingsModel.Settings.VideoControlsVerticalAlignment}">
             <Border.Style>
                 <Style TargetType="Border">
