@@ -34,6 +34,7 @@ namespace InstallationStatusUpdater
             Width = 0;
             Height = 0;
             WindowStyle = WindowStyle.None;
+            Focusable = false;
             ShowInTaskbar = false;
             ShowActivated = false;
             Show();
