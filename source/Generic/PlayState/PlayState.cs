@@ -295,6 +295,7 @@ namespace PlayState
                 ShowActivated = false,
                 SizeToContent = SizeToContent.WidthAndHeight,
                 ShowInTaskbar = false,
+                Focusable = false,
                 Content = new SplashWindow(),
                 DataContext = splashWindowViewModel
             };
