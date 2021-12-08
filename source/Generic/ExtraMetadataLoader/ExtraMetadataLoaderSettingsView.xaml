@@ -230,6 +230,12 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingOtherHeaderLabel}">
+                    <StackPanel Margin="0,10,0,0">
+                        <CheckBox IsChecked="{Binding Settings.EnableYoutubeSearch, UpdateSourceTrigger=PropertyChanged}"
+                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems}"/>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </ScrollViewer>
     </Grid>

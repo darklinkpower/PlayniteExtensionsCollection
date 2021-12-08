@@ -592,6 +592,18 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool enableYoutubeSearch { get; set; } = true;
+        public bool EnableYoutubeSearch
+        {
+            get => enableYoutubeSearch;
+            set
+            {
+                enableYoutubeSearch = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings

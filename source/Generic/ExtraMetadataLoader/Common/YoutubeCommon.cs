@@ -12,11 +12,21 @@ namespace ExtraMetadataLoader.Common
     public class YoutubeCommon
     {
         static string youtubeResponseRegexStr = @"var ytInitialData = ((.*?(?=(;<\/script>))))";
-        static string youtubeSearchTemplate = @"https://www.youtube.com/results?search_query={0}&sp=EgQQARgB";
+        static string youtubeSearchTemplateShort = @"https://www.youtube.com/results?search_query={0}&sp=EgQQARgB";
+        static string youtubeSearchTemplate = @"https://www.youtube.com/results?search_query={0}";
 
-        public static List<YoutubeSearchItem> GetYoutubeSearchResults(string searchTerm)
+        public static List<YoutubeSearchItem> GetYoutubeSearchResults(string searchTerm, bool searchShortVideos)
         {
-            var uri = string.Format(youtubeSearchTemplate, Uri.EscapeDataString(searchTerm));
+            var uri = string.Empty;
+            if (searchShortVideos)
+            {
+                uri = string.Format(youtubeSearchTemplateShort, Uri.EscapeDataString(searchTerm));
+            }
+            else
+            {
+                uri = string.Format(youtubeSearchTemplate, Uri.EscapeDataString(searchTerm));
+            }
+            
             var downloadedString = HttpDownloader.DownloadStringAsync(uri).GetAwaiter().GetResult();
             if (!downloadedString.IsNullOrEmpty())
             {

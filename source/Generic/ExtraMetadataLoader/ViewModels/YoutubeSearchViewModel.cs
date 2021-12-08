@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ExtraMetadataLoader.ViewModels
 {
@@ -75,25 +76,56 @@ namespace ExtraMetadataLoader.ViewModels
             }
         }
 
+        private Visibility downloadButtonVisibility { get; set; }
+        public Visibility DownloadButtonVisibility
+        {
+            get => downloadButtonVisibility;
+            set
+            {
+                downloadButtonVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         private IPlayniteAPI PlayniteApi { get; }
 
         private readonly VideosDownloader videosDownloader;
         private readonly Game game;
+        private readonly bool SearchShortVideos;
 
-        public YoutubeSearchViewModel(IPlayniteAPI PlayniteApi, Game game, VideosDownloader videosDownloader)
+        public YoutubeSearchViewModel(IPlayniteAPI PlayniteApi, Game game, VideosDownloader videosDownloader, bool searchShortVideos, bool showDownloadButton, string defaultSearchTerm)
         {
             this.PlayniteApi = PlayniteApi;
             this.videosDownloader = videosDownloader;
             this.game = game;
-            var initialSearch = $"{game.Name} trailer";
-            var platform = game.Platforms?.FirstOrDefault(x => x.Name != null);
-            if (platform != null)
+
+            if (defaultSearchTerm != null)
             {
-                initialSearch = $"{game.Name} {platform.Name} trailer";
+                SearchTerm = defaultSearchTerm;
+            }
+            else
+            {
+                var initialSearch = $"{game.Name} trailer";
+                var platform = game.Platforms?.FirstOrDefault(x => x.Name != null);
+                if (platform != null && SearchTerm == null)
+                {
+                    initialSearch = $"{game.Name} {platform.Name} trailer";
+                }
+
+                // Using PC only in the search provides better results
+                SearchTerm = initialSearch.Replace("PC (Windows)", "PC");
             }
 
-            // Using PC only in the search provides better results
-            SearchTerm = initialSearch.Replace("PC (Windows)", "PC");
+            if (showDownloadButton)
+            {
+                DownloadButtonVisibility = Visibility.Visible;
+            }
+            else
+            {
+                DownloadButtonVisibility = Visibility.Collapsed;
+            }
+
+            SearchShortVideos = searchShortVideos;
             InvokeSearch();
         }
 
@@ -107,7 +139,7 @@ namespace ExtraMetadataLoader.ViewModels
 
         public void InvokeSearch()
         {
-            SearchItems = YoutubeCommon.GetYoutubeSearchResults(SearchTerm);
+            SearchItems = YoutubeCommon.GetYoutubeSearchResults(SearchTerm, SearchShortVideos);
         }
 
         public RelayCommand<object> DownloadSelectedVideoCommand

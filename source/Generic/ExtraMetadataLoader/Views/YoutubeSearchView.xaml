@@ -47,6 +47,7 @@
             <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
                 <Button Content="{DynamicResource LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel}"
                         IsDefault="False"
+                        Visibility="{Binding DownloadButtonVisibility}"
                         Command="{Binding DownloadSelectedVideoCommand}" />
                 <Button Content="{DynamicResource LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel}"
                         Margin="10,0,0,0" IsDefault="False"

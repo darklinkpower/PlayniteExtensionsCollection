@@ -161,7 +161,7 @@ namespace ExtraMetadataLoader
             var videosMicroSection = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos");
             
             //TODO Move each action to separate methods?
-            return new List<GameMenuItem>
+            var gameMenuItems = new List<GameMenuItem>
             {
                 new GameMenuItem
                 {
@@ -426,6 +426,97 @@ namespace ExtraMetadataLoader
                     }
                 }
             };
+
+            if (settings.Settings.EnableYoutubeSearch)
+            {
+                gameMenuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview"),
+                    MenuSection = $"{videosSection}",
+                    Action = _ =>
+                    {
+                        var game = args.Games.Last();
+                        var searchTerm = $"{game.Name} review";
+                        var searchItems = YoutubeCommon.GetYoutubeSearchResults(searchTerm, false);
+                        if (searchItems.Count > 0)
+                        {
+                            ViewYoutubeVideo(searchItems.First().VideoId);
+                        }
+                        else
+                        {
+                            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageVideoNotFound"));
+                        }
+                    }
+                });
+                gameMenuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay"),
+                    MenuSection = $"{videosSection}",
+                    Action = _ =>
+                    {
+                        var game = args.Games.Last();
+                        var searchTerm = $"{game.Name} gameplay";
+                        var searchItems = YoutubeCommon.GetYoutubeSearchResults(searchTerm, false);
+                        if (searchItems.Count > 0)
+                        {
+                            ViewYoutubeVideo(searchItems.First().VideoId);
+                        }
+                        else
+                        {
+                            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageVideoNotFound"));
+                        }
+                    }
+                });
+                gameMenuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch"),
+                    MenuSection = $"{videosSection}",
+                    Action = _ =>
+                    {
+                        var game = args.Games.Last();
+                        var searchTerm = $"{game.Name}";
+                        CreateYoutubeWindow(false, false, searchTerm);
+                    }
+                });
+            }
+
+            return gameMenuItems;
+        }
+
+        private void ViewYoutubeVideo(string youtubeVideoId)
+        {
+            var youtubeLink = string.Format("https://www.youtube.com/embed/{0}", youtubeVideoId);
+            var html = string.Format(@"
+                <head>
+                    <title>Extra Metadata</title>
+                    <meta http-equiv='refresh' content='0; url={0}'>
+                </head>
+                <body style='margin:0'>
+                </body>", youtubeLink);
+            var webView = PlayniteApi.WebViews.CreateView(1280, 750);
+
+            // Age restricted videos can only be seen in the full version while logged in
+            // so it's needed to redirect to the full YouTube site to view them
+            var embedLoaded = false;
+            webView.LoadingChanged += async (s, e) =>
+            {
+                if (!embedLoaded)
+                {
+                    if (webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
+                    {
+                        var source = await webView.GetPageSourceAsync();
+                        if (source.Contains("<div class=\"ytp-error-content-wrap\"><div class=\"ytp-error-content-wrap-reason\">"))
+                        {
+                            webView.Navigate($"https://www.youtube.com/watch?v={youtubeVideoId}");
+                        }
+                        embedLoaded = true;
+                    }
+                }
+            };
+
+            webView.Navigate("data:text/html," + html);
+            webView.OpenDialog();
+            webView.Dispose();
         }
 
         private void CreateGoogleWindow()
@@ -448,7 +539,7 @@ namespace ExtraMetadataLoader
             window.ShowDialog();
         }
 
-        private void CreateYoutubeWindow()
+        private void CreateYoutubeWindow(bool searchShortVideos = true, bool showDownloadButton = true, string defaultSearchTerm = null)
         {
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
@@ -460,7 +551,7 @@ namespace ExtraMetadataLoader
             window.Title = ResourceProvider.GetString("LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle");
 
             window.Content = new YoutubeSearchView();
-            window.DataContext = new YoutubeSearchViewModel(PlayniteApi, PlayniteApi.MainView.SelectedGames.Last(), videosDownloader);
+            window.DataContext = new YoutubeSearchViewModel(PlayniteApi, PlayniteApi.MainView.SelectedGames.Last(), videosDownloader, searchShortVideos, showDownloadButton, defaultSearchTerm);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
