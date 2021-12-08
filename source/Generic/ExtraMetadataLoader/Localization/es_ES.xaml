@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">Configuración General</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingOtherHeaderLabel">Other settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Ajustes de videos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">Habilitar reproductor de video</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">Reproducir vídeo automáticamente</sys:String>
@@ -27,9 +28,14 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Radio de desenfoque del efecto de sombra</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacidad del efecto de sombra</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">Ajustes de descarga de vídeo</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">Details View player settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">Grid View player settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView">Other views player settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload">Configuración de descarga de logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">Configuración del cargador de Logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl">Configuración del reproductor de vídeo</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel">Display video preview when video is not playing</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">Use alternative video player (Requires restart and support in custom theme)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">Clave API de SteamGridDB:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">Obtener clave API</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Descargar videos de juegos recién añadidos al actualizar la biblioteca</sys:String>
@@ -115,7 +121,7 @@ Se recomienda reducir el tamaño porque las imágenes grandes pueden hacer que P
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Descargar videos de Steam en alta definición</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Solo procesar juegos de Steam o que son juegos de PC al obtener metadatos de Steam</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Selecciona el vídeo para descargar</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Select video to download or view</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Lista de vídeos:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Buscar</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">Descargar el vídeo seleccionado</sys:String>
@@ -126,4 +132,10 @@ Se recomienda reducir el tamaño porque las imágenes grandes pueden hacer que P
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Buscar sólo transparente</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">Establecer logo desde archivo para el juego seleccionado</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">Show menu items to view videos on YouTube</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">View review video on YouTube</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">View gameplay video on YouTube</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Search video on YouTube</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video not found</sys:String>
 </ResourceDictionary>
