@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:ReviewViewer.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -90,7 +91,11 @@
                             Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
             </StackPanel>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
-                <TextBlock Text="{Binding SelectedReviewText}" TextWrapping="Wrap" Opacity="0.75"/>
+                <controls:HtmlTextView HtmlText="{Binding SelectedReviewText}" HorizontalAlignment="left"
+                    HtmlFontFamily="{DynamicResource FontFamily}"
+                    HtmlForeground="{DynamicResource TextColor}"
+                    LinkForeground="{DynamicResource GlyphColor}"
+                    HtmlFontSize="{DynamicResource FontSize}" />
             </ScrollViewer>
             <StackPanel Margin="0,0,0,10" Visibility="{Binding SettingsModel.Settings.DisplayHelpfulnessData, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <TextBlock Text="{Binding ReviewHelpfulnessHelpful}" Opacity="0.75" />

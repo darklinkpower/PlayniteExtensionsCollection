@@ -246,7 +246,7 @@ namespace ReviewViewer.Controls
                     {
                         ThumbsDownVisibility = Visibility.Visible;
                     }
-                    SelectedReviewText = SelectedReview.ReviewReview;
+                    SelectedReviewText = BbCodeProcessor.FormatBbCodeToHtml(SelectedReview.ReviewReview);
                 }
 
                 OnPropertyChanged();
