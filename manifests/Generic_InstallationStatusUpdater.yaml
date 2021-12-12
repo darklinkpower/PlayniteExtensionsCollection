@@ -94,3 +94,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Installation_Status_Updater_2_12.pext
     Changelog:
     - Updated localizations
+  - Version: 2.13
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Installation_Status_Updater_2_13.pext
+    Changelog:
+    - Updated localizations

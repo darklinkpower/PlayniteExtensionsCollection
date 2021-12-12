@@ -79,3 +79,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/PlayState_2_10.pext
     Changelog:
     - Updated localizations
+  - Version: 2.11
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/PlayState_2_11.pext
+    Changelog:
+    - Updated localizations

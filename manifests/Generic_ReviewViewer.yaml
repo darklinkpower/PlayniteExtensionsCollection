@@ -96,3 +96,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_13.pext
     Changelog:
     - Optimize extension controls processing by stopping execution if control is not in current active view in Playnite
+  - Version: 2.14
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_14.pext
+    Changelog:
+    - Reworked renderer for reviews viewer control to improve formatting and make links clickable

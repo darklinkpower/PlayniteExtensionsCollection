@@ -197,3 +197,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_25.pext
     Changelog:
     - "Fix to prevent video from playing if theme doesn't initally show the video player when autoplay has been enabled in settings"
+  - Version: 1.26
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_26.pext
+    Changelog:
+    - Updated localizations
+    - Added optional function to add menu items toview the review, gameplay video or open a search from YouTube of the selected game
+    - Added option to configure if the video image should be displayed when the video is paused
+    - Added option and functionality for custom themes to implement an alternative video player in views (Can be used to provide different locations for the video player in the same theme)
