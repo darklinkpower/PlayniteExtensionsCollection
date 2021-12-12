@@ -114,9 +114,15 @@ namespace NewsViewer.PluginControls
             if (titleChild != null  && descriptionChild != null)
             {
                 NewsTitle = HtmlToPlainText(titleChild.InnerText);
-                NewsText = HtmlToPlainText(descriptionChild.InnerText);
+                NewsText = CleanSteamNewsText(descriptionChild.InnerText);
                 NewsDate = Regex.Replace(HtmlToPlainText(dateChild.InnerText), @" \+\d+$", "");
             }
+        }
+
+        private string CleanSteamNewsText(string html)
+        {
+            html = Regex.Replace(html, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", "");
+            return html;
         }
 
         private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NewsViewer.PluginControls"
+             xmlns:controls="clr-namespace:NewsViewer.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -25,7 +26,11 @@
             </DockPanel>
             <Separator Margin="0,0,0,10"/>
             <ScrollViewer MaxHeight="{Binding SettingsModel.Settings.DescriptionMaxHeight}" Margin="0,0,0,10">
-                <TextBlock Text="{Binding NewsText}" TextWrapping="Wrap" Opacity="0.75"/>
+                <controls:HtmlTextView HtmlText="{Binding NewsText}" HorizontalAlignment="left"
+                    HtmlFontFamily="{DynamicResource FontFamily}"
+                    HtmlForeground="{DynamicResource TextColor}"
+                    LinkForeground="{DynamicResource GlyphColor}"
+                    HtmlFontSize="{DynamicResource FontSize}" />
             </ScrollViewer>
             <Button Content="{DynamicResource LOC_NewsViewer_NewsViewerControl_OpenNewsLabel}" HorizontalAlignment="Right" Command="{Binding OpenSelectedNewsCommand}" />
         </StackPanel>
