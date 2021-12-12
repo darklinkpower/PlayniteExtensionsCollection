@@ -169,12 +169,17 @@ namespace ExtraMetadataLoader
             genericVideoControl?.RefreshPlayer();
         }
 
-        public override void OnGameStarting(OnGameStartingEventArgs args)
+        private void PauseAllVideoControls()
         {
-            // Stops video from playing when game is starting
             detailsVideoControl?.MediaPause();
             gridVideoControl?.MediaPause();
             genericVideoControl?.MediaPause();
+        }
+
+        public override void OnGameStarting(OnGameStartingEventArgs args)
+        {
+            // Stops video from playing when game is starting
+            PauseAllVideoControls();
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -458,6 +463,7 @@ namespace ExtraMetadataLoader
                     MenuSection = $"{videosSection}",
                     Action = _ =>
                     {
+                        ClearVideoSources();
                         var game = args.Games.Last();
                         var searchTerm = $"{game.Name} review";
                         var searchItems = YoutubeCommon.GetYoutubeSearchResults(searchTerm, false);
@@ -469,6 +475,7 @@ namespace ExtraMetadataLoader
                         {
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageVideoNotFound"));
                         }
+                        UpdatePlayersData();
                     }
                 });
                 gameMenuItems.Add(new GameMenuItem
@@ -477,6 +484,7 @@ namespace ExtraMetadataLoader
                     MenuSection = $"{videosSection}",
                     Action = _ =>
                     {
+                        ClearVideoSources();
                         var game = args.Games.Last();
                         var searchTerm = $"{game.Name} gameplay";
                         var searchItems = YoutubeCommon.GetYoutubeSearchResults(searchTerm, false);
@@ -488,6 +496,7 @@ namespace ExtraMetadataLoader
                         {
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageVideoNotFound"));
                         }
+                        UpdatePlayersData();
                     }
                 });
                 gameMenuItems.Add(new GameMenuItem
@@ -496,9 +505,11 @@ namespace ExtraMetadataLoader
                     MenuSection = $"{videosSection}",
                     Action = _ =>
                     {
+                        ClearVideoSources();
                         var game = args.Games.Last();
                         var searchTerm = $"{game.Name}";
                         CreateYoutubeWindow(false, false, searchTerm);
+                        UpdatePlayersData();
                     }
                 });
             }
