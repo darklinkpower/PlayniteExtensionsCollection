@@ -206,3 +206,9 @@ Packages:
     - Added optional function to add menu items toview the review, gameplay video or open a search from YouTube of the selected game
     - Added option to configure if the video image should be displayed when the video is paused
     - Added option and functionality for custom themes to implement an alternative video player in views (Can be used to provide different locations for the video player in the same theme)
+  - Version: 1.27
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_27.pext
+    Changelog:
+    - Updated localizations
