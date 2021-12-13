@@ -9,7 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Threading;
 
 namespace InstallationStatusUpdater
@@ -21,6 +24,10 @@ namespace InstallationStatusUpdater
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
         private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
         private DispatcherTimer timer;
+        private Window mainWindow;
+        private WindowInteropHelper windowInterop;
+        private IntPtr mainWindowHandle;
+        private HwndSource source;
 
         private InstallationStatusUpdaterSettingsViewModel settings { get; set; }
 
@@ -43,6 +50,66 @@ namespace InstallationStatusUpdater
             {
                 DeviceListener.RegisterAction(() => timer.Start());
             }
+        }
+
+        // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.Title.Equals("Playnite", StringComparison.InvariantCultureIgnoreCase));
+            if (mainWindow != null)
+            {
+                windowInterop = new WindowInteropHelper(mainWindow);
+                mainWindowHandle = windowInterop.Handle;
+                source = HwndSource.FromHwnd(mainWindowHandle);
+                source.AddHook(GlobalHotkeyCallback);
+            }
+            else
+            {
+                logger.Error("Could not find main window. Shortcuts could not be registered.");
+            }
+
+            if (settings.Settings.UpdateOnStartup == true)
+            {
+                DetectInstallationStatus(false);
+            }
+        }
+
+        private const int WM_DBT = 0x0219;
+        private const int WM_DEVICECHANGE = 0x0219;                 // device change event
+        private const int DBT_DEVICEARRIVAL = 0x8000;               // system detected a new device
+        private const int DBT_DEVICEREMOVEPENDING = 0x8003;         // about to remove, still available
+        private const int DBT_DEVICEREMOVECOMPLETE = 0x8004;        // device is gone
+        private IntPtr GlobalHotkeyCallback(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (!settings.Settings.UpdateStatusOnUsbChanges)
+            {
+                return IntPtr.Zero;
+            }
+
+            if (msg == WM_DBT)
+            {
+                switch (wParam.ToInt32())
+                {
+                    //case WM_DEVICECHANGE:
+                    //    break;
+                    case DBT_DEVICEARRIVAL:
+                        logger.Info("Started timer from DBT_DEVICEARRIVAL event");
+                        timer.Start();
+                        handled = true;
+                        break;
+                    //case DBT_DEVICEREMOVEPENDING:
+                    //    break;
+                    case DBT_DEVICEREMOVECOMPLETE:
+                        logger.Info("Started timer from DBT_DEVICEREMOVECOMPLETE event");
+                        timer.Start();
+                        handled = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return IntPtr.Zero;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -131,14 +198,6 @@ namespace InstallationStatusUpdater
             logger.Info(string.Format("Watcher invoked by path {0}", invokerPath));
             timer.Stop();
             timer.Start();
-        }
-
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            if (settings.Settings.UpdateOnStartup == true)
-            {
-                DetectInstallationStatus(false);
-            }
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
