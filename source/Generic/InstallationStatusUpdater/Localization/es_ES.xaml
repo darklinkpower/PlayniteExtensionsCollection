@@ -21,7 +21,7 @@ Juegos desinstalados que se marcaron como instalados: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Actualizar estado de instalación al actualizar la biblioteca</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Actualizar etiqueta con la unidad que el juego está instalado durante la actualización de la biblioteca</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Actualizar el estado de instalación cuando se inserta o remueve un dispositivo de almacenamiento (Los cambios requieren reinicio)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Update installation status when a storage device is inserted or removed</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Actualizar el estado de instalación cuando los archivos cambien en los directorios (Los cambios requieren reinicio)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Incluye subdirectorios para detección</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Directorios de detección</sys:String>
