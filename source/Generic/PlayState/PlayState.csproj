@@ -50,10 +50,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalHotKey.cs" />
-    <Compile Include="ListenerWindow.xaml.cs">
-      <DependentUpon>ListenerWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="HotkeyHelper.cs" />
     <Compile Include="Models\Hotkey.cs" />
     <Compile Include="Models\ProcessItem.cs" />
     <Compile Include="PlayState.cs" />
@@ -75,10 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="app.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ListenerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

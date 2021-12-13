@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Threading;
 
 namespace PlayState
@@ -37,6 +38,11 @@ namespace PlayState
         private List<ProcessItem> gameProcesses;
         private List<Tuple<Guid, Stopwatch>> stopwatchList;
         private bool suspendPlaytimeOnly;
+        private Window mainWindow;
+        private WindowInteropHelper windowInterop;
+        private IntPtr mainWindowHandle;
+        private HwndSource source = null;
+        private bool globalHotkeyRegistered = false;
 
         private PlayStateSettingsViewModel settings { get; set; }
 
@@ -67,25 +73,72 @@ namespace PlayState
             };
 
             splashWindowViewModel = new SplashWindowViewModel();
-            var hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(settings.Settings.SavedHotkeyGesture, () => SwitchGameState());
-            if (hotkeyRegisterSuccess)
-            {
-                logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.SavedHotkeyGesture}.");
+        }
 
+        // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.Title.Equals("Playnite", StringComparison.InvariantCultureIgnoreCase));
+            if (mainWindow != null)
+            {
+                windowInterop = new WindowInteropHelper(mainWindow);
+                mainWindowHandle = windowInterop.Handle;
+                source = HwndSource.FromHwnd(mainWindowHandle);
+                RegisterGlobalHotkey();
             }
             else
             {
-                logger.Debug($"Hotkey register failed with hotkey {settings.Settings.SavedHotkeyGesture}. Trying with default key...");
-                hotkeyRegisterSuccess = GlobalHotKey.RegisterHotKey(new Hotkey(Key.A, (ModifierKeys)5), () => SwitchGameState());
-                if (hotkeyRegisterSuccess)
+                logger.Error("Could not find main window. Shortcuts could not be registered.");
+            }
+        }
+
+        internal bool RegisterGlobalHotkey()
+        {
+            if (!globalHotkeyRegistered)
+            {
+                var window = mainWindow;
+                var handle = mainWindowHandle;
+                source.AddHook(GlobalHotkeyCallback);
+                globalHotkeyRegistered = true;
+                var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key));
+
+                if (!registered)
                 {
-                    logger.Debug("Hotkey registered with default hotkey.");
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        Guid.NewGuid().ToString(),
+                        $"PlayState: Failed to register configured Hotkey {settings.Settings.SavedHotkeyGesture}.",
+                        NotificationType.Error)
+                    );
+                    logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.SavedHotkeyGesture}.");
                 }
-                else
+                return registered;
+            }
+
+            return true;
+        }
+
+        private const int HOTKEY_ID = 3754;
+        private const int WM_HOTKEY = 0x0312;
+        private IntPtr GlobalHotkeyCallback(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_HOTKEY)
+            {
+                switch (wParam.ToInt32())
                 {
-                    logger.Debug("Hotkey register with default hotkey failed.");
+                    case HOTKEY_ID:
+                        uint vkey = ((uint)lParam >> 16) & 0xFFFF;
+                        if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
+                        {
+                            SwitchGameState();
+                        }
+                        handled = true;
+                        break;
+                    default:
+                        break;
                 }
             }
+
+            return IntPtr.Zero;
         }
 
         private void SetExclusionList()
