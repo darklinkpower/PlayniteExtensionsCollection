@@ -48,7 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DeviceListenerWindow.xaml">
+    <Page Include="app.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -58,10 +58,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceListener.cs" />
-    <Compile Include="DeviceListenerWindow.xaml.cs">
-      <DependentUpon>DeviceListenerWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="InstallationStatusUpdater.cs" />
     <Compile Include="InstallationStatusUpdaterSettings.cs" />
     <Compile Include="InstallationStatusUpdaterSettingsView.xaml.cs">

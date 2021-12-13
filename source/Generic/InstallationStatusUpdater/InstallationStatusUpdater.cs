@@ -45,14 +45,8 @@ namespace InstallationStatusUpdater
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(5000);
             timer.Tick += new EventHandler(Timer_Tick);
-
-            if (settings.Settings.UpdateStatusOnUsbChanges)
-            {
-                DeviceListener.RegisterAction(() => timer.Start());
-            }
         }
 
-        // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.Title.Equals("Playnite", StringComparison.InvariantCultureIgnoreCase));
@@ -65,7 +59,7 @@ namespace InstallationStatusUpdater
             }
             else
             {
-                logger.Error("Could not find main window. Shortcuts could not be registered.");
+                logger.Error("Could not find Playnite main window.");
             }
 
             if (settings.Settings.UpdateOnStartup == true)
@@ -74,7 +68,6 @@ namespace InstallationStatusUpdater
             }
         }
 
-        private const int WM_DBT = 0x0219;
         private const int WM_DEVICECHANGE = 0x0219;                 // device change event
         private const int DBT_DEVICEARRIVAL = 0x8000;               // system detected a new device
         private const int DBT_DEVICEREMOVEPENDING = 0x8003;         // about to remove, still available
@@ -86,7 +79,7 @@ namespace InstallationStatusUpdater
                 return IntPtr.Zero;
             }
 
-            if (msg == WM_DBT)
+            if (msg == WM_DEVICECHANGE)
             {
                 switch (wParam.ToInt32())
                 {

@@ -20,7 +20,7 @@ Previously uninstalled games were set as installed: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Update installation status on library update</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Update tag with drive the game is installed on library update</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Update installation status when a storage device is inserted or removed (Changes require restart)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Update installation status when a storage device is inserted or removed</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Update installation status when files change in directories (Changes require restart)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Include subdirectories for detection</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Detection directories</sys:String>
