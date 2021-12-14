@@ -304,6 +304,22 @@ namespace GamePassCatalogBrowser.ViewModels
             }
         }
 
+        public RelayCommand<GamePassGame> XboxAppViewCommand
+        {
+            get => new RelayCommand<GamePassGame>((gamePassGame) =>
+            {
+                XboxApp(gamePassGame);
+            }, (gamePassGame) => gamePassGame != null);
+        }
+
+        private void XboxApp(GamePassGame game)
+        {
+            if (game != null)
+            {
+                System.Diagnostics.Process.Start($"msxbox://game/?productId={game.ProductId}");
+            }
+        }
+
         public RelayCommand<GamePassGame> AddGameToLibraryCommand
         {
             get => new RelayCommand<GamePassGame>((gamePassGame) =>
