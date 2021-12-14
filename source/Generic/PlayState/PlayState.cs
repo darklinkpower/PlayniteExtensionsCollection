@@ -78,7 +78,7 @@ namespace PlayState
         // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.Title.Equals("Playnite", StringComparison.InvariantCultureIgnoreCase));
+            mainWindow = Application.Current.MainWindow;
             if (mainWindow != null)
             {
                 windowInterop = new WindowInteropHelper(mainWindow);
