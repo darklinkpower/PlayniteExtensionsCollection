@@ -49,7 +49,7 @@ namespace InstallationStatusUpdater
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            mainWindow = Application.Current.Windows.Cast<Window>().FirstOrDefault(w => w.Title.Equals("Playnite", StringComparison.InvariantCultureIgnoreCase));
+            mainWindow = Application.Current.MainWindow;
             if (mainWindow != null)
             {
                 windowInterop = new WindowInteropHelper(mainWindow);
@@ -86,14 +86,16 @@ namespace InstallationStatusUpdater
                     //case WM_DEVICECHANGE:
                     //    break;
                     case DBT_DEVICEARRIVAL:
-                        logger.Info("Started timer from DBT_DEVICEARRIVAL event");
+                        logger.Debug("Started timer from DBT_DEVICEARRIVAL event");
+                        timer.Stop();
                         timer.Start();
                         handled = true;
                         break;
                     //case DBT_DEVICEREMOVEPENDING:
                     //    break;
                     case DBT_DEVICEREMOVECOMPLETE:
-                        logger.Info("Started timer from DBT_DEVICEREMOVECOMPLETE event");
+                        logger.Debug("Started timer from DBT_DEVICEREMOVECOMPLETE event");
+                        timer.Stop();
                         timer.Start();
                         handled = true;
                         break;
