@@ -91,3 +91,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/PlayState_2_12.pext
     Changelog:
     - Fixed extension causing Playnite windows to not be centered when created when Playnite is not the foreground window
+  - Version: 2.13
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/PlayState_2_13.pext
+    Changelog:
+    - Updated localizations

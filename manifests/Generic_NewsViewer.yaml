@@ -25,3 +25,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_3.-.copia.pext
     Changelog:
     - Reworked renderer for news control text to improve formatting, display images and make links clickable
+  - Version: 1.4
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_4.pext
+    Changelog:
+    - Updated localizations
+    - Added option to show Steam news for games not from Steam
