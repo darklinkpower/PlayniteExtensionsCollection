@@ -4,8 +4,8 @@
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Altezza massima delle note delle notizie</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Utilizza il visualizzatore compatto di notizie quando apri le notizie nel browser</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">Se abilitato, verrà utilizzato un visualizzatore compatto delle notizie al posto della versione completa della pagina delle news</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription">Show Steam news for games that are not from Steam</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">Requires that games have a Steam store link</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription">Mostra le notizie di Steam per i giochi che non provengono da Steam</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">Richiede che i giochi abbiano un link al negozio Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Apri notizie</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Notizie</sys:String>
 </ResourceDictionary>
