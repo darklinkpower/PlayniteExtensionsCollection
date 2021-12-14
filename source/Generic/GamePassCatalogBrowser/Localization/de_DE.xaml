@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Durchsuche Game Pass Spiele</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Füge gesamten Katalog der Playnite-Bibliothek hinzu</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Füge gesamten Katalog der Playnite Bibliothek hinzu</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Cache zurücksetzen</sys:String>
 
     <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass Katalog wurde zurückgesetzt.</sys:String>
@@ -17,7 +17,8 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Suchen:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Entwickler:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Herausgeber:</sys:String>
-    
+
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">View in Xbox app</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Im Microsoft Store anzeigen</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Zur Playnite-Bibliothek hinzufügen</sys:String>
 </ResourceDictionary>

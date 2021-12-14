@@ -21,7 +21,7 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Оновити статус встановлення при оновленні бібліотеки</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Оновити тег з диском, де встановлено ігри при оновленні бібліотеки</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Оновити статус встановлення, коли вставляється або виймається пристрій зберігання даних (зміни вимагають перезапуску)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Оновити статус встановлення, коли вставляється або виймається пристрій зберігання даних</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Оновити статус встановлення при зміні файлів у каталогах (зміни вимагають перезапуску)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Включати підкаталоги для виявлення</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Виявлення каталогів</sys:String>

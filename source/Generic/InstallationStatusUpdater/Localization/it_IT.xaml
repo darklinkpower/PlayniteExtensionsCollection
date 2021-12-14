@@ -21,7 +21,7 @@ I giochi precedentemente disinstallati sono stati impostati come installati: {1}
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Aggiorna lo stato di installazione nell'aggiornamento della libreria</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Aggiorna tag con unità che il gioco è installato sull'aggiornamento della libreria</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Aggiorna lo stato di installazione quando un dispositivo di archiviazione viene inserito o rimosso (le modifiche richiedono il riavvio)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Aggiorna lo stato di installazione quando un dispositivo di archiviazione viene inserito o rimosso</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Aggiorna lo stato di installazione quando i file cambiano nelle cartelle (le modifiche richiedono il riavvio)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Includi sottocartelle per il rilevamento</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Cartelle di rilevamento</sys:String>

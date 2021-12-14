@@ -21,7 +21,7 @@ Zuvor deinstallierte Spiele wurden als installiert markiert: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Installationsstatus beim Bibliotheksupdate aktualisieren</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Aktualisiere Tag mit Laufwerk, auf dem Spiele installiert sind, beim Aktualisieren der Bibliothek</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Installationsstatus aktualisieren, wenn ein Speichergerät angeschlossen oder entfernt wird (Änderung erfordert Neustart)</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Installationsstatus aktualisieren, wenn ein Speichergerät eingefügt oder entfernt wurde</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Installationsstatus aktualisieren, wenn Dateien in Verzeichnissen geändert werden (Änderung erfordert Neustart)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Unterverzeichnisse miteinbeziehen</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Überwachte Verzeichnisse</sys:String>

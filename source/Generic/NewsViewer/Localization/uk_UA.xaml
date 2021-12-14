@@ -4,6 +4,8 @@
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Максимальна висота новинних заміток</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Використовувати компактний переглядач новин при відкритті новин в браузері</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">Якщо увімкнено, буде використано компактний переглядач новин замість повної версії сторінки новин</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription">Show Steam news for games that are not from Steam</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">Requires that games have a Steam store link</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Відкрити новини</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Новини</sys:String>
 </ResourceDictionary>
