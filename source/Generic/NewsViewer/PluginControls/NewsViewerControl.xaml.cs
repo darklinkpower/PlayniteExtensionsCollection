@@ -37,6 +37,7 @@ namespace NewsViewer.PluginControls
         }
         IPlayniteAPI PlayniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
 
         private XmlDocument xmlDoc;
@@ -327,7 +328,7 @@ namespace NewsViewer.PluginControls
                 tokenSource.Cancel();
             }
 
-            if (newContext == null || newContext.PluginId != steamPluginId)
+            if (currentGame == null)
             {
                 timer.Stop();
             }
@@ -340,7 +341,26 @@ namespace NewsViewer.PluginControls
 
         private void UpdateNewsContext(object sender, EventArgs e)
         {
-            if (currentGame == null || currentGame.PluginId != steamPluginId)
+            timer.Stop();
+            if (currentGame == null)
+            {
+                return;
+            }
+
+            var steamId = string.Empty;
+            if (currentGame.PluginId == steamPluginId)
+            {
+                steamId = currentGame.GameId;
+            }
+            else if (SettingsModel.Settings.ShowSteamNewsNonSteam)
+            {
+                steamId = GetSteamIdFromLinks(currentGame);
+                if (string.IsNullOrEmpty(steamId))
+                {
+                    return;
+                }
+            }
+            else
             {
                 return;
             }
@@ -356,8 +376,7 @@ namespace NewsViewer.PluginControls
 
             Task.Run(() =>
             {
-                timer.Stop();
-                var rssSource = client.DownloadString(string.Format(steamRssTemplate, currentGame.GameId, steamLanguage));
+                var rssSource = client.DownloadString(string.Format(steamRssTemplate, steamId, steamLanguage));
                 if (ct.IsCancellationRequested)
                 {
                     return;
@@ -419,6 +438,25 @@ namespace NewsViewer.PluginControls
             // Replace HTML entities.
             buf = WebUtility.HtmlDecode(buf);
             return buf;
+        }
+
+        private string GetSteamIdFromLinks(Game game)
+        {
+            if (game.Links == null)
+            {
+                return null;
+            }
+
+            foreach (Link gameLink in game.Links)
+            {
+                var linkMatch = steamLinkRegex.Match(gameLink.Url);
+                if (linkMatch.Success)
+                {
+                    return linkMatch.Groups[1].Value;
+                }
+            }
+
+            return null;
         }
     }
 }

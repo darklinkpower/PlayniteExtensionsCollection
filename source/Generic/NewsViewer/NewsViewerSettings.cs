@@ -18,6 +18,9 @@ namespace NewsViewer
         private bool useCompactWebNewsViewer = true;
         public bool UseCompactWebNewsViewer { get => useCompactWebNewsViewer; set => SetValue(ref useCompactWebNewsViewer, value); }
         [DontSerialize]
+        private bool showSteamNewsNonSteam = false;
+        public bool ShowSteamNewsNonSteam { get => showSteamNewsNonSteam; set => SetValue(ref showSteamNewsNonSteam, value); }
+        [DontSerialize]
         private double descriptionMaxHeight { get; set; } = 220;
         public double DescriptionMaxHeight
         {
