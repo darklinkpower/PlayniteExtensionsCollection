@@ -7,17 +7,17 @@ function GetGameMenuItems
     $menuItem = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuItemSteamSdTrailerDescription")
     $menuItem.FunctionName = "SteamTrailers480p"
-    $menuItem.MenuSection = "Video"
+    $menuItem.MenuSection = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuSectionDescriptionVideos")
    
     $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuItemSteamHDTrailerDescription")
     $menuItem2.FunctionName = "SteamTrailersMax"
-    $menuItem2.MenuSection = "Video"
+    $menuItem2.MenuSection = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuSectionDescriptionVideos")
 
     $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
     $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription")
     $menuItem3.FunctionName = "SteamTrailersMicro"
-    $menuItem3.MenuSection = "Video"
+    $menuItem3.MenuSection = [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Trailers_MenuSectionDescriptionVideos")
 
     return $menuItem, $menuItem2, $menuItem3
 }
