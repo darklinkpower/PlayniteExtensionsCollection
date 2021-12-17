@@ -150,6 +150,24 @@ namespace ResolutionChanger
 
                 return list;
             }
+
+            public static string GetResolutionAspectRatio(int width, int height)
+            {
+                int Remainder;
+
+                var a = width;
+                var b = height;
+                while (b != 0)
+                {
+                    Remainder = a % b;
+                    a = b;
+                    b = Remainder;
+                }
+
+                var gcd = a;
+                var aspectRatio = $"{width/gcd}:{height/gcd}";
+                return aspectRatio;
+            }
         }
     }
 }

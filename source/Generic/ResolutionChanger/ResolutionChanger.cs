@@ -141,7 +141,7 @@ namespace ResolutionChanger
                 mainMenuitems.Add(
                     new MainMenuItem
                     { 
-                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value),
+                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.GetResolutionAspectRatio(resolution.Key, resolution.Value)),
                         MenuSection = "@Resolution Changer",
                         Action = a => {
                             SetResolutionFeature(resolution.Key, resolution.Value);
