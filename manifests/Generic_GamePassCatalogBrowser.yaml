@@ -49,3 +49,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Added button in catalog window to open game in Xbox app
+  - Version: 2.7
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_7.pext
+    Changelog:
+    - Updated localizations
