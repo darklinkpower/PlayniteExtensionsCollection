@@ -6,3 +6,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_0.pext
     Changelog:
     - Initial release
+  - Version: 1.1
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_1.pext
+    Changelog:
+    - Updated localizations
+    - Show aspect ratio in resolution menu items
+    - Fix menu items not correctly being sorted by resolution

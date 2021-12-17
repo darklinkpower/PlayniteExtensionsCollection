@@ -44,3 +44,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Added missing localization string
+  - Version: 2.7
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Steam_Trailers_2_7.pext
+    Changelog:
+    - Updated localizations
