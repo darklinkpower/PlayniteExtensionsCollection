@@ -18,7 +18,7 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Développeur :</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Éditeur :</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">View in Xbox app</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">Voir dans l'appli Xbox</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Voir dans le Microsoft Store</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Ajouter à la bibliothèque Playnite</sys:String>
 </ResourceDictionary>

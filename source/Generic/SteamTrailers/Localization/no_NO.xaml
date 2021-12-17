@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Videos</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">SD-trailer fra Steam</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">HD-trailer fra Steam</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Microtrailer fra Steam</sys:String>
