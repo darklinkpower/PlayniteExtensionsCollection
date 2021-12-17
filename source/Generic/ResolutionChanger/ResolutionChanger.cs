@@ -119,9 +119,6 @@ namespace ResolutionChanger
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            detectedResolutions = DisplayHelper.GetPossibleResolutions()
-                .Distinct()
-                .OrderByDescending(x => x.Key).ToList();
             mainMenuitems = new List<MainMenuItem>
             {
                 new MainMenuItem
@@ -136,6 +133,9 @@ namespace ResolutionChanger
                 }
             };
 
+            detectedResolutions = DisplayHelper.GetPossibleResolutions()
+                .Distinct()
+                .OrderByDescending(x => x.Key).ThenByDescending(x => x.Value).ToList();
             foreach (var resolution in detectedResolutions)
             {
                 mainMenuitems.Add(

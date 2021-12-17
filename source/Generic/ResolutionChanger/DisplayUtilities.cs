@@ -165,8 +165,7 @@ namespace ResolutionChanger
                 }
 
                 var gcd = a;
-                var aspectRatio = $"{width/gcd}:{height/gcd}";
-                return aspectRatio;
+                return $"{width/gcd}:{height/gcd}";
             }
         }
     }
