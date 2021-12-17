@@ -2,6 +2,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Effacer la configuration de résolution des jeux sélectionnés</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Définir la résolution de lancement à {0}x{1} ({2}) pour les jeux sélectionnés</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Only change resolution when there are not games running</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Ne changer la résolution que lorsqu'il n'y a pas de jeu en cours d'exécution</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Terminé</sys:String>
 </ResourceDictionary>
