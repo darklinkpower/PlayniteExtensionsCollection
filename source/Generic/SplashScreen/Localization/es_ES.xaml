@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Abrir gestor de vídeo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">Disable extension for the selected games</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Re-Enable extension for the selected games</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Añadir la característica para saltar la imágen splashscreen a los juegos seleccionados</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Quitar característica de exclusión para utilizar la imágen splashscreen de los juegos seleccionados</sys:String>
 
