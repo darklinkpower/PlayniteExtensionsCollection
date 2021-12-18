@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Video-Manager öffnen</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">Disable extension for the selected games</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Re-Enable extension for the selected games</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">Erweiterung für ausgewählte Spiele deaktivieren</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Erweiterung für die ausgewählten Spiele wieder aktivieren</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Füge Bild-Splashscreen-Überspringen-Funktion ausgewählten Spielen hinzu</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Entferne Bild-Splashscreen-Überspringen-Funktion von ausgewählten Spielen</sys:String>
 
