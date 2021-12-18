@@ -102,7 +102,11 @@ namespace ResolutionChanger
             //Due to issue #2634 this event is raised before the game IsRunning property
             //is reverted to false, so we need to verify that only this game is set to
             //running in all the database
-            if (!IsAnyOtherGameRunning(args.Game))
+            if (settings.Settings.ChangeResOnlyGamesNotRunning && IsAnyOtherGameRunning(args.Game))
+            {
+                logger.Debug("Another game was detected as running during game stop");
+            }
+            else if (detectedResolutions.Any())
             {
                 logger.Info("Restoring default resolution...");
                 var resChangeResult = ChangeResolution(detectedResolutions.First().Key, detectedResolutions.First().Value);
@@ -113,7 +117,7 @@ namespace ResolutionChanger
             }
             else
             {
-                logger.Info("Games were detected as running so resolution was not changed");
+                logger.Info("Did not restore resolution because none were detected on startup");
             }
         }
 
