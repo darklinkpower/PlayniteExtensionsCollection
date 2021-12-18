@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SplashScreen.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Black">
+    <Grid Background="Black" Cursor="None">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
