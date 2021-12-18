@@ -89,12 +89,19 @@ namespace SplashScreen
                 RestoreBackgroundMusic();
             }
 
-            currentSplashWindow = null;
             var game = args.Game;
+            if (game.Features != null &&
+                game.Features.Any(x => x.Name.Equals("[Splash Screen] Disable", StringComparison.OrdinalIgnoreCase)))
+            {
+                logger.Info($"{game.Name} has splashscreen disable feature");
+                return;
+            }
+
+            currentSplashWindow = null;
+            
             var splashImagePath = string.Empty;
             var logoPath = string.Empty;
             var videoPath = string.Empty;
-            logger.Info($"Game: {game.Name}");
 
             var showSplashImage = true;
             if (game.Features != null)
@@ -427,10 +434,26 @@ namespace SplashScreen
                 },
                 new MainMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemAdd-DisableFeature"),
+                    MenuSection = "@Splash Screen",
+                    Action = a => {
+                        AddImageSkipFeature("[Splash Screen] Disable");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemRemove-DisableFeature"),
+                    MenuSection = "@Splash Screen",
+                    Action = a => {
+                        RemoveImageSkipFeature("[Splash Screen] Disable");
+                    }
+                },
+                new MainMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemAdd-ImageSkipFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        AddImageSkipFeature();
+                        AddImageSkipFeature("[Splash Screen] Skip splash image");
                     }
                 },
                 new MainMenuItem
@@ -438,7 +461,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemRemove-ImageSkipFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        RemoveImageSkipFeature();
+                        RemoveImageSkipFeature("[Splash Screen] Skip splash image");
                     }
                 }
             };
@@ -462,9 +485,9 @@ namespace SplashScreen
             window.ShowDialog();
         }
 
-        private void AddImageSkipFeature()
+        private void AddImageSkipFeature(string featureName)
         {
-            GameFeature feature = PlayniteApi.Database.Features.Add("[Splash Screen] Skip splash image");
+            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
             int featureAddedCount = 0;
             foreach (var game in PlayniteApi.MainView.SelectedGames)
             {
@@ -485,9 +508,9 @@ namespace SplashScreen
             PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCSplashScreen_ExcludeFeatureAddResultsMessage"), feature.Name, featureAddedCount), "Splash Screen");
         }
 
-        private void RemoveImageSkipFeature()
+        private void RemoveImageSkipFeature(string featureName)
         {
-            GameFeature feature = PlayniteApi.Database.Features.Add("[Splash Screen] Skip splash image");
+            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
             int featureRemovedCount = 0;
             foreach (var game in PlayniteApi.MainView.SelectedGames)
             {
