@@ -222,8 +222,8 @@ namespace SplashScreen
                         if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                             (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
                         {
-                            // Closes splash screen after another 30 seconds, but the game is already starting.
-                            await Task.Delay(30000);
+                            // Closes splash screen after another 60 seconds, but the game is already starting.
+                            await Task.Delay(60000);
                             currentSplashWindow.Close();
                             currentSplashWindow = null;
                         }
@@ -285,7 +285,7 @@ namespace SplashScreen
                 if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                     (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
                 {
-                    Task.Delay(30000).ContinueWith(_ =>
+                    Task.Delay(60000).ContinueWith(_ =>
                     {
                         // It needs to be checked if window still exists, in case it was closed manually or
                         // closed by the extension with game close
