@@ -39,6 +39,17 @@ namespace SplashScreen
             };
         }
 
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            if (!settings.Settings.ControllerNoticeShowed)
+            {
+                PlayniteApi.Dialogs.ShowMessage("Important issue, please read!\n\nCurrently there is an issue in Fullscreen mode where Playnite doesn't get controller input after returning from the game when the extension is installed.\nIf you experience this issue, please go to the plugin settings to use a temporary workaround until this issue is fixed.",
+                    "ExtraMetadataLoader");
+                settings.Settings.ControllerNoticeShowed = true;
+                SavePluginSettings(settings.Settings);
+            }
+        }
+
         private void MuteBackgroundMusic()
         {
             if (PlayniteApi.ApplicationInfo.Mode != ApplicationMode.Fullscreen)
