@@ -53,3 +53,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_7.pext
     Changelog:
     - Updated localizations
+  - Version: 2.8
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_8.pext
+    Changelog:
+    - Updated localizations
+    - Added functionality to disable extension for specific games
+    - Disable mouse cursor when splashscreen is shown
+    - Increase automatic close time of SplashScreen from 30 to 60 seconds
+    - Added instructions for temporary fix for Fullscreen controller input issue after closing game in extension settings
