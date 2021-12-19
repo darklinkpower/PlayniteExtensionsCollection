@@ -203,7 +203,7 @@ namespace SplashScreen
                     currentSplashWindow.Dispatcher.InvokeShutdown();
 
                     // Unblock main thread and let Playnite start a game. Works if window is closed manually or by event
-                    stopBlockingEvent.Set();
+                    stopBlockingEvent?.Set();
                     currentSplashWindow = null;
                 };
 
@@ -217,7 +217,7 @@ namespace SplashScreen
                         await Task.Delay(3000);
 
                         // Unblock main thread and let Playnite start a game.
-                        stopBlockingEvent.Set();
+                        stopBlockingEvent?.Set();
 
                         if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                             (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
@@ -231,7 +231,7 @@ namespace SplashScreen
                     else
                     {
                         // Unblock main thread and let Playnite start a game.
-                        stopBlockingEvent.Set();
+                        stopBlockingEvent?.Set();
                         currentSplashWindow.Close();
                     }
                 };
@@ -246,6 +246,8 @@ namespace SplashScreen
 
             // Blocks execution until the event occurs from splash window
             stopBlockingEvent.WaitOne();
+            stopBlockingEvent.Dispose();
+            stopBlockingEvent = null;
         }
 
         private void CreateSplashImageWindow(string splashImagePath, string logoPath)
@@ -273,13 +275,13 @@ namespace SplashScreen
                     currentSplashWindow.Dispatcher.InvokeShutdown();
 
                     // Unblock main thread and let Playnite start a game. Works if window is closed manually or by event
-                    stopBlockingEvent.Set();
+                    stopBlockingEvent?.Set();
                     currentSplashWindow = null;
                 };
 
                 Task.Delay(3000).ContinueWith(_ =>
                 {
-                    stopBlockingEvent.Set();
+                    stopBlockingEvent?.Set();
                 });
 
                 if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
@@ -305,6 +307,8 @@ namespace SplashScreen
             splashWindowThread.IsBackground = true;
             splashWindowThread.Start();
             stopBlockingEvent.WaitOne();
+            stopBlockingEvent.Dispose();
+            stopBlockingEvent = null;
         }
 
         private string GetSplashVideoPath(Game game)
