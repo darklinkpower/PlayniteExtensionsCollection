@@ -1,0 +1,43 @@
+name: Bug report
+title: "[Extension name] Bug description"
+description: Create a report to help us improve
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Check for existing issue**
+        Please use issue search in the repository if an issue for this has already been opened to prevent creating duplicates.
+
+        **Instructions**
+        Change the placeholder title automatically filled in the template and then provide the information requested in the different sections. Extensions marked with a * are obligatory.
+  - type: textarea
+    attributes:
+      label: Extension name
+      description: Indicate the extension for which extension this issue is for
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: If it''s not clear from the description how to reproduce the issue please add clear steps to reproduce the behavior.
+    validations:
+      required: false
+  - type: input
+    attributes:
+      label: Extensions log
+      description: "Attach Playnite's Extensions.log file. It is located in Playnite's installation directory in the portable version or in %AppData%\Playnite (Can be pasted in Explorer) in the installed version"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+    validations:
+      required: false

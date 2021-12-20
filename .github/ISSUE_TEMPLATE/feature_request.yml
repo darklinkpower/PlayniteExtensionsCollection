@@ -1,0 +1,31 @@
+name: Feature request
+title: "[Extension name] Feature description"
+description: Suggest an idea for this project
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Check for existing issue**
+        Please use issue search in the repository if an issue for this has already been opened to prevent creating duplicates.
+
+        **Instructions**
+        Change the placeholder title automatically filled in the template and then provide the information requested in the different sections. Extensions marked with a * are obligatory.
+  - type: textarea
+    attributes:
+      label: Extension name
+      description: Indicate the extension for which extension this issue is for
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Feature Description
+      description: A clear and concise description of the suggested feature.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your suggestion.
+    validations:
+      required: false
