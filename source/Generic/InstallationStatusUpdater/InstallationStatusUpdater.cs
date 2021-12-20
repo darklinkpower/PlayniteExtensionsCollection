@@ -322,6 +322,20 @@ namespace InstallationStatusUpdater
                 return false;
             }
 
+            //Games added as Microsoft Store Application use explorer and arguments to launch the game
+            if (gameAction.Path.Equals("explorer.exe", StringComparison.OrdinalIgnoreCase))
+            {
+                //If directory has been set, it can be used to detect if game is installed or not
+                if (!string.IsNullOrEmpty(installDirectory))
+                {
+                    return Directory.Exists(installDirectory);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
             if (driveRegex.IsMatch(gameAction.Path))
             {
                 return File.Exists(gameAction.Path);
