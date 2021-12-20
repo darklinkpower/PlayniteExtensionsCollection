@@ -10,7 +10,7 @@ body:
         Please use issue search in the repository to check if an issue for this has already been opened to prevent creating duplicates.
 
         **Instructions**
-        Change the placeholder title automatically filled in the template and then provide the information requested in the different sections. Extensions marked with a * are obligatory.
+        Change the placeholder title automatically filled in the template and then provide the information requested in the different sections. Sections marked with a * are obligatory.
   - type: textarea
     attributes:
       label: Extension name
