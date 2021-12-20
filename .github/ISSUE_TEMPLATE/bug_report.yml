@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         **Check for existing issue**
-        Please use issue search in the repository if an issue for this has already been opened to prevent creating duplicates.
+        Please use issue search in the repository to check if an issue for this has already been opened to prevent creating duplicates.
 
         **Instructions**
         Change the placeholder title automatically filled in the template and then provide the information requested in the different sections. Extensions marked with a * are obligatory.
