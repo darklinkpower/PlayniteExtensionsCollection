@@ -11,7 +11,7 @@ body:
 
         **Instructions**
         Change the placeholder title automatically filled in the template and then provide the information requested in the different sections. Sections marked with a * are obligatory.
-  - type: textarea
+  - type: input
     attributes:
       label: Extension name
       description: Indicate the extension for which extension this issue is for
