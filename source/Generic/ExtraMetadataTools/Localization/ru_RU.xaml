@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Set profile picture</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Set background video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme &quot;{0}&quot; updated.
-Please restart Playnite to make changes take effect.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Error converting image file to png. Error: &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Profile Picture set.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Background video set.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Установить изображение профиля</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Установить фоновое видео</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Конфигурация Extra Metadata для шаблона &quot;{0}&quot; обновлена.
+Пожалуйста, перезапустите Playnite чтобы изменения вступили в силу.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Ошибка конвертации файла изображения в png. Ошибка: &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Изображение профиля установлено.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Фоновое видео установлено.</sys:String>
 </ResourceDictionary>
