@@ -2,7 +2,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Engine_Checker_MenuItemAddTagSelectedGamesDescription">Добавить тег игрового движка для выбранных игр</sys:String>
     <sys:String x:Key="LOCGame_Engine_Checker_PcgwDownloadErrorMessage">Не удалось загрузить информацию об игре &quot;{0}&quot; из PCGW. Ошибка: {1}</sys:String>
-    <sys:String x:Key="LOCGame_Engine_Checker_ResultsMessage" xml:space="preserve">Finished.
-Added engine tag to {0} game(s).</sys:String>
-    <sys:String x:Key="LOCGame_Engine_Checker_SteamAppListDownloadErrorMessage">Error downloading Steam AppList database. Error: {0}</sys:String>
+    <sys:String x:Key="LOCGame_Engine_Checker_ResultsMessage" xml:space="preserve">Тег игрового движка добавлен к {0} играм.</sys:String>
+    <sys:String x:Key="LOCGame_Engine_Checker_SteamAppListDownloadErrorMessage">Ошибка загрузки базы данных Steam AppList. Ошибка: {0}</sys:String>
 </ResourceDictionary>
