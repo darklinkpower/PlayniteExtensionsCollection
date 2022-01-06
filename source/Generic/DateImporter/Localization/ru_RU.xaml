@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Import dates of selected Epic, GOG, Origin and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Import dates of all Epic, GOG, Origin and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Set added date of selected games manually</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Импорт дат выбранных игр Epic, GOG, Origin и Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Импорт дат всех игр Epic, GOG, Origin и Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Установить дату добавления к выбранным играм вручную</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Import dates of selected Steam games</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Import dates of all Steam games</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Export Steam licenses list</sys:String>
