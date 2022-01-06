@@ -101,7 +101,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Максимальная ширина:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Максимальная высота:</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Обновить теги статуса дополнительных метаданных...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Обновление тегов статуса дополнительных метаданных...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">Тег будет добавлен ко всем играм в базе данных, в которых отсутствует конкретный актив</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Обновить тег, указывающий на отсутствие в игре логотипа при обновлении библиотеки</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Обновить тег, указывающий на отсутствие в игре видео при обновлении библиотеки</sys:String>
