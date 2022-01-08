@@ -1,8 +1,8 @@
-﻿using Gameloop.Vdf;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using SteamKit2;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +19,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SteamGameTransferUtility
 {
@@ -30,13 +29,14 @@ namespace SteamGameTransferUtility
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         public IPlayniteAPI PlayniteApi { get; set; } = null;
+        private readonly string steamInstallationDirectory;
 
         public WindowView()
         {
             InitializeComponent();
-         
-            string steamInstallationDirectory = GetSteamInstallationPath();
-            List<string> steamLibraries = GetSteamLibraries(steamInstallationDirectory);
+
+            steamInstallationDirectory = GetSteamInstallationPath();
+            List<string> steamLibraries = GetLibraryFolders();
             cmbTargetLibrarySelection.ItemsSource = steamLibraries;
         }
 
@@ -67,35 +67,65 @@ namespace SteamGameTransferUtility
             return "c:\\program files (x86)\\steam";
         }
 
-        public List<string> GetSteamLibraries(string steamInstallationPath)
+        internal static List<string> GetLibraryFolders(KeyValue foldersData)
         {
-            List<string> libraryDirectories = new List<string>
+            var dbs = new List<string>();
+            foreach (var child in foldersData.Children)
             {
-                System.IO.Path.Combine(steamInstallationPath, "steamapps")
-            };
-            string libraryVdfPath = System.IO.Path.Combine(steamInstallationPath, "steamapps", "libraryfolders.vdf");
-            dynamic vdf = VdfConvert.Deserialize(File.ReadAllText(libraryVdfPath));
-            for (int i = 1; true; i++)
-            {
-                string libraryIndex = i.ToString();
-                var libraryPath = vdf.Value[libraryIndex];
-                if (libraryPath != null)
+                if (int.TryParse(child.Name, out int _))
                 {
-                    string libraryAppsPath = System.IO.Path.Combine(libraryPath.ToString(), "steamapps");
-                    logger.Info("Found Steam library: " + libraryAppsPath);
-                    if (!Directory.Exists(libraryAppsPath))
+                    if (!string.IsNullOrEmpty(child.Value))
                     {
-                        logger.Info("Steam library doesn't exist: " + libraryAppsPath);
-                        continue;
+                        dbs.Add(child.Value);
                     }
-                    libraryDirectories.Add(libraryAppsPath);
-                }
-                else
-                {
-                    break;
+                    else if (child.Children.HasItems())
+                    {
+                        var path = child.Children.FirstOrDefault(a => a.Name?.Equals("path", StringComparison.OrdinalIgnoreCase) == true);
+                        if (!string.IsNullOrEmpty(path.Value))
+                        {
+                            dbs.Add(Path.Combine(path.Value, "steamapps"));
+                        }
+                    }
                 }
             }
-            return libraryDirectories;
+
+            return dbs;
+        }
+
+        private List<string> GetLibraryFolders()
+        {
+            var dbs = new List<string>();
+            var configPath = Path.Combine(steamInstallationDirectory, "steamapps", "libraryfolders.vdf");
+            if (!File.Exists(configPath))
+            {
+                return dbs;
+            }
+
+            try
+            {
+                using (var fs = new FileStream(configPath, FileMode.Open, FileAccess.Read))
+                {
+                    var kv = new KeyValue();
+                    kv.ReadAsText(fs);
+                    foreach (var dir in GetLibraryFolders(kv))
+                    {
+                        if (Directory.Exists(dir))
+                        {
+                            dbs.Add(dir);
+                        }
+                        else
+                        {
+                            logger.Warn($"Found external Steam directory, but path doesn't exists: {dir}");
+                        }
+                    }
+                }
+            }
+            catch (Exception e) when (!Debugger.IsAttached)
+            {
+                logger.Error(e, "Failed to get additional Steam library folders.");
+            }
+
+            return dbs;
         }
 
         public void TransferSteamGames(List<string> steamLibraries, string targetLibraryPath, bool deleteSourceGame, bool restartSteam)
@@ -341,7 +371,7 @@ namespace SteamGameTransferUtility
                 dblSByte = bytes / 1024.0;
             }
 
-            return String.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
+            return string.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
         }
 
         private async void RestartSteam()
@@ -349,7 +379,7 @@ namespace SteamGameTransferUtility
             string steamInstallationPath = System.IO.Path.Combine(GetSteamInstallationPath(), "steam.exe");
             if (!File.Exists(steamInstallationPath))
             {
-                logger.Error(String.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));
+                logger.Error(string.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));
                 return;
             }
             bool isSteamRunning = GetIsSteamRunning();
