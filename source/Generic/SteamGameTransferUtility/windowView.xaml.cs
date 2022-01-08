@@ -42,16 +42,16 @@ namespace SteamGameTransferUtility
 
         private void BtnOpenLibrary_Click(object sender, RoutedEventArgs e)
         {
-            string targetLibraryPath = cmbTargetLibrarySelection.SelectedValue.ToString();
-            System.Diagnostics.Process.Start(targetLibraryPath);
+            var targetLibraryPath = cmbTargetLibrarySelection.SelectedValue.ToString();
+            Process.Start(targetLibraryPath);
         }
 
         private void BtnProcess_Click(object sender, RoutedEventArgs e)
         {
-            string targetLibraryPath = cmbTargetLibrarySelection.SelectedValue.ToString();
+            var targetLibraryPath = cmbTargetLibrarySelection.SelectedValue.ToString();
             List<string> steamLibraries = cmbTargetLibrarySelection.Items.OfType<string>().ToList();
-            bool deleteSourceGame = cbDeleteSourceGame.IsChecked ?? true;
-            bool restartSteam = cbRestartSteam.IsChecked ?? true;
+            var deleteSourceGame = cbDeleteSourceGame.IsChecked ?? true;
+            var restartSteam = cbRestartSteam.IsChecked ?? true;
             TransferSteamGames(steamLibraries, targetLibraryPath, deleteSourceGame, restartSteam);
         }
 
@@ -138,11 +138,11 @@ namespace SteamGameTransferUtility
             }
             
             FileInfo t = new FileInfo(targetLibraryPath);
-            string targetDrive = System.IO.Path.GetPathRoot(t.FullName).ToLower();
+            var targetDrive = Path.GetPathRoot(t.FullName).ToLower();
 
-            int copiedGamesCount = 0;
-            int skippedGamesCount = 0;
-            int deletedSourceFilesCount = 0;
+            var copiedGamesCount = 0;
+            var skippedGamesCount = 0;
+            var deletedSourceFilesCount = 0;
             foreach (Game game in gameDatabase)
             {
                 logger.Info(string.Format("Processing game: \"{0}\"", game.Name));
@@ -162,7 +162,7 @@ namespace SteamGameTransferUtility
                 var sourceLibraryPath = steamLibraries.Where(x => x.StartsWith(sourceDrive, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                 if (sourceLibraryPath == null)
                 {
-                    string errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_SteamLibNotDetected"), game.Name, sourceDrive);
+                    var errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_SteamLibNotDetected"), game.Name, sourceDrive);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
@@ -170,11 +170,11 @@ namespace SteamGameTransferUtility
                 }
                 
                 // Check if game source manifest exists
-                string gameManifest = string.Format("appmanifest_{0}.acf", game.GameId);
-                string sourceManifestPath = System.IO.Path.Combine(sourceLibraryPath, gameManifest);
+                var gameManifest = string.Format("appmanifest_{0}.acf", game.GameId);
+                var sourceManifestPath = Path.Combine(sourceLibraryPath, gameManifest);
                 if (!File.Exists(sourceManifestPath))
                 {
-                    string errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected"), game.Name, sourceManifestPath);
+                    var errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected"), game.Name, sourceManifestPath);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
@@ -182,10 +182,10 @@ namespace SteamGameTransferUtility
                 }
 
                 // Check if game source directory exists
-                string sourceGameDirectoryPath = System.IO.Path.Combine(sourceLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
+                var sourceGameDirectoryPath = Path.Combine(sourceLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
                 if (!Directory.Exists(sourceGameDirectoryPath))
                 {
-                    string errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected"), game.Name, sourceGameDirectoryPath);
+                    var errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected"), game.Name, sourceGameDirectoryPath);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
@@ -193,15 +193,15 @@ namespace SteamGameTransferUtility
                 }
 
                 // Check if game manifest already exists in target library
-                string targetManifestPath = System.IO.Path.Combine(targetLibraryPath, gameManifest);
+                var targetManifestPath = System.IO.Path.Combine(targetLibraryPath, gameManifest);
                 if (File.Exists(targetManifestPath))
                 {
-                    int sourceBuildId = Int32.Parse(GetAcfAppSubItem(sourceManifestPath, "buildid"));
-                    int targetBuildId = Int32.Parse(GetAcfAppSubItem(targetManifestPath, "buildid"));
+                    var sourceBuildId = int.Parse(GetAcfAppSubItem(sourceManifestPath, "buildid"));
+                    var targetBuildId = int.Parse(GetAcfAppSubItem(targetManifestPath, "buildid"));
 
                     if (sourceBuildId <= targetBuildId)
                     {
-                        string errorMessage = string.Format("Game: {0}. Equal or greater BuldId. Source BuildId {1} - Target BuildId {2}", game.Name, sourceBuildId.ToString(), targetBuildId.ToString());
+                        var errorMessage = string.Format("Game: {0}. Equal or greater BuldId. Source BuildId {1} - Target BuildId {2}", game.Name, sourceBuildId.ToString(), targetBuildId.ToString());
                         logger.Info(errorMessage);
                         skippedGamesCount++;
 
@@ -209,7 +209,7 @@ namespace SteamGameTransferUtility
                         {
                             Directory.Delete(sourceGameDirectoryPath, true);
                             File.Delete(sourceManifestPath);
-                            logger.Info("Deleted source files");
+                            logger.Info($"Deleted source files of game {game.Name} in {sourceGameDirectoryPath}");
                             deletedSourceFilesCount++;
                         }
                         continue;
@@ -217,11 +217,10 @@ namespace SteamGameTransferUtility
                 }
 
                 //Calculate size of source game directory
-                string sourceDirectorySize = CalculateSize(sourceGameDirectoryPath);
-                
+                var sourceDirectorySize = CalculateSize(sourceGameDirectoryPath);
                 var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
-                    string targetGameDirectoryPath = System.IO.Path.Combine(targetLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
+                    string targetGameDirectoryPath = Path.Combine(targetLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
                     if (Directory.Exists(targetGameDirectoryPath))
                     {
                         Directory.Delete(targetGameDirectoryPath, true);
@@ -245,7 +244,7 @@ namespace SteamGameTransferUtility
                 }, new GlobalProgressOptions(string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame"), game.Name, sourceDirectorySize)));
             }
 
-            string results = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ResultsDialogMessage"), copiedGamesCount.ToString(), skippedGamesCount.ToString(), deletedSourceFilesCount.ToString());
+            var results = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ResultsDialogMessage"), copiedGamesCount.ToString(), skippedGamesCount.ToString(), deletedSourceFilesCount.ToString());
             PlayniteApi.Dialogs.ShowMessage(results, "Steam Game Transfer Utility");
 
             if (restartSteam == true && (copiedGamesCount > 0 || deletedSourceFilesCount > 0))
