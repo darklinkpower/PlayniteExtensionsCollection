@@ -133,7 +133,7 @@ namespace SteamGameTransferUtility
             var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary)).Where(g => g.IsInstalled == true);
             if (gameDatabase.Count() == 0)
             {
-                PlayniteApi.Dialogs.ShowErrorMessage("There are no installed Steam games selected", "Steam Game Transfer Utility");
+                PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel"), "Steam Game Transfer Utility");
                 return;
             }
             
@@ -149,20 +149,20 @@ namespace SteamGameTransferUtility
 
                 // Verify that source and target library are not in the same drive
                 FileInfo s = new FileInfo(game.InstallDirectory);
-                string sourceDrive = System.IO.Path.GetPathRoot(s.FullName).ToLower();
+                var sourceDrive = System.IO.Path.GetPathRoot(s.FullName).ToLower();
                 if (sourceDrive == targetDrive)
                 {
-                    string errorMessage = string.Format("Source and target library are the same drive: \"{0}\"", sourceDrive);
+                    var errorMessage = string.Format("Source and target library are the same drive: \"{0}\"", sourceDrive);
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
                     continue;
                 }
                 
                 // Get steam source library that contains game
-                string sourceLibraryPath = steamLibraries.Where(x => x.StartsWith(sourceDrive, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var sourceLibraryPath = steamLibraries.Where(x => x.StartsWith(sourceDrive, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                 if (sourceLibraryPath == null)
                 {
-                    string errorMessage = string.Format("Game: {0}. Error: Steam library on drive {1} not detected", game.Name, sourceDrive);
+                    string errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_SteamLibNotDetected"), game.Name, sourceDrive);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
@@ -174,9 +174,7 @@ namespace SteamGameTransferUtility
                 string sourceManifestPath = System.IO.Path.Combine(sourceLibraryPath, gameManifest);
                 if (!File.Exists(sourceManifestPath))
                 {
-                    string errorMessage = string.Format("Game: {0}. Error: Source manifest doesn't exist in {1}" +
-                        "\n\nThis issue can be happen if you used this utility on this game and you have not restarted Steam" +
-                        " and updated your Playnite library to reflect the changes", game.Name, sourceManifestPath);
+                    string errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected"), game.Name, sourceManifestPath);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
@@ -187,9 +185,7 @@ namespace SteamGameTransferUtility
                 string sourceGameDirectoryPath = System.IO.Path.Combine(sourceLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
                 if (!Directory.Exists(sourceGameDirectoryPath))
                 {
-                    string errorMessage = string.Format("Game: {0}. Error: Source directory doesn't exist in {1}" +
-                        "\n\nThis issue can be happen if you used this utility on this game and you have not restarted Steam" +
-                        " and updated your Playnite library to reflect the changes", game.Name, sourceGameDirectoryPath);
+                    string errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected"), game.Name, sourceGameDirectoryPath);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
                     logger.Warn(errorMessage);
                     skippedGamesCount++;
@@ -246,18 +242,10 @@ namespace SteamGameTransferUtility
                         deletedSourceFilesCount++;
                     }
 
-                }, new GlobalProgressOptions(string.Format("Processing game: {0}\n\nGame size: {1}", game.Name, sourceDirectorySize)));
+                }, new GlobalProgressOptions(string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame"), game.Name, sourceDirectorySize)));
             }
 
-            string results = string.Format("Finished.\n\nCopied games: {0}\nSkipped games: {1}", copiedGamesCount.ToString(), skippedGamesCount.ToString());
-            if (deleteSourceGame == true)
-            {
-                results += string.Format("\nDeleted source games: {0}", deletedSourceFilesCount.ToString());
-            }
-            if (copiedGamesCount > 0 || deletedSourceFilesCount > 0)
-            {
-                results += "\n\nUpdate your Playnite library after restarting Steam to reflect the changes";
-            }
+            string results = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ResultsDialogMessage"), copiedGamesCount.ToString(), skippedGamesCount.ToString(), deletedSourceFilesCount.ToString());
             PlayniteApi.Dialogs.ShowMessage(results, "Steam Game Transfer Utility");
 
             if (restartSteam == true && (copiedGamesCount > 0 || deletedSourceFilesCount > 0))
