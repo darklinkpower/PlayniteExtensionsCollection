@@ -6,14 +6,14 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Видалити вихідну гру після копіювання гри або якщо гра виявлена в цільовій бібліотеці</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Цільова бібліотека:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Відкрити</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Ігри Steam:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Копіювати обрані ігри Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Копіювати всі ігри Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">Немає вибрано жодної встановленої гри Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Гра: {0}. Помилка: бібліотеку Steam на диску {1} не виявлено</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Гра: {0}. Помилка: маніфест джерела не існує в &quot;{1}&quot;
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
+Ця проблема можлива, якщо ви використали цей інструмент на цій грі і ви не перезапустили Steam і не оновили бібліотеку Playnite для відображення змін</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Game: {0}. Error: Source directory doesn't exist in &quot;{1}&quot;
 
 This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
