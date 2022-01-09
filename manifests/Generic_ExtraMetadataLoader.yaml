@@ -212,3 +212,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_27.pext
     Changelog:
     - Updated localizations
+  - Version: 1.28
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_28.pext
+    Changelog:
+    - Updated localizations
+    - Added options to configure if logos marked as humor or nsfw should be included in searches

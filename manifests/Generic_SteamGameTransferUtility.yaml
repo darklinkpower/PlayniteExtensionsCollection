@@ -39,3 +39,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_5.pext
     Changelog:
     - Updated localizations
+  - Version: 2.6
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_6.pext
+    Changelog:
+    - Updated localizations
+    - Fix extension not working with new Steam library manifest format
+    - Added functionality to select which games to copy in extension window
