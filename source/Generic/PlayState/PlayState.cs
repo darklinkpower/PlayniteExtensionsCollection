@@ -256,27 +256,28 @@ namespace PlayState
                 splashWindowViewModel.GameName = currentGame.Name;
                 isSuspended = false;
                 logger.Debug($"Changed game to {currentGame.Name} game processes");
-                
-                if (game.GameActions != null && game.GameActions.Count > 0)
+                var sourceAction = args.SourceAction;
+                if (sourceAction.Type == GameActionType.Emulator)
                 {
-                    if (game.GameActions[0].Type == GameActionType.Emulator)
+                    var emulatorProfileId = sourceAction.EmulatorProfileId;
+                    if (emulatorProfileId.StartsWith("#builtin_"))
                     {
-                        var emulator = PlayniteApi.Database.Emulators[game.GameActions[0].EmulatorId];
-                        if (emulator != null)
-                        {
-                            //TODO Somehow get BuiltinProfiles executables
-                            var profile = emulator.CustomProfiles.FirstOrDefault(p => p.Id == game.GameActions[0].EmulatorProfileId);
-                            if (profile != null)
-                            {
-                                gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
-                                if (gameProcesses.Count > 0)
-                                {
-                                    CreateGameStopwatchTuple(game);
-                                }
-                            }
-                        }
-                        return;
+                        //Currently it isn't possible to obtain the emulator path
+                        //for emulators using Builtin profiles
+                        //return;
                     }
+
+                    var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
+                    var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
+                    if (profile != null)
+                    {
+                        gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
+                        if (gameProcesses.Count > 0)
+                        {
+                            CreateGameStopwatchTuple(game);
+                        }
+                    }
+                    return;
                 }
 
                 if (string.IsNullOrEmpty(game.InstallDirectory))
@@ -286,7 +287,12 @@ namespace PlayState
                 gameInstallDir = game.InstallDirectory.ToLower();
 
                 // Fix for some games that take longer to start, even when already detected as running
-                await Task.Delay(5000);
+                await Task.Delay(15000);
+                if (CurrentGameChanged(game))
+                {
+                    return;
+                }
+
                 gameProcesses = GetProcessesWmiQuery(true);
                 if (gameProcesses.Count > 0)
                 {
