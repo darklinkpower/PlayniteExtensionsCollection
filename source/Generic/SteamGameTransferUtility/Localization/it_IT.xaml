@@ -6,7 +6,9 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Elimina il gioco sorgente dopo la copia del gioco o se il gioco viene rilevato nella libreria di destinazione</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Libreria di destinazione:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Apri</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copia i giochi Steam selezionati nella libreria Steam selezionata</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;
