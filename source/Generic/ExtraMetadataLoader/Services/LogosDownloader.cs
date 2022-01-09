@@ -22,8 +22,8 @@ namespace ExtraMetadataLoader.Services
         private readonly ExtraMetadataHelper extraMetadataHelper;
         private const string steamLogoUriTemplate = @"https://steamcdn-a.akamaihd.net/steam/apps/{0}/logo.png";
         private const string sgdbGameSearchUriTemplate = @"https://www.steamgriddb.com/api/v2/search/autocomplete/{0}";
-        private const string sgdbLogoRequestEnumUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/{0}/{1}";
-        private const string sgdbLogoRequestIdUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/game/{0}";
+        private const string sgdbLogoRequestEnumUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/{0}/{1}?";
+        private const string sgdbLogoRequestIdUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/game/{0}?";
 
         public LogosDownloader(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings, ExtraMetadataHelper extraMetadataHelper)
         {
@@ -218,11 +218,34 @@ namespace ExtraMetadataLoader.Services
             return false;
         }
 
+        private string ApplySgdbLogoFilters(string uri)
+        {
+            if (settings.SgdbIncludeHumor)
+            {
+                uri += "&nsfw=any";
+            }
+            else
+            {
+                uri += "&nsfw=false";
+            }
+
+            if (settings.SgdbIncludeNsfw)
+            {
+                uri += "&humor=any";
+            }
+            else
+            {
+                uri += "&humor=false";
+            }
+
+            return uri;
+        }
+
         private string GetSgdbRequestUrl(Game game, bool isBackgroundDownload)
         {
             if (SteamCommon.IsGameSteamGame(game))
             {
-                return string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId.ToString());
+                return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId.ToString()));
             }
             else
             {
@@ -234,14 +257,14 @@ namespace ExtraMetadataLoader.Services
                 {
                     if (exactMatches?.ToList().Count > 0)
                     {
-                        return string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString());
+                        return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString()));
                     }
                 }
                 else
                 {
                     if (exactMatches?.ToList().Count == 1)
                     {
-                        return string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString());
+                        return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString()));
                     }
 
                     var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
@@ -251,7 +274,7 @@ namespace ExtraMetadataLoader.Services
                         ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
                     if (selectedGame != null)
                     {
-                        return string.Format(sgdbLogoRequestIdUriTemplate, selectedGame.Description);
+                        return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestIdUriTemplate, selectedGame.Description));
                     }
                 }
             }

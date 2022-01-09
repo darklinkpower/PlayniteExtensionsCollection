@@ -142,7 +142,15 @@
                             <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel}" Command="{Binding OpenSgdbApiSiteCommand}" />
                             <TextBox Margin="10,0,0,0" Text="{Binding Settings.SgdbApiKey}" />
                         </DockPanel>
-                        <CheckBox IsChecked="{Binding Settings.SteamDlOnlyProcessPcGames, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel}" Margin="0,0,0,10"/>
+                        <StackPanel Margin="20,0,0,0">
+                            <CheckBox IsChecked="{Binding Settings.SgdbIncludeNsfw, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel}"
+                                      Margin="0,0,0,10"/>
+                            <CheckBox Margin="0,0,0,10"
+                                  IsChecked="{Binding Settings.SgdbIncludeHumor}"
+                                  Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel}" />
+                        </StackPanel>
+                        <CheckBox IsChecked="{Binding Settings.SteamDlOnlyProcessPcGames, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel}" Margin="0,10,0,10"/>
                         <CheckBox Margin="0,0,0,10" Name="CbDownloadLogosOnLibUpdate"
                                   IsChecked="{Binding Settings.DownloadLogosOnLibUpdate}"
                                   Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel}" />

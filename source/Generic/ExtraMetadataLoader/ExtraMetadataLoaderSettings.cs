@@ -376,6 +376,30 @@ namespace ExtraMetadataLoader
         }
 
         [DontSerialize]
+        private bool sgdbIncludeHumor = false;
+        public bool SgdbIncludeHumor
+        {
+            get => sgdbIncludeHumor;
+            set
+            {
+                sgdbIncludeHumor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool sgdbIncludeNsfw = false;
+        public bool SgdbIncludeNsfw
+        {
+            get => sgdbIncludeNsfw;
+            set
+            {
+                sgdbIncludeNsfw = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
         private bool downloadLogosOnLibUpdate = true;
         public bool DownloadLogosOnLibUpdate
         {
