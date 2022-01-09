@@ -38,8 +38,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">Використовувати альтернативний відео-плеєр (вимагає перезапуску та підтримки в користувацькій темі)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">API ключ SteamGridDB:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">Отримати API ключ</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Include assets marked as &quot;Humor&quot; in searches</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Include assets marked as &quot;Adult Content&quot; in searches</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Включати метадані помічені як &quot;Гумор&quot; в пошуку</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Включати метадані помічені як &quot;Для дорослих&quot; в пошуку</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Завантажити відео нещодавно доданих ігор при оновленні бібліотеки</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Завантажити мікро-відео нещодавно доданих ігор при оновленні бібліотеки</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Завантажити логотипи нещодавно доданих ігор при оновленні бібліотеки</sys:String>
