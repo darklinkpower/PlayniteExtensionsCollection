@@ -38,6 +38,7 @@ function Get-DownloadString
         $errorMessage = $_.Exception.Message
         $__logger.Info("Error downloading file `"$url`". Error: $errorMessage")
         $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage") -f $url, $errorMessage));
+        $webClient.Dispose()
         return
     }
 }
@@ -145,6 +146,57 @@ function Get-SteamAppId
     }
 }
 
+function Get-StorePageTags {
+    param (
+        $appId,
+        $tagsLimit
+    )
+    
+    $tags = [System.Collections.Generic.List[string]]::New()
+    $steamStoreUrl = "https://store.steampowered.com/app/{0}/" -f $appId
+
+    try {
+        $cookieContainer = [System.Net.CookieContainer]::New(2)
+        
+        $cookie = [System.Net.Cookie]::New("wants_mature_content", "1", "/app/" + $appId, "store.steampowered.com")
+        $cookieContainer.add($cookie)
+
+        $cookie = [System.Net.Cookie]::New("birthtime", "628495201", "/", "store.steampowered.com")
+        $cookieContainer.add($cookie)
+        
+        $request = [System.Net.HttpWebRequest]::Create($steamStoreUrl)
+        $request.CookieContainer = $cookieContainer
+        $request.Timeout = 15000
+
+        $response = $request.GetResponse()
+        $responseStream = $response.GetResponseStream()
+        $streamReader = [System.IO.StreamReader]::New($responseStream)
+        $steamStoreUrlSource = $streamReader.ReadToEnd()
+
+        $response.Close()
+        $streamReader.Close()
+        $response.Dispose()
+        $streamReader.Dispose()
+    } catch {
+        $errorMessage = $_.Exception.Message
+        $__logger.Info("Error downloading file `"$steamStoreUrl`". Error: $errorMessage")
+        $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage") -f $steamStoreUrl, $errorMessage));
+        $response.Close()
+        $response.Dispose()
+        $streamReader.Close()
+        $streamReader.Dispose()
+    }
+
+    $sourceRegex = ([regex]'InitAppTagModal\([^[]+([^\n]+)').Matches($steamStoreUrlSource)
+    if ($null -ne $sourceRegex.Groups)
+    {
+        $gameTags = $sourceRegex.Groups[1].Value -replace "..$" | ConvertFrom-Json
+        $gameTags | Select-Object -First $tagsLimit | Select-Object -Property "name" | ForEach-Object {$tags.Add($_.name)}
+    }
+
+    return $tags
+}
+
 function Get-SteamTags
 {
     param (
@@ -161,64 +213,53 @@ function Get-SteamTags
     {
         Set-GlobalAppList $false
     }
-    $regex = 'InitAppTagModal\([^[]+([^\n]+)'
     $counterTagsAdded = 0
+    $webClient = New-Object System.Net.WebClient
+    $webClient.Encoding = [System.Text.Encoding]::UTF8
 
     foreach ($game in $gameDatabase) {
         # Wait time to prevent reaching requests limit
         Start-Sleep -Milliseconds 1500
 
         $appId = Get-SteamAppId $game
-        if (!$appId)
+        if ($null -eq $appId)
         {
             continue
         }
-        $steamStoreUrl = "https://store.steampowered.com/app/{0}/" -f $appId
 
-        try {
-            $cookieContainer = [System.Net.CookieContainer]::New(2)
-            
-            $cookie = [System.Net.Cookie]::New("wants_mature_content", "1", "/app/" + $appId, "store.steampowered.com")
-            $cookieContainer.add($cookie)
-
-            $cookie = [System.Net.Cookie]::New("birthtime", "628495201", "/", "store.steampowered.com")
-            $cookieContainer.add($cookie)
-            
-            $request = [System.Net.HttpWebRequest]::Create($steamStoreUrl)
-            $request.CookieContainer = $cookieContainer
-            $request.Timeout = 15000
-
-            $response = $request.GetResponse()
-            $responseStream = $response.GetResponseStream()
-            $streamReader = [System.IO.StreamReader]::New($responseStream)
-            $steamStoreUrlSource = $streamReader.ReadToEnd()
-
-            $response.Close()
-            $streamReader.Close()
-        } catch {
-            $errorMessage = $_.Exception.Message
-            $__logger.Info("Error downloading file `"$steamStoreUrl`". Error: $errorMessage")
-            $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage") -f $steamStoreUrl, $errorMessage));
-            $response.Close()
-            $streamReader.Close()
-            break
-        }
-
-        $sourceRegex = ([regex]$regex).Matches($steamStoreUrlSource)
-        if (!$sourceRegex.Groups)
-        {
-            continue
-        }
-        $gameTags = $sourceRegex.Groups[1].Value -replace "..$" | ConvertFrom-Json
-        $gameTags = $gameTags | Select-Object -First $tagsLimit
         $tagsAdded = $false
+        if ($tagsLimit -le 10)
+        {
+            $gameTags = [System.Collections.Generic.List[string]]::New()
+            $steamStoreUrl = "https://store.steampowered.com/broadcast/ajaxgetbatchappcapsuleinfo?appids={0}&l=english" -f $appId
+            try {
+                $json = $webClient.DownloadString($steamStoreUrl)
+                $__logger.Info("Downloaded string from `"$steamStoreUrl`"")
+            } catch {
+                $errorMessage = $_.Exception.Message
+                $__logger.Info("Error downloading file `"$steamStoreUrl`". Error: $errorMessage")
+                continue
+            }
+
+            if ($null -ne $json)
+            {
+                $data = $json | ConvertFrom-Json
+                if ($data.success -eq 1)
+                {
+                    $data.apps[0].tags | Select-Object -First $tagsLimit | Select-Object -Property "name" | ForEach-Object {$gameTags.Add($_.name)}
+                }
+            }
+        }
+        else
+        {
+            $gameTags = Get-StorePageTags $appId $tagsLimit
+        }
 
         foreach ($gameTag in $gameTags) {
-            $tag = $PlayniteApi.Database.Tags.Add($gameTag.Name)
-    
+            $tag = $PlayniteApi.Database.Tags.Add($gameTag)
             if ($game.tagIds -notcontains $tag.Id)
             {
-                if ($game.tagIds)
+                if ($null -ne $game.tagIds)
                 {
                     $game.tagIds += $tag.Id
                 }
@@ -231,12 +272,14 @@ function Get-SteamTags
                 $counterTagsAdded++
             }
         }
+
         if ($tagsAdded -eq $true)
         {
             $PlayniteApi.Database.Games.Update($game)
         }  
     }
 
+    $webClient.Dispose()
     $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Tags_Importer_TagsAddedResultsMessage") -f $counterTagsAdded, $($gameDatabase.Count)), "Steam Tags Importer")
 }
 
