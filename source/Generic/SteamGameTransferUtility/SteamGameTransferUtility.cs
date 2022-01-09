@@ -63,7 +63,7 @@ namespace SteamGameTransferUtility
                 ShowMinimizeButton = false
             });
 
-            window.Height = 250;
+            window.Height = 600;
             window.Width = 600;
             window.Title = "Steam Game Transfer Utility";
             window.Content = new TransferWindow();

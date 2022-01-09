@@ -3,6 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using SteamKit2;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -25,11 +26,25 @@ namespace SteamGameTransferUtility.ViewModels
 
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlayniteAPI PlayniteApi;
+        private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         private readonly string steamInstallationDirectory;
         private List<string> steamLibraries;
+        private List<Game> selectedSteamGames;
         private string targetLibraryPath;
         private bool deleteSourceGame = false;
         private bool restartSteamIfNeeded = false;
+        private bool isTargetLibrarySelected = false;
+
+        public List<Game> SelectedSteamGames
+        {
+            get { return selectedSteamGames; }
+            set
+            {
+                selectedSteamGames = value;
+                OnPropertyChanged();
+            }
+        }
+
         public List<string> SteamLibraries
         {
             get { return steamLibraries; }
@@ -39,12 +54,21 @@ namespace SteamGameTransferUtility.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string TargetLibraryPath
         {
             get {return targetLibraryPath; }
             set
             {
                 targetLibraryPath = value;
+                if (string.IsNullOrEmpty(targetLibraryPath))
+                {
+                    isTargetLibrarySelected = false;
+                }
+                else
+                {
+                    isTargetLibrarySelected = true;
+                }
                 OnPropertyChanged();
             }
         }
@@ -74,6 +98,7 @@ namespace SteamGameTransferUtility.ViewModels
             PlayniteApi = api;
             steamInstallationDirectory = GetSteamInstallationPath();
             steamLibraries = GetLibraryFolders();
+            SelectedSteamGames = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == steamPluginId).Where(g => g.IsInstalled == true).OrderBy(x => x.Name).ToList();
         }
 
         public RelayCommand<string> OpenLibraryCommand
@@ -81,15 +106,25 @@ namespace SteamGameTransferUtility.ViewModels
             get => new RelayCommand<string>((targetLibraryPath) =>
             {
                 Process.Start(targetLibraryPath);
-            });
+            }, (a) => isTargetLibrarySelected);
         }
 
-        public RelayCommand<string> TransferGamesCommand
+        public RelayCommand<object> TransferGamesCommand
         {
-            get => new RelayCommand<string>((targetLibraryPath) =>
+            get => new RelayCommand<object>((a) =>
             {
-                TransferSteamGames(targetLibraryPath);
-            });
+                IList items = (IList)a;
+                var collection = items.Cast<Game>().ToList();
+                TransferSteamGames(collection);
+            }, (a) => isTargetLibrarySelected);
+        }
+
+        public RelayCommand TransferAllGamesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                TransferSteamGames(SelectedSteamGames);
+            }, () => isTargetLibrarySelected);
         }
 
         public string GetSteamInstallationPath()
@@ -166,10 +201,9 @@ namespace SteamGameTransferUtility.ViewModels
             return dbs;
         }
 
-        public void TransferSteamGames(string targetLibraryPath)
+        public void TransferSteamGames(List<Game> selectedGameItems)
         {
-            var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary)).Where(g => g.IsInstalled == true);
-            if (gameDatabase.Count() == 0)
+            if (selectedGameItems == null || selectedGameItems.Count == 0)
             {
                 PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel"), "Steam Game Transfer Utility");
                 return;
@@ -181,7 +215,7 @@ namespace SteamGameTransferUtility.ViewModels
             var copiedGamesCount = 0;
             var skippedGamesCount = 0;
             var deletedSourceFilesCount = 0;
-            foreach (Game game in gameDatabase)
+            foreach (Game game in selectedGameItems)
             {
                 logger.Info(string.Format("Processing game: \"{0}\"", game.Name));
 
