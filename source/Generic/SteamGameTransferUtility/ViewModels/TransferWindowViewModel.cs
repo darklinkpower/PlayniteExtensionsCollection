@@ -1,58 +1,95 @@
 ﻿using Microsoft.Win32;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using Playnite.SDK.Plugins;
 using SteamKit2;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
-namespace SteamGameTransferUtility
+namespace SteamGameTransferUtility.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for WindowView.xaml
-    /// </summary>
-    public partial class WindowView : UserControl
+    class TransferWindowViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            var caller = name;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         private static readonly ILogger logger = LogManager.GetLogger();
-        public IPlayniteAPI PlayniteApi { get; set; } = null;
+        private readonly IPlayniteAPI PlayniteApi;
         private readonly string steamInstallationDirectory;
-
-        public WindowView()
+        private List<string> steamLibraries;
+        private string targetLibraryPath;
+        private bool deleteSourceGame = false;
+        private bool restartSteamIfNeeded = false;
+        public List<string> SteamLibraries
         {
-            InitializeComponent();
+            get { return steamLibraries; }
+            set
+            {
+                steamLibraries = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TargetLibraryPath
+        {
+            get {return targetLibraryPath; }
+            set
+            {
+                targetLibraryPath = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public bool DeleteSourceGame
+        {
+            get { return deleteSourceGame; }
+            set
+            {
+                deleteSourceGame = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool RestartSteamIfNeeded
+        {
+            get { return restartSteamIfNeeded; }
+            set
+            {
+                restartSteamIfNeeded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TransferWindowViewModel(IPlayniteAPI api)
+        {
+            PlayniteApi = api;
             steamInstallationDirectory = GetSteamInstallationPath();
-            List<string> steamLibraries = GetLibraryFolders();
-            cmbTargetLibrarySelection.ItemsSource = steamLibraries;
+            steamLibraries = GetLibraryFolders();
         }
 
-        private void BtnOpenLibrary_Click(object sender, RoutedEventArgs e)
+        public RelayCommand<string> OpenLibraryCommand
         {
-            var targetLibraryPath = cmbTargetLibrarySelection.SelectedValue.ToString();
-            Process.Start(targetLibraryPath);
+            get => new RelayCommand<string>((targetLibraryPath) =>
+            {
+                Process.Start(targetLibraryPath);
+            });
         }
 
-        private void BtnProcess_Click(object sender, RoutedEventArgs e)
+        public RelayCommand<string> TransferGamesCommand
         {
-            var targetLibraryPath = cmbTargetLibrarySelection.SelectedValue.ToString();
-            List<string> steamLibraries = cmbTargetLibrarySelection.Items.OfType<string>().ToList();
-            var deleteSourceGame = cbDeleteSourceGame.IsChecked ?? true;
-            var restartSteam = cbRestartSteam.IsChecked ?? true;
-            TransferSteamGames(steamLibraries, targetLibraryPath, deleteSourceGame, restartSteam);
+            get => new RelayCommand<string>((targetLibraryPath) =>
+            {
+                TransferSteamGames(targetLibraryPath);
+            });
         }
 
         public string GetSteamInstallationPath()
@@ -64,6 +101,7 @@ namespace SteamGameTransferUtility
                     return key.GetValue("SteamPath")?.ToString().Replace('/', '\\') ?? "c:\\program files (x86)\\steam";
                 }
             }
+
             return "c:\\program files (x86)\\steam";
         }
 
@@ -128,7 +166,7 @@ namespace SteamGameTransferUtility
             return dbs;
         }
 
-        public void TransferSteamGames(List<string> steamLibraries, string targetLibraryPath, bool deleteSourceGame, bool restartSteam)
+        public void TransferSteamGames(string targetLibraryPath)
         {
             var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary)).Where(g => g.IsInstalled == true);
             if (gameDatabase.Count() == 0)
@@ -136,7 +174,7 @@ namespace SteamGameTransferUtility
                 PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel"), "Steam Game Transfer Utility");
                 return;
             }
-            
+
             FileInfo t = new FileInfo(targetLibraryPath);
             var targetDrive = Path.GetPathRoot(t.FullName).ToLower();
 
@@ -149,7 +187,7 @@ namespace SteamGameTransferUtility
 
                 // Verify that source and target library are not in the same drive
                 FileInfo s = new FileInfo(game.InstallDirectory);
-                var sourceDrive = System.IO.Path.GetPathRoot(s.FullName).ToLower();
+                var sourceDrive = Path.GetPathRoot(s.FullName).ToLower();
                 if (sourceDrive == targetDrive)
                 {
                     var errorMessage = string.Format("Source and target library are the same drive: \"{0}\"", sourceDrive);
@@ -157,9 +195,9 @@ namespace SteamGameTransferUtility
                     skippedGamesCount++;
                     continue;
                 }
-                
+
                 // Get steam source library that contains game
-                var sourceLibraryPath = steamLibraries.Where(x => x.StartsWith(sourceDrive, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var sourceLibraryPath = steamLibraries.FirstOrDefault(x => x.StartsWith(sourceDrive, StringComparison.InvariantCultureIgnoreCase));
                 if (sourceLibraryPath == null)
                 {
                     var errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_SteamLibNotDetected"), game.Name, sourceDrive);
@@ -168,7 +206,7 @@ namespace SteamGameTransferUtility
                     skippedGamesCount++;
                     continue;
                 }
-                
+
                 // Check if game source manifest exists
                 var gameManifest = string.Format("appmanifest_{0}.acf", game.GameId);
                 var sourceManifestPath = Path.Combine(sourceLibraryPath, gameManifest);
@@ -247,7 +285,7 @@ namespace SteamGameTransferUtility
             var results = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ResultsDialogMessage"), copiedGamesCount.ToString(), skippedGamesCount.ToString(), deletedSourceFilesCount.ToString());
             PlayniteApi.Dialogs.ShowMessage(results, "Steam Game Transfer Utility");
 
-            if (restartSteam == true && (copiedGamesCount > 0 || deletedSourceFilesCount > 0))
+            if (restartSteamIfNeeded == true && (copiedGamesCount > 0 || deletedSourceFilesCount > 0))
             {
                 RestartSteam();
             }
@@ -333,7 +371,7 @@ namespace SteamGameTransferUtility
                 {
                     size += fi.Length;
                 }
-                
+
                 // Add subdirectory sizes.
                 DirectoryInfo[] dis = dir.GetDirectories();
                 foreach (DirectoryInfo di in dis)
@@ -413,5 +451,6 @@ namespace SteamGameTransferUtility
                 return false;
             }
         }
+
     }
 }

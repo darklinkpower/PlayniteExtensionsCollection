@@ -1,20 +1,20 @@
-﻿<UserControl x:Class="SteamGameTransferUtility.WindowView"
+﻿<UserControl x:Class="SteamGameTransferUtility.Views.TransferWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SteamGameTransferUtility"
+             xmlns:local="clr-namespace:SteamGameTransferUtility.Views"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
     </UserControl.Resources>
     <StackPanel Margin="20">
-        <CheckBox DockPanel.Dock="Top" Name="cbRestartSteam"
-                  IsChecked="False"
+        <CheckBox DockPanel.Dock="Top"
+                  IsChecked="{Binding RestartSteamIfNeeded}"
                   Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel}"/>
-        <CheckBox Margin="0,10,0,0" DockPanel.Dock="Top" Name="cbDeleteSourceGame"
-                  IsChecked="False"
+        <CheckBox Margin="0,10,0,0" DockPanel.Dock="Top"
+                  IsChecked="{Binding DeleteSourceGame}"
                   Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel}"/>
         <Grid Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
@@ -23,12 +23,12 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel}" VerticalAlignment="Center"/>
-            <ComboBox Grid.Column="1" x:Name="cmbTargetLibrarySelection"
+            <ComboBox Grid.Column="1" ItemsSource="{Binding SteamLibraries}" x:Name="CbSteamLibs"
                 SelectedIndex="0" Margin="10,0,0,0" HorizontalAlignment="Stretch"/>
-            <Button Grid.Column="2" x:Name="BtnOpenLibrary" Click="BtnOpenLibrary_Click"
+            <Button Grid.Column="2" Command="{Binding OpenLibraryCommand}" CommandParameter="{Binding SelectedItem, ElementName=CbSteamLibs}"
                 Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel}" Margin="10,0,0,0" Padding="10,0,10,0" HorizontalAlignment="Right"/>
         </Grid>
-        <Button VerticalAlignment="Bottom" x:Name="BtnProcess" Click="BtnProcess_Click" 
+        <Button VerticalAlignment="Bottom" Command="{Binding TransferGamesCommand}" CommandParameter="{Binding SelectedItem, ElementName=CbSteamLibs}"
                 Content="{DynamicResource LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>

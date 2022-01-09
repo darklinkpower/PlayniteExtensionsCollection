@@ -2,6 +2,8 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using SteamGameTransferUtility.ViewModels;
+using SteamGameTransferUtility.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,13 +50,13 @@ namespace SteamGameTransferUtility
                     Description = ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription"),
                     MenuSection = "@Steam Game Transfer Utility",
                     Action = a => {
-                        WindowMethod();
+                        ShowTransferWindow();
                     }
                 }
             };
         }
 
-        public void WindowMethod()
+        public void ShowTransferWindow()
         {
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
@@ -64,17 +66,11 @@ namespace SteamGameTransferUtility
             window.Height = 250;
             window.Width = 600;
             window.Title = "Steam Game Transfer Utility";
-
-            // Set content of a window. Can be loaded from xaml, loaded from UserControl or created from code behind
-            WindowView windowView = new WindowView();
-            windowView.PlayniteApi = PlayniteApi;
-            window.Content = windowView;
-
-            // Set owner if you need to create modal dialog window
+            window.Content = new TransferWindow();
+            window.DataContext = new TransferWindowViewModel(PlayniteApi);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-            // Use Show or ShowDialog to show the window
             window.ShowDialog();
         }
     }

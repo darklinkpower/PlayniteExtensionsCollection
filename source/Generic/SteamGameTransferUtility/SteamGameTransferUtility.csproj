@@ -64,8 +64,9 @@
       <DependentUpon>SteamGameTransferUtilitySettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="windowView.xaml.cs">
-      <DependentUpon>windowView.xaml</DependentUpon>
+    <Compile Include="ViewModels\TransferWindowViewModel.cs" />
+    <Compile Include="Views\TransferWindow.xaml.cs">
+      <DependentUpon>TransferWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +80,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="windowView.xaml">
+    <Page Include="Views\TransferWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
