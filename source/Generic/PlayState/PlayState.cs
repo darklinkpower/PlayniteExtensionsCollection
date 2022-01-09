@@ -37,7 +37,7 @@ namespace PlayState
         private DispatcherTimer timer;
         private List<ProcessItem> gameProcesses;
         private List<Tuple<Guid, Stopwatch>> stopwatchList;
-        private bool suspendPlaytimeOnly;
+        private bool suspendPlaytimeOnly = false;
         private Window mainWindow;
         private WindowInteropHelper windowInterop;
         private IntPtr mainWindowHandle;
@@ -225,6 +225,11 @@ namespace PlayState
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
+            if (isSuspended)
+            {
+                SwitchGameState();
+            }
+
             var game = args.Game;
             if (game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Blacklist", StringComparison.OrdinalIgnoreCase)))
             {
