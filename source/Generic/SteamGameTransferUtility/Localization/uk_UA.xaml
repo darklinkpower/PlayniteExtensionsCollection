@@ -14,18 +14,18 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Гра: {0}. Помилка: маніфест джерела не існує в &quot;{1}&quot;
 
 Ця проблема можлива, якщо ви використали цей інструмент на цій грі і ви не перезапустили Steam і не оновили бібліотеку Playnite для відображення змін</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Game: {0}. Error: Source directory doesn't exist in &quot;{1}&quot;
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Гра: {0}. Помилка: теки джерела не існує в &quot;{1}&quot;
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Processing game: {0}
+Ця проблема можлива, якщо ви використали цей інструмент на цій грі і ви не перезапустили Steam і не оновили бібліотеку Playnite для відображення змін</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Обробка гри: {0}
 
-Game size: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Finished.
+Розмір гри: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Готово.
 
-Copied games: {0}
-Skipped games: {1}
+Скопійовано ігор: {0}
+Пропущено ігор: {1}
 
-Deleted source games: {2}
+Видалено ігор-джерел: {2}
 
-Update your Playnite library after restarting Steam to reflect the changes</sys:String>
+Оновіть бібліотеку Playnite після перезапуску Steam, щоб відобразити зміни</sys:String>
 </ResourceDictionary>
