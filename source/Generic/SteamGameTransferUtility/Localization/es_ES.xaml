@@ -6,5 +6,26 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Eliminar el juego de origen después de copiar el juego o si el juego se detecta en la biblioteca de destino</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Biblioteca de destino:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Abrir</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copia los juegos de Steam seleccionados a la biblioteca de Steam seleccionada</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Juegos de Steam:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copiar los juegos de Steam seleccionados</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copiar todos los juegos de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">No hay juegos de Steam instalados seleccionados</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Juego: {0}. Error: No se ha detectado librería de Steam en la unidad {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Juego: {0}. Error: El manifiesto de origen no existe en &quot;{1}&quot;
+
+Este problema puede suceder si utilizas esta utilidad en este juego y no has reiniciado Steam y actualizado tu biblioteca de Playnite para reflejar los cambios</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Juego: {0}. Error: El directorio de origen no existe en &quot;{1}&quot;
+
+Este problema puede suceder si utilizaste esta utilidad en este juego y no has reiniciado Steam y actualizado tu biblioteca de Playnite para reflejar los cambios</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Procesando juego: {0}
+
+Tamaño del juego: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Terminado.
+
+Juegos copiados: {0}
+Juegos saltados: {1}
+
+Juegos de origen eliminados: {2}
+
+Actualiza tu biblioteca de Playnite después de reiniciar Steam para reflejar los cambios</sys:String>
 </ResourceDictionary>

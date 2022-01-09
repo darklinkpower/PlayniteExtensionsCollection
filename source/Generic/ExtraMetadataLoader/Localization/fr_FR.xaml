@@ -38,6 +38,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">Utiliser un lecteur alternatif (nécessite redémarrage et prise en charge par le thème)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">Clé API SteamGridDB :</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">Obtenir la clé API</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Include assets marked as &quot;Humor&quot; in searches</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Include assets marked as &quot;Adult Content&quot; in searches</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Télécharger les vidéos des jeux ajoutés lors de la mise à jour de la bibliothèque</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Télécharger les micro vidéos des jeux ajoutés lors de la mise à jour de la bibliothèque</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Télécharger les logos des jeux ajoutés lors de la mise à jour de la bibliothèque</sys:String>

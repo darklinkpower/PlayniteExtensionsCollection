@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">Open Tools Menu</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">See missing media statistics (All games)</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">See missing media statistics (Selected games)</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">Открыть меню инструментов</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">Посмотреть статистику отсутствующих медиа (Все игры)</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">Посмотреть статистику отсутствующих медиа (Выбранная игра)</sys:String>
 
-    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">No games are selected</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Invalid input in Width and height input boxes.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Invalid input in size input box.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Invalid input in extension input box.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_Results1Message" xml:space="preserve">Finished. Games in selection: {0}
+    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">Игры не выбраны</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Неверное значение в полях ввода Ширина и высота.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Неверное значение в поле ввода Размер.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Неверное значение в поле ввода Расширение.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_Results1Message" xml:space="preserve">Завешено. Игр выбрано: {0}
 
-Selected Media: {1}
-Games missing selected media in selection: {2}</sys:String>
+Выбранных медиа: {1}
+Игр с отсутствующими медиа: {2}</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results2Message" xml:space="preserve">
 
-Missing Media in all database
-Covers: {0} games
-Background Images: {1} games
-Icons: {2} games</sys:String>
+Отсутствующие медиа по всей базе данных
+Обложки: {0} игр
+Фоновые изображения: {1} игр
+Иконки: {2} игр</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results3Message" xml:space="preserve">
 
-Tool tag name: {0}
-Games with tag in selection: {1}
-Games with tag in all games database: {2}</sys:String>
+Название тега: {0}
+Игр с тегом выбрано: {1}
+Игр с тегом всего в базе данных: {2}</sys:String>
 </ResourceDictionary>

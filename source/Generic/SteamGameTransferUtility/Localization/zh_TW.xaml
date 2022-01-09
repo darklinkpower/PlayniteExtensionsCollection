@@ -6,5 +6,26 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Delete source game after copying game or if game is detected in target library</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Target Library:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Open</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games to the selected Steam library</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;
+
+This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Game: {0}. Error: Source directory doesn't exist in &quot;{1}&quot;
+
+This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Processing game: {0}
+
+Game size: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Finished.
+
+Copied games: {0}
+Skipped games: {1}
+
+Deleted source games: {2}
+
+Update your Playnite library after restarting Steam to reflect the changes</sys:String>
 </ResourceDictionary>
