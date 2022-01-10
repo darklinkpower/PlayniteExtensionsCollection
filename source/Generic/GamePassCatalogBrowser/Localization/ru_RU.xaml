@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Browse Game Pass Catalog</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Add all Catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Reset Cache</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Очистить кэш</sys:String>
 
     <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass catalog has been reset.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Are you sure you want to add all the Game Pass catalog to your library?</sys:String>
@@ -12,13 +12,13 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Коллекция:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Категория:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Поиск:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Разработчик:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Издатель:</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">View in Xbox app</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">View in Microsoft Store</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Add to Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">Посмотреть в приложении Xbox</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Посмотреть в Microsoft Store</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Добавить в библиотеку Playnite</sys:String>
 </ResourceDictionary>
