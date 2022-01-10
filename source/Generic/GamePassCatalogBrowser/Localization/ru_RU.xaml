@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Browse Game Pass Catalog</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Add all Catalog to the Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Обзор каталога Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Добавить весь каталог в библиотеку Playnite</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Очистить кэш</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass catalog has been reset.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Are you sure you want to add all the Game Pass catalog to your library?</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Could not obtain Game Pass catalog.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Added {0} new games to the Playnite library.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} added to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Каталог Game Pass был очищен.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Вы уверены, что хотите добавить в библиотеку весь каталог Game Pass?</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Не удалось получить каталог Game Pass.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Добавлено {0} новых игр в библиотеку Playnte.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} добавлено в библиотеку Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Обновление каталога Game Pass...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Обновление каталога Game Pass и добавление игр...</sys:String>
     
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Коллекция:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Категория:</sys:String>
