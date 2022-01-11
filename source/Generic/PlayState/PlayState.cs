@@ -254,17 +254,18 @@ namespace PlayState
             {
                 currentGame = game;
                 splashWindowViewModel.GameName = currentGame.Name;
+                gameProcesses = null;
                 isSuspended = false;
                 logger.Debug($"Changed game to {currentGame.Name} game processes");
                 var sourceAction = args.SourceAction;
-                if (sourceAction.Type == GameActionType.Emulator)
+                if (sourceAction?.Type == GameActionType.Emulator)
                 {
                     var emulatorProfileId = sourceAction.EmulatorProfileId;
                     if (emulatorProfileId.StartsWith("#builtin_"))
                     {
                         //Currently it isn't possible to obtain the emulator path
                         //for emulators using Builtin profiles
-                        //return;
+                        return;
                     }
 
                     var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
