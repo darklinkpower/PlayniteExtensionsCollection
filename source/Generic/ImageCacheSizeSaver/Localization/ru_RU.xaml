@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Process Images in Cache</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Select ImageMagick executable</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick executable path saved</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Обработка изображений в кэше</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Выберите исполняемый файл ImageMagick</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Путь к исполняемому файлу Magick сохранен</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Исполняемый файл Magick не найден в {0}. 
+Пожалуйста, запустите расширение снова, чтобы настроить его правильное расположение.</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Обработка изображения завершена. Результаты:
 
-Images Processed: {0}
+Обработано изображений: {0}
 
-Images that had size reduced: {1}
-Errors: {2}
+Изображения уменьшенного размера: {1}
+Ошибки: {2}
 
-Image Cache Size Before: {3} MB
-Image Cache Size After: {4} MB</sys:String>
+Размер кэша изображений было: {3} MB
+Размер кэша изображений стало: {4} MB</sys:String>
 </ResourceDictionary>
