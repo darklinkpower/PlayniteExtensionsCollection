@@ -43,3 +43,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Image_Cache_Size_Saver_2_6.pext
     Changelog:
     - Fix results dialog showing incorrect previous size value
+  - Version: 2.7
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Image_Cache_Size_Saver_2_7.pext
+    Changelog:
+    - Updated localizations

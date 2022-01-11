@@ -105,3 +105,10 @@ Packages:
     - Updated localizations
     - Improved support for Custom emulator profiles. Emulators using Builtin profiles are not supported.
     - Extension will now resume game if it is suspended and another game is started
+  - Version: 2.15
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/PlayState_2_15.pext
+    Changelog:
+    - Updated localizations
+    - Fix extension not working with games not launched as emulated games

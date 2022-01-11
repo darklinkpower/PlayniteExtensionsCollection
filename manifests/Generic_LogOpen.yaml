@@ -32,3 +32,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Log_Open_a755c30f-580a-491e-9584-6c5314f6e254_2_4.pext
     Changelog:
     - Updated localizations
+  - Version: 2.5
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Log_Open_a755c30f-580a-491e-9584-6c5314f6e254_2_5.pext
+    Changelog:
+    - Updated localizations

@@ -219,3 +219,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Added options to configure if logos marked as humor or nsfw should be included in searches
+  - Version: 1.29
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_29.pext
+    Changelog:
+    - Updated localizations
