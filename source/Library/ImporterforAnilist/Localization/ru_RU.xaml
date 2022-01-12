@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Account access code:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Get access code</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Metadata properties prefix:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Adds the entered string before any imported metadata name</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">Import anime library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">Import manga library during library update</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Update user score from AniList account during library update</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Код доступа к учетной записи:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Получить код доступа</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Префикс свойств метаданных:</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSettingTooltip">Добавляет введенную строку перед любым импортированным именем метаданных</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportAnimeSetting">При обновлении библиотеки импортировать библиотеку аниме</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_ImportMangaSetting">При обновлении библиотеки импортировать библиотеку манги</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">При обновлении библиотеки обновить оценку пользователя из учетной записи AniList</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Update completion status from AniList account during library update</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Update progress from AniList account during library update (&quot;Version&quot; field is used)</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
