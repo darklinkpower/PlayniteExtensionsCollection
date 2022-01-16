@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,21 @@ namespace SplashScreen
         public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Left;
         public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
         public bool UseBlackSplashscreen { get; set; } = false;
+        public bool UseGlobalSplashImage { get; set; } = false;
+        public string GlobalSplashFile { get; set; } = string.Empty;
+        public bool UseLogoInGlobalSplashImage { get; set; } = false;
+        [DontSerialize]
+        private string globalSplashImagePath { get; set; }
+        [DontSerialize]
+        public string GlobalSplashImagePath
+        {
+            get => globalSplashImagePath;
+            set
+            {
+                globalSplashImagePath = value;
+                OnPropertyChanged();
+            }
+        }
 
         [DontSerialize]
         public Dictionary<HorizontalAlignment, string> LogoHorizontalSource { get; set; } = new Dictionary<HorizontalAlignment, string>
@@ -65,6 +81,10 @@ It will alt tab twice and will make Playnite properly get controller input again
     public class SplashScreenSettingsViewModel : ObservableObject, ISettings
     {
         private readonly SplashScreen plugin;
+        private readonly string pluginUserDataPath;
+        private readonly IPlayniteAPI playniteApi;
+        private static readonly ILogger logger = LogManager.GetLogger();
+
         private SplashScreenSettings editingClone { get; set; }
 
         private SplashScreenSettings settings;
@@ -78,7 +98,7 @@ It will alt tab twice and will make Playnite properly get controller input again
             }
         }
 
-        public SplashScreenSettingsViewModel(SplashScreen plugin)
+        public SplashScreenSettingsViewModel(SplashScreen plugin, IPlayniteAPI playniteApi, string pluginUserDataPath)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
@@ -94,6 +114,29 @@ It will alt tab twice and will make Playnite properly get controller input again
             else
             {
                 Settings = new SplashScreenSettings();
+            }
+
+            this.pluginUserDataPath = pluginUserDataPath;
+            this.playniteApi = playniteApi;
+            SetGlobalSplashImagePath();
+        }
+
+        private void SetGlobalSplashImagePath()
+        {
+            if (string.IsNullOrEmpty(Settings.GlobalSplashFile))
+            {
+                Settings.GlobalSplashImagePath = null;
+                return;
+            }
+
+            var globalSplashImagePath = Path.Combine(pluginUserDataPath, Settings.GlobalSplashFile);
+            if (File.Exists(globalSplashImagePath))
+            {
+                Settings.GlobalSplashImagePath = globalSplashImagePath;
+            }
+            else
+            {
+                Settings.GlobalSplashImagePath = null;
             }
         }
 
@@ -123,6 +166,63 @@ It will alt tab twice and will make Playnite properly get controller input again
             // Executed before EndEdit is called and EndEdit is not called if false is returned.
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
+            return true;
+        }
+
+        public RelayCommand BrowseSelectGlobalImageCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                var filePath = playniteApi.Dialogs.SelectImagefile();
+                if (!string.IsNullOrEmpty(filePath) && RemoveGlobalImage())
+                {
+                    var fileName = Path.GetFileName(filePath);
+                    var globalSplashImagePath = Path.Combine(pluginUserDataPath, fileName);
+                    try
+                    {
+                        File.Copy(filePath, globalSplashImagePath);
+                        Settings.GlobalSplashFile = Path.GetFileName(filePath);
+                        SetGlobalSplashImagePath();
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error(e, $"Error copying global splash image from {filePath} to {globalSplashImagePath}");
+                    }
+                }
+            });
+        }
+
+        public RelayCommand RemoveGlobalImageCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                RemoveGlobalImage();
+            });
+        }
+
+        private bool RemoveGlobalImage()
+        {
+            if (string.IsNullOrEmpty(Settings.GlobalSplashFile))
+            {
+                return true;
+            }
+
+            var globalSplashImagePath = Path.Combine(pluginUserDataPath, Settings.GlobalSplashFile);
+            if (File.Exists(globalSplashImagePath))
+            {
+                try
+                {
+                    File.Delete(globalSplashImagePath);
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error deleting file in {globalSplashImagePath}");
+                    return false;
+                }
+            }
+
+            Settings.GlobalSplashFile = null;
+            SetGlobalSplashImagePath();
             return true;
         }
     }

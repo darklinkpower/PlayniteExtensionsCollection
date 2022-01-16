@@ -32,7 +32,7 @@ namespace SplashScreen
 
         public SplashScreen(IPlayniteAPI api) : base(api)
         {
-            settings = new SplashScreenSettingsViewModel(this);
+            settings = new SplashScreenSettingsViewModel(this, PlayniteApi, GetPluginUserDataPath());
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -137,13 +137,36 @@ namespace SplashScreen
 
             if (showSplashImage == true)
             {
-                if (settings.Settings.UseBlackSplashscreen == true)
+                var usingGlobalImage = false;
+                if (settings.Settings.UseGlobalSplashImage && !string.IsNullOrEmpty(settings.Settings.GlobalSplashFile))
                 {
-                    splashImagePath = Path.Combine(pluginInstallPath, "Images", "SplashScreenBlack.png");
+                    var globalSplashImagePath = Path.Combine(GetPluginUserDataPath(), settings.Settings.GlobalSplashFile);
+                    if (File.Exists(globalSplashImagePath))
+                    {
+                        splashImagePath = globalSplashImagePath;
+                        usingGlobalImage = true;
+                        if (settings.Settings.UseLogoInGlobalSplashImage)
+                        {
+                            logoPath = GetSplashLogoPath(game);
+                        }
+                    }
                 }
-                else
+
+                if (!usingGlobalImage)
                 {
-                    splashImagePath = GetSplashImagePath(game);
+                    if (settings.Settings.UseBlackSplashscreen)
+                    {
+                        splashImagePath = Path.Combine(pluginInstallPath, "Images", "SplashScreenBlack.png");
+                    }
+                    else
+                    {
+                        splashImagePath = GetSplashImagePath(game);
+                    }
+
+                    if (settings.Settings.ShowLogoInSplashscreen)
+                    {
+                        logoPath = GetSplashLogoPath(game);
+                    }
                 }
 
                 bool closeSplashScreenAutomatic = false;
@@ -154,11 +177,6 @@ namespace SplashScreen
                 else
                 {
                     closeSplashScreenAutomatic = settings.Settings.CloseSplashScreenFullscreenMode;
-                }
-
-                if (settings.Settings.ShowLogoInSplashscreen)
-                {
-                    logoPath = GetSplashLogoPath(game);
                 }
             }
 
