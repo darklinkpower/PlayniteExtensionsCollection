@@ -11,9 +11,6 @@
         </Grid.Resources>
         <ScrollViewer>
             <StackPanel Margin="20">
-                <TextBlock Text="Important issue, please read!" Foreground="Red"/>
-                <TextBlock Text="{Binding Settings.AltTabPsScriptDescription}" Margin="0,10,0,0"/>
-                <TextBox Text="{Binding Settings.AltTabPsScript}" IsReadOnly="True" Height="Auto" Margin="0,10,0,0"/>
                 <CheckBox Name="ExecuteDesktopMode" IsChecked="{Binding Settings.ExecuteInDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBexecuteInDesktopMode}" Margin="0,10,0,0" />
                 <StackPanel Margin="40,0,0,0" IsEnabled="{Binding ElementName=ExecuteDesktopMode, Path=IsChecked}">
                     <CheckBox IsChecked="{Binding Settings.ViewImageSplashscreenDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode}" Margin="0,10,0,0" />

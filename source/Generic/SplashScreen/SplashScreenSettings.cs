@@ -57,25 +57,7 @@ namespace SplashScreen
             { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentBottomLabel") },
         };
 
-
-        [DontSerialize]
-        public string AltTabPsScriptDescription { get; set; } = @"Currently there is an issue in Fullscreen mode where Playnite doesn't get controller input after returning from the game when the extension is installed.
-As a temporary workaround to fix this, you can add this script as a global exit script in Settings -> Script.
-It will alt tab twice and will make Playnite properly get controller input again.";
-
-        [DontSerialize]
-        public string AltTabPsScript { get; set; } = @"if ($PlayniteApi.ApplicationInfo.Mode -eq ""Fullscreen"")
-{
-    $wshell = New-Object -ComObject wscript.shell
-    $wshell.SendKeys('%{TAB}')
-
-    # To not send keys too quickly
-    Start-Sleep -Milliseconds 1000
-
-    $wshell.SendKeys('%{TAB}')
-}";
-
-        public bool ControllerNoticeShowed { get; set; } = false;
+        public bool ControllerNoticeShowed { get; set; } = true;
     }
 
     public class SplashScreenSettingsViewModel : ObservableObject, ISettings

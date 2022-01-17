@@ -22,6 +22,7 @@ namespace SplashScreen
     public class SplashScreen : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly DispatcherTimer timer;
         private string pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private Window currentSplashWindow;
         private bool? isMusicMutedBackup;
@@ -37,15 +38,30 @@ namespace SplashScreen
             {
                 HasSettings = true
             };
+
+            //Used for SendKeys workaround to prevent missing input when closing game in FS mode
+            //A timer is used to ensure that Playnite is focused by the time the keys are sent, otherwise the fix
+            //won't work sometimes
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1500);
+            timer.Tick += new EventHandler(SendKeysFix);
+        }
+
+        private void SendKeysFix(object sender, EventArgs e)
+        {
+            timer.Stop();
+            System.Windows.Forms.SendKeys.SendWait("^{ESC}"); // ^{ESC} is code for ctrl + esc which mimics the windows key.
+            Thread.Sleep(600); //Helps to make sure that inputs are not send to quickly so they are processed correctly
+            System.Windows.Forms.SendKeys.SendWait("^{ESC}");
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            if (!settings.Settings.ControllerNoticeShowed)
+            if (settings.Settings.ControllerNoticeShowed)
             {
-                PlayniteApi.Dialogs.ShowMessage("Important issue, please read!\n\nCurrently there is an issue in Fullscreen mode where Playnite doesn't get controller input after returning from the game when the extension is installed.\nIf you experience this issue, please go to the plugin settings to use a temporary workaround until this issue is fixed.",
-                    "ExtraMetadataLoader");
-                settings.Settings.ControllerNoticeShowed = true;
+                PlayniteApi.Dialogs.ShowMessage("\n\nSplashScreen extension - Important Information!\n\nThe workaround to fix broken input when closing a game in Fullscreen mode has been added natively in the extension.\n\nThe extension will automatically press the window key twice when closing a game in Fullscreen Mode.\n\nIf you manually added the workaround fix, please remove it from Settings -> Scripts -> Script when game is closed. I have not been able to find a fix for the issue so this fix needs to be used.\n\nSorry for the inconvenience and thanks for understanding.",
+                    "SplashScreen extension - Important Information");
+                settings.Settings.ControllerNoticeShowed = false;
                 SavePluginSettings(settings.Settings);
             }
         }
@@ -434,13 +450,18 @@ namespace SplashScreen
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
+            RestoreBackgroundMusic();
             // Close splash screen manually it was not closed automatically
             if (currentSplashWindow != null)
             {
                 currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
                 currentSplashWindow = null;
             }
-            RestoreBackgroundMusic();
+
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                timer.Start();
+            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
