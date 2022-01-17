@@ -11,8 +11,7 @@ Aggiunta la funzione &quot;{1}&quot; a {2} giochi.
 Rimosso la funzione &quot;{3}&quot; da {4} giochi.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Imposta {0} giochi come installati.
-Imposta {1} giochi come disinstallati.</sys:String>
+Marked {0} games as Installed.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Azione di gioco rimossa da {0} giochi</sys:String>
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Aggiorna lo stato abilitato dei giochi all'avvio di Playnite</sys:String>
@@ -22,4 +21,5 @@ Imposta {1} giochi come disinstallati.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">I giochi senza un set di cartelle di installazione vengono rilevati come non installati dalle loro librerie</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Imposta i giochi abilitati come installati quando si aggiorna lo stato abilitato dei giochi</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Avvia in Nvidia GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
 </ResourceDictionary>
