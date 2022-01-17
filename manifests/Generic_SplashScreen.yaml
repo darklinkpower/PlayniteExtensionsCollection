@@ -71,3 +71,9 @@ Packages:
     - Updated localizations
     - Option to use global splash image for the SplashScreen
     - Added workaround to fix broken input issue when closing game in fullscreen mode natively in the extension. If you added the script to fix it, you can remove it as it is no longer needed
+  - Version: 2.10
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_10.pext
+    Changelog:
+    - Updated localizations

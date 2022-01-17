@@ -85,3 +85,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/NVIDIA_GeForce_Now_Enabler_2_12.pext
     Changelog:
     - Updated localizations
+  - Version: 2.13
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/NVIDIA_GeForce_Now_Enabler_2_13.pext
+    Changelog:
+    - Updated localizations
+    - Show notification when games are marked as installed or uninstalled and a dialog is not shown
+    - Fix some Origin games not being matched with GeForce NOW database
