@@ -11,8 +11,7 @@
 Прибрано особливість &quot;{3}&quot; з {4} ігор.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Позначено {0} ігор як встановлені.
-Позначено {1} ігор як видалені.</sys:String>
+Marked {0} games as Installed.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Дія &quot;Грати&quot; вилучена з {0} ігор</sys:String>
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Оновлювати статус сумісності ігор при запуску Playnite</sys:String>
@@ -22,4 +21,5 @@
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Ігри без набору каталогів встановлення визначаються як не встановлені їхніми бібліотеками</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Запустити в Nvidia GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
 </ResourceDictionary>
