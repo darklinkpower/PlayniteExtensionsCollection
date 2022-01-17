@@ -227,7 +227,6 @@ namespace NVIDIAGeForceNowEnabler
             int featureAddedCount = 0;
             int featureRemovedCount = 0;
             int setAsInstalledCount = 0;
-            int setAsUninstalledCount = 0;
 
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
@@ -270,14 +269,6 @@ namespace NVIDIAGeForceNowEnabler
                         {
                             featureRemovedCount++;
                             logger.Info(string.Format("Feature removed from \"{0}\"", game.Name));
-
-                            if (settings.Settings.SetEnabledGamesAsInstalled == true && game.IsInstalled == true)
-                            {
-                                game.IsInstalled = true;
-                                setAsUninstalledCount++;
-                                PlayniteApi.Database.Games.Update(game);
-                                logger.Info(string.Format("Set \"{0}\" as uninstalled", game.Name));
-                            }
                         }
                     }
                     else
@@ -288,6 +279,7 @@ namespace NVIDIAGeForceNowEnabler
                             featureAddedCount++;
                             logger.Info(string.Format("Feature added to \"{0}\"", game.Name));
                         }
+
                         if ((settings.Settings.SetEnabledGamesAsInstalled || settings.Settings.ShowPlayActionsOnLaunch)
                             && game.IsInstalled == false)
                         {
@@ -300,15 +292,21 @@ namespace NVIDIAGeForceNowEnabler
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_UpdatingProgressMessage")));
 
-            if (showDialogs == true)
+            if (showDialogs)
             {
                 string results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
                     enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
                 if (settings.Settings.SetEnabledGamesAsInstalled == true)
                 {
-                    results += string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults3Message"), setAsInstalledCount, setAsUninstalledCount);
+                    results += string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults3Message"), setAsInstalledCount);
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
+            }
+            else
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage(new Guid().ToString(),
+                    string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults"), setAsInstalledCount),
+                    NotificationType.Info));
             }
         }
 
