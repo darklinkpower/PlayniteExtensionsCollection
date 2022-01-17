@@ -84,3 +84,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_12.pext
     Changelog:
     - Fix library update failing when API does not return a entry media format
+  - Version: 2.13
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_13.pext
+    Changelog:
+    - Updated localizations

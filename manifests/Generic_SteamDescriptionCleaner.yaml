@@ -24,3 +24,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/SteamDescriptionCleaner_7793f6ec-83c9-4094-9d1c-e0c2280a0496_1_3.pext
     Changelog:
     - Updated localizations
+  - Version: 1.4
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/SteamDescriptionCleaner_7793f6ec-83c9-4094-9d1c-e0c2280a0496_1_4.pext
+    Changelog:
+    - Updated localizations
+    - Removed automatic processing of games descriptions as Steam plugins no longer download descriptions with junk information

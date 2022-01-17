@@ -38,3 +38,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.1/Steam_Game_Importer_2_5.pext
     Changelog:
     - "Don't import games to library that are in Playnite exclusion list when importing via Depressurizer profile"
+  - Version: 2.6
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Steam_Game_Importer_2_6.pext
+    Changelog:
+    - Updated localizations

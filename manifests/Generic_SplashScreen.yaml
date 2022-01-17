@@ -63,3 +63,11 @@ Packages:
     - Disable mouse cursor when splashscreen is shown
     - Increase automatic close time of SplashScreen from 30 to 60 seconds
     - Added instructions for temporary fix for Fullscreen controller input issue after closing game in extension settings
+  - Version: 2.9
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_9.pext
+    Changelog:
+    - Updated localizations
+    - Option to use global splash image for the SplashScreen
+    - Added workaround to fix broken input issue when closing game in fullscreen mode natively in the extension. If you added the script to fix it, you can remove it as it is no longer needed
