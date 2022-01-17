@@ -302,7 +302,7 @@ namespace NVIDIAGeForceNowEnabler
                 }
                 PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
             }
-            else
+            else if (setAsInstalledCount > 0)
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage(new Guid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults"), setAsInstalledCount),
