@@ -166,6 +166,10 @@ namespace NVIDIAGeForceNowEnabler
                             foreach (var supportedGame in supportedGames)
                             {
                                 supportedGame.Title = SatinizeString(supportedGame.Title);
+                                if (supportedGame.Store == "Origin")
+                                {
+                                    supportedGame.Title = SatinizeOriginGameName(supportedGame.Title);
+                                }
                             }
                             File.WriteAllText(gfnDatabasePath, JsonConvert.SerializeObject(supportedGames));
                             supportedList = supportedGames;
@@ -205,6 +209,16 @@ namespace NVIDIAGeForceNowEnabler
             return gameDatabase;
         }
 
+        private string SatinizeOriginGameName(string gameName)
+        {
+            return gameName.Replace("gameoftheyearedition", "")
+                .Replace("premiumedition", "")
+                .Replace("gameoftheyear", "")
+                .Replace("definitiveedition", "")
+                .Replace("battlefieldvdefinitive", "battlefieldv")
+                .Replace("battlefield1revolution", "battlefield1");
+        }
+
         public void MainMethod(bool showDialogs)
         {
             string featureName = "NVIDIA GeForce NOW";
@@ -217,6 +231,7 @@ namespace NVIDIAGeForceNowEnabler
                 // Also sometimes there are issues with the api and it doesn't return any games in the response
                 return;
             }
+
             var supportedSteamGames = supportedGames.Where(g => g.Store == "Steam");
             var supportedEpicGames = supportedGames.Where(g => g.Store == "Epic");
             var supportedOriginGames = supportedGames.Where(g => g.Store == "Origin");
@@ -240,7 +255,7 @@ namespace NVIDIAGeForceNowEnabler
                     {
                         case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
                             //Steam
-                            var steamUrl = String.Format("https://store.steampowered.com/app/{0}", game.GameId);
+                            var steamUrl = string.Format("https://store.steampowered.com/app/{0}", game.GameId);
                             supportedGame = supportedSteamGames.FirstOrDefault(g => g.SteamUrl == steamUrl);
                             break;
                         case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
@@ -249,6 +264,7 @@ namespace NVIDIAGeForceNowEnabler
                             break;
                         case "85dd7072-2f20-4e76-a007-41035e390724":
                             //Origin
+                            gameName = SatinizeOriginGameName(gameName);
                             supportedGame = supportedOriginGames.FirstOrDefault(g => g.Title == gameName);
                             break;
                         case "c2f038e5-8b92-4877-91f1-da9094155fc5":
@@ -371,7 +387,6 @@ namespace NVIDIAGeForceNowEnabler
             var storeName = string.Empty;
             switch (game.PluginId.ToString())
             {
-
                 //Steam
                 case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
                     storeName = "Steam";
@@ -410,6 +425,10 @@ namespace NVIDIAGeForceNowEnabler
             else
             {
                 var matchingName = SatinizeString(game.Name);
+                if (storeName == "Origin")
+                {
+                    matchingName = SatinizeOriginGameName(matchingName);
+                }
                 supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.Title == matchingName);
             }
 
