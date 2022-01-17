@@ -11,8 +11,7 @@ Added &quot;{1}&quot; feature to {2} games.
 Removed &quot;{3}&quot; feature from {4} games.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Set {0} games as Installed.
-Set {1} games as uninstalled.</sys:String>
+Marked {0} games as Installed.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Game Action removed from {0} games</sys:String>
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Update enabled status of games on Playnite startup</sys:String>
@@ -22,4 +21,5 @@ Set {1} games as uninstalled.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Games without a installation directory set are detected as not installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Set enabled games as installed when updating enabled status of games</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Launch in Nvidia GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
 </ResourceDictionary>

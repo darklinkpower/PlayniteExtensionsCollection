@@ -3,13 +3,13 @@
     <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Видео</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam трейлер SD</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam трейлер HD</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; is not a PC Game. 
-The extension is only compatible with PC Games&quot;</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video not available.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; is not a Steam game and Steam AppId was not found to obtain video data.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Error connecting to server. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Error downloading headers. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Микро-трейлеры Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; это не PC игра. 
+Расширение поддерживает только PC игры&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Ошибка загрузки информации о игре для Appid &quot;{0}&quot;. Ошибка: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Видео недоступно.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; это не Steam игра и Steam AppId не был найден для получения видеоданных.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Ошибка соединения с сервером. Ошибка: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Ошибка загрузки заголовков. Ошибка: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Ошибка загрузки файла через url &quot;{0}&quot;. Ошибка: {1}</sys:String>
 </ResourceDictionary>
