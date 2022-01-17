@@ -40,6 +40,7 @@ namespace ExtraMetadataLoader
         
         private bool useMicrovideosSource;
         private readonly string pluginDataPath;
+        private readonly DispatcherTimer updatePlayerTimer;
         private ActiveVideoType activeVideoType;
         private bool isDragging;
         private Uri microVideoPath;
@@ -132,6 +133,20 @@ namespace ExtraMetadataLoader
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(timer_Tick);
+
+            updatePlayerTimer = new DispatcherTimer();
+            updatePlayerTimer.Interval = TimeSpan.FromMilliseconds(220);
+            updatePlayerTimer.Tick += new EventHandler(UpdaterPlayerTimer_Tick);
+        }
+
+        private void UpdaterPlayerTimer_Tick(object sender, EventArgs e)
+        {
+            updatePlayerTimer.Stop();
+            if (SettingsModel.Settings.EnableVideoPlayer && currentGame != null)
+            {
+                UpdateGameVideoSources();
+                playingContextChanged();
+            }
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -318,16 +333,12 @@ namespace ExtraMetadataLoader
         public void RefreshPlayer()
         {
             ResetPlayerValues();
-            if (SettingsModel.Settings.EnableVideoPlayer && currentGame != null)
-            {
-                UpdateGameVideoSources();
-                playingContextChanged();
-            }
-            else
-            {
-                ControlVisibility = Visibility.Collapsed;
-                SettingsModel.Settings.NewContextVideoAvailable = false;
-            }
+            ControlVisibility = Visibility.Collapsed;
+            SettingsModel.Settings.NewContextVideoAvailable = false;
+
+            // Used to prevent using processing while quickly changing games
+            updatePlayerTimer.Stop();
+            updatePlayerTimer.Start();
         }
 
         private void playingContextChanged()
