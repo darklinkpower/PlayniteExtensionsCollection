@@ -75,9 +75,9 @@
             </Border.Style>
             <WrapPanel>
                 <Button DockPanel.Dock="Left" Name="PlayButton" FontSize="24" Command="{Binding VideoPlayCommand}" Content="&#xECA7;"
-                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" />
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" Visibility="{Binding SettingsModel.Settings.IsVideoPlaying, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
                 <Button DockPanel.Dock="Left" Name="PauseButton" FontSize="24" Command="{Binding VideoPauseCommand}" Content="&#xECA5;"
-                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" />
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" Visibility="{Binding SettingsModel.Settings.IsVideoPlaying, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <Button DockPanel.Dock="Left" Name="MuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB8;"
                         FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" />
                 <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
