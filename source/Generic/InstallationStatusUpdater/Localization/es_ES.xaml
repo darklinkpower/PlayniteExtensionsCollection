@@ -30,4 +30,5 @@ Juegos desinstalados que se marcaron como instalados: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Ruta</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Añadir</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Quitar</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marked {0} games as installed and {1} as uninstalled</sys:String>
 </ResourceDictionary>
