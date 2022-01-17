@@ -28,22 +28,6 @@ namespace SteamDescriptionCleaner
             {
                 HasSettings = false
             };
-
-            PlayniteApi.Database.Games.ItemUpdated += (sender, itemUpdatedArgs) =>
-            {
-                foreach (ItemUpdateEvent<Game> updatedItem in itemUpdatedArgs.UpdatedItems)
-                {
-                    if (!string.IsNullOrEmpty(updatedItem.NewData.Description) &&
-                        updatedItem.NewData.Description.Contains("<h1>About the Game</h1>"))
-                    {
-                        var game = PlayniteApi.Database.Games[updatedItem.NewData.Id];
-                        if (game != null)
-                        {
-                            CleanGameSteamDescription(game);
-                        }
-                    }
-                }
-            };
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
