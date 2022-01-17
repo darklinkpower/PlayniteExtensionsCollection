@@ -31,6 +31,11 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">По центру</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Внизу</sys:String>
 
+    <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Використовувати глобальну екран-заставку для всіх ігор</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Використовувати логотип гри на глобальному екрані-заставці при наявності</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Огляд...</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageRemove">Вилучити</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Менеджер відео</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Обрані ігри</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">Джерела</sys:String>

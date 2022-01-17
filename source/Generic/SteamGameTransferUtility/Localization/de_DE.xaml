@@ -6,26 +6,26 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Lösche Quell-Spiel nach dem Kopieren oder wenn das Spiel in der Ziel-Bibliothek gefunden wurde</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Ziel-Bibliothek:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Öffnen</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam Spiele:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Ausgewählte Steam Spiele kopieren</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Alle Steam Spiele kopieren</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">Es sind keine installierten Steam Spiele ausgewählt</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Spiel: {0}. Fehler: Steam Bibliothek auf Laufwerk {1} nicht erkannt</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Spiel: {0}. Fehler: Quell Manifest existiert nicht in &quot;{1}&quot;
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Game: {0}. Error: Source directory doesn't exist in &quot;{1}&quot;
+Dieses Problem kann auftreten, wenn Sie dieses Dienstprogramm für dieses Spiel verwendet haben und Sie Steam nicht neu gestartet haben und Ihre Playnite Bibliothek aktualisiert haben, um die Änderungen zu berücksichtigen</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Spiel: {0}. Fehler: Quellverzeichnis existiert nicht in &quot;{1}&quot;
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Processing game: {0}
+Dieses Problem kann auftreten, wenn Sie dieses Dienstprogramm für dieses Spiel verwendet haben und Sie Steam nicht neu gestartet haben und Ihre Playnite Bibliothek aktualisiert haben, um die Änderungen zu berücksichtigen</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Spiel wird verarbeitet: {0}
 
-Game size: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Finished.
+Spielgröße: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Fertig.
 
-Copied games: {0}
-Skipped games: {1}
+Kopierte Spiele: {0}
+Übersprungene Spiele: {1}
 
-Deleted source games: {2}
+Gelöschte Quellspiele: {2}
 
-Update your Playnite library after restarting Steam to reflect the changes</sys:String>
+Aktualisieren Sie Ihre Playnite Bibliothek nach dem Neustart von Steam, um die Änderungen wiederzugeben</sys:String>
 </ResourceDictionary>
