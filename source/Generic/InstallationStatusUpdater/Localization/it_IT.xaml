@@ -30,4 +30,5 @@ I giochi precedentemente disinstallati sono stati impostati come installati: {1}
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Percorso</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Aggiungi</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Rimuovi</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marked {0} games as installed and {1} as uninstalled</sys:String>
 </ResourceDictionary>
