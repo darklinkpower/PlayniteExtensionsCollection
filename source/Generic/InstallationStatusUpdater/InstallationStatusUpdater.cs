@@ -443,13 +443,19 @@ namespace InstallationStatusUpdater
                 }
             }
 
-            if (showResultsDialog == true)
+            if (showResultsDialog)
             {
                 PlayniteApi.Dialogs.ShowMessage(
                     string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterResultsMessage"), 
                     markedUninstalled.ToString(), 
                     markedInstalled.ToString()), "Installation Status Updater"
                 );
+            }
+            else if (markedInstalled > 0 || markedUninstalled > 0)
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage(new Guid().ToString(),
+                    string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults"), markedInstalled, markedUninstalled),
+                    NotificationType.Info));
             }
         }
 
