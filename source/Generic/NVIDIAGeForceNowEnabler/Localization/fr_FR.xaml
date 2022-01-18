@@ -11,7 +11,7 @@ Ajout de la fonction &quot;{1}&quot; à {2} jeux.
 Retrait de la fonction &quot;{3}&quot; à {4} jeux.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Marked {0} games as Installed.</sys:String>
+{0} jeux ont été marqués comme installés.</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Action de jeu supprimée de {0} jeux</sys:String>
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Mettre à jour le statut des jeux au démarrage de Playnite</sys:String>
