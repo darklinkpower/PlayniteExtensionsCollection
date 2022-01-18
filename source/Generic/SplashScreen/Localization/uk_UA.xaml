@@ -3,13 +3,13 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Відкрити менеджер відео</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">Вимкнути розширення для вибраних ігор</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Повторно увімкнути розширення для вибраних ігор</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Додайте функцію пропуску екрана-заставки до вибраних ігор</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Прибрати функцію пропуску екрана-заставки з вибраних ігор</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Додати особливість для пропуску екрана-заставки до вибраних ігор</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Прибрати особливіть для пропуску екрана-заставки з вибраних ігор</sys:String>
 
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Вступне відео додано</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Вступне відео прибрано</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Додано функцію виключення &quot;{0}&quot; до {1} гри/ігор</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Прибрано функцію виключення &quot;{0}&quot; до {1} гри/ігор</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Додано особливіть &quot;{0}&quot; до {1} гри/ігор</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Прибрано особливіть &quot;{0}&quot; до {1} гри/ігор</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Запускати розширення в режимі робочого столу</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Показувати зображення екрана-заставки в режимі робочого столу</sys:String>
