@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calculate sizes of selected games</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calculate sizes of selected games (Force overwrite)</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calcular tamaños de los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calcular tamaños de los juegos seleccionados (Forzar sobrescritura)</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Calculating sizes…</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Done</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Calculando tamaños…</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Hecho</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error while getting directory size in {0} of game {1}. {2}</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error while getting rom file size in {0} of game {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error al obtener el tamaño del directorio en {0} del juego {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error al obtener el tamaño del archivo rom en {0} del juego {1}. {2}</sys:String>
 </ResourceDictionary>
