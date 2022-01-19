@@ -57,7 +57,7 @@ namespace GamesSizeCalculator
             {
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGames"),
+                    Description = ResourceProvider.GetString("LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames"),
                     MenuSection = menuSection,
                     Action = a =>
                     {
