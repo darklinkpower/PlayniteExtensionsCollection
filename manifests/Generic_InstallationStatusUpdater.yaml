@@ -131,3 +131,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Show notification when games are marked as installed or uninstalled and a dialog is not shown
+  - Version: 2.19
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Installation_Status_Updater_2_19.pext
+    Changelog:
+    - Updated localizations
