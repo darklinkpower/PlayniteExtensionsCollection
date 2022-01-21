@@ -269,7 +269,7 @@ namespace SplashScreen
                         {
                             // Closes splash screen after another 60 seconds, but the game is already starting.
                             await Task.Delay(60000);
-                            currentSplashWindow.Close();
+                            currentSplashWindow?.Close();
                             currentSplashWindow = null;
                         }
                     }
@@ -277,12 +277,12 @@ namespace SplashScreen
                     {
                         // Unblock main thread and let Playnite start a game.
                         stopBlockingEvent?.Set();
-                        currentSplashWindow.Close();
+                        currentSplashWindow?.Close();
                     }
                 };
 
                 currentSplashWindow.Show();
-                System.Windows.Threading.Dispatcher.Run();
+                Dispatcher.Run();
             }));
 
             splashWindowThread.SetApartmentState(ApartmentState.STA);
@@ -345,7 +345,7 @@ namespace SplashScreen
                 }
 
                 currentSplashWindow.Show();
-                System.Windows.Threading.Dispatcher.Run();
+                Dispatcher.Run();
             }));
 
             splashWindowThread.SetApartmentState(ApartmentState.STA);
