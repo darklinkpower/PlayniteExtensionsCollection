@@ -387,8 +387,25 @@ namespace SplashScreen
                 }
             }
 
-            logger.Info("Video not found");
-            return string.Empty;
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                splashVideo = string.Format(videoPathTemplate, "playnite", "Desktop");
+            }
+            else
+            {
+                splashVideo = string.Format(videoPathTemplate, "playnite", "Fullscreen");
+            }
+
+            if (File.Exists(splashVideo))
+            {
+                logger.Info(string.Format("Playnite mode video for {0} mode found in {1}", PlayniteApi.ApplicationInfo.Mode ,splashVideo));
+                return splashVideo;
+            }
+            else
+            {
+                logger.Info("Video not found");
+                return string.Empty;
+            }
         }
 
         private string GetSplashLogoPath(Game game)
