@@ -31,10 +31,10 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Mitte</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Unten</sys:String>
 
-    <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Use a global splash image for all games</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Use game logo in global splash image if it's available</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Browse...</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageRemove">Remove</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Ein globales Splash Bild für alle Spiele verwenden</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Verwende das Spiellogo im globalen Splash Bild, falls verfügbar</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Durchsuchen...</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageRemove">Entfernen</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Videoverwaltung</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Ausgewählte Spiele</sys:String>
