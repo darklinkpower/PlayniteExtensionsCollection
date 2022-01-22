@@ -90,3 +90,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix Playnite mode videos not playing when configured
+  - Version: 2.13
+    RequiredApiVersion: 6.2.1
+    ReleaseDate: 2022-01-22
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_13.pext
+    Changelog:
+    - Updated localizations
