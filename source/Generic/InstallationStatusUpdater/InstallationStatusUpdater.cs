@@ -453,6 +453,12 @@ namespace InstallationStatusUpdater
             }
             else if (markedInstalled > 0 || markedUninstalled > 0)
             {
+                if (File.Exists(Path.Combine(GetPluginUserDataPath(), "DisableNotifications")))
+                {
+                    logger.Info("Super secret \"DisableNotifications\" file detected. Notification not added.");
+                    return;
+                }
+                
                 PlayniteApi.Notifications.Add(new NotificationMessage(new Guid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults"), markedInstalled, markedUninstalled),
                     NotificationType.Info));
