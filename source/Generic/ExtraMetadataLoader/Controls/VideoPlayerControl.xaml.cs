@@ -1,4 +1,5 @@
-﻿using ExtraMetadataLoader.Models;
+﻿using ExtraMetadataLoader.Common;
+using ExtraMetadataLoader.Models;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
@@ -9,7 +10,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -27,7 +27,6 @@ namespace ExtraMetadataLoader
     public partial class VideoPlayerControl : PluginUserControl, INotifyPropertyChanged
     {
         private static readonly ILogger logger = LogManager.GetLogger(); 
-        private HttpClient client;
         private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         public enum ActiveVideoType { Microtrailer, Trailer, None }; 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -106,8 +105,6 @@ namespace ExtraMetadataLoader
         public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings, string pluginDataPath)
         {
             InitializeComponent();
-            client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
             this.pluginDataPath = pluginDataPath;
             this.PlayniteApi = PlayniteApi;
             SettingsModel = settings;
@@ -389,38 +386,50 @@ namespace ExtraMetadataLoader
             if (SettingsModel.Settings.StreamSteamVideosOnDemand && trailerVideoPath == null)
             {
                 var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_SteamAppDetails.json");
+                var jsonDownloadValid = true;
                 if (!File.Exists(gameDataPath))
                 {
                     string steamId = GetSteamId(game);
                     if (steamId != null)
                     {
                         var url = string.Format(@"https://store.steampowered.com/api/appdetails?appids={0}", steamId);
-                        DownloadFile(url, gameDataPath).GetAwaiter().GetResult();
+                        jsonDownloadValid = HttpDownloader.DownloadFileAsync(url, gameDataPath).GetAwaiter().GetResult();
                     }
                 }
-                if (File.Exists(gameDataPath))
+
+                if (File.Exists(gameDataPath) && jsonDownloadValid)
                 {
                     var jsonString = File.ReadAllText(gameDataPath);
-                    var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(jsonString);
-                    if (parsedData.Keys?.Any() == true)
+                    try
                     {
-                        var response = parsedData[parsedData.Keys.First()];
-                        if (response.success == true && response.data != null)
+                        var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(jsonString);
+                        if (parsedData.Keys?.Any() == true)
                         {
-                            if (trailerVideoPath == null)
+                            var response = parsedData[parsedData.Keys.First()];
+                            if (response.success == true && response.data != null)
                             {
-                                if (SettingsModel.Settings.StreamSteamHighQuality)
+                                if (trailerVideoPath == null)
                                 {
-                                    trailerVideoPath = response.data.Movies?[0].Mp4.Max;
+                                    if (SettingsModel.Settings.StreamSteamHighQuality)
+                                    {
+                                        trailerVideoPath = response.data.Movies?[0].Mp4.Max;
+                                    }
+                                    else
+                                    {
+                                        trailerVideoPath = response.data.Movies?[0].Mp4.Q480;
+                                    }
+                                    SettingsModel.Settings.IsAnyVideoAvailable = true;
+                                    SettingsModel.Settings.IsTrailerAvailable = true;
                                 }
-                                else
-                                {
-                                    trailerVideoPath = response.data.Movies?[0].Mp4.Q480;
-                                }
-                                SettingsModel.Settings.IsAnyVideoAvailable = true;
-                                SettingsModel.Settings.IsTrailerAvailable = true;
                             }
                         }
+                    }
+                    catch
+                    {
+                        // According to #169, it seems that for some reason the uri redirects to
+                        // another page and a html source gets downloaded so it needs to be deleted
+                        logger.Error($"Error deserializing steam appdetails json file in {gameDataPath}");
+                        IoHelper.DeleteFile(gameDataPath);
                     }
                 }
             }
@@ -455,40 +464,6 @@ namespace ExtraMetadataLoader
                     VideoSource = microVideoPath;
                     activeVideoType = ActiveVideoType.Microtrailer;
                 }
-            }
-        }
-
-        public async Task DownloadFile(string requestUri, string path)
-        {
-            try
-            {
-                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    string fileToWriteTo = path;
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error during file download, url {requestUri}");
-            }
-        }
-
-        public HttpStatusCode GetResponseCode(string url)
-        {
-            try
-            {
-                var response = client.GetAsync(url).GetAwaiter().GetResult();
-                return response.StatusCode;
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Failed to get HTTP response for {url}.");
-                return HttpStatusCode.ServiceUnavailable;
             }
         }
 

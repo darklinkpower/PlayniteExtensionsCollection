@@ -45,6 +45,7 @@ namespace ExtraMetadataLoader.Common
             {
                 logger.Error(e, $"Error during file download, url {requestUri}. Error: {e.Message}.");
             }
+
             return false;
         }
 

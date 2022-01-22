@@ -54,6 +54,27 @@ namespace ExtraMetadataLoader.Common
             }
         }
 
+        internal static bool DeleteFile(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    logger.Info($"Deleted file in {filePath}");
+                }
+                else
+                {
+                    logger.Info($"File doesn't exist in {filePath} and was not deleted");
+                }
 
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error deleting file in {filePath}");
+                return false;
+            }
+        }
     }
 }
