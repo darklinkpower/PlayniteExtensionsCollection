@@ -137,7 +137,7 @@ namespace CooperativeModesImporter
                     Action = a => {
                         AddMpFeaturesToGamesProgress(PlayniteApi.MainView.SelectedGames.ToList());
                     }
-                },
+                }
             };
         }
 
@@ -224,7 +224,7 @@ namespace CooperativeModesImporter
                 .ToLower()
                 .Replace("gameoftheyearedition", "")
                 .Replace("gameoftheyear", "")
-                .Replace("premium edition", "");
+                .Replace("premiumedition", "");
         }
     }
 }
