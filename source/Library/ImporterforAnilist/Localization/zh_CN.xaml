@@ -11,7 +11,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Update progress from AniList account during library update (&quot;Version&quot; field is used)</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">选择浏览器</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Remove</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList game entry doesn't have links available, please download metadata using the &quot;Official store&quot; opton to get links from different providers.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Open link</sys:String>
