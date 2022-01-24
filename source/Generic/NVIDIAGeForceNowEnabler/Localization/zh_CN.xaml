@@ -20,6 +20,6 @@ Marked {0} games as Installed.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Enabled games will always be marked as installed when this option is enabled.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Games without a installation directory set are detected as not installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Set enabled games as installed when updating enabled status of games</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Launch in Nvidia GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">在 Nvidia GeForce NOW 中启动</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
 </ResourceDictionary>

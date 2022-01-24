@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Оновити особливості кооперативних режимів усіх ігор в бібліотеці</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Оновити особливості кооперативних режимів обраних ігор</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Оновлення особливостей кооперативних режимів…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Готово.
+
+Додано особливості кооперативних режимів для {0} ігор.</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Додати префікс до доданих особливостей</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Якщо увімкнено, цей текст і оригінальна назва кооперативного режиму будуть об'єднані для використання в назві особливості</sys:String>
+</ResourceDictionary>

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">Set profile picture</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">Set background video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">Extra Metadata configuration for the theme &quot;{0}&quot; updated.
-Please restart Playnite to make changes take effect.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Error converting image file to png. Error: &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Profile Picture set.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Background video set.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetProfilePictureDescription">设置资料图片</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_MenuItemSetBackgroundVideoDescription">设置背景视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">主题“{0}”的 Extra Metadata 配置已更新。
+请重开 Playnite 以使更改生效。</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">将图像文件转换为 png 时出错。错误：“{0}”</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">资料图片已设置。</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">背景视频已设置。</sys:String>
 </ResourceDictionary>

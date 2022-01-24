@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCLog_Open_MenuItemOpenLogDescription">Open Playnite log</sys:String>
-    <sys:String x:Key="LOCLog_Open_MenuItemOpenExtensionsLogDescription">Open extensions log</sys:String>
+    <sys:String x:Key="LOCLog_Open_MenuItemOpenLogDescription">打开 Playnite 日志</sys:String>
+    <sys:String x:Key="LOCLog_Open_MenuItemOpenExtensionsLogDescription">打开扩展日志</sys:String>
 </ResourceDictionary>
