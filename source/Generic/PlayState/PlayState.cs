@@ -504,6 +504,7 @@ namespace PlayState
                         {
                             continue;
                         }
+
                         if (filterPaths)
                         {
                             var fileName = Path.GetFileName(pathLower);
@@ -512,6 +513,7 @@ namespace PlayState
                                 continue;
                             }
                         }
+
                         gameProcesses.Add(
                             new ProcessItem
                             {
@@ -544,43 +546,23 @@ namespace PlayState
                 if (game.PluginId == Guid.Empty ||
                     (game.PluginId != Guid.Empty && !settings.Settings.SubstractOnlyNonLibraryGames))
                 {
-                    Task.Run(async () =>
+                    var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == game.Id)?.Item2.Elapsed;
+                    if (suspendedTime != null)
                     {
-                        // Playnite updates the new game state, including PlayTime, after the OnGameStopped
-                        // event, so it is needed to wait some time for Playnite to update the game and
-                        // update the new playtime afterwards according to the new game item state.
-                        // It needs to be done this way until #2634 is done.
-                        var gameId = game.Id;
-                        await Task.Delay(10000);
-                        
-                        var updatedGame = PlayniteApi.Database.Games[gameId];
-                        var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == gameId)?.Item2.Elapsed;
-
-                        // Check if game still exists for safety, in case game was removed for any reason
-                        if (updatedGame != null && suspendedTime != null)
+                        var elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
+                        logger.Debug($"Suspend elapsed seconds for game {game.Name} was {elapsedSeconds}");
+                        if (elapsedSeconds != 0)
                         {
-                            var elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
-                            logger.Debug($"Suspend elapsed seconds for game {updatedGame.Name} was {elapsedSeconds}");
-                            if (elapsedSeconds != 0)
-                            {
-                                var newPlaytime = updatedGame.Playtime > elapsedSeconds ? updatedGame.Playtime - elapsedSeconds : elapsedSeconds - updatedGame.Playtime;
-                                logger.Debug($"Old playtime {updatedGame.Playtime}, new playtime {newPlaytime}");
-                                updatedGame.Playtime = newPlaytime;
-                                PlayniteApi.Database.Games.Update(updatedGame);
-                            }
+                            var newPlaytime = game.Playtime > elapsedSeconds ? game.Playtime - elapsedSeconds : elapsedSeconds - game.Playtime;
+                            logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
+                            game.Playtime = newPlaytime;
+                            PlayniteApi.Database.Games.Update(game);
                         }
-                        RemoveGameStopwatchTuple(updatedGame);
-                    });
-                }
-                else
-                {
-                    RemoveGameStopwatchTuple(game);
+                    }
                 }
             }
-            else
-            {
-                RemoveGameStopwatchTuple(game);
-            }
+
+            RemoveGameStopwatchTuple(game);
         }
 
         private void CreateGameStopwatchTuple(Game game)
