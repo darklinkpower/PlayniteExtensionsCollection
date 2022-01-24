@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">导入选中的Epic, GOG, Origin和Steam游戏的日期数据</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">导入所有Epic, GOG, Origin和Steam游戏的日期数据</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">导入选中的 Epic、GOG、Origin 和 Steam 游戏的日期数据</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">导入所有 Epic、GOG、Origin 和 Steam 游戏的日期数据</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">手动设定选中游戏的添加日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">导入选中的Steam游戏的日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">导入所有Steam游戏的日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">导出Steam许可证列表</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">导入选中的GOG游戏的日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">导入所有GOG游戏的日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportGogLicencesDescription">导出GOG许可证列表</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">导入选中的Epic游戏的日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">导入所有Epic游戏的日期</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">导出Epic许可证列表</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription">Import dates of selected Origin games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllOriginDatesDescription">Import dates of all Origin games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginErrorMessage">Error retrieving data from Origin</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginInvalidJson">Origin data is invalid</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportOriginLicencesDescription">Export Origin licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">A web browser window will be opened, please close the window after login in.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">No licenses were found.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Found {0} licenses.
-Do you want to export your found {1} licenses?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Licenses exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Library: {0}
-Processed games: {1}
-Games with date found: {2}
-Games without date found: {3}
-Games that had the added date changed: {4}
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">导入选中的 Steam 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">导入所有 Steam 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">导出 Steam 许可证列表</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">导入选中的 GOG 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">导入所有 GOG 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportGogLicencesDescription">导出 GOG 许可证列表</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">导入选中的 Epic 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">导入所有 Epic 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">导出 Epic 许可证列表</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription">导入选中的 Origin 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllOriginDatesDescription">导入所有 Origin 游戏的日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginErrorMessage">从 Origin 获取数据时出错</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginInvalidJson">Origin 的数据无效</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportOriginLicencesDescription">导出 Origin 许可证列表</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">将弹出一个网页浏览器窗口，请在登录后将其关闭。</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">未找到许可证。</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">找到 {0} 个许可证。
+你想要导出你的已找到的 {1} 个许可证吗？</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">已成功导出许可证。</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">库: {0}
+经处理的游戏: {1}
+找到日期的游戏: {2}
+没有找到日期的游戏: {3}
+添加日期已被更改的游戏: {4}
 
-Do you want to export results?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Results exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Enter date to import in the format &quot;dd/MM/yyyy HH:mm&quot;:</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">Error.
-&quot;{0}&quot; is in the wrong format.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Changed the added date of {0} games.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">User is not logged in to {0}.</sys:String>
+你想要导出结果吗？</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">已成功导出结果。</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">按“dd/MM/yyyy HH:mm”格式（d=日，M=月，y=年，H=时，m=分；不包括引号）键入要导入的日期：</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">错误。
+&quot;{0}&quot; 的格式有误。</sys:String>
+    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">更改了 {0} 个游戏的添加日期。</sys:String>
+    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">用户未登录到 {0}。</sys:String>
 </ResourceDictionary>
