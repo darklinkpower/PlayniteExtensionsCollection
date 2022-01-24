@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNVIDIA_GE_GameStream_Export_MenuItemExportSelectedGamesDescription">Export selected games</sys:String>
-    <sys:String x:Key="LOCNVIDIA_GE_GameStream_Export_ResultsMessage">NVIDIA GameStream game shortcuts created: {0}</sys:String>
+    <sys:String x:Key="LOCNVIDIA_GE_GameStream_Export_MenuItemExportSelectedGamesDescription">导出所选游戏</sys:String>
+    <sys:String x:Key="LOCNVIDIA_GE_GameStream_Export_ResultsMessage">已创建 NVIDIA GameStream 游戏快捷方式：{0}</sys:String>
 </ResourceDictionary>
