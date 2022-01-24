@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCMameRenamer_MenuItemRenameRegionInNameDescription">Rename selected MAME games</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MenuItemRenameNoRegionInNameDescription">Rename selected MAME games (Without region in game name)</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsBackgroundDescription">Import snapshots of selected game(s) as Background images from MAME into Playnite</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsCoverDescription">Import snapshots of selected game(s) as Cover images from MAME into Playnite</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">Select the MAME executable.</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutablePathSavedMessage">MAME executable path saved.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemRenameRegionInNameDescription">重命名选中的 MAME 游戏</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemRenameNoRegionInNameDescription">重命名所选的 MAME 游戏（游戏名不含地区）</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsBackgroundDescription">从 MAME 将所选游戏的快照作为背景图像导入到 Playnite</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsCoverDescription">从 MAME 将所选游戏的快照作为封面图像导入到 Playnite</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">选择 MAME 可执行文件。</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutablePathSavedMessage">已保存 MAME 可执行文件路径。</sys:String>
     <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">MAME executable not found in {0}. 
 Please run the extension again to configure it to the correct location.</sys:String>
     <sys:String x:Key="LOCMameRenamer_ResultsMessage">Changed the name of {0} game(s).</sys:String>
