@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">处理缓存中的图像</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">选择 ImageMagick 可执行文件</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick executable path saved</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">已保存 Magick 可执行文件路径</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
 Please run the extension again to configure it to the correct location.</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
