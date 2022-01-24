@@ -121,7 +121,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">登录后允许在完整版站点查看具有年龄限制的视频</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">从 Steam 下载高清质量视频</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">仅处理来自 Steam 的游戏，而不是从 Steam 获取元数据的其他平台 PC 游戏</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">从 Steam 获取元数据时，仅处理来自 Steam 的游戏，而不是其他来源的 PC 游戏</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">选择要下载或观看的视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">视频列表：</sys:String>
