@@ -4,9 +4,9 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Прибрати вибрані ігри з чорного списку Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Налаштувати обрані ігри, щоб примусово призупиняти лише час у грі</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Видалити конфігурацію, щоб примусово призупиняти лише час у грі</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Не вдалося зареєструвати налаштовану гарячу клавішу {0}
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
+Можете спробувати іншу комбінацію гарячих клавіш, щоб розв'язати проблему</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Додано {0} ігор до чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Прибрано {0} ігор з чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Налаштовано {0} ігор для примусового призупинення часу у грі при використанні гарячої клавіші.</sys:String>
