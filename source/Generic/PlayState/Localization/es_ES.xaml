@@ -4,9 +4,9 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Eliminar los juegos seleccionados de la lista de ignorados</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configura los juegos seleccionados para forzar que sólo suspendan el tiempo de juego</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Quitar configuración para forzar el suspender sólo el tiempo de juego</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Error al registrar las teclas de acceso rápido configuradas {0}
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
+Puedes intentar usar una combinación diferente de teclas para solucionar el problema</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Se añadieron {0} juego(s) a la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Se removieron {0} juego(s) de la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">{0} juego(s) configurado(s) para forzar a suspender el tiempo de juego al usar la teclas configuradas.</sys:String>
