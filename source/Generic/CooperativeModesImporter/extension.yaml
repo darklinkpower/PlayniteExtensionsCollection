@@ -1,0 +1,14 @@
+﻿Id: CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3
+Name: Cooperative Modes Importer
+Author: darklinkpower
+Version: 1.0
+Module: CooperativeModesImporter.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-000.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
