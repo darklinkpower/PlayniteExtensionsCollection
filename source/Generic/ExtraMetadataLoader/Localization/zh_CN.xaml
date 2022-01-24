@@ -120,24 +120,24 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">登录到 YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">登录后允许在完整版站点查看具有年龄限制的视频</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Download videos from Steam in High Definition quality</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">从 Steam 下载高清质量视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">仅处理来自 Steam 的游戏或从 Steam 获取元数据时的 PC 游戏</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Select video to download or view</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Videos list:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Search</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">Download selected video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">View selected video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">选择要下载或观看的视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">视频列表：</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">搜索</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">下载所选视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">观看所选视频</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">从 Google 下载所选游戏的徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">下载所选徽标</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Search only transparent</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">仅搜索具有透明度通道的图像</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">从文件设定所选游戏的徽标</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">Show menu items to view videos on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">View review video on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">View gameplay video on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Search video on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video not found</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">在菜单中显示在 YouTube 上观看视频的选项</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">观看 YouTube 上的测评视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">观看 YouTube 上的游玩视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">在 YouTube 上搜索视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">未找到视频</sys:String>
 </ResourceDictionary>
