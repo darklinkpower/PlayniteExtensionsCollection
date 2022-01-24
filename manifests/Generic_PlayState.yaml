@@ -112,3 +112,11 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix extension not working with games not launched as emulated games
+  - Version: 2.16
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/PlayState_2_16.pext
+    Changelog:
+    - Updated localizations
+    - Updated to Playnite SDK 6.2.2
+    - Improvements during new Playtime calculation after game is closed

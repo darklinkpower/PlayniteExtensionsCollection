@@ -38,3 +38,9 @@ Packages:
     Changelog:
     - Fix error during image format conversion
     - Minor fixes and improvements
+  - Version: 2.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/NVIDIA_GE_GameStream_Export_2_6.pext
+    Changelog:
+    - Updated localizations

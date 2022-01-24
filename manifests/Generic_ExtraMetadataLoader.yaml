@@ -245,3 +245,10 @@ Packages:
     Changelog:
     - Updated localizations
     - Fix crash in rare case that invalid steam data file gets downloaded when streaming videos is enabled
+  - Version: 1.33
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_33.pext
+    Changelog:
+    - Updated localizations
+    - Updated to Playnite SDK 6.2.2

@@ -43,3 +43,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_6.pext
     Changelog:
     - Updated localizations
+  - Version: 2.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_7.pext
+    Changelog:
+    - Updated localizations
