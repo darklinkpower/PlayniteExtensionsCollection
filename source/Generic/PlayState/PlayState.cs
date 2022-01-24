@@ -102,15 +102,18 @@ namespace PlayState
                 globalHotkeyRegistered = true;
                 var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key));
 
-                if (!registered)
+                if (registered)
                 {
-                    PlayniteApi.Notifications.Add(new NotificationMessage(
-                        Guid.NewGuid().ToString(),
-                        $"PlayState: Failed to register configured Hotkey {settings.Settings.SavedHotkeyGesture}.",
-                        NotificationType.Error)
-                    );
-                    logger.Debug($"Hotkey registered with custom hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Debug($"Hotkey registered with hotkey {settings.Settings.SavedHotkeyGesture}.");
                 }
+                else
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
+                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedHotkeyGesture),
+                        NotificationType.Error));
+                    logger.Error($"Failed to register configured Hotkey {settings.Settings.SavedHotkeyGesture}.");
+                }
+
                 return registered;
             }
 
