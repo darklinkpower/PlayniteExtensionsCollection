@@ -69,7 +69,7 @@ namespace CooperativeModesImporter
                 { "atari_jaguar", "JAG" },
                 { "atari_lynx", "ATA" },
                 { "atari_st", "ATA" },
-                { "mattel_intellivision", "Night Stalker" },
+                { "mattel_intellivision", "INT" },
                 { "nec_pcfx", "TGFX" },
                 { "nec_supergrafx", "TGFX" },
                 { "nec_turbografx_16", "TGFX" },
