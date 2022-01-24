@@ -4,6 +4,9 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Retirer les jeux sélectionnés de la liste noire PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configurer les jeux sélectionnés pour forcer uniquement la suspension du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Retirer la configuration pour forcer la suspension du temps de jeu</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+
+You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">{0} jeu(x) ajouté(s) à la liste noire PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">{0} jeu(x) retiré(s) de la liste noire PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">{0} jeu(x) configuré(s) pour forcer uniquement la suspension du temps de jeu lorsque vous utilisez le raccourci clavier configuré.</sys:String>
