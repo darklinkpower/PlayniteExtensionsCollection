@@ -4,6 +4,9 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Rimuove i giochi selezionati dalla blacklist di Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configura i giochi selezionati per forzare la sospensione solo del tempo di riproduzione</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Rimuovi la configurazione per forzare la sospensione solo dell'ora di riproduzione</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+
+You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Aggiunto {0} gioco(i) alla blacklist di PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Rimossi {0} gioco(i) dalla blacklist di PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configurato/i {0} gioco/i per forzare a sospendere solo il tempo di gioco quando si utilizza il tasto di scelta rapida configurato.</sys:String>
