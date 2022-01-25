@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Restart Steam after processing games to reflect changes on Steam if necessary</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Delete source game after copying game or if game is detected in target library</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Target Library:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Open</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">打开</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
