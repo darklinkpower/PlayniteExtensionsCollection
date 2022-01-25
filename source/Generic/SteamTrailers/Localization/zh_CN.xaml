@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">视频</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; is not a PC Game. 
-The extension is only compatible with PC Games&quot;</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video not available.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; is not a Steam game and Steam AppId was not found to obtain video data.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Error connecting to server. Error: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam 标清预告片</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam 高清预告片</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam 精简预告片</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot;不是一个 PC 游戏。
+该扩展仅兼容 PC 游戏。</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">下载 AppId “{0}”的游戏信息时出错。错误：{1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">视频不可用。</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">“{0}”不是一个 Steam 游戏，且找不到用于获取视频数据的 Steam AppId。</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">连接服务器时出错。错误：{0}</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Error downloading headers. Error: {0}</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
 </ResourceDictionary>
