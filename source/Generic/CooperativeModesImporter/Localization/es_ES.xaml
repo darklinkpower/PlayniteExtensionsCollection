@@ -8,4 +8,13 @@
 Se añadieron características de modos cooperativos a {0} juegos.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Añadir prefijo a las características añadidas</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Si está activado, este texto y el nombre original del modo cooperativo se combinarán para usar en el nombre de la característica</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Import basic Co-op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Import detailed Co-op data</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
 </ResourceDictionary>
