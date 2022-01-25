@@ -11,6 +11,8 @@ namespace CooperativeModesImporter
     public class CooperativeModesImporterSettings : ObservableObject
     {
         [DontSerialize]
+        private bool addLinkOnImport = false;
+        [DontSerialize]
         private string featuresPrefix = string.Empty;
         [DontSerialize]
         private bool addPrefix = false;
@@ -33,6 +35,7 @@ namespace CooperativeModesImporter
         [DontSerialize]
         private bool importDetailedModeExtras = false;
 
+        public bool AddLinkOnImport { get => addLinkOnImport; set => SetValue(ref addLinkOnImport, value); }
         public string FeaturesPrefix { get => featuresPrefix; set => SetValue(ref featuresPrefix, value); }
         public bool AddPrefix { get => addPrefix; set => SetValue(ref addPrefix, value); }
         public bool ImportBasicModes { get => importBasicModes; set => SetValue(ref importBasicModes, value); }

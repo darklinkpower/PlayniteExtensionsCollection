@@ -203,6 +203,20 @@ namespace CooperativeModesImporter
                         }
                     }
 
+                    if (settings.Settings.AddLinkOnImport)
+                    {
+                        if (game.Links == null)
+                        {
+                            game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>{ new Link { Name = "Co-Optimus", Url = dbGame.Url } };
+                            gameUpdated = true;
+                        }
+                        else if (!game.Links.Any(x => x.Url == dbGame.Url))
+                        {
+                            game.Links.Add(new Link { Name = "Co-Optimus", Url = dbGame.Url });
+                            gameUpdated = true;
+                        }
+                    }
+
                     if (gameUpdated)
                     {
                         PlayniteApi.Database.Games.Update(game);

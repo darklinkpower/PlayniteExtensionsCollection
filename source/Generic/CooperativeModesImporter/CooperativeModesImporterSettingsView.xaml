@@ -6,7 +6,10 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <CheckBox IsChecked="{Binding Settings.AddLinkOnImport}"
+                  Content="{DynamicResource LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport}" />
         <CheckBox IsChecked="{Binding Settings.ImportBasicModes}"
+                  Margin="0,20,0,0"
                   Content="{DynamicResource LOCCooperativeModesImporter_SettingImportBasicData}" />
         <StackPanel IsEnabled="{Binding Settings.ImportBasicModes}" Margin="20,10,0,0">
             <CheckBox IsChecked="{Binding Settings.AddPrefix}"
