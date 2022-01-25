@@ -6,7 +6,9 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,7 +21,9 @@ namespace CooperativeModesImporter
     public class CooperativeModesImporter : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly string databaseZipPath;
         private readonly string databasePath;
+        private readonly int currentDatabaseVersion = 2;
         private readonly Dictionary<string, string> specIdToSystemDictionary;
 
         private CooperativeModesImporterSettingsViewModel settings { get; set; }
@@ -34,7 +38,8 @@ namespace CooperativeModesImporter
                 HasSettings = true
             };
 
-            databasePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "database.json");
+            databaseZipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "database.zip");
+            databasePath = Path.Combine(GetPluginUserDataPath(), "database.json");
             specIdToSystemDictionary = new Dictionary<string, string>
             {
                 //{ "3do", string.Empty },
@@ -108,6 +113,27 @@ namespace CooperativeModesImporter
             };
         }
 
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            if (settings.Settings.DatabaseVersion < currentDatabaseVersion || !File.Exists(databasePath))
+            {
+                
+                PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
+                {
+                    logger.Info("Decompressing database zip file...");
+                    ZipFile.ExtractToDirectory(databaseZipPath, GetPluginUserDataPath());
+                    logger.Info("Decompressed database zip file");
+                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase")));
+
+                if (settings.Settings.DatabaseVersion != currentDatabaseVersion)
+                {
+                    logger.Info($"Database updated from {settings.Settings.DatabaseVersion} to {currentDatabaseVersion}");
+                    settings.Settings.DatabaseVersion = currentDatabaseVersion;
+                    SavePluginSettings(settings.Settings);
+                }
+            }
+        }
+
         public override ISettings GetSettings(bool firstRunSettings)
         {
             return settings;
@@ -144,7 +170,7 @@ namespace CooperativeModesImporter
         private void AddMpFeaturesToGamesProgress(List<Game> games)
         {
             var updatedGames = 0;
-            PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
+            PlayniteApi.Dialogs.ActivateGlobalProgress(progArgs =>
             {
                 updatedGames = AddMpFeaturesToGames(games);
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress")));
@@ -207,12 +233,16 @@ namespace CooperativeModesImporter
                     {
                         if (game.Links == null)
                         {
-                            game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>{ new Link { Name = "Co-Optimus", Url = dbGame.Url } };
+                            game.Links = new ObservableCollection<Link>{ new Link { Name = "Co-Optimus", Url = dbGame.Url } };
                             gameUpdated = true;
                         }
                         else if (!game.Links.Any(x => x.Url == dbGame.Url))
                         {
-                            game.Links.Add(new Link { Name = "Co-Optimus", Url = dbGame.Url });
+                            var linksCopy = new ObservableCollection<Link>(game.Links)
+                            {
+                                new Link { Name = "Co-Optimus", Url = dbGame.Url }
+                            };
+                            game.Links = linksCopy;
                             gameUpdated = true;
                         }
                     }
@@ -231,6 +261,11 @@ namespace CooperativeModesImporter
         private List<string> GetBasicModes(CooperativeGame dbGame)
         {
             var modesBasic = new List<string>();
+            if (!settings.Settings.ImportBasicModes)
+            {
+                return modesBasic;
+            }
+
             foreach (var mode in dbGame.Modes)
             {
                 if (settings.Settings.AddPrefix)
@@ -249,7 +284,7 @@ namespace CooperativeModesImporter
         private List<string> GetDetailedModes(CooperativeGame dbGame)
         {
             var modesDetailed = new List<string>();
-            if (settings.Settings.ImportDetailedModes)
+            if (!settings.Settings.ImportDetailedModes)
             {
                 return modesDetailed;
             }
