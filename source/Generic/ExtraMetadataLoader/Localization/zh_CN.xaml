@@ -85,9 +85,9 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">删除所选游戏的徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">删除所选游戏的视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">删除所选游戏的精简视频</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">从文件设定所选游戏的视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">从文件设置所选游戏的视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">从 YouTube 下载视频</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">从文件设定所选游戏的视频...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">从文件设置所选游戏的视频...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">精简视频</sys:String>
@@ -133,7 +133,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">下载所选徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">仅搜索具有透明度通道的图像</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">从文件设定所选游戏的徽标</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">从文件设置所选游戏的徽标</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">在菜单中显示在 YouTube 上观看视频的选项</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">观看 YouTube 上的测评视频</sys:String>
