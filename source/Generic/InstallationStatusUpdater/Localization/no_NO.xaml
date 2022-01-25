@@ -30,5 +30,5 @@ Tidligere avinstallerte spill ble merket som installert: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Plassering</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Legg til</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Fjern</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marked {0} games as installed and {1} as uninstalled</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installasjonsstatusoppdatering: Markerte {0} spill som installert og {1} som avinstallert</sys:String>
 </ResourceDictionary>
