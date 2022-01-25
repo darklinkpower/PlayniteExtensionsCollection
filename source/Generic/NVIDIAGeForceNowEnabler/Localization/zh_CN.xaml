@@ -12,7 +12,7 @@ Removed &quot;{3}&quot; feature from {4} games.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
 Marked {0} games as Installed.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Game Action removed from {0} games</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">从 {0} 个游戏中移除了游戏指令。</sys:String>
 	
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Update enabled status of games on Playnite startup</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Update enabled status of games on library update</sys:String>

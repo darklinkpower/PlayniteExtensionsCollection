@@ -8,4 +8,15 @@
 Додано особливості кооперативних режимів для {0} ігор.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Додати префікс до доданих особливостей</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Якщо увімкнено, цей текст і оригінальна назва кооперативного режиму будуть об'єднані для використання в назві особливості</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Import basic Co-op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Import detailed Co-op data</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
 </ResourceDictionary>

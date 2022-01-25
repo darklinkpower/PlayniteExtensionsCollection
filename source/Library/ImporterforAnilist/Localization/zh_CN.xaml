@@ -13,8 +13,8 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">选择浏览器</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Remove</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList game entry doesn't have links available, please download metadata using the &quot;Official store&quot; opton to get links from different providers.</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Open link</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList 游戏条目没有可用的链接，请使用“官方商店”选项下载元数据，以从其他供应源获取链接。</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">打开链接</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">AniList status</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Completion status</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Plan to watch/read</sys:String>

@@ -14,5 +14,5 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">News</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Achievements</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">View in Steam Library</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">在 Steam 库中查看</sys:String>
 </ResourceDictionary>

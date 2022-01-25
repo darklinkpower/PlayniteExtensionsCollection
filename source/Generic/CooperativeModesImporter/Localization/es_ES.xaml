@@ -8,4 +8,15 @@
 Se añadieron características de modos cooperativos a {0} juegos.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Añadir prefijo a las características añadidas</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Si está activado, este texto y el nombre original del modo cooperativo se combinarán para usar en el nombre de la característica</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Importar datos básicos de Co-op</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Importar datos detallados de Co-op</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Importar datos de Co-Op Local</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Importar datos de Co-Op Online</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Importar datos de Co-Op Combo (Local + Online)</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Importar datos de Juego LAN o System Link</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importar datos de Co-Op Extras</sys:String>
+
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Añadir el enlace de juego de Co-Optimus a los juegos durante la importación</sys:String>
 </ResourceDictionary>
