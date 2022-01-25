@@ -12,11 +12,12 @@ Added cooperative modes features to {0} games.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Importer grunnleggende data om co-op</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Importer detaljerte data om co-op</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Importer data om lokal co-op</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Importer data om nettbasert co-op</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Importer data om kombinert co-op (lokal + nettbasert)</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Importer data om LAN-spilling eller System Link</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importer data om co-op extras</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Updating Cooperative Modes Importer database…</sys:String>
 </ResourceDictionary>
