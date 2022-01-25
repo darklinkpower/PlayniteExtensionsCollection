@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesIdUrlDescription">Import game(s) with Steam Id or URL</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription">Import game(s) from Depressurizer Profile</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription">从 Depressurizer 资料档导入游戏</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_ResultsMessage">Added {0} new Steam games.</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">Enter Steam game Id or URL:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Warning. Couldn't verify if obtained AppId &quot;{0}&quot; is valid.
