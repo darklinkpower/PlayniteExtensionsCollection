@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">导入选中的 Epic、GOG、Origin 和 Steam 游戏的日期数据</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">导入所有 Epic、GOG、Origin 和 Steam 游戏的日期数据</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">手动设定选中游戏的添加日期</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">手动设置选中游戏的添加日期</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">导入选中的 Steam 游戏的日期</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">导入所有 Steam 游戏的日期</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">导出 Steam 许可证列表</sys:String>
