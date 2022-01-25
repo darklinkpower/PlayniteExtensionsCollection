@@ -97,3 +97,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Updated to Playnite SDK 6.2.2
+  - Version: 2.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_15.pext
+    Changelog:
+    - Updated localizations

@@ -72,3 +72,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Updated to Playnite SDK 6.2.2
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_11.pext
+    Changelog:
+    - Updated localizations

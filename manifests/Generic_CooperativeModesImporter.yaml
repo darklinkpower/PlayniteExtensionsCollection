@@ -6,3 +6,15 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_0.pext
     Changelog:
     - Updated localizations
+  - Version: 1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_1.pext
+    Changelog:
+    - Updated localizations
+    - Added option to enable or disable importing of basic features
+    - Added option to enable or disable importing of detailed features
+    - Added options to enable or disable importing of specific detailed features
+    - Added option to import Co-Optimus link during importing
+    - Fixes and improvements to game matching with database
+    - Updated database
