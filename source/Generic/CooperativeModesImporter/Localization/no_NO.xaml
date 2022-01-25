@@ -7,7 +7,7 @@
 
 Lagt til co-op-modusfunksjoner for {0} spill.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Tilfør prefiks til funksjoner</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">If enabled, this text and the original cooperative mode name will be combined to use in the feature name</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Når dette er aktivert, vil denne teksten og det opprinnelige co-op-modusnavnet kombineres i funksjonsnavnet</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Importer grunnleggende data om co-op</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Importer detaljerte data om co-op</sys:String>
