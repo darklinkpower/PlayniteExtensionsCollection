@@ -14,8 +14,36 @@ namespace CooperativeModesImporter
         private string featuresPrefix = string.Empty;
         [DontSerialize]
         private bool addPrefix = false;
+        [DontSerialize]
+        private bool importBasicModes = true;
+        [DontSerialize]
+        private bool importDetailedModes = false;
+        [DontSerialize]
+        private bool addDetailedPrefix = false;
+        [DontSerialize]
+        private string featuresDetailedPrefix = string.Empty;
+        [DontSerialize]
+        private bool importDetailedModeLocal = false;
+        [DontSerialize]
+        private bool importDetailedModeOnline = false;
+        [DontSerialize]
+        private bool importDetailedModeCombo = false;
+        [DontSerialize]
+        private bool importDetailedModeLan = false;
+        [DontSerialize]
+        private bool importDetailedModeExtras = false;
+
         public string FeaturesPrefix { get => featuresPrefix; set => SetValue(ref featuresPrefix, value); }
         public bool AddPrefix { get => addPrefix; set => SetValue(ref addPrefix, value); }
+        public bool ImportBasicModes { get => importBasicModes; set => SetValue(ref importBasicModes, value); }
+        public bool ImportDetailedModes { get => importDetailedModes; set => SetValue(ref importDetailedModes, value); }
+        public bool AddDetailedPrefix { get => addDetailedPrefix; set => SetValue(ref addDetailedPrefix, value); }
+        public string FeaturesDetailedPrefix { get => featuresDetailedPrefix; set => SetValue(ref featuresDetailedPrefix, value); }
+        public bool ImportDetailedModeLocal { get => importDetailedModeLocal; set => SetValue(ref importDetailedModeLocal, value); }
+        public bool ImportDetailedModeOnline { get => importDetailedModeOnline; set => SetValue(ref importDetailedModeOnline, value); }
+        public bool ImportDetailedModeCombo { get => importDetailedModeCombo; set => SetValue(ref importDetailedModeCombo, value); }
+        public bool ImportDetailedModeLan { get => importDetailedModeLan; set => SetValue(ref importDetailedModeLan, value); }
+        public bool ImportDetailedModeExtras { get => importDetailedModeExtras; set => SetValue(ref importDetailedModeExtras, value); }
     }
 
     public class CooperativeModesImporterSettingsViewModel : ObservableObject, ISettings

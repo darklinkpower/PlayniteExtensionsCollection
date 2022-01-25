@@ -14,19 +14,34 @@ namespace CooperativeModesImporter.Models
 
         public long TotalPages { get; set; }
 
-        public List<Game> Games { get; set; }
+        public List<CooperativeGame> Games { get; set; }
+    }
 
-        public partial class Game
-        {
-            public int Id { get; set; }
+    public class CooperativeGame
+    {
+        public int Id { get; set; }
 
-            public string Name { get; set; }
+        public string Name { get; set; }
 
-            public string Url { get; set; }
+        public string Url { get; set; }
 
-            public string System { get; set; }
+        public string System { get; set; }
 
-            public List<string> Modes { get; set; }
-        }
+        public List<string> Modes { get; set; }
+
+        public ModesDetailed ModesDetailed { get; set; }
+    }
+
+    public class ModesDetailed
+    {
+        public string LocalCoop { get; set; }
+
+        public string OnlineCoop { get; set; }
+
+        public string ComboCoop { get; set; }
+
+        public string LanPlay { get; set; }
+
+        public List<string> Extras { get; set; }
     }
 }

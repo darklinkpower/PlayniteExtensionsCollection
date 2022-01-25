@@ -6,13 +6,47 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <CheckBox IsChecked="{Binding Settings.AddPrefix}"
+        <CheckBox IsChecked="{Binding Settings.ImportBasicModes}"
+                  Content="{DynamicResource LOCCooperativeModesImporter_SettingImportBasicData}" />
+        <StackPanel IsEnabled="{Binding Settings.ImportBasicModes}" Margin="20,10,0,0">
+            <CheckBox IsChecked="{Binding Settings.AddPrefix}"
                   Content="{DynamicResource LOCCooperativeModesImporter_SettingAddPrefix}"
                   ToolTip="{DynamicResource LOCCooperativeModesImporter_PrefixTooltip}" />
-        <StackPanel IsEnabled="{Binding Settings.AddPrefix}" Margin="20,0,0,0">
-            <TextBox Margin="0,10,0,0" MinWidth="200" HorizontalAlignment="Left"
+            <StackPanel IsEnabled="{Binding Settings.AddPrefix}" Margin="20,0,0,0">
+                <TextBox Margin="0,10,0,0" MinWidth="200" HorizontalAlignment="Left"
                      Text="{Binding Settings.FeaturesPrefix}"
                      ToolTip="{DynamicResource LOCCooperativeModesImporter_PrefixTooltip}" />
+            </StackPanel>
+        </StackPanel>
+
+        <CheckBox IsChecked="{Binding Settings.ImportDetailedModes}"
+                  Margin="0,30,0,0"
+                  Content="{DynamicResource LOCCooperativeModesImporter_SettingImportDetailedData}" />
+        <StackPanel IsEnabled="{Binding Settings.ImportDetailedModes}" Margin="20,10,0,0">
+            <CheckBox IsChecked="{Binding Settings.AddDetailedPrefix}"
+                      Content="{DynamicResource LOCCooperativeModesImporter_SettingAddPrefix}"
+                      ToolTip="{DynamicResource LOCCooperativeModesImporter_PrefixTooltip}" />
+            <StackPanel IsEnabled="{Binding Settings.AddDetailedPrefix}" Margin="20,0,0,0">
+                <TextBox Margin="0,10,0,0" MinWidth="200" HorizontalAlignment="Left"
+                         Text="{Binding Settings.FeaturesDetailedPrefix}"
+                         ToolTip="{DynamicResource LOCCooperativeModesImporter_PrefixTooltip}" />
+            </StackPanel>
+
+            <CheckBox IsChecked="{Binding Settings.ImportDetailedModeLocal}"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode}" />
+            <CheckBox IsChecked="{Binding Settings.ImportDetailedModeOnline}"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode}" />
+            <CheckBox IsChecked="{Binding Settings.ImportDetailedModeCombo}"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCCooperativeModesImporter_SettingImportDetailedDataComboMode}" />
+            <CheckBox IsChecked="{Binding Settings.ImportDetailedModeLan}"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCCooperativeModesImporter_SettingImportDetailedDataLanMode}" />
+            <CheckBox IsChecked="{Binding Settings.ImportDetailedModeExtras}"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCCooperativeModesImporter_SettingImportDetailedDataExtras}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

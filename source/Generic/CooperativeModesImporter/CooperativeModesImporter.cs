@@ -179,35 +179,31 @@ namespace CooperativeModesImporter
                         continue;
                     }
 
-                    var featuresUpdated = false;
+                    var gameUpdated = false;
                     if (game.FeatureIds == null)
                     {
                         game.FeatureIds = new List<Guid> {};
-                        featuresUpdated = true;
+                        gameUpdated = true;
                     }
 
-                    foreach (var mpMode in dbGame.Modes)
+                    var modesBasic = GetBasicModes(dbGame);
+                    var modesDetailed = GetDetailedModes(dbGame);
+                    foreach (var coopName in modesBasic.Concat(modesDetailed))
                     {
-                        var mpModeFormat = mpMode;
-                        if (settings.Settings.AddPrefix)
-                        {
-                            mpModeFormat = settings.Settings.FeaturesPrefix + mpMode;
-                        }
-
                         // Should make it faster than trying to create the same
                         // features a lot of times
-                        if (!featuresDictionary.ContainsKey(mpModeFormat))
+                        if (!featuresDictionary.ContainsKey(coopName))
                         {
-                            featuresDictionary.Add(mpModeFormat, PlayniteApi.Database.Features.Add(mpModeFormat));
+                            featuresDictionary.Add(coopName, PlayniteApi.Database.Features.Add(coopName));
                         }
 
-                        if (game.FeatureIds.AddMissing(featuresDictionary[mpModeFormat].Id))
+                        if (game.FeatureIds.AddMissing(featuresDictionary[coopName].Id))
                         {
-                            featuresUpdated = true;
+                            gameUpdated = true;
                         }
                     }
 
-                    if (featuresUpdated)
+                    if (gameUpdated)
                     {
                         PlayniteApi.Database.Games.Update(game);
                         updatedGames += 1;
@@ -216,6 +212,80 @@ namespace CooperativeModesImporter
             }
 
             return updatedGames;
+        }
+
+        private List<string> GetBasicModes(CooperativeGame dbGame)
+        {
+            var modesBasic = new List<string>();
+            foreach (var mode in dbGame.Modes)
+            {
+                if (settings.Settings.AddPrefix)
+                {
+                    modesBasic.Add(settings.Settings.FeaturesPrefix + mode);
+                }
+                else
+                {
+                    modesBasic.Add(mode);
+                }
+            }
+
+            return modesBasic;
+        }
+
+        private List<string> GetDetailedModes(CooperativeGame dbGame)
+        {
+            var modesDetailed = new List<string>();
+            if (settings.Settings.ImportDetailedModes)
+            {
+                return modesDetailed;
+            }
+            
+            if (settings.Settings.ImportDetailedModeLocal && dbGame.ModesDetailed.LocalCoop != "Not Supported")
+            {
+                var modeName = GetDetailedModeFormatedStr($"Local Co-Op: {dbGame.ModesDetailed.LocalCoop}");
+                modesDetailed.Add(modeName);
+            }
+
+            if (settings.Settings.ImportDetailedModeOnline && dbGame.ModesDetailed.OnlineCoop != "Not Supported")
+            {
+                var modeName = GetDetailedModeFormatedStr($"Online Co-Op: {dbGame.ModesDetailed.OnlineCoop}");
+                modesDetailed.Add(modeName);
+            }
+
+            if (settings.Settings.ImportDetailedModeCombo && dbGame.ModesDetailed.ComboCoop != "Not Supported")
+            {
+                var modeName = GetDetailedModeFormatedStr($"Combo Co-Op: {dbGame.ModesDetailed.ComboCoop}");
+                modesDetailed.Add(modeName);
+            }
+
+            if (settings.Settings.ImportDetailedModeLan && dbGame.ModesDetailed.LanPlay != "Not Supported")
+            {
+                var modeName = GetDetailedModeFormatedStr($"LAN Play: {dbGame.ModesDetailed.LanPlay}");
+                modesDetailed.Add(modeName);
+            }
+
+            if (settings.Settings.ImportDetailedModeExtras && dbGame.ModesDetailed.Extras?.Count < 0)
+            {
+                foreach (var extraInfo in dbGame.ModesDetailed.Extras)
+                {
+                    var modeName = GetDetailedModeFormatedStr($"Co-Op Extras: {extraInfo}");
+                    modesDetailed.Add(modeName);
+                }
+            }
+
+            return modesDetailed;
+        }
+
+        private string GetDetailedModeFormatedStr(string modeName)
+        {
+            if (settings.Settings.AddDetailedPrefix)
+            {
+                return settings.Settings.FeaturesDetailedPrefix + modeName;
+            }
+            else
+            {
+                return modeName;
+            }
         }
 
         private static string SatinizeGameName(string str)
