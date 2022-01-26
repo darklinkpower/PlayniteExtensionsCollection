@@ -4,8 +4,8 @@
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">新闻记录的最大高度</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">在浏览器中打开新闻时，使用简洁的新闻查看器</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">如果启用，将使用简洁的新闻查看器，而不是完整的新闻页面版本</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription">Show Steam news for games that are not from Steam</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">Requires that games have a Steam store link</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Open news</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">News</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription">为非 Steam 游戏显示 Steam 新闻</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">需要该游戏具有 Steam 商店链接</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">打开新闻</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">新闻</sys:String>
 </ResourceDictionary>
