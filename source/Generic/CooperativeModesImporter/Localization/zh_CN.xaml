@@ -15,9 +15,9 @@
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">导入本地的 Co-op 数据</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">导入在线的 Co-op 数据</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">导入整合的 Co-Op（本地+在线）数据</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">导入局域网联机或（Xbox）System Link 数据</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">导入 Co-Op 额外数据</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Updating Cooperative Modes Importer database…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">在导入游戏时向其添加 Co-Optimus 游戏链接</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">正在更新合作模式导入器数据库…</sys:String>
 </ResourceDictionary>
