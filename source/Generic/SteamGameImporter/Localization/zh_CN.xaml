@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription">从 Depressurizer 资料档导入（多个）游戏</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_ResultsMessage">新添加了 {0} 个 Steam 游戏。</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">输入 Steam 游戏 Id 或网址：</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Warning. Couldn't verify if obtained AppId &quot;{0}&quot; is valid.
-Add this and all unknown AppIds?</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">Could not obtain any valid Steam AppId.</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">警告。无法验证所获取的 AppId “{0}”的有效性。
+要添加这个以及之后所有未知的 AppId 吗？</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">下载 AppId “{0}”的游戏信息时出错。错误：{1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">无法获取任何有效的 Steam AppId。</sys:String>
 </ResourceDictionary>
