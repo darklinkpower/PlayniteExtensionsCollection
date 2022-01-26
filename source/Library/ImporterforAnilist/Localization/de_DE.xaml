@@ -13,7 +13,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser Pfad:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Browser auswählen</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Entfernen</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList game entry doesn't have links available, please download metadata using the &quot;Official store&quot; option to get links from different providers.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList Spieleintrag hat keine Links zur Verfügung, bitte laden Sie Metadaten mit dem &quot;Offizieller Store&quot; Option herunter, um Links von verschiedenen Anbietern zu erhalten.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Link öffnen</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">AniList status</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Abschlussstatus</sys:String>
