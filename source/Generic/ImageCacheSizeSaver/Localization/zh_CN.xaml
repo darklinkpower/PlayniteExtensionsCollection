@@ -3,15 +3,15 @@
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">处理缓存中的图像</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">选择 ImageMagick 可执行文件</sys:String>
     <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">已保存 Magick 可执行文件路径</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">在 {0} 中找不到 Magick 可执行文件。
+请再次运行扩展，为其配置正确的位置。</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">图像处理完成。 结果：
 
-Images Processed: {0}
+经处理的图像：{0}
 
-Images that had size reduced: {1}
-Errors: {2}
+大小减小的图像：{1}
+错误：{2}
 
-Image Cache Size Before: {3} MB
-Image Cache Size After: {4} MB</sys:String>
+之前图像缓存大小：{3} MB
+之后图像缓存大小：{4} MB</sys:String>
 </ResourceDictionary>
