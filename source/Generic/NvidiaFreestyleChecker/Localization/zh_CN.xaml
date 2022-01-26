@@ -4,5 +4,5 @@
     <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage">无法下载 NVIDIA Freestyle 数据库。错误：{0}</sys:String>
     <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage">错误：未找到任何支持 freestyle 的游戏。</sys:String>
     <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">库中支持 NVIDIA Freestyle 的游戏：{0}
-添加了“{1}”功能特色到 {2} 个游戏。</sys:String>
+为 {2} 个游戏添加了功能特色“{1}”。</sys:String>
 </ResourceDictionary>
