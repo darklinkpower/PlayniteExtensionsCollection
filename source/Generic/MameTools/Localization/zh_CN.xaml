@@ -6,9 +6,9 @@
     <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsCoverDescription">从 MAME 将所选游戏的快照作为封面图像导入到 Playnite</sys:String>
     <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">选择 MAME 可执行文件。</sys:String>
     <sys:String x:Key="LOCMameRenamer_MameExecutablePathSavedMessage">已保存 MAME 可执行文件路径。</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">MAME executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCMameRenamer_ResultsMessage">Changed the name of {0} game(s).</sys:String>
-    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Imported snapshots of {0} game(s) to Playnite. 
-{0} gamee(s) have a missing snapshot or are not MAME games.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">在 {0} 中找不到 MAME 可执行文件。
+请再次运行扩展，为其配置正确的位置。</sys:String>
+    <sys:String x:Key="LOCMameRenamer_ResultsMessage">更改了 {0} 个游戏的名称。</sys:String>
+    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">向 Playnite 导入了 {0} 个游戏的快照。
+{0} 个游戏缺失快照或不是 MAME 游戏。</sys:String>
 </ResourceDictionary>
