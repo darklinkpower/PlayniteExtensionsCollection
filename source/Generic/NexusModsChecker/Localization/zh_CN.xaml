@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Add Nexus Mods feature and links to selected games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Add Nexus Mods feature and links to all games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">There are no games in selection.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games were found on Nexus Mods.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Games with mods available on Nexus Mods: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">添加 Nexus Mods 功能特色和链接到所选游戏</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">添加 Nexus Mods 功能特色和链接到所有游戏</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">从网址&quot;{0}&quot;下载文件时发生错误。错误：{1}</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">选集中没有游戏。</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">在 Nexus Mods 上没有找到游戏。</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">在 Nexus Mod 上有模组可用的游戏：{0}
 
-Added `&quot;{1}`&quot; feature to {2} game(s).
-Added Nexus Mods links to {3} game(s).</sys:String>
+添加了“{1}”功能到 {2} 个游戏。
+添加了 Nexus Mods 链接到 {3} 个游戏。</sys:String>
 </ResourceDictionary>
