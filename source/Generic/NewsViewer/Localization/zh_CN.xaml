@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Steam News</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Maximum height of news notes</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Use compact news viewer when opening news in browser</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">If enabled, a compact news viewer will be used instead of the full news page version</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Steam 新闻</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">新闻记录的最大高度</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">在浏览器中打开新闻时，使用简洁的新闻查看器</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">如果启用，将使用简洁的新闻查看器，而不是完整的新闻页面版本</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription">Show Steam news for games that are not from Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">Requires that games have a Steam store link</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Open news</sys:String>
