@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_MenuItemCheckFreestyleEnabledGamesDescription">Check for Freestyle supported games in library</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage">Couldn't download NVIDIA Freestyle database. Error: {0}</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage">Error: Not found any freestyle supported games.</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">NVIDIA Freestyle supported games in library: {0}
-Added &quot;{1}&quot; feature to {2} game(s).</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_MenuItemCheckFreestyleEnabledGamesDescription">在库中查找支持 Freestyle 的游戏</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage">无法下载 NVIDIA Freestyle 数据库。错误：{0}</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage">错误：未找到任何支持 freestyle 的游戏。</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">库中支持 NVIDIA Freestyle 的游戏：{0}
+添加了“{1}”功能特色到 {2} 个游戏。</sys:String>
 </ResourceDictionary>
