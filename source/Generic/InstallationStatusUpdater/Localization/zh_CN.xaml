@@ -8,8 +8,8 @@
 
 Previously installed games were set as uninstalled: {0}
 Previously uninstalled games were set as installed: {1}</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Added ignore feature to {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Removed ignore feature from {0} game(s).</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">为 {0} 个游戏添加了忽略的功能特色。</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">从 {0} 个游戏移除了忽略的功能特色。</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Finished updating installation drive tags.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Updating installation drive tags...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Detect games with an action of type &quot;Link&quot; as installed</sys:String>
