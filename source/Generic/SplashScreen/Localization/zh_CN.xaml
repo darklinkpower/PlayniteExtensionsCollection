@@ -8,7 +8,7 @@
 
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro video has been added</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro video has been removed</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Added &quot;{0}&quot; exclude feature to {1} game(s)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">为 {1} 个游戏添加了排除的功能特色“{0}”</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Removed &quot;{0}&quot; exclude feature from {1} game(s)</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Execute extension in Desktop Mode</sys:String>
