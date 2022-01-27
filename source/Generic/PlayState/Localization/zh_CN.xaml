@@ -28,7 +28,7 @@ Changing this setting requires restart.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Only suspend playtime count globally and not the game processes</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">通过启用此选项，在使用已配置的热键时，所有游戏都不会被挂起，且时间被记录，以便当游戏停止时从游戏时间扣除。
     
-This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game</sys:String>
+也可以单独应用于某一个游戏，方法是为其添加一个“[PlayState] Suspend playtime only”的功能特色。</sys:String>
 </ResourceDictionary>
