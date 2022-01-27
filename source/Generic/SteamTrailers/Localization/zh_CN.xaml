@@ -10,6 +10,6 @@
     <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">视频不可用。</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">“{0}”不是一个 Steam 游戏，且找不到用于获取视频数据的 Steam AppId。</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">连接服务器时出错。错误：{0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">下载标题时出错。错误：{0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">下载头文件时出错。错误：{0}</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">从网址“{0}”下载文件时发生错误。错误：{1}</sys:String>
 </ResourceDictionary>
