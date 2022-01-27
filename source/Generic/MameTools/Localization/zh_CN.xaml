@@ -9,6 +9,6 @@
     <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">在 {0} 中找不到 MAME 可执行文件。
 请再次运行扩展，为其配置正确的位置。</sys:String>
     <sys:String x:Key="LOCMameRenamer_ResultsMessage">更改了 {0} 个游戏的名称。</sys:String>
-    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Imported snapshots of {0} game(s) to Playnite. 
-{0} game(s) have a missing snapshot or are not MAME games.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">向 Playnite 导入了 {0} 个游戏的快照。
+{0} 个游戏缺失快照或不是 MAME 游戏。</sys:String>
 </ResourceDictionary>
