@@ -7,6 +7,6 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Calculating sizes…</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Done</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error while getting directory size in {0} of game {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator：在获取游戏 {1} 的目录 {0} 的大小时出错。{2}</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error while getting rom file size in {0} of game {1}. {2}</sys:String>
 </ResourceDictionary>
