@@ -9,6 +9,6 @@
     <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">Eseguibile MAME non trovato in {0}. 
 Si prega di eseguire nuovamente l'estensione per configurarla nella posizione corretta.</sys:String>
     <sys:String x:Key="LOCMameRenamer_ResultsMessage">Cambiato il nome di {0} gioco(i).</sys:String>
-    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Imported snapshots of {0} game(s) to Playnite. 
-{0} game(s) have a missing snapshot or are not MAME games.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Importate istantanee di {0} partite su Playnite. 
+{0} gioco/giochi hanno un'istantanea mancante o non sono partite MAMME.</sys:String>
 </ResourceDictionary>
