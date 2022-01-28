@@ -44,22 +44,6 @@ namespace ImporterforAnilist
             };
         }
 
-        public string intToThreeDigitsString(int number)
-        {
-            if (number < 10)
-            {
-                return string.Format("00{0}", number.ToString());
-            }
-            else if (number < 100)
-            {
-                return string.Format("0{0}", number.ToString());
-            }
-            else
-            {
-                return number.ToString();
-            }
-        }
-
         public GameMetadata EntryToGameMetadata(Entry entry)
         {
             var game = AnilistResponseHelper.MediaToGameMetadata(entry.Media, false, settings.Settings.PropertiesPrefix);
@@ -122,14 +106,14 @@ namespace ImporterforAnilist
         {
             //Version (Used for progress)
             var totalLength = 0;
-            var progressPercentageFormat = string.Empty;
-            var totalLenghtString = "??";
+            var progressPercentageFormat = "???";
+            var totalLenghtString = "???";
             if (entry.Media.Type == TypeEnum.Manga)
             {
                 if (entry.Media.Chapters != null)
                 {
                     totalLength = (int)entry.Media.Chapters;
-                    totalLenghtString = intToThreeDigitsString(totalLength);
+                    totalLenghtString = totalLength.ToString("#000");
                 }
             }
             else if (entry.Media.Type == TypeEnum.Anime)
@@ -137,16 +121,17 @@ namespace ImporterforAnilist
                 if (entry.Media.Episodes != null)
                 {
                     totalLength = (int)entry.Media.Episodes;
-                    totalLenghtString = intToThreeDigitsString(totalLength);
+                    totalLenghtString = totalLength.ToString("#000");
                 }
             }
+
             if (totalLength != 0)
             {
-                int percentage = Convert.ToInt32((entry.Progress * 100) / totalLength);
-                progressPercentageFormat = string.Format("({0}%) ", intToThreeDigitsString(percentage));
+                var percentage = Convert.ToInt32((entry.Progress * 100) / totalLength);
+                progressPercentageFormat = $"{percentage:000}%";
             }
 
-            return string.Format("{0}{1}/{2}", progressPercentageFormat, intToThreeDigitsString(entry.Progress), totalLenghtString);
+            return $"({progressPercentageFormat}) {entry.Progress:#000}/{totalLenghtString}";
         }
 
         private void InitializeStatuses()
@@ -234,6 +219,7 @@ namespace ImporterforAnilist
                 existingEntry.UserScore = entry.Score;
                 updateGame = true;
             }
+
             if (settings.Settings.UpdateProgressOnLibUpdate == true)
             {
                 var versionString = GetEntryVersionString(entry);
