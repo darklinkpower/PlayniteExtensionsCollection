@@ -91,74 +91,6 @@ namespace ImporterforAnilist
                 }";
         }
 
-        public GameMetadata MediaToGameMetadata(Media media, string propertiesPrefix)
-        {
-            var game = new GameMetadata()
-            {
-                Source = new MetadataNameProperty("Anilist"),
-                GameId = media.Id.ToString(),
-                Name = media.Title.Romaji ?? media.Title.English ?? media.Title.Native ?? string.Empty,
-                IsInstalled = true,
-                Platforms = new HashSet<MetadataProperty> { new MetadataNameProperty(string.Format("AniList {0}", media.Type.ToString())) },
-                CommunityScore = media.AverageScore ?? null,
-                Description = media.Description ?? string.Empty,
-                Links = new List<Link>(),
-                BackgroundImage = new MetadataFile(media.BannerImage ?? string.Empty),
-                CoverImage = new MetadataFile(media.CoverImage.ExtraLarge ?? string.Empty)
-        };
-
-            //Links
-            game.Links.Add(new Link("AniList", media.SiteUrl.ToString()));
-            if (media.Genres != null)
-            {
-                game.Genres = media.Genres?.Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a))).Cast<MetadataProperty>().ToHashSet();
-            }
-            if (media.IdMal != null)
-            {
-                game.Links.Add(new Link("MyAnimeList", string.Format("https://myanimelist.net/{0}/{1}/", media.Type.ToString().ToLower(), media.IdMal.ToString())));
-            }
-
-            //ReleaseDate
-            if (media.StartDate.Year != null && media.StartDate.Month != null && media.StartDate.Day != null)
-            {
-                game.ReleaseDate = new ReleaseDate(new DateTime((int)media.StartDate.Year, (int)media.StartDate.Month, (int)media.StartDate.Day));
-            }
-
-            //Developers and Publishers
-            if (media.Type == TypeEnum.Manga)
-            {
-                game.Developers = media.Staff.Nodes?.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name.Full))).Cast<MetadataProperty>().ToHashSet();
-            }
-            else if (media.Type == TypeEnum.Anime)
-            {
-                game.Developers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == true)?.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
-                game.Publishers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == false)?.
-                    Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
-            }
-
-            //Tags
-            var tags = media.Tags.
-                Where(s => s.IsMediaSpoiler == false).
-                Where(s => s.IsGeneralSpoiler == false)?.
-                Select(a => new MetadataNameProperty(string.Format("{0}{1}", propertiesPrefix, a.Name))).Cast<MetadataProperty>().ToHashSet();
-
-            if (media.Season != null)
-            {
-                tags.Add(new MetadataNameProperty(string.Format("{0}Season: {1}", propertiesPrefix, media.Season.ToString())));
-            }
-            tags.Add(new MetadataNameProperty(string.Format("{0}Status: {1}", propertiesPrefix, media.Status.ToString())));
-            if (media.Format != null)
-            {
-                tags.Add(new MetadataNameProperty(string.Format("{0}Format: {1}", propertiesPrefix, media.Format.ToString())));
-            }
-            
-            game.Tags = tags;
-
-            return game;
-        }
-
         public override GameMetadata GetMetadata(Game game)
         {
             var metadata = new GameMetadata() { };
@@ -180,7 +112,7 @@ namespace ImporterforAnilist
                 var contents = response.Result.Content.ReadAsStringAsync();
 
                 var mediaEntryData = JsonConvert.DeserializeObject<MediaEntryData>(contents.Result);
-                metadata = MediaToGameMetadata(mediaEntryData.Data.Media, propertiesPrefix);
+                metadata = AnilistResponseHelper.MediaToGameMetadata(mediaEntryData.Data.Media, true, propertiesPrefix);
                 type = mediaEntryData.Data.Media.Type.ToString().ToLower() ?? string.Empty;
                 idMal = mediaEntryData.Data.Media.IdMal.ToString().ToLower() ?? string.Empty;
             }
@@ -200,6 +132,7 @@ namespace ImporterforAnilist
                 {
                     queryUri = string.Format(MalSyncAnilistEndpoint, type, game.GameId);
                 }
+
                 try
                 {
                     if (malSyncRateLimiter.ApiReqRemaining == 0)

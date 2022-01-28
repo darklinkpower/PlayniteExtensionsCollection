@@ -51,6 +51,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnilistResponseHelper.cs" />
     <Compile Include="ImporterForAnilistMetadataProvider.cs" />
     <Compile Include="ImporterForAnilistClient.cs" />
     <Compile Include="ImporterForAnilist.cs" />
