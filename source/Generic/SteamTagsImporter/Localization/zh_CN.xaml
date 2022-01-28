@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsDefaultDescription">Import Steam Tags for selected games (Maximum 5 tags)</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsAllDescription">Import Steam Tags for selected games (All available tags)</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsManualDescription">Import Steam Tags for selected games (Select maximum tags)</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsDefaultDescription">为所选游戏导入 Steam 标签（选择最多的 5 个标签）</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsAllDescription">为所选游戏导入 Steam 标签（选择所有标签）</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_MenuItemGet-SteamTagsManualDescription">为所选游戏导入 Steam 标签（选择最多标签）</sys:String>
 
-    <sys:String x:Key="LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_NoGamesSelectedMessage">No games selected</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Error downloading page &quot;{0}&quot;. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_TagsAddedResultsMessage">Added {0} tags to {1} game(s).</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage">Enter number of tags to download</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_InvalidInputErrorMessage">Invalid input</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage">从网址“{0}”下载文件时发生错误。错误：{1}</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_NoGamesSelectedMessage">未选择游戏</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">下载页面“{0}”时发生错误。错误：{1}</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_TagsAddedResultsMessage">已为 {1} 个游戏添加 {0} 个标签。</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage">输入要下载的标签数</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_InvalidInputErrorMessage">无效的输入</sys:String>
 </ResourceDictionary>
