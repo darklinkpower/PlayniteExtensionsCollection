@@ -9,7 +9,7 @@
 您可以尝试使用不同的热键组合以解决该问题</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">已将 {0} 个游戏添加到 PlayState 黑名单中。</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">已将 {0} 个游戏从 PlayState 黑名单移除。</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">配置了 {0} 个游戏，强制性地使其在使用配置的热键时仅挂起游戏时间。</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">配置了 {0} 个游戏，使其在使用配置的热键时强制性地仅挂起游戏时间。</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">从 {0} 个游戏中移除了使用配置的热键时强制性地仅挂起游戏时间的配置。
 
 当使用配置的热键时，游戏将被挂起。</sys:String>
