@@ -148,7 +148,6 @@ namespace ImporterforAnilist
         {
             var importedGames = new List<Game>();
             InitializeStatuses();
-            
             if (string.IsNullOrEmpty(settings.Settings.AccountAccessCode))
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage(
@@ -227,6 +226,31 @@ namespace ImporterforAnilist
                 {
                     existingEntry.Version = versionString;
                     updateGame = true;
+                }
+            }
+
+            var progressTagName = $"{settings.Settings.PropertiesPrefix}Status: {entry.Media.Status}";
+            if (existingEntry.TagIds == null)
+            {
+                existingEntry.TagIds = new List<Guid>() { PlayniteApi.Database.Tags.Add(progressTagName).Id };
+            }
+            else
+            {
+                var tagStartStr = $"{settings.Settings.PropertiesPrefix}Status: ";
+                var progressTag = existingEntry.Tags.FirstOrDefault(x => x.Name.StartsWith(tagStartStr));
+                if (progressTag == null)
+                {
+                    existingEntry.TagIds.Add(PlayniteApi.Database.Tags.Add(progressTagName).Id);
+                    updateGame = true;
+                }
+                else
+                {
+                    if (progressTag.Name != progressTagName)
+                    {
+                        existingEntry.TagIds.Remove(progressTag.Id);
+                        existingEntry.TagIds.Add(PlayniteApi.Database.Tags.Add(progressTagName).Id);
+                        updateGame = true;
+                    }
                 }
             }
 
