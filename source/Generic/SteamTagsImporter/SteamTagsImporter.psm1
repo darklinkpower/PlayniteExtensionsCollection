@@ -244,7 +244,7 @@ function Get-SteamTags
             if ($null -ne $json)
             {
                 $data = $json | ConvertFrom-Json
-                if ($data.success -eq 1)
+                if ($data.success -eq 1 -and $null -ne $data.apps[0].tags)
                 {
                     $data.apps[0].tags | Select-Object -First $tagsLimit | Select-Object -Property "name" | ForEach-Object {$gameTags.Add($_.name)}
                 }
@@ -255,6 +255,11 @@ function Get-SteamTags
             $gameTags = Get-StorePageTags $appId $tagsLimit
         }
 
+        if ($gameTags.Count -eq 0)
+        {
+            continue
+        }
+        
         foreach ($gameTag in $gameTags) {
             $tag = $PlayniteApi.Database.Tags.Add($gameTag)
             if ($game.tagIds -notcontains $tag.Id)
