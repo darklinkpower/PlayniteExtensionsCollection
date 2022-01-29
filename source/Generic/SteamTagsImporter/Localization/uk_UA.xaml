@@ -6,7 +6,7 @@
 
     <sys:String x:Key="LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage">Помилка завантаження файлу з url &quot;{0}&quot;. Помилка: {1}</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_NoGamesSelectedMessage">Не вибрано жодної гри</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Помилка завантаження сторінки &quot;{0}. Помилка: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Error downloading page &quot;{0}&quot;. Error: {1}</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_TagsAddedResultsMessage">Додано {0} тегів до {1} гри/ігор.</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage">Введіть кількість тегів для завантаження</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_InvalidInputErrorMessage">Неправильне значення</sys:String>
