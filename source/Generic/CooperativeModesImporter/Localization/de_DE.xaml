@@ -1,22 +1,23 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Update cooperative modes features of all games in library</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Update cooperative modes features of selected games</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Updating games cooperative modes features…</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Done.
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Kooperativer Modus Funktionen aller Spiele in der Bibliothek aktualisieren</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Kooperativer Modus für ausgewählte Spiele aktualisieren</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Aktualisiere Spiele Kooperativ Modus Funktionen…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Fertig.
 
-Added cooperative modes features to {0} games.</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Add prefix to the added features</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">If enabled, this text and the original cooperative mode name will be combined to use in the feature name</sys:String>
+Kooperativer Modus zu {0} Spielen hinzugefügt.</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Präfix zu den hinzugefügten Funktionen hinzufügen</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Wenn aktiviert, wird dieser Text und der ursprüngliche Kooperativer Modus in den Eigenschaftsnamen kombiniert</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Import basic Co-op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Import detailed Co-op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Importiere grundlegende Co-op Daten</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Importiere Detaillierte Co-op Daten</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Importiere Lokale Co-Op Daten</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Importiere Online Co-Op Daten</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Importiere Combo Co-Op (Lokal + Online) Daten</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Importiere LAN Play oder Systemlink Daten</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importiere Co-Op Extras Daten</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Co-Optimus Spiel Link zu Spielen beim Import hinzufügen</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Aktualisierung der Datenbank des Kooperativ Modus Importeur…</sys:String>
 </ResourceDictionary>

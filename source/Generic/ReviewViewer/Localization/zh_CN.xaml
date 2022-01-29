@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Review Viewer</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Update review data of selected games</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">Do you want to download data again for games that already have it?</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Reviews data update in progress...</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Data refresh finished.</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">评论查看器</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">更新所选游戏的评论数据</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">是否再次下载游戏的已有数据？</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">正在更新评论数据...</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">数据刷新完成。</sys:String>
 
-    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Use language used by Playnite to search for reviews if it's available on Steam</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Download review data on game selection if it's missing</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Description height</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Display review helpfulness</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Total reviews:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive reviews:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative reviews:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_AverageUserScore">Average score:</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">若在 Steam 上可用，使用 Playnite 所用语言搜索评论</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">下载所选游戏缺失的评论数据</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">描述高度</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">显示评论的帮助度</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">所有评论：</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">好评：</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">差评：</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_AverageUserScore">平均分数：</sys:String>
 
-    <sys:String x:Key="LOCReview_Viewer_ReviewsTypeLabel">Reviews type:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTypeAll">All</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTypePositive">Positive</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">Negative</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Review</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Reviews</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommended</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Not recommended</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} hours {1} minutes at review time</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} hours {1} minutes of total play time</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} people found this review helpful</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} people found this review funny</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewsTypeLabel">评论类型：</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypeAll">所有</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypePositive">好评</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">差评</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_Review">评论：</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewLabel">评论</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">评论</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">推荐的</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">不推荐的</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">评论时已有 {0} 小时 {1} 分钟时间</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} 小时 {1} 分钟的总观访时间</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} 人认为此评论有帮助</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} 人认为此评论有趣</sys:String>
 </ResourceDictionary>

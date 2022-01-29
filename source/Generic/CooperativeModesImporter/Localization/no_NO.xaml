@@ -1,22 +1,23 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Update cooperative modes features of all games in library</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Update cooperative modes features of selected games</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Updating games cooperative modes features…</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Done.
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Oppdater funksjoner for co-op-moduser for alle spill i biblioteket</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Oppdater funksjoner for co-op-moduser for valgte spill</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Oppdaterer funksjoner for co-op-moduser…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Ferdig.
 
-Added cooperative modes features to {0} games.</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Add prefix to the added features</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">If enabled, this text and the original cooperative mode name will be combined to use in the feature name</sys:String>
+Lagt til co-op-modusfunksjoner for {0} spill.</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Tilfør prefiks til funksjoner</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Når dette er aktivert, vil denne teksten og det opprinnelige co-op-modusnavnet kombineres i funksjonsnavnet</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Importer grunnleggende data om co-op</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Importer detaljerte data om co-op</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Importer data om lokal co-op</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Importer data om nettbasert co-op</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Importer data om kombinert co-op (lokal + nettbasert)</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Importer data om LAN-spilling eller System Link</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importer data om co-op extras</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Updating Cooperative Modes Importer database…</sys:String>
 </ResourceDictionary>

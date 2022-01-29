@@ -6,7 +6,7 @@
 
     <sys:String x:Key="LOCSteam_Tags_Importer_GenericFileDownloadErrorMessage">Errore nel download del file dall'url &quot;{0}&quot;. Errore: {1}</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_NoGamesSelectedMessage">Nessun gioco selezionato</sys:String>
-    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Errore nel download della pagina &quot;{0}&quot;. Errore: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Tags_Importer_DownloadSteamPageErrorMessage">Error downloading page &quot;{0}&quot;. Error: {1}</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_TagsAddedResultsMessage">Aggiunti {0} tag a {1} gioco(i).</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_InputTagsNumberDownloadMessage">Inserisci il numero di tag da scaricare</sys:String>
     <sys:String x:Key="LOCSteam_Tags_Importer_InvalidInputErrorMessage">Valore non valido</sys:String>

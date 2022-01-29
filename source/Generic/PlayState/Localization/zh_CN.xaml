@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Add selected games to PlayState Blacklist</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Remove selected games from Playstate Blacklist</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">将所选游戏添加到 PlayState 黑名单</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">将所选游戏从 PlayState 黑名单移除</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">将所选游戏配置为强制性地仅挂起观访时间</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">移除强制性地仅挂起观访时间的配置</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">已配置的热键 {0} 注册失败
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Added {0} game(s) to the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Removed {0} game(s) from the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
+您可以尝试使用不同的热键组合以解决该问题</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">已将 {0} 个游戏添加到 PlayState 黑名单中。</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">已将 {0} 个游戏从 PlayState 黑名单移除。</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">配置了 {0} 个游戏，使其在使用配置的热键时强制性地仅挂起观访时间。</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">从 {0} 个游戏中移除了使用配置的热键时强制性地仅挂起观访时间的配置。
 
-Games will be suspended when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Configured Suspend/Resume hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+当使用配置的热键时，游戏将被挂起。</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">游戏已挂起</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">游戏已恢复</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">观访时间已挂起</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">观访时间已恢复</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">已配置挂起/恢复快捷键：</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">更改热键</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">请按热键</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">备注：
 
-Configured hotkey won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Only suspend playtime count globally and not the game processes</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
+已配置的热键不能被用于其他应用程序。
+此设置的更改需要重开。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">当游戏停止时从观访时间中扣除其挂起的时间。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">通过仅保留游戏未挂起时的时间并计入游戏的观访时间，来帮助得到更精确的观访时间值。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">仅对不被库插件管理的游戏执行</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">仅挂起全局（而非游戏进程）的观访时间记录</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">通过启用此选项，在使用已配置的热键时，所有游戏都不会被挂起，但时间被记录（并在游戏停止时从观访时间扣除）。
     
-This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game</sys:String>
+也可以单独应用于某一个游戏，方法是为其添加一个“[PlayState] Suspend playtime only”的功能特色。</sys:String>
 </ResourceDictionary>

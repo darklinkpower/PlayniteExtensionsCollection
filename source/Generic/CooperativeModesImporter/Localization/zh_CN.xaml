@@ -1,22 +1,23 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Update cooperative modes features of all games in library</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Update cooperative modes features of selected games</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Updating games cooperative modes features…</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Done.
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">更新库中所有游戏的合作模式功能特色</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">更新所选游戏的合作模式功能特色</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">更新游戏合作模式功能特色…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">完成。
 
-Added cooperative modes features to {0} games.</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Add prefix to the added features</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">If enabled, this text and the original cooperative mode name will be combined to use in the feature name</sys:String>
+为 {0} 个游戏添加了合作模式功能特色。</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">为已添加的功能特色添加前缀</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">若启用，此文本和原本的合作模式名称将被合并用于功能特色名</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Import basic Co-op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Import detailed Co-op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">导入基本的 Co-op 数据</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">导入详细的 Co-op 数据</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">导入本地的 Co-op 数据</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">导入在线的 Co-op 数据</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">导入整合的 Co-Op（本地+在线）数据</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">导入局域网联机或（Xbox）System Link 数据</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">导入 Co-Op 额外数据</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">在导入游戏时向其添加 Co-Optimus 游戏链接</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">正在更新合作模式导入器数据库…</sys:String>
 </ResourceDictionary>

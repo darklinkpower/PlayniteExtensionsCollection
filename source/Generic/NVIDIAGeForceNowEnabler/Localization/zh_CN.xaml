@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-	<sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Update enabled status of games</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Remove Geforce NOW Game Action from all games</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">更新游戏的已启用状态</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">为所有游戏移除 Geforce NOW 游戏指令</sys:String>
 
-	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Updating NVIDIA GeForce NOW Enabled games...</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Downloading NVIDIA GeForce NOW database...</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW enabled games in library: {0}
+	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">正在更新已启用 NVIDIA GeForce NOW 的游戏...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">正在下载 NVIDIA GeForce NOW 数据库...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">库中已启用 NVIDIA Geforce NOW 的游戏：{0}
 
-Added &quot;{1}&quot; feature to {2} games.
-Removed &quot;{3}&quot; feature from {4} games.</sys:String>
+为 {2} 个游戏添加了功能特色“{1}”。
+为 {4} 个游戏移除了功能特色“{3}”。</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Marked {0} games as Installed.</sys:String>
+已将 {0} 个游戏标记为已安装。</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">从 {0} 个游戏中移除了游戏指令。</sys:String>
 	
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Update enabled status of games on Playnite startup</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Update enabled status of games on library update</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch in NVIDIA GeForce NOW for compatible games that have not been installed by their libraries</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Enabled games will always be marked as installed when this option is enabled.</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Games without a installation directory set are detected as not installed by their libraries</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Set enabled games as installed when updating enabled status of games</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">在 Playnite 启动时更新游戏的已启用状态</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">在库更新时更新游戏的已启用状态</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">为暂未由对应的库安装的兼容游戏，显示在 NVIDIA GeForce NOW 中启动的指令</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">启用此选项，则已启用的游戏总是被标记为已安装。</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">未设置安装目录的游戏，会被检测为暂未由对应的库安装</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">在更新游戏的已启用状态时，将已启用的游戏设为已安装</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">在 Nvidia GeForce NOW 中启动</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW 启用器：将 {0} 个游戏标记为已安装。</sys:String>
 </ResourceDictionary>

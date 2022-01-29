@@ -9,6 +9,6 @@
     <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">Виконаний файл MAME не знайдено у {0}.
 Будь ласка, запустіть розширення ще раз, щоб налаштувати його у правильному місці.</sys:String>
     <sys:String x:Key="LOCMameRenamer_ResultsMessage">Змінено назву {0} гри/ігор.</sys:String>
-    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Імпортовані знімки {0} гри/ігор в Playnite. 
+    <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Імпортовано знімки {0} гри/ігор в Playnite. 
 {0} гра/гри мають відсутній знімок або не є грою MAME.</sys:String>
 </ResourceDictionary>

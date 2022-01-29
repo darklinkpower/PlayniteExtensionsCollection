@@ -4,9 +4,9 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Entferne ausgewählte Spiele von der Playstate Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Konfiguriere ausgewählte Spiele, um nur die Spielzeit zu unterbrechen</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Entferne Konfiguration, um nur die Spielzeit zu unterbrechen</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Fehler beim Registrieren des konfigurierten Hotkey {0}
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
+Sie können versuchen, eine andere HotKey Kombination zu verwenden, um das Problem möglicherweise zu beheben</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">{0} Spiel(e) auf die PlayState Blacklist gesetzt.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">{0} Spiel(e) von der PlayState Blacklist entfernt.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">{0} Spiele(n) wurden so konfiguriert, dass die Spielzeit nur bei Benutzung des konfigurierten Hotkeys unterbrochen wird.</sys:String>

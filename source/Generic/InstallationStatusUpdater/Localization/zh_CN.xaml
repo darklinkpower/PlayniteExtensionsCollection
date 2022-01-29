@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Check installation status of all games</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Add selected games to ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Update tag with drive where games are installed on</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Remove selected games from ignore list</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Done.
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">检查所有游戏的安装状态</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">添加所选游戏到忽略列表</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">为已安装游戏更新驱动器标签</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">从忽略列表中移除所选游戏</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">完成。
 
-Previously installed games were set as uninstalled: {0}
-Previously uninstalled games were set as installed: {1}</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Added ignore feature to {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Removed ignore feature from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Finished updating installation drive tags.</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Updating installation drive tags...</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Detect games with an action of type &quot;Link&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Detect games with an action of type &quot;Script&quot; as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Only use the first listed rom when detecting via roms</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Skip games that include the play action of their library</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Only use Actions marked as &quot;Play Action&quot; for detection</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Update installation status on startup</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Update installation status on library update</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">Update tag with drive the game is installed on library update</sys:String>
+以前安装的游戏被设置为已卸载： {0}
+以前卸载的游戏被设置为已安装： {1}</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">为 {0} 个游戏添加了忽略的功能特色。</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">从 {0} 个游戏移除了忽略的功能特色。</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">已完成安装驱动器标签的更新。</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">正在更新安装驱动器标签...</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">将指令类型为“链接”的游戏检测为已安装</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">将指令类型为“脚本”的游戏检测为已安装</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">在通过 ROM 检测时，仅使用所列出的第一项 ROM</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">跳过启用了其库集成的开动指令的游戏</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">仅检测标记为“开动指令”的指令</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">在启动时更新安装状态</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">在库更新时更新安装状态</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">在库更新时更新游戏安装所在的驱动器的标签</sys:String>
 
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">Update installation status when a storage device is inserted or removed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Update installation status when files change in directories (Changes require restart)</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Include subdirectories for detection</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Detection directories</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Enabled</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Scan subdirectories</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Path</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Add</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Remove</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marked {0} games as installed and {1} as uninstalled</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">当有存储设备插入或移除时更新安装状态</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">当文件在目录中改变时更新安装状态（需要重开）</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">同时检测子目录</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">要检测的目录</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">已启用</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">扫描子目录</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">路径</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">添加</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">移除</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater：已将 {0} 个游戏标记为已安装，{1} 个游戏为未安装。</sys:String>
 </ResourceDictionary>

@@ -10,5 +10,5 @@
 Ejecute de nuevo la extensión para configurarla en la ubicación correcta.</sys:String>
     <sys:String x:Key="LOCMameRenamer_ResultsMessage">Se ha cambiado el nombre de {0} juego(s).</sys:String>
     <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Se han importado snapshots de {0} juego(s) a Playnite. 
-{0} juego(s) tienen una snapshots faltante o no son juegos de MAME.</sys:String>
+{0} juego(s) tienen una snapshot faltante o no son juegos de MAME.</sys:String>
 </ResourceDictionary>

@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Components</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Activate product</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">Downloads</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Friends</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Screenshots</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Settings</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Store Page</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Community Hub</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussions</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Achievements</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">组件</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">激活产品</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">下载</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">好友</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">新闻</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">截图</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">设置</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">商店页面</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">社区中心</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">讨论</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">指南</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">新闻</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">成就</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">点数商店</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">在 Steam 库中查看</sys:String>
 </ResourceDictionary>

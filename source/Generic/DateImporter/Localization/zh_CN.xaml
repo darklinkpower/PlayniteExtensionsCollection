@@ -20,7 +20,7 @@
     <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">将弹出一个网页浏览器窗口，请在登录后将其关闭。</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">未找到许可证。</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">找到 {0} 个许可证。
-你想要导出你的已找到的 {1} 个许可证吗？</sys:String>
+您想要导出你的已找到的 {1} 个许可证吗？</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">已成功导出许可证。</sys:String>
     <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">库: {0}
 经处理的游戏: {1}
@@ -28,7 +28,7 @@
 没有找到日期的游戏: {3}
 添加日期已被更改的游戏: {4}
 
-你想要导出结果吗？</sys:String>
+您想要导出结果吗？</sys:String>
     <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">已成功导出结果。</sys:String>
     <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">按“dd/MM/yyyy HH:mm”格式（d=日，M=月，y=年，H=时，m=分；不包括引号）键入要导入的日期：</sys:String>
     <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">错误。

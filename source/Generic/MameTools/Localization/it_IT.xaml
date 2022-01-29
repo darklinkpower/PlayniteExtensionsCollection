@@ -10,5 +10,5 @@
 Si prega di eseguire nuovamente l'estensione per configurarla nella posizione corretta.</sys:String>
     <sys:String x:Key="LOCMameRenamer_ResultsMessage">Cambiato il nome di {0} gioco(i).</sys:String>
     <sys:String x:Key="LOCMameRenamer_SnapshotsImportResultsMessage" xml:space="preserve">Importate istantanee di {0} partite su Playnite. 
-{0} partite hanno un'istantanea mancante o non sono partite MAMME.</sys:String>
+{0} gioco/giochi hanno un'istantanea mancante o non sono partite MAMME.</sys:String>
 </ResourceDictionary>
