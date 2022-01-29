@@ -39,7 +39,7 @@
     <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Менеджер відео</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Обрані ігри</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">Джерела</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Platforms</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Платформи</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlayniteModeLabel">Режим Playnite</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionLabel">Колекція:</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerSearchLabel">Пошук:</sys:String>
