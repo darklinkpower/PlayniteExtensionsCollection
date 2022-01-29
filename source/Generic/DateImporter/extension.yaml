@@ -1,7 +1,7 @@
 Id: Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e
 Name: Date Importer
 Author: darklinkpower
-Version: 2.7
+Version: 2.8
 Module: DateImporter.psm1
 Type: Script
 Icon: icon.jpg

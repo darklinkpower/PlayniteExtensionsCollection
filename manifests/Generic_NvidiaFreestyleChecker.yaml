@@ -56,3 +56,9 @@ Packages:
     Changelog:
     - Fix feature being added each time the function was used.
     - Fix showing incorrect dialog message after function completion.
+  - Version: 2.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/NVIDIA_Freestyle_Checker_2_9.pext
+    Changelog:
+    - Updated localizations

@@ -150,3 +150,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Updated to Playnite SDK 6.2.2
+  - Version: 2.22
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Installation_Status_Updater_2_22.pext
+    Changelog:
+    - Updated localizations

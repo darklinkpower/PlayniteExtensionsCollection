@@ -44,3 +44,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_6.pext
     Changelog:
     - Updated localizations
+  - Version: 2.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_7.pext
+    Changelog:
+    - Updated localizations

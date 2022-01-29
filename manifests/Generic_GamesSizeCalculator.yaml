@@ -25,3 +25,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Updated to Playnite SDK 6.2.2
+  - Version: 1.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_4.pext
+    Changelog:
+    - Updated localizations

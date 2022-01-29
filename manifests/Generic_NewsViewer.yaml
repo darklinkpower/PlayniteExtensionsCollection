@@ -57,3 +57,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Updated to Playnite SDK 6.2.2
+  - Version: 1.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_9.pext
+    Changelog:
+    - Updated localizations

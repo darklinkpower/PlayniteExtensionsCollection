@@ -18,3 +18,9 @@ Packages:
     - Added option to import Co-Optimus link during importing
     - Fixes and improvements to game matching with database
     - Updated database
+  - Version: 1.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_2.pext
+    Changelog:
+    - Updated localizations

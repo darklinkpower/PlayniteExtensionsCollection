@@ -65,3 +65,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_9.pext
     Changelog:
     - Updated localizations
+  - Version: 2.10
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-01-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_10.pext
+    Changelog:
+    - Updated localizations

@@ -1,7 +1,7 @@
 Id: Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215
 Name: Steam Tags Importer
 Author: darklinkpower
-Version: 2.8
+Version: 2.9
 Module: SteamTagsImporter.psm1
 Type: Script
 Icon: icon.png
