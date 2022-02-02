@@ -6,26 +6,26 @@
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Slett kilde etter kopiering av spill eller hvis spillet oppdages i målbiblioteket</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Målbibliotek:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Åpne</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam-spill:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Kopier valgte Steam-spill</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Kopier alle Steam-spill</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">Ingen installerte Steam-spill er valgt</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Spill: {0}. Feil: Steam-biblioteket på stasjon {1} ble ikke funnet</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Spill: {0}. Feil: Kildemanifest eksisterer ikke i &quot;{1}&quot;
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Game: {0}. Error: Source directory doesn't exist in &quot;{1}&quot;
+Dette problemet kan skje hvis du brukte dette verktøyet på dette spillet, og du ikke har startet Steam på nytt og oppdatert Playnite-biblioteket for å gjenspeile endringene</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Spill: {0}. Feil: Kildemappe eksisterer ikke i &quot;{1}&quot;
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Processing game: {0}
+Dette problemet kan skje hvis du brukte dette verktøyet på dette spillet, og du ikke har startet Steam på nytt og oppdatert Playnite-biblioteket for å gjenspeile endringene</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Behandler spill: {0}
 
-Game size: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Finished.
+Spillstørrelse: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Ferdig.
 
-Copied games: {0}
-Skipped games: {1}
+Kopierte spill: {0}
+Spill som ble hoppet over: {1}
 
-Deleted source games: {2}
+Slettede kildespill: {2}
 
-Update your Playnite library after restarting Steam to reflect the changes</sys:String>
+Oppdater Playnite-biblioteket etter å ha startet Steam på nytt for å gjenspeile endringene</sys:String>
 </ResourceDictionary>
