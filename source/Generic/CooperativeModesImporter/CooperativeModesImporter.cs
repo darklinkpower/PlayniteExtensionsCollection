@@ -339,7 +339,7 @@ namespace CooperativeModesImporter
 
         private static string SatinizeGameName(string str)
         {
-            return Regex.Replace(str, @"[^\p{L}\p{Nd}]", "")
+            return Regex.Replace(str.Replace(" & ", " And "), @"[^\p{L}\p{Nd}]", "")
                 .ToLower()
                 .Replace("gameoftheyearedition", "")
                 .Replace("gameoftheyear", "")
