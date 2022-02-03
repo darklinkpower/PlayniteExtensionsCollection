@@ -22,17 +22,17 @@
     <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Fant {0} lisenser.
 Vil du eksportere de {1} lisensene som er funnet?</sys:String>
     <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Eksport av lisenser var vellykket.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Library: {0}
-Processed games: {1}
-Games with date found: {2}
-Games without date found: {3}
-Games that had the added date changed: {4}
+    <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Bibliotek: {0}
+Prosesserte spill: {1}
+Spill med dato funnet: {2}
+Spill uten dato funnet: {3}
+Spill som hadde endret &quot;lagt til&quot;-dato: {4}
 
-Do you want to export results?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Results exported succesfully.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Enter date to import in the format &quot;dd/MM/yyyy HH:mm&quot;:</sys:String>
-    <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">Error.
-&quot;{0}&quot; is in the wrong format.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Changed the added date of {0} games.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">User is not logged in to {0}.</sys:String>
+Vil du eksportere resultatene?</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsExportSuccessMessage">Eksport av resultater var vellykket.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputMessage">Skriv inn dato som skal importeres i formatet &quot;dd/MM/yyyy HH:mm&quot;:</sys:String>
+    <sys:String x:Key="LOCDate_Importer_ResultsDateInputBadFormatMessage" xml:space="preserve">Feil.
+&quot;{0}&quot; er i feil format.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_AddedDateModifiedResultsMessage">Endret &quot;lagt til&quot;-dato for {0} spill.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_UsetNotLoggedMessage">Brukeren er ikke logget inn på {0}.</sys:String>
 </ResourceDictionary>
