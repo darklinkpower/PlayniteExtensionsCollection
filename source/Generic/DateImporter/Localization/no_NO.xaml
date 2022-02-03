@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Import dates of selected Epic, GOG, Origin and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Import dates of all Epic, GOG, Origin and Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Set added date of selected games manually</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Import dates of selected Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Import dates of all Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Export Steam licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">Import dates of selected GOG games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">Import dates of all GOG games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportGogLicencesDescription">Export GOG licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Import dates of selected Epic games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Import dates of all Epic games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Export Epic licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription">Import dates of selected Origin games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllOriginDatesDescription">Import dates of all Origin games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginErrorMessage">Error retrieving data from Origin</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginInvalidJson">Origin data is invalid</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemExportOriginLicencesDescription">Export Origin licenses list</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">A web browser window will be opened, please close the window after login in.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">No licenses were found.</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Found {0} licenses.
-Do you want to export your found {1} licenses?</sys:String>
-    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Licenses exported succesfully.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Importer datoer fra valgte Epic-, GOG-, Origin- og Steam-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Importer datoer for alle Epic-, GOG-, Origin- og Steam-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Angi datoer for valgte spill manuelt</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Importer datoer for valgte Steam-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Importer datoer for alle Steam-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Eksporter liste over Steam-lisenser</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">Importer datoer for valgte GOG-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">Importer datoer for alle GOG-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportGogLicencesDescription">Eksporter liste over GOG-lisenser</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedEpicDatesDescription">Importer datoer for valgte Epic-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllEpicDatesDescription">Importer datoer for alle Epic-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportEpicLicencesDescription">Eksporter liste over Epic-lisenser</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedOriginDatesDescription">Importer datoer for valgte Origin-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllOriginDatesDescription">Importer datoer for alle Origin-spill</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginErrorMessage">Feil ved henting av data fra Origin</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportOriginInvalidJson">Origin-data er ugyldig</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemExportOriginLicencesDescription">Eksporter liste over Origin-lisenser</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LoginNotifyMessage">Et nettleservindu vil åpnes – lukk vinduet etter at innlogging er fullført.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesNotFoundMessage">Ingen lisenser ble funnet.</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportChoiceMessage" xml:space="preserve">Fant {0} lisenser.
+Vil du eksportere de {1} lisensene som er funnet?</sys:String>
+    <sys:String x:Key="LOCDate_Importer_LicensesExportSuccessMessage">Eksport av lisenser var vellykket.</sys:String>
     <sys:String x:Key="LOCDate_Importer_ResultsExportChoiceMessage" xml:space="preserve">Library: {0}
 Processed games: {1}
 Games with date found: {2}
