@@ -25,6 +25,7 @@ namespace CooperativeModesImporter
         private readonly string databasePath;
         private readonly int currentDatabaseVersion = 2;
         private readonly Dictionary<string, string> specIdToSystemDictionary;
+        private Dictionary<string, GameFeature> featuresDictionary;
 
         private CooperativeModesImporterSettingsViewModel settings { get; set; }
 
@@ -117,7 +118,7 @@ namespace CooperativeModesImporter
         {
             if (settings.Settings.DatabaseVersion < currentDatabaseVersion || !File.Exists(databasePath))
             {
-                
+
                 PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
                 {
                     logger.Info("Decompressing database zip file...");
@@ -163,6 +164,14 @@ namespace CooperativeModesImporter
                     Action = a => {
                         AddMpFeaturesToGamesProgress(PlayniteApi.MainView.SelectedGames.ToList());
                     }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGamesManual"),
+                    MenuSection = "@Cooperative Modes Importer",
+                    Action = a => {
+                        AddModesManual();
+                    }
                 }
             };
         }
@@ -186,7 +195,7 @@ namespace CooperativeModesImporter
                 databaseItem.Name = SatinizeGameName(databaseItem.Name);
             }
 
-            var featuresDictionary = new Dictionary<string, GameFeature>();
+            featuresDictionary = new Dictionary<string, GameFeature>();
             var updatedGames = 0;
             foreach (var game in games)
             {
@@ -205,57 +214,130 @@ namespace CooperativeModesImporter
                         continue;
                     }
 
-                    var gameUpdated = false;
-                    if (game.FeatureIds == null)
+                    if (ApplyCooptimusData(game, dbGame))
                     {
-                        game.FeatureIds = new List<Guid> {};
-                        gameUpdated = true;
-                    }
-
-                    var modesBasic = GetBasicModes(dbGame);
-                    var modesDetailed = GetDetailedModes(dbGame);
-                    foreach (var coopName in modesBasic.Concat(modesDetailed))
-                    {
-                        // Should make it faster than trying to create the same
-                        // features a lot of times
-                        if (!featuresDictionary.ContainsKey(coopName))
-                        {
-                            featuresDictionary.Add(coopName, PlayniteApi.Database.Features.Add(coopName));
-                        }
-
-                        if (game.FeatureIds.AddMissing(featuresDictionary[coopName].Id))
-                        {
-                            gameUpdated = true;
-                        }
-                    }
-
-                    if (settings.Settings.AddLinkOnImport)
-                    {
-                        if (game.Links == null)
-                        {
-                            game.Links = new ObservableCollection<Link>{ new Link { Name = "Co-Optimus", Url = dbGame.Url } };
-                            gameUpdated = true;
-                        }
-                        else if (!game.Links.Any(x => x.Url == dbGame.Url))
-                        {
-                            var linksCopy = new ObservableCollection<Link>(game.Links)
-                            {
-                                new Link { Name = "Co-Optimus", Url = dbGame.Url }
-                            };
-                            game.Links = linksCopy;
-                            gameUpdated = true;
-                        }
-                    }
-
-                    if (gameUpdated)
-                    {
-                        PlayniteApi.Database.Games.Update(game);
-                        updatedGames += 1;
+                        updatedGames++;
                     }
                 }
             }
 
             return updatedGames;
+        }
+
+        private void AddModesManual()
+        {
+            var database = Serialization.FromJson<CooperativeDatabase>(File.ReadAllText(databasePath));
+            featuresDictionary = new Dictionary<string, GameFeature>();
+            var updatedGames = 0;
+            foreach (var game in PlayniteApi.MainView.SelectedGames)
+            {
+                if (game.Platforms == null || game.Platforms.Count < 0
+                    || string.IsNullOrEmpty(game.Platforms[0].SpecificationId))
+                {
+                    continue;
+                }
+
+                if (specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
+                {
+                    var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(
+                        new List<GenericItemOption>(),
+                        (a) => GetCooptimusItemOptions(a, systemId, database),
+                        game.Name,
+                        ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
+                    
+                    if (selectedItem != null)
+                    {
+                        var selectedDb = database.Games.FirstOrDefault(x => x.Id.ToString() == selectedItem.Description);
+                        if (selectedDb != null)
+                        {
+                            if (ApplyCooptimusData(game, selectedDb))
+                            {
+                                updatedGames++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCooperativeModesImporter_UpdateFeaturesResult"), updatedGames));
+        }
+
+        private bool ApplyCooptimusData(Game game, CooperativeGame dbGame)
+        {
+            var gameUpdated = false;
+            if (game.FeatureIds == null)
+            {
+                game.FeatureIds = new List<Guid> { };
+                gameUpdated = true;
+            }
+
+            var modesBasic = GetBasicModes(dbGame);
+            var modesDetailed = GetDetailedModes(dbGame);
+            foreach (var coopName in modesBasic.Concat(modesDetailed))
+            {
+                // Should make it faster than trying to create the same
+                // features a lot of times
+                if (!featuresDictionary.ContainsKey(coopName))
+                {
+                    featuresDictionary.Add(coopName, PlayniteApi.Database.Features.Add(coopName));
+                }
+
+                if (game.FeatureIds.AddMissing(featuresDictionary[coopName].Id))
+                {
+                    gameUpdated = true;
+                }
+            }
+
+            if (settings.Settings.AddLinkOnImport)
+            {
+                if (game.Links == null)
+                {
+                    game.Links = new ObservableCollection<Link> { new Link { Name = "Co-Optimus", Url = dbGame.Url } };
+                    gameUpdated = true;
+                }
+                else if (!game.Links.Any(x => x.Url == dbGame.Url))
+                {
+                    var linksCopy = new ObservableCollection<Link>(game.Links)
+                        {
+                            new Link { Name = "Co-Optimus", Url = dbGame.Url }
+                        };
+                    game.Links = linksCopy;
+                    gameUpdated = true;
+                }
+            }
+
+            if (gameUpdated)
+            {
+                PlayniteApi.Database.Games.Update(game);
+            }
+
+            return gameUpdated;
+        }
+
+        private List<GenericItemOption> GetCooptimusItemOptions(string gameName, string systemId, CooperativeDatabase database)
+        {
+            var selectOptions = new List<Tuple<int, CooperativeGame>>();
+            foreach (var dbGame in database.Games)
+            {
+                if (dbGame.System != systemId)
+                {
+                    continue;
+                }
+
+                var distance = LevenshteinDistance.Distance(gameName, dbGame.Name);
+                if (distance <= 5)
+                {
+                    selectOptions.Add(Tuple.Create(distance, dbGame));
+                }
+            }
+
+            if (selectOptions.Count == 0)
+            {
+                return new List<GenericItemOption>();
+            }
+
+            selectOptions.Sort((x, y) => x.Item1.CompareTo(y.Item1));
+            return selectOptions.Select(x => new GenericItemOption($"{x.Item2.Name} ({x.Item2.System})", x.Item2.Id.ToString())).Take(10).ToList();
         }
 
         private List<string> GetBasicModes(CooperativeGame dbGame)
