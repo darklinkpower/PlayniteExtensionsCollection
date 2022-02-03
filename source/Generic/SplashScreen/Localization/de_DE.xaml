@@ -39,7 +39,7 @@
     <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Videoverwaltung</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Ausgewählte Spiele</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">Quellen</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Plaformen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Platforms</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlayniteModeLabel">Playnite-Modus</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionLabel">Sammlung:</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerSearchLabel">Suchen:</sys:String>

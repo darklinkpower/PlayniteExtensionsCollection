@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Oppdater funksjoner for co-op-moduser for alle spill i biblioteket</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Oppdater funksjoner for co-op-moduser for valgte spill</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGamesManual">Oppdater funksjoner for co-op-moduser for valgte spill (manuelt)</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Oppdaterer funksjoner for co-op-moduser…</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Ferdig.
 
@@ -18,6 +19,6 @@ Lagt til co-op-modusfunksjoner for {0} spill.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Importer data om LAN-spilling eller System Link</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importer data om co-op extras</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Updating Cooperative Modes Importer database…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Legg til Co-Optimus-spilllenke til spill under import</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Oppdaterer databasen til Cooperative Modes Importer…</sys:String>
 </ResourceDictionary>
