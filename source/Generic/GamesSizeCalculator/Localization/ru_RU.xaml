@@ -7,6 +7,6 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Вычисление размеров…</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Готово</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error while getting directory size in {0} of game {1}. {2}</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error while getting rom file size in {0} of game {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: ошибка при определении размера каталога в {0} для игры {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Ошибка при получении размера Rom файла в {0} для игры {1}. {2}</sys:String>
 </ResourceDictionary>
