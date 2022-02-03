@@ -24,3 +24,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_2.pext
     Changelog:
     - Updated localizations
+  - Version: 1.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_3.pext
+    Changelog:
+    - Updated localizations
+    - 'Improve game matching when name uses "&" character'
+    - 'Added search function to manually select database entry'
