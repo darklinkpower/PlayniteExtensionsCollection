@@ -58,6 +58,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameController.cs" />
     <Compile Include="InstallationStatusUpdater.cs" />
     <Compile Include="InstallationStatusUpdaterSettings.cs" />
     <Compile Include="InstallationStatusUpdaterSettingsView.xaml.cs">
