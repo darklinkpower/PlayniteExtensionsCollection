@@ -3,8 +3,8 @@
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedDescription">Импорт дат выбранных игр Epic, GOG, Origin и Steam</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllDescription">Импорт дат всех игр Epic, GOG, Origin и Steam</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemSetDateManualDescription">Установить дату добавления к выбранным играм вручную</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Import dates of selected Steam games</sys:String>
-    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Import dates of all Steam games</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedSteamDatesDescription">Импортирование дат для выбранных игр Steam</sys:String>
+    <sys:String x:Key="LOCDate_Importer_MenuItemImportAllSteamDatesDescription">Импортирование дат для всех игр Steam</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemExportSteamLicencesDescription">Export Steam licenses list</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportSelectedGogDatesDescription">Import dates of selected GOG games</sys:String>
     <sys:String x:Key="LOCDate_Importer_MenuItemImportAllGogDatesDescription">Import dates of all GOG games</sys:String>
