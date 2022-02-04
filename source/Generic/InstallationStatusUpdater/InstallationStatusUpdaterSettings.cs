@@ -20,6 +20,7 @@ namespace InstallationStatusUpdater
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
         public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
+        public bool EnableInstallButtonAction { get; set; } = true;
         [DontSerialize]
         private List<SelectableDirectory> detectionDirectories { get; set; } = new List<SelectableDirectory>();
         public List<SelectableDirectory> DetectionDirectories
@@ -31,10 +32,6 @@ namespace InstallationStatusUpdater
                 OnPropertyChanged();
             }
         }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
     }
 
     public class InstallationStatusUpdaterSettingsViewModel : ObservableObject, ISettings

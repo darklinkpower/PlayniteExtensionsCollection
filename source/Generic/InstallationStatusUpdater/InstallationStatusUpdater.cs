@@ -259,7 +259,17 @@ namespace InstallationStatusUpdater
             };
         }
 
-        public bool DetectIsRomInstalled(GameRom rom, string installDirectory)
+        public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
+        {
+            if (!settings.Settings.EnableInstallButtonAction || SkipGame(args.Game))
+            {
+                yield break;
+            }
+
+            yield return new StatusUpdaterInstallController(args.Game, IsGameInstalled(args.Game));
+        }
+
+        public static bool DetectIsRomInstalled(GameRom rom, string installDirectory)
         {
             if (string.IsNullOrEmpty(rom.Path))
             {
@@ -315,7 +325,7 @@ namespace InstallationStatusUpdater
             return false;
         }
 
-        public bool DetectIsFileActionInstalled(GameAction gameAction, string installDirectory)
+        public static bool DetectIsFileActionInstalled(GameAction gameAction, string installDirectory)
         {
             if (string.IsNullOrEmpty(gameAction.Path))
             {
@@ -395,37 +405,16 @@ namespace InstallationStatusUpdater
         public void DetectInstallationStatus(bool showResultsDialog)
         {
             var gameCollection = PlayniteApi.Database.Games;
-            string skipFeatureName = "[Status Updater] Ignore";
             int markedInstalled = 0;
             int markedUninstalled = 0;
             foreach (Game game in gameCollection)
             {
-                if (game.IncludeLibraryPluginAction == true && settings.Settings.SkipHandledByPlugin == true && game.PluginId != Guid.Empty)
+                if (SkipGame(game))
                 {
                     continue;
                 }
-                
-                if (game.Features != null && game.Features.Any(x => x.Name == skipFeatureName))
-                {
-                    continue;
-                }
-                
-                var isInstalled = false;
-                var installDirectory = string.Empty;
-                if (!string.IsNullOrEmpty(game.InstallDirectory))
-                {
-                    installDirectory = game.InstallDirectory.ToLower();
-                }
 
-                if (game.GameActions != null && game.GameActions.Count > 0)
-                {
-                    isInstalled = DetectIsAnyActionInstalled(game, installDirectory);
-                }
-
-                if (isInstalled == false)
-                {
-                    isInstalled = DetectIsRomInstalled(game, installDirectory);
-                }
+                var isInstalled = IsGameInstalled(game);
 
                 if (game.IsInstalled == true && isInstalled == false)
                 {
@@ -463,6 +452,43 @@ namespace InstallationStatusUpdater
                     string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults"), markedInstalled, markedUninstalled),
                     NotificationType.Info));
             }
+        }
+
+        public bool SkipGame(Game game)
+        {
+            if (game.IncludeLibraryPluginAction == true && settings.Settings.SkipHandledByPlugin == true && game.PluginId != Guid.Empty)
+            {
+                return true;
+            }
+
+            if (game.Features != null && game.Features.Any(x => x.Name == "[Status Updater] Ignore"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsGameInstalled(Game game)
+        {
+            var isInstalled = false;
+            var installDirectory = string.Empty;
+            if (!string.IsNullOrEmpty(game.InstallDirectory))
+            {
+                installDirectory = game.InstallDirectory.ToLower();
+            }
+
+            if (game.GameActions != null && game.GameActions.Count > 0)
+            {
+                isInstalled = DetectIsAnyActionInstalled(game, installDirectory);
+            }
+
+            if (isInstalled == false)
+            {
+                isInstalled = DetectIsRomInstalled(game, installDirectory);
+            }
+
+            return isInstalled;
         }
 
         public void AddIgnoreFeature()
