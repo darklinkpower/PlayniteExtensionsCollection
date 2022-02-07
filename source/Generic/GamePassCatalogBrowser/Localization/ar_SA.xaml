@@ -12,9 +12,9 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">المجموعات:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">الفئة:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">بحث:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
 
