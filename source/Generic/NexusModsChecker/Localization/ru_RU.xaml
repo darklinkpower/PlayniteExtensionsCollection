@@ -3,10 +3,10 @@
     <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Добавить функцию Nexus Mods и ссылки на выбранные игры</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Добавить функцию Nexus Mods и ссылки на все игры</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Ошибка загрузки файла по ссылке &quot;{0}&quot;. Ошибка: {1}</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">There are no games in selection.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games were found on Nexus Mods.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Games with mods available on Nexus Mods: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">В подборке нет игр.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">На Nexus Mods не найдено ни одной игры.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Игр с доступными модами на Nexus Mods: {0}
 
-Added `&quot;{1}`&quot; feature to {2} game(s).
-Added Nexus Mods links to {3} game(s).</sys:String>
+Добавлено `&quot;{1}`&quot; функций к {2} игре(ам).
+Добавлены ссылки Nexus Mods {3} игре(ам).</sys:String>
 </ResourceDictionary>
