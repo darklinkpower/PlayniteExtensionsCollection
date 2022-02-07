@@ -1,50 +1,50 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Open video manager</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">Disable extension for the selected games</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Re-Enable extension for the selected games</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">فتح إدارة الفيديو</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">تعطيل الإضافة للألعاب المختارة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">أعد تفعيل الإضافة للألعاب المختارة</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Add image splash screen skip feature to selected games</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Remove image splash screen skip feature from selected games</sys:String>
 
-    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro video has been added</sys:String>
-    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro video has been removed</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Added &quot;{0}&quot; exclude feature to {1} game(s)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Removed &quot;{0}&quot; exclude feature from {1} game(s)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">تم إضافة فيديو مقدمة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">تم حذف فيديو المقدمة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">تم اضافة &quot;{0}&quot; ميزة استبعاد &quot;{1}&quot; لعبة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">تم إزالة &quot;{0}&quot; ميزة استبعاد &quot;{1}&quot; لعبة</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Execute extension in Desktop Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">View splashscreen images in Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">View intro videos in Desktop Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">عرض فيديو المقدمة في وضع Desktop</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Execute extension in Fullscreen Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">View splashscreen images in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">View intro videos in Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">عرض فيديو المقدمة في وضع Fullscreen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Add game logo in splashscreen image if available</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Use game icon from Metadata as logo</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Use black splashscreen instead of the splashscreen image</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Logo horizontal position:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Logo vertical position:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">Left</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">Center</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">Right</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Top</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Center</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Bottom</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">استخدام الشاشة السوداء بدلاً من صورة شاشة البداية</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">الموقع الأفقي للشعار:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">الموقع العمودي للشعار:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">اليسار</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">الوسط</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">اليمين</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">الأعلى</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">الوسط</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">الأسفل</sys:String>
 
-    <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Use a global splash image for all games</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Use game logo in global splash image if it's available</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Browse...</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageRemove">Remove</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">استخدام صورة بداية عامة لجميع الألعاب</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">استخدم شعار اللعبة في صورة البداية العالمية إذا كان متاحًا</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">تصفح...</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageRemove">إزالة</sys:String>
     
-    <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">Video manager</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">Selected games</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">Sources</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">Platforms</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlayniteModeLabel">Playnite Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionLabel">Collection:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Video not available</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Add video</sys:String>
-    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Remove video</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerTitle">إدارة الفيديو</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSelectedGamesLabel">الألعاب المختارة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionSourcesLabel">المصادر</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlatformsLabel">المِنصات</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionPlayniteModeLabel">وضع Playnite</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerCollectionLabel">المجموعات:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerSearchLabel">بحث:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">الفيديو غير متوفر</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">إضافة فيديو</sys:String>
+    <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">إزالة الفيديو</sys:String>
 
 </ResourceDictionary>
