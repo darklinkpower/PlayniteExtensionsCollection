@@ -3,7 +3,7 @@
     <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesAutomaticDescription">Add Twitch links to selected games (Automatic)</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesSemiAutomaticDescription">Add Twitch links to selected games (Semi-Automatic)</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_GenericGameInformationDownloadFailMessage">Error downloading game information of &quot;{0}&quot;.</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">Invalid Url.</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">الرابط غير صالح.</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">Do you want to continue the extension execution for the remaining games?</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">Twitch link added to {0} game(s).</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">تم إضافة رابط تويتش إلى {0} لعبة.</sys:String>
 </ResourceDictionary>
