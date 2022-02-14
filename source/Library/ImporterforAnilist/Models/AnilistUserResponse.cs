@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,40 +9,40 @@ namespace ImporterforAnilist.Models
 {
     public partial class AnilistUser
     {
-        [JsonProperty("data")]
+        [SerializationPropertyName("data")]
         public Data Data { get; set; }
     }
 
     public partial class Data
     {
-        [JsonProperty("Viewer")]
+        [SerializationPropertyName("Viewer")]
         public Viewer Viewer { get; set; }
     }
 
     public partial class Viewer
     {
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public long Id { get; set; }
 
-        [JsonProperty("options")]
+        [SerializationPropertyName("options")]
         public Options Options { get; set; }
 
-        [JsonProperty("mediaListOptions")]
+        [SerializationPropertyName("mediaListOptions")]
         public MediaListOptions MediaListOptions { get; set; }
     }
 
     public partial class MediaListOptions
     {
-        [JsonProperty("scoreFormat")]
+        [SerializationPropertyName("scoreFormat")]
         public string ScoreFormat { get; set; }
     }
 
     public partial class Options
     {
-        [JsonProperty("displayAdultContent")]
+        [SerializationPropertyName("displayAdultContent")]
         public bool DisplayAdultContent { get; set; }
     }
 }

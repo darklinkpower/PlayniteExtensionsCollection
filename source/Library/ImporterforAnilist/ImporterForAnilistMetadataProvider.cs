@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImporterforAnilist.Models;
-using Newtonsoft.Json;
 using System.Net.Http;
-using Newtonsoft.Json.Linq;
 using System.Threading;
+using Playnite.SDK.Data;
+using Newtonsoft.Json.Linq;
 
 namespace ImporterforAnilist
 {
@@ -102,7 +102,7 @@ namespace ImporterforAnilist
                 {
                     { "id", game.GameId }
                 };
-                string variablesJson = JsonConvert.SerializeObject(variables);
+                string variablesJson = Serialization.ToJson(variables);
                 var postParams = new Dictionary<string, string>
                 {
                     { "query", apiListQueryString },
@@ -111,7 +111,7 @@ namespace ImporterforAnilist
                 var response = client.PostAsync(GraphQLEndpoint, new FormUrlEncodedContent(postParams));
                 var contents = response.Result.Content.ReadAsStringAsync();
 
-                var mediaEntryData = JsonConvert.DeserializeObject<MediaEntryData>(contents.Result);
+                var mediaEntryData = Serialization.FromJson<MediaEntryData>(contents.Result);
                 metadata = AnilistResponseHelper.MediaToGameMetadata(mediaEntryData.Data.Media, true, propertiesPrefix);
                 type = mediaEntryData.Data.Media.Type.ToString().ToLower() ?? string.Empty;
                 idMal = mediaEntryData.Data.Media.IdMal.ToString().ToLower() ?? string.Empty;
@@ -139,10 +139,11 @@ namespace ImporterforAnilist
                     {
                         Thread.Sleep(5000);
                     }
+
                     malSyncRateLimiter.Decrease();
                     var response = client.GetAsync(string.Format(queryUri));
                     var contents = response.Result.Content.ReadAsStringAsync();
-                    if (contents.Result != "Not found in the fire")
+                    if (!string.IsNullOrEmpty(contents.Result) && contents.Result != "Not found in the fire")
                     {
                         JObject jsonObject = JObject.Parse(contents.Result);
                         if (jsonObject["Sites"] != null)
@@ -156,7 +157,7 @@ namespace ImporterforAnilist
                                     foreach (var item in siteItem)
                                     {
                                         string str = item.First().ToString();
-                                        var malSyncItem = JsonConvert.DeserializeObject<MalSyncSiteItem>(str);
+                                        var malSyncItem = Serialization.FromJson<MalSyncSiteItem>(str);
                                         metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
                                     }
                                 }
@@ -173,6 +174,7 @@ namespace ImporterforAnilist
                     logger.Error(e, $"Failed to process MalSync query {queryUri}");
                 }
             }
+
             return metadata;
         }
     }

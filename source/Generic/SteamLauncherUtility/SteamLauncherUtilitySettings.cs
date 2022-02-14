@@ -16,11 +16,6 @@ namespace SteamLauncherUtility
         public bool DisableSteamWebBrowserOnFullscreenMode { get; set; } = true;
         public bool LaunchSteamBpmOnFullscreenMode { get; set; } = false;
         public bool CloseSteamIfRunning { get; set; } = false;
-
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
     }
 
     public class SteamLauncherUtilitySettingsViewModel : ObservableObject, ISettings

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
-using Newtonsoft.Json;
+using Playnite.SDK.Data;
 
 namespace ImporterforAnilist.Services
 {
@@ -107,7 +107,7 @@ namespace ImporterforAnilist.Services
                 {
                     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accountAccessCode}");
                     client.DefaultRequestHeaders.Add("Accept", "application/json");
-                    string postParamsString = JsonConvert.SerializeObject(postParams);
+                    string postParamsString = Serialization.ToJson(postParams);
                     client.DefaultRequestHeaders.Add("Body", postParamsString);
 
                     var response = client.PostAsync(GraphQLEndpoint, new FormUrlEncodedContent(postParams));
@@ -135,7 +135,7 @@ namespace ImporterforAnilist.Services
             {
                 return string.Empty;
             }
-            var anilistUser = JsonConvert.DeserializeObject<AnilistUser>(response);
+            var anilistUser = Serialization.FromJson<AnilistUser>(response);
             return anilistUser.Data.Viewer?.Name ?? string.Empty;
         }
 
@@ -149,7 +149,7 @@ namespace ImporterforAnilist.Services
                 { "userName", anilistUsername },
                 { "type", type }
             };
-            string variablesJson = JsonConvert.SerializeObject(variables);
+            string variablesJson = Serialization.ToJson(variables);
             var postParams = new Dictionary<string, string>
             {
                 { "query", apiListQueryString },
@@ -161,7 +161,8 @@ namespace ImporterforAnilist.Services
             {
                 return entriesList;
             }
-            var mediaList = JsonConvert.DeserializeObject<MediaList>(response);
+
+            var mediaList = Serialization.FromJson<MediaList>(response);
 
             foreach (ListElement listElement in mediaList.Data.List.Lists)
             {

@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Controls;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using ReviewViewer.Models;
 using System;
@@ -453,7 +453,7 @@ namespace ReviewViewer.Controls
 
             try
             {
-                Reviews = JsonConvert.DeserializeObject<ReviewsResponse>(File.ReadAllText(gameDataPath));
+                Reviews = Serialization.FromJsonFile<ReviewsResponse>(gameDataPath);
             }
             catch (Exception e)
             {

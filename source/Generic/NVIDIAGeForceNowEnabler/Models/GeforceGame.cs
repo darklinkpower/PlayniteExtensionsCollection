@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,31 +9,31 @@ namespace NVIDIAGeForceNowEnabler
 {
     public class GeforceGame
     {
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public long Id { get; set; }
 
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public string Title { get; set; }
 
-        [JsonProperty("sortName")]
+        [SerializationPropertyName("sortName")]
         public string SortName { get; set; }
 
-        [JsonProperty("isFullyOptimized")]
+        [SerializationPropertyName("isFullyOptimized")]
         public bool IsFullyOptimized { get; set; }
 
-        [JsonProperty("steamUrl")]
+        [SerializationPropertyName("steamUrl")]
         public string SteamUrl { get; set; }
 
-        [JsonProperty("store")]
+        [SerializationPropertyName("store")]
         public string Store { get; set; }
 
-        [JsonProperty("publisher")]
+        [SerializationPropertyName("publisher")]
         public string Publisher { get; set; }
 
-        [JsonProperty("genres")]
+        [SerializationPropertyName("genres")]
         public string[] Genres { get; set; }
 
-        [JsonProperty("status")]
+        [SerializationPropertyName("status")]
         public string Status { get; set; }
     }
 }

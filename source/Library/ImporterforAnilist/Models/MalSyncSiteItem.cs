@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,28 +9,28 @@ namespace ImporterforAnilist.Models
 {
     public partial class MalSyncSiteItem
     {
-        [JsonProperty("identifier")]
+        [SerializationPropertyName("identifier")]
         public string Identifier { get; set; }
 
-        [JsonProperty("type")]
+        [SerializationPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("page")]
+        [SerializationPropertyName("page")]
         public string Page { get; set; }
 
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public string Title { get; set; }
 
-        [JsonProperty("url")]
+        [SerializationPropertyName("url")]
         public string Url { get; set; }
 
-        [JsonProperty("image")]
+        [SerializationPropertyName("image")]
         public string Image { get; set; }
 
-        [JsonProperty("malId")]
+        [SerializationPropertyName("malId")]
         public int? MalId { get; set; }
 
-        [JsonProperty("aniId")]
+        [SerializationPropertyName("aniId")]
         public int? AniId { get; set; }
     }
 }

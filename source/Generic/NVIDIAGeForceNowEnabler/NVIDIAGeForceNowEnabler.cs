@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Net;
-using Newtonsoft.Json;
+using Playnite.SDK.Data;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -48,7 +48,7 @@ namespace NVIDIAGeForceNowEnabler
                 return;
             }
 
-            supportedList = JsonConvert.DeserializeObject<List<GeforceGame>>(File.ReadAllText(gfnDatabasePath));
+            supportedList = Serialization.FromJsonFile<List<GeforceGame>>(gfnDatabasePath);
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -160,7 +160,7 @@ namespace NVIDIAGeForceNowEnabler
                     {
                         webClient.Encoding = Encoding.UTF8;
                         string downloadedString = webClient.DownloadString(@"https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json");
-                        supportedGames = JsonConvert.DeserializeObject<List<GeforceGame>>(downloadedString);
+                        supportedGames = Serialization.FromJson<List<GeforceGame>>(downloadedString);
                         if (supportedGames.Count >= 0)
                         {
                             foreach (var supportedGame in supportedGames)
@@ -171,7 +171,8 @@ namespace NVIDIAGeForceNowEnabler
                                     supportedGame.Title = SatinizeOriginGameName(supportedGame.Title);
                                 }
                             }
-                            File.WriteAllText(gfnDatabasePath, JsonConvert.SerializeObject(supportedGames));
+
+                            File.WriteAllText(gfnDatabasePath, Serialization.ToJson(supportedGames));
                             supportedList = supportedGames;
                         }
                     }
@@ -438,7 +439,6 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     new NVIDIAGeForceNowEnablerPlayController(game, supportedGame.Id.ToString(), geforceNowExecutablePath, geforceNowWorkingPath)
                 };
-
             }
 
             return null;

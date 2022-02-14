@@ -3,193 +3,192 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using Playnite.SDK.Data;
 
 namespace ImporterforAnilist.Models
 {
     public class MediaList
     {
-        [JsonProperty("data")]
+        [SerializationPropertyName("data")]
         public MediaListData Data { get; set; }
     }
 
     public class MediaListData
     {
-        [JsonProperty("list")]
+        [SerializationPropertyName("list")]
         public DataList List { get; set; }
     }
 
     public class DataList
     {
-        [JsonProperty("lists")]
+        [SerializationPropertyName("lists")]
         public List<ListElement> Lists { get; set; }
 
     }
 
     public class ListElement
     {
-        [JsonProperty("status")]
+        [SerializationPropertyName("status")]
         public EntryStatus? Status { get; set; }
 
-        [JsonProperty("entries")]
+        [SerializationPropertyName("entries")]
         public List<Entry> Entries { get; set; }
     }
 
     public class Entry
     {
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("progress")]
+        [SerializationPropertyName("progress")]
         public int Progress { get; set; }
 
-        [JsonProperty("score")]
+        [SerializationPropertyName("score")]
         public int Score { get; set; }
 
-        [JsonProperty("status")]
+        [SerializationPropertyName("status")]
         public EntryStatus? Status { get; set; }
 
-        [JsonProperty("updatedAt")]
+        [SerializationPropertyName("updatedAt")]
         public int UpdatedAt { get; set; }
 
-        [JsonProperty("media")]
+        [SerializationPropertyName("media")]
         public Media Media { get; set; }
     }
 
     public partial class Media
     {
-        [JsonProperty("id")]
+        [SerializationPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonProperty("idMal")]
+        [SerializationPropertyName("idMal")]
         public int? IdMal { get; set; }
 
-        [JsonProperty("siteUrl")]
+        [SerializationPropertyName("siteUrl")]
         public Uri SiteUrl { get; set; }
 
-        [JsonProperty("type")]
+        [SerializationPropertyName("type")]
         public TypeEnum Type { get; set; }
 
-        [JsonProperty("format")]
+        [SerializationPropertyName("format")]
         public Format? Format { get; set; }
 
-        [JsonProperty("episodes")]
+        [SerializationPropertyName("episodes")]
         public int? Episodes { get; set; }
 
-        [JsonProperty("chapters")]
+        [SerializationPropertyName("chapters")]
         public int? Chapters { get; set; }
 
-        [JsonProperty("averageScore")]
+        [SerializationPropertyName("averageScore")]
         public int? AverageScore { get; set; }
 
-        [JsonProperty("title")]
+        [SerializationPropertyName("title")]
         public Title Title { get; set; }
 
-        [JsonProperty("startDate")]
+        [SerializationPropertyName("startDate")]
         public StartDate StartDate { get; set; }
 
-        [JsonProperty("description")]
+        [SerializationPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonProperty("genres")]
+        [SerializationPropertyName("genres")]
         public List<string> Genres { get; set; }
 
-        [JsonProperty("tags")]
+        [SerializationPropertyName("tags")]
         public List<Tag> Tags { get; set; }
 
-        [JsonProperty("season")]
+        [SerializationPropertyName("season")]
         public Season? Season { get; set; }
 
-        [JsonProperty("status")]
+        [SerializationPropertyName("status")]
         public MediaStatus Status { get; set; }
 
-        [JsonProperty("studios")]
+        [SerializationPropertyName("studios")]
         public Studios Studios { get; set; }
 
-        [JsonProperty("staff")]
+        [SerializationPropertyName("staff")]
         public Staff Staff { get; set; }
 
-        [JsonProperty("coverImage")]
+        [SerializationPropertyName("coverImage")]
         public CoverImage CoverImage { get; set; }
 
-        [JsonProperty("bannerImage")]
+        [SerializationPropertyName("bannerImage")]
         public string BannerImage { get; set; }
 
     }
 
     public partial class CoverImage
     {
-        [JsonProperty("extraLarge")]
+        [SerializationPropertyName("extraLarge")]
         public string ExtraLarge { get; set; }
     }
 
     public partial class Staff
     {
-        [JsonProperty("nodes")]
+        [SerializationPropertyName("nodes")]
         public StaffNode[] Nodes { get; set; }
     }
 
     public partial class StaffNode
     {
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public StaffName Name { get; set; }
     }
 
     public partial class StaffName
     {
-        [JsonProperty("full")]
+        [SerializationPropertyName("full")]
         public string Full { get; set; }
     }
 
     public partial class Studios
     {
-        [JsonProperty("nodes")]
+        [SerializationPropertyName("nodes")]
         public StudiosNode[] Nodes { get; set; }
     }
 
     public partial class StudiosNode
     {
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("isAnimationStudio")]
+        [SerializationPropertyName("isAnimationStudio")]
         public bool IsAnimationStudio { get; set; }
     }
 
     public partial class StartDate
     {
-        [JsonProperty("year")]
+        [SerializationPropertyName("year")]
         public int? Year { get; set; }
 
-        [JsonProperty("month")]
+        [SerializationPropertyName("month")]
         public int? Month { get; set; }
 
-        [JsonProperty("day")]
+        [SerializationPropertyName("day")]
         public int? Day { get; set; }
     }
 
     public partial class Tag
     {
-        [JsonProperty("name")]
+        [SerializationPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("isGeneralSpoiler")]
+        [SerializationPropertyName("isGeneralSpoiler")]
         public bool IsGeneralSpoiler { get; set; }
 
-        [JsonProperty("isMediaSpoiler")]
+        [SerializationPropertyName("isMediaSpoiler")]
         public bool IsMediaSpoiler { get; set; }
     }
 
     public partial class Title
     {
-        [JsonProperty("romaji")]
+        [SerializationPropertyName("romaji")]
         public string Romaji { get; set; }
 
-        [JsonProperty("english")]
+        [SerializationPropertyName("english")]
         public string English { get; set; }
 
-        [JsonProperty("native")]
+        [SerializationPropertyName("native")]
         public string Native { get; set; }
     }
 
