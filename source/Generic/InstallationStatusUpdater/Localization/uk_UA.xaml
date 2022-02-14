@@ -31,4 +31,6 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Додати</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Вилучити</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Оновлення стану встановлення: Позначено {0} ігор як встановлені і {1} як видалені</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Виявити статус встановлення ігор при використанні кнопки Встановити</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Виявити статус встановлення використовуючи розширення &quot;Installation Status Updater&quot;</sys:String>
 </ResourceDictionary>

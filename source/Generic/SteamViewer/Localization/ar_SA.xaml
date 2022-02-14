@@ -7,12 +7,12 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">News</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Screenshots</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Settings</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Store Page</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Community Hub</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussions</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Achievements</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">View in Steam Library</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">صفحة المتجر</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">مركز المجتمع</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">المناقشات</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">الإرشادات</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">الأخبار</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">الإنجازات</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">متجر النقاط</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">عرض في مكتبة Steam</sys:String>
 </ResourceDictionary>

@@ -4,11 +4,11 @@
 
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Restart Steam after processing games to reflect changes on Steam if necessary</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Delete source game after copying game or if game is detected in target library</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Target Library:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Open</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">المكتبة:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">فتح</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">ألعاب Steam:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">نسخ ألعاب Steam المحددة</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">نسخ جميع ألعاب Steam</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;

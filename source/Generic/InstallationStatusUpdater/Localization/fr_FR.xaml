@@ -31,4 +31,6 @@ Les jeux précédemment désinstallés ont été configurés comme installés : 
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Ajouter</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Enlever</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Mise à jour de l'état de l'installation : {0} jeux ont été marqués comme installés et {1} comme désinstallés</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Détecter les statuts d'installation des jeux lorsque vous utilisez le bouton Installer</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Détecter l'état de l'installation avec l'extension &quot;Installation Status Updater&quot;</sys:String>
 </ResourceDictionary>

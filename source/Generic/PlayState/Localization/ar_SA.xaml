@@ -13,10 +13,10 @@ You can try using a diferent HotKey combination to possibly fix the issue</sys:S
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
 
 Games will be suspended when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">تم إيقاف اللعبة</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">تم استئناف اللعبة</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">تم إيقاف وقت التشغيل</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">استؤنف وقت التشغيل</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Configured Suspend/Resume hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>

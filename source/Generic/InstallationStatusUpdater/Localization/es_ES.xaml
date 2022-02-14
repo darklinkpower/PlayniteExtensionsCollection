@@ -31,4 +31,6 @@ Juegos desinstalados que se marcaron como instalados: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Añadir</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Quitar</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marcados {0} juegos como instalados y {1} como desinstalados</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Detectar los estados de instalación de los juegos al usar el botón de Instalar</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Detectar el estado de instalación con la extensión &quot;Installation Status Updater&quot;</sys:String>
 </ResourceDictionary>

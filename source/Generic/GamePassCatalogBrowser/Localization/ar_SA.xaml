@@ -8,17 +8,17 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Are you sure you want to add all the Game Pass catalog to your library?</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Could not obtain Game Pass catalog.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Added {0} new games to the Playnite library.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} added to the Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} أضيف إلى مكتبة Playnite</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">المجموعات:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">الفئة:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">بحث:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">المطور:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">الناشر:</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">View in Xbox app</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">View in Microsoft Store</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Add to Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">عرض في تطبيق Xbox</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">عرض في Microsoft Store</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">إضافة لمكتبة Playnite</sys:String>
 </ResourceDictionary>

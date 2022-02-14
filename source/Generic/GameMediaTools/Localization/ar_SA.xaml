@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">Open Tools Menu</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">فتح قائمة الأدوات</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">See missing media statistics (All games)</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">See missing media statistics (Selected games)</sys:String>
 
-    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">No games are selected</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">لم يتم تحديد أي لعبة</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Invalid input in Width and height input boxes.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Invalid input in size input box.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Invalid input in extension input box.</sys:String>
