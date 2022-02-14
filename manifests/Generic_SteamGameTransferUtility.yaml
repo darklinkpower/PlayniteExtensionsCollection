@@ -90,3 +90,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_13.pext
     Changelog:
     - Updated localizations
+  - Version: 2.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_14.pext
+    Changelog:
+    - Updated localizations

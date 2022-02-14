@@ -74,3 +74,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_10.pext
     Changelog:
     - Updated localizations
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_11.pext
+    Changelog:
+    - Updated localizations

@@ -156,3 +156,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Installation_Status_Updater_2_22.pext
     Changelog:
     - Updated localizations
+  - Version: 2.23
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/Installation_Status_Updater_2_23.pext
+    Changelog:
+    - Updated localizations
+    - Added option to detect game installation status when using the Install button

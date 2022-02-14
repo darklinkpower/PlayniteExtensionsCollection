@@ -1,7 +1,7 @@
 Id: Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85
 Name: Nexus Mods checker
 Author: darklinkpower
-Version: 2.8
+Version: 2.9
 Module: NexusModsChecker.psm1
 Type: Script
 Icon: icon.png

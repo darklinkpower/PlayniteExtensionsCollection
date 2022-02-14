@@ -111,3 +111,9 @@ Packages:
     - Updated localizations
     - Changed the format of the progress value in "Version" field for entries that status is not finished
     - Extension will now update the tag that indicates the entry releasing status on library update
+  - Version: 2.17
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_17.pext
+    Changelog:
+    - Updated localizations
