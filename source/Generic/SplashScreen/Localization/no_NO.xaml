@@ -14,16 +14,16 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Kjør utvidelsen i skrivebordsmodus</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Vis splashscreen-bilder i skrivebordsmodus</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Vis intro-videoer i skrivebordsmodus</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Execute extension in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">View splashscreen images in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">View intro videos in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Add game logo in splashscreen image if available</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Use game icon from Metadata as logo</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Use black splashscreen instead of the splashscreen image</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Logo horizontal position:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Logo vertical position:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Lukk splashscreen automatisk i skrivebordsmodus (deaktivering skjuler skrivebordet når spillet lukkes, men kan forårsake problemer)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Kjør utvidelse i fullskjermmodus</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Vis splashscreen-bilder i fullskjermmodus</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">Vis intro-videoer i fullskjermmodus</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Lukk splashscreen automatisk i fullskjermmodus (deaktivering skjuler skrivebordet når spillet lukkes, men kan forårsake problemer)</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Legg til spilllogo i splashscreen-bilde hvis tilgjengelig</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Bruk spillikon fra metadata som logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Bruk svart splashscreen i stedet for splashscreen-bildet</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Logoens horisontale posisjon:</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Logoens vertikale posisjon:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">Venstre</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">Midtstilt</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">Høyre</sys:String>
@@ -32,7 +32,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Nederst</sys:String>
 
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Bruk et globalt bilde for alle spill</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Bruk spilllogo i globalt bilde hvis den er tilgjengelig</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Bruk spilllogo i globalt splashscreen-bilde hvis tilgjengelig</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Bla gjennom…</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageRemove">Fjern</sys:String>
     
