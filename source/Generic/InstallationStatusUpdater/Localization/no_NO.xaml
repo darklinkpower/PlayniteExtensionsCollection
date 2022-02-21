@@ -31,6 +31,6 @@ Tidligere avinstallerte spill ble merket som installert: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Legg til</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Fjern</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installasjonsstatusoppdatering: Markerte {0} spill som installert og {1} som avinstallert</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Detect installation statuses of games when using the Install button</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Detect installation status with &quot;Installation Status Updater&quot; extension</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Finn installasjonsstatusen til spillet når du trykker på Installer-knappen</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Finn installasjonsstatus med &quot;Installasjonsstatus&quot;-utvidelse</sys:String>
 </ResourceDictionary>
