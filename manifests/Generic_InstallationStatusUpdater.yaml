@@ -163,3 +163,9 @@ Packages:
     Changelog:
     - Updated localizations
     - Added option to detect game installation status when using the Install button
+  - Version: 2.24
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/Installation_Status_Updater_2_24.pext
+    Changelog:
+    - Updated localizations
