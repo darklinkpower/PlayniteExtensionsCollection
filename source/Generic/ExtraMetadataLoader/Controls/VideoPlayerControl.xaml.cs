@@ -111,17 +111,18 @@ namespace ExtraMetadataLoader
             DataContext = this;
 
             useMicrovideosSource = settings.Settings.UseMicrotrailersDefault;
-            player.Volume = 1;
-            volumeSlider.Value = 0;
-
-            if (settings.Settings.DefaultVolume != 0)
-            {
-                volumeSlider.Value = settings.Settings.DefaultVolume / 100;
-            }
             if (settings.Settings.StartNoSound)
             {
                 player.Volume = 0;
+                volumeSlider.Value = 0;
             }
+            else
+            {
+                var initialVolumeValue = settings.Settings.DefaultVolume / 100;
+                volumeSlider.Value = initialVolumeValue;
+                player.Volume = initialVolumeValue * initialVolumeValue;
+            }
+
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
