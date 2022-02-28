@@ -276,3 +276,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_37.pext
     Changelog:
     - 'Fix video player control not using configured default volume value on startup'
+  - Version: 1.38
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_38.pext
+    Changelog:
+    - Separate mute and unmute buttons in video player
