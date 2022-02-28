@@ -47,12 +47,16 @@
                 <MediaElement.Style>
                     <Style>
                         <Setter Property="MediaElement.Source" Value="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}" />
+                        <Setter Property="MediaElement.Volume" Value="{Binding VideoPlayerVolume, UpdateSourceTrigger=PropertyChanged}" />
                         <Style.Triggers>
                             <!--This helps to prevent the video from playing in themes that don't have the
                             video player visible at first, for example, when the video player is only visible
                             after clicking a button-->
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="False">
                                 <Setter Property="MediaElement.Source" Value="{x:Null}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsPlayerMuted}" Value="True">
+                                <Setter Property="MediaElement.Volume" Value="0" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -79,6 +83,10 @@
                 <Button DockPanel.Dock="Left" Name="PauseButton" FontSize="24" Command="{Binding VideoPauseCommand}" Content="&#xECA5;"
                         FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" Visibility="{Binding SettingsModel.Settings.IsVideoPlaying, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <Button DockPanel.Dock="Left" Name="MuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB8;"
+                        Visibility="{Binding IsPlayerMuted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" />
+                <Button DockPanel.Dock="Left" Name="UnmuteButton" FontSize="24" Command="{Binding VideoMuteCommand}" Content="&#xECB7;"
+                        Visibility="{Binding IsPlayerMuted, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
                         FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,10,0" Padding="5" />
                 <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                 <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>

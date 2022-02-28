@@ -69,6 +69,28 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private bool isPlayerMuted = false;
+        public bool IsPlayerMuted
+        {
+            get => isPlayerMuted;
+            set
+            {
+                isPlayerMuted = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private double videoPlayerVolume;
+        public double VideoPlayerVolume
+        {
+            get => videoPlayerVolume;
+            set
+            {
+                videoPlayerVolume = value * value;
+                OnPropertyChanged();
+            }
+        }
+
         DispatcherTimer timer;
         private string playbackTimeProgress = "00:00";
         public string PlaybackTimeProgress
@@ -113,20 +135,18 @@ namespace ExtraMetadataLoader
             useMicrovideosSource = settings.Settings.UseMicrotrailersDefault;
             if (settings.Settings.StartNoSound)
             {
-                player.Volume = 0;
-                volumeSlider.Value = 0;
+                IsPlayerMuted = true;
             }
-            else
-            {
-                var initialVolumeValue = settings.Settings.DefaultVolume / 100;
-                volumeSlider.Value = initialVolumeValue;
-                player.Volume = initialVolumeValue * initialVolumeValue;
-            }
+
+            var initialVolumeValue = settings.Settings.DefaultVolume / 100;
+            volumeSlider.Value = initialVolumeValue;
+            VideoPlayerVolume = initialVolumeValue;
 
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
+
             volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
@@ -153,13 +173,14 @@ namespace ExtraMetadataLoader
             {
                 timelineSlider.Value = player.Position.TotalSeconds;
             }
+
             PlaybackTimeProgress = player.Position.ToString(@"mm\:ss") ?? "00:00";
             playbackProgressBar.Value = player.Position.TotalSeconds;
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            player.Volume = e.NewValue * e.NewValue;
+            VideoPlayerVolume = e.NewValue;
         }
 
         private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
@@ -213,14 +234,7 @@ namespace ExtraMetadataLoader
 
         void MediaMute()
         {
-            if (player.Volume > 0)
-            {
-                player.Volume = 0;
-            }
-            else if (player.Volume == 0)
-            {
-                player.Volume = volumeSlider.Value * volumeSlider.Value;
-            }
+            IsPlayerMuted = !IsPlayerMuted;
         }
 
         public RelayCommand<object> SwitchVideoSourceCommand
@@ -489,6 +503,7 @@ namespace ExtraMetadataLoader
                         return linkMatch.Groups[1].Value;
                     }
                 }
+
                 return null;
             }
         }
