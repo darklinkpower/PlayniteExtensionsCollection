@@ -228,6 +228,8 @@ namespace PlayState
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
+            InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
+
             if (isSuspended)
             {
                 SwitchGameState();
@@ -554,6 +556,7 @@ namespace PlayState
                     {
                         var elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
                         logger.Debug($"Suspend elapsed seconds for game {game.Name} was {elapsedSeconds}");
+                        ExportPausedTimeInfo(game, elapsedSeconds); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
                         if (elapsedSeconds != 0)
                         {
                             var newPlaytime = game.Playtime > elapsedSeconds ? game.Playtime - elapsedSeconds : elapsedSeconds - game.Playtime;
@@ -589,6 +592,22 @@ namespace PlayState
                 stopwatchList.Remove(tuple);
                 logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was removed on game stopped");
             }
+        }
+
+        private void InitializePlaytimeInfoFile() // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
+        {
+            // This method will remove the info of the txt file in order to avoid reusing the previous play information.
+            string[] info = { " ", " " };
+
+            File.WriteAllLines(Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt"), info);
+        }
+
+        private void ExportPausedTimeInfo(Game game, ulong elapsedSeconds) // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
+        {
+            // This method will write the Id and pausedTime to PlayState.txt file placed inside ExtensionsData Roaming Playnite folder
+            string[] info = { game.Id.ToString(), elapsedSeconds.ToString() };
+
+            File.WriteAllLines(Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt"), info);
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
