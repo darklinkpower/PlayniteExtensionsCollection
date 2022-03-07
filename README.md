@@ -5,17 +5,25 @@ Collection of extensions made for [Playnite](https://github.com/JosefNemec/Playn
 
 ## Questions, suggestions and Issues
 
-Please open a [new Issue](https://github.com/darklinkpower/PlayniteScriptExtensions/issues)
+Please open a [new Issue](https://github.com/darklinkpower/PlayniteScriptExtensions/issues) to report issues or request features.
+
+Please also be aware that I don't visite the Playnite forums frequenty so if you need help or have a question, I'm more easily found in the [Playnite Discord server](https://discord.gg/BrtABqe "Playnite Discord server")
 
 ## Download and installation
 
 Option A. Click the `Install` link of the extension in the table.
+
 Option B. Click the `Database` link of the extension in the table to go to the addon entry in the Playnite database and then click the `Download` button in the entry.
+
 Option C. Download directly from Playnite in the addons browser.
 
 ## Usage
 
 Varies depending the extension functionality but in general. Refer to each extension thread in Playnite forums for the specific instructions.
+
+## Extensions
+
+### Generic
 
 |Icon⠀⠀|Name|Description|Database|Forums|Install|Help|
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
@@ -51,6 +59,12 @@ Varies depending the extension functionality but in general. Refer to each exten
 | <img src="source/Generic/SteamTrailers/icon.png" width="50" height="50"> | Steam Trailers | Extension to view trailers from Steam in Playnite. Compatible with Steam games or games that are on the Steam Store. | [Database](https://playnite.link/addons.html#Steam_Trailers "Database") | [Forums](https://playnite.link/forum/thread-242.html "Forums") | [Install](https://tinyurl.com/254x3y2v "Install") | None |
 | <img src="source/Generic/SteamViewer/icon.png" width="50" height="50"> | Steam Viewer | This simple extension will add items with functions to open various game pages and steam components directly on Steam from the game right click menu. | [Database](https://playnite.link/addons.html#Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac "Database") | [Forums](https://playnite.link/forum/thread-506.html "Forums") | [Install](https://tinyurl.com/yn26t6kv "Install") | None |
 | <img src="source/Generic/TwitchAddLink/icon.png" width="50" height="50"> | Twitch link importer | This extension will add a Twitch Link to your selected games. | [Database](https://playnite.link/addons.html#Twitch_Add_Link "Database") | [Forums](https://playnite.link/forum/thread-364.html "Forums") | [Install](https://tinyurl.com/yc66h6fw "Install") | None |
+
+### Library
+
+|Icon⠀⠀|Name|Description|Database|Forums|Install|Help|
+| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| <img src="source/Library\ImporterforAnilist/icon.png" width="50" height="50"> | Importer for Anilist | This plugin imports your anime and manga lists from AniList for viewing in Playnite. | [Database](https://playnite.link/addons.html#ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3 "Database") | [Forums](https://playnite.link/forum/thread-707.html "Forums") | [Install](https://tinyurl.com/bdd386u4 "Install") | None |
 
 ## Contributing
 
