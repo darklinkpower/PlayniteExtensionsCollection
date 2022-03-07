@@ -270,8 +270,7 @@ namespace PlayState
             playedDateTime = DateTime.Now;
 
             showWindowsNotificationsStyle = false;
-            if (settings.Settings.GlobalShowWindowsNotificationsStyle ||
-                game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Show Windows notifications style", StringComparison.OrdinalIgnoreCase)))
+            if (settings.Settings.GlobalShowWindowsNotificationsStyle)
             {
                 showWindowsNotificationsStyle = true;
             }
@@ -850,24 +849,6 @@ namespace PlayState
                     Action = a => {
                         var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Suspend Playtime only");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
-                    }
-                },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToWindowsNotificationsStyleDescription"),
-                    MenuSection = "@PlayState",
-                    Action = a => {
-                        var featureAddedCount = AddFeatureToSelectedGames("[PlayState] Show Windows notifications style");
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_WindowsNotificationsStyleAddedResultsMessage"), featureAddedCount), "PlayState");
-                    }
-                },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromWindowsNotificationsStyleDescription"),
-                    MenuSection = "@PlayState",
-                    Action = a => {
-                        var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Show Windows notifications style");
-                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_WindowsNotificationsStyleRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }
             };
