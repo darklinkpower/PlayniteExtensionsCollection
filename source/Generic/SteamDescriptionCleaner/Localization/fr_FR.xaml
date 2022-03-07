@@ -1,5 +1,0 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Description_Cleaner_MenuItemDescriptionCleanAllGamesDescriptions">Nettoyer la description Steam de tous les jeux de la bibliothèque</sys:String>
-    <sys:String x:Key="LOCSteam_Description_Cleaner_ResultsMessageGamesDescriptionClean">Descriptions de {0} jeux nettoyés.</sys:String>
-</ResourceDictionary>
