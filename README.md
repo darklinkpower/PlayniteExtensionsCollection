@@ -14,7 +14,7 @@ Varies depending the extension functionality but in general. Refer to each exten
 ## Extensions
 |Name|Description|Database|Forums|Install|Troubleshooting|
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-|Cooperative Modes Importer|Detects and adds features that indicate the cooperative features in games. Data used by the extension is obtained from Co-Optimus.|[Database](https://playnite.link/addons.html#CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3 "Database")|[Forums](https://playnite.link/forum/thread-1101.html "Forums")|`playnite://playnite/installaddon/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3`|-|
+|Cooperative Modes Importer|Detects and adds features that indicate the cooperative features in games. Data used by the extension is obtained from Co-Optimus.|[Database](https://playnite.link/addons.html#CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3 "Database")|[Forums](https://playnite.link/forum/thread-1101.html "Forums")|[Install](playnite://playnite/installaddon/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3 "Install")|-|
 |   |   |   |   |   |   |
 |   |   |   |   |   |   |
 |   |   |   |   |   |   |
