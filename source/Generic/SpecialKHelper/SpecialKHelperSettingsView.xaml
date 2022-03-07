@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="SpecialKHelper.SpecialKHelperSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             xmlns:conv="clr-namespace:SpecialKHelper.Converters"
+             xmlns:beh="clr-namespace:SpecialKHelper.Behaviors"
+             xmlns:skM="clr-namespace:SpecialKHelper.Models"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid Margin="20">
+        <ScrollViewer>
+            <StackPanel>
+                <StackPanel Margin="0,00,0,0" Orientation="Horizontal">
+                    <TextBlock Text="Special K execution mode:" VerticalAlignment="Center"/>
+                    <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
+                          SelectedValue="{Binding Settings.SpecialKExecutionMode}"
+                          beh:SelectorBehaviors.EnumSource="{x:Type skM:SpecialKExecutionMode}" />
+                </StackPanel>
+                <TextBlock Margin="20,10,0,0" Text="Global Mode: Special K services are started when launching all games. Execution is stil stopped if they have either of the exclusion features [SK] Global Mode Disable&#10;&#10;Selective Mode: Special K services are started only for games that have the inclusion feature [SW] Selective Mode Enable" TextWrapping="Wrap"/>
+                <CheckBox Margin="0,10,0,0" Content="Stop execution if game has Valve Anti-Cheat Enabled feature"
+                      IsChecked="{Binding Settings.StopExecutionIfVac}" />
+
+                <CheckBox Margin="0,10,0,0" Content="Only start Special K services when starting PC games"
+                      IsChecked="{Binding Settings.OnlyExecutePcGames}" />
+
+                <Separator Margin="0,10,0,0"/>
+
+                <CheckBox Margin="0,10,0,0" Content="Enable Steam overlay for new profiles created by Special K"
+                      IsChecked="{Binding Settings.EnableStOverlayOnNewProfiles}" />
+
+                <CheckBox Margin="0,10,0,0" Content="Enable Reshade for new profiles created by Special K"
+                      IsChecked="{Binding Settings.EnableReshadeOnNewProfiles}" />
+
+                <CheckBox Margin="0,10,0,0" Content="Enable Flip Model Presentation for new profiles created by Special K"
+                      ToolTip="Makes games run the same or better while running in windowed mode"
+                      IsChecked="{Binding Settings.UseFlipModelOnNewProfiles}" />
+
+                <CheckBox Margin="0,10,0,0" Content="Disable Nvidia bloatware for new profiles created by Special K"
+                      IsChecked="{Binding Settings.DisableNvidiaBlOnNewProfiles}" />
+
+                <CheckBox x:Name="cbFpsEnable" Margin="0,10,0,0" Content="Set framerate limit for new profiles created by Special K"
+                      IsChecked="{Binding Settings.SetDefaultFpsOnNewProfiles}" />
+                <StackPanel Margin="20,10,0,0" IsEnabled="{Binding ElementName=cbFpsEnable, Path=IsChecked}">
+                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                        <TextBlock Text="TargetFPS:" VerticalAlignment="Center"/>
+                        <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBox.Text>
+                                <Binding Path="Settings.DefaultFpsLimit"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnDataErrors="True"
+                                 NotifyOnValidationError="True"
+                                 Converter="{conv:DoubleToStringConverter}">
+                                    <Binding.ValidationRules>
+                                        <conv:DoubleFieldValidation MinValue="0.0" MaxValue="9999" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <TextBlock Margin="0,10,0,0" Text="Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay. After you have a correct value, you can paste it to the text box." TextWrapping="Wrap"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="SpecialKHelper.Views.SpecialKProfileEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpecialKHelper.Views"
+             xmlns:conv="clr-namespace:SpecialKHelper.Converters"
+             xmlns:beh="clr-namespace:SpecialKHelper.Behaviors"
+             xmlns:skM="clr-namespace:SpecialKHelper.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20">
+        <Grid.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        </Grid.Resources>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0" Grid.ColumnSpan="1">
+                <StackPanel DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Search" VerticalAlignment="Center"/>
+                        <TextBox Margin="10,0,0,0" MinWidth="200"
+                             Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
+                             VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <CheckBox Margin="0,10,0,0" IsChecked="{Binding UseFuzzySearch}" 
+                          Content="Use fuzzy search"/>
+
+                </StackPanel>
+                <DataGrid SelectionMode="Single" ItemsSource="{Binding SKProfilesCollection}"
+                      SelectedItem="{Binding SelectedProfile}" IsSynchronizedWithCurrentItem="True"
+                      CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserSortColumns="True"   
+                      GridLinesVisibility="All"  BorderThickness="1"
+                      Margin="0,20,0,0" DockPanel.Dock="Top">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Profile Name" Binding="{Binding ProfileName}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Load Steam overlay" Binding="{Binding Steam.System.PreLoadSteamOverlay}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Steam App Id" Binding="{Binding Steam.System.AppID}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Reshade ready" Binding="{Binding IsReshadeReady}" IsReadOnly="True" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <ScrollViewer Grid.Column="1" Margin="10,0,0,0">
+                <StackPanel Visibility="{Binding SelectedProfile, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Label Content="Profile" VerticalAlignment="Center"/>
+                    <TextBlock Margin="0,5,0,0" Text="{Binding SelectedProfile.ProfileName}" />
+                    <Label Margin="0,10,0,0" Content="Profile path" VerticalAlignment="Center"/>
+                    <TextBlock Margin="0,5,0,0" Text="{Binding SelectedProfile.ProfileIniPath}"
+                               TextWrapping="Wrap" ToolTip="{Binding SelectedProfile.ProfileIniPath}" />
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Save profile" Command="{Binding SaveSelectedProfileCommand}" />
+                    </StackPanel>
+                    <CheckBox Margin="0,10,0,0" IsThreeState="True" IsChecked="{Binding SelectedProfile.Steam.System.PreLoadSteamOverlay}" 
+                          Content="Load Steam overlay" />
+                    <CheckBox Margin="0,10,0,0" IsThreeState="True" IsChecked="{Binding SelectedProfile.Compatibility.General.DisableBloatWare_NVIDIA}" 
+                          Content="Disable Nvidia bloatware"/>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="TargetFPS:" VerticalAlignment="Center"/>
+                        <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBox.Text>
+                                <Binding Path="SelectedProfile.Render.FrameRate.TargetFPS"
+                                             UpdateSourceTrigger="PropertyChanged" 
+                                             ValidatesOnDataErrors="True"
+                                             NotifyOnValidationError="True"
+                                             Converter="{conv:DoubleToStringConverter}">
+                                    <Binding.ValidationRules>
+                                        <conv:DoubleFieldValidation MinValue="0.0" MaxValue="9999" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+
+                    <TextBlock Margin="0,20,0,0" Text="Reshade ready!" VerticalAlignment="Center"
+                               Foreground="Green"
+                               Visibility="{Binding SelectedProfile.IsReshadeReady, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Margin="0,20,0,0" Text="Not Reshade ready" VerticalAlignment="Center"
+                               Foreground="Red"
+                               Visibility="{Binding SelectedProfile.IsReshadeReady, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <Button Content="Make Reshade ready" Command="{Binding SetAsReshadeReadyCommand}"
+                                Visibility="{Binding SelectedProfile.IsReshadeReady, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Button Content="Make not Reshade ready" Command="{Binding SetAsNotReshadeReadyCommand}"
+                                Visibility="{Binding SelectedProfile.IsReshadeReady, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                    
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="Reshade 64 Load mode:" VerticalAlignment="Center"/>
+                        <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
+                              SelectedValue="{Binding SelectedProfile.Import.ReShade64.When}"
+                              beh:SelectorBehaviors.EnumSource="{x:Type skM:PluginLoadMode}" />
+                    </StackPanel>
+                    
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="Reshade 32 Load mode:" VerticalAlignment="Center"/>
+                        <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
+                              SelectedValue="{Binding SelectedProfile.Import.ReShade32.When}"
+                              beh:SelectorBehaviors.EnumSource="{x:Type skM:PluginLoadMode}" />
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>
