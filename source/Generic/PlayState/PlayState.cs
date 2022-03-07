@@ -19,6 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace PlayState
 {
@@ -43,6 +44,9 @@ namespace PlayState
         private IntPtr mainWindowHandle;
         private HwndSource source = null;
         private bool globalHotkeyRegistered = false;
+        private bool processesSuspended = false;
+        private bool showWindowsNotificationsStyle = false;
+        private DateTime playedDateTime;
 
         private PlayStateSettingsViewModel settings { get; set; }
 
@@ -100,21 +104,38 @@ namespace PlayState
                 var handle = mainWindowHandle;
                 source.AddHook(GlobalHotkeyCallback);
                 globalHotkeyRegistered = true;
+
+                // Pause/Resume Hotkey
                 var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key));
 
                 if (registered)
                 {
-                    logger.Debug($"Hotkey registered with hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Debug($"Pause/resume Hotkey registered with hotkey {settings.Settings.SavedHotkeyGesture}.");
                 }
                 else
                 {
                     PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
                         "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedHotkeyGesture),
                         NotificationType.Error));
-                    logger.Error($"Failed to register configured Hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Error($"Failed to register configured pause/resume Hotkey {settings.Settings.SavedHotkeyGesture}.");
                 }
 
-                return registered;
+                // Information Hotkey
+                var registered2 = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedInformationHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key));
+                
+                if (registered2)
+                {
+                    logger.Debug($"Information Hotkey registered with hotkey {settings.Settings.SavedInformationHotkeyGesture}.");
+                }
+                else
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
+                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedInformationHotkeyGesture),
+                        NotificationType.Error));
+                    logger.Error($"Failed to register configured information Hotkey {settings.Settings.SavedInformationHotkeyGesture}.");
+                }
+
+                return registered && registered2;
             }
 
             return true;
@@ -133,6 +154,10 @@ namespace PlayState
                         if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
                         {
                             SwitchGameState();
+                        }
+                        else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
+                        {
+                            ShowNotification("information");
                         }
                         handled = true;
                         break;
@@ -240,6 +265,15 @@ namespace PlayState
             {
                 logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
                 return;
+            }
+
+            playedDateTime = DateTime.Now;
+
+            showWindowsNotificationsStyle = false;
+            if (settings.Settings.GlobalShowWindowsNotificationsStyle ||
+                game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Show Windows notifications style", StringComparison.OrdinalIgnoreCase)))
+            {
+                showWindowsNotificationsStyle = true;
             }
 
             suspendPlaytimeOnly = false;
@@ -392,6 +426,174 @@ namespace PlayState
             currentSplashWindow.Closed -= WindowClosed;
         }
 
+        /// <summary>
+        /// Method for obtaining the real playtime of the actual session, which is the playtime after substracting the paused time.
+        /// </summary>
+        private ulong GetRealPlaytime()
+        {
+            var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Elapsed;
+            ulong elapsedSeconds = 0;
+            if (suspendedTime != null)
+            {
+                elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
+            }
+            return Convert.ToUInt64(DateTime.Now.Subtract(playedDateTime).TotalSeconds) - elapsedSeconds;
+        }
+
+        /// <summary>
+        /// Method for obtaining the pertinent "{0} hours {1} minutes" string from playtime in seconds.<br/><br/>
+        /// <param name="playtimeSeconds">Playtime in seconds</param>
+        /// </summary>
+        private string GetHoursString(ulong playtimeSeconds)
+        {
+            TimeSpan playtime = TimeSpan.FromSeconds(playtimeSeconds);
+            if (playtime.Hours == 1)
+            {
+                if (playtime.Minutes == 1)
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutePlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                }
+                else
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutesPlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                }
+            }
+            else if (playtime.Hours == 0 && playtime.Minutes == 0) // If the playtime is less than a minute, show the seconds instead
+            {
+                if (playtime.Seconds == 1)
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_SecondPlayed"), playtime.Seconds.ToString());
+                }
+                else
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_SecondsPlayed"), playtime.Seconds.ToString());
+                }
+            }
+            else
+            {
+                if (playtime.Minutes == 1)
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutePlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                }
+                else
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutesPlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for showing notifications. It will respect the style (Playnite / Windows) notification settings.<br/><br/>
+        /// <param name="status">Status of the game to be notified:<br/>
+        /// - "resumed" for resuming process and playtime<br/>
+        /// - "playtimeResumed" for resuming playtime<br/>
+        /// - "suspended" for suspend process and playtime<br/>
+        /// - "playtimeSuspended" for suspend playtime<br/>
+        /// - "information" for showing the actual status<br/>
+        /// </param>
+        /// </summary>
+        private void ShowNotification(string status)
+        {
+            switch (status)
+            {
+                case "resumed": // for resuming process and playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                    }
+                    else
+                    {
+                        // Windows notification only admits 3 .Addtext properties, so for more text lines you have to use {Environment.NewLine}
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name) // First AddText field will act as a title
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage))) // Show game image in the notification
+                            .Show();
+                    }
+                    break;
+                case "playtimeResumed": // for resuming playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
+                    }
+                    else
+                    {
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name)
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage)))
+                            .Show();
+                    }
+                    break;
+                case "suspended": // for suspend process and playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
+                    }
+                    else
+                    {
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name)
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage)))
+                            .Show();
+                    }
+                    break;
+                case "playtimeSuspended": // for suspend playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
+                    }
+                    else
+                    {
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name)
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage)))
+                            .Show();
+                    }
+                    break;
+                case "information": // for showing the actual status
+                    {
+                        if (currentGame == null)
+                        {
+                            break;
+                        }
+                        if (isSuspended)
+                        {
+                            if (processesSuspended)
+                            {
+                                ShowNotification("suspended");
+                            }
+                            else
+                            {
+                                ShowNotification("playtimeSuspended");
+                            }
+                        }
+                        else
+                        {
+                            if (processesSuspended)
+                            {
+                                ShowNotification("resumed");
+                            }
+                            else
+                            {
+                                ShowNotification("playtimeResumed");
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
         private void SwitchGameState()
         {
             if (currentGame == null)
@@ -401,7 +603,7 @@ namespace PlayState
 
             try
             {
-                var processesSuspended = false;
+                processesSuspended = false;
                 if (gameProcesses != null && gameProcesses.Count > 0)
                 {
                     foreach (var gameProcess in gameProcesses)
@@ -429,11 +631,11 @@ namespace PlayState
                         isSuspended = false;
                         if (processesSuspended)
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                            ShowNotification("resumed");
                         }
                         else
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
+                            ShowNotification("playtimeResumed");
                         }
                         stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
                         logger.Debug($"Game {currentGame.Name} resumed");
@@ -443,11 +645,11 @@ namespace PlayState
                         isSuspended = true;
                         if (processesSuspended)
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
+                            ShowNotification("suspended");
                         }
                         else
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
+                            ShowNotification("playtimeSuspended");
                         }
                         stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
                         logger.Debug($"Game {currentGame.Name} suspended");
@@ -648,6 +850,24 @@ namespace PlayState
                     Action = a => {
                         var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Suspend Playtime only");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToWindowsNotificationsStyleDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        var featureAddedCount = AddFeatureToSelectedGames("[PlayState] Show Windows notifications style");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_WindowsNotificationsStyleAddedResultsMessage"), featureAddedCount), "PlayState");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromWindowsNotificationsStyleDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Show Windows notifications style");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_WindowsNotificationsStyleRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }
             };

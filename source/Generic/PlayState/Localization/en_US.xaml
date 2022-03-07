@@ -3,6 +3,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Remove selected games from Playstate Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToWindowsNotificationsStyleDescription">Configure selected games to force to show Windows notifications</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromWindowsNotificationsStyleDescription">Remove configuration to force to show Windows notifications</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
 
 You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
@@ -12,17 +14,23 @@ You can try using a diferent HotKey combination to possibly fix the issue</sys:S
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
 
 Games will be suspended when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_WindowsNotificationsStyleAddedResultsMessage">Configured {0} game(s) to force to show Windows notifications instead Playnite overlay.</sys:String>
+    <sys:String x:Key="LOCPlayState_WindowsNotificationsStyleRemovedResultsMessage" xml:space="preserve">Removed configuration to force to show Windows notifications from {0} game(s).
+
+Notifications will be send using Playnite overlay.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Configured Suspend/Resume hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
 Configured hotkey won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
+Changing this setting requires restart.
+If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
@@ -30,4 +38,16 @@ Changing this setting requires restart.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
 This can also be applied individually per game by adding a feature named "[PlayState] Suspend playtime only" to a game</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show Windows notifications instead Playnite overlay</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip" xml:space="preserve">By enabling this option, all games will show Windows toast notifications instead Playnite overlay notifications.
+    
+This can also be applied individually per game by adding a feature named "[PlayState] Show Windows notifications style" to a game</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
 </ResourceDictionary>
