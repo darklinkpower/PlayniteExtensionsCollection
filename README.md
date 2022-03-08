@@ -7,7 +7,7 @@ Collection of extensions made for [Playnite](https://github.com/JosefNemec/Playn
 
 Please open a [new Issue](https://github.com/darklinkpower/PlayniteScriptExtensions/issues) to report issues or request features.
 
-Please also be aware that I don't visite the Playnite forums frequenty so if you need help or have a question, I'm more easily found in the [Playnite Discord server](https://discord.gg/BrtABqe "Playnite Discord server")
+Please also be aware that I don't visit the Playnite forums frequently so if you need help or have a question, I'm more easily found in the [Playnite Discord server](https://discord.gg/BrtABqe "Playnite Discord server")
 
 ## Download and installation
 
