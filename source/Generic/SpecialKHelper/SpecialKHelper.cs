@@ -337,7 +337,7 @@ namespace SpecialKHelper
                 }
                 else if (settings.Settings.SpecialKExecutionMode == SpecialKExecutionMode.Selective)
                 {
-                    if (!game.Features.Any(x => x.Name == "[SW] Selective Mode Enable"))
+                    if (!game.Features.Any(x => x.Name == "[SK] Selective Mode Enable"))
                     {
                         return false;
                     }
@@ -674,17 +674,106 @@ namespace SpecialKHelper
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            return new List<MainMenuItem>
+            return new List<MainMenuItem>();
+
+
+            //return new List<MainMenuItem>
+            //{
+            //    new MainMenuItem
+            //    {
+            //        Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
+            //        MenuSection = "@Special K Helper",
+            //        Action = o => {
+            //            OpenEditorWindow();
+            //        }
+            //    },
+            //};
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            var menuItems = new List<GameMenuItem>();
+            if (settings.Settings.SpecialKExecutionMode == SpecialKExecutionMode.Global)
             {
-                new MainMenuItem
+                menuItems.Add(new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
-                    MenuSection = "@Special K Helper",
-                    Action = o => {
-                        OpenEditorWindow();
+                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature"),
+                    MenuSection = $"Special K Helper",
+                    Action = o =>
+                    {
+                        AddFeatureToSelectedGames("[SK] Global Mode Disable");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
                     }
-                },
-            };
+                });
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature"),
+                    MenuSection = $"Special K Helper",
+                    Action = o => {
+                        RemoveFeatureFromSelectedGames("[SK] Global Mode Disable");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
+                    }
+                });
+            }
+            else
+            {
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature"),
+                    MenuSection = $"Special K Helper",
+                    Action = o =>
+                    {
+                        AddFeatureToSelectedGames("[SK] Selective Mode Enable");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
+                    }
+                });
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature"),
+                    MenuSection = $"Special K Helper",
+                    Action = o => {
+                        RemoveFeatureFromSelectedGames("[SK] Selective Mode Enable");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
+                    }
+                });
+            }
+
+            return menuItems;
+        }
+
+        private void AddFeatureToSelectedGames(string featureName)
+        {
+            var feature = PlayniteApi.Database.Features.Add(featureName);
+            foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
+            {
+                if (game.Features == null)
+                {
+                    game.FeatureIds = new List<Guid> { feature.Id };
+                }
+                else if (!game.Features.Any(x => x.Name == featureName))
+                {
+                    game.FeatureIds.Add(feature.Id);
+                    PlayniteApi.Database.Games.Update(game);
+                }
+            }
+        }
+
+        private void RemoveFeatureFromSelectedGames(string featureName)
+        {
+            foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
+            {
+                if (game.Features == null)
+                {
+                    continue;
+                }
+
+                var feature = game.Features.FirstOrDefault(x => x.Name == featureName);
+                if (feature != null)
+                {
+                    game.FeatureIds.Remove(feature.Id);
+                    PlayniteApi.Database.Games.Update(game);
+                }
+            }
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
