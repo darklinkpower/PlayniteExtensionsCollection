@@ -2,17 +2,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Apri editor dei profili Special K</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Add feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Remove feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Add feature to enable execution in Selective Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Aggiungi funzionalità per disabilitare l'esecuzione in modalità globale</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Rimuovi la funzione per disabilitare l'esecuzione in modalità globale</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Aggiungi funzionalità per abilitare l'esecuzione in modalità selettiva</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Rimuovi funzione per abilitare l'esecuzione in modalità selettiva</sys:String>
     
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Seleziona il gioco da usare per la configurazione di Steam o annulla per usare un'opzione generica</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound">DLL Special K non trovata in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Editor dei profili Special K</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Aiuto</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Done</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Fatto</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Modalità di esecuzione Special K:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Modalità globale: i servizi Special K vengono avviati quando vengono lanciati tutti i giochi. L'esecuzione è ancora interrotta se hanno una delle funzioni di esclusione &quot;[SK] Global Mode Disable&quot;
 
@@ -32,8 +32,8 @@ Modalità selettiva: I servizi Special K sono avviati solo per i giochi che hann
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Nota: Per assicurarsi di fornire un valore corretto per il monitor specifico, fare riferimento prima ai valori forniti nella sovrapposizione di Special K.
 
 Dopo che hai ottenuto un valore corretto, puoi incollarlo nella casella di testo.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selective mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Modalità globale</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Modalità selettiva</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Desktop</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Modalità Big Picture</sys:String>
 </ResourceDictionary>
