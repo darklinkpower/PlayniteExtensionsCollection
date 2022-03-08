@@ -68,6 +68,8 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 ## Themes
 
+🚧🚧🚧
+
 **Note:** Themes are listed here just for recopilatory purposes. Each of them have a separate repository that should be used for suggestions and bug reports. To go to the theme repository, click in the theme name.
 
 |Name|Description|Database|Forums|Install|Screenshot|
