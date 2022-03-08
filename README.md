@@ -66,6 +66,17 @@ Varies depending the extension functionality but in general. Refer to each exten
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
 | <img src="source/Library\ImporterforAnilist/icon.png" width="50" height="50"> | Importer for Anilist | This plugin imports your anime and manga lists from AniList for viewing in Playnite. | [Database](https://playnite.link/addons.html#ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3 "Database") | [Forums](https://playnite.link/forum/thread-707.html "Forums") | [Install](https://tinyurl.com/bdd386u4 "Install") | None |
 
+## Themes
+
+**Note:** Themes are listed here just for recopilatory purposes. Each of them have a separate repository that should be used for suggestions and bug reports. To go to the theme repository, click in the theme name.
+
+|Name|Description|Database|Forums|Install|Screenshot|
+| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| [Harmony](https://github.com/darklinkpower/Harmony "Harmony") | Clean theme with modern design for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047 "Database") | [Forums](https://playnite.link/forum/thread-457.html "Forums") | [Install](https://tinyurl.com/4hkbewdh "Install") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Harmony/master/screenshots/screenshot_01.jpg) |
+| [Helium](https://github.com/darklinkpower/Helium "Helium") | Theme inspired by Steam for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1 "Database") | [Forums](https://playnite.link/forum/thread-811.html "Forums") | [Install](https://tinyurl.com/2s3ja34m "Install") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Helium/master/screenshots/screenshot_01.jpg) |
+| [Mythic](https://github.com/darklinkpower/Mythic "Mythic") | Theme inspired by Epic Games Launcher for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8 "Database") | [Forums](https://playnite.link/forum/thread-1136.html "Forums") | [Install](https://tinyurl.com/2p9ar9p6 "Install") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_01.jpg) |
+| [Stardust](https://github.com/darklinkpower/Harmony "Stardust") | Theme inspired by GOG Galaxy 2.0 for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Stardust%202.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002 "Database") | [Forums](https://playnite.link/forum/thread-468.html "Forums") | [Install](https://tinyurl.com/msj9th4j "Install") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Stardust/master/Screenshots/screenshot_01.jpg) |
+
 ## Contributing
 
 If possible, please contact me before working on a new PR to make sure that the changes are something that we can discuss beforehand.
