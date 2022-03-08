@@ -2,17 +2,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Öffne den Spezial K Profil Editor</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Add feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Remove feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Add feature to enable execution in Selective Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Funktion hinzufügen, um die Ausführung im Globalen Modus zu deaktivieren</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Funktion entfernen um die Ausführung im Globalen Modus zu deaktivieren</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Funktion hinzufügen, um Ausführung im Auswahlmodus zu aktivieren</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Funktion entfernen, um die Ausführung im Selektiven Modus zu aktivieren</sys:String>
     
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Wählen Sie das Spiel aus, das Sie für die Steam Konfiguration verwenden möchten, oder brechen Sie den Vorgang ab, um eine generische Option zu verwenden</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound">Spezial K dll nicht gefunden in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Speziel K Profil Editor</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Hilfe</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Done</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Fertig</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Spezial K Ausführungsmodus:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Globaler Modus: Speziel K Dienste werden beim Starten aller Spiele gestartet. Die Ausführung wird weiterhin gestoppt, wenn sie eines der Ausschlussmerkmale &quot;[SK] Global Mode Disable&quot; aufweisen
 
@@ -25,15 +25,15 @@ Selektiver Modus: Speziel K Dienste werden nur für Spiele gestartet, die das Ei
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam Overlay wird verwendet, wenn der Steam Big Picture Modus läuft:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Reshade aktivieren</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Flip Model Präsentation aktivieren</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Disable Nvidia bloatware</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Set framerate limit</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Target FPS:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay.
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Sorgt dafür, dass Spiele im Fenstermodus genauso gut oder besser laufen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Nvidia Bloatware deaktivieren</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Framerate Limit festlegen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Ziel FPS:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Anmerkung: Um sicherzugehen, dass Sie einen korrekten Wert für Ihren spezifischen Monitor angeben, sehen Sie sich bitte zuerst die Werte im Overlay Spezial K an.
 
-After you have a correct value, you can paste it to the text box.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selective mode</sys:String>
+Wenn Sie einen korrekten Wert haben, können Sie ihn in das Textfeld einfügen.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Globaler Modus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Auswahlmodus</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Desktop</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
 </ResourceDictionary>
