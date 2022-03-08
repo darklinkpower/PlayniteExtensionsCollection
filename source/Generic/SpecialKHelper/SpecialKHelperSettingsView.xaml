@@ -11,7 +11,7 @@
     <Grid Margin="20">
         <ScrollViewer>
             <StackPanel>
-                <StackPanel Margin="0,00,0,0" Orientation="Horizontal">
+                <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
                     <TextBlock Text="Special K execution mode:" VerticalAlignment="Center"/>
                     <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
                           SelectedValue="{Binding Settings.SpecialKExecutionMode}"
@@ -29,6 +29,13 @@
                 <CheckBox Margin="0,10,0,0" Content="Enable Steam overlay for new profiles created by Special K"
                       IsChecked="{Binding Settings.EnableStOverlayOnNewProfiles}" />
 
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <TextBlock Text="Steam overlay to use if Steam Big Picture mode is running:" VerticalAlignment="Center"/>
+                    <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
+                          SelectedValue="{Binding Settings.SteamOverlayForBpm}"
+                          beh:SelectorBehaviors.EnumSource="{x:Type skM:SteamOverlay}" />
+                </StackPanel>
+                
                 <CheckBox Margin="0,10,0,0" Content="Enable Reshade for new profiles created by Special K"
                       IsChecked="{Binding Settings.EnableReshadeOnNewProfiles}" />
 

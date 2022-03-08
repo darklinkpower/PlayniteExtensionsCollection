@@ -14,4 +14,12 @@ namespace SpecialKHelper.Models
         [Description("Selective")]
         Selective
     }
+
+    public enum SteamOverlay
+    {
+        [Description("Desktop")]
+        Desktop,
+        [Description("Big Picture Mode")]
+        BigPictureMode
+    }
 }

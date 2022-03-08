@@ -1,6 +1,7 @@
 ﻿using FuzzySharp;
 using IniParser;
 using IniParser.Model;
+using Microsoft.Win32;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Events;
@@ -91,14 +92,9 @@ namespace SpecialKHelper
             return string.Join(",", techniqueList);
         }
 
-        public override void OnGameInstalled(OnGameInstalledEventArgs args)
-        {
-            // Add code to be executed when game is finished installing.
-        }
-
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
-            // Add code to be executed when game is started running.
+            //RemoveBpmEnvVariable();
         }
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
@@ -106,6 +102,22 @@ namespace SpecialKHelper
             var game = args.Game;
             var cpuArchitectures = new string[] { "32", "64" };
             var startServices = GetShouldStartService(game);
+
+            if (SteamCommon.IsGameSteamGame(game))
+            {
+                RemoveBpmEnvVariable();
+            }
+            else
+            {
+                if (settings.Settings.SteamOverlayForBpm == SteamOverlay.BigPictureMode && GetIsSteamBpmRunning())
+                {
+                    SetBpmEnvVariable();
+                }
+                else
+                {
+                    RemoveBpmEnvVariable();
+                }
+            }
 
             foreach (var cpuArchitecture in cpuArchitectures)
             {
@@ -128,6 +140,58 @@ namespace SpecialKHelper
             ValidateDefaultProfile();
             ConfigureSteamApiInject(game);
             ValidateReshadeConfiguration(game);
+        }
+
+        private void RemoveBpmEnvVariable()
+        {
+            var variable = Environment.GetEnvironmentVariable("SteamTenfoot", EnvironmentVariableTarget.Process);
+            if (!variable.IsNullOrEmpty())
+            {
+                Environment.SetEnvironmentVariable("SteamTenfoot", string.Empty, EnvironmentVariableTarget.Process);
+            }
+        }
+
+        private void SetBpmEnvVariable()
+        {
+            // Setting "SteamTenfoot" to "1" forces to use the Steam BPM overlay
+            // but it will still not work if Steam BPM is not running
+            var variable = Environment.GetEnvironmentVariable("SteamTenfoot", EnvironmentVariableTarget.Process);
+            if (variable.IsNullOrEmpty() || variable != "1")
+            {
+                Environment.SetEnvironmentVariable("SteamTenfoot", "1", EnvironmentVariableTarget.Process);
+            }
+        }
+
+        private bool GetIsSteamBpmRunning()
+        {
+            Process[] processes = Process.GetProcessesByName("Steam");
+            if (processes.Length == 0)
+            {
+                return false;
+            }
+
+            using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
+            {
+                if (key == null)
+                {
+                    return false;
+                }
+
+                var value = key.GetValue("BigPictureInForeground")?.ToString();
+                if (value.IsNullOrEmpty())
+                {
+                    return false;
+                }
+
+                var intValue = int.Parse(value);
+                if (intValue == 0)
+                {
+                    return false;
+                }
+            }
+
+            logger.Info("Steam Big Picture Mode detected as running");
+            return true;
         }
 
         private void ValidateReshadeConfiguration(Game game)
@@ -399,6 +463,7 @@ namespace SpecialKHelper
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
+            RemoveBpmEnvVariable();
             var cpuArchitectures = new string[] { "32", "64" };
             foreach (var cpuArchitecture in cpuArchitectures)
             {
@@ -422,22 +487,25 @@ namespace SpecialKHelper
             }
 
             var exePath = "rundll32.exe";
-            var exe64Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "rundll32.exe");
-            if (cpuArchitecture == "64" && File.Exists(exe64Path))
+            if (cpuArchitecture == "64")
             {
-                exePath = exe64Path;
+                var exe64Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "rundll32.exe");
+                if (File.Exists(exe64Path))
+                {
+                    exePath = exe64Path;
+                }
             }
 
-            var sinfo = new ProcessStartInfo();
-            sinfo.UseShellExecute = true; // Do not wait - make the process stand alone
-            sinfo.FileName = exePath;
-            sinfo.WorkingDirectory = skifPath;
-            sinfo.Arguments = $"\"{dllPath}\",RunDLL_InjectionManager Install";
-            Process.Start(sinfo);
+            var info = new ProcessStartInfo(exePath)
+            {
+                Arguments = $"\"{dllPath}\",RunDLL_InjectionManager Install",
+                WorkingDirectory = skifPath,
+                UseShellExecute = true
+            };
+            Process.Start(info);
 
             var eventName = "Local\\SK_GlobalHookTeardown" + cpuArchitecture;
             var i = 0;
-
             while (i < 12)
             {
                 Thread.Sleep(40);
@@ -476,13 +544,14 @@ namespace SpecialKHelper
 
             try
             {
-                var sinfo = new ProcessStartInfo();
-                sinfo.UseShellExecute = true; // Do not wait - make the process stand alone
-                sinfo.FileName = exePath;
-                sinfo.WorkingDirectory = skifPath;
-                sinfo.Arguments = $"\"{dllPath}\",RunDLL_InjectionManager Remove";
-                Process.Start(sinfo);
+                var info = new ProcessStartInfo(exePath)
+                {
+                    Arguments = $"\"{dllPath}\",RunDLL_InjectionManager Remove",
+                    WorkingDirectory = skifPath,
+                    UseShellExecute = false
+                };
 
+                Process.Start(info);
                 logger.Info($"Special K {cpuArchitecture} service has been removed");
                 return true;
             }
@@ -576,26 +645,6 @@ namespace SpecialKHelper
 
             logger.Info($"Steam id for game {game.Name} not found");
             return null;
-        }
-
-        public override void OnGameUninstalled(OnGameUninstalledEventArgs args)
-        {
-            // Add code to be executed when game is uninstalled.
-        }
-
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            // Add code to be executed when Playnite is initialized.
-        }
-
-        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
-        {
-            // Add code to be executed when Playnite is shutting down.
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            // Add code to be executed when library is updated.
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
