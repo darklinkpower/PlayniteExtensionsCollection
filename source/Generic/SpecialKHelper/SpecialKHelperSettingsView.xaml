@@ -7,65 +7,77 @@
              xmlns:conv="clr-namespace:SpecialKHelper.Converters"
              xmlns:beh="clr-namespace:SpecialKHelper.Behaviors"
              xmlns:skM="clr-namespace:SpecialKHelper.Models"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid Margin="20">
         <ScrollViewer>
             <StackPanel>
                 <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
-                    <TextBlock Text="Special K execution mode:" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionMode}" VerticalAlignment="Center"/>
                     <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
                           SelectedValue="{Binding Settings.SpecialKExecutionMode}"
                           beh:SelectorBehaviors.EnumSource="{x:Type skM:SpecialKExecutionMode}" />
-                </StackPanel>
-                <TextBlock Margin="20,10,0,0" Text="Global Mode: Special K services are started when launching all games. Execution is stil stopped if they have either of the exclusion features [SK] Global Mode Disable&#10;&#10;Selective Mode: Special K services are started only for games that have the inclusion feature [SW] Selective Mode Enable" TextWrapping="Wrap"/>
-                <CheckBox Margin="0,10,0,0" Content="Stop execution if game has Valve Anti-Cheat Enabled feature"
-                      IsChecked="{Binding Settings.StopExecutionIfVac}" />
 
-                <CheckBox Margin="0,10,0,0" Content="Only start Special K services when starting PC games"
-                      IsChecked="{Binding Settings.OnlyExecutePcGames}" />
+                    <Button Margin="20,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenHelpCommand}"
+                            Content="{DynamicResource LOCSpecial_K_Helper_HelpLabel}" />
+                </StackPanel>
+                <TextBlock Margin="20,10,0,0" Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionModeNote}" TextWrapping="Wrap"/>
 
                 <Separator Margin="0,10,0,0"/>
+                
+                <CheckBox Margin="0,20,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingStopIfVac}"
+                      IsChecked="{Binding Settings.StopExecutionIfVac}" />
 
-                <CheckBox Margin="0,10,0,0" Content="Enable Steam overlay for new profiles created by Special K"
-                      IsChecked="{Binding Settings.EnableStOverlayOnNewProfiles}" />
+                <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingRunOnlyPcGames}"
+                      IsChecked="{Binding Settings.OnlyExecutePcGames}" />
 
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                    <TextBlock Text="Steam overlay to use if Steam Big Picture mode is running:" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning}" VerticalAlignment="Center"/>
                     <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
                           SelectedValue="{Binding Settings.SteamOverlayForBpm}"
                           beh:SelectorBehaviors.EnumSource="{x:Type skM:SteamOverlay}" />
                 </StackPanel>
                 
-                <CheckBox Margin="0,10,0,0" Content="Enable Reshade for new profiles created by Special K"
+                <Separator Margin="0,10,0,0"/>
+
+                <TextBlock Margin="0,20,0,00" Text="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileSettingsLabel}" />
+                <StackPanel Margin="20,0,0,0">
+                    <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay}"
+                      IsChecked="{Binding Settings.EnableStOverlayOnNewProfiles}" />
+
+                    <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileEnableReshade}"
                       IsChecked="{Binding Settings.EnableReshadeOnNewProfiles}" />
 
-                <CheckBox Margin="0,10,0,0" Content="Enable Flip Model Presentation for new profiles created by Special K"
-                      ToolTip="Makes games run the same or better while running in windowed mode"
+                    <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel}"
+                      ToolTip="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip}"
                       IsChecked="{Binding Settings.UseFlipModelOnNewProfiles}" />
 
-                <CheckBox Margin="0,10,0,0" Content="Disable Nvidia bloatware for new profiles created by Special K"
+                    <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware}"
                       IsChecked="{Binding Settings.DisableNvidiaBlOnNewProfiles}" />
 
-                <CheckBox x:Name="cbFpsEnable" Margin="0,10,0,0" Content="Set framerate limit for new profiles created by Special K"
+                    <CheckBox x:Name="cbFpsEnable" Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit}"
                       IsChecked="{Binding Settings.SetDefaultFpsOnNewProfiles}" />
-                <StackPanel Margin="20,10,0,0" IsEnabled="{Binding ElementName=cbFpsEnable, Path=IsChecked}">
-                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
-                        <TextBlock Text="TargetFPS:" VerticalAlignment="Center"/>
-                        <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
-                            <TextBox.Text>
-                                <Binding Path="Settings.DefaultFpsLimit"
+                    <StackPanel Margin="20,10,0,0" IsEnabled="{Binding ElementName=cbFpsEnable, Path=IsChecked}">
+                        <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                            <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileTargetFps}" VerticalAlignment="Center"/>
+                            <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                                <TextBox.Text>
+                                    <Binding Path="Settings.DefaultFpsLimit"
                                  UpdateSourceTrigger="PropertyChanged"
                                  ValidatesOnDataErrors="True"
                                  NotifyOnValidationError="True"
                                  Converter="{conv:DoubleToStringConverter}">
-                                    <Binding.ValidationRules>
-                                        <conv:DoubleFieldValidation MinValue="0.0" MaxValue="9999" />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
+                                        <Binding.ValidationRules>
+                                            <conv:DoubleFieldValidation MinValue="0.0" MaxValue="9999" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                        <TextBlock Margin="0,10,0,0" Text="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote}" TextWrapping="Wrap"/>
                     </StackPanel>
-                    <TextBlock Margin="0,10,0,0" Text="Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay. After you have a correct value, you can paste it to the text box." TextWrapping="Wrap"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

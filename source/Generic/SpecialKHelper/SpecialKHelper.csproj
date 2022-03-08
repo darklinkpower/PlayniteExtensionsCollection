@@ -66,6 +66,7 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IniEditor.cs" />
+    <Compile Include="Localization\LocalizationKeys.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\SpecialKProfile.cs" />
     <Compile Include="Models\SteamAppDetails.cs" />
@@ -91,6 +92,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="app.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Localization\en_US.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="SpecialKHelperSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,4 +116,7 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>
+  </PropertyGroup>
 </Project>

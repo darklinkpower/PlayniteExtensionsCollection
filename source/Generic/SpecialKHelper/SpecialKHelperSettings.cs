@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using SpecialKHelper.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -100,6 +101,26 @@ namespace SpecialKHelper
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        public RelayCommand OpenHelpCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper");
+            });
+        }
+
+        public static Process StartUrl(string url)
+        {
+            try
+            {
+                return Process.Start(url);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

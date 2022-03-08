@@ -9,17 +9,17 @@ namespace SpecialKHelper.Models
 {
     public enum SpecialKExecutionMode
     {
-        [Description("Global")]
+        [Description(LOC.SpecialKExecutionModeGlobal)]
         Global,
-        [Description("Selective")]
+        [Description(LOC.SpecialKExecutionModeSelective)]
         Selective
     }
 
     public enum SteamOverlay
     {
-        [Description("Desktop")]
+        [Description(LOC.SteamOverlayDesktop)]
         Desktop,
-        [Description("Big Picture Mode")]
+        [Description(LOC.SteamOverlayBpm)]
         BigPictureMode
     }
 }

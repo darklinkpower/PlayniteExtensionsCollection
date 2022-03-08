@@ -479,7 +479,7 @@ namespace SpecialKHelper
                 logger.Info($"Special K dll not found in {dllPath}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_dll_notfound" + cpuArchitecture,
-                    $"Special K dll not found in {dllPath}",
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), dllPath),
                     NotificationType.Error
                 ));
 
@@ -627,7 +627,7 @@ namespace SpecialKHelper
                     results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
                     (a) => SteamCommon.GetSteamSearchGenericItemOptions(a),
                     normalizedName,
-                    "Select game to use for Steam configuration or cancel to use a generic option");
+                    ResourceProvider.GetString("LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption"));
                 if (selectedGame != null)
                 {
                     return selectedGame.Description;
@@ -662,7 +662,7 @@ namespace SpecialKHelper
 
             window.Height = 700;
             window.Width = 900;
-            window.Title = "Special K Profile Editor";
+            window.Title = ResourceProvider.GetString("LOCSpecial_K_Helper_WindowTitleSkProfileEditor");
 
             window.Content = new SpecialKProfileEditorView();
             window.DataContext = new SpecialKProfileEditorViewModel(PlayniteApi, iniParser, skifPath, searchTerm);
@@ -678,7 +678,7 @@ namespace SpecialKHelper
             {
                 new MainMenuItem
                 {
-                    Description = "Open Special K Profiles Editor",
+                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
                     MenuSection = "@Special K Helper",
                     Action = o => {
                         OpenEditorWindow();
