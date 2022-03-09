@@ -87,8 +87,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">Eliminar vídeos micro de los juegos seleccionados</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">Seleccione el archivo de vídeo a establecer como vídeo para el juego seleccionado</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">Descargar vídeo de YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Download videos from YouTube for all selected games automatically</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Downloading videos from YouTube…</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Descargar automáticamente vídeos de YouTube para todos los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Descargando vídeos de YouTube…</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Estableciendo vídeo del juego desde el archivo de vídeo seleccionado...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Videos</sys:String>
