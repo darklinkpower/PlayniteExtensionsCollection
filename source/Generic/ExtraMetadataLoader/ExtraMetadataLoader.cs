@@ -330,6 +330,21 @@ namespace ExtraMetadataLoader
                 },
                 new GameMenuItem
                 {
+                    Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch"),
+                    MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Action = _ =>
+                    {
+                        ClearVideoSources();
+                        if (!ValidateExecutablesSettings(true, true))
+                        {
+                            return;
+                        }
+                        DownloadYoutubeVideosBatch();
+                        UpdatePlayersData();
+                    }
+                },
+                new GameMenuItem
+                {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
                     Action = _ => 
@@ -515,6 +530,56 @@ namespace ExtraMetadataLoader
             }
 
             return gameMenuItems;
+        }
+
+        private string GetPlatformName(Game game, bool addSpaceEnd = false)
+        {
+            if (game.Platforms == null)
+            {
+                return string.Empty;
+            }
+            else if (addSpaceEnd)
+            {
+                return game.Platforms[0].Name + " ";
+            }
+            else
+            {
+                return game.Platforms[0].Name;
+            }
+        }
+
+        private void DownloadYoutubeVideosBatch()
+        {
+            var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
+            var progressString = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic");
+            var progressOptions = new GlobalProgressOptions(progressString, true);
+            progressOptions.IsIndeterminate = false;
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                var games = PlayniteApi.MainView.SelectedGames.Distinct();
+                a.ProgressMaxValue = games.Count();
+                foreach (var game in games)
+                {
+                    if (a.CancelToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
+                    a.CurrentProgressValue++;
+                    a.Text = $"{progressString}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue} {game.Name}";
+                    if (!overwrite && File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
+                    {
+                        continue;
+                    }
+
+                    // Platform name is added to search for best results
+                    var searchItems = YoutubeCommon.GetYoutubeSearchResults($"{game.Name} {GetPlatformName(game, true)}trailer", true);
+                    if (searchItems.Count > 0)
+                    {
+                        videosDownloader.DownloadYoutubeVideoById(game, searchItems[0].VideoId, overwrite);
+                    }
+                };
+            }, progressOptions);
         }
 
         private void ViewYoutubeVideo(string youtubeVideoId)
