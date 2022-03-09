@@ -48,6 +48,7 @@ namespace SpecialKHelper
             pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             skifPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Mods", "SpecialK");
             defaultConfigPath = Path.Combine(skifPath, "Global", "default_SpecialK.ini");
+
             emptyReshadePreset = Path.Combine(pluginInstallPath, "Resources", "ReshadeDefaultPreset.ini");
             reshadeBase = Path.Combine(skifPath, @"PlugIns\ThirdParty\ReShade");
             reshadeIniPath = Path.Combine(reshadeBase, "ReShade.ini");
@@ -473,6 +474,13 @@ namespace SpecialKHelper
 
         private bool StartSpecialkService(string cpuArchitecture, string skifPath)
         {
+            var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
+            if (File.Exists(servletPid))
+            {
+                logger.Info($"Servlet Pid file in {servletPid} detected so it was not started");
+                return true;
+            }
+
             var dllPath = Path.Combine(skifPath, "SpecialK" + cpuArchitecture + ".dll");
             if (!File.Exists(dllPath))
             {
@@ -486,48 +494,50 @@ namespace SpecialKHelper
                 return false;
             }
 
-            var exePath = "rundll32.exe";
-            if (cpuArchitecture == "64")
+            var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture +".exe");
+            if (!File.Exists(servletExe))
             {
-                var exe64Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "rundll32.exe");
-                if (File.Exists(exe64Path))
-                {
-                    exePath = exe64Path;
-                }
+                logger.Info($"Special K dll not found in {dllPath}");
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "sk_servletExe_notfound" + cpuArchitecture,
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
+                    NotificationType.Error
+                ));
+                return false;
             }
 
-            var info = new ProcessStartInfo(exePath)
+            var info = new ProcessStartInfo(servletExe)
             {
-                Arguments = $"\"{dllPath}\",RunDLL_InjectionManager Install",
-                WorkingDirectory = skifPath,
+                WorkingDirectory = Path.GetDirectoryName(servletExe),
                 UseShellExecute = true
             };
             Process.Start(info);
 
-            var eventName = "Local\\SK_GlobalHookTeardown" + cpuArchitecture;
             var i = 0;
             while (i < 12)
             {
                 Thread.Sleep(40);
-                if (EventWaitHandle.TryOpenExisting(eventName, out var eventWaitHandle))
+                if (File.Exists(servletPid))
                 {
-                    eventWaitHandle.Close();
-                    eventWaitHandle.Dispose();
-                    logger.Info($"Special K global service for {dllPath} started");
+                    logger.Info($"Special K global service for \"{cpuArchitecture}\" started. Pid file detected in {servletPid}");
                     return true;
                 }
-                else
-                {
-                    i++;
-                }
+                i++;
             }
 
-            logger.Info($"Special K global service for \"{eventName}\" could not be opened");
+            logger.Info($"Special K global service for \"{cpuArchitecture}\" could not be opened");
             return false;
         }
 
         private bool StopSpecialkService(string cpuArchitecture, string skifPath)
         {
+            var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
+            if (!File.Exists(servletPid))
+            {
+                logger.Info($"Servlet Pid file in {servletPid} not detected so closing was not needed");
+                return true;
+            }
+
             var dllPath = Path.Combine(skifPath, "SpecialK" + cpuArchitecture + ".dll");
             if (!File.Exists(dllPath))
             {
@@ -535,31 +545,26 @@ namespace SpecialKHelper
                 return false;
             }
 
-            var exePath = "rundll32.exe";
-            var exe64Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.SystemX86), "rundll32.exe");
-            if (cpuArchitecture == "64" && File.Exists(exe64Path))
+            var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture + ".exe");
+            if (!File.Exists(servletExe))
             {
-                exePath = exe64Path;
-            }
-
-            try
-            {
-                var info = new ProcessStartInfo(exePath)
-                {
-                    Arguments = $"\"{dllPath}\",RunDLL_InjectionManager Remove",
-                    WorkingDirectory = skifPath,
-                    UseShellExecute = false
-                };
-
-                Process.Start(info);
-                logger.Info($"Special K {cpuArchitecture} service has been removed");
-                return true;
-            }
-            catch
-            {
-                logger.Error($"Special K {cpuArchitecture} service could not be removed");
+                logger.Info($"Special K dll not found in {dllPath}");
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "sk_servletExe_notfound" + cpuArchitecture,
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
+                    NotificationType.Error
+                ));
                 return false;
             }
+
+            var info = new ProcessStartInfo(servletExe)
+            {
+                WorkingDirectory = Path.GetDirectoryName(servletExe),
+                UseShellExecute = true
+            };
+            Process.Start(info);
+
+            return true;
         }
 
         public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload, bool matchFuzzyMethods = false)
