@@ -103,21 +103,21 @@ namespace SpecialKHelper
             var cpuArchitectures = new string[] { "32", "64" };
             var startServices = GetShouldStartService(game);
 
-            if (SteamCommon.IsGameSteamGame(game))
-            {
-                RemoveBpmEnvVariable();
-            }
-            else
-            {
-                if (settings.Settings.SteamOverlayForBpm == SteamOverlay.BigPictureMode && GetIsSteamBpmRunning())
-                {
-                    SetBpmEnvVariable();
-                }
-                else
-                {
-                    RemoveBpmEnvVariable();
-                }
-            }
+            //if (SteamCommon.IsGameSteamGame(game))
+            //{
+            //    RemoveBpmEnvVariable();
+            //}
+            //else
+            //{
+            //    if (settings.Settings.SteamOverlayForBpm == SteamOverlay.BigPictureMode && GetIsSteamBpmRunning())
+            //    {
+            //        SetBpmEnvVariable();
+            //    }
+            //    else
+            //    {
+            //        RemoveBpmEnvVariable();
+            //    }
+            //}
 
             foreach (var cpuArchitecture in cpuArchitectures)
             {

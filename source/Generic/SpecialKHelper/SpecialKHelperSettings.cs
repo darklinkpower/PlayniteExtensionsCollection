@@ -35,7 +35,7 @@ namespace SpecialKHelper
         private double defaultFpsLimit = 0.0;
         public double DefaultFpsLimit { get => defaultFpsLimit; set => SetValue(ref defaultFpsLimit, value); }
 
-        private SteamOverlay steamOverlayForBpm = SteamOverlay.BigPictureMode;
+        private SteamOverlay steamOverlayForBpm = SteamOverlay.Desktop;
         public SteamOverlay SteamOverlayForBpm { get => steamOverlayForBpm; set => SetValue(ref steamOverlayForBpm, value); }
     }
 
