@@ -132,3 +132,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/PlayState_2_18.pext
     Changelog:
     - Updated localizations
+  - Version: 2.19
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/PlayState_2_19.pext
+    Changelog:
+    - "Added temporary workaround for sharing paused time with GameActivity extension (By BanCrash)"
