@@ -2,11 +2,18 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Apri editor dei profili Special K</sys:String>
 
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Open Steam Controller configuration for &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id for game &quot;{0}&quot; needed to open the configuration was not found.
+
+Please launch the game once so this Id can be automatically configured.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Configuration for game &quot;{0}&quot; with Steam Id &quot;{1}&quot; will be opened.
+
+Be aware that a controller needs to be currently connected and enabled for Steam Controller for the configuration window to open.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Aggiungi funzionalità per disabilitare l'esecuzione in modalità globale</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Rimuovi la funzione per disabilitare l'esecuzione in modalità globale</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Aggiungi funzionalità per abilitare l'esecuzione in modalità selettiva</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Rimuovi funzione per abilitare l'esecuzione in modalità selettiva</sys:String>
-    
+
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Seleziona il gioco da usare per la configurazione di Steam o annulla per usare un'opzione generica</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound">DLL Special K non trovata in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Editor dei profili Special K</sys:String>
