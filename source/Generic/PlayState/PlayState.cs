@@ -446,18 +446,19 @@ namespace PlayState
         private string GetHoursString(ulong playtimeSeconds)
         {
             TimeSpan playtime = TimeSpan.FromSeconds(playtimeSeconds);
-            if (playtime.Hours == 1)
+            int playtimeHours = playtime.Hours + playtime.Days * 24;
+            if (playtimeHours == 1)
             {
                 if (playtime.Minutes == 1)
                 {
-                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutePlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutePlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
                 }
                 else
                 {
-                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutesPlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutesPlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
                 }
             }
-            else if (playtime.Hours == 0 && playtime.Minutes == 0) // If the playtime is less than a minute, show the seconds instead
+            else if (playtimeHours == 0 && playtime.Minutes == 0) // If the playtime is less than a minute, show the seconds instead
             {
                 if (playtime.Seconds == 1)
                 {
@@ -472,11 +473,11 @@ namespace PlayState
             {
                 if (playtime.Minutes == 1)
                 {
-                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutePlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutePlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
                 }
                 else
                 {
-                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutesPlayed"), playtime.Hours.ToString(), playtime.Minutes.ToString());
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutesPlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
                 }
             }
         }
