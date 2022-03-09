@@ -198,7 +198,9 @@ namespace ExtraMetadataLoader
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
                         var isBackgroundDownload = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically"));
-                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam"), true);
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam");
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
@@ -210,8 +212,9 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                logosDownloader.DownloadSteamLogo(game, overwrite, isBackgroundDownload);
                                 a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                logosDownloader.DownloadSteamLogo(game, overwrite, isBackgroundDownload);
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -224,7 +227,9 @@ namespace ExtraMetadataLoader
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
                         var isBackgroundDownload = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically"));
-                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb"), true);
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb");
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
@@ -236,8 +241,9 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                logosDownloader.DownloadSgdbLogo(game, overwrite, isBackgroundDownload);
                                 a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                logosDownloader.DownloadSgdbLogo(game, overwrite, isBackgroundDownload);
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -294,7 +300,9 @@ namespace ExtraMetadataLoader
                             return;
                         }
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
-                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam"), true);
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam");
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
                         ClearVideoSources();
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
@@ -307,8 +315,9 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                videosDownloader.DownloadSteamVideo(game, overwrite, false, true, false);
                                 a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                videosDownloader.DownloadSteamVideo(game, overwrite, false, true, false);
                             };
                         }, progressOptions);
                         UpdatePlayersData();
@@ -357,7 +366,9 @@ namespace ExtraMetadataLoader
                         }
                         ClearVideoSources();
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
-                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam"), true);
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam");
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
@@ -369,8 +380,9 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                videosDownloader.DownloadSteamVideo(game, overwrite, false, false, true);
                                 a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                videosDownloader.DownloadSteamVideo(game, overwrite, false, false, true);
                             };
                         }, progressOptions);
                         UpdatePlayersData();
@@ -401,7 +413,9 @@ namespace ExtraMetadataLoader
                         }
                         ClearVideoSources();
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
-                        var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos"), true);
+                        var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos");
+
+                        var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
@@ -413,8 +427,9 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                videosDownloader.ConvertVideoToMicro(game, overwrite);
                                 a.CurrentProgressValue++;
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                videosDownloader.ConvertVideoToMicro(game, overwrite);
                             };
                         }, progressOptions);
                         UpdatePlayersData();
@@ -553,8 +568,8 @@ namespace ExtraMetadataLoader
         private void DownloadYoutubeVideosBatch()
         {
             var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
-            var progressString = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic");
-            var progressOptions = new GlobalProgressOptions(progressString, true);
+            var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic");
+            var progressOptions = new GlobalProgressOptions(progressTitle, true);
             progressOptions.IsIndeterminate = false;
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
@@ -568,7 +583,7 @@ namespace ExtraMetadataLoader
                     }
 
                     a.CurrentProgressValue++;
-                    a.Text = $"{progressString}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue} {game.Name}";
+                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                     if (!overwrite && File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
                     {
                         continue;
