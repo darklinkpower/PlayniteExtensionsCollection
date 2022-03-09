@@ -197,6 +197,7 @@ namespace ExtraMetadataLoader
                     MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
+                        var isBackgroundDownload = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam"), true);
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
@@ -209,7 +210,7 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                logosDownloader.DownloadSteamLogo(game, overwrite, false);
+                                logosDownloader.DownloadSteamLogo(game, overwrite, isBackgroundDownload);
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
@@ -222,6 +223,7 @@ namespace ExtraMetadataLoader
                     MenuSection = $"Extra Metadata|{logosSection}",
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
+                        var isBackgroundDownload = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically"));
                         var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb"), true);
                         progressOptions.IsIndeterminate = false;
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
@@ -234,7 +236,7 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
-                                logosDownloader.DownloadSgdbLogo(game, overwrite, false);
+                                logosDownloader.DownloadSgdbLogo(game, overwrite, isBackgroundDownload);
                                 a.CurrentProgressValue++;
                             };
                         }, progressOptions);
