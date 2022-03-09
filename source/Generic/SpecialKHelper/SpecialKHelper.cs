@@ -509,14 +509,15 @@ namespace SpecialKHelper
             var info = new ProcessStartInfo(servletExe)
             {
                 WorkingDirectory = Path.GetDirectoryName(servletExe),
-                UseShellExecute = true
+                UseShellExecute = true,
+                Arguments = "Start",
             };
             Process.Start(info);
 
             var i = 0;
             while (i < 12)
             {
-                Thread.Sleep(40);
+                Thread.Sleep(100);
                 if (File.Exists(servletPid))
                 {
                     logger.Info($"Special K global service for \"{cpuArchitecture}\" started. Pid file detected in {servletPid}");
@@ -560,7 +561,8 @@ namespace SpecialKHelper
             var info = new ProcessStartInfo(servletExe)
             {
                 WorkingDirectory = Path.GetDirectoryName(servletExe),
-                UseShellExecute = true
+                UseShellExecute = true,
+                Arguments = "Stop",
             };
             Process.Start(info);
 
