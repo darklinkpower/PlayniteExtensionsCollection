@@ -25,7 +25,7 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">推荐的</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">不推荐的</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">评论时已有 {0} 小时 {1} 分钟时间</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} 小时 {1} 分钟的总观访时间</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} 小时 {1} 分钟的总游玩时间</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} 人认为此评论有帮助</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} 人认为此评论有趣</sys:String>
 </ResourceDictionary>

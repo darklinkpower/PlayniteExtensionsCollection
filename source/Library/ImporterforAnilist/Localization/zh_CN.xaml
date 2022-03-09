@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">在库更新时从 AniList 帐户更新用户评分</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">在库更新期间从 AniList 帐户更新完成状态</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">在库更新期间从 AniList 帐户更新进度（使用“版本”字段）</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">若已配置，将在配置的浏览器中打开由开动指令打开的链接。</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">若已配置，将在配置的浏览器中打开由游玩指令打开的链接。</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">浏览器路径：</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">选择浏览器</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">移除</sys:String>
