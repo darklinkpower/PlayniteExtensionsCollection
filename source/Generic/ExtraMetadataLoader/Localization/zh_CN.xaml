@@ -87,8 +87,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">删除所选游戏的精简视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">从文件设置所选游戏的视频</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">从 YouTube 下载视频</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Download videos from YouTube for all selected games automatically</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Downloading videos from YouTube…</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">自动从 YouTube 下载所有所选游戏的视频</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">正在从 YouTube 下载视频…</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">从文件设置所选游戏的视频...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">徽标</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">视频</sys:String>
