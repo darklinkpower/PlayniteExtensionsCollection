@@ -14,10 +14,10 @@
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Fertig</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Spezial K Ausführungsmodus:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Globaler Modus: Speziel K Dienste werden beim Starten aller Spiele gestartet. Die Ausführung wird weiterhin gestoppt, wenn sie eines der Ausschlussmerkmale &quot;[SK] Global Mode Disable&quot; aufweisen
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games. Execution is stil stopped if they have either of the exclusion features &quot;[SK] Global Mode Disable&quot;
 
-Selektiver Modus: Speziel K Dienste werden nur für Spiele gestartet, die das Einschlussmerkmal &quot;[SW] Selektiver Modus aktivieren&quot; haben</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Ausführung stoppen, wenn Valve Anti-Cheat aktiviert ist</sys:String>
+Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop execution if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Starte Special K Dienste nur beim Start von PC Spielen</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Standardeinstellungen für neue Profile erstellt von Special K</sys:String>
