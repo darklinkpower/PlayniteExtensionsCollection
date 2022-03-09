@@ -697,7 +697,20 @@ namespace SpecialKHelper
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuItems = new List<GameMenuItem>();
+            var firstGame = args.Games.Last();
+            var menuItems = new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig"), firstGame.Name),
+                    MenuSection = $"Special K Helper",
+                    Action = o =>
+                    {
+                        OpenGameSteamControllerConfig(firstGame);
+                    }
+                }
+            };
+
             if (settings.Settings.SpecialKExecutionMode == SpecialKExecutionMode.Global)
             {
                 menuItems.Add(new GameMenuItem
@@ -744,6 +757,56 @@ namespace SpecialKHelper
             }
 
             return menuItems;
+        }
+
+        private string GetConfiguredSteamId(Game game)
+        {
+            if (SteamCommon.IsGameSteamGame(game))
+            {
+                return game.GameId;
+            }
+
+            if (!game.InstallDirectory.IsNullOrEmpty())
+            {
+                var appIdTextPath = Path.Combine(game.InstallDirectory, "steam_appid.txt");
+                if (File.Exists(appIdTextPath))
+                {
+                    return File.ReadAllText(appIdTextPath);
+                }
+            }
+
+            var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "attempted" + game.Id.ToString());
+            if (File.Exists(historyFlagFile))
+            {
+                return File.ReadAllText(historyFlagFile);
+            }
+
+            return string.Empty;
+        }
+
+        private void OpenGameSteamControllerConfig(Game game)
+        {
+            var steamId = GetConfiguredSteamId(game);
+            if (steamId.IsNullOrEmpty())
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage(
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound"), game.Name),
+                    "Special K Helper");
+                return;
+            }
+
+            PlayniteApi.Dialogs.ShowMessage(
+                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_DialogMessageSteamControlNotice"), game.Name, steamId),
+                "Special K Helper");
+
+            try
+            {
+                Process.Start($"steam://currentcontrollerconfig/{steamId}");
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error opening Steam Controller configuration with Uri steam Id {steamId}");
+            }
         }
 
         private void AddFeatureToSelectedGames(string featureName)
