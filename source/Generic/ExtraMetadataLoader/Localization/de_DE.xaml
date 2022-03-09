@@ -142,4 +142,9 @@ Es wird empfohlen die Größe zu reduzieren, da große Bilder Playnite verlangsa
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">Gameplay Video auf YouTube ansehen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Video auf YouTube suchen</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video nicht gefunden</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    
+Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
+Select &quot;No&quot; to manually make selections when necessary.</sys:String>
 </ResourceDictionary>
