@@ -30,41 +30,41 @@ Mode sélectif : Les services Special K ne sont lancés que pour les jeux qui on
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Paramètres par défaut pour les nouveaux profils créés par Special K</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Activer Steam overlay</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam overlay to use if Steam Big Picture mode is running:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam Overlay à utiliser si le mode Steam Big Picture est en cours d'exécution :</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Activer Reshade</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Enable Flip Model Presentation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Activer le Flip Model Presentation</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Disable Nvidia bloatware</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Set framerate limit</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Target FPS:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay.
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Désactiver Nvidia bloatware</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Définir la limite de fréquence d'images</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">FPS cible :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: Pour vous assurer que vous fournissez une valeur correcte pour votre moniteur spécifique, reportez-vous d'abord aux valeurs fournies dans la superposition Special K.
 
-After you have a correct value, you can paste it to the text box.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selective mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Desktop</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
+Une fois que vous avez une valeur correcte, vous pouvez la coller dans la zone de texte.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Mode global</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Mode sélectif</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Bureau</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Mode Big Picture</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Search:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Use fuzzy search</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profiles</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Rechercher :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Utiliser la recherche approximative</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profils</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Clés</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Clé</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Valeur</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Save profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profile saved.
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profil :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Chemin du profil :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Enregistrer le profil</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profil enregistré.
 
-Profile name: {0}
-Profile path: {1}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Save value</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Selected option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Section:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Key:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Value:</sys:String>
+Nom du profil : {0}
+Chemin du profil : {1}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Enregistrer la valeur</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Option sélectionnée</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Section :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Clé :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Valeur :</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
 
