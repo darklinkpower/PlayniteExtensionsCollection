@@ -50,7 +50,7 @@ After you have a correct value, you can paste it to the text box.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Key</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
