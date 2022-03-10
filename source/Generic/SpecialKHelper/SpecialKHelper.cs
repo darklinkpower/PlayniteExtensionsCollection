@@ -523,7 +523,7 @@ namespace SpecialKHelper
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture +".exe");
             if (!File.Exists(servletExe))
             {
-                logger.Info($"Special K servlet exe not found in {dllPath}");
+                logger.Info($"Special K servlet exe not found in {servletExe}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
