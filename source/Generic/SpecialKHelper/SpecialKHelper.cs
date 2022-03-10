@@ -120,7 +120,6 @@ namespace SpecialKHelper
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
-            var cpuArchitectures = new string[] { "32", "64" };
             var startServices = GetShouldStartService(game);
 
             //if (SteamCommon.IsGameSteamGame(game))
@@ -139,22 +138,23 @@ namespace SpecialKHelper
             //    }
             //}
 
-            var startSuccess = false;
-            foreach (var cpuArchitecture in cpuArchitectures)
+            var startSuccess32 = false;
+            var startSuccess64 = false;
+            if (startServices)
             {
-                if (startServices)
-                {
-                    startSuccess = StartSpecialkService(cpuArchitecture, skifPath);
-                }
-                else
-                {
-                    //Check if leftover service is running and close it
-                    StopSpecialkService(cpuArchitecture, skifPath);
-                }
+                startSuccess32 = StartSpecialkService("32", skifPath);
+                startSuccess64 = StartSpecialkService("64", skifPath);
+            }
+            else
+            {
+                //Check if leftover service is running and close it
+                StopSpecialkService("32", skifPath);
+                StopSpecialkService("64", skifPath);
             }
 
-            if (!startServices || !startSuccess)
+            if (!startServices || !startSuccess32 || !startSuccess64)
             {
+                logger.Info("Execution stopped due to services not started");
                 return;
             }
 
