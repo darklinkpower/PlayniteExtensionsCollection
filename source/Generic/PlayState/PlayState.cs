@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayState.Enums;
 using PlayState.Models;
 using PlayState.ViewModels;
 using PlayState.Views;
@@ -157,7 +158,7 @@ namespace PlayState
                         }
                         else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
                         {
-                            ShowNotification("information");
+                            ShowNotification(NotificationTypes.Information);
                         }
                         handled = true;
                         break;
@@ -486,7 +487,7 @@ namespace PlayState
         /// - "information" for showing the actual status<br/>
         /// </param>
         /// </summary>
-        private void ShowNotification(string status)
+        private void ShowNotification(NotificationTypes status)
         {
             showWindowsNotificationsStyle = false;
             if (settings.Settings.GlobalShowWindowsNotificationsStyle)
@@ -496,7 +497,7 @@ namespace PlayState
 
             switch (status)
             {
-                case "resumed": // for resuming process and playtime
+                case NotificationTypes.Resumed: // for resuming process and playtime
                     if (!showWindowsNotificationsStyle)
                     {
                         ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
@@ -513,7 +514,7 @@ namespace PlayState
                             .Show();
                     }
                     break;
-                case "playtimeResumed": // for resuming playtime
+                case NotificationTypes.PlaytimeResumed: // for resuming playtime
                     if (!showWindowsNotificationsStyle)
                     {
                         ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
@@ -529,7 +530,7 @@ namespace PlayState
                             .Show();
                     }
                     break;
-                case "suspended": // for suspend process and playtime
+                case NotificationTypes.Suspended: // for suspend process and playtime
                     if (!showWindowsNotificationsStyle)
                     {
                         ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
@@ -545,7 +546,7 @@ namespace PlayState
                             .Show();
                     }
                     break;
-                case "playtimeSuspended": // for suspend playtime
+                case NotificationTypes.PlaytimeSuspended: // for suspend playtime
                     if (!showWindowsNotificationsStyle)
                     {
                         ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
@@ -561,7 +562,7 @@ namespace PlayState
                             .Show();
                     }
                     break;
-                case "information": // for showing the actual status
+                case NotificationTypes.Information: // for showing the actual status
                     {
                         if (currentGame == null)
                         {
@@ -571,22 +572,22 @@ namespace PlayState
                         {
                             if (processesSuspended)
                             {
-                                ShowNotification("suspended");
+                                ShowNotification(NotificationTypes.Suspended);
                             }
                             else
                             {
-                                ShowNotification("playtimeSuspended");
+                                ShowNotification(NotificationTypes.PlaytimeSuspended);
                             }
                         }
                         else
                         {
                             if (processesSuspended)
                             {
-                                ShowNotification("resumed");
+                                ShowNotification(NotificationTypes.Resumed);
                             }
                             else
                             {
-                                ShowNotification("playtimeResumed");
+                                ShowNotification(NotificationTypes.PlaytimeResumed);
                             }
                         }
                     }
@@ -631,11 +632,11 @@ namespace PlayState
                         isSuspended = false;
                         if (processesSuspended)
                         {
-                            ShowNotification("resumed");
+                            ShowNotification(NotificationTypes.Resumed);
                         }
                         else
                         {
-                            ShowNotification("playtimeResumed");
+                            ShowNotification(NotificationTypes.PlaytimeResumed);
                         }
                         stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
                         logger.Debug($"Game {currentGame.Name} resumed");
@@ -645,11 +646,11 @@ namespace PlayState
                         isSuspended = true;
                         if (processesSuspended)
                         {
-                            ShowNotification("suspended");
+                            ShowNotification(NotificationTypes.Suspended);
                         }
                         else
                         {
-                            ShowNotification("playtimeSuspended");
+                            ShowNotification(NotificationTypes.PlaytimeSuspended);
                         }
                         stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
                         logger.Debug($"Game {currentGame.Name} suspended");
