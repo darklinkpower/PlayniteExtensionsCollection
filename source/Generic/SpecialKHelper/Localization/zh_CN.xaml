@@ -15,8 +15,8 @@
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">移除在选取模式下启用执行的功能特色</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">选择要用于 Steam 配置的游戏，或取消以使用通用选项</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">在 {0} 中找不到 Special K 文件</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">无法启动 Special K 的 {0} 服务</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K 配置档编辑器</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">帮助</sys:String>
@@ -51,7 +51,7 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">集：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">键</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">键</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">值</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">配置档：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">配置档路径：</sys:String>
@@ -66,9 +66,9 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">键：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">值：</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K 助手状态切换器
 
-Indicates if the extension is allowed to start the Special K services when starting a game.
-If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
+指示是否允许扩展在开始游戏时启动 Special K 服务。
+若禁用此设置，无论设置或配置如何，服务都不会启动。</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">显示用于切换扩展状态的扩展侧边栏项目</sys:String>
 </ResourceDictionary>
