@@ -19,47 +19,45 @@
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
             <DockPanel Grid.Column="0" Grid.ColumnSpan="1">
-                <StackPanel DockPanel.Dock="Top">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Search" VerticalAlignment="Center"/>
-                        <TextBox Margin="10,0,0,0" MinWidth="200"
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelSearch}" VerticalAlignment="Center"/>
+                    <TextBox Margin="10,0,0,0" MinWidth="200"
                              Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                              VerticalAlignment="Center"/>
-                    </StackPanel>
-
-                    <CheckBox Margin="0,10,0,0" IsChecked="{Binding UseFuzzySearch}" 
-                          Content="Use fuzzy search"/>
-
+                    <CheckBox Margin="10,0,0,0" IsChecked="{Binding UseFuzzySearch}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelUseFuzzySearch}"/>
                 </StackPanel>
+
                 <Grid Margin="0,20,0,0" DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" MinWidth="130"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" MinWidth="250" MaxWidth="350" />
+                        <ColumnDefinition Width="Auto" MinWidth="220" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <DockPanel Grid.Column="0">
-                        <TextBlock Text="Profiles" Margin="0,0,0,5" DockPanel.Dock="Top" />
+                        <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelProfiles}" Margin="0,0,0,5" DockPanel.Dock="Top" />
                         <ListBox SelectionMode="Single" ItemsSource="{Binding SKProfilesCollection}"
                          SelectedItem="{Binding SelectedProfile}" IsSynchronizedWithCurrentItem="True"
                          DisplayMemberPath="ProfileName" DockPanel.Dock="Top" />
                     </DockPanel>
 
                     <DockPanel Grid.Column="1" Margin="10,0,0,0">
-                        <TextBlock Text="Sections"  Margin="0,0,0,5" DockPanel.Dock="Top" />
+                        <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelSections}"  Margin="0,0,0,5" DockPanel.Dock="Top" />
                         <ListBox SelectionMode="Single" ItemsSource="{Binding SelectedProfile.IniData.Sections}"
                          SelectedItem="{Binding SelectedProfileSection}" IsSynchronizedWithCurrentItem="True"
                          DisplayMemberPath="SectionName" DockPanel.Dock="Top" />
                     </DockPanel>
 
                     <DockPanel Grid.Column="2" Margin="10,0,0,0">
-                        <TextBlock Text="Keys" Margin="0,0,0,5" DockPanel.Dock="Top" />
+                        <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelKeys}" Margin="0,0,0,5" DockPanel.Dock="Top" />
                         <DataGrid x:Name="KeysDataGrid" SelectionMode="Single" ItemsSource="{Binding SelectedProfileSection.Keys}"
                                   DockPanel.Dock="Top"
                                   CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserSortColumns="True"   
                                   SelectedItem="{Binding SelectedProfileKey}" IsSynchronizedWithCurrentItem="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Key" Binding="{Binding Value.KeyName}" IsReadOnly="True" />
-                                <DataGridTextColumn Header="Value" Binding="{Binding Value.Value}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="{DynamicResource LOCSpecial_K_Helper_EditorLabelKey}" Binding="{Binding Value.KeyName}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="{DynamicResource LOCSpecial_K_Helper_EditorLabelValue}" Binding="{Binding Value.Value}" IsReadOnly="True" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
@@ -67,23 +65,31 @@
             </DockPanel>
             <ScrollViewer Grid.Column="1" Margin="10,0,0,0">
                 <StackPanel Visibility="{Binding SelectedProfile, Converter={StaticResource NullToVisibilityConverter}}">
-                    <Label Content="Profile" VerticalAlignment="Center"/>
+                    <Label Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelProfile}" VerticalAlignment="Center"/>
                     <TextBlock Margin="0,5,0,0" Text="{Binding SelectedProfile.ProfileName}" />
-                    <Label Margin="0,10,0,0" Content="Profile path" VerticalAlignment="Center"/>
+                    <Label Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelProfilePath}" VerticalAlignment="Center"/>
                     <TextBlock Margin="0,5,0,0" Text="{Binding SelectedProfile.ProfileIniPath}"
                                TextWrapping="Wrap" ToolTip="{Binding SelectedProfile.ProfileIniPath}" />
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Button Content="Save profile" Command="{Binding SaveSelectedProfileCommand}" />
+                        <Button Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelSaveProfile}" Command="{Binding SaveSelectedProfileCommand}" />
                     </StackPanel>
 
-                    <TextBlock Text="Selected Key" Margin="0,20,0,0"/>
+                    <Separator Margin="0,10,0,0"/>
 
-                    <TextBlock Text="Name:" Margin="0,10,0,0"/>
-                    <TextBlock Margin="0,5,0,0" Text="{Binding ElementName=KeysDataGrid, Path=SelectedItem.Value.KeyName, Mode=OneWay}" />
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelSelectedOption}" Margin="0,20,0,0"/>
 
-                    <TextBlock Text="Value:" Margin="0,10,0,0"/>
-                    <TextBox Margin="0,5,0,0" Text="{Binding ElementName=KeysDataGrid, Path=SelectedItem.Value.Value, Mode=OneWay}" />
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelIniSection}" Margin="0,10,0,0"/>
+                    <TextBlock Margin="0,5,0,0" Text="{Binding CurrentEditSection, Mode=OneWay}" />
+
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelIniKey}" Margin="0,10,0,0"/>
+                    <TextBlock Margin="0,5,0,0" Text="{Binding CurrentEditKey, Mode=OneWay}" />
+
+                    <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelIniValue}" Margin="0,10,0,0"/>
+                    <TextBox Margin="0,5,0,0" Text="{Binding CurrentEditValue, Mode=TwoWay}" />
+                    <Button Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelSaveValue}" Margin="0,10,0,0"
+                            HorizontalAlignment="Left"
+                            Command="{Binding SaveValueCommand}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>

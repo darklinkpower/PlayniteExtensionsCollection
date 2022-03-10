@@ -26,6 +26,76 @@ namespace SpecialKHelper.ViewModels
             get { return sKProfilesCollection; }
         }
 
+        private string currentEditSection;
+        public string CurrentEditSection
+        {
+            get
+            {
+                if (currentEditSection.IsNullOrEmpty())
+                {
+                    return string.Empty;
+                }
+
+                return currentEditSection;
+            }
+            set
+            {
+                currentEditSection = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isKeySelected { get; set; } = false;
+        public bool IsKeySelected
+        {
+            get => isKeySelected;
+            set
+            {
+                isKeySelected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string currentEditKey;
+        public string CurrentEditKey
+        {
+            get
+            {
+                if (currentEditKey.IsNullOrEmpty())
+                {
+                    return string.Empty;
+                }
+
+                return currentEditKey;
+            }
+            set
+            {
+                currentEditKey = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string currentEditValue;
+        public string CurrentEditValue
+        {
+            get
+            {
+                if (currentEditValue.IsNullOrEmpty())
+                {
+                    isKeySelected = true;
+                    return string.Empty;
+                }
+
+                isKeySelected = true;
+                return currentEditValue;
+            }
+            set
+            {
+                currentEditValue = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string searchString;
         public string SearchString
         {
@@ -65,6 +135,7 @@ namespace SpecialKHelper.ViewModels
             set
             {
                 selectedProfileSection = value;
+                CurrentEditSection = selectedProfileSection?.SectionName ?? string.Empty;
                 OnPropertyChanged();
             }
         }
@@ -76,6 +147,8 @@ namespace SpecialKHelper.ViewModels
             set
             {
                 selectedProfileKey = value;
+                CurrentEditKey = selectedProfileKey.Value?.KeyName ?? string.Empty;
+                CurrentEditValue = selectedProfileKey.Value?.Value ?? string.Empty;
                 OnPropertyChanged();
             }
         }
@@ -187,6 +260,59 @@ namespace SpecialKHelper.ViewModels
             }
 
             return profiles;
+        }
+
+        public RelayCommand<object> SaveSelectedProfileCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SaveProfile(SelectedProfile);
+            }, a => isProfileSelected);
+        }
+
+        private bool SaveProfile(SpecialKProfile specialKProfile)
+        {
+            if (specialKProfile == null)
+            {
+                return false;
+            }
+
+            iniParser.WriteFile(specialKProfile.ProfileIniPath, specialKProfile.IniData, Encoding.UTF8);
+            playniteApi.Dialogs.ShowMessage(
+                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDialogMessageSaveProfile"), specialKProfile.ProfileName, specialKProfile.ProfileIniPath));
+            return true;
+        }
+
+        public RelayCommand<object> SaveValueCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                SaveValue();
+            }, a => isKeySelected);
+        }
+
+        private bool SaveValue()
+        {
+            if (AddValueToIni(SelectedProfile.IniData, CurrentEditSection, CurrentEditKey, CurrentEditValue) == 1)
+            {
+                OnPropertyChanged("SelectedProfile");
+                OnPropertyChanged("SelectedProfileKey");
+                return true;
+            }
+
+            return false;
+        }
+
+        private int AddValueToIni(IniData ini, string section, string key, string newValue)
+        {
+            var currentValue = ini[section][key];
+            if (currentValue == null || currentValue != newValue)
+            {
+                ini[section][key] = newValue;
+                return 1;
+            }
+
+            return 0;
         }
     }
 }
