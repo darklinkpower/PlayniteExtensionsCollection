@@ -269,12 +269,6 @@ namespace PlayState
 
             playedDateTime = DateTime.Now;
 
-            showWindowsNotificationsStyle = false;
-            if (settings.Settings.GlobalShowWindowsNotificationsStyle)
-            {
-                showWindowsNotificationsStyle = true;
-            }
-
             suspendPlaytimeOnly = false;
             if (settings.Settings.SubstractSuspendedPlaytimeOnStopped &&
                 (settings.Settings.GlobalOnlySuspendPlaytime ||
@@ -494,6 +488,12 @@ namespace PlayState
         /// </summary>
         private void ShowNotification(string status)
         {
+            showWindowsNotificationsStyle = false;
+            if (settings.Settings.GlobalShowWindowsNotificationsStyle)
+            {
+                showWindowsNotificationsStyle = true;
+            }
+
             switch (status)
             {
                 case "resumed": // for resuming process and playtime
