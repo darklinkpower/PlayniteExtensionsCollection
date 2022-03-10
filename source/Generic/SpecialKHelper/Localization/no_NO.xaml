@@ -15,7 +15,8 @@ Be aware that a controller needs to be currently connected and enabled for Steam
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Select game to use for Steam configuration or cancel to use a generic option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound">Special K dll not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K Profile Editor</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Help</sys:String>
@@ -50,7 +51,7 @@ After you have a correct value, you can paste it to the text box.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Key</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
