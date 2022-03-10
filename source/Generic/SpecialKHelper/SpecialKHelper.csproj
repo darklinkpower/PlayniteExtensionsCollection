@@ -67,6 +67,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Localization\LocalizationKeys.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\GameDataCache.cs" />
     <Compile Include="Models\SpecialKProfile.cs" />
     <Compile Include="Models\SteamAppDetails.cs" />
     <Compile Include="SpecialKHelper.cs" />

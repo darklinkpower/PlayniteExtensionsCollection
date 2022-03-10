@@ -346,6 +346,29 @@ namespace SpecialKHelper
             return 0;
         }
 
+        private bool GetIsGameEacEnabled(Game game)
+        {
+            var cachePath = Path.Combine(GetPluginUserDataPath(), game.Id.ToString() + "_cache.json");
+            if (!File.Exists(cachePath))
+            {
+                var newCache = new GameDataCache
+                {
+                    Id = game.Id,
+                    EasyAnticheatStatus = GetGameEasyAnticheatStatus(game)
+                };
+
+                File.WriteAllText(cachePath, Serialization.ToJson(newCache));
+            }
+
+            var cache = Serialization.FromJsonFile<GameDataCache>(cachePath);
+            if (cache.EasyAnticheatStatus == EasyAnticheatStatus.Detected)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private bool GetShouldStartService(Game game)
         {
             if (!sidebarItemSwitcherViewModel.AllowSkUse)
@@ -353,7 +376,13 @@ namespace SpecialKHelper
                 logger.Info("Start of services is disabled by sidebar item");
                 return false;
             }
-            
+
+            if (settings.Settings.StopIfEasyAntiCheat && GetIsGameEacEnabled(game))
+            {
+                logger.Info($"Start of services disabled due to game {game.Name} using EasyAntiCheat");
+                return false;
+            }
+
             if (game.Features != null)
             {
                 if (settings.Settings.StopExecutionIfVac && game.Features.Any(x => x.Name == "Valve Anti-Cheat Enabled"))
@@ -385,6 +414,41 @@ namespace SpecialKHelper
             return true;
         }
 
+        private EasyAnticheatStatus GetGameEasyAnticheatStatus(Game game)
+        {
+            if (!IsGamePcGame(game))
+            {
+                return EasyAnticheatStatus.NotDetected;
+            }
+
+            if (!GetIsGameInstallDirValid(game))
+            {
+                return EasyAnticheatStatus.Unknown;
+            }
+
+            try
+            {
+                var eacFile = Directory
+                     .EnumerateFiles(game.InstallDirectory, "EasyAntiCheat*", SearchOption.AllDirectories)
+                     .FirstOrDefault();
+                if (eacFile != null)
+                {
+                    logger.Info($"EasyAntiCheat file {eacFile} detected for {game.Name}");
+                    return EasyAnticheatStatus.Detected;
+                }
+                else
+                {
+                    logger.Info($"EasyAntiCheat not detected for {game.Name}");
+                    return EasyAnticheatStatus.NotDetected;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error during EAC enumeration for {game.Name} with dir {game.InstallDirectory}");
+                return EasyAnticheatStatus.ErrorOnDetection;
+            }
+        }
+
         private bool IsGamePcGame(Game game)
         {
             if (game.Platforms == null)
@@ -406,6 +470,7 @@ namespace SpecialKHelper
         {
             if (game.InstallDirectory.IsNullOrEmpty() || !Directory.Exists(game.InstallDirectory))
             {
+                logger.Warn($"Installation directory of {game.Name} in {game.InstallDirectory??string.Empty} is not valid");
                 return false;
             }
 
@@ -431,6 +496,8 @@ namespace SpecialKHelper
             }
 
             var previousId = string.Empty;
+
+            // TODO move to game data cache...
             var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "SteamId_" + game.Id.ToString());
             if (File.Exists(historyFlagFile))
             {

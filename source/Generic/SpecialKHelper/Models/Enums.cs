@@ -22,4 +22,12 @@ namespace SpecialKHelper.Models
         [Description(LOC.SteamOverlayBpm)]
         BigPictureMode
     }
+
+    public enum EasyAnticheatStatus : int
+    {
+        Detected = 0,
+        NotDetected = 1,
+        ErrorOnDetection = 2,
+        Unknown = 3
+    }
 }

@@ -40,6 +40,9 @@ namespace SpecialKHelper
 
         private bool showSidebarItem = true;
         public bool ShowSidebarItem { get => showSidebarItem; set => SetValue(ref showSidebarItem, value); }
+
+        private bool stopIfEasyAntiCheat = true;
+        public bool StopIfEasyAntiCheat { get => stopIfEasyAntiCheat; set => SetValue(ref stopIfEasyAntiCheat, value); }
     }
 
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings
