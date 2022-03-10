@@ -128,27 +128,27 @@ namespace SpecialKHelper.ViewModels
             }
         }
 
-        private SectionData selectedProfileSection;
-        public SectionData SelectedProfileSection
+        private Section selectedProfileSection;
+        public Section SelectedProfileSection
         {
             get => selectedProfileSection;
             set
             {
                 selectedProfileSection = value;
-                CurrentEditSection = selectedProfileSection?.SectionName ?? string.Empty;
+                CurrentEditSection = selectedProfileSection.Name;
                 OnPropertyChanged();
             }
         }
 
-        private KeyValuePair<string, KeyData> selectedProfileKey;
-        public KeyValuePair<string, KeyData> SelectedProfileKey
+        private ProfileKey selectedProfileKey;
+        public ProfileKey SelectedProfileKey
         {
             get => selectedProfileKey;
             set
             {
                 selectedProfileKey = value;
-                CurrentEditKey = selectedProfileKey.Value?.KeyName ?? string.Empty;
-                CurrentEditValue = selectedProfileKey.Value?.Value ?? string.Empty;
+                CurrentEditKey = selectedProfileKey.Name;
+                CurrentEditValue = selectedProfileKey.Value;
                 OnPropertyChanged();
             }
         }
@@ -213,6 +213,8 @@ namespace SpecialKHelper.ViewModels
             {
                 SearchString = initialSearch;
             }
+
+            //TODO Rework this for something that makes more sense
         }
 
         bool FilterSkProfilesCollection(object item)
@@ -251,12 +253,33 @@ namespace SpecialKHelper.ViewModels
                 }
 
                 IniData ini = iniParser.ReadFile(iniPath);
-                profiles.Add(new SpecialKProfile
+
+                var profile = new SpecialKProfile
                 {
                     ProfileName = Path.GetFileName(profileDir),
-                    ProfileIniPath = iniPath,
-                    IniData = ini
-                });
+                    ProfileIniPath = iniPath
+                };
+
+                foreach (var iniSection in ini.Sections)
+                {
+                    var section = new Section
+                    {
+                        Name = iniSection.SectionName
+                    };
+
+                    foreach (var iniKey in iniSection.Keys)
+                    {
+                        section.Keys.Add(new ProfileKey
+                        {
+                            Name = iniKey.KeyName,
+                            Value = iniKey.Value
+                        });
+                    }
+
+                    profile.Sections.Add(section);
+                }
+
+                profiles.Add(profile);
             }
 
             return profiles;
@@ -277,7 +300,25 @@ namespace SpecialKHelper.ViewModels
                 return false;
             }
 
-            iniParser.WriteFile(specialKProfile.ProfileIniPath, specialKProfile.IniData, Encoding.UTF8);
+            // There is a weird bug in the ini Parser, where it will ignore the configured
+            // AssignmentSpacer when writing the file if the iniData object was created via
+            // empty initializer. For some reason, initializing it via the ReadFile method
+            // makes the ini parser use the configured AssignmentSpacer value
+            var tempIni = Path.Combine(playniteApi.Paths.ExtensionsDataPath, "tempIni.ini");
+            if (!File.Exists(tempIni))
+            {
+                File.WriteAllText(tempIni, string.Empty, Encoding.UTF8);
+            }
+            IniData iniData = iniParser.ReadFile(tempIni);
+            foreach (var section in specialKProfile.Sections)
+            {
+                foreach (var key in section.Keys)
+                {
+                    iniData[section.Name][key.Name] = key.Value;
+                }
+            }
+
+            iniParser.WriteFile(specialKProfile.ProfileIniPath, iniData, Encoding.UTF8);
             playniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDialogMessageSaveProfile"), specialKProfile.ProfileName, specialKProfile.ProfileIniPath));
             return true;
@@ -293,22 +334,32 @@ namespace SpecialKHelper.ViewModels
 
         private bool SaveValue()
         {
-            if (AddValueToIni(SelectedProfile.IniData, CurrentEditSection, CurrentEditKey, CurrentEditValue) == 1)
+            if (AddValueToIni(SelectedProfile, CurrentEditSection, CurrentEditKey, CurrentEditValue) == 1)
             {
-                OnPropertyChanged("SelectedProfile");
-                OnPropertyChanged("SelectedProfileKey");
                 return true;
             }
 
             return false;
         }
 
-        private int AddValueToIni(IniData ini, string section, string key, string newValue)
+        private int AddValueToIni(SpecialKProfile profile, string section, string key, string newValue)
         {
-            var currentValue = ini[section][key];
-            if (currentValue == null || currentValue != newValue)
+            var profileSection = profile.Sections.FirstOrDefault(x => x.Name == section);
+            if (profileSection == null)
             {
-                ini[section][key] = newValue;
+                profile.Sections.Add(new Section { Name = section });
+            }
+
+            var existingSection = profile.Sections.FirstOrDefault(x => x.Name == section);
+            var existingKey = existingSection.Keys.FirstOrDefault(x => x.Name == key);
+            if (existingKey == null)
+            {
+                existingSection.Keys.Add(new ProfileKey { Name = key, Value = newValue});
+                return 1;
+            }
+            else if (existingKey.Value != newValue)
+            {
+                existingKey.Value = newValue;
                 return 1;
             }
 

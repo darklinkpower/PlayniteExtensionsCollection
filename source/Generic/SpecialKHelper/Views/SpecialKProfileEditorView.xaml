@@ -38,15 +38,15 @@
                     <DockPanel Grid.Column="0">
                         <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelProfiles}" Margin="0,0,0,5" DockPanel.Dock="Top" />
                         <ListBox SelectionMode="Single" ItemsSource="{Binding SKProfilesCollection}"
-                         SelectedItem="{Binding SelectedProfile}" IsSynchronizedWithCurrentItem="True"
-                         DisplayMemberPath="ProfileName" DockPanel.Dock="Top" />
+                                 SelectedItem="{Binding SelectedProfile}" IsSynchronizedWithCurrentItem="True"
+                                 DisplayMemberPath="ProfileName" DockPanel.Dock="Top" />
                     </DockPanel>
 
                     <DockPanel Grid.Column="1" Margin="10,0,0,0">
                         <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_EditorLabelSections}"  Margin="0,0,0,5" DockPanel.Dock="Top" />
-                        <ListBox SelectionMode="Single" ItemsSource="{Binding SelectedProfile.IniData.Sections}"
-                         SelectedItem="{Binding SelectedProfileSection}" IsSynchronizedWithCurrentItem="True"
-                         DisplayMemberPath="SectionName" DockPanel.Dock="Top" />
+                        <ListBox SelectionMode="Single" ItemsSource="{Binding SelectedProfile.Sections}"
+                                 SelectedItem="{Binding SelectedProfileSection}" IsSynchronizedWithCurrentItem="True"
+                                 DisplayMemberPath="Name" DockPanel.Dock="Top" />
                     </DockPanel>
 
                     <DockPanel Grid.Column="2" Margin="10,0,0,0">
@@ -56,8 +56,8 @@
                                   CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="False" CanUserSortColumns="True"   
                                   SelectedItem="{Binding SelectedProfileKey}" IsSynchronizedWithCurrentItem="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{DynamicResource LOCSpecial_K_Helper_EditorLabelKey}" Binding="{Binding Value.KeyName}" IsReadOnly="True" />
-                                <DataGridTextColumn Header="{DynamicResource LOCSpecial_K_Helper_EditorLabelValue}" Binding="{Binding Value.Value}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="{DynamicResource LOCSpecial_K_Helper_EditorLabelKey}" Binding="{Binding Name}" IsReadOnly="True" />
+                                <DataGridTextColumn Header="{DynamicResource LOCSpecial_K_Helper_EditorLabelValue}" Binding="{Binding Value}" IsReadOnly="False" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
