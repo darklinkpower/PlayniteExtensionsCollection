@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Open Special K Profiles Editor</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Ouvrir l'éditeur de profils Special K</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Open Steam Controller configuration for &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id for game &quot;{0}&quot; needed to open the configuration was not found.
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Ouvrir la configuration du contrôleur Steam pour «{0}»</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id pour le jeu «{0}» pour ouvrir la configuration n'a pas été trouvé.
 
-Please launch the game once so this Id can be automatically configured.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Configuration for game &quot;{0}&quot; with Steam Id &quot;{1}&quot; will be opened.
+Veuillez lancer le jeu une fois pour que cet Id puisse être configuré automatiquement.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">La configuration du contrôleur Steam pour le jeu &quot;{0}&quot; avec Steam Id &quot;{1}&quot; sera ouverte.
 
-Be aware that a controller needs to be currently connected and enabled for Steam Controller for the configuration window to open.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Add feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Remove feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Add feature to enable execution in Selective Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
+Sachez qu'un contrôleur doit être connecté et activé pour que la fenêtre de configuration s'ouvre.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Ajouter une fonctionnalité pour désactiver l'exécution en mode global</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Supprimer la fonctionnalité pour désactiver l'exécution en mode global</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Ajouter une fonctionnalité pour activer l'exécution en mode sélectif</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Supprimer la fonctionnalité pour activer l'exécution en mode sélectif</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Select game to use for Steam configuration or cancel to use a generic option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K Profile Editor</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Sélectionnez le jeu à utiliser pour la configuration Steam ou annulez pour utiliser une option générique</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Fichier Special K introuvable dans {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Le service Special K {0} n'a pas pu être démarré</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Éditeur de profil Special K</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Done</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K execution mode:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games. Execution is stil stopped if they have either of the exclusion features &quot;[SK] Global Mode Disable&quot;
+    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Aide</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Fait</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Mode d'exécution Special K :</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Mode Global : Les services Special K sont lancés lors du lancement de tous les jeux. L'exécution est arrêtée si l'une des fonctionnalités d'exclusion &quot;[SK] Mode global désactivé&quot;
 
-Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop execution if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Only start Special K services when starting PC games</sys:String>
+Mode sélectif : Les services Special K ne sont lancés que pour les jeux qui ont la fonction d'inclusion &quot;[SK] Mode sélectif activé&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Arrêter l'exécution si la jeu a la fonction &quot;Valve anti-triche activées&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Lancer uniquement les services Special K lors du démarrage des parties PC</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Default settings for new profiles created by Special K</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Enable Steam overlay</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Paramètres par défaut pour les nouveaux profils créés par Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Activer Steam overlay</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam overlay to use if Steam Big Picture mode is running:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Enable Reshade</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Activer Reshade</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Enable Flip Model Presentation</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Disable Nvidia bloatware</sys:String>
