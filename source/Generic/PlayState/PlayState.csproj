@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Enums\NotificationTypes.cs" />
     <Compile Include="HotkeyHelper.cs" />
+    <Compile Include="Models\PlayStateData.cs" />
     <Compile Include="Models\Hotkey.cs" />
     <Compile Include="Models\ProcessItem.cs" />
     <Compile Include="PlayState.cs" />

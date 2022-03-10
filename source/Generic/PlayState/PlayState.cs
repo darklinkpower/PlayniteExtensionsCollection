@@ -38,7 +38,6 @@ namespace PlayState
         private Window currentSplashWindow;
         private DispatcherTimer timer;
         private List<ProcessItem> gameProcesses;
-        private List<Tuple<Guid, Stopwatch>> stopwatchList;
         private bool suspendPlaytimeOnly = false;
         private Window mainWindow;
         private WindowInteropHelper windowInterop;
@@ -47,7 +46,7 @@ namespace PlayState
         private bool globalHotkeyRegistered = false;
         private bool processesSuspended = false;
         private bool showWindowsNotificationsStyle = false;
-        private DateTime playedDateTime;
+        private List<PlayStateData> playStateData;
 
         private PlayStateSettingsViewModel settings { get; set; }
 
@@ -63,7 +62,7 @@ namespace PlayState
             };
             SetExclusionList();
 
-            stopwatchList = new List<Tuple<Guid, Stopwatch>>();
+            playStateData = new List<PlayStateData>();
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1000);
@@ -268,8 +267,6 @@ namespace PlayState
                 return;
             }
 
-            playedDateTime = DateTime.Now;
-
             suspendPlaytimeOnly = false;
             if (settings.Settings.SubstractSuspendedPlaytimeOnStopped &&
                 (settings.Settings.GlobalOnlySuspendPlaytime ||
@@ -279,7 +276,7 @@ namespace PlayState
                 currentGame = game;
                 splashWindowViewModel.GameName = currentGame.Name;
                 gameProcesses = null;
-                CreateGameStopwatchTuple(game);
+                AddGame(game);
                 return;
             }
 
@@ -308,7 +305,7 @@ namespace PlayState
                         gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
                         if (gameProcesses.Count > 0)
                         {
-                            CreateGameStopwatchTuple(game);
+                            AddGame(game);
                         }
                     }
                     return;
@@ -331,7 +328,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0)
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
-                    CreateGameStopwatchTuple(game);
+                    AddGame(game);
                     return;
                 }
 
@@ -359,7 +356,7 @@ namespace PlayState
                     if (gameProcesses.Count > 0)
                     {
                         logger.Debug($"Found {gameProcesses.Count} game processes");
-                        CreateGameStopwatchTuple(game);
+                        AddGame(game);
                         return;
                     }
                     else
@@ -425,13 +422,13 @@ namespace PlayState
         /// </summary>
         private ulong GetRealPlaytime()
         {
-            var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Elapsed;
+            var suspendedTime = playStateData.FirstOrDefault(x => x.Game.Id == currentGame.Id)?.Stopwatch.Elapsed;
             ulong elapsedSeconds = 0;
             if (suspendedTime != null)
             {
                 elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
             }
-            return Convert.ToUInt64(DateTime.Now.Subtract(playedDateTime).TotalSeconds) - elapsedSeconds;
+            return Convert.ToUInt64(DateTime.Now.Subtract(playStateData.FirstOrDefault(x => x.Game.Id == currentGame.Id).StartDate).TotalSeconds) - elapsedSeconds;
         }
 
         /// <summary>
@@ -564,7 +561,7 @@ namespace PlayState
                     break;
                 case NotificationTypes.Information: // for showing the actual status
                     {
-                        if (currentGame == null)
+                        if (currentGame == null || !playStateData.Any(x => x.Game.Id == currentGame.Id))
                         {
                             break;
                         }
@@ -599,6 +596,11 @@ namespace PlayState
         {
             if (currentGame == null)
             {
+                if (isSuspended)
+                {
+                    isSuspended = false;
+                    processesSuspended = false;
+                }
                 return;
             }
 
@@ -638,7 +640,7 @@ namespace PlayState
                         {
                             ShowNotification(NotificationTypes.PlaytimeResumed);
                         }
-                        stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
+                        playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Stop();
                         logger.Debug($"Game {currentGame.Name} resumed");
                     }
                     else
@@ -652,7 +654,7 @@ namespace PlayState
                         {
                             ShowNotification(NotificationTypes.PlaytimeSuspended);
                         }
-                        stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
+                        playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Start();
                         logger.Debug($"Game {currentGame.Name} suspended");
                     }
                 }
@@ -661,7 +663,7 @@ namespace PlayState
             {
                 logger.Error(e, "Error while suspending or resuming game");
                 gameProcesses = null;
-                stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
+                playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Stop();
             }
         }
 
@@ -754,7 +756,7 @@ namespace PlayState
                 if (game.PluginId == Guid.Empty ||
                     (game.PluginId != Guid.Empty && !settings.Settings.SubstractOnlyNonLibraryGames))
                 {
-                    var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == game.Id)?.Item2.Elapsed;
+                    var suspendedTime = playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Elapsed;
                     if (suspendedTime != null)
                     {
                         var elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
@@ -771,29 +773,32 @@ namespace PlayState
                 }
             }
 
-            RemoveGameStopwatchTuple(game);
+            RemoveGame(game);
         }
 
-        private void CreateGameStopwatchTuple(Game game)
+        private void AddGame(Game game)
         {
-            if (stopwatchList.Any(x => x.Item1 == game.Id))
+            if (playStateData.Any(x => x.Game.Id == game.Id && x.Stopwatch != null))
             {
-                logger.Debug($"A stopwatch for game {game.Name} with id {game.Id} already exists");
+                logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
             }
             else
             {
-                stopwatchList.Add(new Tuple<Guid, Stopwatch>(game.Id, new Stopwatch()));
-                logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was created");
+                playStateData.Add(new PlayStateData(game, DateTime.Now, new Stopwatch()));
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was created");
             }
         }
 
-        private void RemoveGameStopwatchTuple(Game game)
+        private void RemoveGame(Game game)
         {
-            var tuple = stopwatchList.FirstOrDefault(x => x.Item1 == game.Id);
-            if (tuple != null)
+            if (playStateData.Any(x => x.Game.Id == game.Id))
             {
-                stopwatchList.Remove(tuple);
+                playStateData.Remove(playStateData.Find(x => x.Game.Id == game.Id));
                 logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was removed on game stopped");
+                if (currentGame == game)
+                {
+                    currentGame = playStateData.Any() ? playStateData.Last().Game : null;
+                }
             }
         }
 
