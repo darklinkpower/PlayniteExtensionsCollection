@@ -57,6 +57,11 @@ Selective Mode: Special K services are started only for games that have the incl
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">配置档：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">配置档路径：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">保存配置档</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
+    
+Error: {2}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">配置档已保存。
 
 配置档名称：{0}
