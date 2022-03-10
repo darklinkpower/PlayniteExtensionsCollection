@@ -44,13 +44,13 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">桌面</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">大屏幕模式</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Search:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Use fuzzy search</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profiles</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Key</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">搜索：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">使用模糊搜索</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">配置档</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">章节</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">键</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">键</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">键值</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
