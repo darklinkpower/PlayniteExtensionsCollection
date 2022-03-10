@@ -64,4 +64,10 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">集：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">键：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">值：</sys:String>
+
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+
+Indicates if the extension is allowed to start the Special K services when starting a game.
+If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
 </ResourceDictionary>
