@@ -22,10 +22,11 @@ Ten en cuenta que un control necesita estar conectado y habilitado para que se a
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Hecho</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Modo de ejecución de Special K:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Modo global: Los servicios de Special K se inician cuando se lanzan todos los juegos. La ejecución se detiene si tienen alguna de las características de exclusión &quot;[SK] Global Mode Disable&quot;
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Modo global: Los servicios de Special K se inician al lanzar todos los juegos, excepto aquellos que tienen la opción de exclusión &quot;[SK] Global Mode Disable&quot; añadida por la extensión
 
-Modo selectivo: Los servicios de Special K se inician solo para los juegos que tienen la función de inclusión &quot;[SK] Selective Mode Enable&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Detener la ejecución si el juego tiene la característica &quot;Valve Anti-Cheat Enabled&quot;</sys:String>
+Modo selectivo: Los servicios de Special K se inician sólo para los juegos que tienen la característica de inclusión &quot;[SK] Selective Mode Enable&quot; añadida por la extensión</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Detener el inicio de los servicios si el juego tiene la característica &quot;Valve Anti-Cheat Enabled&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Detener el inicio de los servicios si se detecta que el juego utiliza EasyAntiCheat</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Únicamente iniciar los servicios de Special K al iniciar juegos de PC</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Configuración predeterminada para nuevos perfiles creados por Special K</sys:String>
@@ -56,6 +57,11 @@ Después de tener un valor correcto, puedeS pegarlo en el cuadro de texto.</sys:
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Perfil:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Ruta del perfil:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Guardar perfil</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Eliminar perfil</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">¿Está seguro que desea eliminar el perfil? Esta acción no se puede deshacer.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Error al eliminar el perfil &quot;{0}&quot; en {1}
+
+Error: {2}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Perfil guardado.
 
 Nombre del perfil: {0}
