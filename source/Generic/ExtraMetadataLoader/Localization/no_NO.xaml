@@ -142,4 +142,9 @@ Mindre bilder anbefales fordi store bilder kan gjøre Playnite tregere.</sys:Str
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">Vis video av gjennomspilling på YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Søk etter video på YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video ikke funnet</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    
+Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
+Select &quot;No&quot; to manually make selections when necessary.</sys:String>
 </ResourceDictionary>

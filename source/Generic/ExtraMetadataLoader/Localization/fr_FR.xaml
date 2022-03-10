@@ -142,4 +142,9 @@ Le redimensionnement est recommandé car les grandes images peuvent ralentir Pla
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">Voir une vidéo de gameplay sur YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Rechercher une vidéo sur YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Vidéo non trouvée</sys:String>
+
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    
+Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
+Select &quot;No&quot; to manually make selections when necessary.</sys:String>
 </ResourceDictionary>

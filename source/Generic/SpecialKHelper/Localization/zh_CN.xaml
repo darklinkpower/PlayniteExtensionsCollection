@@ -1,39 +1,74 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Open Special K Profiles Editor</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">打开 Special K 配置档编辑器</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Add feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Remove feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Add feature to enable execution in Selective Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
-    
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Select game to use for Steam configuration or cancel to use a generic option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound">Special K dll not found in {0}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K Profile Editor</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">打开“{0}”的 Steam 控制器配置</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">找不到要打开配置的游戏的 Steam ID “{0}”。
 
-    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Done</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K execution mode:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games. Execution is stil stopped if they have either of the exclusion features &quot;[SK] Global Mode Disable&quot;
+请先启动一次游戏，然后才能自动配置此 ID 。</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">将打开 Steam ID 为“{1}”的游戏“{0}”的 Steam 控制器配置。
 
-Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop execution if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Only start Special K services when starting PC games</sys:String>
+注意，对于 Steam 控制器，为打开配置窗口，需要控制器已连接且启用。</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">添加在全局模式下禁用执行的功能特色</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">移除在全局模式下禁用执行的功能特色</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">添加在选取模式下启用执行的功能特色</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">移除在选取模式下启用执行的功能特色</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Default settings for new profiles created by Special K</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Enable Steam overlay</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam overlay to use if Steam Big Picture mode is running:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Enable Reshade</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Enable Flip Model Presentation</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Disable Nvidia bloatware</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Set framerate limit</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Target FPS:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay.
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">选择要用于 Steam 配置的游戏，或取消以使用通用选项</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K 配置档编辑器</sys:String>
 
-After you have a correct value, you can paste it to the text box.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selective mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Desktop</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">帮助</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">完成</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K 执行模式：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">全局模式：启动所有游戏时都启动 Special K 服务。若它们具有排除性的功能特色“[SK] Global Mode Disable”，则执行依然会停止。
+
+选取模式：只对具有包含性的功能特色“[SK] Selective Mode Enable”的游戏启动 Special K 服务。</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">如果游戏具备“已启用 Valve 反作弊模式”（即 VAC）的功能特色，则停止执行</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">仅在启动 PC 游戏时启动 Special K 服务</sys:String>
+
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Special K 所创建新配置档的默认设置</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">启用 Steam 叠加层</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam 大屏幕模式运行时使用的 Steam 叠加层：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">启用 Reshade</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">启用翻转模型演示文稿</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">在窗口模式下运行时使游戏相同或更好地运行</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">禁用 Nvidia 的臃肿软件</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">设置帧率限制</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">目标 FPS：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">备注：为了确保您为指定的显示器提供了正确的值，请先参考 Special K 叠加层中提供的值。
+
+在您得到正确的值后，可将其粘贴到文本框中。</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">全局模式</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">选取模式</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">桌面</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">大屏幕模式</sys:String>
+
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">搜索：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">使用模糊搜索</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">配置档</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">集：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">键</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">键</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
+
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">配置档：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">配置档路径：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">保存配置档</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">配置档已保存。
+
+配置档名称：{0}
+配置档路径：{1}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">保存值</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">已选选项</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">集：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">键：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">值：</sys:String>
+
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+
+Indicates if the extension is allowed to start the Special K services when starting a game.
+If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
 </ResourceDictionary>
