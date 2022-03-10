@@ -57,6 +57,11 @@ Wenn Sie einen korrekten Wert haben, können Sie ihn in das Textfeld einfügen.<
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Save profile</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
+    
+Error: {2}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profile saved.
 
 Profile name: {0}
