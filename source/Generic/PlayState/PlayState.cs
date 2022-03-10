@@ -510,7 +510,7 @@ namespace PlayState
                             .AddText(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"))
                             .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
                                 $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage))) // Show game image in the notification
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage))) // Show game image in the notification
                             .Show();
                     }
                     break;
@@ -526,7 +526,7 @@ namespace PlayState
                             .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"))
                             .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
                                 $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage)))
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
                             .Show();
                     }
                     break;
@@ -542,7 +542,7 @@ namespace PlayState
                             .AddText(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"))
                             .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
                                 $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage)))
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
                             .Show();
                     }
                     break;
@@ -558,7 +558,7 @@ namespace PlayState
                             .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"))
                             .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
                                 $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(Path.Combine(PlayniteApi.Paths.ConfigurationPath, "library/files", currentGame.BackgroundImage)))
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
                             .Show();
                     }
                     break;
