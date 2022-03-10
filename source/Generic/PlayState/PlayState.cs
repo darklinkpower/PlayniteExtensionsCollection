@@ -439,8 +439,8 @@ namespace PlayState
         /// </summary>
         private string GetHoursString(ulong playtimeSeconds)
         {
-            TimeSpan playtime = TimeSpan.FromSeconds(playtimeSeconds);
-            int playtimeHours = playtime.Hours + playtime.Days * 24;
+            var playtime = TimeSpan.FromSeconds(playtimeSeconds);
+            var playtimeHours = playtime.Hours + playtime.Days * 24;
             if (playtimeHours == 1)
             {
                 if (playtime.Minutes == 1)
