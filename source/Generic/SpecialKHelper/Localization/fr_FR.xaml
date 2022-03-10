@@ -22,10 +22,11 @@ Sachez qu'un contrôleur doit être connecté et activé pour que la fenêtre de
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Aide</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Fait</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Mode d'exécution Special K :</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Mode Global : Les services Special K sont lancés lors du lancement de tous les jeux. L'exécution est arrêtée si l'une des fonctionnalités d'exclusion &quot;[SK] Mode global désactivé&quot;
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games except for those that have the &quot;[SK] Global Mode Disable&quot; exclusion feature added by the extension
 
-Mode sélectif : Les services Special K ne sont lancés que pour les jeux qui ont la fonction d'inclusion &quot;[SK] Mode sélectif activé&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Arrêter l'exécution si la jeu a la fonction &quot;Valve anti-triche activées&quot;</sys:String>
+Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot; added by the extension</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Lancer uniquement les services Special K lors du démarrage des parties PC</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Paramètres par défaut pour les nouveaux profils créés par Special K</sys:String>
