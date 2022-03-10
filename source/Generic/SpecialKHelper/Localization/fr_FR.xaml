@@ -66,9 +66,9 @@ Chemin du profil : {1}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Clé :</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Valeur :</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Changeur de statut de l'assistant Special K
 
-Indicates if the extension is allowed to start the Special K services when starting a game.
-If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
+Indique si l'extension est autorisée à démarrer les services de Special K lors du démarrage d'un jeu.
+Si cette option est désactivée, les services ne seront pas démarrés, peu importe les paramètres ou la configuration.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Afficher l'icône dans le panneau latéral pour changer l'état de l'extension</sys:String>
 </ResourceDictionary>
