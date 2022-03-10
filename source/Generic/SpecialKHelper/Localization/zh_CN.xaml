@@ -15,7 +15,8 @@
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">移除在选取模式下启用执行的功能特色</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">选择要用于 Steam 配置的游戏，或取消以使用通用选项</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound">在 {0} 中找不到 Special K 的 dll 文件</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K 配置档编辑器</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">帮助</sys:String>
@@ -50,7 +51,7 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">集：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">键</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">键</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">键值</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">配置档：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">配置档路径：</sys:String>
