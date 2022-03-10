@@ -217,6 +217,12 @@ namespace SpecialKHelper
 
         private void ValidateReshadeConfiguration(Game game)
         {
+            if (!Directory.Exists(reshadeBase))
+            {
+                logger.Warn($"Reshade directory not found in {reshadeBase}");
+                return;
+            }
+
             var gameReshadePresetSubPath = Path.Combine("reshade-presets", game.Id.ToString() + ".ini");
             var gameReshadePreset = Path.Combine(reshadeBase, gameReshadePresetSubPath);
 
