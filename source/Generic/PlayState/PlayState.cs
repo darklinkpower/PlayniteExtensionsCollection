@@ -778,7 +778,7 @@ namespace PlayState
 
         private void AddGame(Game game)
         {
-            if (playStateData.Any(x => x.Game.Id == game.Id && x.Stopwatch != null))
+            if (playStateData.Any(x => x.Game.Id == game.Id))
             {
                 logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
             }
@@ -794,7 +794,7 @@ namespace PlayState
             if (playStateData.Any(x => x.Game.Id == game.Id))
             {
                 playStateData.Remove(playStateData.Find(x => x.Game.Id == game.Id));
-                logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was removed on game stopped");
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was removed on game stopped");
                 if (currentGame == game)
                 {
                     currentGame = playStateData.Any() ? playStateData.Last().Game : null;
