@@ -22,10 +22,11 @@
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">帮助</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">完成</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K 执行模式：</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">全局模式：启动所有游戏时都启动 Special K 服务。若它们具有排除性的功能特色“[SK] Global Mode Disable”，则执行依然会停止。
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games except for those that have the &quot;[SK] Global Mode Disable&quot; exclusion feature added by the extension
 
-选取模式：只对具有包含性的功能特色“[SK] Selective Mode Enable”的游戏启动 Special K 服务。</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">如果游戏具备“已启用 Valve 反作弊模式”（即 VAC）的功能特色，则停止执行</sys:String>
+Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot; added by the extension</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">仅在启动 PC 游戏时启动 Special K 服务</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Special K 所创建新配置档的默认设置</sys:String>
