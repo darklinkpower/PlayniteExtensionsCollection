@@ -143,8 +143,8 @@ Se recomienda reducir el tamaño porque las imágenes grandes pueden hacer que P
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Buscar vídeo en YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video no encontrado</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">¿Selecciona los logos para descargar automáticamente?
     
-Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
-Select &quot;No&quot; to manually make selections when necessary.</sys:String>
+Selecciona &quot;Si&quot; para seleccionar automáticamente los logos para descargar sin ninguna interacción del usuario.
+Seleccione &quot;No&quot; para hacer selecciones manualmente cuando sea necesario.</sys:String>
 </ResourceDictionary>
