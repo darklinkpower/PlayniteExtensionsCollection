@@ -289,3 +289,11 @@ Packages:
     Changelog:
     - Updated localizations
     - Add menu item to automatically download videos from YouTube in batch
+  - Version: 1.40
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_40.pext
+    Changelog:
+    - Updated localizations
+    - Added dialog to select if logos should be downloaded completely automatically or not
+    - Show progress information in progress dialogs
