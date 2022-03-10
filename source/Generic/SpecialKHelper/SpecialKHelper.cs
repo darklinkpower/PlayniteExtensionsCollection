@@ -139,11 +139,12 @@ namespace SpecialKHelper
             //    }
             //}
 
+            var startSuccess = false;
             foreach (var cpuArchitecture in cpuArchitectures)
             {
                 if (startServices)
                 {
-                    StartSpecialkService(cpuArchitecture, skifPath);
+                    startSuccess = StartSpecialkService(cpuArchitecture, skifPath);
                 }
                 else
                 {
@@ -152,7 +153,7 @@ namespace SpecialKHelper
                 }
             }
 
-            if (!startServices)
+            if (!startServices || !startSuccess)
             {
                 return;
             }
@@ -424,7 +425,7 @@ namespace SpecialKHelper
             }
 
             var previousId = string.Empty;
-            var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "attempted" + game.Id.ToString());
+            var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "SteamId_" + game.Id.ToString());
             if (File.Exists(historyFlagFile))
             {
                 previousId = File.ReadAllText(historyFlagFile).Trim();
@@ -512,7 +513,7 @@ namespace SpecialKHelper
                 logger.Info($"Special K dll not found in {dllPath}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_dll_notfound" + cpuArchitecture,
-                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), dllPath),
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
                     NotificationType.Error
                 ));
 
@@ -522,7 +523,7 @@ namespace SpecialKHelper
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture +".exe");
             if (!File.Exists(servletExe))
             {
-                logger.Info($"Special K dll not found in {dllPath}");
+                logger.Info($"Special K servlet exe not found in {dllPath}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
@@ -552,6 +553,11 @@ namespace SpecialKHelper
             }
 
             logger.Info($"Special K global service for \"{cpuArchitecture}\" could not be opened");
+            PlayniteApi.Notifications.Add(new NotificationMessage(
+                "SkNotStarted" + cpuArchitecture,
+                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart"), cpuArchitecture),
+                NotificationType.Error
+            ));
             return false;
         }
 
@@ -574,7 +580,7 @@ namespace SpecialKHelper
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture + ".exe");
             if (!File.Exists(servletExe))
             {
-                logger.Info($"Special K dll not found in {dllPath}");
+                logger.Info($"Special K servlet exe not found in {servletExe}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
@@ -757,7 +763,7 @@ namespace SpecialKHelper
                     }
                 });
             }
-            else
+            else if (settings.Settings.SpecialKExecutionMode == SpecialKExecutionMode.Selective)
             {
                 menuItems.Add(new GameMenuItem
                 {
@@ -799,7 +805,7 @@ namespace SpecialKHelper
                 }
             }
 
-            var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "attempted" + game.Id.ToString());
+            var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "SteamId_" + game.Id.ToString());
             if (File.Exists(historyFlagFile))
             {
                 return File.ReadAllText(historyFlagFile);
