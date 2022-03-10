@@ -22,10 +22,11 @@ Ten en cuenta que un control necesita estar conectado y habilitado para que se a
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Hecho</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Modo de ejecución de Special K:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Modo global: Los servicios de Special K se inician cuando se lanzan todos los juegos. La ejecución se detiene si tienen alguna de las características de exclusión &quot;[SK] Global Mode Disable&quot;
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games except for those that have the &quot;[SK] Global Mode Disable&quot; exclusion feature added by the extension
 
-Modo selectivo: Los servicios de Special K se inician solo para los juegos que tienen la función de inclusión &quot;[SK] Selective Mode Enable&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Detener la ejecución si el juego tiene la característica &quot;Valve Anti-Cheat Enabled&quot;</sys:String>
+Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot; added by the extension</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Únicamente iniciar los servicios de Special K al iniciar juegos de PC</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Configuración predeterminada para nuevos perfiles creados por Special K</sys:String>
