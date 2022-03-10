@@ -55,88 +55,128 @@ namespace SpecialKHelper.ViewModels
                 }
 
                 OnPropertyChanged();
-                OnPropertyChanged("SelectedProfileIsReshadeReady");
-                OnPropertyChanged("SelectedProfileReshade32When");
-                OnPropertyChanged("SelectedProfileReshade64When");
             }
         }
 
-        public bool SelectedProfileIsReshadeReady
+        private SectionData selectedProfileSection;
+        public SectionData SelectedProfileSection
         {
-            get
-            {
-                if (SelectedProfile != null)
-                {
-                    return SelectedProfile.IsReshadeReady;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            get => selectedProfileSection;
             set
             {
-                if (SelectedProfile == null || SelectedProfile.IsReshadeReady == value)
-                {
-                    return;
-                }
-
-                SelectedProfile.IsReshadeReady = value;
-                OnPropertyChanged();
-                OnPropertyChanged("SelectedProfileReshade32When");
-                OnPropertyChanged("SelectedProfileReshade64When");
-            }
-        }
-
-        public string SelectedProfileReshade32When
-        {
-            get
-            {
-                if (SelectedProfile != null)
-                {
-                    return SelectedProfile.Import.ReShade32.When;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                if (SelectedProfile == null || SelectedProfile.Import.ReShade32.When == value)
-                {
-                    return;
-                }
-
-                SelectedProfile.Import.ReShade32.When = value;
+                selectedProfileSection = value;
                 OnPropertyChanged();
             }
         }
 
-        public string SelectedProfileReshade64When
+        private KeyValuePair<string, KeyData> selectedProfileKey;
+        public KeyValuePair<string, KeyData> SelectedProfileKey
+        {
+            get => selectedProfileKey;
+            set
+            {
+                selectedProfileKey = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string selectedProfileKeyValue;
+        public string SelectedProfileKeyValue
         {
             get
             {
-                if (SelectedProfile != null)
+                if (selectedProfileKeyValue.IsNullOrEmpty())
                 {
-                    return SelectedProfile.Import.ReShade64.When;
+                    return string.Empty;
                 }
                 else
                 {
-                    return null;
+                    return selectedProfileKeyValue;
                 }
             }
             set
             {
-                if (SelectedProfile == null || SelectedProfile.Import.ReShade64.When == value)
-                {
-                    return;
-                }
-
-                SelectedProfile.Import.ReShade64.When = value;
+                selectedProfileKeyValue = value;
                 OnPropertyChanged();
             }
         }
+
+        //public bool SelectedProfileIsReshadeReady
+        //{
+        //    get
+        //    {
+        //        if (SelectedProfile != null)
+        //        {
+        //            return SelectedProfile.IsReshadeReady;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (SelectedProfile == null || SelectedProfile.IsReshadeReady == value)
+        //        {
+        //            return;
+        //        }
+
+        //        SelectedProfile.IsReshadeReady = value;
+        //        OnPropertyChanged();
+        //        OnPropertyChanged("SelectedProfileReshade32When");
+        //        OnPropertyChanged("SelectedProfileReshade64When");
+        //    }
+        //}
+
+        //public string SelectedProfileReshade32When
+        //{
+        //    get
+        //    {
+        //        if (SelectedProfile != null)
+        //        {
+        //            return SelectedProfile.Import.ReShade32.When;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (SelectedProfile == null || SelectedProfile.Import.ReShade32.When == value)
+        //        {
+        //            return;
+        //        }
+
+        //        SelectedProfile.Import.ReShade32.When = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
+        //public string SelectedProfileReshade64When
+        //{
+        //    get
+        //    {
+        //        if (SelectedProfile != null)
+        //        {
+        //            return SelectedProfile.Import.ReShade64.When;
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (SelectedProfile == null || SelectedProfile.Import.ReShade64.When == value)
+        //        {
+        //            return;
+        //        }
+
+        //        SelectedProfile.Import.ReShade64.When = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         private bool useFuzzySearch { get; set; } = false;
         public bool UseFuzzySearch
@@ -189,7 +229,7 @@ namespace SpecialKHelper.ViewModels
 
             if (UseFuzzySearch)
             {
-                if (Fuzz.Ratio(SearchString, profile.ProfileName.ToLower()) > 83)
+                if (Fuzz.Ratio(SearchString, profile.ProfileName.ToLower()) > 80)
                 {
                     return true;
                 }
@@ -214,45 +254,29 @@ namespace SpecialKHelper.ViewModels
                     continue;
                 }
 
-                var newProfile = new SpecialKProfile
-                {
-                    ProfileName = Path.GetFileName(profileDir),
-                    ProfileDirectory = profileDir,
-                    ProfileIniPath = iniPath
-                };
-
                 IniData ini = iniParser.ReadFile(iniPath);
-                var iniValue = string.Empty;
-                iniValue = ini["Steam.System"]["AppID"];
-                if (iniValue != null)
+                var sections = new Dictionary<string, Dictionary<string, string>>();
+                foreach (var section in ini.Sections)
                 {
-                    newProfile.Steam.System.AppID = iniValue;
+                    var keys = new Dictionary<string, string>();
+                    foreach (var key in section.Keys)
+                    {
+                        keys.Add(key.KeyName, key.Value);
+                    }
+
+                    if (keys.Count == 0)
+                    {
+                        continue;
+                    }
+                    sections.Add(section.SectionName, keys);
                 }
 
-                newProfile.Steam.System.AppID = GetStringIfValueFoundOrReturnOriginal(newProfile.Steam.System.AppID, ini, "Steam.System", "AppID");
-
-                newProfile.Steam.System.PreLoadSteamOverlay = GetNullableBoolFromString(
-                    ini["Steam.System"]["PreLoadSteamOverlay"]);
-
-                newProfile.Compatibility.General.DisableBloatWare_NVIDIA = GetNullableBoolFromString(
-                    ini["Compatibility.General"]["DisableBloatWare_NVIDIA"]);
-
-                newProfile.Render.DXGI.UseFlipDiscard = GetNullableBoolFromString(
-                    ini["Render.DXGI"]["UseFlipDiscard"]);
-
-                newProfile.Render.FrameRate.TargetFPS = GetDoubleOrZeroFromString(
-                    ini["Render.FrameRate"]["TargetFPS"]);
-
-                newProfile.Render.FrameRate.SleeplessRenderThread = GetNullableBoolFromString(
-                    ini["Render.FrameRate"]["SleeplessRenderThread"]);
-
-                newProfile.Render.OSD.ShowInVideoCapture = GetNullableBoolFromString(
-                    ini["Render.OSD"]["ShowInVideoCapture"]);
-
-                //newProfile.Import.ReShade64.When = GetStringIfValueFoundOrNull(newProfile.Import.ReShade64.When, ini, "Import.ReShade64", "When");
-                //newProfile.Import.ReShade32.When = GetStringIfValueFoundOrNull(newProfile.Import.ReShade32.When, ini, "Import.ReShade64", "When");
-                newProfile.UpdateReshadeStatus();
-                profiles.Add(newProfile);
+                profiles.Add(new SpecialKProfile
+                {
+                    ProfileName = Path.GetFileName(profileDir),
+                    ProfileIniPath = iniPath,
+                    IniData = ini
+                });
             }
 
             return profiles;
@@ -280,70 +304,70 @@ namespace SpecialKHelper.ViewModels
             return originalValue;
         }
 
-        public RelayCommand<object> SetAsReshadeReadyCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                SelectedProfile.ChangeReshadeStatus(true);
-            }, a => isProfileSelected && !SelectedProfile.IsReshadeReady);
-        }
+        //public RelayCommand<object> SetAsReshadeReadyCommand
+        //{
+        //    get => new RelayCommand<object>((a) =>
+        //    {
+        //        SelectedProfile.ChangeReshadeStatus(true);
+        //    }, a => isProfileSelected && !SelectedProfile.IsReshadeReady);
+        //}
 
-        public RelayCommand<object> SetAsNotReshadeReadyCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                SelectedProfile.ChangeReshadeStatus(false);
-            }, a => isProfileSelected && SelectedProfile.IsReshadeReady);
-        }
+        //public RelayCommand<object> SetAsNotReshadeReadyCommand
+        //{
+        //    get => new RelayCommand<object>((a) =>
+        //    {
+        //        SelectedProfile.ChangeReshadeStatus(false);
+        //    }, a => isProfileSelected && SelectedProfile.IsReshadeReady);
+        //}
 
-        public RelayCommand<object> SaveSelectedProfileCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                SaveProfile(SelectedProfile);
-            }, a => isProfileSelected);
-        }
+        //public RelayCommand<object> SaveSelectedProfileCommand
+        //{
+        //    get => new RelayCommand<object>((a) =>
+        //    {
+        //        SaveProfile(SelectedProfile);
+        //    }, a => isProfileSelected);
+        //}
 
-        private bool SaveProfile(SpecialKProfile specialKProfile)
-        {
-            if (specialKProfile == null)
-            {
-                return false;
-            }
+        //private bool SaveProfile(SpecialKProfile specialKProfile)
+        //{
+        //    if (specialKProfile == null)
+        //    {
+        //        return false;
+        //    }
 
-            if (!File.Exists(specialKProfile.ProfileIniPath))
-            {
-                playniteApi.Dialogs.ShowErrorMessage($"Special K profile file not found in \"{specialKProfile.ProfileIniPath}\".", "Special K Helper");
-                return false;
-            }
+        //    if (!File.Exists(specialKProfile.ProfileIniPath))
+        //    {
+        //        playniteApi.Dialogs.ShowErrorMessage($"Special K profile file not found in \"{specialKProfile.ProfileIniPath}\".", "Special K Helper");
+        //        return false;
+        //    }
 
-            IniData ini = iniParser.ReadFile(specialKProfile.ProfileIniPath);
-            var updatedValues = 0;
-            updatedValues += AddStringValueToIni("Steam.System", "AppID", ini, specialKProfile.Steam.System.AppID);
-            updatedValues += AddNullableBoolValueToIni("Steam.System", "PreLoadSteamOverlay", ini, specialKProfile.Steam.System.PreLoadSteamOverlay);
-            updatedValues += AddNullableBoolValueToIni("Compatibility.General", "DisableBloatWare_NVIDIA", ini, specialKProfile.Compatibility.General.DisableBloatWare_NVIDIA);
-            updatedValues += AddNullableBoolValueToIni("Render.DXGI", "UseFlipDiscard", ini, specialKProfile.Render.DXGI.UseFlipDiscard);
-            updatedValues += AddNullableBoolValueToIni("Render.FrameRate", "SleeplessRenderThread", ini, specialKProfile.Render.FrameRate.SleeplessRenderThread);
-            updatedValues += AddDoubleValueToIni("Render.FrameRate", "TargetFPS", ini, specialKProfile.Render.FrameRate.TargetFPS);
-            updatedValues += AddNullableBoolValueToIni("Render.OSD", "ShowInVideoCapture", ini, specialKProfile.Render.OSD.ShowInVideoCapture);
-            updatedValues += AddStringValueToIni("Import.ReShade64", "Architecture", ini, specialKProfile.Import.ReShade64.Architecture);
-            updatedValues += AddStringValueToIni("Import.ReShade64", "Role", ini, specialKProfile.Import.ReShade64.Role);
-            updatedValues += AddStringValueToIni("Import.ReShade64", "When", ini, specialKProfile.Import.ReShade64.When);
-            updatedValues += AddStringValueToIni("Import.ReShade64", "Filename", ini, specialKProfile.Import.ReShade64.Filename);
-            updatedValues += AddStringValueToIni("Import.ReShade32", "Architecture", ini, specialKProfile.Import.ReShade32.Architecture);
-            updatedValues += AddStringValueToIni("Import.ReShade32", "Role", ini, specialKProfile.Import.ReShade32.Role);
-            updatedValues += AddStringValueToIni("Import.ReShade32", "When", ini, specialKProfile.Import.ReShade32.When);
-            updatedValues += AddStringValueToIni("Import.ReShade32", "Filename", ini, specialKProfile.Import.ReShade32.Filename);
-            specialKProfile.UpdateReshadeStatus();
+        //    IniData ini = iniParser.ReadFile(specialKProfile.ProfileIniPath);
+        //    var updatedValues = 0;
+        //    updatedValues += AddStringValueToIni("Steam.System", "AppID", ini, specialKProfile.Steam.System.AppID);
+        //    updatedValues += AddNullableBoolValueToIni("Steam.System", "PreLoadSteamOverlay", ini, specialKProfile.Steam.System.PreLoadSteamOverlay);
+        //    updatedValues += AddNullableBoolValueToIni("Compatibility.General", "DisableBloatWare_NVIDIA", ini, specialKProfile.Compatibility.General.DisableBloatWare_NVIDIA);
+        //    updatedValues += AddNullableBoolValueToIni("Render.DXGI", "UseFlipDiscard", ini, specialKProfile.Render.DXGI.UseFlipDiscard);
+        //    updatedValues += AddNullableBoolValueToIni("Render.FrameRate", "SleeplessRenderThread", ini, specialKProfile.Render.FrameRate.SleeplessRenderThread);
+        //    updatedValues += AddDoubleValueToIni("Render.FrameRate", "TargetFPS", ini, specialKProfile.Render.FrameRate.TargetFPS);
+        //    updatedValues += AddNullableBoolValueToIni("Render.OSD", "ShowInVideoCapture", ini, specialKProfile.Render.OSD.ShowInVideoCapture);
+        //    updatedValues += AddStringValueToIni("Import.ReShade64", "Architecture", ini, specialKProfile.Import.ReShade64.Architecture);
+        //    updatedValues += AddStringValueToIni("Import.ReShade64", "Role", ini, specialKProfile.Import.ReShade64.Role);
+        //    updatedValues += AddStringValueToIni("Import.ReShade64", "When", ini, specialKProfile.Import.ReShade64.When);
+        //    updatedValues += AddStringValueToIni("Import.ReShade64", "Filename", ini, specialKProfile.Import.ReShade64.Filename);
+        //    updatedValues += AddStringValueToIni("Import.ReShade32", "Architecture", ini, specialKProfile.Import.ReShade32.Architecture);
+        //    updatedValues += AddStringValueToIni("Import.ReShade32", "Role", ini, specialKProfile.Import.ReShade32.Role);
+        //    updatedValues += AddStringValueToIni("Import.ReShade32", "When", ini, specialKProfile.Import.ReShade32.When);
+        //    updatedValues += AddStringValueToIni("Import.ReShade32", "Filename", ini, specialKProfile.Import.ReShade32.Filename);
+        //    specialKProfile.UpdateReshadeStatus();
 
-            if (updatedValues > 0)
-            {
-                iniParser.WriteFile(specialKProfile.ProfileIniPath, ini, Encoding.UTF8);
-            }
+        //    if (updatedValues > 0)
+        //    {
+        //        iniParser.WriteFile(specialKProfile.ProfileIniPath, ini, Encoding.UTF8);
+        //    }
 
-            playniteApi.Dialogs.ShowMessage($"Special K profile \"{specialKProfile.ProfileName}\" updated.");
-            return true;
-        }
+        //    playniteApi.Dialogs.ShowMessage($"Special K profile \"{specialKProfile.ProfileName}\" updated.");
+        //    return true;
+        //}
 
         private int AddStringValueToIni(string key, string subKey, IniData ini, string newValue)
         {

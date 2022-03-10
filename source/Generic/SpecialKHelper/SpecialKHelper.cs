@@ -681,20 +681,17 @@ namespace SpecialKHelper
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            return new List<MainMenuItem>();
-
-
-            //return new List<MainMenuItem>
-            //{
-            //    new MainMenuItem
-            //    {
-            //        Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
-            //        MenuSection = "@Special K Helper",
-            //        Action = o => {
-            //            OpenEditorWindow();
-            //        }
-            //    },
-            //};
+            return new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
+                    MenuSection = "@Special K Helper",
+                    Action = o => {
+                        OpenEditorWindow();
+                    }
+                },
+            };
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

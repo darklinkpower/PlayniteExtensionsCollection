@@ -5,83 +5,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using IniParser.Model;
 
 namespace SpecialKHelper.Models
 {
-    class SpecialKProfile : ObservableObject
+    class SpecialKProfile
     {
         public string ProfileName { get; set; }
-        public string ProfileDirectory { get; set; }
         public string ProfileIniPath { get; set; }
-        public bool isReshadeReady { get; set; } = false;
-        public bool IsReshadeReady
+        public IniData IniData { get; set; }
+
+        public class ProfileSection
         {
-            get => isReshadeReady;
-            set
-            {
-                isReshadeReady = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public CompatibilitySection Compatibility { get; set; } = new CompatibilitySection();
-        public ImportSection Import { get; set; } = new ImportSection();
-        public RenderSection Render { get; set; } = new RenderSection();
-        public SteamSection Steam { get; set; } = new SteamSection();
-
-        public void ChangeReshadeStatus(bool enable)
-        {
-            if (enable)
-            {
-                Render.FrameRate.SleeplessRenderThread = false;
-                Render.OSD.ShowInVideoCapture = false;
-                Import.ReShade64.When = Import.ReShade64.When ?? "PlugIn";
-                Import.ReShade32.When = Import.ReShade32.When ?? "PlugIn";
-                IsReshadeReady = true;
-            }
-            else
-            {
-                Render.FrameRate.SleeplessRenderThread = false;
-                Render.OSD.ShowInVideoCapture = true;
-                IsReshadeReady = true;
-            }
-
-            UpdateReshadeStatus();
-        }
-
-        public bool GetIsReshadeReady()
-        {
-            //https://wiki.special-k.info/en/SpecialK/ReShade
-            if (Render.FrameRate.SleeplessRenderThread == null ||
-                Render.OSD.ShowInVideoCapture == null)
-            {
-                return false;
-            }
-
-            if ((bool)Render.FrameRate.SleeplessRenderThread ||
-                (bool)Render.OSD.ShowInVideoCapture)
-            {
-                return false;
-            }
-
-            if (Import.ReShade64.When.IsNullOrEmpty() ||
-                Import.ReShade32.When.IsNullOrEmpty())
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public void UpdateReshadeStatus()
-        {
-            IsReshadeReady = GetIsReshadeReady();
-        }
-
-        public class RenderSection
-        {
-            public Render_DXGI DXGI { get; set; } = new Render_DXGI();
+            public string Name { get; set; } = string.Empty;
             public Render_FrameRate FrameRate { get; set; } = new Render_FrameRate();
             public Render_OSD OSD { get; set; } = new Render_OSD();
 
