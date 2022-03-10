@@ -65,7 +65,6 @@
     <Compile Include="Converters\NumericConverters.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="IniEditor.cs" />
     <Compile Include="Localization\LocalizationKeys.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\SpecialKProfile.cs" />

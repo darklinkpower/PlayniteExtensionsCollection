@@ -464,7 +464,7 @@ namespace SpecialKHelper
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            RemoveBpmEnvVariable();
+            //RemoveBpmEnvVariable();
             var cpuArchitectures = new string[] { "32", "64" };
             foreach (var cpuArchitecture in cpuArchitectures)
             {
