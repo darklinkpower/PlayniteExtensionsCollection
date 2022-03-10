@@ -317,16 +317,8 @@ namespace SpecialKHelper.ViewModels
                 return false;
             }
 
-            // There is a weird bug in the ini Parser, where it will ignore the configured
-            // AssignmentSpacer when writing the file if the iniData object was created via
-            // empty initializer. For some reason, initializing it via the ReadFile method
-            // makes the ini parser use the configured AssignmentSpacer value
-            var tempIni = Path.Combine(playniteApi.Paths.ExtensionsDataPath, "tempIni.ini");
-            if (!File.Exists(tempIni))
-            {
-                File.WriteAllText(tempIni, string.Empty, Encoding.UTF8);
-            }
-            IniData iniData = iniParser.ReadFile(tempIni);
+            var iniData = new IniData();
+            iniData.Configuration.AssigmentSpacer = string.Empty;
             foreach (var section in specialKProfile.Sections)
             {
                 foreach (var key in section.Keys)
