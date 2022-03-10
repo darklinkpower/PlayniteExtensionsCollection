@@ -39,6 +39,7 @@ namespace SpecialKHelper
         private readonly string defaultConfigPath;
         private static readonly Regex reshadeTechniqueRegex = new Regex(@"technique ([^\s]+)", RegexOptions.Compiled);
 
+        private SidebarItemSwitcherViewModel sidebarItemSwitcherViewModel { get; }
         private SpecialKHelperSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("71349310-9ed8-4bf5-8bf2-e92cdb222748");
@@ -61,6 +62,24 @@ namespace SpecialKHelper
             {
                 HasSettings = true
             };
+
+            sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, pluginInstallPath);
+        }
+
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            if (settings.Settings.ShowSidebarItem)
+            {
+                yield return new SidebarItem
+                {
+                    Title = ResourceProvider.GetString("LOCSpecial_K_Helper_SidebarTooltip"),
+                    Type = SiderbarItemType.Button,
+                    Icon = new SidebarItemSwitcherView { DataContext = sidebarItemSwitcherViewModel },
+                    Activated = () => {
+                        sidebarItemSwitcherViewModel.SwitchAllowState();
+                    }
+                };
+            }
         }
 
         public string GetReshadeTechniqueSorting()
@@ -322,6 +341,12 @@ namespace SpecialKHelper
 
         private bool GetShouldStartService(Game game)
         {
+            if (!sidebarItemSwitcherViewModel.AllowSkUse)
+            {
+                logger.Info("Start of services is disabled by sidebar item");
+                return false;
+            }
+            
             if (game.Features != null)
             {
                 if (settings.Settings.StopExecutionIfVac && game.Features.Any(x => x.Name == "Valve Anti-Cheat Enabled"))

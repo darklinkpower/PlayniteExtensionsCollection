@@ -37,6 +37,9 @@ namespace SpecialKHelper
 
         private SteamOverlay steamOverlayForBpm = SteamOverlay.Desktop;
         public SteamOverlay SteamOverlayForBpm { get => steamOverlayForBpm; set => SetValue(ref steamOverlayForBpm, value); }
+
+        private bool showSidebarItem = true;
+        public bool ShowSidebarItem { get => showSidebarItem; set => SetValue(ref showSidebarItem, value); }
     }
 
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings

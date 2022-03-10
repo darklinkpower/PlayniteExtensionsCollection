@@ -75,7 +75,11 @@
       <DependentUpon>SpecialKHelperSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SidebarItemSwitcherViewModel.cs" />
     <Compile Include="ViewModels\SpecialKProfileEditorViewModel.cs" />
+    <Compile Include="Views\SidebarItemSwitcherView.xaml.cs">
+      <DependentUpon>SidebarItemSwitcherView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpecialKProfileEditorView.xaml.cs">
       <DependentUpon>SpecialKProfileEditorView.xaml</DependentUpon>
     </Compile>
@@ -86,6 +90,12 @@
     </None>
     <None Include="packages.config" />
     <None Include="Resources\ReshadeDefaultPreset.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SidebarEnabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SidebarDisabled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -100,6 +110,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="SpecialKHelperSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SidebarItemSwitcherView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
