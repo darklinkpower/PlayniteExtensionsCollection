@@ -47,21 +47,21 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">搜索：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">使用模糊搜索</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">配置档</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">章节</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">集：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">键</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">键</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">键值</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Save profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profile saved.
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">配置档：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">配置档路径：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">保存配置档</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">配置档已保存。
 
-Profile name: {0}
-Profile path: {1}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Save value</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Selected option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Section:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Key:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Value:</sys:String>
+配置档名称：{0}
+配置档路径：{1}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">保存值</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">已选选项</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">集：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">键：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">值：</sys:String>
 </ResourceDictionary>
