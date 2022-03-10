@@ -6,3 +6,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_0.pext
     Changelog:
     - Initial release
+  - Version: 1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_1.pext
+    Changelog:
+    - Updated localizations
+    - Added option to not start services if game is detected as using EasyAntiCheat
+    - Added button to profiles editor to delete the selected profile
