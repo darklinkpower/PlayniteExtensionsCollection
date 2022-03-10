@@ -72,7 +72,11 @@
                                TextWrapping="Wrap" ToolTip="{Binding SelectedProfile.ProfileIniPath}" />
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Button Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelSaveProfile}" Command="{Binding SaveSelectedProfileCommand}" />
+                        <Button Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelSaveProfile}"
+                                Command="{Binding SaveSelectedProfileCommand}" />
+                        <Button Content="{DynamicResource LOCSpecial_K_Helper_EditorLabelDeleteProfile}"
+                                Margin="10,0,0,0"
+                                Command="{Binding DeleteSelectedProfileCommand}" />
                     </StackPanel>
 
                     <Separator Margin="0,10,0,0"/>

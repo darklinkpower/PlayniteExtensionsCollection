@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace SpecialKHelper.ViewModels
@@ -17,9 +18,24 @@ namespace SpecialKHelper.ViewModels
     class SpecialKProfileEditorViewModel : ObservableObject
     {
         private readonly IPlayniteAPI playniteApi;
+        private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string skifPath;
         private readonly FileIniDataParser iniParser;
         private readonly string skProfilesPath;
+        private List<SpecialKProfile> sKProfilesCollectionItems;
+        public List<SpecialKProfile> SKProfilesCollectionItems
+        {
+            get
+            {
+                return sKProfilesCollectionItems;
+            }
+            set
+            {
+                sKProfilesCollectionItems = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ICollectionView sKProfilesCollection;
         public ICollectionView SKProfilesCollection
         {
@@ -202,7 +218,8 @@ namespace SpecialKHelper.ViewModels
             this.skifPath = skifPath;
             this.iniParser = iniParser;
             skProfilesPath = Path.Combine(skifPath, "Profiles");
-            sKProfilesCollection = CollectionViewSource.GetDefaultView(GetSkProfiles());
+            SKProfilesCollectionItems = GetSkProfiles();
+            sKProfilesCollection = CollectionViewSource.GetDefaultView(SKProfilesCollectionItems);
             sKProfilesCollection.Filter = FilterSkProfilesCollection;
 
             if (initialSearch == null)
@@ -317,7 +334,7 @@ namespace SpecialKHelper.ViewModels
                     iniData[section.Name][key.Name] = key.Value;
                 }
             }
-
+            
             iniParser.WriteFile(specialKProfile.ProfileIniPath, iniData, Encoding.UTF8);
             playniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDialogMessageSaveProfile"), specialKProfile.ProfileName, specialKProfile.ProfileIniPath));
@@ -339,6 +356,45 @@ namespace SpecialKHelper.ViewModels
                 return true;
             }
 
+            return false;
+        }
+
+        public RelayCommand<object> DeleteSelectedProfileCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                DeleteProfile(SelectedProfile);
+            }, a => isProfileSelected);
+        }
+
+        private bool DeleteProfile(SpecialKProfile profile)
+        {
+            var selection = playniteApi.Dialogs.ShowMessage(
+                ResourceProvider.GetString("LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice"),
+                "Special K Profile Editor",
+                MessageBoxButton.YesNo);
+            if (selection == MessageBoxResult.Yes)
+            {
+                var profileDirectory = Path.GetDirectoryName(profile.ProfileIniPath);
+                try
+                {
+                    if (Directory.Exists(profileDirectory))
+                    {
+                        Directory.Delete(profileDirectory, true);
+                    }
+                    SKProfilesCollectionItems.Remove(profile);
+                    sKProfilesCollection.Refresh();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error while deleting profile directory in {profileDirectory}");
+                    playniteApi.Dialogs.ShowErrorMessage(
+                        string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDeleteProfileError"), profile.ProfileName, profileDirectory, e.Message),
+                        "Special K Profile Editor");
+                }
+            }
+            
             return false;
         }
 
