@@ -32,8 +32,8 @@ If you have Focus Assist enabled when playing a game, you have to add Playnite t
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
 This can also be applied individually per game by adding a feature named "[PlayState] Suspend playtime only" to a game</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show Windows notifications instead Playnite overlay</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip" xml:space="preserve">By enabling this option, games will show Windows toast notifications instead Playnite overlay notifications.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
