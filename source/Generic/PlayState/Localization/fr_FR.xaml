@@ -17,13 +17,24 @@ Les jeux seront mis en pause en utilisant le raccourci clavier configuré.</sys:
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Partie reprise</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Temps de jeu suspendu</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Reprise du temps de jeu</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information :</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action :</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Raccourci Pause/Reprise configuré:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Raccourci Information configuré :</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Affiche une notification qui affiche l'état de pause en cours et les autres informations de la jeu actif</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Changer le raccourci clavier</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Appuyez sur le raccourci clavier maintenant</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Remarques:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Remarques :
 
 Les raccourcis clavier configurés ne pourront pas être utilisés dans d'autres applications.
 Le changement de ce paramètre nécessite un redémarrage.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
+
+This feature is only supported on Windows 10 and Windows 11</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
+
+For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Soustraire la durée de suspension du temps de jeu quand la partie est arrêtée</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aide à conserver un temps de jeu plus précis en comptant seulement le temps de jeu hors pause</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Exécuter uniquement pour les jeux qui ne sont pas gérés par les extensions de clients de jeu</sys:String>
@@ -31,4 +42,16 @@ Le changement de ce paramètre nécessite un redémarrage.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">En activant cette option, toutes les parties ne seront pas suspendues lorsque vous utilisez le raccourci clavier configuré et seul le temps de jeu sera compté pour être soustrait  quand le jeu s'arrêtera.
     
 Cela peut également être appliqué individuellement pour chaque jeu en ajoutant une fonctionnalité nommée &quot;[PlayState] Suspendre le temps de jeu seulement &quot;</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Afficher les notifications Windows natives au lieu de la fenêtre de notification Playnite</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">En activant cette option, les jeux afficheront des notifications Windows natives au lieu de la fenêtre de notification Playnite.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Afficher le temps de lecture de la session dans le message de notification</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Afficher le temps de lecture total dans le message de notification</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Temps de jeu :</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Temps total de jeu :</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} heures {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} heures {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} heure {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} heure {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} secondes</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} seconde</sys:String>
 </ResourceDictionary>
