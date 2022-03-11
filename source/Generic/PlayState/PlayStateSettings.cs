@@ -87,7 +87,7 @@ namespace PlayState
                 Settings = new PlayStateSettings();
             }
 
-            IsWindows10Or11 = !isWindows10Or11;
+            IsWindows10Or11 = isWindows10Or11;
         }
 
         public void BeginEdit()

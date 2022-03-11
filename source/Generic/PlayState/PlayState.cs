@@ -286,7 +286,6 @@ namespace PlayState
             {
                 suspendPlaytimeOnly = true;
                 currentGame = game;
-                splashWindowViewModel.GameName = currentGame.Name;
                 gameProcesses = null;
                 AddGame(game);
                 return;
@@ -295,7 +294,6 @@ namespace PlayState
             Task.Run(async () =>
             {
                 currentGame = game;
-                splashWindowViewModel.GameName = currentGame.Name;
                 gameProcesses = null;
                 isSuspended = false;
                 logger.Debug($"Changed game to {currentGame.Name} game processes");

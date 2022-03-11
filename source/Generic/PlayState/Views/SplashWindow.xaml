@@ -8,8 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="LightGray">
         <StackPanel Margin="24,12,24,12">
-            <TextBlock Text="{Binding GameName}" FontWeight="Bold" FontSize="30" HorizontalAlignment="Center" />
-            <TextBlock Text="{Binding NotificationMessage}" FontWeight="Normal" FontSize="18" HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding GameName}" FontWeight="Bold" FontSize="26" HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding NotificationMessage}" FontWeight="Normal" FontSize="17" HorizontalAlignment="Left" />
         </StackPanel>
     </Grid>
 </UserControl>
