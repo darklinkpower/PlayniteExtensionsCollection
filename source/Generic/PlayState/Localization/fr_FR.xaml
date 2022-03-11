@@ -19,13 +19,16 @@ Les jeux seront mis en pause en utilisant le raccourci clavier configuré.</sys:
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Reprise du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Raccourci Pause/Reprise configuré:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Changer le raccourci clavier</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Appuyez sur le raccourci clavier maintenant</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Configured hotkey won't be able to be used in other applications.
-Changing this setting requires restart.
-If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
+The configured hotkeys won't be able to be used in other applications.
+Changing this setting requires restart.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.
+
+This feature is only supported on Windows 10 and Windows 11</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Soustraire la durée de suspension du temps de jeu quand la partie est arrêtée</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aide à conserver un temps de jeu plus précis en comptant seulement le temps de jeu hors pause</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Exécuter uniquement pour les jeux qui ne sont pas gérés par les extensions de clients de jeu</sys:String>
