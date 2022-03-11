@@ -18,6 +18,11 @@ namespace PlayState
         public string HotkeyText { get => hotkeyText; set => SetValue(ref hotkeyText, value); }
         public Hotkey SavedHotkeyGesture { get; set; } = new Hotkey(Key.A, (ModifierKeys)5);
         [DontSerialize]
+        private string informationHotkeyText = string.Empty;
+        [DontSerialize]
+        public string InformationHotkeyText { get => informationHotkeyText; set => SetValue(ref informationHotkeyText, value); }
+        public Hotkey SavedInformationHotkeyGesture { get; set; } = new Hotkey(Key.I, (ModifierKeys)5);
+        [DontSerialize]
         private bool substractSuspendedPlaytimeOnStopped = false;
         public bool SubstractSuspendedPlaytimeOnStopped { get => substractSuspendedPlaytimeOnStopped; set => SetValue(ref substractSuspendedPlaytimeOnStopped, value); }
         [DontSerialize]
@@ -26,6 +31,9 @@ namespace PlayState
         [DontSerialize]
         private bool globalOnlySuspendPlaytime = false;
         public bool GlobalOnlySuspendPlaytime { get => globalOnlySuspendPlaytime; set => SetValue(ref globalOnlySuspendPlaytime, value); }
+        [DontSerialize]
+        private bool globalShowWindowsNotificationsStyle = false;
+        public bool GlobalShowWindowsNotificationsStyle { get => globalShowWindowsNotificationsStyle; set => SetValue(ref globalShowWindowsNotificationsStyle, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
@@ -77,6 +85,7 @@ namespace PlayState
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
             Settings.HotkeyText = $"{Settings.SavedHotkeyGesture.Modifiers} + {Settings.SavedHotkeyGesture.Key}";
+            Settings.InformationHotkeyText = $"{Settings.SavedInformationHotkeyGesture.Modifiers} + {Settings.SavedInformationHotkeyGesture.Key}";
         }
 
         public void CancelEdit()

@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayState.Enums;
 using PlayState.Models;
 using PlayState.ViewModels;
 using PlayState.Views;
@@ -19,6 +20,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace PlayState
 {
@@ -36,13 +38,14 @@ namespace PlayState
         private Window currentSplashWindow;
         private DispatcherTimer timer;
         private List<ProcessItem> gameProcesses;
-        private List<Tuple<Guid, Stopwatch>> stopwatchList;
         private bool suspendPlaytimeOnly = false;
         private Window mainWindow;
         private WindowInteropHelper windowInterop;
         private IntPtr mainWindowHandle;
         private HwndSource source = null;
         private bool globalHotkeyRegistered = false;
+        private bool processesSuspended = false;
+        private List<PlayStateData> playStateData;
 
         private PlayStateSettingsViewModel settings { get; set; }
 
@@ -58,7 +61,7 @@ namespace PlayState
             };
             SetExclusionList();
 
-            stopwatchList = new List<Tuple<Guid, Stopwatch>>();
+            playStateData = new List<PlayStateData>();
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1000);
@@ -100,21 +103,38 @@ namespace PlayState
                 var handle = mainWindowHandle;
                 source.AddHook(GlobalHotkeyCallback);
                 globalHotkeyRegistered = true;
+
+                // Pause/Resume Hotkey
                 var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key));
 
                 if (registered)
                 {
-                    logger.Debug($"Hotkey registered with hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Debug($"Pause/resume Hotkey registered with hotkey {settings.Settings.SavedHotkeyGesture}.");
                 }
                 else
                 {
                     PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
                         "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedHotkeyGesture),
                         NotificationType.Error));
-                    logger.Error($"Failed to register configured Hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Error($"Failed to register configured pause/resume Hotkey {settings.Settings.SavedHotkeyGesture}.");
                 }
 
-                return registered;
+                // Information Hotkey
+                var registered2 = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedInformationHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key));
+                
+                if (registered2)
+                {
+                    logger.Debug($"Information Hotkey registered with hotkey {settings.Settings.SavedInformationHotkeyGesture}.");
+                }
+                else
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
+                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedInformationHotkeyGesture),
+                        NotificationType.Error));
+                    logger.Error($"Failed to register configured information Hotkey {settings.Settings.SavedInformationHotkeyGesture}.");
+                }
+
+                return registered && registered2;
             }
 
             return true;
@@ -133,6 +153,10 @@ namespace PlayState
                         if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
                         {
                             SwitchGameState();
+                        }
+                        else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
+                        {
+                            ShowNotification(NotificationTypes.Information);
                         }
                         handled = true;
                         break;
@@ -251,7 +275,7 @@ namespace PlayState
                 currentGame = game;
                 splashWindowViewModel.GameName = currentGame.Name;
                 gameProcesses = null;
-                CreateGameStopwatchTuple(game);
+                AddGame(game);
                 return;
             }
 
@@ -280,7 +304,7 @@ namespace PlayState
                         gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
                         if (gameProcesses.Count > 0)
                         {
-                            CreateGameStopwatchTuple(game);
+                            AddGame(game);
                         }
                     }
                     return;
@@ -303,7 +327,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0)
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
-                    CreateGameStopwatchTuple(game);
+                    AddGame(game);
                     return;
                 }
 
@@ -331,7 +355,7 @@ namespace PlayState
                     if (gameProcesses.Count > 0)
                     {
                         logger.Debug($"Found {gameProcesses.Count} game processes");
-                        CreateGameStopwatchTuple(game);
+                        AddGame(game);
                         return;
                     }
                     else
@@ -392,16 +416,192 @@ namespace PlayState
             currentSplashWindow.Closed -= WindowClosed;
         }
 
+        /// <summary>
+        /// Method for obtaining the real playtime of the actual session, which is the playtime after substracting the paused time.
+        /// </summary>
+        private ulong GetRealPlaytime()
+        {
+            var suspendedTime = playStateData.FirstOrDefault(x => x.Game.Id == currentGame.Id)?.Stopwatch.Elapsed;
+            ulong elapsedSeconds = 0;
+            if (suspendedTime != null)
+            {
+                elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
+            }
+            return Convert.ToUInt64(DateTime.Now.Subtract(playStateData.First(x => x.Game.Id == currentGame.Id).StartDate).TotalSeconds) - elapsedSeconds;
+        }
+
+        /// <summary>
+        /// Method for obtaining the pertinent "{0} hours {1} minutes" string from playtime in seconds.<br/><br/>
+        /// <param name="playtimeSeconds">Playtime in seconds</param>
+        /// </summary>
+        private string GetHoursString(ulong playtimeSeconds)
+        {
+            var playtime = TimeSpan.FromSeconds(playtimeSeconds);
+            var playtimeHours = playtime.Hours + playtime.Days * 24;
+            if (playtimeHours == 1)
+            {
+                if (playtime.Minutes == 1)
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutePlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
+                }
+                else
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HourMinutesPlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
+                }
+            }
+            else if (playtimeHours == 0 && playtime.Minutes == 0) // If the playtime is less than a minute, show the seconds instead
+            {
+                if (playtime.Seconds == 1)
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_SecondPlayed"), playtime.Seconds.ToString());
+                }
+                else
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_SecondsPlayed"), playtime.Seconds.ToString());
+                }
+            }
+            else
+            {
+                if (playtime.Minutes == 1)
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutePlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
+                }
+                else
+                {
+                    return String.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutesPlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for showing notifications. It will respect the style (Playnite / Windows) notification settings.<br/><br/>
+        /// <param name="status">Status of the game to be notified:<br/>
+        /// - "resumed" for resuming process and playtime<br/>
+        /// - "playtimeResumed" for resuming playtime<br/>
+        /// - "suspended" for suspend process and playtime<br/>
+        /// - "playtimeSuspended" for suspend playtime<br/>
+        /// - "information" for showing the actual status<br/>
+        /// </param>
+        /// </summary>
+        private void ShowNotification(NotificationTypes status)
+        {
+            var showWindowsNotificationsStyle = settings.Settings.GlobalShowWindowsNotificationsStyle;
+
+            switch (status)
+            {
+                case NotificationTypes.Resumed: // for resuming process and playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                    }
+                    else
+                    {
+                        // Windows notification only admits 3 .Addtext properties, so for more text lines you have to use {Environment.NewLine}
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name) // First AddText field will act as a title
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage))) // Show game image in the notification
+                            .Show();
+                    }
+                    break;
+                case NotificationTypes.PlaytimeResumed: // for resuming playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
+                    }
+                    else
+                    {
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name)
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
+                            .Show();
+                    }
+                    break;
+                case NotificationTypes.Suspended: // for suspend process and playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
+                    }
+                    else
+                    {
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name)
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
+                            .Show();
+                    }
+                    break;
+                case NotificationTypes.PlaytimeSuspended: // for suspend playtime
+                    if (!showWindowsNotificationsStyle)
+                    {
+                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
+                    }
+                    else
+                    {
+                        new ToastContentBuilder()
+                            .AddText(currentGame.Name)
+                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"))
+                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
+                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
+                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
+                            .Show();
+                    }
+                    break;
+                case NotificationTypes.Information: // for showing the actual status
+                    {
+                        if (currentGame == null || !playStateData.Any(x => x.Game.Id == currentGame.Id))
+                        {
+                            break;
+                        }
+                        if (isSuspended)
+                        {
+                            if (processesSuspended)
+                            {
+                                ShowNotification(NotificationTypes.Suspended);
+                            }
+                            else
+                            {
+                                ShowNotification(NotificationTypes.PlaytimeSuspended);
+                            }
+                        }
+                        else
+                        {
+                            if (processesSuspended)
+                            {
+                                ShowNotification(NotificationTypes.Resumed);
+                            }
+                            else
+                            {
+                                ShowNotification(NotificationTypes.PlaytimeResumed);
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
         private void SwitchGameState()
         {
             if (currentGame == null)
             {
+                if (isSuspended)
+                {
+                    isSuspended = false;
+                    processesSuspended = false;
+                }
                 return;
             }
 
             try
             {
-                var processesSuspended = false;
+                processesSuspended = false;
                 if (gameProcesses != null && gameProcesses.Count > 0)
                 {
                     foreach (var gameProcess in gameProcesses)
@@ -429,13 +629,13 @@ namespace PlayState
                         isSuspended = false;
                         if (processesSuspended)
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                            ShowNotification(NotificationTypes.Resumed);
                         }
                         else
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
+                            ShowNotification(NotificationTypes.PlaytimeResumed);
                         }
-                        stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
+                        playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Stop();
                         logger.Debug($"Game {currentGame.Name} resumed");
                     }
                     else
@@ -443,13 +643,13 @@ namespace PlayState
                         isSuspended = true;
                         if (processesSuspended)
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
+                            ShowNotification(NotificationTypes.Suspended);
                         }
                         else
                         {
-                            ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
+                            ShowNotification(NotificationTypes.PlaytimeSuspended);
                         }
-                        stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Start();
+                        playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Start();
                         logger.Debug($"Game {currentGame.Name} suspended");
                     }
                 }
@@ -458,7 +658,7 @@ namespace PlayState
             {
                 logger.Error(e, "Error while suspending or resuming game");
                 gameProcesses = null;
-                stopwatchList.FirstOrDefault(x => x.Item1 == currentGame.Id)?.Item2.Stop();
+                playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Stop();
             }
         }
 
@@ -551,7 +751,7 @@ namespace PlayState
                 if (game.PluginId == Guid.Empty ||
                     (game.PluginId != Guid.Empty && !settings.Settings.SubstractOnlyNonLibraryGames))
                 {
-                    var suspendedTime = stopwatchList.FirstOrDefault(x => x.Item1 == game.Id)?.Item2.Elapsed;
+                    var suspendedTime = playStateData.Find(x => x.Game.Id == currentGame.Id)?.Stopwatch.Elapsed;
                     if (suspendedTime != null)
                     {
                         var elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
@@ -568,29 +768,33 @@ namespace PlayState
                 }
             }
 
-            RemoveGameStopwatchTuple(game);
+            RemoveGame(game);
         }
 
-        private void CreateGameStopwatchTuple(Game game)
+        private void AddGame(Game game)
         {
-            if (stopwatchList.Any(x => x.Item1 == game.Id))
+            if (playStateData.Any(x => x.Game.Id == game.Id))
             {
-                logger.Debug($"A stopwatch for game {game.Name} with id {game.Id} already exists");
+                logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
             }
             else
             {
-                stopwatchList.Add(new Tuple<Guid, Stopwatch>(game.Id, new Stopwatch()));
-                logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was created");
+                playStateData.Add(new PlayStateData(game));
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was created");
             }
         }
 
-        private void RemoveGameStopwatchTuple(Game game)
+        private void RemoveGame(Game game)
         {
-            var tuple = stopwatchList.FirstOrDefault(x => x.Item1 == game.Id);
-            if (tuple != null)
+            var gameData = playStateData.FirstOrDefault(x => x.Game.Id == game.Id);
+            if (gameData != null)
             {
-                stopwatchList.Remove(tuple);
-                logger.Debug($"Stopwatch for game {game.Name} with id {game.Id} was removed on game stopped");
+                playStateData.Remove(gameData);
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was removed on game stopped");
+                if (currentGame == game)
+                {
+                    currentGame = playStateData.Any() ? playStateData.Last().Game : null;
+                }
             }
         }
 
