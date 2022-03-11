@@ -779,7 +779,7 @@ namespace PlayState
             }
             else
             {
-                playStateData.Add(new PlayStateData(game, DateTime.Now, new Stopwatch()));
+                playStateData.Add(new PlayStateData(game));
                 logger.Debug($"Data for game {game.Name} with id {game.Id} was created");
             }
         }

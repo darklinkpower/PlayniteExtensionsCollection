@@ -14,11 +14,11 @@ namespace PlayState.Models
         public DateTime StartDate { get; set; }
         public Stopwatch Stopwatch { get; set; }
 
-        public PlayStateData(Game game, DateTime startDate, Stopwatch stopwatch)
+        public PlayStateData(Game game)
         {
             Game = game;
-            StartDate = startDate;
-            Stopwatch = stopwatch;
+            StartDate = DateTime.Now;
+            Stopwatch = new Stopwatch();
         }
     }
 }
