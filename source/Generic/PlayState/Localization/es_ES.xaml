@@ -17,6 +17,8 @@ Los juegos se suspenderán cuando se utilice la teclas configuradas.</sys:String
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tiempo de juego suspendido</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tiempo de juego reanudado</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Tecla de suspensión/Reanudación configurada:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
