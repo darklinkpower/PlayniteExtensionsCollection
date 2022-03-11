@@ -143,8 +143,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Поиск видео в YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Видео не найдено</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Выбирать логотипы для загрузки автоматически?
     
-Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
-Select &quot;No&quot; to manually make selections when necessary.</sys:String>
+Выберите «Да», чтобы автоматически выбирать логотипы для загрузки без какого-либо взаимодействия с пользователем.
+Выберите «Нет», чтобы при необходимости  выбирать логотипы вручную.</sys:String>
 </ResourceDictionary>
