@@ -19,13 +19,16 @@ Spiele werden unterbrechen, wenn der konfigurierte Hotkey verwendet wird.</sys:S
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spielzeit fortgesetzt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfiguriertes Sperren/Fortsetzen Hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Configured hotkey won't be able to be used in other applications.
-Changing this setting requires restart.
-If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
+The configured hotkeys won't be able to be used in other applications.
+Changing this setting requires restart.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.
+
+This feature is only supported on Windows 10 and Windows 11</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Nur für Spiele ausführen, die nicht von Bibliothek Plugins verwaltet werden</sys:String>
