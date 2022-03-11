@@ -25,8 +25,8 @@
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">全局模式：启动所有游戏时都启动 Special K 服务，除非其具有“[SK] Global Mode Disable”这个由扩展添加的排除性的功能特色。
 
 选取模式：对游戏一般不启动 Special K 服务，除非其具有“[SK] Selective Mode Enable”这个由扩展添加的包含性的功能特色。</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">如果游戏具备“Valve Anti-Cheat Enabled”（即 VAC）的功能特色，则停止启动服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">若检测到游戏使用 EasyAntiCheat 则停止启动服务</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">仅在启动 PC 游戏时启动 Special K 服务</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Special K 所创建新配置档的默认设置</sys:String>
@@ -57,11 +57,11 @@
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">配置档：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">配置档路径：</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">保存配置档</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
-    
-Error: {2}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">删除配置档</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">您确定要删除这个配置档吗？此操作无法撤消。</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">删除 {1} 中的配置档 &quot;{0}&quot; 失败
+
+错误：{2}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">配置档已保存。
 
 配置档名称：{0}
