@@ -45,7 +45,6 @@ namespace PlayState
         private HwndSource source = null;
         private bool globalHotkeyRegistered = false;
         private bool processesSuspended = false;
-        private bool showWindowsNotificationsStyle = false;
         private List<PlayStateData> playStateData;
 
         private PlayStateSettingsViewModel settings { get; set; }
@@ -486,11 +485,7 @@ namespace PlayState
         /// </summary>
         private void ShowNotification(NotificationTypes status)
         {
-            showWindowsNotificationsStyle = false;
-            if (settings.Settings.GlobalShowWindowsNotificationsStyle)
-            {
-                showWindowsNotificationsStyle = true;
-            }
+            var showWindowsNotificationsStyle = settings.Settings.GlobalShowWindowsNotificationsStyle;
 
             switch (status)
             {
