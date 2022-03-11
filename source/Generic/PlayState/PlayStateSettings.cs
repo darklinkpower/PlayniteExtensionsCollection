@@ -59,7 +59,9 @@ namespace PlayState
             }
         }
 
-        public PlayStateSettingsViewModel(PlayState plugin)
+        public bool IsWindows10Or11 { get; }
+
+        public PlayStateSettingsViewModel(PlayState plugin, bool isWindows10Or11)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
@@ -84,7 +86,8 @@ namespace PlayState
             {
                 Settings = new PlayStateSettings();
             }
-            
+
+            IsWindows10Or11 = !isWindows10Or11;
         }
 
         public void BeginEdit()

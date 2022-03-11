@@ -57,7 +57,8 @@ namespace PlayState
 
         public PlayState(IPlayniteAPI api) : base(api)
         {
-            settings = new PlayStateSettingsViewModel(this);
+            isWindows10Or11 = IsWindows10Or11();
+            settings = new PlayStateSettingsViewModel(this, isWindows10Or11);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -79,7 +80,6 @@ namespace PlayState
             };
 
             splashWindowViewModel = new SplashWindowViewModel();
-            isWindows10Or11 = IsWindows10Or11();
         }
 
         private bool IsWindows10Or11()
