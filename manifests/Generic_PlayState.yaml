@@ -138,3 +138,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/PlayState_2_19.pext
     Changelog:
     - "Added temporary workaround for sharing paused time with GameActivity extension (By BanCrash)"
+  - Version: 2.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/PlayState_2_20.pext
+    Changelog:
+    - Updated localizations
+    - 'Added option to display notifications as native Windows notifications. Enabled by default and only compatible with Windows10+. For full compatibility with games, it is required to configure Windows Focus Assist (By BanCrash)'
+    - 'Added option to show total game playtime and session playtime in notifications. Enabled by default (By BanCrash)'
