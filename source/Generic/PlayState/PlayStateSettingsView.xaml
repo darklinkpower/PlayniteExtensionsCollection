@@ -52,7 +52,7 @@
                       ToolTip="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip}"
                       IsChecked="{Binding Settings.GlobalOnlySuspendPlaytime}" Margin="0,0,0,10"/>
         </StackPanel>
-        <CheckBox Content="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel}"
+        <CheckBox x:Name="ShowWindowsNotifications" Content="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel}"
                   IsChecked="{Binding Settings.GlobalShowWindowsNotificationsStyle}"
                   ToolTip="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip}"
                   Margin="0,0,0,10"/>

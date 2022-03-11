@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,10 @@ namespace PlayState
             InitializeComponent();
             TbHotkey.PreviewKeyDown += HotkeyTextBox_PreviewKeyDown;
             TbInformationHotkey.PreviewKeyDown += InformationHotkeyTextBox_PreviewKeyDown;
+            if (!IsWindows10Or11())
+            {
+                ShowWindowsNotifications.IsEnabled = false;
+            }
         }
 
         private void HotkeyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -147,6 +152,12 @@ namespace PlayState
             tbInformationHotkey.Focusable = false;
             setInformationHotkeyButton.Focus();
             setInformationHotkeyButton.Content = ResourceProvider.GetString("LOCPlayState_SettingChangeHotkeyButtonLabel");
+        }
+
+        private bool IsWindows10Or11()
+        {
+            var productName = (string) Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion")?.GetValue("productName");
+            return productName.Contains("Windows 10") || productName.Contains("Windows 11");
         }
 
     }
