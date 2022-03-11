@@ -791,9 +791,10 @@ namespace PlayState
 
         private void RemoveGame(Game game)
         {
-            if (playStateData.Any(x => x.Game.Id == game.Id))
+            var gameData = playStateData.FirstOrDefault(x => x.Game.Id == game.Id);
+            if (gameData != null)
             {
-                playStateData.Remove(playStateData.Find(x => x.Game.Id == game.Id));
+                playStateData.Remove(gameData);
                 logger.Debug($"Data for game {game.Name} with id {game.Id} was removed on game stopped");
                 if (currentGame == game)
                 {
