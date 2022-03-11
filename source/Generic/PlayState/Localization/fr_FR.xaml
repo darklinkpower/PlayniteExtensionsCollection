@@ -17,6 +17,8 @@ Les jeux seront mis en pause en utilisant le raccourci clavier configuré.</sys:
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Partie reprise</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Temps de jeu suspendu</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Reprise du temps de jeu</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Raccourci Pause/Reprise configuré:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
