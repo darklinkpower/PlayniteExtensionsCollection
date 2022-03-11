@@ -18,12 +18,14 @@ Spiele werden unterbrechen, wenn der konfigurierte Hotkey verwendet wird.</sys:S
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Spielzeit unterbrochen</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spielzeit fortgesetzt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfiguriertes Sperren/Fortsetzen Hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Anmerkungen:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Konfigurierte Hotkeys können nicht in anderen Anwendungen verwendet werden.
-Die Änderung dieser Einstellung erfordert einen Neustart.</sys:String>
+Configured hotkey won't be able to be used in other applications.
+Changing this setting requires restart.
+If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Nur für Spiele ausführen, die nicht von Bibliothek Plugins verwaltet werden</sys:String>
@@ -31,4 +33,14 @@ Die Änderung dieser Einstellung erfordert einen Neustart.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Wenn Sie diese Option aktivieren, werden nicht alle Spiele unterbrochen, wenn Sie den konfigurierten Hotkey verwenden und es wird nur die Zeit gezählt, die von der Spielzeit abgezogen wird, wenn das Spiel endet.
     
 Dies kann auch individuell pro Spiel angewendet werden, indem eine Funktion namens &quot;[PlayState] Nur Spielzeit anhalten&quot; hinzugefügt wird. zu einem Spiel</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
 </ResourceDictionary>
