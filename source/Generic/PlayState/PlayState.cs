@@ -115,6 +115,12 @@ namespace PlayState
                 settings.Settings.WindowsNotificationStyleFirstSetupDone = true;
                 SavePluginSettings(settings.Settings);
 
+                // A notification is shown so Playnite is added to the list
+                // to add Playnite to the priority list
+                new ToastContentBuilder()
+                    .AddText("PlayState")
+                    .Show();
+
                 try
                 {
                     Process.Start(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
