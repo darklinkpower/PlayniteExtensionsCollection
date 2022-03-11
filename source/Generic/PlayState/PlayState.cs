@@ -21,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Win32;
 
 namespace PlayState
 {
@@ -52,6 +53,8 @@ namespace PlayState
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
         internal SplashWindowViewModel splashWindowViewModel { get; private set; }
 
+        private readonly bool isWindows10Or11;
+
         public PlayState(IPlayniteAPI api) : base(api)
         {
             settings = new PlayStateSettingsViewModel(this);
@@ -76,6 +79,16 @@ namespace PlayState
             };
 
             splashWindowViewModel = new SplashWindowViewModel();
+            isWindows10Or11 = IsWindows10Or11();
+        }
+
+        private bool IsWindows10Or11()
+        {
+            using (var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
+            {
+                var productName = key?.GetValue("ProductName")?.ToString() ?? string.Empty;
+                return productName.Contains("Windows 10") || productName.Contains("Windows 11");
+            }
         }
 
         // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
@@ -485,8 +498,7 @@ namespace PlayState
         /// </summary>
         private void ShowNotification(NotificationTypes status)
         {
-            var showWindowsNotificationsStyle = settings.Settings.GlobalShowWindowsNotificationsStyle;
-
+            var showWindowsNotificationsStyle = settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11;
             switch (status)
             {
                 case NotificationTypes.Resumed: // for resuming process and playtime
