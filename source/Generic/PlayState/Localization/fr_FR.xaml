@@ -18,12 +18,14 @@ Les jeux seront mis en pause en utilisant le raccourci clavier configuré.</sys:
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Temps de jeu suspendu</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Reprise du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Raccourci Pause/Reprise configuré:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Changer le raccourci clavier</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Appuyez sur le raccourci clavier maintenant</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Remarques:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Les raccourcis clavier configurés ne pourront pas être utilisés dans d'autres applications.
-Le changement de ce paramètre nécessite un redémarrage.</sys:String>
+Configured hotkey won't be able to be used in other applications.
+Changing this setting requires restart.
+If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Soustraire la durée de suspension du temps de jeu quand la partie est arrêtée</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aide à conserver un temps de jeu plus précis en comptant seulement le temps de jeu hors pause</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Exécuter uniquement pour les jeux qui ne sont pas gérés par les extensions de clients de jeu</sys:String>
@@ -31,4 +33,14 @@ Le changement de ce paramètre nécessite un redémarrage.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">En activant cette option, toutes les parties ne seront pas suspendues lorsque vous utilisez le raccourci clavier configuré et seul le temps de jeu sera compté pour être soustrait  quand le jeu s'arrêtera.
     
 Cela peut également être appliqué individuellement pour chaque jeu en ajoutant une fonctionnalité nommée &quot;[PlayState] Suspendre le temps de jeu seulement &quot;</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
 </ResourceDictionary>
