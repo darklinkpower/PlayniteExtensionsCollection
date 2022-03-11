@@ -18,12 +18,14 @@ I giochi verranno sospesi quando si utilizza il tasto di scelta rapida configura
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tempo di gioco sospeso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tempo di gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Scorciatoia sospendi/riprendi configurata:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambia scorciatoia</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Premi il tasto di scelta rapida ora</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Note:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Il tasto di scelta rapida configurato non potrà essere utilizzato in altre applicazioni.
-La modifica di questa impostazione richiede il riavvio.</sys:String>
+Configured hotkey won't be able to be used in other applications.
+Changing this setting requires restart.
+If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Sottrai il tempo in cui il gioco è stato sospeso dal tempo di gioco quando è stato interrotto</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aiuta a mantenere un valore di gioco più preciso nei giochi mantenendo solo il tempo in cui il gioco non è stato sospeso conteggio verso il tempo di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Esegui solo per i giochi che non sono gestiti dai plugin della libreria</sys:String>
@@ -31,4 +33,14 @@ La modifica di questa impostazione richiede il riavvio.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Abilitando questa opzione, tutti i giochi non saranno sospesi quando si utilizza il tasto di scelta rapida configurato e solo il tempo sarà conteggiato per substrato dal tempo di gioco quando si ferma.
     
 Questo può anche essere applicato individualmente per ogni gioco aggiungendo una funzione chiamata &quot;[PlayState] Sospendi solo il tempo di gioco&quot; a un gioco</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
 </ResourceDictionary>
