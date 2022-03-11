@@ -427,7 +427,7 @@ namespace PlayState
             {
                 elapsedSeconds = Convert.ToUInt64(suspendedTime.Value.TotalSeconds);
             }
-            return Convert.ToUInt64(DateTime.Now.Subtract(playStateData.FirstOrDefault(x => x.Game.Id == currentGame.Id).StartDate).TotalSeconds) - elapsedSeconds;
+            return Convert.ToUInt64(DateTime.Now.Subtract(playStateData.First(x => x.Game.Id == currentGame.Id).StartDate).TotalSeconds) - elapsedSeconds;
         }
 
         /// <summary>
