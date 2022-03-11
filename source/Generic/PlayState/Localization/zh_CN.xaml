@@ -40,6 +40,8 @@ This feature is only supported on Windows 10 and Windows 11</sys:String>
 也可以单独应用于某一个游戏，方法是为其添加一个“[PlayState] Suspend playtime only”的功能特色。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
