@@ -18,12 +18,14 @@
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">游玩时间已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">游玩时间已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">已配置挂起/恢复快捷键：</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">更改热键</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">请按热键</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">备注：
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-已配置的热键不能被用于其他应用程序。
-此设置的更改需要重开。</sys:String>
+Configured hotkey won't be able to be used in other applications.
+Changing this setting requires restart.
+If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">当游戏停止时从游玩时间中扣除其挂起的时间。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">通过仅保留游戏未挂起时的时间并计入游戏的游玩时间，来帮助得到更精确的游玩时间值。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">仅对不被库插件管理的游戏执行</sys:String>
@@ -31,4 +33,14 @@
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">通过启用此选项，在使用已配置的热键时，所有游戏都不会被挂起，但时间被记录（并在游戏停止时从游玩时间扣除）。
     
 也可以单独应用于某一个游戏，方法是为其添加一个“[PlayState] Suspend playtime only”的功能特色。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
 </ResourceDictionary>
