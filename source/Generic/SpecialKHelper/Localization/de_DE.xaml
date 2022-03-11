@@ -6,9 +6,9 @@
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam ID für Spiel &quot;{0}&quot; die zum Öffnen der Konfiguration benötigt wird, wurde nicht gefunden.
 
 Bitte starten Sie das Spiel einmal, damit diese ID automatisch konfiguriert werden kann.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Configuration for game &quot;{0}&quot; with Steam Id &quot;{1}&quot; will be opened.
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Konfiguration für Spiel &quot;{0}&quot; mit Steam Id &quot;{1}&quot; wird geöffnet.
 
-Be aware that a controller needs to be currently connected and enabled for Steam Controller for the configuration window to open.</sys:String>
+Beachten Sie, dass ein Controller angeschlossen und für Steam Controller aktiviert sein muss, damit sich das Konfigurationsfenster öffnet.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Funktion hinzufügen, um die Ausführung im Globalen Modus zu deaktivieren</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Funktion entfernen um die Ausführung im Globalen Modus zu deaktivieren</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Funktion hinzufügen, um Ausführung im Auswahlmodus zu aktivieren</sys:String>
