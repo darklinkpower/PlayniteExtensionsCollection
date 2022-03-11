@@ -17,6 +17,8 @@ Games will be suspended when using the configured hotkey.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Configured Suspend/Resume hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
