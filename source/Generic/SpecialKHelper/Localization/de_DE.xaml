@@ -46,35 +46,35 @@ Wenn Sie einen korrekten Wert haben, können Sie ihn in das Textfeld einfügen.<
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Desktop</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Search:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Use fuzzy search</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profiles</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Suchen:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Unscharfe Suche verwenden</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profile</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sektionen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Tasten</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Taste</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Save profile</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profil Pfad:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Profil speichern</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
     
 Error: {2}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profile saved.
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profil gespeichert.
 
-Profile name: {0}
-Profile path: {1}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Save value</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Selected option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Section:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Key:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Value:</sys:String>
+Profil Name: {0}
+Profil Pfad: {1}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Wert speichern</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Ausgewählte Option</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Abschnitt:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Taste:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Wert:</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helfer Status Wechsler
 
-Indicates if the extension is allowed to start the Special K services when starting a game.
-If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
+Zeigt an, ob die Erweiterung beim Starten eines Spiels die Spezial K Dienste starten darf.
+Wenn diese Einstellung deaktiviert ist, werden die Dienste unabhängig von Einstellungen oder Konfiguration nicht gestartet.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Erweiterte Seitenleiste anzeigen um den Erweiterungsstatus zu wechseln</sys:String>
 </ResourceDictionary>
