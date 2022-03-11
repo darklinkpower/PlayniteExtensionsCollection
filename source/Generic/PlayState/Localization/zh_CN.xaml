@@ -19,13 +19,16 @@
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">游玩时间已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">已配置挂起/恢复快捷键：</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">更改热键</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">请按热键</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Configured hotkey won't be able to be used in other applications.
-Changing this setting requires restart.
-If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
+The configured hotkeys won't be able to be used in other applications.
+Changing this setting requires restart.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.
+
+This feature is only supported on Windows 10 and Windows 11</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">当游戏停止时从游玩时间中扣除其挂起的时间。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">通过仅保留游戏未挂起时的时间并计入游戏的游玩时间，来帮助得到更精确的游玩时间值。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">仅对不被库插件管理的游戏执行</sys:String>
