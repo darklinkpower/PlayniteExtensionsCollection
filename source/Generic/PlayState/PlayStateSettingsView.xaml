@@ -6,7 +6,15 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <DockPanel LastChildFill="False">
+
+        <Button Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Command="{Binding OpenLinkCommand}"
+                CommandParameter="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState"
+                Content="{DynamicResource LOCPlayState_SettingHelpLabel}" />
+        
+        <DockPanel LastChildFill="False" Margin="0,20,0,0">
             <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredHotkeyLabel}"
                        DockPanel.Dock="Left"
                        VerticalAlignment="Center"/>
@@ -58,6 +66,13 @@
             <TextBlock Text="{DynamicResource LOCPlayState_SettingsWinNotificationNote}" TextWrapping="Wrap"
                    Margin="40,10,0,0"
                    IsEnabled="{Binding ElementName=ShowWindowsNotifications, Path=IsChecked}"/>
+
+            <Button Margin="40,10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding OpenLinkCommand}"
+                    CommandParameter="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration"
+                    Content="{DynamicResource LOCPlayState_SettingHelpLabel}" />
         </StackPanel>
 
         <CheckBox x:Name="CbSubstractOnSuspended" Content="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel}"

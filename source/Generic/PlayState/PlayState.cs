@@ -106,6 +106,24 @@ namespace PlayState
             {
                 logger.Error("Could not find main window. Shortcuts could not be registered.");
             }
+
+            if (!settings.Settings.WindowsNotificationStyleFirstSetupDone &&
+                isWindows10Or11 &&
+                settings.Settings.GlobalShowWindowsNotificationsStyle)
+            {
+                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCPlayState_MessageWinStyleNotificationsFirstSetup"), "PlayState");
+                settings.Settings.WindowsNotificationStyleFirstSetupDone = true;
+                SavePluginSettings(settings.Settings);
+
+                try
+                {
+                    Process.Start(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, "First window notification url could not be opened");
+                }
+            }
         }
 
         internal bool RegisterGlobalHotkey()

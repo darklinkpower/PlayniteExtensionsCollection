@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using PlayState.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace PlayState
         [DontSerialize]
         private bool notificationShowTotalPlaytime = true;
         public bool NotificationShowTotalPlaytime { get => notificationShowTotalPlaytime; set => SetValue(ref notificationShowTotalPlaytime, value); }
-
+        public bool WindowsNotificationStyleFirstSetupDone = false;
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
@@ -119,6 +120,26 @@ namespace PlayState
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        public RelayCommand<string> OpenLinkCommand
+        {
+            get => new RelayCommand<string>((a) =>
+            {
+                StartUrl(a);
+            });
+        }
+
+        public static void StartUrl(string url)
+        {
+            try
+            {
+                Process.Start(url);
+            }
+            catch
+            {
+
+            }
         }
     }
 }
