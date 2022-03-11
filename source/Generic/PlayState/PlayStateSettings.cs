@@ -32,13 +32,13 @@ namespace PlayState
         private bool globalOnlySuspendPlaytime = false;
         public bool GlobalOnlySuspendPlaytime { get => globalOnlySuspendPlaytime; set => SetValue(ref globalOnlySuspendPlaytime, value); }
         [DontSerialize]
-        private bool globalShowWindowsNotificationsStyle = false;
+        private bool globalShowWindowsNotificationsStyle = true;
         public bool GlobalShowWindowsNotificationsStyle { get => globalShowWindowsNotificationsStyle; set => SetValue(ref globalShowWindowsNotificationsStyle, value); }
         [DontSerialize]
-        private bool notificationShowSessionPlaytime = false;
+        private bool notificationShowSessionPlaytime = true;
         public bool NotificationShowSessionPlaytime { get => notificationShowSessionPlaytime; set => SetValue(ref notificationShowSessionPlaytime, value); }
         [DontSerialize]
-        private bool notificationShowTotalPlaytime = false;
+        private bool notificationShowTotalPlaytime = true;
         public bool NotificationShowTotalPlaytime { get => notificationShowTotalPlaytime; set => SetValue(ref notificationShowTotalPlaytime, value); }
 
     }
