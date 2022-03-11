@@ -17,6 +17,8 @@
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Гру відновлено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Час у грі призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Час у грі відновлено</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Налаштована гаряча клавіша заморозки/поновлення:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
