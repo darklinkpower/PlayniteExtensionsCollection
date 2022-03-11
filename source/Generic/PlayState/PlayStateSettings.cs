@@ -34,6 +34,13 @@ namespace PlayState
         [DontSerialize]
         private bool globalShowWindowsNotificationsStyle = false;
         public bool GlobalShowWindowsNotificationsStyle { get => globalShowWindowsNotificationsStyle; set => SetValue(ref globalShowWindowsNotificationsStyle, value); }
+        [DontSerialize]
+        private bool notificationShowSessionPlaytime = false;
+        public bool NotificationShowSessionPlaytime { get => notificationShowSessionPlaytime; set => SetValue(ref notificationShowSessionPlaytime, value); }
+        [DontSerialize]
+        private bool notificationShowTotalPlaytime = false;
+        public bool NotificationShowTotalPlaytime { get => notificationShowTotalPlaytime; set => SetValue(ref notificationShowTotalPlaytime, value); }
+
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings

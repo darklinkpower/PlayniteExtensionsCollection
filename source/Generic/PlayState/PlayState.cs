@@ -504,7 +504,6 @@ namespace PlayState
                 return;
             }
 
-            var showWindowsNotificationsStyle = settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11;
             var sb = new StringBuilder();
             switch (status)
             {
@@ -553,11 +552,17 @@ namespace PlayState
                     break;
             }
 
-            sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}");
-            sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}");
+            if (settings.Settings.NotificationShowSessionPlaytime)
+            {
+                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}");
+            }
+            if (settings.Settings.NotificationShowTotalPlaytime)
+            {
+                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}");
+            }
             var notificationMessage = sb.ToString();
-            
-            if (showWindowsNotificationsStyle)
+
+            if (settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11)
             {
                 new ToastContentBuilder()
                     .AddText(currentGame.Name) // First AddText field will act as a title
