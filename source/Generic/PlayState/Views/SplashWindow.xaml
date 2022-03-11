@@ -9,7 +9,7 @@
     <Grid Background="LightGray">
         <StackPanel Margin="24,12,24,12">
             <TextBlock Text="{Binding GameName}" FontWeight="Bold" FontSize="30" HorizontalAlignment="Center" />
-            <TextBlock Text="{Binding SuspendStatus}" FontWeight="Normal" FontSize="18" HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding NotificationMessage}" FontWeight="Normal" FontSize="18" HorizontalAlignment="Center" />
         </StackPanel>
     </Grid>
 </UserControl>

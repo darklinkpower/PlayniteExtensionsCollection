@@ -410,14 +410,15 @@ namespace PlayState
             currentSplashWindow.Closed += WindowClosed;
         }
 
-        private void ShowSplashWindow(string status)
+        private void ShowSplashWindow(string gameName, string notificationMessage)
         {
             if (currentSplashWindow == null)
             {
                 CreateSplashWindow();
             }
 
-            splashWindowViewModel.SuspendStatus = status;
+            splashWindowViewModel.GameName = gameName;
+            splashWindowViewModel.NotificationMessage = notificationMessage;
             currentSplashWindow.Topmost = true;
             currentSplashWindow.Show();
             timer.Start();
@@ -498,104 +499,75 @@ namespace PlayState
         /// </summary>
         private void ShowNotification(NotificationTypes status)
         {
+            if (currentGame == null || !playStateData.Any(x => x.Game.Id == currentGame.Id))
+            {
+                return;
+            }
+
             var showWindowsNotificationsStyle = settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11;
+            var sb = new StringBuilder();
             switch (status)
             {
                 case NotificationTypes.Resumed: // for resuming process and playtime
-                    if (!showWindowsNotificationsStyle)
-                    {
-                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
-                    }
-                    else
-                    {
-                        // Windows notification only admits 3 .Addtext properties, so for more text lines you have to use {Environment.NewLine}
-                        new ToastContentBuilder()
-                            .AddText(currentGame.Name) // First AddText field will act as a title
-                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"))
-                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
-                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage))) // Show game image in the notification
-                            .Show();
-                    }
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
+                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
                     break;
                 case NotificationTypes.PlaytimeResumed: // for resuming playtime
-                    if (!showWindowsNotificationsStyle)
-                    {
-                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
-                    }
-                    else
-                    {
-                        new ToastContentBuilder()
-                            .AddText(currentGame.Name)
-                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"))
-                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
-                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
-                            .Show();
-                    }
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
+                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
                     break;
                 case NotificationTypes.Suspended: // for suspend process and playtime
-                    if (!showWindowsNotificationsStyle)
-                    {
-                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
-                    }
-                    else
-                    {
-                        new ToastContentBuilder()
-                            .AddText(currentGame.Name)
-                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"))
-                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
-                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
-                            .Show();
-                    }
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
+                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
                     break;
                 case NotificationTypes.PlaytimeSuspended: // for suspend playtime
-                    if (!showWindowsNotificationsStyle)
-                    {
-                        ShowSplashWindow(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
-                    }
-                    else
-                    {
-                        new ToastContentBuilder()
-                            .AddText(currentGame.Name)
-                            .AddText(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"))
-                            .AddText($"{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}" +
-                                $"{Environment.NewLine}{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}")
-                            .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage)))
-                            .Show();
-                    }
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
+                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
                     break;
-                case NotificationTypes.Information: // for showing the actual status
+                case NotificationTypes.Information:
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusInformationMessage")} ");
+                    if (isSuspended)
                     {
-                        if (currentGame == null || !playStateData.Any(x => x.Game.Id == currentGame.Id))
+                        if (processesSuspended)
                         {
-                            break;
-                        }
-                        if (isSuspended)
-                        {
-                            if (processesSuspended)
-                            {
-                                ShowNotification(NotificationTypes.Suspended);
-                            }
-                            else
-                            {
-                                ShowNotification(NotificationTypes.PlaytimeSuspended);
-                            }
+                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
                         }
                         else
                         {
-                            if (processesSuspended)
-                            {
-                                ShowNotification(NotificationTypes.Resumed);
-                            }
-                            else
-                            {
-                                ShowNotification(NotificationTypes.PlaytimeResumed);
-                            }
+                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
+                        }
+                    }
+                    else
+                    {
+                        if (processesSuspended)
+                        {
+                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
+                        }
+                        else
+                        {
+                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
                         }
                     }
                     break;
+                default:
+                    break;
+            }
+
+            sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime())}");
+            sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime() + currentGame.Playtime)}");
+            var notificationMessage = sb.ToString();
+            
+            if (showWindowsNotificationsStyle)
+            {
+                new ToastContentBuilder()
+                    .AddText(currentGame.Name) // First AddText field will act as a title
+                    .AddText(notificationMessage)
+                    .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(currentGame.BackgroundImage))) // Show game image in the notification
+                    .Show();
+            }
+            else
+            {
+                ShowSplashWindow(currentGame.Name, notificationMessage);
             }
         }
 

@@ -8,13 +8,8 @@ using System.Threading.Tasks;
 
 namespace PlayState.ViewModels
 {
-    class SplashWindowViewModel: INotifyPropertyChanged
+    class SplashWindowViewModel: ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
 
         public string gameName { get; set; }
         public string GameName
@@ -27,13 +22,13 @@ namespace PlayState.ViewModels
             }
         }
 
-        public string suspendStatus { get; set; }
-        public string SuspendStatus
+        public string notificationMessage { get; set; }
+        public string NotificationMessage
         {
-            get => suspendStatus;
+            get => notificationMessage;
             set
             {
-                suspendStatus = value;
+                notificationMessage = value;
                 OnPropertyChanged();
             }
         }
