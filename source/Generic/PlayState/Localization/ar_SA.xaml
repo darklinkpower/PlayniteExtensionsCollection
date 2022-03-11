@@ -18,12 +18,14 @@ Games will be suspended when using the configured hotkey.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">تم إيقاف وقت التشغيل</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">استؤنف وقت التشغيل</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Configured Suspend/Resume hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
 Configured hotkey won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
+Changing this setting requires restart.
+If you have Focus Assist enabled when playing a game, you have to add Playnite to priority list in order to receive Windows notifications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
@@ -31,4 +33,14 @@ Changing this setting requires restart.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
 This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
 </ResourceDictionary>
