@@ -142,14 +142,14 @@ namespace SpecialKHelper
             var startSuccess64 = false;
             if (startServices)
             {
-                startSuccess32 = StartSpecialkService("32", skifPath);
-                startSuccess64 = StartSpecialkService("64", skifPath);
+                startSuccess32 = StartSpecialkService("32");
+                startSuccess64 = StartSpecialkService("64");
             }
             else
             {
                 //Check if leftover service is running and close it
-                StopSpecialkService("32", skifPath);
-                StopSpecialkService("64", skifPath);
+                StopSpecialkService("32");
+                StopSpecialkService("64");
             }
 
             if (!startServices || !startSuccess32 || !startSuccess64)
@@ -567,11 +567,11 @@ namespace SpecialKHelper
             var cpuArchitectures = new string[] { "32", "64" };
             foreach (var cpuArchitecture in cpuArchitectures)
             {
-                StopSpecialkService(cpuArchitecture, skifPath);
+                StopSpecialkService(cpuArchitecture);
             }
         }
 
-        private bool StartSpecialkService(string cpuArchitecture, string skifPath)
+        private bool StartSpecialkService(string cpuArchitecture)
         {
             var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
             if (File.Exists(servletPid))
@@ -580,28 +580,33 @@ namespace SpecialKHelper
                 return true;
             }
 
+            var allFilesDetected = true;
             var dllPath = Path.Combine(skifPath, "SpecialK" + cpuArchitecture + ".dll");
             if (!File.Exists(dllPath))
             {
+                allFilesDetected = false;
                 logger.Info($"Special K dll not found in {dllPath}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_dll_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
                     NotificationType.Error
                 ));
-
-                return false;
             }
 
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture +".exe");
             if (!File.Exists(servletExe))
             {
+                allFilesDetected = false;
                 logger.Info($"Special K servlet exe not found in {servletExe}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_servletExe_notfound" + cpuArchitecture,
-                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), servletExe),
                     NotificationType.Error
                 ));
+            }
+
+            if (!allFilesDetected)
+            {
                 return false;
             }
 
@@ -634,7 +639,7 @@ namespace SpecialKHelper
             return false;
         }
 
-        private bool StopSpecialkService(string cpuArchitecture, string skifPath)
+        private bool StopSpecialkService(string cpuArchitecture)
         {
             var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
             if (!File.Exists(servletPid))
@@ -643,22 +648,33 @@ namespace SpecialKHelper
                 return true;
             }
 
+            var allFilesDetected = true;
             var dllPath = Path.Combine(skifPath, "SpecialK" + cpuArchitecture + ".dll");
             if (!File.Exists(dllPath))
             {
+                allFilesDetected = false;
                 logger.Info($"Special K dll not found in {dllPath}");
-                return false;
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "sk_dll_notfound" + cpuArchitecture,
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
+                    NotificationType.Error
+                ));
             }
 
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture + ".exe");
             if (!File.Exists(servletExe))
             {
+                allFilesDetected = false;
                 logger.Info($"Special K servlet exe not found in {servletExe}");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     "sk_servletExe_notfound" + cpuArchitecture,
-                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDllNotFound"), servletExe),
+                    string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), servletExe),
                     NotificationType.Error
                 ));
+            }
+
+            if (!allFilesDetected)
+            {
                 return false;
             }
 
