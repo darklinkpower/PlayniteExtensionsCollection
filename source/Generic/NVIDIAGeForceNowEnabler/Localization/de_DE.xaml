@@ -22,4 +22,5 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Aktivierte Spiele als installiert beim Aktualisieren des aktivierten Status von Spielen festlegen</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">In Nvidia GeForce NOW starten</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW aktiverer: {0} Spiele als installiert markiert.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
 </ResourceDictionary>
