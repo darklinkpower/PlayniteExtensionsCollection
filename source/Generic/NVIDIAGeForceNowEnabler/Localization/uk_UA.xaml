@@ -22,4 +22,5 @@
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Запустити в Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Позначено {0} ігор як встановлені.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
 </ResourceDictionary>
