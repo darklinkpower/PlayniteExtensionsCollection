@@ -22,4 +22,5 @@
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">在更新游戏的已启用状态时，将已启用的游戏设为已安装</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">在 Nvidia GeForce NOW 中启动</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW 启用器：将 {0} 个游戏标记为已安装。</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
 </ResourceDictionary>
