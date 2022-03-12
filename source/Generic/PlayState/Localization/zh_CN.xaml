@@ -28,7 +28,7 @@
 
 已配置的热键不能被用于其他应用程序。
 此设置的更改需要重开。</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">如果您在游玩游戏并打开全屏模式时启用焦点助手，您必须将 Playnite 添加到优先级列表才能接收 Windows 通知并配置它们以允许显示。
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">如果您在游玩游戏并打开全屏模式时启用了专注助手，您必须将 Playnite 添加到优先级列表，才能接收 Windows 通知并配置它们以允许显示它们。
 
 此功能仅支持 Windows 10 和 Windows 11</sys:String>
     <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState 添加了以原生 Windows 通知显示通知的支持。默认启用此功能，可以从扩展设置中更改。
