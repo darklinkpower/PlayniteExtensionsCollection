@@ -4,6 +4,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -324,7 +325,7 @@ namespace CooperativeModesImporter
                     continue;
                 }
 
-                var distance = LevenshteinDistance.Distance(gameName, dbGame.Name);
+                var distance = gameName.GetLevenshteinDistance(dbGame.Name);
                 if (distance <= 5)
                 {
                     selectOptions.Add(Tuple.Create(distance, dbGame));

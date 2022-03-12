@@ -756,7 +756,7 @@ namespace SpecialKHelper
                 // Automatic match method 3: LevenshteinDistance
                 foreach (var result in results)
                 {
-                    var distance = LevenshteinDistance.Distance(normalizedName.ToLower(), result.Name.ToLower());
+                    var distance = normalizedName.ToLower().GetLevenshteinDistance(result.Name.ToLower());
                     if (distance < currentDistance)
                     {
                         currentDistance = distance;

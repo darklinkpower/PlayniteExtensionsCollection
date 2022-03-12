@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}</ProjectGuid>
+    <ProjectGuid>{BCB07CE2-D6E4-4C73-B133-CC5A6AD1BFC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SpecialKHelper</RootNamespace>
@@ -60,11 +60,8 @@
   <ItemGroup>
     <Compile Include="Behaviors\SelectorBehaviors.cs" />
     <Compile Include="Common\HttpDownloader.cs" />
-    <Compile Include="Common\LevenshteinDistance.cs" />
     <Compile Include="Common\SteamCommon.cs" />
     <Compile Include="Converters\NumericConverters.cs" />
-    <Compile Include="Extensions\Extensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Localization\LocalizationKeys.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\GameDataCache.cs" />
