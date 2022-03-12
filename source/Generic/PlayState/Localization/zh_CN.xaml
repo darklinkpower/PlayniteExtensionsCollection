@@ -17,24 +17,24 @@
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">游戏已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">游玩时间已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">游玩时间已恢复</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">信息：</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">指令：</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">已配置挂起/恢复快捷键：</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">已配置信息快捷键：</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">显示一个通知，展示当前游戏的暂停状态和其他信息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">更改热键</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">请按热键</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">备注：
 
-The configured hotkeys won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
+已配置的热键不能被用于其他应用程序。
+此设置的更改需要重开。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">如果您在游玩游戏并打开全屏模式时启用焦点助手，您必须将 Playnite 添加到优先级列表才能接收 Windows 通知并配置它们以允许显示。
 
-This feature is only supported on Windows 10 and Windows 11</sys:String>
-    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
+此功能仅支持 Windows 10 和 Windows 11</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState 添加了以原生 Windows 通知显示通知的支持。默认启用此功能，可以从扩展设置中更改。
 
-For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Help</sys:String>
+为了更好地兼容游戏，需要您对 Windows 配置进行一些调整。包含操作说明的链接将在关闭此对话框后打开。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingHelpLabel">帮助</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">当游戏停止时从游玩时间中扣除其挂起的时间。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">通过仅保留游戏未挂起时的时间并计入游戏的游玩时间，来帮助得到更精确的游玩时间值。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">仅对不被库插件管理的游戏执行</sys:String>
@@ -42,16 +42,16 @@ For better compatibility with games, some adjustments to your Windows configurat
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">通过启用此选项，在使用已配置的热键时，所有游戏都不会被挂起，但时间被记录（并在游戏停止时从游玩时间扣除）。
     
 也可以单独应用于某一个游戏，方法是为其添加一个“[PlayState] Suspend playtime only”的功能特色。</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">显示原生的 Windows 通知而不是 Playnite 通知窗口</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">启用此选项，游戏将显示原生 Windows 通知，而不是 Playnite 通知窗口。</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">在通知消息中显示会话游玩时间</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">在通知消息中显示总游玩时间</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">游玩时间：</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">总游玩时间：</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} 时 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} 时 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} 时 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} 时 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} 秒</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} 秒</sys:String>
 </ResourceDictionary>
