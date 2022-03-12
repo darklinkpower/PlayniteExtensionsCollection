@@ -16,6 +16,10 @@ Please open a [new Issue](https://github.com/darklinkpower/PlayniteScriptExtensi
 
 Please also be aware that I don't visit the Playnite forums frequently so if you need help or have a question, I'm more easily found in the [Playnite Discord server](https://discord.gg/BrtABqe "Playnite Discord server")
 
+## Translations
+
+You can help to translate the extensions do different languages via the project [Crowdin page.](https://crowdin.com/project/darklinkpower-playnite-extensi)
+
 ## Download and installation
 
 Option A. Click the `Install` link of the extension in the table.
