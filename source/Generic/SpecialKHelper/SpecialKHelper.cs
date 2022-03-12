@@ -590,7 +590,7 @@ namespace SpecialKHelper
                     "sk_dll_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
                     NotificationType.Error,
-                    () => OpenFileMissingUrl()
+                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -603,7 +603,7 @@ namespace SpecialKHelper
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), servletExe),
                     NotificationType.Error,
-                    () => OpenFileMissingUrl()
+                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -636,7 +636,8 @@ namespace SpecialKHelper
             PlayniteApi.Notifications.Add(new NotificationMessage(
                 "SkNotStarted" + cpuArchitecture,
                 string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart"), cpuArchitecture),
-                NotificationType.Error
+                NotificationType.Error,
+                () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#special-k-service-could-not-be-started-notification-error")
             ));
             return false;
         }
@@ -660,7 +661,7 @@ namespace SpecialKHelper
                     "sk_dll_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
                     NotificationType.Error,
-                    () => OpenFileMissingUrl()
+                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -673,7 +674,7 @@ namespace SpecialKHelper
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), servletExe),
                     NotificationType.Error,
-                    () => OpenFileMissingUrl()
+                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -693,15 +694,21 @@ namespace SpecialKHelper
             return true;
         }
 
-        private void OpenFileMissingUrl()
+        private void OpenUrl(string url)
         {
+            if (!url.StartsWith("http") || !url.StartsWith("www"))
+            {
+                logger.Error($"Attempted url {url} is not an url");
+                return;
+            }
+            
             try
             {
-                Process.Start(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error");
+                Process.Start(url);
             }
             catch (Exception e)
             {
-                logger.Error(e, "File missing url could not be opened");
+                logger.Error(e, $"Url {url} could not be opened");
             }
         }
 

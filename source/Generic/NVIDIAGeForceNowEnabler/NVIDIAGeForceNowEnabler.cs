@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Net;
 using Playnite.SDK.Data;
+using System.Diagnostics;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -246,7 +247,6 @@ namespace NVIDIAGeForceNowEnabler
 
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-
                 var gameDatabase = GetGamesSupportedLibraries();
                 foreach (var game in gameDatabase)
                 {
@@ -371,6 +371,12 @@ namespace NVIDIAGeForceNowEnabler
             if (!File.Exists(geforceNowExecutablePath))
             {
                 logger.Debug("Geforce Now Executable was not detected");
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "gfnExeNotFound",
+                    string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_NotificationMessage"), geforceNowExecutablePath),
+                    NotificationType.Error,
+                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler#nvidia-geforce-now-executable-not-found-error-notification")
+                ));
                 return null;
             }
 
@@ -444,6 +450,22 @@ namespace NVIDIAGeForceNowEnabler
             return null;
         }
 
+        private void OpenUrl(string url)
+        {
+            if (!url.StartsWith("http") || !url.StartsWith("www"))
+            {
+                logger.Error($"Attempted url {url} is not an url");
+                return;
+            }
 
+            try
+            {
+                Process.Start(url);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Url {url} could not be opened");
+            }
+        }
     }
 }
