@@ -4,7 +4,6 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
