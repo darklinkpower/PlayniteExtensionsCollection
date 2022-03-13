@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_NewsViewer_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Новости в Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Максимальная высота заметок с новостями</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Использовать компактный просмотр новостей при открытии новостей в браузере</sys:String>
