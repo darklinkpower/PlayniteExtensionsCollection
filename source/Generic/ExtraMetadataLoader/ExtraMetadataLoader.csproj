@@ -76,7 +76,6 @@
       <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NumericConverters.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="ExtraMetadataLoader.cs" />
     <Compile Include="ExtraMetadataLoaderSettings.cs" />
     <Compile Include="ExtraMetadataLoaderSettingsView.xaml.cs">
@@ -147,7 +146,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\PluginsCommon\PluginsCommon.csproj">
+      <Project>{cbed3b97-8fb8-4ca4-8827-13065ab64113}</Project>
+      <Name>PluginsCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy "$(ProjectDir)Localization" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>

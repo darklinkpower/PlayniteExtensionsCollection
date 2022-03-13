@@ -98,6 +98,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\PluginsCommon\PluginsCommon.csproj">
+      <Project>{cbed3b97-8fb8-4ca4-8827-13065ab64113}</Project>
+      <Name>PluginsCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy "$(ProjectDir)Localization" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>

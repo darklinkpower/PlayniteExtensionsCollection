@@ -52,7 +52,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="Models\CooperativeDatabase.cs" />
     <Compile Include="CooperativeModesImporter.cs" />
     <Compile Include="CooperativeModesImporterSettings.cs" />

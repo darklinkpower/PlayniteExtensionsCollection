@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -104,6 +101,12 @@
     <PackageReference Include="System.Management">
       <Version>5.0.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\PluginsCommon\PluginsCommon.csproj">
+      <Project>{cbed3b97-8fb8-4ca4-8827-13065ab64113}</Project>
+      <Name>PluginsCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
