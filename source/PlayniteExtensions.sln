@@ -40,9 +40,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamLauncherUtility", "Generic\SteamLauncherUtility\SteamLauncherUtility.csproj", "{1D868838-0CF3-4898-AA64-373CE5E555E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterforAnilist", "Library\ImporterforAnilist\ImporterforAnilist.csproj", "{2351B5C1-6E28-4B79-A1D9-90FDA53B5417}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamCommon", "Common\SteamCommon\SteamCommon.csproj", "{4050F4C3-5D5A-4FC5-95DB-1531D815AED5}"
 EndProject
