@@ -72,13 +72,13 @@
                     <StackPanel Margin="20,10,0,0" IsEnabled="{Binding ElementName=cbFpsEnable, Path=IsChecked}">
                         <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
                             <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingNewProfileTargetFps}" VerticalAlignment="Center"/>
-                            <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBox MinWidth="100" VerticalAlignment="Center" Margin="10,0,0,0">
                                 <TextBox.Text>
                                     <Binding Path="Settings.DefaultFpsLimit"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 ValidatesOnDataErrors="True"
-                                 NotifyOnValidationError="True"
-                                 Converter="{conv:DoubleToStringConverter}">
+                                             UpdateSourceTrigger="PropertyChanged"
+                                             ValidatesOnDataErrors="True"
+                                             NotifyOnValidationError="True"
+                                             Converter="{conv:DoubleToStringConverter}">
                                         <Binding.ValidationRules>
                                             <conv:DoubleFieldValidation MinValue="0.0" MaxValue="9999" />
                                         </Binding.ValidationRules>

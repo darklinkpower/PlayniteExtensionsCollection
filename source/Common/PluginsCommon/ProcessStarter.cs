@@ -149,7 +149,6 @@ namespace PluginsCommon
             string arguments,
             string workDir,
             bool createNoWindow,
-            bool useShellExecute,
             out string stdOutput,
             out string stdError)
         {
@@ -168,7 +167,7 @@ namespace PluginsCommon
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
                 CreateNoWindow = createNoWindow,
-                UseShellExecute = useShellExecute
+                UseShellExecute = false
             };
 
             var stdout = string.Empty;

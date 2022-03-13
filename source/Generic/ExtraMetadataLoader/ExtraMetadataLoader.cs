@@ -214,6 +214,7 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
+
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                                 logosDownloader.DownloadSteamLogo(game, overwrite, isBackgroundDownload);
@@ -317,6 +318,7 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
+
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                                 videosDownloader.DownloadSteamVideo(game, overwrite, false, true, false);
@@ -382,6 +384,7 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
+
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                                 videosDownloader.DownloadSteamVideo(game, overwrite, false, false, true);
@@ -429,6 +432,7 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
+
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                                 videosDownloader.ConvertVideoToMicro(game, overwrite);
@@ -698,7 +702,8 @@ namespace ExtraMetadataLoader
             // the necessary metadata added to download the assets automatically
             if (settings.Settings.DownloadLogosOnLibUpdate == true)
             {
-                var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload"), true);
+                var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload");
+                var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
@@ -706,6 +711,8 @@ namespace ExtraMetadataLoader
                     a.ProgressMaxValue = games.Count();
                     foreach (var game in games)
                     {
+                        a.CurrentProgressValue++;
+                        a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                         if (a.CancelToken.IsCancellationRequested)
                         {
                             break;
@@ -714,14 +721,14 @@ namespace ExtraMetadataLoader
                         {
                             logosDownloader.DownloadSgdbLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically);
                         }
-                        a.CurrentProgressValue++;
                     };
                 }, progressOptions);
             }
 
             if ((settings.Settings.DownloadVideosOnLibUpdate || settings.Settings.DownloadVideosMicroOnLibUpdate) && ValidateExecutablesSettings(true, false))
             {
-                var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos"),true);
+                var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos");
+                var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
@@ -733,8 +740,10 @@ namespace ExtraMetadataLoader
                         {
                             break;
                         }
-                        videosDownloader.DownloadSteamVideo(game, false, true, settings.Settings.DownloadVideosOnLibUpdate, settings.Settings.DownloadVideosMicroOnLibUpdate);
+
                         a.CurrentProgressValue++;
+                        a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                        videosDownloader.DownloadSteamVideo(game, false, true, settings.Settings.DownloadVideosOnLibUpdate, settings.Settings.DownloadVideosMicroOnLibUpdate);
                     };
                 }, progressOptions);
             }
