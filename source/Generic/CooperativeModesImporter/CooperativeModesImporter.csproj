@@ -56,6 +56,9 @@
     <Compile Include="..\..\Common\PlayniteUtilitiesCommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
+      <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Downloader.cs">
       <Link>Shared\PluginsCommon\Downloader.cs</Link>
     </Compile>

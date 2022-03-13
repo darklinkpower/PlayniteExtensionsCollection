@@ -34,6 +34,7 @@
     <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,10 +42,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\NumericConverters.cs" />
     <Compile Include="Downloader.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

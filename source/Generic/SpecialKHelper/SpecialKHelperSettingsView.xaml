@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             xmlns:conv="clr-namespace:SpecialKHelper.Converters"
+             xmlns:conv="clr-namespace:PluginsCommon.Converters"
              xmlns:beh="clr-namespace:SpecialKHelper.Behaviors"
              xmlns:skM="clr-namespace:SpecialKHelper.Models"
              xmlns:pcmd="clr-namespace:PluginsCommon.Commands"

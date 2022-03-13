@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              mc:Ignorable="d"
-             xmlns:conv="clr-namespace:ExtraMetadataLoader.Converters"
+             xmlns:conv="clr-namespace:PluginsCommon.Converters"
              d:DesignHeight="1250" d:DesignWidth="600">
     <Grid Margin="20">
         <StackPanel>
@@ -204,10 +204,10 @@
                                         <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
                                             <TextBox.Text>
                                                 <Binding Path="Settings.MaxLogoProcessWidth"
-                                             UpdateSourceTrigger="PropertyChanged" 
-                                             ValidatesOnDataErrors="True"
-                                             NotifyOnValidationError="True"
-                                             Converter="{conv:NullableIntToStringConverter}">
+                                                         UpdateSourceTrigger="PropertyChanged" 
+                                                         ValidatesOnDataErrors="True"
+                                                         NotifyOnValidationError="True"
+                                                         Converter="{conv:NullableIntToStringConverter}">
                                                     <Binding.ValidationRules>
                                                         <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
                                                     </Binding.ValidationRules>
@@ -220,10 +220,10 @@
                                         <TextBox MinWidth="50" VerticalAlignment="Center" Margin="10,0,0,0">
                                             <TextBox.Text>
                                                 <Binding Path="Settings.MaxLogoProcessHeight"
-                                             UpdateSourceTrigger="PropertyChanged" 
-                                             ValidatesOnDataErrors="True"
-                                             NotifyOnValidationError="True"
-                                             Converter="{conv:NullableIntToStringConverter}">
+                                                         UpdateSourceTrigger="PropertyChanged" 
+                                                         ValidatesOnDataErrors="True"
+                                                         NotifyOnValidationError="True"
+                                                         Converter="{conv:NullableIntToStringConverter}">
                                                     <Binding.ValidationRules>
                                                         <conv:NullableIntFieldValidation MinValue="1" MaxValue="9999" />
                                                     </Binding.ValidationRules>

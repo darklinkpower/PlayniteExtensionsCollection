@@ -64,6 +64,9 @@
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\NumericConverters.cs">
+      <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\Downloader.cs">
       <Link>Shared\PluginsCommon\Downloader.cs</Link>
     </Compile>
@@ -116,7 +119,6 @@
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
     <Compile Include="Behaviors\SelectorBehaviors.cs" />
-    <Compile Include="Converters\NumericConverters.cs" />
     <Compile Include="Localization\LocalizationKeys.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\GameDataCache.cs" />
@@ -179,6 +181,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>
