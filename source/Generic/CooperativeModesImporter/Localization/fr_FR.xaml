@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Mettre à jour les fonctionnalités &quot;modes coopératifs&quot; de tous les jeux de la bibliothèque</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Mettre à jour les fonctionnalités &quot;modes coopératifs&quot; des jeux sélectionnés</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGamesManual">Mettre à jour les fonctionnalités &quot;modes coopératifs&quot; des jeux sélectionnés (Manuel)</sys:String>
