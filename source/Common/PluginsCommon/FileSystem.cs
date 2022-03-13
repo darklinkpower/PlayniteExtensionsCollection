@@ -302,13 +302,13 @@ namespace PluginsCommon
                 }
                 catch (IOException exc)
                 {
-                    logger.Debug($"Can't write to a file, trying again. {path}");
+                    logger.Error(exc, $"Can't write to a file, trying again. {path}");
                     ioException = exc;
                     Task.Delay(500).Wait();
                 }
             }
 
-            throw new IOException($"Failed to write to {path}", ioException);
+            //throw new IOException($"Failed to write to {path}", ioException);
         }
 
         public static void DeleteFileSafe(string path, int retryAttempts = 5)

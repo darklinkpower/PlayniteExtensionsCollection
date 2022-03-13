@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,7 +38,7 @@ namespace NVIDIAGeForceNowEnabler
             Dispose();
             stopWatch = Stopwatch.StartNew();
             var arguments = string.Format("--url-route=\"#?cmsId={0}&launchSource=External&shortName=game_gfn_pc&parentGameId=\"", supportedGameId);
-            StartProcess(geforceNowExecutablePath, arguments, geforceNowWorkingPath);
+            ProcessStarter.StartProcess(geforceNowExecutablePath, arguments, geforceNowWorkingPath);
             StartWatching();
         }
 
@@ -78,23 +79,5 @@ namespace NVIDIAGeForceNowEnabler
             }
         }
 
-        public static Process StartProcess(string path, string arguments, string workDir, bool asAdmin = false)
-        {
-            logger.Debug($"Starting process: {path}, {arguments}, {workDir}, {asAdmin}");
-            var startupPath = path;
-
-            var info = new ProcessStartInfo(startupPath)
-            {
-                Arguments = arguments,
-                WorkingDirectory = string.IsNullOrEmpty(workDir) ? (new FileInfo(startupPath)).Directory.FullName : workDir
-            };
-
-            if (asAdmin)
-            {
-                info.Verb = "runas";
-            }
-
-            return Process.Start(info);
-        }
     }
 }

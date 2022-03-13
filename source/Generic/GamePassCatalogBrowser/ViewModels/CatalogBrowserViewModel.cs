@@ -13,6 +13,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Collections;
+using PluginsCommon;
 
 namespace GamePassCatalogBrowser.ViewModels
 {
@@ -300,7 +301,7 @@ namespace GamePassCatalogBrowser.ViewModels
         {
             if (game != null)
             {
-                System.Diagnostics.Process.Start($"ms-windows-store://pdp?productId={game.ProductId}");
+                ProcessStarter.StartUrl($"ms-windows-store://pdp?productId={game.ProductId}");
             }
         }
 
@@ -316,7 +317,7 @@ namespace GamePassCatalogBrowser.ViewModels
         {
             if (game != null)
             {
-                System.Diagnostics.Process.Start($"msxbox://game/?productId={game.ProductId}");
+                ProcessStarter.StartUrl($"msxbox://game/?productId={game.ProductId}");
             }
         }
 

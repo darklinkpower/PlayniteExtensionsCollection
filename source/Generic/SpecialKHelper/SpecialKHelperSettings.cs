@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using PluginsCommon;
 using SpecialKHelper.Models;
 using System;
 using System.Collections.Generic;
@@ -113,20 +114,9 @@ namespace SpecialKHelper
         {
             get => new RelayCommand(() =>
             {
-                StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper");
+                ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper");
             });
         }
 
-        public static Process StartUrl(string url)
-        {
-            try
-            {
-                return Process.Start(url);
-            }
-            catch
-            {
-                return null;
-            }
-        }
     }
 }

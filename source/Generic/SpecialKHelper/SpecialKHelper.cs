@@ -96,7 +96,7 @@ namespace SpecialKHelper
             var techniqueList = new List<string>();
             foreach (var fxFile in fxFiles)
             {
-                var fxContent = File.ReadAllText(fxFile);
+                var fxContent = FileSystem.ReadStringFromFile(fxFile);
                 var result = reshadeTechniqueRegex.Match(fxContent);
                 if (result.Success)
                 {
@@ -233,11 +233,11 @@ namespace SpecialKHelper
                 var techniqueSortingLine = GetReshadeTechniqueSorting();
                 if (!techniqueSortingLine.IsNullOrEmpty())
                 {
-                    File.WriteAllText(gameReshadePreset, $"PreprocessorDefinitions=\nTechniques=\nTechniqueSorting={techniqueSortingLine}", Encoding.UTF8);
+                    FileSystem.WriteStringToFile(gameReshadePreset, $"PreprocessorDefinitions=\nTechniques=\nTechniqueSorting={techniqueSortingLine}", true);
                 }
                 else
                 {
-                    File.Copy(emptyReshadePreset, gameReshadePreset, true);
+                    FileSystem.CopyFile(emptyReshadePreset, gameReshadePreset, true);
                 }
             }
 
@@ -358,7 +358,7 @@ namespace SpecialKHelper
                     EasyAnticheatStatus = GetGameEasyAnticheatStatus(game)
                 };
 
-                File.WriteAllText(cachePath, Serialization.ToJson(newCache));
+                FileSystem.WriteStringToFile(cachePath, Serialization.ToJson(newCache));
             }
 
             var cache = Serialization.FromJsonFile<GameDataCache>(cachePath);
@@ -502,7 +502,7 @@ namespace SpecialKHelper
             var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "SteamId_" + game.Id.ToString());
             if (FileSystem.FileExists(historyFlagFile))
             {
-                previousId = File.ReadAllText(historyFlagFile).Trim();
+                previousId = FileSystem.ReadStringFromFile(historyFlagFile).Trim();
                 logger.Warn($"Detected attempt flag file for game {game.Name} in {historyFlagFile}. Previous Id: {previousId}");
             }
 
@@ -531,7 +531,7 @@ namespace SpecialKHelper
             {
                 try
                 {
-                    File.WriteAllText(appIdTextPath, steamId);
+                    FileSystem.WriteStringToFileSafe(appIdTextPath, steamId);
                 }
                 catch (Exception e)
                 {
@@ -942,14 +942,7 @@ namespace SpecialKHelper
                 string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_DialogMessageSteamControlNotice"), game.Name, steamId),
                 "Special K Helper");
 
-            try
-            {
-                Process.Start($"steam://currentcontrollerconfig/{steamId}");
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error opening Steam Controller configuration with Uri steam Id {steamId}");
-            }
+            ProcessStarter.StartUrl($"steam://currentcontrollerconfig/{steamId}");
         }
 
         private void AddFeatureToSelectedGames(string featureName)

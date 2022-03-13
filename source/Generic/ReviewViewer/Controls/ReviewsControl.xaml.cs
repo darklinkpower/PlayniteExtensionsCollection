@@ -3,6 +3,7 @@ using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
+using PluginsCommon.Web;
 using ReviewViewer.Models;
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,9 @@ namespace ReviewViewer.Controls
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             var caller = name;
-
-            
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
         private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         private readonly DesktopView ActiveViewAtCreation;
         IPlayniteAPI PlayniteApi;
@@ -94,7 +94,6 @@ namespace ReviewViewer.Controls
         }
 
         private ILogger logger = LogManager.GetLogger();
-        private HttpClient client;
         private string pluginUserDataPath;
 
         string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
@@ -349,9 +348,6 @@ namespace ReviewViewer.Controls
             InitializeComponent();
             this.PlayniteApi = playniteApi;
             SettingsModel = settings;
-            client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.Timeout = TimeSpan.FromMilliseconds(2000);
             selectedReviewSearch = ReviewSearchType.All;
             this.pluginUserDataPath = pluginUserDataPath;
             this.steamApiLanguage = steamApiLanguage;
@@ -445,7 +441,7 @@ namespace ReviewViewer.Controls
                 }
 
                 var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
-                DownloadFile(uri, gameDataPath).GetAwaiter().GetResult();
+                HttpDownloader.DownloadJsonFileAsync(uri, gameDataPath).GetAwaiter().GetResult();
                 if (!FileSystem.FileExists(gameDataPath))
                 {
                     return;
@@ -514,23 +510,5 @@ namespace ReviewViewer.Controls
             CalculatedScore = string.Format("{0}{1}", Math.Round(score * 100, 2).ToString(), "%");
         }
 
-        public async Task DownloadFile(string requestUri, string fileToWriteTo)
-        {
-            try
-            {
-                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error during file download, url {requestUri}. Error: {e.Message}.");
-            }
-        }
     }
 }

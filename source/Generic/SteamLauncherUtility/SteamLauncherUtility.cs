@@ -52,12 +52,12 @@ namespace SteamLauncherUtility
                 var matchingFeature = game.Features.Where(f => f.Name == modeFeatureName);
                 if (settings.Settings.LaunchMode == 0 && matchingFeature.Count() > 0)
                 {
-                    logger.Info(String.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
+                    logger.Info(string.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
                 else if (settings.Settings.LaunchMode == 1 && matchingFeature.Count() == 0)
                 {
-                    logger.Info(String.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
+                    logger.Info(string.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
             }
@@ -113,6 +113,7 @@ namespace SteamLauncherUtility
             {
                 return true;
             }
+            
             return false;
         }
 
@@ -137,6 +138,7 @@ namespace SteamLauncherUtility
                     return key.GetValue("SteamExe")?.ToString().Replace('/', '\\') ?? "C:\\Program Files (x86)\\Steam\\steam.exe";
                 }
             }
+
             return "C:\\Program Files (x86)\\Steam\\steam.exe";
         }
 
@@ -189,7 +191,7 @@ namespace SteamLauncherUtility
             bool isSteamRunning = GetIsSteamRunning();
             if (isSteamRunning == true && settings.Settings.CloseSteamIfRunning == true)
             {
-                Process.Start(steamInstallationPath, "-shutdown");
+                ProcessStarter.StartProcess(steamInstallationPath, "-shutdown");
                 logger.Info("Steam detected running. Closing via command line.");
                 for (int i = 0; i < 8; i++)
                 {
@@ -210,8 +212,8 @@ namespace SteamLauncherUtility
             if (isSteamRunning == false)
             {
                 string launchArguments = GetSteamLaunchArguments();
-                Process.Start(steamInstallationPath, launchArguments);
-                logger.Info(String.Format("Steam launched with arguments: \"{0}\"", launchArguments));
+                ProcessStarter.StartProcess(steamInstallationPath, launchArguments);
+                logger.Info($"Steam launched with arguments: \"{launchArguments}\"");
             }
             else
             {

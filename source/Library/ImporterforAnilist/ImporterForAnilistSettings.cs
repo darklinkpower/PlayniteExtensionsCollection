@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,8 +115,7 @@ namespace ImporterforAnilist
 
         private void Login()
         {
-            string url = string.Format("https://anilist.co/api/v2/oauth/authorize?client_id={0}&response_type=token", "5706");
-            System.Diagnostics.Process.Start(url);
+            ProcessStarter.StartUrl(@"https://anilist.co/api/v2/oauth/authorize?client_id=5706&response_type=token");
         }
 
         public RelayCommand<object> SelectBrowserExecutableCommand
@@ -138,13 +138,9 @@ namespace ImporterforAnilist
         {
             get => new RelayCommand<object>((a) =>
             {
-                RemoveBrowser();
+                settings.BrowserPath = string.Empty;
             });
         }
 
-        private void RemoveBrowser()
-        {
-            settings.BrowserPath = string.Empty;
-        }
     }
 }

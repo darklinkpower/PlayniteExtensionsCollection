@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using PlayState.Models;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -126,20 +127,9 @@ namespace PlayState
         {
             get => new RelayCommand<string>((a) =>
             {
-                StartUrl(a);
+                ProcessStarter.StartUrl(a);
             });
         }
 
-        public static void StartUrl(string url)
-        {
-            try
-            {
-                Process.Start(url);
-            }
-            catch
-            {
-
-            }
-        }
     }
 }

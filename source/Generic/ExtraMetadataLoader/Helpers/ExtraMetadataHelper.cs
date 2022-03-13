@@ -20,7 +20,7 @@ namespace ExtraMetadataLoader.Helpers
         public ExtraMetadataHelper(IPlayniteAPI playniteApi)
         {
             this.playniteApi = playniteApi;
-            baseDirectory = Path.Combine(playniteApi.Paths.ConfigurationPath, "ExtraMetadata");
+            baseDirectory = FileSystem.FixPathLength(Path.Combine(playniteApi.Paths.ConfigurationPath, "ExtraMetadata"));
         }
 
         public bool IsGamePcGame(Game game)

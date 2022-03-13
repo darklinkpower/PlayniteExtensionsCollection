@@ -22,6 +22,7 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
+using PluginsCommon;
 
 namespace PlayState
 {
@@ -120,15 +121,7 @@ namespace PlayState
                 new ToastContentBuilder()
                     .AddText("PlayState")
                     .Show();
-
-                try
-                {
-                    Process.Start(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, "First window notification url could not be opened");
-                }
+                ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
             }
         }
 

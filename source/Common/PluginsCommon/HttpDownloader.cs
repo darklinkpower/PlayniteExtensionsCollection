@@ -16,6 +16,7 @@ namespace PluginsCommon.Web
     {
         private static ILogger logger = LogManager.GetLogger();
         private static readonly HttpClient httpClient = new HttpClient();
+        private static readonly HttpClient httpClientJson = new HttpClient();
         private static readonly Downloader downloader = new Downloader();
 
         public static string DownloadString(IEnumerable<string> mirrors)
@@ -90,6 +91,44 @@ namespace PluginsCommon.Web
         public static async Task<bool> DownloadFileAsync(string requestUri, string fileToWriteTo)
         {
             logger.Debug($"DownloadFileAsync method with url {requestUri} and file to write {fileToWriteTo}");
+            try
+            {
+                using (HttpResponseMessage response = await httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
+                        {
+                            using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
+                            {
+                                await streamToReadFrom.CopyToAsync(streamToWriteTo);
+                                logger.Debug("Ran to completion");
+                                return true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        logger.Debug($"Request Url {requestUri} didn't give OK status code and was not downloaded");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error during file download, url {requestUri}.");
+            }
+
+            return false;
+        }
+
+        public static async Task<bool> DownloadJsonFileAsync(string requestUri, string fileToWriteTo)
+        {
+            logger.Debug($"DownloadJsonFileAsync method with url {requestUri} and file to write {fileToWriteTo}");
+            if (httpClientJson.DefaultRequestHeaders.Count() == 0)
+            {
+                httpClientJson.DefaultRequestHeaders.Add("Accept", "application/json");
+                httpClient.Timeout = TimeSpan.FromMilliseconds(2000);
+            }
             try
             {
                 using (HttpResponseMessage response = await httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))

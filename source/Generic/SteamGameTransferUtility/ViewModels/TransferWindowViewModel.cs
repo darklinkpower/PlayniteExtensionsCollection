@@ -106,7 +106,7 @@ namespace SteamGameTransferUtility.ViewModels
         {
             get => new RelayCommand<string>((targetLibraryPath) =>
             {
-                Process.Start(targetLibraryPath);
+                ProcessStarter.StartProcess(targetLibraryPath);
             }, (a) => isTargetLibrarySelected);
         }
 
@@ -445,7 +445,7 @@ namespace SteamGameTransferUtility.ViewModels
             bool isSteamRunning = GetIsSteamRunning();
             if (isSteamRunning == true)
             {
-                Process.Start(steamInstallationPath, "-shutdown");
+                ProcessStarter.StartProcess(steamInstallationPath, "-shutdown");
                 logger.Info("Steam detected running. Closing via command line.");
                 for (int i = 0; i < 8; i++)
                 {
@@ -464,7 +464,7 @@ namespace SteamGameTransferUtility.ViewModels
             }
             if (isSteamRunning == false)
             {
-                Process.Start(steamInstallationPath);
+                ProcessStarter.StartProcess(steamInstallationPath);
                 logger.Info("Steam started.");
             }
         }

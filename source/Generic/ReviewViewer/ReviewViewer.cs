@@ -3,6 +3,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
+using PluginsCommon.Web;
 using ReviewViewer.Controls;
 using System;
 using System.Collections.Generic;
@@ -175,43 +176,37 @@ namespace ReviewViewer
             var reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
 
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) => {
-                using (var httpClient = new HttpClient())
+                foreach (Game game in games)
                 {
-                    httpClient.DefaultRequestHeaders.Clear();
-                    httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                    httpClient.Timeout = TimeSpan.FromMilliseconds(2000);
-                    foreach (Game game in games)
+                    string steamId;
+                    if (game.PluginId == steamPluginId)
                     {
-                        string steamId;
-                        if (game.PluginId == steamPluginId)
+                        steamId = game.GameId;
+                    }
+                    else
+                    {
+                        steamId = GetSteamIdFromLinks(game);
+                        if (steamId == null)
                         {
-                            steamId = game.GameId;
+                            continue;
                         }
-                        else
+                    }
+
+                    foreach (string reviewSearchType in reviewSearchTypes)
+                    {
+                        var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_{reviewSearchType}.json");
+                        if (FileSystem.FileExists(gameDataPath))
                         {
-                            steamId = GetSteamIdFromLinks(game);
-                            if (steamId == null)
+                            if (userOverwriteChoice != MessageBoxResult.Yes)
                             {
                                 continue;
                             }
                         }
+                        var uri = string.Format(reviewsApiMask, steamId, steamApiLanguage, reviewSearchType);
 
-                        foreach (string reviewSearchType in reviewSearchTypes)
-                        {
-                            var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_{reviewSearchType}.json");
-                            if (FileSystem.FileExists(gameDataPath))
-                            {
-                                if (userOverwriteChoice != MessageBoxResult.Yes)
-                                {
-                                    continue;
-                                }
-                            }
-                            var uri = string.Format(reviewsApiMask, steamId, steamApiLanguage, reviewSearchType);
-
-                            // To prevent being rate limited
-                            Thread.Sleep(200);
-                            DownloadFile(httpClient, uri, gameDataPath).GetAwaiter().GetResult();
-                        }
+                        // To prevent being rate limited
+                        Thread.Sleep(200);
+                        HttpDownloader.DownloadJsonFileAsync(uri, gameDataPath).GetAwaiter().GetResult();
                     }
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCReview_Viewer_DialogDataUpdateProgressMessage")));
@@ -219,26 +214,7 @@ namespace ReviewViewer
             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Review Viewer");
         }
 
-        public async Task DownloadFile(HttpClient client, string requestUri, string fileToWriteTo)
-        {
-            try
-            {
-                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error during file download, url {requestUri}. Error: {e.Message}.");
-            }
-        }
-
-        private string GetSteamIdFromLinks(Game game)
+        private static string GetSteamIdFromLinks(Game game)
         {
             if (game.Links == null)
             {

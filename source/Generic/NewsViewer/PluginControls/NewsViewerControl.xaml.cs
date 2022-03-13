@@ -412,7 +412,7 @@ namespace NewsViewer.PluginControls
 
         static string HtmlToPlainText(string html)
         {
-            if (string.IsNullOrEmpty(html))
+            if (html.IsNullOrEmpty())
             {
                 return string.Empty;
             }

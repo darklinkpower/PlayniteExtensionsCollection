@@ -14,6 +14,7 @@ using System.Net;
 using Playnite.SDK.Data;
 using System.Diagnostics;
 using PluginsCommon;
+using PluginsCommon.Web;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -153,38 +154,33 @@ namespace NVIDIAGeForceNowEnabler
         public List<GeforceGame> DownloadGameList(bool showDialogs)
         {
             var supportedGames = new List<GeforceGame>();
-
-            var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                using (var webClient = new WebClient())
+                try
                 {
-                    try
+                    var downloadedString = HttpDownloader.DownloadString(@"https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json");
+                    supportedGames = Serialization.FromJson<List<GeforceGame>>(downloadedString);
+                    if (supportedGames.Count >= 0)
                     {
-                        webClient.Encoding = Encoding.UTF8;
-                        string downloadedString = webClient.DownloadString(@"https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json");
-                        supportedGames = Serialization.FromJson<List<GeforceGame>>(downloadedString);
-                        if (supportedGames.Count >= 0)
+                        foreach (var supportedGame in supportedGames)
                         {
-                            foreach (var supportedGame in supportedGames)
+                            supportedGame.Title = SatinizeString(supportedGame.Title);
+                            if (supportedGame.Store == "Origin")
                             {
-                                supportedGame.Title = SatinizeString(supportedGame.Title);
-                                if (supportedGame.Store == "Origin")
-                                {
-                                    supportedGame.Title = SatinizeOriginGameName(supportedGame.Title);
-                                }
+                                supportedGame.Title = SatinizeOriginGameName(supportedGame.Title);
                             }
+                        }
 
-                            File.WriteAllText(gfnDatabasePath, Serialization.ToJson(supportedGames));
-                            supportedList = supportedGames;
-                        }
+                        FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(supportedGames));
+                        supportedList = supportedGames;
                     }
-                    catch (Exception e)
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error downloading database.");
+                    if (showDialogs)
                     {
-                        logger.Error(e, e.Message);
-                        if (showDialogs == true)
-                        {
-                            PlayniteApi.Dialogs.ShowErrorMessage(e.Message, "NVIDIA GeForce NOW Enabler");
-                        }
+                        PlayniteApi.Dialogs.ShowErrorMessage(e.Message, "NVIDIA GeForce NOW Enabler");
                     }
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_DownloadingDatabaseProgressMessage")));
@@ -376,7 +372,7 @@ namespace NVIDIAGeForceNowEnabler
                     "gfnExeNotFound",
                     string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_NotificationMessage"), geforceNowExecutablePath),
                     NotificationType.Error,
-                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler#nvidia-geforce-now-executable-not-found-error-notification")
+                    () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler#nvidia-geforce-now-executable-not-found-error-notification")
                 ));
                 return null;
             }
@@ -449,24 +445,6 @@ namespace NVIDIAGeForceNowEnabler
             }
 
             return null;
-        }
-
-        private void OpenUrl(string url)
-        {
-            if (!url.StartsWith("http") || !url.StartsWith("www"))
-            {
-                logger.Error($"Attempted url {url} is not an url");
-                return;
-            }
-
-            try
-            {
-                Process.Start(url);
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Url {url} could not be opened");
-            }
         }
     }
 }
