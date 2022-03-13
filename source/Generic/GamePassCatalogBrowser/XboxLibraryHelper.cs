@@ -1,6 +1,7 @@
 ﻿using GamePassCatalogBrowser.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using PluginsCommon.Web;
 using System;
@@ -96,47 +97,40 @@ namespace GamePassCatalogBrowser
 
         public Game GetLibraryGameFromGamePassGame(GamePassGame gamePassGame)
         {
-            var game = PlayniteApi.Database.Games.
-                Where(g => g.PluginId.Equals(pluginId)).
-                Where(g => g.GameId.Equals(gamePassGame.GameId)).
-                Where(g => g.SourceId != null).
-                Where(g => g.SourceId.Equals(source.Id)).
-                FirstOrDefault();
-
-            return game;
+            return PlayniteApi.Database.Games
+                .FirstOrDefault(g => g.PluginId.Equals(pluginId) &&
+                g.GameId.Equals(gamePassGame.GameId) &&
+                g.SourceId != null &&
+                g.SourceId.Equals(source.Id));
         }
 
         public Game GetLibraryGameFromGamePassGameAnySource(GamePassGame gamePassGame)
         {
-            var game = PlayniteApi.Database.Games.
-                Where(g => g.PluginId.Equals(pluginId)).
-                Where(g => g.GameId.Equals(gamePassGame.GameId)).
-                FirstOrDefault();
-
-            return game;
+            return PlayniteApi.Database.Games
+                .FirstOrDefault(g => g.PluginId.Equals(pluginId) &&
+                g.GameId.Equals(gamePassGame.GameId));
         }
 
         public bool RemoveGamePassGame(GamePassGame gamePassGame)
         {
-
             var game = GetLibraryGameFromGamePassGame(gamePassGame);
-            if (game != null)
+            if (game == null)
             {
-                if (game.Playtime > 0)
-                {
-                    game.SourceId = sourceXbox.Id;
-                    PlayniteApi.Database.Games.Update(game);
-                    return false;
-                }
-                else
-                {
-                    PlayniteApi.Database.Games.Remove(game.Id);
-                    GameIdsInLibrary.Remove(game.GameId);
-                    return true;
-                }
-
+                return false;
             }
-            return false;
+
+            if (game.Playtime > 0)
+            {
+                game.SourceId = sourceXbox.Id;
+                PlayniteApi.Database.Games.Update(game);
+                return false;
+            }
+            else
+            {
+                PlayniteApi.Database.Games.Remove(game.Id);
+                GameIdsInLibrary.Remove(game.GameId);
+                return true;
+            }
         }
 
         public void AddExpiredTag(GamePassGame gamePassGame)
@@ -144,7 +138,7 @@ namespace GamePassCatalogBrowser
             var game = GetLibraryGameFromGamePassGame(gamePassGame);
             if (game != null)
             {
-                AddTagToGame(game, gameExpiredTag);
+                PlayniteUtilities.AddTagToGame(PlayniteApi, game, gameExpiredTag);
                 game.SourceId = sourceXbox.Id;
                 PlayniteApi.Database.Games.Update(game);
             }
@@ -211,17 +205,16 @@ namespace GamePassCatalogBrowser
                 GameId = game.GameId,
                 DeveloperIds = arrayToCompanyGuids(game.Developers),
                 PublisherIds = arrayToCompanyGuids(game.Publishers),
+                TagIds = new List<Guid>() { gameAddedTag.Id },
                 PluginId = pluginId,
                 PlatformIds = platformsList,
                 Description = StringToHtml(game.Description, true),
                 SourceId = source.Id,
-                ReleaseDate = new ReleaseDate(game.ReleaseDate) 
+                ReleaseDate = new ReleaseDate(game.ReleaseDate)
             };
 
-            AddTagToGame(newGame, gameAddedTag);
 
             PlayniteApi.Database.Games.Add(newGame);
-
             if (FileSystem.FileExists(game.CoverImage))
             {
                 var copiedImage = PlayniteApi.Database.AddFile(game.CoverImage, newGame.Id);
@@ -248,10 +241,11 @@ namespace GamePassCatalogBrowser
             PlayniteApi.Database.Games.Update(newGame);
             GameIdsInLibrary.Add(game.GameId);
 
-            if (showGameAddDialog == true)
+            if (showGameAddDialog)
             {
                 PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_AddGameResultsMessage"), game.Name));
             }
+
             return true;
         }
     }

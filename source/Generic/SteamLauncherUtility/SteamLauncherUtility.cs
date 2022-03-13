@@ -3,6 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using SteamCommon;
 using System;
@@ -156,80 +157,22 @@ namespace SteamLauncherUtility
             return sb.ToString();
         }
 
-        public bool AddFeature(Game game, GameFeature feature)
-        {
-            if (game.FeatureIds == null)
-            {
-                game.FeatureIds = new List<Guid> { feature.Id };
-                PlayniteApi.Database.Games.Update(game);
-                return true;
-            }
-            else if (game.FeatureIds.Contains(feature.Id) == false)
-            {
-                game.FeatureIds.AddMissing(feature.Id);
-                PlayniteApi.Database.Games.Update(game);
-                return true;
-            }
-            else
-            { 
-                return false;
-            }
-        }
-
         public void AddModeFeature()
         {
-            string featureName = GetModeFeatureName();
-            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
-            var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary));
-            int featureAddedCount = 0;
-            foreach (var game in gameDatabase)
-            {
-                bool featureAdded = AddFeature(game, feature);
-                if (featureAdded == true)
-                {
-                    featureAddedCount++;
-                    logger.Info(string.Format("Added \"{0}\" feature to \"{1}\"", featureName, game.Name));
-                }
-            }
+            var featureName = "[Splash Screen] Skip splash image";
+            var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi,
+                PlayniteApi.MainView.SelectedGames.Distinct().Where(g => Steam.IsGameSteamGame(g)),
+                featureName);
             PlayniteApi.Dialogs.ShowMessage(string.Format("Added \"{0}\" feature to {1} game(s).", featureName, featureAddedCount), "Steam Launcher Utility");
-        }
-
-        public bool RemoveFeature(Game game, GameFeature feature)
-        {
-            if (game.FeatureIds != null)
-            {
-                if (game.FeatureIds.Contains(feature.Id))
-                {
-                    game.FeatureIds.Remove(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public void RemoveModeFeature()
         {
             var featureName = GetModeFeatureName();
-            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
-            var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => Steam.IsGameSteamGame(g));
-            int featureRemovedCount = 0;
-            foreach (var game in gameDatabase)
-            {
-                var featureRemoved = RemoveFeature(game, feature);
-                if (featureRemoved == true)
-                {
-                    featureRemovedCount++;
-                    logger.Info(string.Format("Removed \"{0}\" feature from \"{1}\"", featureName, game.Name));
-                }
-            }
+            var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(
+                PlayniteApi,
+                PlayniteApi.MainView.SelectedGames.Where(g => Steam.IsGameSteamGame(g)),
+                featureName);
             PlayniteApi.Dialogs.ShowMessage(string.Format("Removed \"{0}\" feature from {1} game(s).", featureName, featureRemovedCount), "Steam Launcher Utility");
         }
     }

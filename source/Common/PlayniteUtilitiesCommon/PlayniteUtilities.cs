@@ -87,6 +87,23 @@ namespace PlayniteUtilitiesCommon
             return false;
         }
 
+        public static bool RemoveFeatureFromGame(IPlayniteAPI PlayniteApi, Game game, GameFeature feature)
+        {
+            if (game.Features == null)
+            {
+                return false;
+            }
+
+            if (game.FeatureIds.Any(x => x == feature.Id))
+            {
+                game.FeatureIds.Remove(feature.Id);
+                PlayniteApi.Database.Games.Update(game);
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool AddTagToGame(IPlayniteAPI PlayniteApi, Game game, string tagName)
         {
             var tag = PlayniteApi.Database.Tags.Add(tagName);
@@ -154,6 +171,23 @@ namespace PlayniteUtilitiesCommon
 
             var tag = game.Tags.FirstOrDefault(x => x.Name == tagName);
             if (tag != null)
+            {
+                game.TagIds.Remove(tag.Id);
+                PlayniteApi.Database.Games.Update(game);
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool RemoveTagFromGame(IPlayniteAPI PlayniteApi, Game game, Tag tag)
+        {
+            if (game.Tags == null)
+            {
+                return false;
+            }
+
+            if (game.TagIds.Any(x => x == tag.Id))
             {
                 game.TagIds.Remove(tag.Id);
                 PlayniteApi.Database.Games.Update(game);

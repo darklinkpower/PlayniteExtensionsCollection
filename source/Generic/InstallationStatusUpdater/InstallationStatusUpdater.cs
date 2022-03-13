@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -493,37 +494,7 @@ namespace InstallationStatusUpdater
 
         public void AddIgnoreFeature()
         {
-            string skipFeatureName = "[Status Updater] Ignore";
-            GameFeature feature = PlayniteApi.Database.Features.Add(skipFeatureName);
-            int featureAddedCount = 0;
-            var gameCollection = PlayniteApi.MainView.SelectedGames;
-            foreach (Game game in gameCollection)
-            {
-                if (game.FeatureIds == null)
-                {
-                    game.FeatureIds = new List<Guid> { feature.Id };
-                    continue;
-                }
-
-                var containsFeature = false;
-                foreach (Guid featureId in game.FeatureIds)
-                {
-                    if (featureId == feature.Id)
-                    {
-                        containsFeature = true;
-                        break;
-                    }
-                }
-
-                if (containsFeature == false)
-                {
-                    game.FeatureIds.Add(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                    featureAddedCount++;
-                    logger.Info(string.Format("Game: {0} Added ignore feature", game.Name));
-                }
-            }
-
+            var featureAddedCount = PlayniteUtilities.AddTagToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore"); ;
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage"),
                 featureAddedCount.ToString()), "Installation Status Updater"
@@ -532,30 +503,7 @@ namespace InstallationStatusUpdater
 
         public void RemoveIgnoreFeature()
         {
-            string skipFeatureName = "[Status Updater] Ignore";
-            GameFeature feature = PlayniteApi.Database.Features.Add(skipFeatureName);
-            int featureRemovedCount = 0;
-            var gameCollection = PlayniteApi.MainView.SelectedGames;
-            foreach (Game game in gameCollection)
-            {
-                if (game.FeatureIds == null)
-                {
-                    continue;
-                }
-
-                foreach (Guid featureId in game.FeatureIds)
-                {
-                    if (featureId == feature.Id)
-                    {
-                        game.FeatureIds.Remove(feature.Id);
-                        PlayniteApi.Database.Games.Update(game);
-                        featureRemovedCount++;
-                        logger.Info(string.Format("Game: {0} Removed ignore feature", game.Name));
-                        break;
-                    }
-                }
-            }
-
+            var featureRemovedCount = PlayniteUtilities.RemoveTagFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore");
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage"), 
                 featureRemovedCount.ToString()), "Installation Status Updater"
@@ -567,17 +515,17 @@ namespace InstallationStatusUpdater
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 var gameDatabase = PlayniteApi.Database.Games;
-                string driveTagPrefix = "[Install Drive]";
+                var driveTagPrefix = "[Install Drive]";
                 foreach (Game game in gameDatabase)
                 {
                     string tagName = string.Empty;
                     if (!string.IsNullOrEmpty(game.InstallDirectory) && game.IsInstalled == true)
                     {
                         FileInfo s = new FileInfo(game.InstallDirectory);
-                        string sourceDrive = System.IO.Path.GetPathRoot(s.FullName).ToUpper();
+                        string sourceDrive = Path.GetPathRoot(s.FullName).ToUpper();
                         tagName = string.Format("{0} {1}", driveTagPrefix, sourceDrive);
                         Tag driveTag = PlayniteApi.Database.Tags.Add(tagName);
-                        AddTag(game, driveTag);
+                        PlayniteUtilities.AddTagToGame(PlayniteApi, game, driveTag);
                     }
 
                     if (game.Tags == null)
@@ -587,67 +535,21 @@ namespace InstallationStatusUpdater
 
                     foreach (Tag tag in game.Tags.Where(x => x.Name.StartsWith(driveTagPrefix)))
                     {
-                        if (!string.IsNullOrEmpty(tagName))
+                        if (!tagName.IsNullOrEmpty())
                         {
                             if (tag.Name != tagName)
                             {
-                                RemoveTag(game, tag);
+                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, tag);
                             }
                         }
                         else
                         {
-                            RemoveTag(game, tag);
+                            PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, tag);
                         }
                     }
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage")));
         }
 
-        public bool RemoveTag(Game game, Tag tag)
-        {
-            if (game.TagIds != null)
-            {
-                if (game.TagIds.Contains(tag.Id))
-                {
-                    game.TagIds.Remove(tag.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                    bool tagRemoved = true;
-                    return tagRemoved;
-                }
-                else
-                {
-                    bool tagRemoved = false;
-                    return tagRemoved;
-                }
-            }
-            else
-            {
-                bool tagRemoved = false;
-                return tagRemoved;
-            }
-        }
-
-        public bool AddTag(Game game, Tag tag)
-        {
-            if (game.TagIds == null)
-            {
-                game.TagIds = new List<Guid> { tag.Id };
-                PlayniteApi.Database.Games.Update(game);
-                bool tagAdded = true;
-                return tagAdded;
-            }
-            else if (game.TagIds.Contains(tag.Id) == false)
-            {
-                game.TagIds.AddMissing(tag.Id);
-                PlayniteApi.Database.Games.Update(game);
-                bool tagAdded = true;
-                return tagAdded;
-            }
-            else
-            {
-                bool tagAdded = false;
-                return tagAdded;
-            }
-        }
     }
 }

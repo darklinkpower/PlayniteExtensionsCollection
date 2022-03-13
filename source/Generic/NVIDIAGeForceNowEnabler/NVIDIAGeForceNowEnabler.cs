@@ -15,6 +15,7 @@ using Playnite.SDK.Data;
 using System.Diagnostics;
 using PluginsCommon;
 using PluginsCommon.Web;
+using PlayniteUtilitiesCommon;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -124,26 +125,6 @@ namespace NVIDIAGeForceNowEnabler
             }
         }
 
-        public bool AddFeature(Game game, GameFeature feature)
-        {
-            if (game.FeatureIds == null)
-            {
-                game.FeatureIds = new List<Guid> { feature.Id };
-                PlayniteApi.Database.Games.Update(game);
-                return true;
-            }
-            else if (game.FeatureIds.Contains(feature.Id) == false)
-            {
-                game.FeatureIds.AddMissing(feature.Id);
-                PlayniteApi.Database.Games.Update(game);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private string SatinizeString(string str)
         {
             var satinizedString = str.Replace("Game of the Year Edition", "Game of the Year");
@@ -220,8 +201,8 @@ namespace NVIDIAGeForceNowEnabler
 
         public void MainMethod(bool showDialogs)
         {
-            string featureName = "NVIDIA GeForce NOW";
-            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
+            var featureName = "NVIDIA GeForce NOW";
+            var feature = PlayniteApi.Database.Features.Add(featureName);
 
             var supportedGames = DownloadGameList(showDialogs);
             if (supportedGames.Count() == 0)
@@ -279,7 +260,7 @@ namespace NVIDIAGeForceNowEnabler
 
                     if (supportedGame == null)
                     {
-                        if (RemoveFeature(game, feature))
+                        if (PlayniteUtilities.RemoveFeatureFromGame(PlayniteApi, game, feature))
                         {
                             featureRemovedCount++;
                             logger.Info(string.Format("Feature removed from \"{0}\"", game.Name));
@@ -288,7 +269,7 @@ namespace NVIDIAGeForceNowEnabler
                     else
                     {
                         enabledGamesCount++;
-                        if (AddFeature(game, feature))
+                        if (PlayniteUtilities.AddFeatureToGame(PlayniteApi, game, feature))
                         {
                             featureAddedCount++;
                             logger.Info(string.Format("Feature added to \"{0}\"", game.Name));

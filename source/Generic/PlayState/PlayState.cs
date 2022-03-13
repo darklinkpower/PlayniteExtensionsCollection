@@ -23,6 +23,7 @@ using System.Windows.Threading;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using PluginsCommon;
+using PlayniteUtilitiesCommon;
 
 namespace PlayState
 {
@@ -827,7 +828,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToBlacklistDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureAddedCount = AddFeatureToSelectedGames("[PlayState] Blacklist");
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Blacklist");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
@@ -836,7 +837,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromBlacklistDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Blacklist");
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Blacklist");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 },
@@ -845,7 +846,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToPlaytimeSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureAddedCount = AddFeatureToSelectedGames("[PlayState] Suspend Playtime only");
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
@@ -854,54 +855,11 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureRemovedCount = RemoveFeatureFromSelectedGames("[PlayState] Suspend Playtime only");
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }
             };
-        }
-
-        private int RemoveFeatureFromSelectedGames(string featureName)
-        {
-            var feature = PlayniteApi.Database.Features.Add(featureName);
-            int featureRemovedCount = 0;
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
-            {
-                if (game.FeatureIds != null && game.FeatureIds.Contains(feature.Id))
-                {
-                    game.FeatureIds.Remove(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                    featureRemovedCount++;
-                    logger.Info(string.Format("Removed \"{0}\" feature from \"{1}\"", featureName, game.Name));
-                }
-            }
-            return featureRemovedCount;
-        }
-
-        public int AddFeatureToSelectedGames(string featureName)
-        {
-            var feature = PlayniteApi.Database.Features.Add(featureName);
-            int featureAddedCount = 0;
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
-            {
-                if (game.FeatureIds == null)
-                {
-                    game.FeatureIds = new List<Guid> { feature.Id };
-                    PlayniteApi.Database.Games.Update(game);
-                    featureAddedCount++;
-                }
-                else if (game.FeatureIds.AddMissing(feature.Id))
-                {
-                    PlayniteApi.Database.Games.Update(game);
-                    featureAddedCount++;
-                }
-                else
-                {
-                    continue;
-                }
-                logger.Info(string.Format("Added \"{0}\" feature to \"{1}\"", featureName, game.Name));
-            }
-            return featureAddedCount;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

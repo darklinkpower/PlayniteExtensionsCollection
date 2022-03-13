@@ -7,6 +7,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
@@ -774,62 +775,34 @@ namespace ExtraMetadataLoader
                         {
                             if (FileSystem.FileExists(extraMetadataHelper.GetGameLogoPath(game)))
                             {
-                                var tagRemoved = RemoveTag(game, logoMissingTag, false);
-                                if (tagRemoved)
-                                {
-                                    gameUpdated = true;
-                                }
+                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, logoMissingTag);
                             }
                             else
                             {
-                                var tagAdded = AddTag(game, logoMissingTag, false);
-                                if (tagAdded)
-                                {
-                                    gameUpdated = true;
-                                }
+                                PlayniteUtilities.AddTagToGame(PlayniteApi, game, logoMissingTag);
                             }
                         }
                         if (videoMissingTag != null)
                         {
                             if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
                             {
-                                var tagRemoved = RemoveTag(game, videoMissingTag, false);
-                                if (tagRemoved)
-                                {
-                                    gameUpdated = true;
-                                }
+                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, videoMissingTag);
                             }
                             else
                             {
-                                var tagAdded = AddTag(game, videoMissingTag, false);
-                                if (tagAdded)
-                                {
-                                    gameUpdated = true;
-                                }
+                                PlayniteUtilities.AddTagToGame(PlayniteApi, game, videoMissingTag);
                             }
                         }
                         if (microvideoMissingTag != null)
                         {
                             if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoMicroPath(game)))
                             {
-                                var tagRemoved = RemoveTag(game, microvideoMissingTag, false);
-                                if (tagRemoved)
-                                {
-                                    gameUpdated = true;
-                                }
+                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, microvideoMissingTag);
                             }
                             else
                             {
-                                var tagAdded = AddTag(game, microvideoMissingTag, false);
-                                if (tagAdded)
-                                {
-                                    gameUpdated = true;
-                                }
+                                PlayniteUtilities.AddTagToGame(PlayniteApi, game, microvideoMissingTag);
                             }
-                        }
-                        if (gameUpdated)
-                        {
-                            PlayniteApi.Database.Games.Update(game);
                         }
                     }
                 }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
@@ -888,45 +861,6 @@ namespace ExtraMetadataLoader
             }
 
             return success;
-        }
-
-        private bool AddTag(Game game, Tag tag, bool updateGame = true)
-        {
-            var tagAdded = false;
-            if (game.TagIds == null)
-            {
-                game.TagIds = new List<Guid> { tag.Id };
-                tagAdded = true;
-            }
-            else if (!game.TagIds.Contains(tag.Id))
-            {
-                game.TagIds.Add(tag.Id);
-                tagAdded = true;
-            }
-            if (tagAdded && updateGame)
-            {
-                PlayniteApi.Database.Games.Update(game);
-            }
-            return tagAdded;
-        }
-
-        private bool RemoveTag(Game game, Tag tag, bool updateGame = true)
-        {
-            var tagRemoved = false;
-            if (game.TagIds == null)
-            {
-                return false;
-            }
-            else if (game.TagIds.Contains(tag.Id))
-            {
-                game.TagIds.Remove(tag.Id);
-                tagRemoved = true;
-            }
-            if (tagRemoved && updateGame)
-            {
-                PlayniteApi.Database.Games.Update(game);
-            }
-            return tagRemoved;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

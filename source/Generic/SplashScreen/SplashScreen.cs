@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using SplashScreen.ViewModels;
 using SplashScreen.Views;
@@ -509,7 +510,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemAdd-DisableFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        AddImageSkipFeature("[Splash Screen] Disable");
+                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Disable");
                     }
                 },
                 new MainMenuItem
@@ -517,7 +518,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemRemove-DisableFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        RemoveImageSkipFeature("[Splash Screen] Disable");
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Disable");
                     }
                 },
                 new MainMenuItem
@@ -525,7 +526,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemAdd-ImageSkipFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        AddImageSkipFeature("[Splash Screen] Skip splash image");
+                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Skip splash image");
                     }
                 },
                 new MainMenuItem
@@ -533,7 +534,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemRemove-ImageSkipFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        RemoveImageSkipFeature("[Splash Screen] Skip splash image");
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Skip splash image");
                     }
                 }
             };
@@ -560,7 +561,7 @@ namespace SplashScreen
         private void AddImageSkipFeature(string featureName)
         {
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
-            int featureAddedCount = 0;
+            int featureAddedCount = 009;
             foreach (var game in PlayniteApi.MainView.SelectedGames)
             {
                 if (game.FeatureIds == null)

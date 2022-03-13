@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,7 +149,7 @@ namespace ResolutionChanger
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.GetResolutionAspectRatio(resolution.Key, resolution.Value)),
                         MenuSection = "@Resolution Changer",
                         Action = a => {
-                            SetResolutionFeature(resolution.Key, resolution.Value);
+                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Key}x{resolution.Value}");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
                     }
@@ -173,39 +174,7 @@ namespace ResolutionChanger
                         {
                             game.FeatureIds.Remove(rcFeature.Id);
                         }
-                        PlayniteApi.Database.Games.Update(game);
-                    }
-                }
-            }
-        }
 
-        private void SetResolutionFeature(int width, int height)
-        {
-            var featureName = $"[RC] {width}x{height}";
-            var feature = PlayniteApi.Database.Features.Add(featureName);
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
-            {
-                if (game.FeatureIds == null)
-                {
-                    game.FeatureIds = new List<Guid>{feature.Id};
-                    PlayniteApi.Database.Games.Update(game);
-                }
-                else
-                {
-                    var featuresRemoved = false;
-                    var rcFeatures = game.Features.Where(x => x.Name != featureName && Regex.IsMatch(x.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase));
-                    if (rcFeatures != null && rcFeatures.Count() > 0)
-                    {
-                        foreach (var rcFeature in rcFeatures)
-                        {
-                            game.FeatureIds.Remove(rcFeature.Id);
-                        }
-                        featuresRemoved = true;
-                    }
-
-                    var featureAdded = game.FeatureIds.AddMissing(feature.Id);
-                    if (featuresRemoved || featureAdded)
-                    {
                         PlayniteApi.Database.Games.Update(game);
                     }
                 }
