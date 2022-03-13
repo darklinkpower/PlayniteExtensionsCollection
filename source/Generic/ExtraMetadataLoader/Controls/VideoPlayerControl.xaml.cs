@@ -446,7 +446,7 @@ namespace ExtraMetadataLoader
                         // According to #169, it seems that for some reason the uri redirects to
                         // another page and a html source gets downloaded so it needs to be deleted
                         logger.Error($"Error deserializing steam appdetails json file in {gameDataPath}");
-                        IoHelper.DeleteFile(gameDataPath);
+                        FileSystem.DeleteFile(gameDataPath);
                     }
                 }
             }

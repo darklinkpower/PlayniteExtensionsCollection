@@ -68,8 +68,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\IoHelper.cs" />
-    <Compile Include="Common\ProcessStarter.cs" />
     <Compile Include="Common\SteamCommon.cs" />
     <Compile Include="Common\YoutubeCommon.cs" />
     <Compile Include="Controls\VideoPlayerControl.xaml.cs">
@@ -95,7 +93,6 @@
     </Compile>
     <Compile Include="Services\LogosDownloader.cs" />
     <Compile Include="Services\VideosDownloader.cs" />
-    <Compile Include="Common\HttpDownloader.cs" />
     <Compile Include="ViewModels\GoogleImageDownloaderViewModel.cs" />
     <Compile Include="ViewModels\YoutubeSearchViewModel.cs" />
     <Compile Include="Views\GoogleImageDownloaderView.xaml.cs">

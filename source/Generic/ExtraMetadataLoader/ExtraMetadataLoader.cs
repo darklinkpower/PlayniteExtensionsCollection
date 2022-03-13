@@ -269,7 +269,7 @@ namespace ExtraMetadataLoader
                         if (!filePath.IsNullOrEmpty())
                         {
                             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
-                            var fileCopied = IoHelper.MoveFile(filePath, logoPath, true);
+                            var fileCopied = FileSystem.CopyFile(filePath, logoPath, true);
                             if (settings.Settings.ProcessLogosOnDownload && fileCopied)
                             {
                                 logosDownloader.ProcessLogoImage(logoPath);
@@ -845,13 +845,13 @@ namespace ExtraMetadataLoader
                 if (settings.Settings.FfmpegPath.IsNullOrEmpty())
                 {
                     logger.Debug($"ffmpeg has not been configured");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error));
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
                 else if (!FileSystem.FileExists(settings.Settings.FfmpegPath))
                 {
                     logger.Debug($"ffmpeg executable not found in {settings.Settings.FfmpegPath}");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error));
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
 
@@ -859,13 +859,13 @@ namespace ExtraMetadataLoader
                 if (settings.Settings.FfprobePath.IsNullOrEmpty())
                 {
                     logger.Debug($"ffprobe has not been configured");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error));
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
                 else if (!FileSystem.FileExists(settings.Settings.FfprobePath))
                 {
                     logger.Debug($"ffprobe executable not found in {settings.Settings.FfprobePath}");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error));
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
             }
@@ -876,13 +876,13 @@ namespace ExtraMetadataLoader
                 if (settings.Settings.YoutubeDlPath.IsNullOrEmpty())
                 {
                     logger.Debug($"youtube-dl has not been configured");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured"), NotificationType.Error));
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
                 else if (!FileSystem.FileExists(settings.Settings.YoutubeDlPath))
                 {
                     logger.Debug($"youtube-dl executable not found in {settings.Settings.YoutubeDlPath}");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound"), NotificationType.Error));
+                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
             }

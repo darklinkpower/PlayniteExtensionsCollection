@@ -266,7 +266,7 @@ namespace SteamGameTransferUtility.ViewModels
                 }
 
                 // Check if game manifest already exists in target library
-                var targetManifestPath = System.IO.Path.Combine(targetLibraryPath, gameManifest);
+                var targetManifestPath = Path.Combine(targetLibraryPath, gameManifest);
                 if (FileSystem.FileExists(targetManifestPath))
                 {
                     var sourceBuildId = int.Parse(GetAcfAppSubItem(sourceManifestPath, "buildid"));
@@ -300,13 +300,13 @@ namespace SteamGameTransferUtility.ViewModels
                         logger.Info(string.Format("Deleted directory: {0}", targetGameDirectoryPath));
                     }
 
-                    DirectoryCopy(sourceGameDirectoryPath, targetGameDirectoryPath, true);
+                    FileSystem.CopyDirectory(sourceGameDirectoryPath, targetGameDirectoryPath, true);
                     logger.Info(string.Format("Game copied: {0}. sourceDirName: {1}, destDirName: {2}", game.Name, sourceGameDirectoryPath, targetGameDirectoryPath));
-                    File.Copy(sourceManifestPath, targetManifestPath, true);
+                    FileSystem.CopyFile(sourceManifestPath, targetManifestPath, true);
                     logger.Info(string.Format("Game manifest copied: {0}. sourceDirName: {1}, destDirName: {2}", game.Name, sourceManifestPath, targetManifestPath));
                     copiedGamesCount++;
 
-                    if (deleteSourceGame == true)
+                    if (deleteSourceGame)
                     {
                         Directory.Delete(sourceGameDirectoryPath, true);
                         File.Delete(sourceManifestPath);
@@ -333,47 +333,11 @@ namespace SteamGameTransferUtility.ViewModels
             return acfStruct.SubACF["AppState"].SubItems[subItemName];
         }
 
-        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
-        {
-            // Get the subdirectories for the specified directory.
-            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
-
-            if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
-            }
-
-            DirectoryInfo[] dirs = dir.GetDirectories();
-
-            // If the destination directory doesn't exist, create it.       
-            Directory.CreateDirectory(destDirName);
-
-            // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string tempPath = System.IO.Path.Combine(destDirName, file.Name);
-                file.CopyTo(tempPath, false);
-            }
-
-            // If copying subdirectories, copy them and their contents to new location.
-            if (copySubDirs)
-            {
-                foreach (DirectoryInfo subdir in dirs)
-                {
-                    string tempPath = System.IO.Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
-                }
-            }
-        }
-
         public string CalculateSize(string directory)
         {
             var task = Task.Run(() =>
             {
-                return CalculateSizeTask(new DirectoryInfo(directory));
+                return FileSystem.GetDirectorySize(directory);
             });
 
             bool isCompletedSuccessfully = task.Wait(TimeSpan.FromMilliseconds(9000));
@@ -395,32 +359,6 @@ namespace SteamGameTransferUtility.ViewModels
             }
         }
 
-        private static long CalculateSizeTask(DirectoryInfo dir)
-        {
-            try
-            {
-                long size = 0;
-                // Add file sizes.
-                FileInfo[] fis = dir.GetFiles();
-                foreach (FileInfo fi in fis)
-                {
-                    size += fi.Length;
-                }
-
-                // Add subdirectory sizes.
-                DirectoryInfo[] dis = dir.GetDirectories();
-                foreach (DirectoryInfo di in dis)
-                {
-                    size += CalculateSizeTask(di);
-                }
-                return size;
-            }
-            catch
-            {
-                return 0;
-            }
-        }
-
         private static string FormatBytes(long bytes)
         {
             string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
@@ -436,7 +374,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         private async void RestartSteam()
         {
-            string steamInstallationPath = System.IO.Path.Combine(GetSteamInstallationPath(), "steam.exe");
+            string steamInstallationPath = Path.Combine(GetSteamInstallationPath(), "steam.exe");
             if (!FileSystem.FileExists(steamInstallationPath))
             {
                 logger.Error(string.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));

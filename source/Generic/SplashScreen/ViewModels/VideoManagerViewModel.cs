@@ -138,18 +138,18 @@ namespace SplashScreen.ViewModels
             }
 
             // In case source video is the same as target
-            if (videoSourcePath == videoDestinationPath)
+            if (videoSourcePath.Equals(videoDestinationPath, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
 
             var directory = Path.GetDirectoryName(videoDestinationPath);
-            if (!Directory.Exists(directory))
+            if (!FileSystem.DirectoryExists(directory))
             {
-                Directory.CreateDirectory(directory);
+                FileSystem.CreateDirectory(directory);
             }
 
-            File.Copy(videoSourcePath, videoDestinationPath, true);
+            FileSystem.CopyFile(videoSourcePath, videoDestinationPath, true);
             VideoSource = new Uri(videoDestinationPath);
             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_IntroVideoAddedMessage"), "Splash Screen");
             return true;
@@ -166,7 +166,7 @@ namespace SplashScreen.ViewModels
         private void RemoveVideo(VideoManagerItem videoManagerItem)
         {
             VideoSource = null;
-            File.Delete(videoManagerItem.VideoPath);
+            FileSystem.DeleteFileSafe(videoManagerItem.VideoPath);
             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_IntroVideoRemovedMessage"), "Splash Screen");
         }
 

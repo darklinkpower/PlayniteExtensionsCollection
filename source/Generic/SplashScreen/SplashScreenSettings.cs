@@ -163,7 +163,7 @@ namespace SplashScreen
                     var globalSplashImagePath = Path.Combine(pluginUserDataPath, fileName);
                     try
                     {
-                        File.Copy(filePath, globalSplashImagePath);
+                        FileSystem.CopyFile(filePath, globalSplashImagePath);
                         Settings.GlobalSplashFile = Path.GetFileName(filePath);
                         SetGlobalSplashImagePath();
                     }
@@ -185,7 +185,7 @@ namespace SplashScreen
 
         private bool RemoveGlobalImage()
         {
-            if (string.IsNullOrEmpty(Settings.GlobalSplashFile))
+            if (Settings.GlobalSplashFile.IsNullOrEmpty())
             {
                 return true;
             }

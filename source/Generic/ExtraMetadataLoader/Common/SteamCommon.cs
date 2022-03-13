@@ -3,6 +3,7 @@ using ExtraMetadataLoader.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;

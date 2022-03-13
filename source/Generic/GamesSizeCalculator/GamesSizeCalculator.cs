@@ -16,15 +16,6 @@ namespace GamesSizeCalculator
 {
     public class GamesSizeCalculator : GenericPlugin
     {
-        [DllImport("kernel32.dll")]
-        static extern uint GetCompressedFileSizeW([In, MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
-        [Out, MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh);
-
-        [DllImport("kernel32.dll", SetLastError = true, PreserveSig = true)]
-        static extern int GetDiskFreeSpaceW([In, MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName,
-        out uint lpSectorsPerCluster, out uint lpBytesPerSector, out uint lpNumberOfFreeClusters,
-        out uint lpTotalNumberOfClusters);
-
         private static readonly ILogger logger = LogManager.GetLogger();
 
         private GamesSizeCalculatorSettingsViewModel settings { get; set; }
@@ -86,13 +77,13 @@ namespace GamesSizeCalculator
                 a.ProgressMaxValue = games.Count();
                 foreach (var game in games)
                 {
-                    a.Text = $"{a.CurrentProgressValue}/{a.ProgressMaxValue} - {game.Name}";
-                    CalculateGameSize(game, forceNonEmpty);
-                    a.CurrentProgressValue++;
                     if (a.CancelToken.IsCancellationRequested)
                     {
                         break;
                     }
+                    a.CurrentProgressValue++;
+                    a.Text = $"{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                    CalculateGameSize(game, forceNonEmpty);
                 }
             }, progressOptions);
 
@@ -116,7 +107,7 @@ namespace GamesSizeCalculator
 
                 try
                 {
-                    size = GetDirSizeOnDisk(new DirectoryInfo(game.InstallDirectory));
+                    size = FileSystem.GetDirectorySizeOnDisk(game.InstallDirectory);
                 }
                 catch (Exception e)
                 {
@@ -150,7 +141,7 @@ namespace GamesSizeCalculator
 
                 try
                 {
-                    size = GetFileSizeOnDisk(new FileInfo(romPath));
+                    size = FileSystem.GetFileSizeOnDisk(romPath);
                 }
                 catch (Exception e)
                 {
@@ -171,30 +162,11 @@ namespace GamesSizeCalculator
             }
 
             var fSize = GetBytesReadable(size);
-            if (string.IsNullOrEmpty(game.Version) || game.Version != fSize)
+            if (game.Version.IsNullOrEmpty() || game.Version != fSize)
             {
                 game.Version = fSize;
                 PlayniteApi.Database.Games.Update(game);
             }
-        }
-
-        public long GetDirSizeOnDisk(DirectoryInfo dirInfo)
-        {
-            long size = 0;
-
-            // Add file sizes.
-            foreach (FileInfo file in dirInfo.GetFiles())
-            {
-                size += GetFileSizeOnDisk(file);
-            }
-
-            // Add subdirectory sizes.
-            foreach (DirectoryInfo directory in dirInfo.GetDirectories())
-            {
-                size += GetDirSizeOnDisk(directory);
-            }
-
-            return size;
         }
 
         // Returns the human-readable file size for an arbitrary, 64-bit file size 
@@ -212,18 +184,5 @@ namespace GamesSizeCalculator
             return readable.ToString("000.000 GB");
         }
 
-        // From https://stackoverflow.com/a/3751135
-        public static long GetFileSizeOnDisk(FileInfo info)
-        {
-            uint dummy, sectorsPerCluster, bytesPerSector;
-            int result = GetDiskFreeSpaceW(info.Directory.Root.FullName, out sectorsPerCluster, out bytesPerSector, out dummy, out dummy);
-            if (result == 0) throw new System.ComponentModel.Win32Exception();
-            uint clusterSize = sectorsPerCluster * bytesPerSector;
-            uint hosize;
-            uint losize = GetCompressedFileSizeW(info.FullName, out hosize);
-            long size;
-            size = (long)hosize << 32 | losize;
-            return ((size + clusterSize - 1) / clusterSize) * clusterSize;
-        }
     }
 }

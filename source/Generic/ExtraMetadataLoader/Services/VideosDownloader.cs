@@ -130,11 +130,11 @@ namespace ExtraMetadataLoader.Services
                 {
                     if (copyOnly)
                     {
-                        success = IoHelper.MoveFile(videoPath, destinationPath, true);
+                        success = FileSystem.CopyFile(videoPath, destinationPath);
                     }
                     else
                     {
-                        success = IoHelper.MoveFile(videoPath, destinationPath, false);
+                        success = FileSystem.MoveFile(videoPath, destinationPath);
                     }
                 }
                 else if (neededAction == VideoActionNeeded.Invalid)
@@ -150,8 +150,9 @@ namespace ExtraMetadataLoader.Services
 
             if (deleteSource && FileSystem.FileExists(videoPath))
             {
-                File.Delete(videoPath);
+                FileSystem.DeleteFile(videoPath);
             }
+
             return success;
         }
 

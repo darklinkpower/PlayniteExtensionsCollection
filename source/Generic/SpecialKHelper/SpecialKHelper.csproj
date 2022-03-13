@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\SelectorBehaviors.cs" />
-    <Compile Include="Common\HttpDownloader.cs" />
     <Compile Include="Common\SteamCommon.cs" />
     <Compile Include="Converters\NumericConverters.cs" />
     <Compile Include="Localization\LocalizationKeys.cs" />

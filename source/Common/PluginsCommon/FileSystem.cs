@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,15 @@ namespace PluginsCommon
 
     public static partial class FileSystem
     {
+        [DllImport("kernel32.dll")]
+        static extern uint GetCompressedFileSizeW([In, MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+        [Out, MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh);
+
+        [DllImport("kernel32.dll", SetLastError = true, PreserveSig = true)]
+        static extern int GetDiskFreeSpaceW([In, MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName,
+        out uint lpSectorsPerCluster, out uint lpBytesPerSector, out uint lpNumberOfFreeClusters,
+        out uint lpTotalNumberOfClusters);
+
         private static ILogger logger = LogManager.GetLogger();
         private const string longPathPrefix = @"\\?\";
         private const string longPathUncPrefix = @"\\?\UNC\";
@@ -88,13 +98,54 @@ namespace PluginsCommon
             File.Create(path).Dispose();
         }
 
-        public static void CopyFile(string sourcePath, string targetPath, bool overwrite = true)
+        public static bool CopyFile(string sourcePath, string targetPath, bool overwrite = true)
         {
             sourcePath = FixPathLength(sourcePath);
             targetPath = FixPathLength(targetPath);
-            logger.Debug($"Copying file {sourcePath} to {targetPath}");
-            PrepareSaveFile(targetPath);
-            File.Copy(sourcePath, targetPath, overwrite);
+
+            try
+            {
+                logger.Debug($"Copying file {sourcePath} to {targetPath}");
+                PrepareSaveFile(targetPath);
+                File.Copy(sourcePath, targetPath, overwrite);
+                return true;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error copying file {sourcePath} to {targetPath}");
+                return false;
+            }
+        }
+
+        public static bool MoveFile(string sourcePath, string targetPath)
+        {
+            sourcePath = FixPathLength(sourcePath);
+            targetPath = FixPathLength(targetPath);
+            logger.Debug($"Moving file {sourcePath} to {targetPath}");
+            if (sourcePath.Equals(targetPath, StringComparison.OrdinalIgnoreCase))
+            {
+                logger.Debug($"Source path and target path are the same: {sourcePath}");
+                return false;
+            }
+
+            if (!File.Exists(sourcePath))
+            {
+                logger.Debug($"Source doesn't exists: {sourcePath}");
+                return false;
+            }
+
+            var targetDir = Path.GetDirectoryName(targetPath);
+            if (!Directory.Exists(targetDir))
+            {
+                Directory.CreateDirectory(targetDir);
+            }
+            else if (File.Exists(targetPath))
+            {
+                File.Delete(targetPath);
+            }
+
+            File.Move(sourcePath, targetPath);
+            return true;
         }
 
         public static void DeleteDirectory(string path)
@@ -347,6 +398,82 @@ namespace PluginsCommon
         {
             path = FixPathLength(path);
             return new FileInfo(path).Length;
+        }
+
+        
+        public static long GetFileSizeOnDisk(string path)
+        {
+            return GetFileSizeOnDisk(new FileInfo(FixPathLength(path)));
+        }
+
+        
+        public static long GetFileSizeOnDisk(FileInfo info)
+        {
+            // From https://stackoverflow.com/a/3751135
+            uint dummy, sectorsPerCluster, bytesPerSector;
+            int result = GetDiskFreeSpaceW(info.Directory.Root.FullName, out sectorsPerCluster, out bytesPerSector, out dummy, out dummy);
+            if (result == 0) throw new System.ComponentModel.Win32Exception();
+            uint clusterSize = sectorsPerCluster * bytesPerSector;
+            uint hosize;
+            uint losize = GetCompressedFileSizeW(info.FullName, out hosize);
+            long size;
+            size = (long)hosize << 32 | losize;
+            return ((size + clusterSize - 1) / clusterSize) * clusterSize;
+        }
+
+        public static long GetDirectorySize(string path)
+        {
+            return GetDirectorySize(new DirectoryInfo(FixPathLength(path)));
+        }
+
+        private static long GetDirectorySize(DirectoryInfo dir)
+        {
+            try
+            {
+                long size = 0;
+                // Add file sizes.
+                FileInfo[] fis = dir.GetFiles();
+                foreach (FileInfo fi in fis)
+                {
+                    size += fi.Length;
+                }
+
+                // Add subdirectory sizes.
+                DirectoryInfo[] dis = dir.GetDirectories();
+                foreach (DirectoryInfo di in dis)
+                {
+                    size += GetDirectorySize(di);
+                }
+                return size;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public static long GetDirectorySizeOnDisk(string path)
+        {
+            return GetDirectorySizeOnDisk(new DirectoryInfo(FixPathLength(path)));
+        }
+
+        public static long GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
+        {
+            long size = 0;
+
+            // Add file sizes.
+            foreach (FileInfo file in dirInfo.GetFiles())
+            {
+                size += GetFileSizeOnDisk(file);
+            }
+
+            // Add subdirectory sizes.
+            foreach (DirectoryInfo directory in dirInfo.GetDirectories())
+            {
+                size += GetDirectorySizeOnDisk(directory);
+            }
+
+            return size;
         }
 
         public static void CopyDirectory(string sourceDirName, string destDirName, bool copySubDirs = true, bool overwrite = true)
