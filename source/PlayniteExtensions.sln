@@ -12,79 +12,43 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{4168396D-8C15-4892-A09B-95E94B24B510}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CooperativeModesImporter", "Generic\CooperativeModesImporter\CooperativeModesImporter.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraMetadataLoader", "Generic\ExtraMetadataLoader\ExtraMetadataLoader.csproj", "{CD6A59BB-D91B-42C6-98F3-027D690AE74F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePassCatalogBrowser", "Generic\GamePassCatalogBrowser\GamePassCatalogBrowser.csproj", "{EC3574AA-38C9-4EA9-B750-C815CE6CAB25}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesSizeCalculator", "Generic\GamesSizeCalculator\GamesSizeCalculator.csproj", "{1E80FE98-3F7D-4EE1-8CD1-4B7751CC141A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallationStatusUpdater", "Generic\InstallationStatusUpdater\InstallationStatusUpdater.csproj", "{51C3FE65-214E-4A7C-BD8C-9C3D46CD30B0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsViewer", "Generic\NewsViewer\NewsViewer.csproj", "{D7941592-8D0A-4521-A29C-7E79571291A1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NVIDIAGeForceNowEnabler", "Generic\NVIDIAGeForceNowEnabler\NVIDIAGeForceNowEnabler.csproj", "{9942EA2C-F4EA-46CB-9033-FD063BD3D931}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayState", "Generic\PlayState\PlayState.csproj", "{F3021AE3-EF99-480A-8CFE-A97672A36985}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResolutionChanger", "Generic\ResolutionChanger\ResolutionChanger.csproj", "{7BDB4FCC-B0A7-4D81-B54F-2E0133B28FF3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewViewer", "Generic\ReviewViewer\ReviewViewer.csproj", "{E63CAD2F-E238-4F0B-B294-90810D6134B2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecialKHelper", "Generic\SpecialKHelper\SpecialKHelper.csproj", "{BCB07CE2-D6E4-4C73-B133-CC5A6AD1BFC4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplashScreen", "Generic\SplashScreen\SplashScreen.csproj", "{54958136-EE8C-4747-9EAB-1920F9CE6C41}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamGameTransferUtility", "Generic\SteamGameTransferUtility\SteamGameTransferUtility.csproj", "{B8B62F00-0C07-4B1E-BB2B-8FDE21A94B2B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamLauncherUtility", "Generic\SteamLauncherUtility\SteamLauncherUtility.csproj", "{1D868838-0CF3-4898-AA64-373CE5E555E7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImporterforAnilist", "Library\ImporterforAnilist\ImporterforAnilist.csproj", "{2351B5C1-6E28-4B79-A1D9-90FDA53B5417}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CBED3B97-8FB8-4CA4-8827-13065AB64113} = {CBED3B97-8FB8-4CA4-8827-13065AB64113}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamCommon", "Common\SteamCommon\SteamCommon.csproj", "{4050F4C3-5D5A-4FC5-95DB-1531D815AED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayniteUtilitiesCommon", "Common\PlayniteUtilitiesCommon\PlayniteUtilitiesCommon.csproj", "{F234D215-E78A-4C84-827D-F6EF09A86D9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeCommon", "Common\YouTubeCommon\YouTubeCommon.csproj", "{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,6 +120,18 @@ Global
 		{2351B5C1-6E28-4B79-A1D9-90FDA53B5417}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2351B5C1-6E28-4B79-A1D9-90FDA53B5417}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2351B5C1-6E28-4B79-A1D9-90FDA53B5417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4050F4C3-5D5A-4FC5-95DB-1531D815AED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4050F4C3-5D5A-4FC5-95DB-1531D815AED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4050F4C3-5D5A-4FC5-95DB-1531D815AED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4050F4C3-5D5A-4FC5-95DB-1531D815AED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F234D215-E78A-4C84-827D-F6EF09A86D9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F234D215-E78A-4C84-827D-F6EF09A86D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F234D215-E78A-4C84-827D-F6EF09A86D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F234D215-E78A-4C84-827D-F6EF09A86D9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +153,9 @@ Global
 		{B8B62F00-0C07-4B1E-BB2B-8FDE21A94B2B} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{1D868838-0CF3-4898-AA64-373CE5E555E7} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{2351B5C1-6E28-4B79-A1D9-90FDA53B5417} = {4168396D-8C15-4892-A09B-95E94B24B510}
+		{4050F4C3-5D5A-4FC5-95DB-1531D815AED5} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
+		{F234D215-E78A-4C84-827D-F6EF09A86D9E} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
+		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

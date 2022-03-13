@@ -153,8 +153,6 @@ namespace GamePassCatalogBrowser
             window.WindowState = WindowState.Maximized;
 
             window.ShowDialog();
-
-            catalogBrowserViewModel.Dispose();
         }
     }
 }

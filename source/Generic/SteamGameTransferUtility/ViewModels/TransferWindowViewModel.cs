@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginsCommon;
+using SteamCommon;
 using SteamKit2;
 using System;
 using System.Collections;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using SteamClientLib = SteamCommon.SteamClient;
 
 namespace SteamGameTransferUtility.ViewModels
 {
@@ -27,7 +29,6 @@ namespace SteamGameTransferUtility.ViewModels
 
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlayniteAPI PlayniteApi;
-        private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         private readonly string steamInstallationDirectory;
         private List<string> steamLibraries;
         private List<Game> selectedSteamGames;
@@ -38,7 +39,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         public List<Game> SelectedSteamGames
         {
-            get { return selectedSteamGames; }
+            get => selectedSteamGames;
             set
             {
                 selectedSteamGames = value;
@@ -48,7 +49,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         public List<string> SteamLibraries
         {
-            get { return steamLibraries; }
+            get => steamLibraries;
             set
             {
                 steamLibraries = value;
@@ -58,7 +59,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         public string TargetLibraryPath
         {
-            get {return targetLibraryPath; }
+            get => targetLibraryPath;
             set
             {
                 targetLibraryPath = value;
@@ -76,7 +77,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         public bool DeleteSourceGame
         {
-            get { return deleteSourceGame; }
+            get => deleteSourceGame;
             set
             {
                 deleteSourceGame = value;
@@ -86,7 +87,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         public bool RestartSteamIfNeeded
         {
-            get { return restartSteamIfNeeded; }
+            get => restartSteamIfNeeded;
             set
             {
                 restartSteamIfNeeded = value;
@@ -97,9 +98,9 @@ namespace SteamGameTransferUtility.ViewModels
         public TransferWindowViewModel(IPlayniteAPI api)
         {
             PlayniteApi = api;
-            steamInstallationDirectory = GetSteamInstallationPath();
+            steamInstallationDirectory = SteamClientLib.GetSteamInstallationPath();
             steamLibraries = GetLibraryFolders();
-            SelectedSteamGames = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == steamPluginId).Where(g => g.IsInstalled == true).OrderBy(x => x.Name).ToList();
+            SelectedSteamGames = PlayniteApi.MainView.SelectedGames.Where(g => g.IsInstalled && Steam.IsGameSteamGame(g)).OrderBy(x => x.Name).ToList();
         }
 
         public RelayCommand<string> OpenLibraryCommand
@@ -126,19 +127,6 @@ namespace SteamGameTransferUtility.ViewModels
             {
                 TransferSteamGames(SelectedSteamGames);
             }, () => isTargetLibrarySelected);
-        }
-
-        public string GetSteamInstallationPath()
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam"))
-            {
-                if (key?.GetValueNames().Contains("SteamPath") == true)
-                {
-                    return key.GetValue("SteamPath")?.ToString().Replace('/', '\\') ?? "c:\\program files (x86)\\steam";
-                }
-            }
-
-            return "c:\\program files (x86)\\steam";
         }
 
         internal static List<string> GetLibraryFolders(KeyValue foldersData)
@@ -223,7 +211,7 @@ namespace SteamGameTransferUtility.ViewModels
                 // Verify that source and target library are not in the same drive
                 FileInfo s = new FileInfo(game.InstallDirectory);
                 var sourceDrive = Path.GetPathRoot(s.FullName).ToLower();
-                if (sourceDrive == targetDrive)
+                if (sourceDrive.Equals(targetDrive, StringComparison.OrdinalIgnoreCase))
                 {
                     var errorMessage = string.Format("Source and target library are the same drive: \"{0}\"", sourceDrive);
                     logger.Warn(errorMessage);
@@ -322,7 +310,7 @@ namespace SteamGameTransferUtility.ViewModels
 
             if (restartSteamIfNeeded == true && (copiedGamesCount > 0 || deletedSourceFilesCount > 0))
             {
-                RestartSteam();
+                SteamClientLib.StartSteam(true);
             }
         }
 
@@ -340,8 +328,7 @@ namespace SteamGameTransferUtility.ViewModels
                 return FileSystem.GetDirectorySize(directory);
             });
 
-            bool isCompletedSuccessfully = task.Wait(TimeSpan.FromMilliseconds(9000));
-
+            var isCompletedSuccessfully = task.Wait(TimeSpan.FromMilliseconds(9000));
             if (isCompletedSuccessfully)
             {
                 if (task.Result == 0)
@@ -370,59 +357,6 @@ namespace SteamGameTransferUtility.ViewModels
             }
 
             return string.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
-        }
-
-        private async void RestartSteam()
-        {
-            string steamInstallationPath = Path.Combine(GetSteamInstallationPath(), "steam.exe");
-            if (!FileSystem.FileExists(steamInstallationPath))
-            {
-                logger.Error(string.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));
-                return;
-            }
-            bool isSteamRunning = GetIsSteamRunning();
-            if (isSteamRunning == true)
-            {
-                ProcessStarter.StartProcess(steamInstallationPath, "-shutdown");
-                logger.Info("Steam detected running. Closing via command line.");
-                for (int i = 0; i < 8; i++)
-                {
-                    isSteamRunning = GetIsSteamRunning();
-                    await PutTaskDelay(2000);
-                    if (isSteamRunning == true)
-                    {
-                        logger.Info("Steam detected running.");
-                    }
-                    else
-                    {
-                        logger.Info("Steam has closed.");
-                        break;
-                    }
-                }
-            }
-            if (isSteamRunning == false)
-            {
-                ProcessStarter.StartProcess(steamInstallationPath);
-                logger.Info("Steam started.");
-            }
-        }
-
-        async Task PutTaskDelay(int delayTime)
-        {
-            await Task.Delay(delayTime);
-        }
-
-        public bool GetIsSteamRunning()
-        {
-            Process[] processes = Process.GetProcessesByName("Steam");
-            if (processes.Length > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
     }

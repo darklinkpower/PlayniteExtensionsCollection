@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,7 +38,6 @@ namespace NewsViewer.PluginControls
         }
         IPlayniteAPI PlayniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
 
         private XmlDocument xmlDoc;
@@ -122,11 +122,9 @@ namespace NewsViewer.PluginControls
 
         private string CleanSteamNewsText(string html)
         {
-            html = Regex.Replace(html, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", "");
-            return html;
+            return Regex.Replace(html, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", "");
         }
 
-        private readonly Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         const string steamRssTemplate = @"https://store.steampowered.com/feeds/news/app/{0}/l={1}";
         private readonly string steamLanguage;
         private readonly DesktopView ActiveViewAtCreation;
@@ -347,20 +345,8 @@ namespace NewsViewer.PluginControls
                 return;
             }
 
-            var steamId = string.Empty;
-            if (currentGame.PluginId == steamPluginId)
-            {
-                steamId = currentGame.GameId;
-            }
-            else if (SettingsModel.Settings.ShowSteamNewsNonSteam)
-            {
-                steamId = GetSteamIdFromLinks(currentGame);
-                if (string.IsNullOrEmpty(steamId))
-                {
-                    return;
-                }
-            }
-            else
+            var steamId = Steam.GetGameSteamId(currentGame, SettingsModel.Settings.ShowSteamNewsNonSteam);
+            if (steamId.IsNullOrEmpty())
             {
                 return;
             }
@@ -440,23 +426,5 @@ namespace NewsViewer.PluginControls
             return buf;
         }
 
-        private string GetSteamIdFromLinks(Game game)
-        {
-            if (game.Links == null)
-            {
-                return null;
-            }
-
-            foreach (Link gameLink in game.Links)
-            {
-                var linkMatch = steamLinkRegex.Match(gameLink.Url);
-                if (linkMatch.Success)
-                {
-                    return linkMatch.Groups[1].Value;
-                }
-            }
-
-            return null;
-        }
     }
 }

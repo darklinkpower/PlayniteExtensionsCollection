@@ -54,8 +54,51 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
+      <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Downloader.cs">
+      <Link>Shared\PluginsCommon\Downloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Encryption.cs">
+      <Link>Shared\PluginsCommon\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\EnumExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\FileSystem.cs">
+      <Link>Shared\PluginsCommon\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\GlobalCommands.cs">
+      <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\HttpDownloader.cs">
+      <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
     <Compile Include="BbCodeProcessor.cs" />
     <Compile Include="Controls\HtmlTextView.cs" />
     <Compile Include="Controls\ReviewsControl.xaml.cs">
@@ -97,12 +140,6 @@
     <None Include="icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\PluginsCommon\PluginsCommon.csproj">
-      <Project>{cbed3b97-8fb8-4ca4-8827-13065ab64113}</Project>
-      <Name>PluginsCommon</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

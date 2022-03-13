@@ -6,6 +6,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginsCommon;
 using PluginsCommon.Web;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -51,7 +52,7 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamId = string.Empty;
-            if (SteamCommon.IsGameSteamGame(game))
+            if (Steam.IsGameSteamGame(game))
             {
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
@@ -72,7 +73,7 @@ namespace ExtraMetadataLoader.Services
                 return false;
             }
 
-            var steamAppDetails = SteamCommon.GetSteamAppDetails(steamId);
+            var steamAppDetails = SteamWeb.GetSteamAppDetails(steamId);
             if (steamAppDetails == null || steamAppDetails.data.Movies == null || steamAppDetails.data.Movies.Count == 0)
             {
                 return false;

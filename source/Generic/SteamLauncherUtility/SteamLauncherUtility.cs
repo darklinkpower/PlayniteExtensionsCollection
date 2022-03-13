@@ -4,6 +4,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,12 +37,12 @@ namespace SteamLauncherUtility
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
-            if (game.IsInstalled == false)
+            if (!game.IsInstalled)
             {
                 return;
             }
 
-            if (BuiltinExtensions.GetExtensionFromId(game.PluginId) != BuiltinExtension.SteamLibrary)
+            if (!Steam.IsGameSteamGame(game))
             {
                 return;
             }
@@ -49,20 +50,20 @@ namespace SteamLauncherUtility
             string modeFeatureName = GetModeFeatureName();
             if (game.Features != null)
             {
-                var matchingFeature = game.Features.Where(f => f.Name == modeFeatureName);
-                if (settings.Settings.LaunchMode == 0 && matchingFeature.Count() > 0)
+                var featureFound = game.Features.Any(f => f.Name == modeFeatureName);
+                if (settings.Settings.LaunchMode == 0 && featureFound)
                 {
                     logger.Info(string.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
-                else if (settings.Settings.LaunchMode == 1 && matchingFeature.Count() == 0)
+                else if (settings.Settings.LaunchMode == 1 && featureFound)
                 {
                     logger.Info(string.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
             }
 
-            LaunchSteam();
+            SteamClient.StartSteam(settings.Settings.CloseSteamIfRunning, GetSteamLaunchArguments());
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -84,7 +85,7 @@ namespace SteamLauncherUtility
                     Description = ResourceProvider.GetString("LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription"),
                     MenuSection = "@Steam Launcher Utility",
                     Action = a => {
-                        LaunchSteam();
+                        SteamClient.StartSteam(settings.Settings.CloseSteamIfRunning, GetSteamLaunchArguments());
                     }
                 },
                 new MainMenuItem
@@ -106,17 +107,6 @@ namespace SteamLauncherUtility
             };
         }
 
-        public bool GetIsSteamRunning()
-        {
-            Process[] processes = Process.GetProcessesByName("Steam");
-            if (processes.Length > 0)
-            {
-                return true;
-            }
-            
-            return false;
-        }
-
         public string GetModeFeatureName()
         {
             if (settings.Settings.LaunchMode == 0)
@@ -129,96 +119,41 @@ namespace SteamLauncherUtility
             }
         }
 
-        public string GetSteamInstallationPath()
-        {
-            using (var key = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam"))
-            {
-                if (key?.GetValueNames().Contains("SteamExe") == true)
-                {
-                    return key.GetValue("SteamExe")?.ToString().Replace('/', '\\') ?? "C:\\Program Files (x86)\\Steam\\steam.exe";
-                }
-            }
-
-            return "C:\\Program Files (x86)\\Steam\\steam.exe";
-        }
-
         public string GetSteamLaunchArguments()
         {
-            string arguments = "";
+            var sb = new StringBuilder();
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                if (settings.Settings.DisableSteamWebBrowserOnDesktopMode == true)
+                if (settings.Settings.DisableSteamWebBrowserOnDesktopMode)
                 {
-                    arguments = arguments + " -no-browser";
+                    sb.Append("-no-browser ");
                 }
-                if (settings.Settings.LaunchSteamBpmOnDesktopMode == true)
+                if (settings.Settings.LaunchSteamBpmOnDesktopMode)
                 {
-                    arguments = arguments + " -bigpicture";
+                    sb.Append("-bigpicture ");
                 }
                 else
                 {
-                    arguments = arguments + " -silent";
+                    sb.Append("-silent ");
                 }
             }
             else if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
-                if (settings.Settings.DisableSteamWebBrowserOnFullscreenMode == true)
+                if (settings.Settings.DisableSteamWebBrowserOnFullscreenMode)
                 {
-                    arguments = arguments + " -no-browser";
+                    sb.Append("-no-browser ");
                 }
-                if (settings.Settings.LaunchSteamBpmOnFullscreenMode == true)
+                if (settings.Settings.LaunchSteamBpmOnFullscreenMode)
                 {
-                    arguments = arguments + " -bigpicture";
+                    sb.Append("-bigpicture ");
                 }
                 else
                 {
-                    arguments = arguments + " -silent";
+                    sb.Append("-silent ");
                 }
             }
 
-            return arguments;
-        }
-
-        public void LaunchSteam()
-        {
-            string steamInstallationPath = GetSteamInstallationPath();
-            if (!FileSystem.FileExists(steamInstallationPath))
-            {
-                logger.Error($"Steam executable not detected in path \"{steamInstallationPath}\"");
-                return;
-            }
-
-            bool isSteamRunning = GetIsSteamRunning();
-            if (isSteamRunning == true && settings.Settings.CloseSteamIfRunning == true)
-            {
-                ProcessStarter.StartProcess(steamInstallationPath, "-shutdown");
-                logger.Info("Steam detected running. Closing via command line.");
-                for (int i = 0; i < 8; i++)
-                {
-                    isSteamRunning = GetIsSteamRunning();
-                    if (isSteamRunning == true)
-                    {
-                        logger.Info("Steam detected running.");
-                        Thread.Sleep(2000);
-                    }
-                    else
-                    {
-                        logger.Info("Steam has closed.");
-                        break;
-                    }
-                }
-            }
-
-            if (isSteamRunning == false)
-            {
-                string launchArguments = GetSteamLaunchArguments();
-                ProcessStarter.StartProcess(steamInstallationPath, launchArguments);
-                logger.Info($"Steam launched with arguments: \"{launchArguments}\"");
-            }
-            else
-            {
-                logger.Warn("Steam was detected as running and was not launched via the extension.");
-            }
+            return sb.ToString();
         }
 
         public bool AddFeature(Game game, GameFeature feature)
@@ -253,10 +188,10 @@ namespace SteamLauncherUtility
                 if (featureAdded == true)
                 {
                     featureAddedCount++;
-                    logger.Info(String.Format("Added \"{0}\" feature to \"{1}\"", featureName, game.Name));
+                    logger.Info(string.Format("Added \"{0}\" feature to \"{1}\"", featureName, game.Name));
                 }
             }
-            PlayniteApi.Dialogs.ShowMessage(String.Format("Added \"{0}\" feature to {1} game(s).", featureName, featureAddedCount), "Steam Launcher Utility");
+            PlayniteApi.Dialogs.ShowMessage(string.Format("Added \"{0}\" feature to {1} game(s).", featureName, featureAddedCount), "Steam Launcher Utility");
         }
 
         public bool RemoveFeature(Game game, GameFeature feature)
@@ -282,20 +217,20 @@ namespace SteamLauncherUtility
 
         public void RemoveModeFeature()
         {
-            string featureName = GetModeFeatureName();
+            var featureName = GetModeFeatureName();
             GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
-            var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => g.PluginId == BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary));
+            var gameDatabase = PlayniteApi.MainView.SelectedGames.Where(g => Steam.IsGameSteamGame(g));
             int featureRemovedCount = 0;
             foreach (var game in gameDatabase)
             {
-                bool featureRemoved = RemoveFeature(game, feature);
+                var featureRemoved = RemoveFeature(game, feature);
                 if (featureRemoved == true)
                 {
                     featureRemovedCount++;
-                    logger.Info(String.Format("Removed \"{0}\" feature from \"{1}\"", featureName, game.Name));
+                    logger.Info(string.Format("Removed \"{0}\" feature from \"{1}\"", featureName, game.Name));
                 }
             }
-            PlayniteApi.Dialogs.ShowMessage(String.Format("Removed \"{0}\" feature from {1} game(s).", featureName, featureRemovedCount), "Steam Launcher Utility");
+            PlayniteApi.Dialogs.ShowMessage(string.Format("Removed \"{0}\" feature from {1} game(s).", featureName, featureRemovedCount), "Steam Launcher Utility");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,7 @@ using System.Text;
 using PluginsCommon.Web;
 using ImageMagick;
 using PluginsCommon;
+using Playnite.SDK.Data;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -45,7 +47,7 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamId = string.Empty;
-            if (SteamCommon.IsGameSteamGame(game))
+            if (Steam.IsGameSteamGame(game))
             {
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
@@ -172,10 +174,11 @@ namespace ExtraMetadataLoader.Services
                     { "Accept", "application/json" },
                     { "Authorization", $"Bearer {settings.SgdbApiKey}" }
                 };
+
                 var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(requestString, headers).GetAwaiter().GetResult();
-                if (!string.IsNullOrEmpty(downloadedString))
+                if (!downloadedString.IsNullOrEmpty())
                 {
-                    var response = JsonConvert.DeserializeObject<SteamGridDbLogoResponse.Response>(downloadedString);
+                    var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString);
                     if (response.Success && response.Data.Count > 0)
                     {
                         var success = false;
@@ -245,7 +248,7 @@ namespace ExtraMetadataLoader.Services
 
         private string GetSgdbRequestUrl(Game game, bool isBackgroundDownload)
         {
-            if (SteamCommon.IsGameSteamGame(game))
+            if (Steam.IsGameSteamGame(game))
             {
                 return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId.ToString()));
             }
@@ -289,7 +292,7 @@ namespace ExtraMetadataLoader.Services
             return new List<GenericItemOption>(GetSteamGridDbSearchResults(gameName).Select(x => new GenericItemOption(x.Name, x.Id.ToString())));
         }
 
-        private List<SteamGridDbGameSearchResponse.Data> GetSteamGridDbSearchResults(string gameName)
+        private List<SgdbData> GetSteamGridDbSearchResults(string gameName)
         {
             var searchUrl = string.Format(sgdbGameSearchUriTemplate, Uri.EscapeDataString(gameName));
             var headers = new Dictionary<string, string> {
@@ -299,7 +302,7 @@ namespace ExtraMetadataLoader.Services
             var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(searchUrl, headers).GetAwaiter().GetResult();
             if (!string.IsNullOrEmpty(downloadedString))
             {
-                var response = JsonConvert.DeserializeObject<SteamGridDbGameSearchResponse.Response>(downloadedString);
+                var response = JsonConvert.DeserializeObject<SteamGridDbGameSearchResponse>(downloadedString);
                 if (response.Success)
                 {
                     return response.Data;
@@ -309,7 +312,8 @@ namespace ExtraMetadataLoader.Services
                     logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
                 }
             }
-            return new List<SteamGridDbGameSearchResponse.Data>();
+
+            return new List<SgdbData>();
         }
     }
 }

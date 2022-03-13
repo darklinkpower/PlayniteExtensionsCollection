@@ -144,11 +144,6 @@ namespace GamePassCatalogBrowser.ViewModels
             //throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            xboxLibraryHelper.Dispose();
-        }
-
         public CatalogBrowserViewModel(List<GamePassGame> list, IPlayniteAPI api)
         {
             PlayniteApi = api;

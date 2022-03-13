@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtraMetadataLoader.Models
+namespace SteamCommon.Models
 {
     public class StoreSearchResult : GenericItemOption
     {

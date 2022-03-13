@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace PluginsCommon
 {
     // Based on https://github.com/JosefNemec/Playnite
-    public class Paths
+    public static class Paths
     {
         public static bool IsValidFilePath(string path)
         {

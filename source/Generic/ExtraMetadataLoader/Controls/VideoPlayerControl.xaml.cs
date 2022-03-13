@@ -6,6 +6,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
 using PluginsCommon.Web;
+using SteamCommon.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -416,7 +417,7 @@ namespace ExtraMetadataLoader
 
                 if (FileSystem.FileExists(gameDataPath) && jsonDownloadValid)
                 {
-                    var jsonString = File.ReadAllText(gameDataPath);
+                    var jsonString = FileSystem.ReadStringFromFile(gameDataPath);
                     try
                     {
                         var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(jsonString);

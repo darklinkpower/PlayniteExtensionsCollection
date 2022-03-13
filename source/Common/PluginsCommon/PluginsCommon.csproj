@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Downloader.cs" />
+    <Compile Include="Encryption.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="GlobalCommands.cs" />

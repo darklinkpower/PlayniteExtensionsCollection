@@ -7,6 +7,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using SpecialKHelper.Common;
 using SpecialKHelper.Models;
@@ -182,38 +183,6 @@ namespace SpecialKHelper
             {
                 Environment.SetEnvironmentVariable("SteamTenfoot", "1", EnvironmentVariableTarget.Process);
             }
-        }
-
-        private bool GetIsSteamBpmRunning()
-        {
-            Process[] processes = Process.GetProcessesByName("Steam");
-            if (processes.Length == 0)
-            {
-                return false;
-            }
-
-            using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
-            {
-                if (key == null)
-                {
-                    return false;
-                }
-
-                var value = key.GetValue("BigPictureInForeground")?.ToString();
-                if (value.IsNullOrEmpty())
-                {
-                    return false;
-                }
-
-                var intValue = int.Parse(value);
-                if (intValue == 0)
-                {
-                    return false;
-                }
-            }
-
-            logger.Info("Steam Big Picture Mode detected as running");
-            return true;
         }
 
         private void ValidateReshadeConfiguration(Game game)
@@ -407,7 +376,7 @@ namespace SpecialKHelper
                 }
             }
 
-            if (settings.Settings.OnlyExecutePcGames && !IsGamePcGame(game))
+            if (settings.Settings.OnlyExecutePcGames && !PlayniteUtilities.IsGamePcGame(game))
             {
                 return false;
             }
@@ -417,7 +386,7 @@ namespace SpecialKHelper
 
         private EasyAnticheatStatus GetGameEasyAnticheatStatus(Game game)
         {
-            if (!IsGamePcGame(game))
+            if (!PlayniteUtilities.IsGamePcGame(game))
             {
                 return EasyAnticheatStatus.NotDetected;
             }
@@ -448,23 +417,6 @@ namespace SpecialKHelper
                 logger.Error(e, $"Error during EAC enumeration for {game.Name} with dir {game.InstallDirectory}");
                 return EasyAnticheatStatus.ErrorOnDetection;
             }
-        }
-
-        private bool IsGamePcGame(Game game)
-        {
-            if (game.Platforms == null)
-            {
-                logger.Info($"Game {game.Name} doesn't have platforms set");
-                return false;
-            }
-            else if (!game.Platforms.Any(x => x.Name == "PC (Windows)" ||
-                      !x.SpecificationId.IsNullOrEmpty() && x.SpecificationId == "pc_windows"))
-            {
-                logger.Info($"Game {game.Name} is not PC platform");
-                return false;
-            }
-
-            return true;
         }
 
         private bool GetIsGameInstallDirValid(Game game)
@@ -512,7 +464,7 @@ namespace SpecialKHelper
                 // We use the previously found Id to not have to search again
                 steamId = previousId;
             }
-            else if (IsGamePcGame(game))
+            else if (PlayniteUtilities.IsGamePcGame(game))
             {
                 var isBackgroundDownload = false;
                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
@@ -591,7 +543,7 @@ namespace SpecialKHelper
                     "sk_dll_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
                     NotificationType.Error,
-                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
+                    () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -604,7 +556,7 @@ namespace SpecialKHelper
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), servletExe),
                     NotificationType.Error,
-                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
+                    () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -638,7 +590,7 @@ namespace SpecialKHelper
                 "SkNotStarted" + cpuArchitecture,
                 string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart"), cpuArchitecture),
                 NotificationType.Error,
-                () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#special-k-service-could-not-be-started-notification-error")
+                () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#special-k-service-could-not-be-started-notification-error")
             ));
             return false;
         }
@@ -662,7 +614,7 @@ namespace SpecialKHelper
                     "sk_dll_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), dllPath),
                     NotificationType.Error,
-                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
+                    () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -675,7 +627,7 @@ namespace SpecialKHelper
                     "sk_servletExe_notfound" + cpuArchitecture,
                     string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound"), servletExe),
                     NotificationType.Error,
-                    () => OpenUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
+                    () => ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper#file-not-found-notification-error")
                 ));
             }
 
@@ -693,24 +645,6 @@ namespace SpecialKHelper
             Process.Start(info);
 
             return true;
-        }
-
-        private void OpenUrl(string url)
-        {
-            if (!url.StartsWith("http") || !url.StartsWith("www"))
-            {
-                logger.Error($"Attempted url {url} is not an url");
-                return;
-            }
-            
-            try
-            {
-                Process.Start(url);
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Url {url} could not be opened");
-            }
         }
 
         public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload, bool matchFuzzyMethods = false)
@@ -862,7 +796,7 @@ namespace SpecialKHelper
                     MenuSection = $"Special K Helper",
                     Action = o =>
                     {
-                        AddFeatureToSelectedGames("[SK] Global Mode Disable");
+                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, args.Games.Distinct(), "[SK] Global Mode Disable");
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
                     }
                 });
@@ -871,7 +805,7 @@ namespace SpecialKHelper
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature"),
                     MenuSection = $"Special K Helper",
                     Action = o => {
-                        RemoveFeatureFromSelectedGames("[SK] Global Mode Disable");
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, args.Games.Distinct(), "[SK] Global Mode Disable");
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
                     }
                 });
@@ -884,7 +818,7 @@ namespace SpecialKHelper
                     MenuSection = $"Special K Helper",
                     Action = o =>
                     {
-                        AddFeatureToSelectedGames("[SK] Selective Mode Enable");
+                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, args.Games.Distinct(), "[SK] Selective Mode Enable");
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
                     }
                 });
@@ -893,7 +827,7 @@ namespace SpecialKHelper
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature"),
                     MenuSection = $"Special K Helper",
                     Action = o => {
-                        RemoveFeatureFromSelectedGames("[SK] Selective Mode Enable");
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, args.Games.Distinct(), "[SK] Selective Mode Enable");
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
                     }
                 });
@@ -943,41 +877,6 @@ namespace SpecialKHelper
                 "Special K Helper");
 
             ProcessStarter.StartUrl($"steam://currentcontrollerconfig/{steamId}");
-        }
-
-        private void AddFeatureToSelectedGames(string featureName)
-        {
-            var feature = PlayniteApi.Database.Features.Add(featureName);
-            foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
-            {
-                if (game.Features == null)
-                {
-                    game.FeatureIds = new List<Guid> { feature.Id };
-                }
-                else if (!game.Features.Any(x => x.Name == featureName))
-                {
-                    game.FeatureIds.Add(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                }
-            }
-        }
-
-        private void RemoveFeatureFromSelectedGames(string featureName)
-        {
-            foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
-            {
-                if (game.Features == null)
-                {
-                    continue;
-                }
-
-                var feature = game.Features.FirstOrDefault(x => x.Name == featureName);
-                if (feature != null)
-                {
-                    game.FeatureIds.Remove(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                }
-            }
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)

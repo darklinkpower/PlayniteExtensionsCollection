@@ -1,11 +1,11 @@
-﻿using ExtraMetadataLoader.Common;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SteamCommon;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -82,12 +82,13 @@ namespace ExtraMetadataLoader.Helpers
                 if (Directory.Exists(directoryPath))
                 { 
                     Directory.Delete(directoryPath, true);
-                }    
+                }
+
                 return true;
             }
             catch (Exception e)
             {
-                logger.Error(e, $"Error while deleting removed extra metadata directory {directoryPath}");
+                logger.Error(e, $"Error while deleting removed Extra Metadata directory {directoryPath}");
                 playniteApi.Notifications.Add(new NotificationMessage(
                     Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory"), directoryPath, e.Message),
@@ -115,7 +116,7 @@ namespace ExtraMetadataLoader.Helpers
         public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload)
         {
             var normalizedName = game.Name.NormalizeGameName();
-            var results = SteamCommon.GetSteamSearchResults(normalizedName);
+            var results = SteamWeb.GetSteamSearchResults(normalizedName);
             results.ForEach(a => a.Name = a.Name.NormalizeGameName());
 
             // Try to see if there's an exact match, to not prompt the user unless needed
@@ -129,7 +130,7 @@ namespace ExtraMetadataLoader.Helpers
             {
                 var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
                     results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
-                    (a) => SteamCommon.GetSteamSearchGenericItemOptions(a),
+                    (a) => SteamWeb.GetSteamSearchGenericItemOptions(a),
                     normalizedName,
                     ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
                 if (selectedGame != null)
@@ -149,6 +150,7 @@ namespace ExtraMetadataLoader.Helpers
                 {
                     File.Delete(FileSystem.FixPathLength(sourcePath));
                 }
+
                 return true;
             }
             catch (Exception e)
@@ -162,7 +164,6 @@ namespace ExtraMetadataLoader.Helpers
                 return false;
             }
         }
-
 
     }
 }

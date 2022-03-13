@@ -50,8 +50,51 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\PlayniteUtilitiesCommon\PlayniteUtilities.cs">
+      <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Downloader.cs">
+      <Link>Shared\PluginsCommon\Downloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Encryption.cs">
+      <Link>Shared\PluginsCommon\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\EnumExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\FileSystem.cs">
+      <Link>Shared\PluginsCommon\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\GlobalCommands.cs">
+      <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\HttpDownloader.cs">
+      <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
     <Compile Include="Models\CooperativeDatabase.cs" />
     <Compile Include="CooperativeModesImporter.cs" />
     <Compile Include="CooperativeModesImporterSettings.cs" />
@@ -88,12 +131,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\PluginsCommon\PluginsCommon.csproj">
-      <Project>{cbed3b97-8fb8-4ca4-8827-13065ab64113}</Project>
-      <Name>PluginsCommon</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>
