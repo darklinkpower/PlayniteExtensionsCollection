@@ -23,17 +23,6 @@ namespace ExtraMetadataLoader.Helpers
             baseDirectory = FileSystem.FixPathLength(Path.Combine(playniteApi.Paths.ConfigurationPath, "ExtraMetadata"));
         }
 
-        public bool IsGamePcGame(Game game)
-        {
-            if (game.Platforms != null &&
-                game.Platforms.Any(p => p.SpecificationId == "pc_windows"))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public string GetExtraMetadataDirectory(Game game, bool createDirectory = false)
         {
             var directory = Path.Combine(baseDirectory, "games", game.Id.ToString());

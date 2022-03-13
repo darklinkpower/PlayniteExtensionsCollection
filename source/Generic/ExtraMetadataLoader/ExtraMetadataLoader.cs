@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Common;
-using ExtraMetadataLoader.Helpers;
+﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
 using ExtraMetadataLoader.Views;
@@ -20,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using YouTubeCommon;
 
 namespace ExtraMetadataLoader
 {
@@ -500,7 +500,7 @@ namespace ExtraMetadataLoader
                         ClearVideoSources();
                         var game = args.Games.Last();
                         var searchTerm = $"{game.Name} review";
-                        var searchItems = YoutubeCommon.GetYoutubeSearchResults(searchTerm, false);
+                        var searchItems = YouTube.GetYoutubeSearchResults(searchTerm, false);
                         if (searchItems.Count > 0)
                         {
                             ViewYoutubeVideo(searchItems.First().VideoId);
@@ -521,7 +521,7 @@ namespace ExtraMetadataLoader
                         ClearVideoSources();
                         var game = args.Games.Last();
                         var searchTerm = $"{game.Name} gameplay";
-                        var searchItems = YoutubeCommon.GetYoutubeSearchResults(searchTerm, false);
+                        var searchItems = YouTube.GetYoutubeSearchResults(searchTerm, false);
                         if (searchItems.Count > 0)
                         {
                             ViewYoutubeVideo(searchItems.First().VideoId);
@@ -592,7 +592,7 @@ namespace ExtraMetadataLoader
                     }
 
                     // Platform name is added to search for best results
-                    var searchItems = YoutubeCommon.GetYoutubeSearchResults($"{game.Name} {GetPlatformName(game, true)}trailer", true);
+                    var searchItems = YouTube.GetYoutubeSearchResults($"{game.Name} {GetPlatformName(game, true)}trailer", true);
                     if (searchItems.Count > 0)
                     {
                         videosDownloader.DownloadYoutubeVideoById(game, searchItems[0].VideoId, overwrite);
@@ -770,7 +770,6 @@ namespace ExtraMetadataLoader
 
                     foreach (var game in PlayniteApi.Database.Games)
                     {
-                        var gameUpdated = false;
                         if (logoMissingTag != null)
                         {
                             if (FileSystem.FileExists(extraMetadataHelper.GetGameLogoPath(game)))

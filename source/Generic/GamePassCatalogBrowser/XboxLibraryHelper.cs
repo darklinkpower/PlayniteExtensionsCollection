@@ -164,18 +164,6 @@ namespace GamePassCatalogBrowser
             return i;
         }
 
-        public void AddTagToGame(Game game, Tag tag)
-        {
-            if (game.TagIds == null)
-            {
-                game.TagIds = new List<Guid>() { tag.Id };
-            }
-            else
-            {
-                game.TagIds.AddMissing(tag.Id);
-            }
-        }
-
         public bool AddGameToLibrary(GamePassGame game, bool showGameAddDialog)
         {
             if (game == null)

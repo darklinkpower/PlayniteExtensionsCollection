@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Common;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using PluginsCommon;
 using System;

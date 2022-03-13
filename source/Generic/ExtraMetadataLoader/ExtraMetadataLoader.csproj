@@ -122,7 +122,15 @@
     <Compile Include="..\..\common\steamcommon\Web.cs">
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
-    <Compile Include="Common\YoutubeCommon.cs" />
+    <Compile Include="..\..\Common\YouTubeCommon\Models\YoutubeEmbeddedResponse.cs">
+      <Link>Shared\YouTubeCommon\Models\YoutubeEmbeddedResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\YouTubeCommon\Models\YoutubeSearchItem.cs">
+      <Link>Shared\YouTubeCommon\Models\YoutubeSearchItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\YouTubeCommon\YouTube.cs">
+      <Link>Shared\YouTubeCommon\YouTube.cs</Link>
+    </Compile>
     <Compile Include="Controls\VideoPlayerControl.xaml.cs">
       <DependentUpon>VideoPlayerControl.xaml</DependentUpon>
     </Compile>
@@ -137,8 +145,6 @@
     <Compile Include="Models\GoogleImage.cs" />
     <Compile Include="Models\SteamGridDbGameSearchResponse.cs" />
     <Compile Include="Models\SteamGridDbLogoResponse.cs" />
-    <Compile Include="Models\YoutubeEmbeddedResponse.cs" />
-    <Compile Include="Models\YoutubeSearchItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\LogoLoaderControl.xaml.cs">
       <DependentUpon>LogoLoaderControl.xaml</DependentUpon>

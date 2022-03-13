@@ -65,7 +65,7 @@ namespace NVIDIAGeForceNowEnabler
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            if (settings.Settings.ExecuteOnLibraryUpdate == true)
+            if (settings.Settings.ExecuteOnLibraryUpdate)
             {
                 MainMethod(false);
             }
@@ -102,27 +102,6 @@ namespace NVIDIAGeForceNowEnabler
                     }
                 },
             };
-        }
-
-        public bool RemoveFeature(Game game, GameFeature feature)
-        {
-            if (game.FeatureIds != null)
-            {
-                if (game.FeatureIds.Contains(feature.Id))
-                {
-                    game.FeatureIds.Remove(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private string SatinizeString(string str)
@@ -289,7 +268,7 @@ namespace NVIDIAGeForceNowEnabler
 
             if (showDialogs)
             {
-                string results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
+                var results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
                     enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
                 if (settings.Settings.SetEnabledGamesAsInstalled == true)
                 {

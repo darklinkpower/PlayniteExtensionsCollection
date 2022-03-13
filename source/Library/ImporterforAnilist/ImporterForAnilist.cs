@@ -244,14 +244,11 @@ namespace ImporterforAnilist
                     existingEntry.TagIds.Add(PlayniteApi.Database.Tags.Add(progressTagName).Id);
                     updateGame = true;
                 }
-                else
+                else if (progressTag.Name != progressTagName)
                 {
-                    if (progressTag.Name != progressTagName)
-                    {
-                        existingEntry.TagIds.Remove(progressTag.Id);
-                        existingEntry.TagIds.Add(PlayniteApi.Database.Tags.Add(progressTagName).Id);
-                        updateGame = true;
-                    }
+                    existingEntry.TagIds.Remove(progressTag.Id);
+                    existingEntry.TagIds.Add(PlayniteApi.Database.Tags.Add(progressTagName).Id);
+                    updateGame = true;
                 }
             }
 
@@ -312,7 +309,7 @@ namespace ImporterforAnilist
                 }
             }
 
-            if (updateGame == true)
+            if (updateGame)
             {
                 PlayniteApi.Database.Games.Update(existingEntry);
             }

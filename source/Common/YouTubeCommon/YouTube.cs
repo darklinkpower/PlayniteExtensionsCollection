@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
@@ -7,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using YouTubeCommon.Models;
 
-namespace ExtraMetadataLoader.Common
+namespace YouTubeCommon
 {
-    public class YoutubeCommon
+    public class YouTube
     {
         static string youtubeResponseRegexStr = @"var ytInitialData = ((.*?(?=(;<\/script>))))";
         static string youtubeSearchTemplateShort = @"https://www.youtube.com/results?search_query={0}&sp=EgQQARgB";
@@ -27,9 +27,9 @@ namespace ExtraMetadataLoader.Common
             {
                 uri = string.Format(youtubeSearchTemplate, Uri.EscapeDataString(searchTerm));
             }
-            
+
             var downloadedString = HttpDownloader.DownloadStringAsync(uri).GetAwaiter().GetResult();
-            if (!downloadedString.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(downloadedString))
             {
                 var embeddedJsonMatch = Regex.Match(downloadedString, youtubeResponseRegexStr);
                 if (embeddedJsonMatch.Success)

@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -215,5 +216,15 @@ namespace PlayniteUtilitiesCommon
             return false;
         }
 
+        public static bool GetIsInstallDirectoryValid(Game game)
+        {
+            if (string.IsNullOrEmpty(game.InstallDirectory) || !Directory.Exists(game.InstallDirectory))
+            {
+                logger.Warn($"Installation directory of {game.Name} in {game.InstallDirectory ?? string.Empty} is not valid");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

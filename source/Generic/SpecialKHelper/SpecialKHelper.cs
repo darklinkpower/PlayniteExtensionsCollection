@@ -391,7 +391,7 @@ namespace SpecialKHelper
                 return EasyAnticheatStatus.NotDetected;
             }
 
-            if (!GetIsGameInstallDirValid(game))
+            if (!PlayniteUtilities.GetIsInstallDirectoryValid(game))
             {
                 return EasyAnticheatStatus.Unknown;
             }
@@ -419,17 +419,6 @@ namespace SpecialKHelper
             }
         }
 
-        private bool GetIsGameInstallDirValid(Game game)
-        {
-            if (game.InstallDirectory.IsNullOrEmpty() || !Directory.Exists(game.InstallDirectory))
-            {
-                logger.Warn($"Installation directory of {game.Name} in {game.InstallDirectory??string.Empty} is not valid");
-                return false;
-            }
-
-            return true;
-        }
-
         private bool ConfigureSteamApiInject(Game game)
         {
             if (SteamCommon.IsGameSteamGame(game))
@@ -438,7 +427,7 @@ namespace SpecialKHelper
             }
 
             var appIdTextPath = string.Empty;
-            var isInstallDirValid = GetIsGameInstallDirValid(game);
+            var isInstallDirValid = PlayniteUtilities.GetIsInstallDirectoryValid(game);
             if (isInstallDirValid)
             {
                 appIdTextPath = Path.Combine(game.InstallDirectory, "steam_appid.txt");
@@ -651,7 +640,6 @@ namespace SpecialKHelper
         {
             var normalizedName = game.Name.NormalizeGameName();
             var results = SteamCommon.GetSteamSearchResults(normalizedName);
-
             results.ForEach(a => a.Name = a.Name.NormalizeGameName());
 
             // Try to see if there's an exact match, to not prompt the user unless needed

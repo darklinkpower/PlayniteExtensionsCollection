@@ -558,47 +558,5 @@ namespace SplashScreen
             window.ShowDialog();
         }
 
-        private void AddImageSkipFeature(string featureName)
-        {
-            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
-            int featureAddedCount = 009;
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
-            {
-                if (game.FeatureIds == null)
-                {
-                    game.FeatureIds = new List<Guid> { feature.Id };
-                    PlayniteApi.Database.Games.Update(game);
-                    featureAddedCount++;
-                }
-                else if (!game.FeatureIds.Contains(feature.Id))
-                {
-                    game.FeatureIds.AddMissing(feature.Id);
-                    PlayniteApi.Database.Games.Update(game);
-                    featureAddedCount++;
-                }
-            }
-
-            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCSplashScreen_ExcludeFeatureAddResultsMessage"), feature.Name, featureAddedCount), "Splash Screen");
-        }
-
-        private void RemoveImageSkipFeature(string featureName)
-        {
-            GameFeature feature = PlayniteApi.Database.Features.Add(featureName);
-            int featureRemovedCount = 0;
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
-            {
-                if (game.FeatureIds != null)
-                {
-                    if (game.FeatureIds.Contains(feature.Id))
-                    {
-                        game.FeatureIds.Remove(feature.Id);
-                        PlayniteApi.Database.Games.Update(game);
-                        featureRemovedCount++;
-                        logger.Info(string.Format("Removed \"{0}\" feature from \"{1}\"", feature.Name, game.Name));
-                    }
-                }
-            }
-            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCSplashScreen_ExcludeFeatureRemoveResultsMessage"), feature.Name, featureRemovedCount), "Splash Screen");
-        }
     }
 }

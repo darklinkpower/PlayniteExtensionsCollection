@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Common;
-using ExtraMetadataLoader.Models;
+﻿using ExtraMetadataLoader.Models;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;

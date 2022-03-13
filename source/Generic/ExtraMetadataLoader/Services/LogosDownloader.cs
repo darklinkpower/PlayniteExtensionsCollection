@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
-using ExtraMetadataLoader.Common;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Helpers;
 using System.Text;
@@ -15,6 +14,7 @@ using PluginsCommon.Web;
 using ImageMagick;
 using PluginsCommon;
 using Playnite.SDK.Data;
+using PlayniteUtilitiesCommon;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -52,7 +52,7 @@ namespace ExtraMetadataLoader.Services
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
-            else if (!settings.SteamDlOnlyProcessPcGames || extraMetadataHelper.IsGamePcGame(game))
+            else if (!settings.SteamDlOnlyProcessPcGames || PlayniteUtilities.IsGamePcGame(game))
             {
                 steamId = extraMetadataHelper.GetSteamIdFromSearch(game, isBackgroundDownload);
             }

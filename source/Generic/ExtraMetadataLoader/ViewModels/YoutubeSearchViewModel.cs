@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Common;
-using ExtraMetadataLoader.Models;
+﻿using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Services;
 using Newtonsoft.Json;
 using Playnite.SDK;
@@ -13,6 +12,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using YouTubeCommon;
+using YouTubeCommon.Models;
 
 namespace ExtraMetadataLoader.ViewModels
 {
@@ -139,7 +140,7 @@ namespace ExtraMetadataLoader.ViewModels
 
         public void InvokeSearch()
         {
-            SearchItems = YoutubeCommon.GetYoutubeSearchResults(SearchTerm, SearchShortVideos);
+            SearchItems = YouTube.GetYoutubeSearchResults(SearchTerm, SearchShortVideos);
         }
 
         public RelayCommand<object> DownloadSelectedVideoCommand

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExtraMetadataLoader.Models
+namespace YouTubeCommon.Models
 {
     public class YoutubeSearchItem
     {

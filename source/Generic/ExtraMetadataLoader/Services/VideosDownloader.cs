@@ -1,9 +1,9 @@
-﻿using ExtraMetadataLoader.Common;
-using ExtraMetadataLoader.Helpers;
+﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using PluginsCommon.Web;
 using SteamCommon;
@@ -57,7 +57,7 @@ namespace ExtraMetadataLoader.Services
                 logger.Debug("Steam id found for Steam game");
                 steamId = game.GameId;
             }
-            else if (!settings.SteamDlOnlyProcessPcGames || extraMetadataHelper.IsGamePcGame(game))
+            else if (!settings.SteamDlOnlyProcessPcGames || PlayniteUtilities.IsGamePcGame(game))
             {
                 steamId = extraMetadataHelper.GetSteamIdFromSearch(game, isBackgroundDownload);
             }
