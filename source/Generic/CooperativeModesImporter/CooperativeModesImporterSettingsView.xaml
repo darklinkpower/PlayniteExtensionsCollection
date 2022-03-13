@@ -3,9 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+            <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Cooperative-Modes-Importer"
+                       Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                       CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                <Run Text="{DynamicResource LOCCooperativeModesImporter_SettingsHelpLabel}" />
+            </Hyperlink>
+        </TextBlock>
         <CheckBox IsChecked="{Binding Settings.AddLinkOnImport}"
                   Content="{DynamicResource LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport}" />
         <CheckBox IsChecked="{Binding Settings.ImportBasicModes}"

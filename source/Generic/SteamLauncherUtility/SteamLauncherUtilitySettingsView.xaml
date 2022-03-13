@@ -2,10 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Steam-Launcher-Utility"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCSteam_Launcher_Utility_SettingsHelpLabel}" />
+                </Hyperlink>
+        </TextBlock>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
             <TextBlock TextWrapping="Wrap" Text="{DynamicResource LOCSteam_Launcher_UtilityUtilityModeSetting}" VerticalAlignment="Center" MinWidth="140"
                        ToolTip="{DynamicResource LOCSteam_Launcher_UtilityUtilityModeTooltip}"/>

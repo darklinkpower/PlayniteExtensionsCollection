@@ -2,18 +2,26 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Game-Pass-Catalog-Browser"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCGamePass_Catalog_Browser_SettingsHelpLabel}" />
+                </Hyperlink>
+        </TextBlock>
         <DockPanel>
-            <Label Content="Game Pass catalog region:"/>
+            <Label Content="{DynamicResource LOCGamePass_Catalog_Browser_CatalogRegionLabel}"/>
             <ComboBox x:Name="regionsComboBox" SelectedValuePath="Key" SelectedValue="{Binding Settings.RegionCode}" DisplayMemberPath="Value" Margin="10,0,0,0"/>
         </DockPanel>
-        <CheckBox IsChecked="{Binding Settings.UpdateCatalogOnLibraryUpdate}" Content="Update Game Pass catalog on library update" Margin="0,10,0,0"/>
-        <CheckBox IsChecked="{Binding Settings.NotifyCatalogUpdates}" Content="Notify of Game Pass catalog updates" Margin="0,10,0,0"/>
-        <CheckBox IsChecked="{Binding Settings.AddExpiredTagToGames}" Content="Add expired tag to games removed from Game Pass" Margin="0,10,0,0"/>
-        <CheckBox IsChecked="{Binding Settings.AddNewGames}" Content="Add newly added games when updating the Game Pass catalog to the Playnite library" Margin="0,10,0,0"/>
-        <CheckBox IsChecked="{Binding Settings.RemoveExpiredGames}" Content="Remove removed games when updating the Game Pass catalog from the Playnite library if they have not been played" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.UpdateCatalogOnLibraryUpdate}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate}" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.NotifyCatalogUpdates}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates}" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.AddExpiredTagToGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames}" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.AddNewGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto}" Margin="0,10,0,0"/>
+        <CheckBox IsChecked="{Binding Settings.RemoveExpiredGames}" Content="{DynamicResource LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto}" Margin="0,10,0,0"/>
     </StackPanel>
 </UserControl>

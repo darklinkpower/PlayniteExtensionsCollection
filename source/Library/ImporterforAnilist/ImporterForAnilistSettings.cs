@@ -105,19 +105,6 @@ namespace ImporterforAnilist
             return true;
         }
 
-        public RelayCommand<object> LoginCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                Login();
-            });
-        }
-
-        private void Login()
-        {
-            ProcessStarter.StartUrl(@"https://anilist.co/api/v2/oauth/authorize?client_id=5706&response_type=token");
-        }
-
         public RelayCommand<object> SelectBrowserExecutableCommand
         {
             get => new RelayCommand<object>((a) =>

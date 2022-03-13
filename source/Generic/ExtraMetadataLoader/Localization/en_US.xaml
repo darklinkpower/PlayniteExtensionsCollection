@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">General settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingOtherHeaderLabel">Other settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Videos settings</sys:String>

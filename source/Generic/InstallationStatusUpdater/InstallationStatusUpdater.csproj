@@ -108,7 +108,7 @@
       <DependentUpon>InstallationStatusUpdaterSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectableDirectoryPath.cs" />
+    <Compile Include="Models\SelectableDirectoryPath.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

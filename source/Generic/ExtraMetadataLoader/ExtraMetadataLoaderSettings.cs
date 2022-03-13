@@ -768,38 +768,6 @@ namespace ExtraMetadataLoader
             return true;
         }
 
-        public RelayCommand<object> OpenSgdbApiSiteCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                ProcessStarter.StartUrl(@"https://www.steamgriddb.com/profile/preferences/api");
-            });
-        }
-
-        public RelayCommand<object> DownloadFfmpegCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                ProcessStarter.StartUrl(@"https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.7z");
-            });
-        }
-
-        public RelayCommand<object> DownloadYoutubeDlCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                ProcessStarter.StartUrl(@"https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe");
-            });
-        }
-
-        public RelayCommand<object> OpenCookiesObtainHelpCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                ProcessStarter.StartUrl(@"https://github.com/ytdl-org/youtube-dl/blob/master/README.md#how-do-i-pass-cookies-to-youtube-dl");
-            });
-        }
-
         public RelayCommand<object> BrowseSelectYoutubeCookiesCommand
         {
             get => new RelayCommand<object>((a) =>

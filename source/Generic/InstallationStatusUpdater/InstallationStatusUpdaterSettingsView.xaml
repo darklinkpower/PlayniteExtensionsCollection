@@ -3,9 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="650" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Installation-Status-Updater"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCInstallation_Status_Updater_SettingsHelpLabel}" />
+                </Hyperlink>
+        </TextBlock>
         <CheckBox Margin="0,0,0,0" IsChecked="{Binding Settings.EnableInstallButtonAction}" Content="{DynamicResource LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton}" />
         <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.OnlyUsePlayActionGameActions}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions}" />
         <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.SkipHandledByPlugin}" Content="{DynamicResource LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin}" />

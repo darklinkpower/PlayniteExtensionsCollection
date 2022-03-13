@@ -7,21 +7,24 @@
              xmlns:conv="clr-namespace:SpecialKHelper.Converters"
              xmlns:beh="clr-namespace:SpecialKHelper.Behaviors"
              xmlns:skM="clr-namespace:SpecialKHelper.Models"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid Margin="20">
         <ScrollViewer>
             <StackPanel>
+                <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                    <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Special-K-Helper"
+                               Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                               CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="{DynamicResource LOCSpecial_K_Helper_SettingsHelpLabel}" />
+                    </Hyperlink>
+                </TextBlock>
                 <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
                     <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionMode}" VerticalAlignment="Center"/>
                     <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
                           SelectedValue="{Binding Settings.SpecialKExecutionMode}"
                           beh:SelectorBehaviors.EnumSource="{x:Type skM:SpecialKExecutionMode}" />
 
-                    <Button Margin="20,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Command="{Binding OpenHelpCommand}"
-                            Content="{DynamicResource LOCSpecial_K_Helper_HelpLabel}" />
                 </StackPanel>
                 <TextBlock Margin="20,10,0,0" Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionModeNote}" TextWrapping="Wrap"/>
 

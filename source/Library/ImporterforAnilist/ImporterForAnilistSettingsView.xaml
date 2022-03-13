@@ -2,15 +2,26 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="600">
-    <Grid>
-        <StackPanel Margin="20">
+             d:DesignHeight="550" d:DesignWidth="600">
+    <ScrollViewer Margin="20">
+        <StackPanel>
+            <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Importer-for-Anilist"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCImporter_For_Anilist_SettingsHelpLabel}" />
+                </Hyperlink>
+            </TextBlock>
             <DockPanel>
                 <TextBlock Text="{DynamicResource LOCImporter_For_Anilist_AccountAccessCodeSettingLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                <Button Content="{DynamicResource LOCImporter_For_Anilist_AccountAccessCodeSettingButton}" DockPanel.Dock="Right" VerticalAlignment="Center"
-                        Command="{Binding LoginCommand}" Margin="10,0,0,0"/>
+                <Button Content="{DynamicResource LOCImporter_For_Anilist_AccountAccessCodeSettingButton}"
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Right" VerticalAlignment="Center"
+                        Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                        CommandParameter="https://anilist.co/api/v2/oauth/authorize?client_id=5706&amp;response_type=token" />
                 <TextBox Name="AccountAccessCode" Text="{Binding Settings.AccountAccessCode}" Margin="10,0,0,0" VerticalAlignment="Center"/>
             </DockPanel>
             <DockPanel Margin="0,10,0,0">
@@ -83,5 +94,5 @@
                          ToolTip="{DynamicResource LOCImporter_For_Anilist_BrowserExecutableTooltip}" Margin="10,0,0,0" />
             </DockPanel>
         </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

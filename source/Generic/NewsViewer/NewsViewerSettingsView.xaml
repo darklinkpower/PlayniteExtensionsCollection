@@ -2,10 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/News-Viewer"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOC_NewsViewer_SettingsHelpLabel}" />
+                </Hyperlink>
+        </TextBlock>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
             <Label Content="{DynamicResource LOC_NewsViewer_Settings_DescriptionMaxHeightLabel}" Margin="0,0,0,0" VerticalAlignment="Center" />
             <Slider Value="{Binding Settings.DescriptionMaxHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="150" Maximum="400" VerticalAlignment="Center"

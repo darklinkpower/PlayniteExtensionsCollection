@@ -2,15 +2,23 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="990" d:DesignWidth="600">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
         </Grid.Resources>
         <ScrollViewer>
             <StackPanel Margin="20">
+                <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                    <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Splash-Screen"
+                               Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                               CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="{DynamicResource LOCSplashScreen_SettingsHelpLabel}" />
+                    </Hyperlink>
+                </TextBlock>
                 <CheckBox Name="ExecuteDesktopMode" IsChecked="{Binding Settings.ExecuteInDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBexecuteInDesktopMode}" Margin="0,10,0,0" />
                 <StackPanel Margin="40,0,0,0" IsEnabled="{Binding ElementName=ExecuteDesktopMode, Path=IsChecked}">
                     <CheckBox IsChecked="{Binding Settings.ViewImageSplashscreenDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode}" Margin="0,10,0,0" />

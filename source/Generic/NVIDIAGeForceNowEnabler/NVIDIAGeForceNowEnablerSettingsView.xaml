@@ -2,10 +2,18 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCNgfn_Enabler_SettingsHelpLabel}" />
+                </Hyperlink>
+        </TextBlock>
         <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnStartup"
                   Margin="0,0,0,15"
                   IsChecked="{Binding Settings.ExecuteOnStartup}"
@@ -19,7 +27,7 @@
                   IsChecked="{Binding Settings.ShowPlayActionsOnLaunch}"
                   Content="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting}"
                   ToolTip="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip}"/>
-        <TextBlock Margin="20,0,0,15"
+        <TextBlock Margin="20,0,0,15" TextWrapping="Wrap"
                    Text="{DynamicResource LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel}" />
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
                   Margin="0,0,0,15"

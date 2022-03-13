@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using InstallationStatusUpdater.Models;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
