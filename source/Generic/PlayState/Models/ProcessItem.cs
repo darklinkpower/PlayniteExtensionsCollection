@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlayState.Models
 {
-    class ProcessItem
+    public class ProcessItem
     {
         public string ExecutablePath;
         public Process Process;

@@ -13,12 +13,18 @@ namespace PlayState.Models
         public Game Game { get; set; }
         public DateTime StartDate { get; set; }
         public Stopwatch Stopwatch { get; set; }
+        public List<ProcessItem> GameProcesses { get; set; }
+        public bool IsSuspended { get; set; }
+        public bool ProcessesSuspended { get; set; }
 
-        public PlayStateData(Game game)
+        public PlayStateData(Game game, List<ProcessItem> gameProcesses)
         {
             Game = game;
             StartDate = DateTime.Now;
             Stopwatch = new Stopwatch();
+            GameProcesses = gameProcesses;
+            IsSuspended = false;
+            ProcessesSuspended = false;
         }
     }
 }
