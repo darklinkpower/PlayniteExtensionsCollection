@@ -60,6 +60,24 @@
     <Compile Include="..\PluginsCommon\HttpDownloader.cs">
       <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
     </Compile>
+    <Compile Include="..\PluginsCommon\Native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\PluginsCommon\Native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\PluginsCommon\Native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\PluginsCommon\Native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\PluginsCommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\PluginsCommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
     <Compile Include="Client.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Models\SteamAppDetailsResponse.cs" />

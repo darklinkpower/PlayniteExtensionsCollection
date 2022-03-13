@@ -9,10 +9,10 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using SpecialKHelper.Common;
 using SpecialKHelper.Models;
 using SpecialKHelper.ViewModels;
 using SpecialKHelper.Views;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -421,7 +421,7 @@ namespace SpecialKHelper
 
         private bool ConfigureSteamApiInject(Game game)
         {
-            if (SteamCommon.IsGameSteamGame(game))
+            if (Steam.IsGameSteamGame(game))
             {
                 return true;
             }
@@ -639,7 +639,7 @@ namespace SpecialKHelper
         public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload, bool matchFuzzyMethods = false)
         {
             var normalizedName = game.Name.NormalizeGameName();
-            var results = SteamCommon.GetSteamSearchResults(normalizedName);
+            var results = SteamWeb.GetSteamSearchResults(normalizedName);
             results.ForEach(a => a.Name = a.Name.NormalizeGameName());
 
             // Try to see if there's an exact match, to not prompt the user unless needed
@@ -698,7 +698,7 @@ namespace SpecialKHelper
             {
                 var selectedGame = PlayniteApi.Dialogs.ChooseItemWithSearch(
                     results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
-                    (a) => SteamCommon.GetSteamSearchGenericItemOptions(a),
+                    (a) => SteamWeb.GetSteamSearchGenericItemOptions(a),
                     normalizedName,
                     ResourceProvider.GetString("LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption"));
                 if (selectedGame != null)
@@ -826,7 +826,7 @@ namespace SpecialKHelper
 
         private string GetConfiguredSteamId(Game game)
         {
-            if (SteamCommon.IsGameSteamGame(game))
+            if (Steam.IsGameSteamGame(game))
             {
                 return game.GameId;
             }

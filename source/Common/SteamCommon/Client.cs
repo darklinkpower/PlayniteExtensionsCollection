@@ -31,7 +31,7 @@ namespace SteamCommon
             using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
             {
                 var value = key?.GetValue("BigPictureInForeground")?.ToString();
-                if (value.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(value))
                 {
                     return false;
                 }
