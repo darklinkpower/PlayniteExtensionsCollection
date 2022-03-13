@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCReview_Viewer_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">评论查看器</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">更新所选游戏的评论数据</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">是否再次下载游戏的已有数据？</sys:String>
