@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using PluginsCommon;
 
 namespace SteamGameTransferUtility
 {
@@ -14,7 +15,7 @@ namespace SteamGameTransferUtility
 
         public AcfReader(string FileLocation)
         {
-            if (File.Exists(FileLocation))
+            if (FileSystem.FileExists(FileLocation))
             {
                 this.FileLocation = FileLocation;
             }

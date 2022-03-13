@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GamePassCatalogBrowser.Models;
 using System.Text.RegularExpressions;
+using PluginsCommon.Web;
+using PluginsCommon;
 
 namespace GamePassCatalogBrowser.Services
 {
@@ -16,7 +18,6 @@ namespace GamePassCatalogBrowser.Services
     {
         private IPlayniteAPI playniteApi;
         private ILogger logger = LogManager.GetLogger();
-        private HttpClient client;
         public List<GamePassGame> gamePassGamesList = new List<GamePassGame>();
         private readonly string userDataPath = string.Empty;
         private readonly string cachePath = string.Empty;
@@ -35,47 +36,9 @@ namespace GamePassCatalogBrowser.Services
         private readonly bool removeExpiredGames;
         public XboxLibraryHelper xboxLibraryHelper;
 
-        public void Dispose()
-        {
-            client.Dispose();
-            xboxLibraryHelper.Dispose();
-        }
-
-        private void ClearFolder(string folderPath)
-        {
-            DirectoryInfo dir = new DirectoryInfo(folderPath);
-
-            foreach (FileInfo file in dir.GetFiles())
-            {
-                file.Delete();
-            }
-
-            foreach (DirectoryInfo directory in dir.GetDirectories())
-            {
-                ClearFolder(directory.FullName);
-                directory.Delete();
-            }
-        }
-
-        private void DeleteFileFromPath(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                var fileInfo = new FileInfo(filePath);
-                try
-                {
-                    fileInfo.Delete();
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error deleting file {filePath}");
-                }
-            }
-        }
-
         public void DeleteCache()
         {
-            ClearFolder(cachePath);
+            FileSystem.ClearDirectory(cachePath);
         }
 
         public GamePassCatalogBrowserService(IPlayniteAPI api, string dataPath, bool _notifyCatalogUpdates, bool _addExpiredTagToGames, bool _addNewGames, bool _removeExpiredGames, string _countryCode, string _languageCode = "en-us")
@@ -86,8 +49,6 @@ namespace GamePassCatalogBrowser.Services
             addExpiredTagToGames = _addExpiredTagToGames;
             addNewGames = _addNewGames;
             removeExpiredGames = _removeExpiredGames;
-            client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
 
             cachePath = Path.Combine(userDataPath, "cache");
             imageCachePath = Path.Combine(cachePath, "images");
@@ -105,13 +66,13 @@ namespace GamePassCatalogBrowser.Services
             var gamePassGames = new List<GamePassCatalogProduct>();
             try
             {
-                var response = client.GetAsync(catalogUrl);
-                var contents = response.Result.Content.ReadAsStringAsync();
-                if (string.IsNullOrEmpty(contents.Result))
+                var downloadedString = HttpDownloader.DownloadString(catalogUrl);
+                if (downloadedString.IsNullOrEmpty())
                 {
                     return null;
                 }
-                var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(contents.Result);
+                
+                var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(downloadedString);
                 foreach (GamePassCatalogProduct gamePassProduct in gamePassCatalog)
                 {
                     if (gamePassProduct.Id == null)
@@ -129,26 +90,6 @@ namespace GamePassCatalogBrowser.Services
             }
         }
        
-        public async Task DownloadFile(string requestUri, string path)
-        {
-            try
-            {
-                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    string fileToWriteTo = path;
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error during file download, url {requestUri}");
-            }
-        }
-
         private static string RegexRemoveOnEnd(string input, string search)
         {
             string result = Regex.Replace(
@@ -275,11 +216,10 @@ namespace GamePassCatalogBrowser.Services
                                 string catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
                                 try
                                 {
-                                    var response = client.GetAsync(string.Format(catalogDataApiUrl));
-                                    var contents = response.Result.Content.ReadAsStringAsync();
-                                    if (response.Status == TaskStatus.RanToCompletion)
+                                    var response = HttpDownloader.DownloadString(catalogDataApiUrl);
+                                    if (!response.IsNullOrEmpty())
                                     {
-                                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), false, gameProductType, true, product.ProductId);
+                                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(response), false, gameProductType, true, product.ProductId);
                                     }
                                     else
                                     {
@@ -382,7 +322,7 @@ namespace GamePassCatalogBrowser.Services
             // Try to create cache directory in case it doesn't exist
             Directory.CreateDirectory(imageCachePath);
 
-            if (File.Exists(gameDataCachePath))
+            if (FileSystem.FileExists(gameDataCachePath))
             {
                 gamePassGamesList = JsonConvert.DeserializeObject<List<GamePassGame>>(File.ReadAllText(gameDataCachePath));
             }
@@ -448,7 +388,7 @@ namespace GamePassCatalogBrowser.Services
 
                     foreach (string filePath in gameFilesPaths)
                     {
-                        DeleteFileFromPath(filePath);
+                        FileSystem.DeleteFileSafe(filePath);
                     }
 
                     var gameRemoved = false;
@@ -502,11 +442,10 @@ namespace GamePassCatalogBrowser.Services
                 string catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
                 try
                 {
-                    var response = client.GetAsync(string.Format(catalogDataApiUrl));
-                    var contents = response.Result.Content.ReadAsStringAsync();
-                    if (response.Status == TaskStatus.RanToCompletion)
+                    var response = HttpDownloader.DownloadString(catalogDataApiUrl);
+                    if (!response.IsNullOrEmpty())
                     {
-                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(contents.Result), true, gameProductType, false, string.Empty);
+                        addGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(response), true, gameProductType, false, string.Empty);
                         File.WriteAllText(gameDataCachePath, JsonConvert.SerializeObject(gamePassGamesList));
                     }
                     else
@@ -524,15 +463,15 @@ namespace GamePassCatalogBrowser.Services
         public void DownloadGamePassGameCache(GamePassGame game)
         {
             game.CoverImageLowRes = Path.Combine(imageCachePath, game.CoverImageLowRes);
-            DownloadFile(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl), game.CoverImageLowRes).GetAwaiter().GetResult();
-
+            HttpDownloader.DownloadFile(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl), game.CoverImageLowRes);
+            
             game.CoverImage = Path.Combine(imageCachePath, game.CoverImage);
-            DownloadFile(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl), game.CoverImage).GetAwaiter().GetResult();
+            HttpDownloader.DownloadFile(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl), game.CoverImage);
 
             if (game.Icon != null)
             {
                 game.Icon = Path.Combine(imageCachePath, game.Icon);
-                DownloadFile(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl), game.Icon).GetAwaiter().GetResult();
+                HttpDownloader.DownloadFile(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl), game.Icon);
             }
         }
 

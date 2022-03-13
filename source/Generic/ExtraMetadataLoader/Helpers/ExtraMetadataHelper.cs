@@ -1,6 +1,7 @@
 ﻿using ExtraMetadataLoader.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -144,9 +145,9 @@ namespace ExtraMetadataLoader.Helpers
         {
             try
             {
-                if (File.Exists(sourcePath))
+                if (FileSystem.FileExists(sourcePath))
                 {
-                    File.Delete(sourcePath);
+                    File.Delete(FileSystem.FixPathLength(sourcePath));
                 }
                 return true;
             }

@@ -7,6 +7,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -584,7 +585,7 @@ namespace ExtraMetadataLoader
 
                     a.CurrentProgressValue++;
                     a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                    if (!overwrite && File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
+                    if (!overwrite && FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
                     {
                         continue;
                     }
@@ -771,7 +772,7 @@ namespace ExtraMetadataLoader
                         var gameUpdated = false;
                         if (logoMissingTag != null)
                         {
-                            if (File.Exists(extraMetadataHelper.GetGameLogoPath(game)))
+                            if (FileSystem.FileExists(extraMetadataHelper.GetGameLogoPath(game)))
                             {
                                 var tagRemoved = RemoveTag(game, logoMissingTag, false);
                                 if (tagRemoved)
@@ -790,7 +791,7 @@ namespace ExtraMetadataLoader
                         }
                         if (videoMissingTag != null)
                         {
-                            if (File.Exists(extraMetadataHelper.GetGameVideoPath(game)))
+                            if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
                             {
                                 var tagRemoved = RemoveTag(game, videoMissingTag, false);
                                 if (tagRemoved)
@@ -809,7 +810,7 @@ namespace ExtraMetadataLoader
                         }
                         if (microvideoMissingTag != null)
                         {
-                            if (File.Exists(extraMetadataHelper.GetGameVideoMicroPath(game)))
+                            if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoMicroPath(game)))
                             {
                                 var tagRemoved = RemoveTag(game, microvideoMissingTag, false);
                                 if (tagRemoved)
@@ -847,7 +848,7 @@ namespace ExtraMetadataLoader
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error));
                     success = false;
                 }
-                else if (!File.Exists(settings.Settings.FfmpegPath))
+                else if (!FileSystem.FileExists(settings.Settings.FfmpegPath))
                 {
                     logger.Debug($"ffmpeg executable not found in {settings.Settings.FfmpegPath}");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error));
@@ -861,7 +862,7 @@ namespace ExtraMetadataLoader
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error));
                     success = false;
                 }
-                else if (!File.Exists(settings.Settings.FfprobePath))
+                else if (!FileSystem.FileExists(settings.Settings.FfprobePath))
                 {
                     logger.Debug($"ffprobe executable not found in {settings.Settings.FfprobePath}");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error));
@@ -878,7 +879,7 @@ namespace ExtraMetadataLoader
                     PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured"), NotificationType.Error));
                     success = false;
                 }
-                else if (!File.Exists(settings.Settings.YoutubeDlPath))
+                else if (!FileSystem.FileExists(settings.Settings.YoutubeDlPath))
                 {
                     logger.Debug($"youtube-dl executable not found in {settings.Settings.YoutubeDlPath}");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound"), NotificationType.Error));

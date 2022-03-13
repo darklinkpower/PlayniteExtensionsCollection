@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using SplashScreen.ViewModels;
 using SplashScreen.Views;
 using System;
@@ -157,7 +158,7 @@ namespace SplashScreen
                 if (settings.Settings.UseGlobalSplashImage && !string.IsNullOrEmpty(settings.Settings.GlobalSplashFile))
                 {
                     var globalSplashImagePath = Path.Combine(GetPluginUserDataPath(), settings.Settings.GlobalSplashFile);
-                    if (File.Exists(globalSplashImagePath))
+                    if (FileSystem.FileExists(globalSplashImagePath))
                     {
                         splashImagePath = globalSplashImagePath;
                         usingGlobalImage = true;
@@ -361,7 +362,7 @@ namespace SplashScreen
             string videoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4");
 
             string splashVideo = string.Format(videoPathTemplate, "games", game.Id.ToString());
-            if (File.Exists(splashVideo))
+            if (FileSystem.FileExists(splashVideo))
             {
                 logger.Info(string.Format("Specific game video found in {0}", splashVideo));
                 return splashVideo;
@@ -370,7 +371,7 @@ namespace SplashScreen
             if (game.Source != null)
             {
                 splashVideo = string.Format(videoPathTemplate, "sources", game.Source.Id.ToString());
-                if (File.Exists(splashVideo))
+                if (FileSystem.FileExists(splashVideo))
                 {
                     logger.Info(string.Format("Source video found in {0}", splashVideo));
                     return splashVideo;
@@ -380,7 +381,7 @@ namespace SplashScreen
             if (game.Platforms != null)
             {
                 splashVideo = string.Format(videoPathTemplate, "platforms", game.Platforms[0].Id.ToString());
-                if (File.Exists(splashVideo))
+                if (FileSystem.FileExists(splashVideo))
                 {
                     logger.Info(string.Format("Platform video found in {0}", splashVideo));
                     return splashVideo;
@@ -396,7 +397,7 @@ namespace SplashScreen
                 splashVideo = string.Format(videoPathTemplate, "playnite", "Fullscreen");
             }
 
-            if (File.Exists(splashVideo))
+            if (FileSystem.FileExists(splashVideo))
             {
                 logger.Info(string.Format("Playnite mode video for {0} mode found in {1}", PlayniteApi.ApplicationInfo.Mode ,splashVideo));
                 return splashVideo;
@@ -424,7 +425,7 @@ namespace SplashScreen
             else
             {
                 var logoPathSearch = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "Logo.png");
-                if (File.Exists(logoPathSearch))
+                if (FileSystem.FileExists(logoPathSearch))
                 {
                     logger.Info(string.Format("Specific game logo found in {0}", logoPathSearch));
                     return logoPathSearch;

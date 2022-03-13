@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.IO;
 using System.Text.RegularExpressions;
+using PluginsCommon;
 
 namespace ImporterforAnilist
 {
@@ -347,7 +348,7 @@ namespace ImporterforAnilist
             }
 
             var browserPath = string.Empty;
-            if (!string.IsNullOrEmpty(settings.Settings.BrowserPath) && File.Exists(settings.Settings.BrowserPath))
+            if (!settings.Settings.BrowserPath.IsNullOrEmpty() && FileSystem.FileExists(settings.Settings.BrowserPath))
             {
                 browserPath = settings.Settings.BrowserPath;
             }

@@ -7,6 +7,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using SpecialKHelper.Common;
 using SpecialKHelper.Models;
 using SpecialKHelper.ViewModels;
@@ -226,7 +227,7 @@ namespace SpecialKHelper
             var gameReshadePresetSubPath = Path.Combine("reshade-presets", game.Id.ToString() + ".ini");
             var gameReshadePreset = Path.Combine(reshadeBase, gameReshadePresetSubPath);
 
-            if (!File.Exists(gameReshadePreset))
+            if (!FileSystem.FileExists(gameReshadePreset))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(gameReshadePreset));
                 var techniqueSortingLine = GetReshadeTechniqueSorting();
@@ -240,7 +241,7 @@ namespace SpecialKHelper
                 }
             }
 
-            if (File.Exists(reshadeIniPath))
+            if (FileSystem.FileExists(reshadeIniPath))
             {
                 IniData ini = iniParser.ReadFile(reshadeIniPath);
                 var updatedValues = 0;
@@ -260,10 +261,10 @@ namespace SpecialKHelper
 
         private void ValidateDefaultProfile()
         {
-            if (!File.Exists(defaultConfigPath))
+            if (!FileSystem.FileExists(defaultConfigPath))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(defaultConfigPath));
-                File.Create(defaultConfigPath).Dispose();
+                FileSystem.CreateFile(defaultConfigPath);
                 logger.Info($"Created default profile file blank file in {defaultConfigPath} since it was missing");
             }
 
@@ -349,7 +350,7 @@ namespace SpecialKHelper
         private bool GetIsGameEacEnabled(Game game)
         {
             var cachePath = Path.Combine(GetPluginUserDataPath(), game.Id.ToString() + "_cache.json");
-            if (!File.Exists(cachePath))
+            if (!FileSystem.FileExists(cachePath))
             {
                 var newCache = new GameDataCache
                 {
@@ -489,7 +490,7 @@ namespace SpecialKHelper
             if (isInstallDirValid)
             {
                 appIdTextPath = Path.Combine(game.InstallDirectory, "steam_appid.txt");
-                if (File.Exists(appIdTextPath))
+                if (FileSystem.FileExists(appIdTextPath))
                 {
                     return true;
                 }
@@ -499,7 +500,7 @@ namespace SpecialKHelper
 
             // TODO move to game data cache...
             var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "SteamId_" + game.Id.ToString());
-            if (File.Exists(historyFlagFile))
+            if (FileSystem.FileExists(historyFlagFile))
             {
                 previousId = File.ReadAllText(historyFlagFile).Trim();
                 logger.Warn($"Detected attempt flag file for game {game.Name} in {historyFlagFile}. Previous Id: {previousId}");
@@ -541,7 +542,7 @@ namespace SpecialKHelper
             // As an alternative in case file creation fails or created steam id file
             // is not used, we attempt to modify the default profile
             // so the id gets copied if a new profile is created
-            if (File.Exists(defaultConfigPath))
+            if (FileSystem.FileExists(defaultConfigPath))
             {
                 IniData ini = iniParser.ReadFile(defaultConfigPath);
                 var currentAppId = ini["Steam.System"]["AppID"];
@@ -553,9 +554,9 @@ namespace SpecialKHelper
             }
 
             // Flag file so we don't attempt to search again in future startups.
-            if (!File.Exists(historyFlagFile))
+            if (!FileSystem.FileExists(historyFlagFile))
             {
-                File.WriteAllText(historyFlagFile, steamId, Encoding.UTF8);
+                FileSystem.WriteStringToFile(historyFlagFile, steamId, true);
             }
             
             return true;
@@ -574,7 +575,7 @@ namespace SpecialKHelper
         private bool StartSpecialkService(string cpuArchitecture)
         {
             var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
-            if (File.Exists(servletPid))
+            if (FileSystem.FileExists(servletPid))
             {
                 logger.Info($"Servlet Pid file in {servletPid} detected so it was not started");
                 return true;
@@ -582,7 +583,7 @@ namespace SpecialKHelper
 
             var allFilesDetected = true;
             var dllPath = Path.Combine(skifPath, "SpecialK" + cpuArchitecture + ".dll");
-            if (!File.Exists(dllPath))
+            if (!FileSystem.FileExists(dllPath))
             {
                 allFilesDetected = false;
                 logger.Info($"Special K dll not found in {dllPath}");
@@ -595,7 +596,7 @@ namespace SpecialKHelper
             }
 
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture +".exe");
-            if (!File.Exists(servletExe))
+            if (!FileSystem.FileExists(servletExe))
             {
                 allFilesDetected = false;
                 logger.Info($"Special K servlet exe not found in {servletExe}");
@@ -624,7 +625,7 @@ namespace SpecialKHelper
             while (i < 12)
             {
                 Thread.Sleep(100);
-                if (File.Exists(servletPid))
+                if (FileSystem.FileExists(servletPid))
                 {
                     logger.Info($"Special K global service for \"{cpuArchitecture}\" started. Pid file detected in {servletPid}");
                     return true;
@@ -645,7 +646,7 @@ namespace SpecialKHelper
         private bool StopSpecialkService(string cpuArchitecture)
         {
             var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
-            if (!File.Exists(servletPid))
+            if (!FileSystem.FileExists(servletPid))
             {
                 logger.Info($"Servlet Pid file in {servletPid} not detected so closing was not needed");
                 return true;
@@ -653,7 +654,7 @@ namespace SpecialKHelper
 
             var allFilesDetected = true;
             var dllPath = Path.Combine(skifPath, "SpecialK" + cpuArchitecture + ".dll");
-            if (!File.Exists(dllPath))
+            if (!FileSystem.FileExists(dllPath))
             {
                 allFilesDetected = false;
                 logger.Info($"Special K dll not found in {dllPath}");
@@ -666,7 +667,7 @@ namespace SpecialKHelper
             }
 
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + cpuArchitecture + ".exe");
-            if (!File.Exists(servletExe))
+            if (!FileSystem.FileExists(servletExe))
             {
                 allFilesDetected = false;
                 logger.Info($"Special K servlet exe not found in {servletExe}");
@@ -911,16 +912,16 @@ namespace SpecialKHelper
             if (!game.InstallDirectory.IsNullOrEmpty())
             {
                 var appIdTextPath = Path.Combine(game.InstallDirectory, "steam_appid.txt");
-                if (File.Exists(appIdTextPath))
+                if (FileSystem.FileExists(appIdTextPath))
                 {
-                    return File.ReadAllText(appIdTextPath);
+                    return FileSystem.ReadStringFromFile(appIdTextPath);
                 }
             }
 
             var historyFlagFile = Path.Combine(GetPluginUserDataPath(), "SteamId_" + game.Id.ToString());
-            if (File.Exists(historyFlagFile))
+            if (FileSystem.FileExists(historyFlagFile))
             {
-                return File.ReadAllText(historyFlagFile);
+                return FileSystem.ReadStringFromFile(historyFlagFile);
             }
 
             return string.Empty;

@@ -3,6 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -179,9 +180,9 @@ namespace SteamLauncherUtility
         public void LaunchSteam()
         {
             string steamInstallationPath = GetSteamInstallationPath();
-            if (!File.Exists(steamInstallationPath))
+            if (!FileSystem.FileExists(steamInstallationPath))
             {
-                logger.Error(String.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));
+                logger.Error($"Steam executable not detected in path \"{steamInstallationPath}\"");
                 return;
             }
 

@@ -2,6 +2,7 @@
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using ReviewViewer.Models;
 using System;
 using System.Collections.Generic;
@@ -419,7 +420,7 @@ namespace ReviewViewer.Controls
             }
 
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
-            if (!File.Exists(gameDataPath))
+            if (!FileSystem.FileExists(gameDataPath))
             {
                 if (!SettingsModel.Settings.DownloadDataOnGameSelection)
                 {
@@ -445,7 +446,7 @@ namespace ReviewViewer.Controls
 
                 var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
                 DownloadFile(uri, gameDataPath).GetAwaiter().GetResult();
-                if (!File.Exists(gameDataPath))
+                if (!FileSystem.FileExists(gameDataPath))
                 {
                     return;
                 }

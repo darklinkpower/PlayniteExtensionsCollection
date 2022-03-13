@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using ReviewViewer.Controls;
 using System;
 using System.Collections.Generic;
@@ -198,7 +199,7 @@ namespace ReviewViewer
                         foreach (string reviewSearchType in reviewSearchTypes)
                         {
                             var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_{reviewSearchType}.json");
-                            if (File.Exists(gameDataPath))
+                            if (FileSystem.FileExists(gameDataPath))
                             {
                                 if (userOverwriteChoice != MessageBoxResult.Yes)
                                 {

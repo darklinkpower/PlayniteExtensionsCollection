@@ -2,6 +2,7 @@
 using IniParser;
 using IniParser.Model;
 using Playnite.SDK;
+using PluginsCommon;
 using SpecialKHelper.Models;
 using System;
 using System.Collections.Generic;
@@ -264,7 +265,7 @@ namespace SpecialKHelper.ViewModels
             foreach (var profileDir in profileDirectoriesSearch)
             {
                 var iniPath = Path.Combine(profileDir, "SpecialK.ini");
-                if (!File.Exists(iniPath))
+                if (!FileSystem.FileExists(iniPath))
                 {
                     continue;
                 }

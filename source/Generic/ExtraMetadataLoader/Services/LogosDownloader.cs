@@ -10,7 +10,9 @@ using ExtraMetadataLoader.Common;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Helpers;
 using System.Text;
+using PluginsCommon.Web;
 using ImageMagick;
+using PluginsCommon;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -36,7 +38,7 @@ namespace ExtraMetadataLoader.Services
         {
             logger.Debug($"DownloadSteamLogo starting for game {game.Name}");
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
-            if (File.Exists(logoPath) && !overwrite)
+            if (FileSystem.FileExists(logoPath) && !overwrite)
             {
                 logger.Debug("Logo exists and overwrite is set to false, skipping");
                 return true;
@@ -133,7 +135,7 @@ namespace ExtraMetadataLoader.Services
         {
             logger.Debug($"DownloadGoogleImage starting for game {game.Name}");
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
-            if (File.Exists(logoPath) && !overwrite)
+            if (FileSystem.FileExists(logoPath) && !overwrite)
             {
                 logger.Debug("Logo exists and overwrite is set to false, skipping");
                 return true;
@@ -151,7 +153,7 @@ namespace ExtraMetadataLoader.Services
         public bool DownloadSgdbLogo(Game game, bool overwrite, bool isBackgroundDownload)
         {
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
-            if (File.Exists(logoPath) && !overwrite)
+            if (FileSystem.FileExists(logoPath) && !overwrite)
             {
                 logger.Debug("Logo exists and overwrite is set to false, skipping");
                 return true;

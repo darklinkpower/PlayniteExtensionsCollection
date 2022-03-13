@@ -4,6 +4,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -116,9 +117,8 @@ namespace CooperativeModesImporter
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            if (settings.Settings.DatabaseVersion < currentDatabaseVersion || !File.Exists(databasePath))
+            if (settings.Settings.DatabaseVersion < currentDatabaseVersion || !FileSystem.FileExists(databasePath))
             {
-
                 PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
                 {
                     logger.Info("Decompressing database zip file...");

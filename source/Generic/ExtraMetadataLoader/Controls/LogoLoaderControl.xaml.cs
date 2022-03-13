@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -92,7 +93,7 @@ namespace ExtraMetadataLoader
             if (newContext != null)
             {
                 var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
-                if (File.Exists(logoPath))
+                if (FileSystem.FileExists(logoPath))
                 {
                     LogoSource = logoPath;
                     SettingsModel.Settings.IsLogoAvailable = true;

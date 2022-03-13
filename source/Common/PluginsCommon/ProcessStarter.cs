@@ -148,9 +148,12 @@ namespace PluginsCommon
             string path,
             string arguments,
             string workDir,
+            bool createNoWindow,
+            bool useShellExecute,
             out string stdOutput,
             out string stdError)
         {
+            path = FileSystem.FixPathLength(path);
             logger.Debug($"Starting process: {path}, {arguments}, {workDir}");
             var startupPath = path;
             if (path.Contains(".."))
@@ -164,8 +167,8 @@ namespace PluginsCommon
                 WorkingDirectory = string.IsNullOrEmpty(workDir) ? (new FileInfo(startupPath)).Directory.FullName : workDir,
                 RedirectStandardError = true,
                 RedirectStandardOutput = true,
-                CreateNoWindow = true,
-                UseShellExecute = false
+                CreateNoWindow = createNoWindow,
+                UseShellExecute = useShellExecute
             };
 
             var stdout = string.Empty;

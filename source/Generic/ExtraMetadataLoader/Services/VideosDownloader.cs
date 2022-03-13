@@ -4,6 +4,8 @@ using ExtraMetadataLoader.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PluginsCommon;
+using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -35,11 +37,11 @@ namespace ExtraMetadataLoader.Services
             logger.Debug($"DownloadSteamVideo starting for game {game.Name}");
             var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
             var videoMicroPath = extraMetadataHelper.GetGameVideoMicroPath(game, true);
-            if (File.Exists(videoPath) && !overwrite)
+            if (FileSystem.FileExists(videoPath) && !overwrite)
             {
                 downloadVideo = false;
             }
-            if (File.Exists(videoMicroPath) && !overwrite)
+            if (FileSystem.FileExists(videoMicroPath) && !overwrite)
             {
                 downloadVideoMicro = false;
             }
@@ -117,7 +119,7 @@ namespace ExtraMetadataLoader.Services
                     {
                         args = $"-y -i \"{videoPath}\" -c:v libx264 -c:a mp3 -vf scale=trunc(iw/2)*2:trunc(ih/2)*2 -pix_fmt yuv420p \"{destinationPath}\"";
                     }
-                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, true, out var stdOut, out var stdErr);
                     if (result != 0)
                     {
                         logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
@@ -146,7 +148,7 @@ namespace ExtraMetadataLoader.Services
                 success = false;
             }
 
-            if (deleteSource && File.Exists(videoPath))
+            if (deleteSource && FileSystem.FileExists(videoPath))
             {
                 File.Delete(videoPath);
             }
@@ -190,7 +192,7 @@ namespace ExtraMetadataLoader.Services
         {
             logger.Debug($"Obtaining video information: {videoPath}");
             var args = $"-v error -select_streams v:0 -show_entries stream=width,height,codec_name_name,pix_fmt,duration -of json \"{videoPath}\"";
-            var result = ProcessStarter.StartProcessWait(settings.FfprobePath, args, Path.GetDirectoryName(settings.FfprobePath), true, out var stdOut, out var stdErr);
+            var result = ProcessStarter.StartProcessWait(settings.FfprobePath, args, Path.GetDirectoryName(settings.FfprobePath), true, true, out var stdOut, out var stdErr);
             if (result != 0)
             {
                 logger.Error($"Failed to get video information: {videoPath}, {result}, {stdErr}");
@@ -204,7 +206,7 @@ namespace ExtraMetadataLoader.Services
         {
             var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
             var videoMicroPath = extraMetadataHelper.GetGameVideoMicroPath(game, true);
-            if (!File.Exists(videoPath) || (File.Exists(videoMicroPath) && !overwrite))
+            if (!FileSystem.FileExists(videoPath) || (FileSystem.FileExists(videoMicroPath) && !overwrite))
             {
                 return false;
             }
@@ -231,7 +233,7 @@ namespace ExtraMetadataLoader.Services
                     // Scale parameter needs to be used because otherwise ffmpeg
                     // will fail if a dimension is not divisible by 2.
                     var args = $"-y -i \"{videoPath}\" -c:v libx264 -c:a mp3 -vf scale=trunc(iw/2)*2:trunc(ih/2)*2 -pix_fmt yuv420p -an \"{videoMicroPath}\"";
-                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, true, out var stdOut, out var stdErr);
                     if (result != 0)
                     {
                         logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
@@ -243,7 +245,7 @@ namespace ExtraMetadataLoader.Services
                     // Scale parameter needs to be used because otherwise ffmpeg
                     // will fail if a dimension is not divisible by 2.
                     var args = $"-y -i \"{videoPath}\" -c:v copy -an \"{videoMicroPath}\"";
-                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                    var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, true, out var stdOut, out var stdErr);
                     if (result != 0)
                     {
                         logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
@@ -273,7 +275,7 @@ namespace ExtraMetadataLoader.Services
 
                 var selectString = $"\"select = '{string.Join("+", rangeStringList)}', setpts = N / FRAME_RATE / TB, scale = trunc(iw / 2) * 2:trunc(ih / 2) * 2\"";
                 var args = $"-y -i \"{videoPath}\" -vf {selectString} -c:v libx264 -pix_fmt yuv420p -an \"{videoMicroPath}\"";
-                var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
+                var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, true, out var stdOut, out var stdErr);
                 if (result != 0)
                 {
                     logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
@@ -302,16 +304,16 @@ namespace ExtraMetadataLoader.Services
         public bool DownloadYoutubeVideoById(Game game, string videoId, bool overwrite)
         {
             var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
-            if (File.Exists(videoPath) && !overwrite)
+            if (FileSystem.FileExists(videoPath) && !overwrite)
             {
                 return false;
             }
             var args = string.Format("-v -o \"{0}\" -f \"mp4\" \"{1}\"", tempDownloadPath, $"https://www.youtube.com/watch?v={videoId}");
-            if (!settings.YoutubeCookiesPath.IsNullOrEmpty() && File.Exists(settings.YoutubeCookiesPath))
+            if (!settings.YoutubeCookiesPath.IsNullOrEmpty() && FileSystem.FileExists(settings.YoutubeCookiesPath))
             {
                 args = string.Format("-v -o \"{0}\" --cookies \"{1}\" -f \"mp4\" \"{2}\"", tempDownloadPath, settings.YoutubeCookiesPath, $"https://www.youtube.com/watch?v={videoId}");
             }
-            var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, out var stdOut, out var stdErr);
+            var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, true, out var stdOut, out var stdErr);
             if (result != 0)
             {
                 logger.Error($"Failed to download video in youtube-dlp: {result}, {stdErr}");

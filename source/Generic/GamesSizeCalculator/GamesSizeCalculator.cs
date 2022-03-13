@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -142,7 +143,7 @@ namespace GamesSizeCalculator
                     romPath = romPath.Replace("{InstallDir}", game.InstallDirectory).Replace("\\\\", "\\");
                 }
 
-                if (string.IsNullOrEmpty(romPath) || !File.Exists(romPath))
+                if (string.IsNullOrEmpty(romPath) || !FileSystem.FileExists(romPath))
                 {
                     return;
                 }

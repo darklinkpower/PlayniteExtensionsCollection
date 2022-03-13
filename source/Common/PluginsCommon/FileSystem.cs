@@ -106,6 +106,28 @@ namespace PluginsCommon
             }
         }
 
+        public static void ClearDirectory(string path)
+        {
+            path = FixPathLength(path);
+            if (!Directory.Exists(path))
+            {
+                return;
+            }
+
+            DirectoryInfo dir = new DirectoryInfo(path);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                DeleteDirectory(file.FullName);
+            }
+
+            foreach (DirectoryInfo directory in dir.GetDirectories())
+            {
+                ClearDirectory(directory.FullName);
+                DeleteDirectory(directory.FullName);
+            }
+        }
+
         public static void DeleteDirectory(string path, bool includeReadonly)
         {
             path = FixPathLength(path);
@@ -246,11 +268,18 @@ namespace PluginsCommon
             throw new IOException($"Failed to read {path}", ioException);
         }
 
-        public static void WriteStringToFile(string path, string content)
+        public static void WriteStringToFile(string path, string content, bool useUtf8 = false)
         {
             path = FixPathLength(path);
             PrepareSaveFile(path);
-            File.WriteAllText(path, content);
+            if (useUtf8)
+            {
+                File.WriteAllText(path, content, Encoding.UTF8);
+            }
+            else
+            {
+                File.WriteAllText(path, content);
+            }
         }
 
         public static string ReadStringFromFile(string path)
@@ -284,6 +313,7 @@ namespace PluginsCommon
 
         public static void DeleteFileSafe(string path, int retryAttempts = 5)
         {
+            path = FixPathLength(path);
             if (!File.Exists(path))
             {
                 return;
@@ -299,13 +329,13 @@ namespace PluginsCommon
                 }
                 catch (IOException exc)
                 {
-                    logger.Debug($"Can't detele file, trying again. {path}");
+                    logger.Debug($"Can't delete file, trying again. {path}");
                     ioException = exc;
                     Task.Delay(500).Wait();
                 }
                 catch (UnauthorizedAccessException exc)
                 {
-                    logger.Error(exc, $"Can't detele file, UnauthorizedAccessException. {path}");
+                    logger.Error(exc, $"Can't delete file, UnauthorizedAccessException. {path}");
                     return;
                 }
             }

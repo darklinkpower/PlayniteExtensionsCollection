@@ -13,6 +13,7 @@ using System.IO;
 using System.Net;
 using Playnite.SDK.Data;
 using System.Diagnostics;
+using PluginsCommon;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -43,7 +44,7 @@ namespace NVIDIAGeForceNowEnabler
 
         private void UpdateDatabase()
         {
-            if (!File.Exists(gfnDatabasePath))
+            if (!FileSystem.FileExists(gfnDatabasePath))
             {
                 supportedList = new List<GeforceGame>();
                 return;
@@ -368,7 +369,7 @@ namespace NVIDIAGeForceNowEnabler
                 return null;
             }
 
-            if (!File.Exists(geforceNowExecutablePath))
+            if (!FileSystem.FileExists(geforceNowExecutablePath))
             {
                 logger.Debug("Geforce Now Executable was not detected");
                 PlayniteApi.Notifications.Add(new NotificationMessage(

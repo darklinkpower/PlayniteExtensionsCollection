@@ -109,7 +109,6 @@ namespace GamePassCatalogBrowser
                         var addedGames = service.xboxLibraryHelper.AddGamePassListToLibrary(gamePassGamesList);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage"), addedGames.ToString()), "Game Pass Catalog Browser");
                     }
-                    service.Dispose();
                 }, new GlobalProgressOptions(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage")));
             }
         }
@@ -125,7 +124,6 @@ namespace GamePassCatalogBrowser
                     service.DeleteCache();
                 }
                 gamePassGamesList = service.GetGamePassGamesList();
-                service.Dispose();
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage")));
 
             return gamePassGamesList;

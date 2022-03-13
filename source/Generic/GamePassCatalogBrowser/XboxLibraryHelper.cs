@@ -1,6 +1,8 @@
 ﻿using GamePassCatalogBrowser.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PluginsCommon;
+using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,7 +19,6 @@ namespace GamePassCatalogBrowser
     {
         private IPlayniteAPI PlayniteApi;
         private ILogger logger = LogManager.GetLogger();
-        private HttpClient client;
         private Guid pluginId;
         private List<Guid> platformsList;
         private Tag gameExpiredTag;
@@ -27,16 +28,10 @@ namespace GamePassCatalogBrowser
         public IEnumerable<Game> LibraryGames;
         public HashSet<string> GameIdsInLibrary;
 
-        public void Dispose()
-        {
-            client.Dispose();
-        }
-
         public XboxLibraryHelper(IPlayniteAPI api)
         {
             PlayniteApi = api;
-            client = new HttpClient();
-            pluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary);
+            pluginId = Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287");
             RefreshLibraryItems();
 
             var pcPlatform = PlayniteApi.Database.Platforms.Add("PC (Windows)");
@@ -45,26 +40,6 @@ namespace GamePassCatalogBrowser
             gameAddedTag = PlayniteApi.Database.Tags.Add("Game Pass");
             source = PlayniteApi.Database.Sources.Add("Xbox Game Pass");
             sourceXbox = PlayniteApi.Database.Sources.Add("Xbox");
-        }
-
-        public async Task DownloadFile(string requestUri, string path)
-        {
-            try
-            {
-                using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
-                using (Stream streamToReadFrom = await response.Content.ReadAsStreamAsync())
-                {
-                    string fileToWriteTo = path;
-                    using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
-                    {
-                        await streamToReadFrom.CopyToAsync(streamToWriteTo);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error during file download, url {requestUri}");
-            }
         }
 
         public void RefreshLibraryItems()
@@ -247,24 +222,24 @@ namespace GamePassCatalogBrowser
 
             PlayniteApi.Database.Games.Add(newGame);
 
-            if (File.Exists(game.CoverImage))
+            if (FileSystem.FileExists(game.CoverImage))
             {
                 var copiedImage = PlayniteApi.Database.AddFile(game.CoverImage, newGame.Id);
                 newGame.CoverImage = copiedImage;
             }
 
-            if (File.Exists(game.Icon))
+            if (FileSystem.FileExists(game.Icon))
             {
                 var copiedImage = PlayniteApi.Database.AddFile(game.Icon, newGame.Id);
                 newGame.Icon = copiedImage;
             }
 
-            if (string.IsNullOrEmpty(game.BackgroundImageUrl) == false)
+            if (!game.BackgroundImageUrl.IsNullOrEmpty())
             {
                 var fileName = string.Format("{0}.jpg", Guid.NewGuid().ToString());
                 var downloadPath = Path.Combine(PlayniteApi.Database.GetFileStoragePath(newGame.Id), fileName);
-                DownloadFile(string.Format("{0}?mode=scale&q=90&h=1080&w=1920", game.BackgroundImageUrl), downloadPath).GetAwaiter().GetResult();
-                if (File.Exists(downloadPath))
+                HttpDownloader.DownloadFile($"{game.BackgroundImageUrl}?mode=scale&q=90&h=1080&w=1920", downloadPath);
+                if (FileSystem.FileExists(downloadPath))
                 {
                     newGame.BackgroundImage = string.Format("{0}/{1}", newGame.Id.ToString(), fileName);
                 }

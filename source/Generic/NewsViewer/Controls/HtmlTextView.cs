@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluginsCommon;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -75,7 +76,7 @@ namespace NewsViewer.Controls
                 {
                     obj.templateContent = string.Empty;
                 }
-                else if (File.Exists(path))
+                else if (FileSystem.FileExists(path))
                 {
                     obj.templateContent = File.ReadAllText(path);
                 }

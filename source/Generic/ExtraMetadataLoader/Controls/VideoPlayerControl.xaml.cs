@@ -4,6 +4,8 @@ using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PluginsCommon;
+using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -383,7 +385,7 @@ namespace ExtraMetadataLoader
 
             var game = currentGame;
             var videoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoTrailer.mp4");
-            if (File.Exists(videoPath))
+            if (FileSystem.FileExists(videoPath))
             {
                 SettingsModel.Settings.IsAnyVideoAvailable = true;
                 SettingsModel.Settings.IsTrailerAvailable = true;
@@ -391,7 +393,7 @@ namespace ExtraMetadataLoader
             }
 
             var videoMicroPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", game.Id.ToString(), "VideoMicrotrailer.mp4");
-            if (File.Exists(videoMicroPath))
+            if (FileSystem.FileExists(videoMicroPath))
             {
                 SettingsModel.Settings.IsAnyVideoAvailable = true;
                 SettingsModel.Settings.IsMicrotrailerAvailable = true;
@@ -402,7 +404,7 @@ namespace ExtraMetadataLoader
             {
                 var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_SteamAppDetails.json");
                 var jsonDownloadValid = true;
-                if (!File.Exists(gameDataPath))
+                if (!FileSystem.FileExists(gameDataPath))
                 {
                     string steamId = GetSteamId(game);
                     if (steamId != null)
@@ -412,7 +414,7 @@ namespace ExtraMetadataLoader
                     }
                 }
 
-                if (File.Exists(gameDataPath) && jsonDownloadValid)
+                if (FileSystem.FileExists(gameDataPath) && jsonDownloadValid)
                 {
                     var jsonString = File.ReadAllText(gameDataPath);
                     try

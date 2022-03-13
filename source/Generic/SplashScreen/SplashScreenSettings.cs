@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -112,7 +113,7 @@ namespace SplashScreen
             }
 
             var globalSplashImagePath = Path.Combine(pluginUserDataPath, Settings.GlobalSplashFile);
-            if (File.Exists(globalSplashImagePath))
+            if (FileSystem.FileExists(globalSplashImagePath))
             {
                 Settings.GlobalSplashImagePath = globalSplashImagePath;
             }
@@ -190,18 +191,7 @@ namespace SplashScreen
             }
 
             var globalSplashImagePath = Path.Combine(pluginUserDataPath, Settings.GlobalSplashFile);
-            if (File.Exists(globalSplashImagePath))
-            {
-                try
-                {
-                    File.Delete(globalSplashImagePath);
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error deleting file in {globalSplashImagePath}");
-                    return false;
-                }
-            }
+            FileSystem.DeleteFileSafe(globalSplashImagePath);
 
             Settings.GlobalSplashFile = null;
             SetGlobalSplashImagePath();

@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using SplashScreen.Models;
 using System;
 using System.Collections.Generic;
@@ -107,7 +108,7 @@ namespace SplashScreen.ViewModels
                 return;
             }
             
-            if (File.Exists(SelectedItem.VideoPath))
+            if (FileSystem.FileExists(SelectedItem.VideoPath))
             {
                 RemoveButtonIsEnabled = true;
             }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using SteamKit2;
 using System;
 using System.Collections;
@@ -169,7 +170,7 @@ namespace SteamGameTransferUtility.ViewModels
         {
             var dbs = new List<string>();
             var configPath = Path.Combine(steamInstallationDirectory, "steamapps", "libraryfolders.vdf");
-            if (!File.Exists(configPath))
+            if (!FileSystem.FileExists(configPath))
             {
                 return dbs;
             }
@@ -244,7 +245,7 @@ namespace SteamGameTransferUtility.ViewModels
                 // Check if game source manifest exists
                 var gameManifest = string.Format("appmanifest_{0}.acf", game.GameId);
                 var sourceManifestPath = Path.Combine(sourceLibraryPath, gameManifest);
-                if (!File.Exists(sourceManifestPath))
+                if (!FileSystem.FileExists(sourceManifestPath))
                 {
                     var errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected"), game.Name, sourceManifestPath);
                     PlayniteApi.Dialogs.ShowErrorMessage(errorMessage, "Steam Game Transfer Utility");
@@ -266,7 +267,7 @@ namespace SteamGameTransferUtility.ViewModels
 
                 // Check if game manifest already exists in target library
                 var targetManifestPath = System.IO.Path.Combine(targetLibraryPath, gameManifest);
-                if (File.Exists(targetManifestPath))
+                if (FileSystem.FileExists(targetManifestPath))
                 {
                     var sourceBuildId = int.Parse(GetAcfAppSubItem(sourceManifestPath, "buildid"));
                     var targetBuildId = int.Parse(GetAcfAppSubItem(targetManifestPath, "buildid"));
@@ -436,7 +437,7 @@ namespace SteamGameTransferUtility.ViewModels
         private async void RestartSteam()
         {
             string steamInstallationPath = System.IO.Path.Combine(GetSteamInstallationPath(), "steam.exe");
-            if (!File.Exists(steamInstallationPath))
+            if (!FileSystem.FileExists(steamInstallationPath))
             {
                 logger.Error(string.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));
                 return;
