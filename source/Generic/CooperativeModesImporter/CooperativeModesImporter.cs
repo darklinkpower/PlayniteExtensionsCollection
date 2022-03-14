@@ -24,7 +24,7 @@ namespace CooperativeModesImporter
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string databaseZipPath;
         private readonly string databasePath;
-        private readonly int currentDatabaseVersion = 2;
+        private readonly int currentDatabaseVersion = 3;
         private readonly Dictionary<string, string> specIdToSystemDictionary;
         private Dictionary<string, GameFeature> featuresDictionary;
 
@@ -122,6 +122,7 @@ namespace CooperativeModesImporter
                 PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
                 {
                     logger.Info("Decompressing database zip file...");
+                    FileSystem.DeleteFile(databasePath);
                     ZipFile.ExtractToDirectory(databaseZipPath, GetPluginUserDataPath());
                     logger.Info("Decompressed database zip file");
                 }, new GlobalProgressOptions(ResourceProvider.GetString("LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase")));
