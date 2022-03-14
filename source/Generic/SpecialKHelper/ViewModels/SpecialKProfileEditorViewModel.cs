@@ -152,7 +152,7 @@ namespace SpecialKHelper.ViewModels
             set
             {
                 selectedProfileSection = value;
-                CurrentEditSection = selectedProfileSection.Name;
+                CurrentEditSection = selectedProfileSection?.Name ?? null;
                 OnPropertyChanged();
             }
         }
@@ -164,7 +164,7 @@ namespace SpecialKHelper.ViewModels
             set
             {
                 selectedProfileKey = value;
-                CurrentEditKey = selectedProfileKey.Name;
+                CurrentEditKey = selectedProfileKey?.Name ?? null;
                 CurrentEditValue = selectedProfileKey.Value;
                 OnPropertyChanged();
             }
@@ -199,6 +199,7 @@ namespace SpecialKHelper.ViewModels
             {
                 useFuzzySearch = value;
                 OnPropertyChanged();
+                sKProfilesCollection.Refresh();
             }
         }
 
