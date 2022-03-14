@@ -90,3 +90,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_13.pext
     Changelog:
     - 'Fix adding incorrect feature from menu function'
+  - Version: 2.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_14.pext
+    Changelog:
+    - 'Fix inclusion feature not correctly working in Selective Mode'
