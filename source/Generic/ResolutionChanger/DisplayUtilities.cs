@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ResolutionChanger
 {
@@ -26,7 +27,7 @@ namespace ResolutionChanger
             public int dmFields;
             public int dmPositionX;
             public int dmPositionY;
-            public string dmDisplayOrientation;
+            public ScreenOrientation dmDisplayOrientation;
             public int dmDisplayFixedOutput;
             public short dmColor;
             public short dmDuplex;
@@ -51,7 +52,7 @@ namespace ResolutionChanger
             public int dmPanningHeight;
         }
 
-        class User_32
+        public static class User_32
         {
             [DllImport("user32.dll")]
             public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DEVMODE devMode);
@@ -69,19 +70,28 @@ namespace ResolutionChanger
 
         public static class DisplayHelper
         {
+            public static DEVMODE GetCurrentScreenDevMode()
+            {
+                DEVMODE dm = new DEVMODE();
+                foreach (var screen in Screen.AllScreens)
+                {
+                    dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
+                    User_32.EnumDisplaySettings(screen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref dm);
+                    break;
+                }
+
+                return dm;
+            }
+            
             public static int ChangeResolution(int width, int height)
             {
-
-                DEVMODE dm = GetDevMode1();
-
+                DEVMODE dm = GetDevMode();
                 if (User_32.EnumDisplaySettings(null, User_32.ENUM_CURRENT_SETTINGS, ref dm))
                 {
-
                     dm.dmPelsWidth = width;
                     dm.dmPelsHeight = height;
 
                     int iRet = User_32.ChangeDisplaySettings(ref dm, User_32.CDS_TEST);
-
                     if (iRet == User_32.DISP_CHANGE_FAILED)
                     {
                         return -1;
@@ -92,22 +102,13 @@ namespace ResolutionChanger
                         switch (iRet)
                         {
                             case User_32.DISP_CHANGE_SUCCESSFUL:
-                                {
-                                    return 0;
-                                }
+                                return 0;
                             case User_32.DISP_CHANGE_RESTART:
-                                {
-                                    return 1;
-                                }
+                                return 1;
                             default:
-                                {
-                                    return -1;
-                                }
+                                return -1;
                         }
-
                     }
-
-
                 }
                 else
                 {
@@ -115,7 +116,7 @@ namespace ResolutionChanger
                 }
             }
 
-            private static DEVMODE GetDevMode1()
+            private static DEVMODE GetDevMode()
             {
                 DEVMODE dm = new DEVMODE();
                 dm.dmDeviceName = new string(new char[32]);

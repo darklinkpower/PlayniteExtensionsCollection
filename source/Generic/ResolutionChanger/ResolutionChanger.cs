@@ -21,6 +21,7 @@ namespace ResolutionChanger
         private bool resolutionChanged = false;
         private List<KeyValuePair<int, int>> detectedResolutions;
         private List<MainMenuItem> mainMenuitems;
+        private DEVMODE devModePriorSet = new DEVMODE();
 
         private ResolutionChangerSettingsViewModel settings { get; set; }
 
@@ -57,18 +58,26 @@ namespace ResolutionChanger
             foreach (var feature in game.Features)
             {
                 var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
-                if (resMatch.Success)
+                if (!resMatch.Success)
                 {
-                    var width = int.Parse(resMatch.Groups[1].Value);
-                    var height = int.Parse(resMatch.Groups[2].Value);
-                    var resChangeResult = ChangeResolution(width, height);
-                    if (resChangeResult)
-                    {
-                        resolutionChanged = true;
-                    }
-
-                    break;
+                    continue;
                 }
+
+                var currentDevMode = DisplayHelper.GetCurrentScreenDevMode();
+                var width = int.Parse(resMatch.Groups[1].Value);
+                var height = int.Parse(resMatch.Groups[2].Value);
+                var resChanged = ChangeResolution(width, height);
+                if (resChanged)
+                {
+                    if (devModePriorSet.dmPelsWidth == 0 || devModePriorSet.dmPelsHeight == 0)
+                    {
+                        devModePriorSet = currentDevMode;
+                        logger.Info($"Stored DevMode with resolution {devModePriorSet.dmPelsWidth}x{devModePriorSet.dmPelsHeight}");
+                    }
+                    resolutionChanged = true;
+                }
+
+                break;
             }
         }
 
@@ -83,7 +92,7 @@ namespace ResolutionChanger
             var changeResult = DisplayHelper.ChangeResolution(width, height);
             if (changeResult == 0)
             {
-                logger.Info("Resolution set");
+                logger.Info($"Resolution set to {width}x{height}");
                 return true;
             }
             else
@@ -95,7 +104,7 @@ namespace ResolutionChanger
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            if (!resolutionChanged || !detectedResolutions.Any())
+            if (!resolutionChanged)
             {
                 return;
             }
@@ -106,19 +115,25 @@ namespace ResolutionChanger
             if (settings.Settings.ChangeResOnlyGamesNotRunning && IsAnyOtherGameRunning(args.Game))
             {
                 logger.Debug("Another game was detected as running during game stop");
+                return;
             }
-            else if (detectedResolutions.Any())
+
+            if (devModePriorSet.dmPelsWidth == 0 || devModePriorSet.dmPelsHeight == 0)
             {
-                logger.Info("Restoring default resolution...");
-                var resChangeResult = ChangeResolution(detectedResolutions.First().Key, detectedResolutions.First().Value);
-                if (resChangeResult)
-                {
-                    resolutionChanged = false;
-                }
+                return;
+            }
+
+            var width = devModePriorSet.dmPelsWidth;
+            var height = devModePriorSet.dmPelsHeight;
+            logger.Info($"Restoring previous resolution {width}x{height}");
+            if (ChangeResolution(width, height))
+            {
+                resolutionChanged = false;
+                devModePriorSet = new DEVMODE();
             }
             else
             {
-                logger.Info("Did not restore resolution because none were detected on startup");
+                logger.Info($"Failed to restore resolution");
             }
         }
 
@@ -159,24 +174,22 @@ namespace ResolutionChanger
 
         private void RemoveResolutionConfigurationSelected()
         {
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
+            foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
             {
                 if (game.FeatureIds == null)
                 {
                     continue;
                 }
-                else
-                {
-                    var rcFeatures = game.Features.Where(x => Regex.IsMatch(x.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase));
-                    if (rcFeatures != null && rcFeatures.Count() > 0)
-                    {
-                        foreach (var rcFeature in rcFeatures)
-                        {
-                            game.FeatureIds.Remove(rcFeature.Id);
-                        }
 
-                        PlayniteApi.Database.Games.Update(game);
+                var rcFeatures = game.Features.Where(x => Regex.IsMatch(x.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase));
+                if (rcFeatures != null && rcFeatures.Count() > 0)
+                {
+                    foreach (var rcFeature in rcFeatures)
+                    {
+                        game.FeatureIds.Remove(rcFeature.Id);
                     }
+
+                    PlayniteApi.Database.Games.Update(game);
                 }
             }
         }
