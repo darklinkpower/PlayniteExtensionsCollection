@@ -198,9 +198,9 @@ namespace GamePassCatalogBrowser
                 PlatformIds = platformsList,
                 Description = StringToHtml(game.Description, true),
                 SourceId = source.Id,
-                ReleaseDate = new ReleaseDate(game.ReleaseDate)
+                ReleaseDate = new ReleaseDate(game.ReleaseDate),
+                CompletionStatusId = PlayniteApi.ApplicationSettings.CompletionStatus.DefaultStatus
             };
-
 
             PlayniteApi.Database.Games.Add(newGame);
             if (FileSystem.FileExists(game.CoverImage))
