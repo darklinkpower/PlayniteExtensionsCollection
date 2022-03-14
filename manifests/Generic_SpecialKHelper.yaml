@@ -28,3 +28,10 @@ Packages:
     - Updated localizations
     - Clicking an error notification will open the Wiki help article
     - Improved detection of missing Special K files
+  - Version: 1.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_4.pext
+    Changelog:
+    - Improved extension codebase structure
+    - Misc improvements

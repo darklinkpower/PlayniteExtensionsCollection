@@ -39,3 +39,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_5.pext
     Changelog:
     - Updated localizations
+  - Version: 1.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_6.pext
+    Changelog:
+    - Improved extension codebase structure
+    - Misc improvements

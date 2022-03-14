@@ -169,3 +169,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/Installation_Status_Updater_2_24.pext
     Changelog:
     - Updated localizations
+  - Version: 2.25
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/Installation_Status_Updater_2_25.pext
+    Changelog:
+    - Improved extension codebase structure
+    - Misc improvements

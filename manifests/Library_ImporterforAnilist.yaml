@@ -123,3 +123,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_18.pext
     Changelog:
     - Updated localizations
+  - Version: 2.19
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_19.pext
+    Changelog:
+    - Improved extension codebase structure
+    - Misc improvements
+    - Added menu item to launch AniList website from tray menu
