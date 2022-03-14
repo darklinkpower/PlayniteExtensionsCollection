@@ -29,6 +29,7 @@ namespace SteamGameTransferUtility.ViewModels
 
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlayniteAPI PlayniteApi;
+        private readonly string steamInstallationPath;
         private readonly string steamInstallationDirectory;
         private List<string> steamLibraries;
         private List<Game> selectedSteamGames;
@@ -98,7 +99,8 @@ namespace SteamGameTransferUtility.ViewModels
         public TransferWindowViewModel(IPlayniteAPI api)
         {
             PlayniteApi = api;
-            steamInstallationDirectory = SteamClientLib.GetSteamInstallationPath();
+            steamInstallationPath = SteamClientLib.GetSteamInstallationPath();
+            steamInstallationDirectory = Path.GetDirectoryName(steamInstallationPath);
             steamLibraries = GetLibraryFolders();
             SelectedSteamGames = PlayniteApi.MainView.SelectedGames.Where(g => g.IsInstalled && Steam.IsGameSteamGame(g)).OrderBy(x => x.Name).ToList();
         }

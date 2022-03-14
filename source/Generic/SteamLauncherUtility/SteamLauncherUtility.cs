@@ -48,7 +48,7 @@ namespace SteamLauncherUtility
                 return;
             }
 
-            string modeFeatureName = GetModeFeatureName();
+            var modeFeatureName = GetModeFeatureName();
             if (game.Features != null)
             {
                 var featureFound = game.Features.Any(f => f.Name == modeFeatureName);

@@ -210,7 +210,7 @@ namespace PlayniteUtilitiesCommon
                       !string.IsNullOrEmpty(x.SpecificationId) && x.SpecificationId == "pc_windows"))
             {
                 logger.Info($"Game {game.Name} is PC platform");
-                return false;
+                return true;
             }
 
             return false;

@@ -102,6 +102,9 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\SteamCommon\Common.cs">
+      <Link>Shared\SteamCommon\Common.cs</Link>
+    </Compile>
     <Compile Include="BbCodeProcessor.cs" />
     <Compile Include="Controls\HtmlTextView.cs" />
     <Compile Include="Controls\ReviewsControl.xaml.cs">

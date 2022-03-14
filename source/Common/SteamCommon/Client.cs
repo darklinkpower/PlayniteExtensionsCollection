@@ -60,14 +60,9 @@ namespace SteamCommon
             return "C:\\Program Files (x86)\\Steam\\steam.exe";
         }
 
-        public static void RestartSteam(string arguments = "")
-        {
-
-        }
-
         public static void StartSteam(bool restartIfRunning, string arguments = "")
         {
-            string steamInstallationPath = Path.Combine(GetSteamInstallationPath(), "steam.exe");
+            string steamInstallationPath = GetSteamInstallationPath();
             if (!FileSystem.FileExists(steamInstallationPath))
             {
                 logger.Error(string.Format("Steam executable not detected in path \"{0}\"", steamInstallationPath));
