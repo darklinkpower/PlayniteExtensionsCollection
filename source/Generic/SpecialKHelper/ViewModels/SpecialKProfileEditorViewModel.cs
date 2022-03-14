@@ -246,7 +246,7 @@ namespace SpecialKHelper.ViewModels
 
             if (UseFuzzySearch)
             {
-                if (Fuzz.Ratio(SearchString, profile.ProfileName.ToLower()) > 80)
+                if (Fuzz.Ratio(SearchString, profile.ProfileName.ToLower()) > 65)
                 {
                     return true;
                 }
