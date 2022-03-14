@@ -26,8 +26,8 @@ Beachten Sie, dass ein Controller angeschlossen und für Steam Controller aktivi
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Globaler Modus: Spezielle K Dienste werden beim Starten aller Spiele gestartet, mit Ausnahme derjenigen, die die Option &quot;[SK] Globaler Modus Deaktivieren&quot; haben. Ausschlussfunktion, die durch die Erweiterung hinzugefügt wurde
 
 Selektiver Modus: Spezielle K Dienste werden nur für Spiele gestartet, die das Einschlussmerkmal &quot;[SK] Selektiver Modus Aktivieren&quot; haben. Hinzugefügt durch die Erweiterung</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stoppe den Start der Dienste, wenn das Spiel die Funktion &quot;Valve Anti-Cheat aktiviert&quot; hat</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stoppe den Start der Dienste, wenn festgestellt wird, dass das Spiel EasyAntiCheat verwendet</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Starte Special K Dienste nur beim Start von PC Spielen</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Standardeinstellungen für neue Profile erstellt von Special K</sys:String>
@@ -58,11 +58,11 @@ Wenn Sie einen korrekten Wert haben, können Sie ihn in das Textfeld einfügen.<
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profil Pfad:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Profil speichern</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Profil löschen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Sind Sie sicher, dass Sie das Profil löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Fehler beim Löschen des Profils &quot;{0}&quot; in {1}
     
-Error: {2}</sys:String>
+Fehler: {2}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profil gespeichert.
 
 Profil Name: {0}
