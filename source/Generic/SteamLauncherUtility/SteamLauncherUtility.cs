@@ -159,7 +159,7 @@ namespace SteamLauncherUtility
 
         public void AddModeFeature()
         {
-            var featureName = "[Splash Screen] Skip splash image";
+            var featureName = GetModeFeatureName();
             var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi,
                 PlayniteApi.MainView.SelectedGames.Distinct().Where(g => Steam.IsGameSteamGame(g)),
                 featureName);
