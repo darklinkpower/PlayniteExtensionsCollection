@@ -545,7 +545,7 @@ namespace PlayState
             {
                 return;
             }
-            
+
             var sb = new StringBuilder();
             switch (status)
             {
