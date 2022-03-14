@@ -35,3 +35,11 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 1.5
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_5.pext
+    Changelog:
+    - 'Fix Special K Editor not opening if an ini has duplicate keys'
+    - 'Fix using checkbox to switch fuzzy search not refreshing the results'
+    - 'Lower fuzzy search threshold in Profiles Editor'
