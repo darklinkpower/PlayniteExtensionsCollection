@@ -40,7 +40,7 @@
                     <ComboBox Name="ComboBoxCategories" Grid.Column="3" ItemsSource="{Binding Categories}" IsSynchronizedWithCurrentItem="True"
                           Margin="10,0,0,0"/>
                     <TextBlock Text="{DynamicResource LOCGamePass_Catalog_Browser_WindowViewSearchLabel}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="0,10,0,0"/>
-                    <TextBox Margin="10,10,0,0" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+                    <TextBox Margin="10,10,0,0" Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                              Grid.Column="1" Grid.Row="1"/>
                     <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" IsChecked="{Binding ShowGamesOnLibrary}"
                               Content="Show games that are already in the Playnite library" Margin="0,10,0,0"/>

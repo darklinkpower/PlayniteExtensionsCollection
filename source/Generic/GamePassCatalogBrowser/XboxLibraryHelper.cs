@@ -198,21 +198,25 @@ namespace GamePassCatalogBrowser
                 PlatformIds = platformsList,
                 Description = StringToHtml(game.Description, true),
                 SourceId = source.Id,
-                ReleaseDate = new ReleaseDate(game.ReleaseDate),
                 CompletionStatusId = PlayniteApi.ApplicationSettings.CompletionStatus.DefaultStatus
             };
+
+            // #71 Certain games have incorrect dates in their release date,
+            // having in common the year 2799
+            if (game.ReleaseDate.Year != 2799)
+            {
+                newGame.ReleaseDate = new ReleaseDate(game.ReleaseDate);
+            }
 
             PlayniteApi.Database.Games.Add(newGame);
             if (FileSystem.FileExists(game.CoverImage))
             {
-                var copiedImage = PlayniteApi.Database.AddFile(game.CoverImage, newGame.Id);
-                newGame.CoverImage = copiedImage;
+                newGame.CoverImage = PlayniteApi.Database.AddFile(game.CoverImage, newGame.Id);
             }
 
             if (FileSystem.FileExists(game.Icon))
             {
-                var copiedImage = PlayniteApi.Database.AddFile(game.Icon, newGame.Id);
-                newGame.Icon = copiedImage;
+                newGame.Icon = PlayniteApi.Database.AddFile(game.Icon, newGame.Id);
             }
 
             if (!game.BackgroundImageUrl.IsNullOrEmpty())
