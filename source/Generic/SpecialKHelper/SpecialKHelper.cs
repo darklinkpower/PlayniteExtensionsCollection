@@ -58,6 +58,8 @@ namespace SpecialKHelper
 
             iniParser = new FileIniDataParser();
             iniParser.Parser.Configuration.AssigmentSpacer = string.Empty;
+            iniParser.Parser.Configuration.AllowDuplicateKeys = true;
+            iniParser.Parser.Configuration.OverrideDuplicateKeys = true;
 
             settings = new SpecialKHelperSettingsViewModel(this);
             Properties = new GenericPluginProperties
