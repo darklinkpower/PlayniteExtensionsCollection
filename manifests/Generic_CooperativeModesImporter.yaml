@@ -45,3 +45,9 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 1.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_6.pext
+    Changelog:
+    - 'Update Co-Optimus database used by the extension'
