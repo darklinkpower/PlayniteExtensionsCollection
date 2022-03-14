@@ -88,3 +88,9 @@ Packages:
     - Improved extension codebase structure
     - Misc improvements
     - Import default configured Completion Status for added games
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_13.pext
+    Changelog:
+    - 'Fix some games being added with an incorrect ReleaseDate to the Playnite library'

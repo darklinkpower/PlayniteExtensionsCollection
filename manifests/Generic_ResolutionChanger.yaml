@@ -46,3 +46,9 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 1.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.9/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_7.pext
+    Changelog:
+    - Fix restoring incorrect resolution after exiting game in some cases
