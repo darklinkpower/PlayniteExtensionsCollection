@@ -51,13 +51,13 @@ namespace SteamLauncherUtility
             var modeFeatureName = GetModeFeatureName();
             if (game.Features != null)
             {
-                var featureFound = game.Features.Any(f => f.Name == modeFeatureName);
+                var featureFound = game.Features.Any(f => f.Name.Equals(modeFeatureName, StringComparison.OrdinalIgnoreCase));
                 if (settings.Settings.LaunchMode == 0 && featureFound)
                 {
                     logger.Info(string.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
                     return;
                 }
-                else if (settings.Settings.LaunchMode == 1 && featureFound)
+                else if (settings.Settings.LaunchMode == 1 && !featureFound)
                 {
                     logger.Info(string.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
                     return;
