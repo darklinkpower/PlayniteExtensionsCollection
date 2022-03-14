@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Ouvrir l'éditeur de profils Special K</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Ouvrir la configuration du contrôleur Steam pour «{0}»</sys:String>
@@ -34,7 +35,7 @@ Mode sélectif : les services Special K ne sont démarrés que pour les jeux qui
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam Overlay à utiliser si le mode Steam Big Picture est en cours d'exécution :</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Activer Reshade</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Activer le Flip Model Presentation</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Permet aux jeux de fonctionner de façon identique ou meilleure lorsqu'ils fonctionnent en mode fenêtré</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Désactiver Nvidia bloatware</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Définir la limite de fréquence d'images</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">FPS cible :</sys:String>

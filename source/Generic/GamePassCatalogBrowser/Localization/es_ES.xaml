@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Navegar catálogo de juegos de Game Pass</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Añadir todo el catálogo a la biblioteca de Playnite</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Reiniciar caché</sys:String>
@@ -21,4 +22,11 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">Ver en la aplicación de Xbox</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Ver en la tienda de Microsoft</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Añadir a la biblioteca de Playnite</sys:String>
+
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Región del catálogo de GamePass:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Actualizar el catálogo de Game Pass al actualizar la biblioteca</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notificar actualizaciones del catálogo de Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Añadir etiqueta de expiración a juegos eliminados de Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Añadir nuevos juegos al actualizar el catálogo de Game Pass a la biblioteca de Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Remover juegos removidos al actualizar el catálogo de Game Pass de la biblioteca Playnite si no han sido jugados</sys:String>
 </ResourceDictionary>

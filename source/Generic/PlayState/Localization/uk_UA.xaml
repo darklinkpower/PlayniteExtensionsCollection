@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Додати вибрані ігри до чорного списку PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Прибрати вибрані ігри з чорного списку Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Налаштувати обрані ігри, щоб примусово призупиняти лише час у грі</sys:String>

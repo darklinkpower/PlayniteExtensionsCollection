@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-	<sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Оновити сумісний статус ігор</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Оновити сумісний статус ігор</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Видалити дію Geforce NOW з усіх ігор</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Оновлення ігор сумісних з NVIDIA GeForce NOW...</sys:String>
@@ -22,4 +23,5 @@
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Запустити в Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Позначено {0} ігор як встановлені.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
 </ResourceDictionary>

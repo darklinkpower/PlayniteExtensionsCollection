@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Verificar o status de instalação de todos os jogos</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Adicionar jogos selecionados à lista para ignorar</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Atualize os marcadores com a unidade onde os jogos são instalados</sys:String>

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription">Öffne Werkzeugfenster</sys:String>
 
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Starte Steam nach der Verarbeitung neu, um Änderungen in Steam zu übernehmen, falls nötig</sys:String>

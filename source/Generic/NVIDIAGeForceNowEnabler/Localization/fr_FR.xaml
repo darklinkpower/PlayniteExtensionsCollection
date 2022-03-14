@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-	<sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Mettre à jour le statut des jeux</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Mettre à jour le statut des jeux</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Retirer l'action Geforce NOW de tous les jeux</sys:String>
 
 	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Mise à jour des jeux disponibles sur NVIDIA GeForce NOW...</sys:String>
@@ -22,4 +23,5 @@ Retrait de la fonction &quot;{3}&quot; à {4} jeux.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Définir les jeux activés comme installés lors de la mise à jour de l'état des jeux</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Lancer avec Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">Activateur de NVIDIA GeForce Now : {0} jeux marqués comme installés.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">L'exécutable NVIDIA GeForce NOW n'a pas été trouvé dans {0}.</sys:String>
 </ResourceDictionary>

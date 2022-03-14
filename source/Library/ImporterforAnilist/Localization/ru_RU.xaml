@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Код доступа к учетной записи:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Получить код доступа</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Префикс свойств метаданных:</sys:String>

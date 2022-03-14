@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">فتح إدارة الفيديو</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">تعطيل الإضافة للألعاب المختارة</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">أعد تفعيل الإضافة للألعاب المختارة</sys:String>

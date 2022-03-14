@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCReview_Viewer_SettingsHelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Ver reseñas</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Actualizar datos de reseñas de los juegos seleccionados</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">¿Quieres descargar datos de nuevo para juegos que ya lo tienen?</sys:String>

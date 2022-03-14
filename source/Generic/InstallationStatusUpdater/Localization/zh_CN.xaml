@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">检查所有游戏的安装状态</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">添加所选游戏到忽略列表</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">为已安装游戏更新驱动器标签</sys:String>
