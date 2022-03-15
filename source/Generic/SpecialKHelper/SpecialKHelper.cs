@@ -60,6 +60,7 @@ namespace SpecialKHelper
             iniParser.Parser.Configuration.AssigmentSpacer = string.Empty;
             iniParser.Parser.Configuration.AllowDuplicateKeys = true;
             iniParser.Parser.Configuration.OverrideDuplicateKeys = true;
+            iniParser.Parser.Configuration.AllowDuplicateSections = true;
 
             settings = new SpecialKHelperSettingsViewModel(this);
             Properties = new GenericPluginProperties
