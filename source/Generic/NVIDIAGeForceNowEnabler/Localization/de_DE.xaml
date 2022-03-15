@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Aktualisierung des aktivierten Status von Spielen</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Geforce NOW Spiel Aktion aus allen Spielen entfernen</sys:String>
 
@@ -23,5 +23,5 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Aktivierte Spiele als installiert beim Aktualisieren des aktivierten Status von Spielen festlegen</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">In Nvidia GeForce NOW starten</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW aktiverer: {0} Spiele als installiert markiert.</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW ausführbare Datei nicht in {0} gefunden.</sys:String>
 </ResourceDictionary>
