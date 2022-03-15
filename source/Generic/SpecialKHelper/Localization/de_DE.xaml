@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Öffne den Spezial K Profil Editor</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Steam Controller Konfiguration für &quot;{0} &quot; öffnen</sys:String>
