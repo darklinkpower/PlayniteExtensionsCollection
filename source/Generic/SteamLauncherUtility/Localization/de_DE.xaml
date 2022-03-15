@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Launcher_Utility_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_Utility_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription">Steam mit konfigurierten Aktionen starten</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemAddFilterFeatureDescription">Füge Modus-Filterfunktion zu ausgewählten Spielen hinzu</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Entferne Modus-Filterfunktion von ausgewählten Spielen</sys:String>
