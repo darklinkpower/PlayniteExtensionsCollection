@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Ausgewählte Spiele zur PlayState Blacklist hinzufügen</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Entferne ausgewählte Spiele von der Playstate Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Konfiguriere ausgewählte Spiele, um nur die Spielzeit zu unterbrechen</sys:String>
@@ -18,24 +18,24 @@ Spiele werden unterbrechen, wenn der konfigurierte Hotkey verwendet wird.</sys:S
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Spiel fortgesetzt</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Spielzeit unterbrochen</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spielzeit fortgesetzt</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informationen:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Aktion:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfiguriertes Sperren/Fortsetzen Hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Konfigurierte Informationstaste:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Zeigt eine Benachrichtigung an, die den aktuellen Pausenstatus und andere Informationen des aktiven Spiels anzeigt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Anmerkungen:
 
-The configured hotkeys won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
+Die konfigurierten Hotkeys können in anderen Anwendungen nicht verwendet werden.
+Die Änderung dieser Einstellung erfordert einen Neustart.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Wenn du den Fokus Assistenten beim Spielen eines Spiels und im Vollbildmodus aktiviert hast, musst du Playnite zur Prioritätsliste hinzufügen, um Windows-Benachrichtigungen zu erhalten und sie so zu konfigurieren, dass sie angezeigt werden.
 
-This feature is only supported on Windows 10 and Windows 11</sys:String>
-    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
+Diese Funktion wird nur von Windows 10 und Windows 11 unterstützt</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState hat Unterstützung für die Anzeige von Benachrichtigungen als native Windows Benachrichtigungen hinzugefügt. Dies ist standardmäßig aktiviert und kann in den Einstellungen der Erweiterung geändert werden.
 
-For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Help</sys:String>
+Für eine bessere Kompatibilität mit Spielen sind einige Anpassungen an der Windows Konfiguration erforderlich. Ein Link, der die Anweisungen dazu enthält, wird nach dem Schließen dieses Dialogs geöffnet.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Nur für Spiele ausführen, die nicht von Bibliothek Plugins verwaltet werden</sys:String>
@@ -45,14 +45,14 @@ For better compatibility with games, some adjustments to your Windows configurat
 Dies kann auch individuell pro Spiel angewendet werden, indem eine Funktion namens &quot;[PlayState] Nur Spielzeit anhalten&quot; hinzugefügt wird. zu einem Spiel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Anzeigen von nativen Windows Benachrichtigungen anstelle des Playnite Benachrichtigungsfensters</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Durch Aktivieren dieser Option werden native Windows-Benachrichtigungen anstelle von Playnite Benachrichtigungen angezeigt.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Zeigt die Spielzeit in der Benachrichtigungsnachricht an</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Gesamte Spielzeit in der Benachrichtigungsnachricht anzeigen</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Spielzeit:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Gesamte Spielzeit:</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} Stunden {1} Minuten</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} Stunden {1} Minute</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} Stunde {1} Minuten</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} Stunde {1} Minute</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} Sekunden</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} Sekunde</sys:String>
 </ResourceDictionary>
