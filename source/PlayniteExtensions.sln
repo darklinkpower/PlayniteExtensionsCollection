@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsCommon", "Common\PluginsCommon\PluginsCommon.csproj", "{CBED3B97-8FB8-4CA4-8827-13065AB64113}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generic", "Generic", "{0B392A79-5131-438C-BDB2-AEF170C06F60}"
-	ProjectSection(SolutionItems) = preProject
-		Generic\PlayniteControlLocker\PlayniteControlLocker.csproj = Generic\PlayniteControlLocker\PlayniteControlLocker.csproj
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{82DA706F-BCA9-4D05-912F-E23A589A66C8}"
 EndProject
