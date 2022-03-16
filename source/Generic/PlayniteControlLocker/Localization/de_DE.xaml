@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Enter password value number {0}</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Password was incorrect</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite will close.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Hilfe</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Passwortwert Nummer {0} eingeben</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Passwort war falsch</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite wird beendet.</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart" xml:space="preserve">Password was correct.
 
 Playnite will start normally without any limitation!</sys:String>
