@@ -27,7 +27,7 @@ namespace GamesSizeCalculator
             settings = new GamesSizeCalculatorSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
         }
 
@@ -66,6 +66,14 @@ namespace GamesSizeCalculator
                     }
                 }
             };
+        }
+
+        public override void OnGameStopped(OnGameStoppedEventArgs args)
+        {
+            if (settings.Settings.CalculateOnGameClose)
+            {
+                CalculateGameSize(args.Game, false);
+            }
         }
 
         private void UpdateGamesListSizes(List<Game> games, bool forceNonEmpty)
@@ -162,7 +170,7 @@ namespace GamesSizeCalculator
             }
 
             var fSize = GetBytesReadable(size);
-            if (game.Version.IsNullOrEmpty() || game.Version != fSize)
+            if (game.Version.IsNullOrEmpty() || (!game.Version.IsNullOrEmpty() && game.Version != fSize))
             {
                 game.Version = fSize;
                 PlayniteApi.Database.Games.Update(game);

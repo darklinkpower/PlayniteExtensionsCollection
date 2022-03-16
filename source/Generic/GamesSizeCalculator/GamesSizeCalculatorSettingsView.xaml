@@ -14,5 +14,7 @@
                     <Run Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsHelpLabel}" />
                 </Hyperlink>
         </TextBlock>
+        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel}"
+                  IsChecked="{Binding Settings.CalculateOnGameClose}"/>
     </StackPanel>
 </UserControl>
