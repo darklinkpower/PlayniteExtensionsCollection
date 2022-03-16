@@ -44,3 +44,9 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 1.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.16_af6a49cc/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_7.pext
+    Changelog:
+    - 'Added option to automatically calculate the game size after it is stopped (Enabled by default)'
