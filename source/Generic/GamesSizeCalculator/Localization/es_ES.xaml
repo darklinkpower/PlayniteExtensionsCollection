@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Ayuda</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Automatically calculate the size of a game after it is stopped</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Calcula automáticamente el tamaño de un juego después de que se detenga</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calcular tamaños de los juegos seleccionados</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calcular tamaños de los juegos seleccionados (Forzar sobrescritura)</sys:String>
