@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Enter password value number {0}</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Password was incorrect</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite will close.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart" xml:space="preserve">Password was correct.
+    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Aiuto</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Inserisci il valore della password numero {0}</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Password errata</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite si chiuderà.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart" xml:space="preserve">La password è corretta.
 
-Playnite will start normally without any limitation!</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteControlModeStart">Playnite will start in control mode.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableDesktopMode">Enable extension for Desktop Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableFullscreenMode">Enable extension for Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ClosePlayniteOnPwFail">Close Playnite if password is incorrect</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PlayniteStartingFsModeMessage">Playnite will start in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_SetPasswordLabel">Configure password</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnterPasswordMessage">Please enter the password to be used by the extension, selecting a combination of 6 &quot;Yes&quot; and &quot;No&quot; choices</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RepeatPasswordMessage">Please repeat the entered password combination</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordSetSuccessMessage">Password set successfully</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordCombinationsNotSame" xml:space="preserve">Password combinations were different.
+Playnite inizierà normalmente senza alcuna limitazione!</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteControlModeStart">Playnite si avvierà in modalità controllo.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableDesktopMode">Abilita estensione per la modalità desktop</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableFullscreenMode">Abilita estensione per la modalità schermo intero</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ClosePlayniteOnPwFail">Chiudi Playnite se la password non è corretta</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PlayniteStartingFsModeMessage">Playnite inizierà in modalità schermo intero</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_SetPasswordLabel">Configura password</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnterPasswordMessage">Inserisci la password da utilizzare per l'estensione, selezionando una combinazione di 6 scelte &quot;Sì&quot; e &quot;No&quot;</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RepeatPasswordMessage">Ripeti la combinazione di password inserita</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordSetSuccessMessage">Password salvata con successo</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordCombinationsNotSame" xml:space="preserve">Le combinazioni di password erano diverse.
 
-Password was not set.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">Unlock settings</sys:String>
+La password non è stata impostata.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">Sblocca impostazioni</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">Allow to delete games</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">Allow to favorite games</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowHidingGames">Allow to hide games</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">Permetti di eliminare i giochi</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">Permetti ai giochi preferiti</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowHidingGames">Permetti di nascondere i giochi</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsLabel">Control mode settings</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsNote" xml:space="preserve">This mode is enabled if the password is incorrect and the extension is not configured to close Playnite.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsLabel">Impostazioni modalità controllo</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsNote" xml:space="preserve">Questa modalità è abilitata se la password è errata e l'estensione non è configurata per chiudere Playnite.</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RestartApplyNote" xml:space="preserve">Changing settings require restarting Playnite to apply and to work correctly.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RestartApplyNote" xml:space="preserve">La modifica delle impostazioni richiede il riavvio di Playnite da applicare e funzionare correttamente.</sys:String>
 </ResourceDictionary>
