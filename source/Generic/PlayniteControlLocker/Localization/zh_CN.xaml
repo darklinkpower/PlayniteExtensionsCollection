@@ -13,20 +13,20 @@ Playnite 将不受任何限制地正常启动！</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ClosePlayniteOnPwFail">密码错误时关闭 Playnite</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PlayniteStartingFsModeMessage">Playnite 将在全屏模式下启动</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_SetPasswordLabel">配置密码</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnterPasswordMessage">Please enter the password to be used by the extension, selecting a combination of 6 &quot;Yes&quot; and &quot;No&quot; choices</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RepeatPasswordMessage">Please repeat the entered password combination</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordSetSuccessMessage">Password set successfully</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordCombinationsNotSame" xml:space="preserve">Password combinations were different.
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnterPasswordMessage">请输入该扩展所用的密码，选择一个由六个 Yes 和 No 的选项构成的组合</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RepeatPasswordMessage">请重复已输入的密码组合</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordSetSuccessMessage">密码设置成功</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordCombinationsNotSame" xml:space="preserve">两个密码组合不同。
 
-Password was not set.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">Unlock settings</sys:String>
+密码未设置。</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">解锁设置</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">Allow to delete games</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">Allow to favorite games</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowHidingGames">Allow to hide games</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">允许删除游戏</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">允许收藏游戏</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowHidingGames">允许隐藏游戏</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsLabel">Control mode settings</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsNote" xml:space="preserve">This mode is enabled if the password is incorrect and the extension is not configured to close Playnite.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsLabel">控制模式设置</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsNote" xml:space="preserve">若密码错误，且扩展未被配置为关闭 Playnite，则启用该模式。</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RestartApplyNote" xml:space="preserve">Changing settings require restarting Playnite to apply and to work correctly.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RestartApplyNote" xml:space="preserve">需要重开 Playnite 才能应用设置的更改，并使其正确工作。</sys:String>
 </ResourceDictionary>
