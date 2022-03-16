@@ -5,4 +5,10 @@ Packages:
     ReleaseDate: 2022-03-15
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.15_d311d23f/PlayniteControlLocker_e7c39fe7-bec1-4691-a818-b9ba1470ad21_1_0.pext
     Changelog:
-    - 'Updated localizations'
+    - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.16_d599147e/PlayniteControlLocker_e7c39fe7-bec1-4691-a818-b9ba1470ad21_1_1.pext
+    Changelog:
+    - 'Fix always enabling Control mode'
