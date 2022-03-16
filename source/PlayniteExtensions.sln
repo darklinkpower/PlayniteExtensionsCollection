@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginsCommon", "Common\PluginsCommon\PluginsCommon.csproj", "{CBED3B97-8FB8-4CA4-8827-13065AB64113}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generic", "Generic", "{0B392A79-5131-438C-BDB2-AEF170C06F60}"
+	ProjectSection(SolutionItems) = preProject
+		Generic\PlayniteControlLocker\PlayniteControlLocker.csproj = Generic\PlayniteControlLocker\PlayniteControlLocker.csproj
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{82DA706F-BCA9-4D05-912F-E23A589A66C8}"
 EndProject
@@ -46,6 +49,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayniteUtilitiesCommon", "Common\PlayniteUtilitiesCommon\PlayniteUtilitiesCommon.csproj", "{F234D215-E78A-4C84-827D-F6EF09A86D9E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeCommon", "Common\YouTubeCommon\YouTubeCommon.csproj", "{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayniteControlLocker", "Generic\PlayniteControlLocker\PlayniteControlLocker.csproj", "{39C43569-FD87-4583-884E-A6E79BCFB598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +134,10 @@ Global
 		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39C43569-FD87-4583-884E-A6E79BCFB598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39C43569-FD87-4583-884E-A6E79BCFB598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39C43569-FD87-4583-884E-A6E79BCFB598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39C43569-FD87-4583-884E-A6E79BCFB598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +162,7 @@ Global
 		{4050F4C3-5D5A-4FC5-95DB-1531D815AED5} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{F234D215-E78A-4C84-827D-F6EF09A86D9E} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
+		{39C43569-FD87-4583-884E-A6E79BCFB598} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

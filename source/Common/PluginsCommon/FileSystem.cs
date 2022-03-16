@@ -169,7 +169,7 @@ namespace PluginsCommon
 
             foreach (FileInfo file in dir.GetFiles())
             {
-                DeleteDirectory(file.FullName);
+                DeleteFile(file.FullName);
             }
 
             foreach (DirectoryInfo directory in dir.GetDirectories())
