@@ -37,7 +37,6 @@ namespace PlayniteControlLocker
             {
                 HasSettings = true
             };
-            SetSubscriptions();
 
             timerRestoreGames = new DispatcherTimer();
             timerRestoreGames.Interval = TimeSpan.FromMilliseconds(500);
@@ -64,6 +63,7 @@ namespace PlayniteControlLocker
                 addedGame.Icon = RestoreMediaToRemovedGame(addedGame, removedItem.Icon);
 
                 PlayniteApi.Database.Games.Update(addedGame);
+                logger.Debug($"Restored deleted game {addedGame.Name}");
                 gamesToRestore.Remove(removedItem);
             }
         }
@@ -91,6 +91,7 @@ namespace PlayniteControlLocker
 
         private void SetSubscriptions()
         {
+            logger.Debug("Setting subscriptions...");
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
                 var removedGames = 0;
@@ -181,6 +182,8 @@ namespace PlayniteControlLocker
                     }
                 }
             };
+
+            logger.Debug("Subscriptions set");
         }
 
         private string StoreAndReturnTempMediaPath(string path)
@@ -236,11 +239,13 @@ namespace PlayniteControlLocker
             {
                 if (!settings.Settings.EnableOnDesktopMode)
                 {
+                    logger.Debug($"Execution disabled for Desktop mode");
                     return;
                 }
 
                 if (settings.ValidatePassword())
                 {
+                    logger.Debug($"Password was correct");
                     PlayniteApi.Dialogs.ShowMessage("LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart", "Playnite Control Locker");
                     return;
                 }
@@ -249,6 +254,7 @@ namespace PlayniteControlLocker
                 var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, "Playnite.DesktopApp.exe");
                 if (settings.Settings.DesktopCheckCloseOnFail && File.Exists(playniteExecutable))
                 {
+                    logger.Debug($"Password will be shutdown by the extension");
                     PlayniteApi.Dialogs.ShowMessage(
                         ResourceProvider.GetString("LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect") +
                         "\n\n" +
@@ -263,11 +269,13 @@ namespace PlayniteControlLocker
             {
                 if (!settings.Settings.EnableOnFullscreenMode)
                 {
+                    logger.Debug($"Execution disabled for fullscreen mode");
                     return;
                 }
 
                 if (settings.ValidatePassword())
                 {
+                    logger.Debug($"Password was correct");
                     PlayniteApi.Dialogs.ShowMessage("LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart", "Playnite Control Locker");
                     return;
                 }
@@ -275,6 +283,7 @@ namespace PlayniteControlLocker
                 var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, "Playnite.FullscreenApp.exe");
                 if (settings.Settings.FullcreenCheckCloseOnFail && File.Exists(playniteExecutable))
                 {
+                    logger.Debug($"Password will be shutdown by the extension");
                     PlayniteApi.Dialogs.ShowMessage(
                         ResourceProvider.GetString("LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect") +
                         "\n\n" +
