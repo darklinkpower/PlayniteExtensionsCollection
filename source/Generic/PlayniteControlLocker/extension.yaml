@@ -5,3 +5,12 @@ Version: 1.0
 Module: PlayniteControlLocker.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-1165.html
+    - Name: Wiki
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Playnite-Control-Locker
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
