@@ -23,10 +23,10 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Vis i Microsoft Store</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Legg til i Playnite-biblioteket</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Game Pass catalog region:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Update Game Pass catalog on library update</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notify of Game Pass catalog updates</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Add expired tag to games removed from Game Pass</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Add newly added games when updating the Game Pass catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Remove removed games when updating the Game Pass catalog from the Playnite library if they have not been played</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Katalog-region for Game Pass:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Oppdater Game Pass-katalog ved biblioteksoppdatering</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Varsle om oppdateringer i Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Tilfør utløpt-tag til spill som er fjernet fra Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Legg til nye Game Pass-spill i Playnite-biblioteket ved oppdatering av katalogen</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Fjern uspilte spill som er fjernet fra Game Pass fra Playnite-biblioteket ved oppdatering av katalogen</sys:String>
 </ResourceDictionary>
