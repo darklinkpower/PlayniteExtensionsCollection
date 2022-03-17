@@ -133,6 +133,8 @@ namespace SearchCollection
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
+            NewDefinitionName = string.Empty;
+            NewDefinitionSearchTemplate = string.Empty;
         }
 
         public void CancelEdit()
