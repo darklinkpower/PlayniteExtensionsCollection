@@ -9,11 +9,12 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate">搜索模板</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelRemoveSelected">移除所选</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAlreadyExists">A search definition with the same search template already exists</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinition">New search definition</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionName">Name:</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionSearchTemplate">Search template:</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Add new search definition</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAlreadyExists">已存在具有相同搜索模板的搜索定义</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinition">新的搜索定义</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionName">名称：</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionSearchTemplate">搜索模板：</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">添加新的搜索定义</sys:String>
 
-    <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Use %s where the game name should be substituted. For example: &quot;https://duckduckgo.com/?q=%s&quot; will turn into &quot;https://duckduckgo.com/?q=Braid&quot; when searching with a game named &quot;Braid&quot;</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">在应当替代游戏名称处使用 %s。例如：
+当搜索名为“Braid”的游戏时，“https://duckduckgo.com/?q=%s”将变为“https://duckduckgo.com/?q=Braid”。</sys:String>
 </ResourceDictionary>
