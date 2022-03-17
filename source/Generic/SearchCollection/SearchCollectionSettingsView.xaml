@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="SearchCollection.SearchCollectionSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="600">
+    <ScrollViewer Margin="20">
+        <TabControl>
+            <TabItem Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultSearches}">
+                <StackPanel Margin="0,10,0,0">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                    <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Search-Collection"
+                               Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                               CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultHelp}" />
+                    </Hyperlink>
+                    </TextBlock>
+                    <CheckBox Content="Metacritic" IsChecked="{Binding Settings.SearchIsEnabledMetacritic}" Margin="0,0,0,0" />
+                    <CheckBox Content="PCGamingWiki" IsChecked="{Binding Settings.SearchIsEnabledPcgw}" Margin="0,10,0,0" />
+                    <CheckBox Content="Twitch" IsChecked="{Binding Settings.SearchIsEnabledTwitch}" Margin="0,10,0,0" />
+                    <CheckBox Content="Steam" IsChecked="{Binding Settings.SearchIsEnabledSteam}" Margin="0,10,0,0" />
+                    <CheckBox Content="SteamDB" IsChecked="{Binding Settings.SearchIsEnabledSteamDb}" Margin="0,10,0,0" />
+                    <CheckBox Content="SteamGridDB" IsChecked="{Binding Settings.SearchIsEnabledSteamGridDB}" Margin="0,10,0,0" />
+                    <CheckBox Content="VNDB" IsChecked="{Binding Settings.SearchIsEnabledVndb}" Margin="0,10,0,0" />
+                    <CheckBox Content="YouTube" IsChecked="{Binding Settings.SearchIsEnabledYoutube}" Margin="0,10,0,0" />
+                    <CheckBox Content="Steam" IsChecked="{Binding Settings.SearchIsEnabledSteam}" Margin="0,10,0,0" />
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource LOCSearch_Collection_SettingsLabelCustomSearches}">
+                <StackPanel>
+                    <ListView Name="ListsSearchDefinitions" SelectionMode="Extended" Height="200" Margin="0,10,0,0"
+                              ItemsSource="{Binding Settings.SearchDefinitions}">
+                        <ListView.View>
+                            <GridView>
+
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionEnabled}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsEnabled}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="250" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="250"  Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SearchTemplate}" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button Content="{DynamicResource LOCSearch_Collection_SettingsLabelRemoveSelected}"
+                            Margin="0,10,0,0" MinWidth="80"
+                            HorizontalAlignment="Left"
+                            Command="{Binding RemoveSearchDefinitions}"
+                            CommandParameter="{Binding SelectedItems, ElementName=ListsSearchDefinitions}"/>
+
+                    <TextBlock Text="{DynamicResource LOCSearch_Collection_SettingsLabelNewDefinition}" Margin="0,20,0,0"/>
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock Text="{DynamicResource LOCSearch_Collection_SettingsLabelNewDefinitionName}" />
+                        <TextBox Margin="10,0,0,0" Text="{Binding NewDefinitionName}" />
+                    </DockPanel>
+
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock Text="{DynamicResource LOCSearch_Collection_SettingsLabelNewDefinitionSearchTemplate}" />
+                        <TextBox Margin="10,0,0,0" Text="{Binding NewDefinitionSearchTemplate}" />
+                    </DockPanel>
+
+                    <TextBlock TextWrapping="Wrap"
+                        Text="{DynamicResource LOCSearch_Collection_SettingsNewDefinitionExplanation}"
+                        Margin="0,5,0,0" />
+                    
+                    <Button Content="{DynamicResource LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition}"
+                    HorizontalAlignment="Left"
+                    Margin="0,10,0,0" MinWidth="80"
+                    Command="{Binding AddSearchDefinition}" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+    </ScrollViewer>
+</UserControl>
