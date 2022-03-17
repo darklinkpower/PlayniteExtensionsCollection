@@ -416,14 +416,7 @@ namespace PlayState
         /// </summary>
         private PlayStateData GetGameData(Game game)
         {
-            if (game == null || !playStateData.Any(x => x.Game.Id == game.Id))
-            {
-                return null;
-            }
-            else
-            {
-                return playStateData.Find(x => x.Game.Id == game.Id);
-            }
+            return playStateData.FirstOrDefault(x => x.Game.Id == game.Id);
         }
 
         private void CreateSplashWindow()
