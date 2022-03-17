@@ -25,7 +25,6 @@
                     <CheckBox Content="SteamGridDB" IsChecked="{Binding Settings.SearchIsEnabledSteamGridDB}" Margin="0,10,0,0" />
                     <CheckBox Content="VNDB" IsChecked="{Binding Settings.SearchIsEnabledVndb}" Margin="0,10,0,0" />
                     <CheckBox Content="YouTube" IsChecked="{Binding Settings.SearchIsEnabledYoutube}" Margin="0,10,0,0" />
-                    <CheckBox Content="Steam" IsChecked="{Binding Settings.SearchIsEnabledSteam}" Margin="0,10,0,0" />
                 </StackPanel>
             </TabItem>
 
@@ -66,7 +65,7 @@
                     <Button Content="{DynamicResource LOCSearch_Collection_SettingsLabelRemoveSelected}"
                             Margin="0,10,0,0" MinWidth="80"
                             HorizontalAlignment="Left"
-                            Command="{Binding RemoveSearchDefinitions}"
+                            Command="{Binding RemoveSearchDefinitionsCommand}"
                             CommandParameter="{Binding SelectedItems, ElementName=ListsSearchDefinitions}"/>
 
                     <TextBlock Text="{DynamicResource LOCSearch_Collection_SettingsLabelNewDefinition}" Margin="0,20,0,0"/>
@@ -87,7 +86,7 @@
                     <Button Content="{DynamicResource LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition}"
                     HorizontalAlignment="Left"
                     Margin="0,10,0,0" MinWidth="80"
-                    Command="{Binding AddSearchDefinition}" />
+                    Command="{Binding AddSearchDefinitionCommand}" />
                 </StackPanel>
             </TabItem>
         </TabControl>

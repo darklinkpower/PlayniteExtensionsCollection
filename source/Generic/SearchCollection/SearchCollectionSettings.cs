@@ -158,7 +158,7 @@ namespace SearchCollection
             return true;
         }
 
-        public RelayCommand AddSearchDefinition
+        public RelayCommand AddSearchDefinitionCommand
         {
             get => new RelayCommand(() =>
             {
@@ -210,7 +210,7 @@ namespace SearchCollection
             }
         }
 
-        public RelayCommand<IList<object>> RemoveDetectionDirectoryCommand
+        public RelayCommand<IList<object>> RemoveSearchDefinitionsCommand
         {
             get => new RelayCommand<IList<object>>((items) =>
             {
@@ -221,6 +221,7 @@ namespace SearchCollection
                         var iconPath = Path.Combine(userIconsDirectory, searchDefinition.Icon);
                         FileSystem.DeleteFileSafe(iconPath);
                     }
+
                     Settings.SearchDefinitions.Remove(searchDefinition);
                 }
 
