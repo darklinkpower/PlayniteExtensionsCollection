@@ -46,7 +46,7 @@
                                 <GridViewColumn Width="250" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding Name}" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -54,7 +54,7 @@
                                 <GridViewColumn Width="250"  Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding SearchTemplate}" VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding SearchTemplate}" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
