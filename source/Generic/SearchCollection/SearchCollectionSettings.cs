@@ -189,7 +189,8 @@ namespace SearchCollection
 
                 newDefinition.Icon = GetNewDefinitionIcon(newDefinition);
                 Settings.SearchDefinitions.Add(newDefinition);
-                Settings.SearchDefinitions = Serialization.GetClone(Settings.SearchDefinitions);
+
+                Settings.SearchDefinitions = Settings.SearchDefinitions.OrderBy(x => x.Name).ToList();
             }, () => AddButtonEnabled);
         }
 
@@ -225,7 +226,7 @@ namespace SearchCollection
                     Settings.SearchDefinitions.Remove(searchDefinition);
                 }
 
-                Settings.SearchDefinitions = Serialization.GetClone(Settings.SearchDefinitions);
+                Settings.SearchDefinitions = Settings.SearchDefinitions.OrderBy(x => x.Name).ToList();
             }, (items) => items != null && items.Count > 0);
         }
     }
