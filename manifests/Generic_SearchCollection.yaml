@@ -55,3 +55,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/Search_Collection_2_8.pext
     Changelog:
     - Updated localizations
+  - Version: 2.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/Search_Collection_2_9.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Extension rewritten from scratch'
+    - 'Added options to enable and disable default searches'
+    - 'Support to add custom searches in settings'
+    - 'Search options will now have icons in menu'

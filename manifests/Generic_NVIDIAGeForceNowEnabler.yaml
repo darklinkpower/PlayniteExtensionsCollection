@@ -137,3 +137,9 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 2.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/NVIDIA_GeForce_Now_Enabler_2_21.pext
+    Changelog:
+    - 'Updated localizations'

@@ -316,3 +316,9 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 1.44
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_44.pext
+    Changelog:
+    - 'Updated localizations'

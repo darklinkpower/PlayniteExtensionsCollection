@@ -134,3 +134,9 @@ Packages:
     Changelog:
     - Improved extension codebase structure
     - Misc improvements
+  - Version: 2.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_20.pext
+    Changelog:
+    - 'Updated localizations'

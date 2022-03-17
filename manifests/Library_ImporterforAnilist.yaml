@@ -131,3 +131,9 @@ Packages:
     - Improved extension codebase structure
     - Misc improvements
     - Added menu item to launch AniList website from tray menu
+  - Version: 2.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_20.pext
+    Changelog:
+    - 'Updated localizations'
