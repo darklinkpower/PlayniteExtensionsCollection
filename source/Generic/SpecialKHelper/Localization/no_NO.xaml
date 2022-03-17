@@ -1,81 +1,81 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Open Special K Profiles Editor</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Hjelp</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Åpne redigeringsverktøy for Special K-profiler</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Open Steam Controller configuration for &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id for game &quot;{0}&quot; needed to open the configuration was not found.
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Åpne Steam Controller-konfigurasjon for &quot;{0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id for spillet &quot;{0} som trengs for å åpne konfigurasjonen, ble ikke funnet.
 
-Please launch the game once so this Id can be automatically configured.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Configuration for game &quot;{0}&quot; with Steam Id &quot;{1}&quot; will be opened.
+Vennligst start spillet én gang, slik at Id-en kan konfigureres automatisk.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller-konfigurasjon for spill &quot;{0}&quot; med Steam Id &quot;{1}&quot; åpnes.
 
-Be aware that a controller needs to be currently connected and enabled for Steam Controller for the configuration window to open.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Add feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Remove feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Add feature to enable execution in Selective Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
+Vær oppmerksom på at en kontroller må være koblet til og aktivert som Steam-kontroller for at konfigurasjonsvinduet skal åpnes.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Legge til funksjon for å deaktivere kjøring i global modus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Fjern funksjon for å deaktivere kjøring i global modus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Legg til funksjon for å aktivere kjøring i selektiv modus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Fjern funksjon for å aktivere kjøring i global modus</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Select game to use for Steam configuration or cancel to use a generic option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K Profile Editor</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Velg spill du vil bruke til Steam-konfigurasjon eller avbryt for å bruke et generisk valg</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K-fil ikke funnet i {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K-tjeneste for {0} kunne ikke startes</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Redigeringsverktøy for Special K-profiler</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Done</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K execution mode:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games except for those that have the &quot;[SK] Global Mode Disable&quot; exclusion feature added by the extension
+    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Hjelp</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Ferdig</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K kjøringsmodus:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global modus: Special K-tjenester startes når du starter alle spill, med unntak av de som har fått funksjonen &quot;[SK] &quot;Global Mode Disable&quot; lagt til av utvidelsen
 
-Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot; added by the extension</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Only start Special K services when starting PC games</sys:String>
+Selektiv modus: Special K-tjenester startes bare for spill som har fått funksjonen &quot;[SK] Selective Mode Enable&quot; lagt til av utvidelsen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Hindre start av tjenester hvis spillet har funksjonen &quot;Anti-Cheat aktivert&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Hindre start av tjenester hvis det blir oppdaget at spillet bruker EasyAntiCheat</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Bare start Special K-tjenester når du starter PC-spill</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Default settings for new profiles created by Special K</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Enable Steam overlay</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam overlay to use if Steam Big Picture mode is running:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Enable Reshade</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Enable Flip Model Presentation</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Disable Nvidia bloatware</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Set framerate limit</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Target FPS:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay.
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Standardinnstillinger for nye profiler opprettet av Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Aktiver Steam-overlegg</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam-overlegg som skal brukes hvis Steam Big Picture-modus kjører:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Aktiver Reshade</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Aktiver Flip Model Presentation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Gjør at spill kjører bedre eller like godt i vindus-modus som i fullskjermsmodus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Deaktiver Nvidia-bloatware</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Angi bildefrekvensgrense</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Mål-FPS:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Merk: For å sikre at du angir korrekt verdi for din spesifikke skjerm, vennligst sjekk verdiene i Special K-overlegget.
 
-After you have a correct value, you can paste it to the text box.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selective mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Desktop</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
+Etter at du har funnet riktig verdi, kan du fylle den inn i tekstboksen.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global modus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selektiv modus</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Skrivebord</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture-modus</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Search:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Use fuzzy search</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profiles</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Søk:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Bruk mindre spesifikt søk</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profiler</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Seksjoner</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Nøkler</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Nøkkel</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Verdi</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Save profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profil:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Bane til profil:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Lagre profil</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Slett profil</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Er du sikker på at du vil slette denne profilen? Denne handlingen kan ikke angres.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Kunne ikke slette profil &quot;{0}&quot; i {1}
     
 Error: {2}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profile saved.
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profil lagret.
 
-Profile name: {0}
-Profile path: {1}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Save value</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Selected option</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Section:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Key:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Value:</sys:String>
+profilnavn: {0}
+Profilbane: {1}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Lagre verdi</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Valgt alternativ</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Seksjon:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Nøkkel:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Verdi:</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper statusvelger
 
-Indicates if the extension is allowed to start the Special K services when starting a game.
-If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
+Indikerer om utvidelsen har lov til å starte Special K-tjenester når du starter et spill.
+Ved deaktivering vil ikke tjenestene bli startet uansett innstillinger eller konfigurasjon.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Vis knapp i sidestolpe for bytte av utvidelsestilstand</sys:String>
 </ResourceDictionary>

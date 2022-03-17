@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSearch_Collection_MenuItemSearchSection">搜索</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_NoPcGamesSelectedMessage">未选择 PC 游戏。</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultHelp">帮助</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultSearches">默认搜索</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelCustomSearches">自定义搜索</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionEnabled">已启用</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionName">名称</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate">搜索模板</sys:String>
+
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelRemoveSelected">移除所选</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAlreadyExists">已存在具有相同搜索模板的搜索定义</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinition">新的搜索定义</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionName">名称：</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionSearchTemplate">搜索模板：</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">添加新的搜索定义</sys:String>
+
+    <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">在应当替代游戏名称处使用 %s。例如：
+当搜索名为“Braid”的游戏时，“https://duckduckgo.com/?q=%s”将变为“https://duckduckgo.com/?q=Braid”。</sys:String>
 </ResourceDictionary>

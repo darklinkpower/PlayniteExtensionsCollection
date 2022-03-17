@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">帮助</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">更新游戏的已启用状态</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">为所有游戏移除 Geforce NOW 游戏指令</sys:String>
 

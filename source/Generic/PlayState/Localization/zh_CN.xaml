@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">帮助</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">将所选游戏添加到 PlayState 黑名单</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">将所选游戏从 PlayState 黑名单移除</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">将所选游戏配置为强制性地仅挂起游玩时间</sys:String>

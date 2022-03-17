@@ -1,5 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSearch_Collection_MenuItemSearchSection">Buscar</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_NoPcGamesSelectedMessage">No hay juegos de PC seleccionados.</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultHelp">Ayuda</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultSearches">Búsquedas predeterminadas</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelCustomSearches">Busquedas personalizadas</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionEnabled">Habilitado</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionName">Nombre</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate">Plantilla de búsqueda</sys:String>
+
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelRemoveSelected">Eliminar seleccionados</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAlreadyExists">Ya existe una definición de búsqueda con la misma plantilla de búsqueda</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinition">Nueva definición de búsqueda</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionName">Nombre:</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionSearchTemplate">Plantilla de búsqueda:</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Añadir nueva definición de búsqueda</sys:String>
+
+    <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Usa %s donde el nombre del juego debe ser sustituido. Por ejemplo: &quot;https://duckduckgo.com/?q=%s&quot; se convertirá en &quot;https://duckduckgo.com/?q=Braid&quot; al buscar con un juego llamado &quot;Braid&quot;</sys:String>
 </ResourceDictionary>

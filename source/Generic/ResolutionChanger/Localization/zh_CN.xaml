@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">帮助</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">清除所选游戏的分辨率配置</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">将所选游戏的启动分辨率设置为 {0}x{1}（{2}）</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">仅当没有游戏正在运行时更改分辨率</sys:String>

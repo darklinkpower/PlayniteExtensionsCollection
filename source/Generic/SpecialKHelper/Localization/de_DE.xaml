@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Öffne den Spezial K Profil Editor</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Steam Controller Konfiguration für &quot;{0} &quot; öffnen</sys:String>
@@ -16,18 +16,18 @@ Beachten Sie, dass ein Controller angeschlossen und für Steam Controller aktivi
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Funktion entfernen, um die Ausführung im Selektiven Modus zu aktivieren</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Wählen Sie das Spiel aus, das Sie für die Steam Konfiguration verwenden möchten, oder brechen Sie den Vorgang ab, um eine generische Option zu verwenden</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Spezial K Datei nicht gefunden in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Spezieller K {0} Dienst konnte nicht gestartet werden</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Speziel K Profil Editor</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Fertig</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Spezial K Ausführungsmodus:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games except for those that have the &quot;[SK] Global Mode Disable&quot; exclusion feature added by the extension
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Globaler Modus: Spezielle K Dienste werden beim Starten aller Spiele gestartet, mit Ausnahme derjenigen, die die Option &quot;[SK] Globaler Modus Deaktivieren&quot; haben. Ausschlussfunktion, die durch die Erweiterung hinzugefügt wurde
 
-Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot; added by the extension</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
+Selektiver Modus: Spezielle K Dienste werden nur für Spiele gestartet, die das Einschlussmerkmal &quot;[SK] Selektiver Modus Aktivieren&quot; haben. Hinzugefügt durch die Erweiterung</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stoppe den Start der Dienste, wenn das Spiel die Funktion &quot;Valve Anti-Cheat aktiviert&quot; hat</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stoppe den Start der Dienste, wenn festgestellt wird, dass das Spiel EasyAntiCheat verwendet</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Starte Special K Dienste nur beim Start von PC Spielen</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Standardeinstellungen für neue Profile erstellt von Special K</sys:String>
@@ -53,16 +53,16 @@ Wenn Sie einen korrekten Wert haben, können Sie ihn in das Textfeld einfügen.<
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sektionen</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Tasten</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Taste</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Wert</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profil Pfad:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Profil speichern</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Profil löschen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Sind Sie sicher, dass Sie das Profil löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Fehler beim Löschen des Profils &quot;{0}&quot; in {1}
     
-Error: {2}</sys:String>
+Fehler: {2}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDialogMessageSaveProfile" xml:space="preserve">Profil gespeichert.
 
 Profil Name: {0}

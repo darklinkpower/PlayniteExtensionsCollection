@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">Open Tools Menu</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">See missing media statistics (All games)</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">See missing media statistics (Selected games)</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">Åpne verktøymeny</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">Se manglende mediastatistikk (alle spill)</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">Se manglende mediastatistikk (valgte spill)</sys:String>
 
-    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">No games are selected</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Invalid input in Width and height input boxes.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Invalid input in size input box.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Invalid input in extension input box.</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_Results1Message" xml:space="preserve">Finished. Games in selection: {0}
+    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">Ingen spill er valgt</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Ugyldig data i bredde- og høydebokser.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Ugyldig data i størrelseboks.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Ugyldig data i utvidelsesboks.</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_Results1Message" xml:space="preserve">Fullført. Spill i utvalg: {0}
 
-Selected Media: {1}
-Games missing selected media in selection: {2}</sys:String>
+Valgte media: {1}
+Spill i utvalg som mangler valgte media: {2}</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results2Message" xml:space="preserve">
 
-Missing Media in all database
-Covers: {0} games
-Background Images: {1} games
-Icons: {2} games</sys:String>
+Manglende media i hele databasen
+Cover: {0} spill
+Bakgrunnsbilder: {1} spill
+Ikoner: {2} spill</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_Results3Message" xml:space="preserve">
 
-Tool tag name: {0}
-Games with tag in selection: {1}
-Games with tag in all games database: {2}</sys:String>
+Navn på verktøy-tag: {0}
+Spill med tag i utvalget: {1}
+Spill med tag i hele spilldatabasen: {2}</sys:String>
 </ResourceDictionary>
