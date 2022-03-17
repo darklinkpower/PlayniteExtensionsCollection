@@ -186,7 +186,11 @@ namespace PlayState
                         uint vkey = ((uint)lParam >> 16) & 0xFFFF;
                         if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
                         {
-                            SwitchGameState(currentGame);
+                            var gameData = GetGameData(currentGame);
+                            if (gameData != null)
+                            {
+                                SwitchGameState(gameData);
+                            }
                         }
                         else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
                         {
@@ -288,9 +292,10 @@ namespace PlayState
         {
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
 
-            if (currentGame != null && GetGameData(currentGame).IsSuspended)
+            var gameData = GetGameData(currentGame);
+            if (gameData != null && gameData.IsSuspended)
             {
-                SwitchGameState(currentGame);
+                SwitchGameState(gameData);
             }
 
             var game = args.Game;
@@ -461,14 +466,8 @@ namespace PlayState
         /// <summary>
         /// Method for obtaining the real playtime of the actual session, which is the playtime after substracting the paused time.
         /// </summary>
-        private ulong GetRealPlaytime(Game game)
+        private ulong GetRealPlaytime(PlayStateData gameData)
         {
-            var gameData = GetGameData(game);
-            if (gameData == null)
-            {
-                return 0;
-            }
-            
             var suspendedTime = gameData.Stopwatch.Elapsed;
             ulong elapsedSeconds = 0;
             if (suspendedTime != null)
@@ -589,11 +588,11 @@ namespace PlayState
 
             if (settings.Settings.NotificationShowSessionPlaytime)
             {
-                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime(game))}");
+                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime(gameData))}");
             }
             if (settings.Settings.NotificationShowTotalPlaytime)
             {
-                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime(game) + game.Playtime)}");
+                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime(gameData) + game.Playtime)}");
             }
             var notificationMessage = sb.ToString();
 
@@ -611,14 +610,8 @@ namespace PlayState
             }
         }
 
-        private void SwitchGameState(Game game)
+        private void SwitchGameState(PlayStateData gameData)
         {
-            var gameData = GetGameData(game);
-            if (gameData == null)
-            {
-                return;
-            }
-
             try
             {
                 gameData.ProcessesSuspended = false;
@@ -649,28 +642,28 @@ namespace PlayState
                         gameData.IsSuspended = false;
                         if (gameData.ProcessesSuspended)
                         {
-                            ShowNotification(NotificationTypes.Resumed, game);
+                            ShowNotification(NotificationTypes.Resumed, gameData.Game);
                         }
                         else
                         {
-                            ShowNotification(NotificationTypes.PlaytimeResumed, game);
+                            ShowNotification(NotificationTypes.PlaytimeResumed, gameData.Game);
                         }
                         gameData.Stopwatch.Stop();
-                        logger.Debug($"Game {game.Name} resumed");
+                        logger.Debug($"Game {gameData.Game.Name} resumed");
                     }
                     else
                     {
                         gameData.IsSuspended = true;
                         if (gameData.ProcessesSuspended)
                         {
-                            ShowNotification(NotificationTypes.Suspended, game);
+                            ShowNotification(NotificationTypes.Suspended, gameData.Game);
                         }
                         else
                         {
-                            ShowNotification(NotificationTypes.PlaytimeSuspended, game);
+                            ShowNotification(NotificationTypes.PlaytimeSuspended, gameData.Game);
                         }
                         gameData.Stopwatch.Start();
-                        logger.Debug($"Game {game.Name} suspended");
+                        logger.Debug($"Game {gameData.Game.Name} suspended");
                     }
                 }
             }
