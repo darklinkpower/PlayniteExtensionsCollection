@@ -47,6 +47,10 @@ namespace SearchCollection
         {
             var menuItems = new List<GameMenuItem>();
 
+            if (settings.Settings.SearchIsEnabledIgdb)
+            {
+                menuItems.Add(GetGenericDefaultSearchItem("IGDB", "IGDB.png", @"https://www.igdb.com/search?utf8=✓&type=1&q={0}"));
+            }
             if (settings.Settings.SearchIsEnabledMetacritic)
             {
                 menuItems.Add(GetGenericDefaultSearchItem("Metacritic", "Metacritic.png", @"https://www.metacritic.com/search/game/{0}/results"));

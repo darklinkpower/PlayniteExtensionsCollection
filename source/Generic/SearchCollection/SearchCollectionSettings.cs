@@ -14,7 +14,9 @@ namespace SearchCollection
 {
     public class SearchCollectionSettings : ObservableObject
     {
-
+        [DontSerialize]
+        private bool searchIsEnabledIgdb = true;
+        public bool SearchIsEnabledIgdb { get => searchIsEnabledIgdb; set => SetValue(ref searchIsEnabledIgdb, value); }
         [DontSerialize]
         private bool searchIsEnabledMetacritic = true;
         public bool SearchIsEnabledMetacritic { get => searchIsEnabledMetacritic; set => SetValue(ref searchIsEnabledMetacritic, value); }

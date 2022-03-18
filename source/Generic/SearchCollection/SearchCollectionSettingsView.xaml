@@ -17,7 +17,8 @@
                         <Run Text="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultHelp}" />
                     </Hyperlink>
                     </TextBlock>
-                    <CheckBox Content="Metacritic" IsChecked="{Binding Settings.SearchIsEnabledMetacritic}" Margin="0,0,0,0" />
+                    <CheckBox Content="IGDB" IsChecked="{Binding Settings.SearchIsEnabledIgdb}" Margin="0,0,0,0" />
+                    <CheckBox Content="Metacritic" IsChecked="{Binding Settings.SearchIsEnabledMetacritic}" Margin="0,10,0,0" />
                     <CheckBox Content="PCGamingWiki" IsChecked="{Binding Settings.SearchIsEnabledPcgw}" Margin="0,10,0,0" />
                     <CheckBox Content="Twitch" IsChecked="{Binding Settings.SearchIsEnabledTwitch}" Margin="0,10,0,0" />
                     <CheckBox Content="Steam" IsChecked="{Binding Settings.SearchIsEnabledSteam}" Margin="0,10,0,0" />
