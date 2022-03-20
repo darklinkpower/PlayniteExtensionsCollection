@@ -36,7 +36,6 @@ namespace PlayState
         private static readonly ILogger logger = LogManager.GetLogger();
         private Game currentGame;
         private List<string> exclusionList;
-        private string gameInstallDir;
         private Window currentSplashWindow;
         private DispatcherTimer timer;
         private bool suspendPlaytimeOnly = false;
@@ -324,11 +323,13 @@ namespace PlayState
                 var sourceAction = args.SourceAction;
                 if (sourceAction?.Type == GameActionType.Emulator)
                 {
+                    logger.Debug("Source action is emulator.");
                     var emulatorProfileId = sourceAction.EmulatorProfileId;
                     if (emulatorProfileId.StartsWith("#builtin_"))
                     {
                         //Currently it isn't possible to obtain the emulator path
                         //for emulators using Builtin profiles
+                        logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
                         return;
                     }
 
@@ -336,20 +337,23 @@ namespace PlayState
                     var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
                     if (profile != null)
                     {
-                        gameProcesses = GetProcessesWmiQuery(false, profile.Executable.ToLower());
+                        logger.Debug($"Custom emulator profile executable is {profile.Executable}");
+                        gameProcesses = GetProcessesWmiQuery(false, string.Empty, profile.Executable.ToLower());
                         if (gameProcesses.Count > 0)
                         {
                             AddGame(game, gameProcesses);
                         }
                     }
+
                     return;
                 }
 
-                if (string.IsNullOrEmpty(game.InstallDirectory))
+                if (game.InstallDirectory.IsNullOrEmpty())
                 {
                     return;
                 }
-                gameInstallDir = game.InstallDirectory.ToLower();
+
+                var gameInstallDir = game.InstallDirectory.ToLower();
 
                 // Fix for some games that take longer to start, even when already detected as running
                 await Task.Delay(15000);
@@ -358,10 +362,10 @@ namespace PlayState
                     return;
                 }
 
-                gameProcesses = GetProcessesWmiQuery(true);
+                gameProcesses = GetProcessesWmiQuery(true, gameInstallDir);
                 if (gameProcesses.Count > 0)
                 {
-                    logger.Debug($"Found {gameProcesses.Count} game processes");
+                    logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
                     AddGame(game, gameProcesses);
                     return;
                 }
@@ -376,17 +380,21 @@ namespace PlayState
                     // or the launched game was closed
                     if (CurrentGameChanged(game))
                     {
+                        logger.Debug($"Current game has changed. Execution of WMI Query task stopped.");
                         return;
                     }
 
                     // Try a few times with filters.
                     // If nothing is found, try without filters. This helps in cases
                     // where the active process is being filtered out by filters
+                    logger.Debug($"Starting WMI loop number {i}");
                     if (i == 5)
                     {
+                        logger.Debug("FilterPaths set to false for WMI Query");
                         filterPaths = false;
                     }
-                    gameProcesses = GetProcessesWmiQuery(filterPaths);
+
+                    gameProcesses = GetProcessesWmiQuery(filterPaths, gameInstallDir);
                     if (gameProcesses.Count > 0)
                     {
                         logger.Debug($"Found {gameProcesses.Count} game processes");
@@ -616,7 +624,6 @@ namespace PlayState
                 {
                     foreach (var gameProcess in gameData.GameProcesses)
                     {
-                        logger.Debug($"Process executable: {gameProcess.ExecutablePath}, IsSuspended: {gameData.IsSuspended}");
                         if (gameProcess == null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
                         {
                             return;
@@ -673,7 +680,7 @@ namespace PlayState
             }
         }
 
-        private List<ProcessItem> GetProcessesWmiQuery(bool filterPaths, string exactPath = null)
+        private List<ProcessItem> GetProcessesWmiQuery(bool filterPaths, string gameInstallDir, string exactPath = null)
         {
             var wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
             using (var searcher = new ManagementObjectSearcher(wmiQueryString))
@@ -793,7 +800,8 @@ namespace PlayState
             else
             {
                 playStateData.Add(new PlayStateData(game, gameProcesses));
-                logger.Debug($"Data for game {game.Name} with id {game.Id} was created");
+                var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
             }
         }
 
