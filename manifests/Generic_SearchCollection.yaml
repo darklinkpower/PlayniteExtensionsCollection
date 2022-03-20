@@ -65,3 +65,10 @@ Packages:
     - 'Added options to enable and disable default searches'
     - 'Support to add custom searches in settings'
     - 'Search options will now have icons in menu'
+  - Version: 2.10
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.20_b118c6cd/Search_Collection_2_10.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added option to show IGDB search item in menu. Enabled by default.'
