@@ -116,7 +116,7 @@ namespace ReviewViewer
                     var steamId = Steam.GetGameSteamId(game, true);
                     if (steamId.IsNullOrEmpty())
                     {
-                        steamId = game.GameId;
+                        continue;
                     }
 
                     foreach (string reviewSearchType in reviewSearchTypes)
