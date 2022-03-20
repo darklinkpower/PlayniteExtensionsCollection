@@ -202,7 +202,7 @@ namespace PlayState
 
         private void SetExclusionList()
         {
-            exclusionList = new List<string>
+            var exclusionListBase = new List<string>
             {
                 "7z.exe",
                 "7za.exe",
@@ -235,6 +235,7 @@ namespace PlayState
                 "HavokBehaviorPostProcess.exe",
                 "help",
                 "install",
+                "Launch_Game.exe",
                 "LangSelect.exe",
                 "Language.exe",
                 "Launch",
@@ -280,6 +281,8 @@ namespace PlayState
                 "Website.exe",
                 "wide_on.exe"
             };
+
+            exclusionList = exclusionListBase.Select(x => x.ToLower()).ToList();
         }
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
@@ -613,6 +616,7 @@ namespace PlayState
                 {
                     foreach (var gameProcess in gameData.GameProcesses)
                     {
+                        logger.Debug($"Process executable: {gameProcess.ExecutablePath}, IsSuspended: {gameData.IsSuspended}");
                         if (gameProcess == null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
                         {
                             return;

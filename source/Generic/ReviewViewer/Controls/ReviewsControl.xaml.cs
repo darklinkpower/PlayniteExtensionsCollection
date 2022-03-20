@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using PluginsCommon;
 using PluginsCommon.Web;
 using ReviewViewer.Models;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -425,18 +426,11 @@ namespace ReviewViewer.Controls
                 
                 if (currentSteamId == null)
                 {
-                    if (currentGame.PluginId == Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab"))
+                    var currentSteamId = Steam.GetGameSteamId(currentGame, true);
+                    if (currentSteamId == null)
                     {
-                        currentSteamId = currentGame.GameId;
-                    }
-                    else
-                    {
-                        GetSteamIdFromLinks(currentGame);
-                        if (currentSteamId == null)
-                        {
-                            MainPanelVisibility = Visibility.Collapsed;
-                            return;
-                        }
+                        MainPanelVisibility = Visibility.Collapsed;
+                        return;
                     }
                 }
 
