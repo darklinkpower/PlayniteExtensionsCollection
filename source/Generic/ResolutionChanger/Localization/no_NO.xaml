@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Fjern oppløsningskonfigurasjon fra valgte spill</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Satt oppstartsoppløsning til {0}x{1} ({2}) for valgte spill</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Endre bare oppløsningen når ingen spill kjører</sys:String>
