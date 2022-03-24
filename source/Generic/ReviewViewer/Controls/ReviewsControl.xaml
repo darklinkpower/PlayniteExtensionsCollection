@@ -77,6 +77,9 @@
                         <TextBlock Text="{Binding TotalFormattedPlaytime}" Opacity="0.75" />
                     </StackPanel>
                 </StackPanel>
+                <TextBlock Text="{Binding ReviewPostedDate}"
+                           Visibility="{Binding SettingsModel.Settings.DisplayReviewDate, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Margin="0,10,0,0" Opacity="0.75" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">

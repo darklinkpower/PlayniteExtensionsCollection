@@ -57,6 +57,18 @@ namespace ReviewViewer
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool displayReviewDate { get; set; } = true;
+        public bool DisplayReviewDate
+        {
+            get => displayReviewDate;
+            set
+            {
+                displayReviewDate = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ReviewViewerSettingsViewModel : ObservableObject, ISettings

@@ -20,6 +20,8 @@
                   Content="{DynamicResource LOCReview_Viewer_SettingDownloadOnGameSelectionDescription}" Margin="0,0,0,10"/>
         <CheckBox IsChecked="{Binding Settings.DisplayHelpfulnessData}"
                   Content="{DynamicResource LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription}" Margin="0,0,0,10"/>
+        <CheckBox IsChecked="{Binding Settings.DisplayReviewDate}"
+                  Content="{DynamicResource LOCReview_Viewer_SettingDisplayDateDescription}" Margin="0,0,0,10"/>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <Label Content="{DynamicResource LOCReview_Viewer_SettingDescriptionHeightDescription}" Margin="0,0,0,0" VerticalAlignment="Center" />
             <Slider Value="{Binding Settings.DescriptionHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="50" Maximum="400" VerticalAlignment="Center"

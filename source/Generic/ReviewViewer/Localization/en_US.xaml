@@ -10,6 +10,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Download review data on game selection if it's missing</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Description height</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Display review helpfulness</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Display review date</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Total reviews:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive reviews:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative reviews:</sys:String>
@@ -22,6 +23,7 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Review:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Review</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Reviews</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Posted: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Not recommended</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} hours {1} minutes at review time</sys:String>

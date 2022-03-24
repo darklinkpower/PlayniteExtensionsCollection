@@ -194,6 +194,17 @@ namespace ReviewViewer.Controls
             }
         }
 
+        private string reviewPostedDate;
+        public string ReviewPostedDate
+        {
+            get => reviewPostedDate;
+            set
+            {
+                reviewPostedDate = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int selectedReviewIndex;
         public int SelectedReviewIndex
         {
@@ -228,6 +239,15 @@ namespace ReviewViewer.Controls
 
             ReviewHelpfulnessHelpful = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat"), SelectedReview.VotesUp);
             ReviewHelpfulnessFunny = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewHelpfulnessFunnyFormat"), SelectedReview.VotesFunny);
+
+            ReviewPostedDate = string.Format(ResourceProvider.GetString("LOCReview_Viewer_ReviewPostedDateLabel"), UnixTimeStampToFormattedString(SelectedReview.TimestampUpdated));
+        }
+
+        public static string UnixTimeStampToFormattedString(double unixTimeStamp)
+        {
+            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime.ToString("dd MMM yyyy");
         }
 
         private Review selectedReview;
