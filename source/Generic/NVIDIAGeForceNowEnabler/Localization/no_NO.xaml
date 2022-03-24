@@ -22,6 +22,6 @@ Markerte {0} spill som installert.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Spill uten en valgt installasjonsmappe blir regnet som ikke installert av bibliotekene</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Angi aktiverte spill som installert når du oppdaterer aktivert-status for spill</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Start i Nvidia GeForce NOW</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Markerte {0} spill som installert.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW-programfil ikke funnet i {0}.</sys:String>
 </ResourceDictionary>
