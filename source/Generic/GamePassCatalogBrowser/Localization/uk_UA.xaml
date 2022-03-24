@@ -23,10 +23,10 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Переглянути в магазині Microsoft</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Додати до бібліотеки Playnite</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Game Pass catalog region:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Update Game Pass catalog on library update</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notify of Game Pass catalog updates</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Add expired tag to games removed from Game Pass</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Add newly added games when updating the Game Pass catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Remove removed games when updating the Game Pass catalog from the Playnite library if they have not been played</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Регіон каталогу Game Pass:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Оновити каталог Game Pass при оновленні бібліотеки</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Повідомляти про оновлення каталогу Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Додати тег &quot;Прострочено&quot; для ігор, вилучених з Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Додати нові ігри при оновленні каталогу Game Pass до бібліотеки Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">При оновленні каталогу Game Pass видаляти з Playnite прибрані з каталогу ігри, якщо вони не були зіграні</sys:String>
 </ResourceDictionary>
