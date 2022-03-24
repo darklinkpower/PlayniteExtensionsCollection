@@ -11,6 +11,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Descargar datos de reseñas en la selección del juego si faltan</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Altura de descripción</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Mostrar utilidad de las reseñas</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Mostrar fecha de reseña</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Reseñas totales:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Revisiones positivas:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Reseñas negativas:</sys:String>
@@ -23,6 +24,7 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Reseña:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Reseña</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Reseñas</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Publicado: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Recomendado</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">No recomendado</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} horas {1} minutos en tiempo de reseña</sys:String>

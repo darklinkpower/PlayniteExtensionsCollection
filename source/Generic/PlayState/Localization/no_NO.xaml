@@ -1,58 +1,58 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Add selected games to PlayState Blacklist</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Remove selected games from Playstate Blacklist</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Hjelp</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Legg til valgte spill i svartelisten til PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Fjern valgte spill fra svartelisten til Playstate</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Konfigurer valgte spill til å bare pause spilletid</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Fjern konfigurasjon for å bare pause avspillingen</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Klarte ikke å registrere konfigurert hurtigtast {0}
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Added {0} game(s) to the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Removed {0} game(s) from the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
+Du kan prøve å bruke en annen hurtigtastkombinasjon for å løse problemet</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">La til {0} spill i svartelisten til Playstate.</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Fjernet {0} spill fra svartelisten til Playstate.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Konfigurerte {0} spill til å bare pause spilltid når du bruker den konfigurerte hurtigtasten.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Fjernet konfigurasjon for å bare pause spilletid når du bruker den konfigurerte hurtigtasten fra {0} spill.
 
-Games will be suspended when using the configured hotkey.</sys:String>
+Spill vil bli pauset når du bruker den konfigurerte hurtigtasten.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Spillet er på pause</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Spillet er gjenopptatt</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Configured Suspend/Resume hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Configured Information hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Spilletid er på pause</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spilletid er gjenopptatt</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informasjon:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Handling:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfigurert pause-/gjenoppta-hurtigtast:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Konfigurert informasjonshurtigtast:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Viser et varsel som gir deg gjeldende pausestatus og annen informasjon om det aktive spillet</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Endre hurtigtast</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Trykk hurtigtast nå</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Merk:
 
-The configured hotkeys won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
+Den konfigurerte hurtigtasten vil ikke kunne brukes i andre programmer.
+Endring av denne innstillingen krever omstart.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Hvis du har fokusassistent aktivert når du spiller et spill i fullskjermsmodus, må du legge til Playnite i prioritetslisten for å motta Windows-varsler og konfigurere dem for å tillate å vise dem.
 
-This feature is only supported on Windows 10 and Windows 11</sys:String>
-    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
+Denne funksjonen støttes bare i Windows 10 og Windows 11</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState har fått støtte for å vise varsler som standard Windows-varsler. Dette er aktivert som standard, og kan endres fra utvidelsesinnstillingene.
 
-For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Only suspend playtime count globally and not the game processes</sys:String>
+For bedre kompatibilitet med spill, trengs noen justeringer i Windows-konfigurasjonen. En lenke som inneholder instruksjonene for dette vil åpnes etter at denne dialogboksen er lukket.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Hjelp</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Trekk fra tiden spillet var på pause fra spilletiden ved avslutning</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hjelper til med å holde en mer nøyaktig spilltidsverdi i spill, ved å bare la tiden spillet ikke var på pause telle inn i spilletiden</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Bare kjør for spill som ikke administreres av bibliotekutvidelser</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Bare sett spilltiden på pause globalt og ikke for spillprosessene</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
 This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Bruk standard Windows-varsler i stedet for Playnites varslingsvindu</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Ved å aktivere dette alternativet, vil spill bruke standard Windows-varsler i stedet for Playnites varslingsvindu.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Vis spilletid for økt i varsel</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Vis total spilletid i varsel</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Spilletid:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total spilletid:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} timer og {1} minutter</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} timer og {1} minutt</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} time og {1} minutter</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} time og {1} minutt</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} sekunder</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} sekund</sys:String>
 </ResourceDictionary>

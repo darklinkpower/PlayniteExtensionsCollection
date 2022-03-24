@@ -11,6 +11,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">تحميل بيانات المراجعة عند اختيار اللعبة إذا كان مفقودا</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">طول الوصف</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">عرض فائدة المراجعة</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Display review date</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">مجموع المراجعات:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">استعراضات إيجابية:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">استعراضات سلبية:</sys:String>
@@ -23,6 +24,7 @@
     <sys:String x:Key="LOCReview_Viewer_Review">مراجعة:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">مراجعة</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">مراجعات</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Posted: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">موصى بها</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">غير موصى بها</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} ساعات {1} دقائق عند وقت المراجعة</sys:String>
