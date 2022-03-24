@@ -146,3 +146,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.20_b118c6cd/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_21.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.22
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.23_32f4ed05/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_22.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix crash when downloaded Steam review data was not succesful'
+    - 'Added option to display review data (Enabled by default)'

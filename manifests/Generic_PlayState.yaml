@@ -171,3 +171,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.20_b118c6cd/PlayState_2_24.pext
     Changelog:
     - 'Fixed detection of processes to suspend for game Lost Ark'
+  - Version: 2.25
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.23_32f4ed05/PlayState_2_25.pext
+    Changelog:
+    - 'Updated localizations'

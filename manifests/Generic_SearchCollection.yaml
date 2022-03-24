@@ -72,3 +72,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added option to show IGDB search item in menu. Enabled by default.'
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.23_32f4ed05/Search_Collection_2_11.pext
+    Changelog:
+    - 'Updated localizations'
