@@ -22,19 +22,19 @@
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Дія:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Налаштована гаряча клавіша заморозки/поновлення:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Налаштована гаряча клавіша інформації:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показує повідомлення з поточним станом паузи та іншу інформацію про активну гру</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Змінити гарячу клавішу</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Натисніть гарячу клавішу</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Примітки:
 
-The configured hotkeys won't be able to be used in other applications.
-Changing this setting requires restart.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
+Налаштовані гарячі клавіші не можна буде використовувати в інших додатках.
+Зміна цього налаштування вимагає перезапуску.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Якщо під час гри в повноекранному режимі у вас працює Focus Assist, вам потрібно додати Playnite до списку пріоритетів, щоб отримувати сповіщення Windows і налаштувати їх, щоб дозволити їх показ.
 
-This feature is only supported on Windows 10 and Windows 11</sys:String>
-    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
+Ця функція підтримується лише для Windows 10 і Windows 11</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState додав підтримку для показу сповіщень Windows. Це увімкнено за замовчуванням і може бути змінено в налаштуваннях розширення.
 
-For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
+Для кращої сумісності з іграми потрібно змінити деякі налаштування Windows. Посилання з інструкціями буде відкрито після закриття цього повідомлення.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Віднімати час, коли гра була припинена від ігрового часу</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Допомагає вести облік часу у грі точніше, не враховуючи час, поки гра знаходиться в призупиненому стані</sys:String>
@@ -43,10 +43,10 @@ For better compatibility with games, some adjustments to your Windows configurat
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Увімкнувши дану опцію, всі ігри не будуть призупинені при використанні налаштованої гарячої клавіші і тільки час буде зараховано до віднятого з часу у грі, коли вона зупиниться.
     
 Це також можна застосовувати індивідуально для кожної гри, додавши особливість &quot;[PlayState] Suspend playtime only&quot; до гри</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Показувати сповіщення Windows замість вікна сповіщень Playnite</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Увімкнувши цю опцію, ігри показуватимуть сповіщення Windows замість вікна сповіщень Playnite.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Показувати час гри поточної сесії у сповіщенні</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Показувати загальний час гри у сповіщенні</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Час гри:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Загальний час гри:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} годин {1} хвилин</sys:String>
