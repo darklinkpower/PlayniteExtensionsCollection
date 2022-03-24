@@ -153,4 +153,4 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix crash when downloaded Steam review data was not succesful'
-    - 'Added option to display review data (Enabled by default)'
+    - 'Added option to display review date (Enabled by default)'
