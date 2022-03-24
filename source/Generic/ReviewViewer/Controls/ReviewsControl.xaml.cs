@@ -450,11 +450,18 @@ namespace ReviewViewer.Controls
             {
                 logger.Error(e, $"Error deserializing file {gameDataPath}. Error: {e.Message}.");
             }
-            
+
+            if (Reviews.Success != 1)
+            {
+                logger.Debug($"Deserialized json in {gameDataPath} had Success value {Reviews.Success}.");
+                return;
+            }
+
             try
             {
                 if (Reviews.QuerySummary.NumReviews == 0)
                 {
+                    logger.Debug($"Deserialized json in {gameDataPath} had 0 reviews.");
                     return;
                 }
             }
@@ -473,24 +480,6 @@ namespace ReviewViewer.Controls
             TotalReviewsAvailable = Reviews.QuerySummary.NumReviews;
             CalculateUserScore();
             MainPanelVisibility = Visibility.Visible;
-        }
-
-        private void GetSteamIdFromLinks(Game game)
-        {
-            if (game.Links == null)
-            {
-                return;
-            }
-
-            foreach (Link gameLink in game.Links)
-            {
-                var linkMatch = steamLinkRegex.Match(gameLink.Url);
-                if (linkMatch.Success)
-                {
-                    currentSteamId = linkMatch.Groups[1].Value;
-                    return;
-                }
-            }
         }
 
         private void CalculateUserScore()
