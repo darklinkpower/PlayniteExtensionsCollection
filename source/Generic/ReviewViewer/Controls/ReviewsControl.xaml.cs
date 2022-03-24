@@ -25,6 +25,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Threading;
 
 namespace ReviewViewer.Controls
 {
@@ -42,6 +43,7 @@ namespace ReviewViewer.Controls
 
         private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         private readonly DesktopView ActiveViewAtCreation;
+        private readonly DispatcherTimer timer;
         IPlayniteAPI PlayniteApi;
         public ReviewViewerSettingsViewModel SettingsModel { get; }
         
@@ -326,7 +328,7 @@ namespace ReviewViewer.Controls
         {
             selectedReviewSearch = ReviewSearchType.Positive;
             SummaryGrid.Visibility = Visibility.Collapsed;
-            Task.Run(() => UpdateReviewsContext());
+            UpdateReviewsContext();
         }
 
         public RelayCommand<object> SwitchNegativeReviewsCommand
@@ -341,7 +343,7 @@ namespace ReviewViewer.Controls
         {
             selectedReviewSearch = ReviewSearchType.Negative;
             SummaryGrid.Visibility = Visibility.Collapsed;
-            Task.Run(() => UpdateReviewsContext());
+            UpdateReviewsContext();
         }
 
         public ReviewsControl(string pluginUserDataPath, string steamApiLanguage, ReviewViewerSettingsViewModel settings, IPlayniteAPI playniteApi)
@@ -357,6 +359,16 @@ namespace ReviewViewer.Controls
             {
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(220);
+            timer.Tick += new EventHandler(TimerUpdateContext);
+        }
+
+        private void TimerUpdateContext(object sender, EventArgs e)
+        {
+            timer.Stop();
+            UpdateReviewsContext();
         }
 
         private void ResetBindingValues()
@@ -377,6 +389,7 @@ namespace ReviewViewer.Controls
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
+            timer.Stop();
             //The GameContextChanged method is rised even when the control
             //is not in the active view. To prevent unecessary processing we
             //can stop processing if the active view is not the same one was
@@ -395,7 +408,7 @@ namespace ReviewViewer.Controls
             }
 
             currentGame = newContext;
-            Task.Run(() => UpdateReviewsContext());
+            timer.Start();
         }
 
         public void UpdateReviewsContext()
