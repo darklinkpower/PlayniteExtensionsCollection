@@ -8,12 +8,12 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionName">Назва</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate">Шаблон пошуку</sys:String>
 
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelRemoveSelected">Remove selected</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAlreadyExists">A search definition with the same search template already exists</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelRemoveSelected">Прибрати обране</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAlreadyExists">Визначення пошуку з таким самим пошуковим шаблоном вже існує</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinition">Нове визначення пошуку</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionName">Назва:</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionSearchTemplate">Шаблон пошуку:</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Додати нове визначення пошуку</sys:String>
 
-    <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Use %s where the game name should be substituted. For example: &quot;https://duckduckgo.com/?q=%s&quot; will turn into &quot;https://duckduckgo.com/?q=Braid&quot; when searching with a game named &quot;Braid&quot;</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Використовуйте %s , де потрібно замінити назву гри. Наприклад: &quot;https://duckduckgo.com/?q=%s&quot; перетвориться на &quot;https://duckduckgo.com/?q=Braid&quot; під час пошуку гри з назвою &quot;Braid&quot;</sys:String>
 </ResourceDictionary>
