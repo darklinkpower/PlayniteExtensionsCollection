@@ -47,7 +47,6 @@ namespace ReviewViewer.Controls
         IPlayniteAPI PlayniteApi;
         public ReviewViewerSettingsViewModel SettingsModel { get; }
         
-        private string currentSteamId;
         private Game currentGame;
 
         public enum ReviewSearchType { All, Positive, Negative };
@@ -420,7 +419,6 @@ namespace ReviewViewer.Controls
                 return;
             }
 
-            currentSteamId = null;
             if (newContext == null)
             {
                 ResetBindingValues();
@@ -456,15 +454,12 @@ namespace ReviewViewer.Controls
                 {
                     return;
                 }
-                
+
+                var currentSteamId = Steam.GetGameSteamId(currentGame, true);
                 if (currentSteamId == null)
                 {
-                    var currentSteamId = Steam.GetGameSteamId(currentGame, true);
-                    if (currentSteamId == null)
-                    {
-                        MainPanelVisibility = Visibility.Collapsed;
-                        return;
-                    }
+                    MainPanelVisibility = Visibility.Collapsed;
+                    return;
                 }
 
                 var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
