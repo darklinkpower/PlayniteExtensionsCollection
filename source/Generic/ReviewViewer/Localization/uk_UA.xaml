@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCReview_Viewer_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingsHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Переглядач Відгуків</sys:String>
     <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Оновити дані відгуків вибраних ігор</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">Завантажити дані знову для ігор, які їх вже мають?</sys:String>
@@ -11,7 +11,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Завантажити дані відгуків при виборі гри у разі відсутності</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Висота опису</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Показувати корисність відгуку</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Display review date</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Показувати дату огляду</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Всього відгуків:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Позитивні відгуки:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Негативні відгуки:</sys:String>
@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Відгук:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Відгук</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Відгуки</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Posted: {0}</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Опубліковано: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Рекомендовано</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Не рекомендовано</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} годин {1} хвилин під час написання відгуку</sys:String>

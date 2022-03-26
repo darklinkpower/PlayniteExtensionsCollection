@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription">Åpne verktøy-vindu</sys:String>
 
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Start Steam på nytt etter behandling av spill for å gjenspeile endringer i Steam om nødvendig</sys:String>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">Загальні налаштування</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingOtherHeaderLabel">Інші налаштування</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Параметри відео</sys:String>
@@ -88,8 +88,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">Видалити мікро-відео вибраних ігор</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">Виберіть відеофайл, щоб встановити його як відео для вибраної гри</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">Завантажити відео з YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Download videos from YouTube for all selected games automatically</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Downloading videos from YouTube…</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Завантажувати відео з YouTube для всіх вибраних ігор автоматично</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Завантаження відео з YouTube…</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Встановлення відео гри з обраного відеофайлу...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Логотипи</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Відео</sys:String>
@@ -144,8 +144,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Шукати відео на YouTube</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Відео не знайдено</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Вибирати логотипи для завантажити автоматично?
     
-Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
-Select &quot;No&quot; to manually make selections when necessary.</sys:String>
+Виберіть &quot;Так&quot;, щоб логотипи завантажувалися повністю автоматично.
+Виберіть &quot;Ні&quot;, щоб при можливості робити вибір вручну.</sys:String>
 </ResourceDictionary>
