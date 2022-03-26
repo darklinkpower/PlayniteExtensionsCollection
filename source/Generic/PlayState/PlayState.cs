@@ -120,6 +120,14 @@ namespace PlayState
                     .Show();
                 ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
             }
+
+            var suspendPlaytimeOnlyFeature = PlayniteApi.Database.Features.FirstOrDefault(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase));
+            if (suspendPlaytimeOnlyFeature != null)
+            {
+                suspendPlaytimeOnlyFeature.Name = "[PlayState] Override suspend playtime only setting";
+                PlayniteApi.Database.Features.Update(suspendPlaytimeOnlyFeature);
+                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCPlayState_MessageSuspPlaytimeOnlyMigration"), "PlayState");
+            }
         }
 
         internal bool RegisterGlobalHotkey()
@@ -304,9 +312,10 @@ namespace PlayState
             List<ProcessItem> gameProcesses;
 
             suspendPlaytimeOnly = false;
+            var ignoreSuspendPlaytimeSetting = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Override suspend playtime only setting", StringComparison.OrdinalIgnoreCase)) : false;
             if (settings.Settings.SubstractSuspendedPlaytimeOnStopped &&
-                (settings.Settings.GlobalOnlySuspendPlaytime ||
-                game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase))))
+                (settings.Settings.GlobalOnlySuspendPlaytime && !ignoreSuspendPlaytimeSetting ||
+                !settings.Settings.GlobalOnlySuspendPlaytime && ignoreSuspendPlaytimeSetting))
             {
                 suspendPlaytimeOnly = true;
                 currentGame = game;
@@ -862,7 +871,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToPlaytimeSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Override suspend playtime only setting");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
@@ -871,7 +880,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Override suspend playtime only setting");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }

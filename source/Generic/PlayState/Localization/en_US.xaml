@@ -2,17 +2,17 @@
     <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Add selected games to PlayState Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Remove selected games from Playstate Blacklist</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to override suspend playtime only setting</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to override suspend playtime only setting</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
 
 You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Added {0} game(s) to the PlayState blacklist.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Removed {0} game(s) from the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to override suspend playtime only setting when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Removed configuration to override suspend playtime only setting when using the configured hotkey from {0} game(s).
 
-Games will be suspended when using the configured hotkey.</sys:String>
+Games will respect the state of the global setting of only suspend playtime count globally and not the game processes.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
@@ -31,6 +31,10 @@ Changing this setting requires restart.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
 
 This feature is only supported on Windows 10 and Windows 11</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageSuspPlaytimeOnlyMigration" xml:space="preserve">PlayState has modified the behaviour of the game feature previously called "[PlayState] Suspend Playtime only". This feature is now called "[PlayState] Override suspend playtime only setting".
+
+With this new game feature, the games that have it will override the state of "Only suspend playtime count globally and not the game processes" setting, and so will do the opposite of that setting.
+So if that setting is enabled and this feature is added, that game will suspend playtime and the game processes, and if that setting is disabled and this feature added, will only suspend playtime and not the game processes.</sys:String>
     <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
 
 For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
@@ -41,7 +45,8 @@ For better compatibility with games, some adjustments to your Windows configurat
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Only suspend playtime count globally and not the game processes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
-This can also be applied individually per game by adding a feature named "[PlayState] Suspend playtime only" to a game</sys:String>
+The state of this setting can be overridden individually per game by adding a feature named "[PlayState] Override suspend playtime only setting" to a game.
+If this feature is added, the behaviour of the pause / resume of the game will be the opposite of the state of this setting.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Show native Windows notifications instead of Playnite notification window</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">By enabling this option, games will show native Windows notifications instead of Playnite notification window.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
