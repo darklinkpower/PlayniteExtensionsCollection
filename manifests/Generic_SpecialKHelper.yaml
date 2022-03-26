@@ -55,3 +55,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_7.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.8
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_8.pext
+    Changelog:
+    - 'Updated localizations'

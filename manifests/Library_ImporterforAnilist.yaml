@@ -137,3 +137,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.17_881638e7/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_20.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_21.pext
+    Changelog:
+    - 'Updated localizations'

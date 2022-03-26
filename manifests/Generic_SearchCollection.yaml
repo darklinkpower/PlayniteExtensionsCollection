@@ -78,3 +78,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.23_32f4ed05/Search_Collection_2_11.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.12
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/Search_Collection_2_12.pext
+    Changelog:
+    - 'Updated localizations'

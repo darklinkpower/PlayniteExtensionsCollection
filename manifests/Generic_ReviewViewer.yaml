@@ -154,3 +154,10 @@ Packages:
     - 'Updated localizations'
     - 'Fix crash when downloaded Steam review data was not succesful'
     - 'Added option to display review date (Enabled by default)'
+  - Version: 2.23
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_23.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix downloading invalid data for games that do not have review data on selection'

@@ -64,3 +64,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.23_32f4ed05/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_9.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.10
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_10.pext
+    Changelog:
+    - 'Updated localizations'
