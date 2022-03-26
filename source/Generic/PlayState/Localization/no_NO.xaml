@@ -40,9 +40,9 @@ For bedre kompatibilitet med spill, trengs noen justeringer i Windows-konfiguras
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hjelper til med å holde en mer nøyaktig spilltidsverdi i spill, ved å bare la tiden spillet ikke var på pause telle inn i spilletiden</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Bare kjør for spill som ikke administreres av bibliotekutvidelser</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Bare sett spilltiden på pause globalt og ikke for spillprosessene</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Ved å aktivere denne innstillingen, vil ikke spill bli pauset av den konfigurerte hurtigtasten. I stedet vil den kun aktivere pausing av tiden som skal trekkes fra spilletid ved avslutning.
     
-This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game</sys:String>
+Dette kan også aktiveres for individuelle spill ved å legge til funksjonen &quot;[PlayState] Suspend playtime only&quot;.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Bruk standard Windows-varsler i stedet for Playnites varslingsvindu</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Ved å aktivere dette alternativet, vil spill bruke standard Windows-varsler i stedet for Playnites varslingsvindu.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Vis spilletid for økt i varsel</sys:String>

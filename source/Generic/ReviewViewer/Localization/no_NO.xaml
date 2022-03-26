@@ -11,7 +11,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Last ned omtaledata for valgte spill der det mangler</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Omtalefeltets høyde</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Vis data om omtalens kvalitet</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Display review date</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Vis omtaledato</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Totalt antall omtaler:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive omtaler:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative omtaler:</sys:String>
@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCReview_Viewer_Review">Omtale:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">Omtale</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">Omtaler</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Posted: {0}</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Postet: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Anbefalt</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Ikke anbefalt</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} timer og {1} minutter ved tidspunkt for omtale</sys:String>
