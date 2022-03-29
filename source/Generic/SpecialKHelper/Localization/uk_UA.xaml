@@ -39,9 +39,9 @@
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Вимкнути нав'язані додатки Nvidia</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Встановити ліміт частоти кадрів</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Цільові FPS:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay.
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Примітка: щоб переконатися, що ви вказали правильне значення для конкретного монітора, будь ласка, спочатку зверніться до значень наданих оверлеєм Special K.
 
-After you have a correct value, you can paste it to the text box.</sys:String>
+Після того, як у вас буде правильне значення, ви можете вставити його до текстового поля.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Глобальний режим</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Вибірковий режим</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Робочий стіл</sys:String>
@@ -73,9 +73,9 @@ After you have a correct value, you can paste it to the text box.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Клавіша:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Значення:</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
+    <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Перемикач стану Special K Helper
 
-Indicates if the extension is allowed to start the Special K services when starting a game.
-If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
+Вказує, чи дозволено розширенню запускати Special K під час запуску гри.
+Якщо вимкнено, служби не будуть запущені незалежно від налаштувань чи конфігурації.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Показувати кнопку на бічній панелі, щоб перемикати стан розширення</sys:String>
 </ResourceDictionary>
