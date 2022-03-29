@@ -3,19 +3,19 @@
     <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Відкрити редактор профілів Special K</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Open Steam Controller configuration for &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id for game &quot;{0}&quot; needed to open the configuration was not found.
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Відкрийте конфігурацію контролера Steam для &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id для гри &quot;{0}, необхідний для відкриття конфігурації не знайдено.
 
-Please launch the game once so this Id can be automatically configured.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Configuration for game &quot;{0}&quot; with Steam Id &quot;{1}&quot; will be opened.
+Будь ласка, запустіть гру один раз, щоб цей Id можна було автоматично налаштувати.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Конфігурацію контролера Steam для гри &quot;{0}&quot; зі Steam Id &quot;{1}&quot; буде відкрито.
 
-Be aware that a controller needs to be currently connected and enabled for Steam Controller for the configuration window to open.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Add feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Remove feature to disable execution in Global Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Add feature to enable execution in Selective Mode</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Remove feature to enable execution in Selective Mode</sys:String>
+Майте на увазі, що контролер повинен бути підключений і увімкнений, щоб вікно конфігурації контролера Steam відкрилося.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Додати особливість для вимкнення виконання в Глобальному Режимі</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Прибрати особливість для вимкнення виконання в Глобальному Режимі</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Додати особливість для вимкнення виконання в Вибірковому Режимі</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Прибрати особливість для вимкнення виконання в Вибірковому Режимі</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Select game to use for Steam configuration or cancel to use a generic option</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Виберіть гру для конфігурації Steam, або виберіть скасування для використання загальних параметрів</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Файл Special K не знайдено в {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Сервіс {0} Special K не може бути запущений</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Редактор профілів Special K</sys:String>
@@ -23,19 +23,19 @@ Be aware that a controller needs to be currently connected and enabled for Steam
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Готово</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Режим виконання Special K:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Global Mode: Special K services are started when launching all games except for those that have the &quot;[SK] Global Mode Disable&quot; exclusion feature added by the extension
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Глобальний Режим: сервіси Special K запускаються під час запуску всіх ігор, окрім тих, які мають особливість &quot;[SK] Global Mode Disable&quot;, додану розширенням
 
-Selective Mode: Special K services are started only for games that have the inclusion feature &quot;[SK] Selective Mode Enable&quot; added by the extension</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Only start Special K services when starting PC games</sys:String>
+Вибірковий Режим: сервіси Special K запускаються лише для ігор, які мають особливість &quot;[SK] Selective Mode Enable&quot;, додану розширенням</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Зупинити запуск служб, якщо у грі є особливість &quot;Valve Anti-Cheat Enabled&quot;</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Зупинити запуск сервісів, якщо було виявлено, що гра використовує EasyAntiCheat</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Запускати сервіси Special K лише при запуску ПК ігор</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Default settings for new profiles created by Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Параметри за замовчуванням для нових профілів, створених Special K</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Увімкнути оверлей Steam</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam overlay to use if Steam Big Picture mode is running:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Використовувати такий оверлей, якщо запущено режим Steam Big Picture:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Увімкнути Reshade</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Enable Flip Model Presentation</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Увімкнути Flip Model Presentation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Дозволяє іграм працювати так само або краще, коли вони запущені у віконному режимі</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Вимкнути нав'язані додатки Nvidia</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Встановити ліміт частоти кадрів</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Цільові FPS:</sys:String>
