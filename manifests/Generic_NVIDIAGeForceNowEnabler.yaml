@@ -155,3 +155,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_901ef791/NVIDIA_GeForce_Now_Enabler_2_23.pext
     Changelog:
     - 'Fix entry detection failing after latest changes in GeForce NOW database'
+  - Version: 2.24
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_a5bb55cf/NVIDIA_GeForce_Now_Enabler_2_24.pext
+    Changelog:
+    - 'Fix not correctly detecting GeForce NOW executable on game launch'
