@@ -188,3 +188,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/Installation_Status_Updater_2_27.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.28
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_901ef791/Installation_Status_Updater_2_28.pext
+    Changelog:
+    - 'Updated localizations'

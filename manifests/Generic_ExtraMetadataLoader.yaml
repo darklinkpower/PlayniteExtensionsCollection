@@ -334,3 +334,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_46.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.47
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_901ef791/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_47.pext
+    Changelog:
+    - 'Updated localizations'

@@ -161,3 +161,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix downloading invalid data for games that do not have review data on selection'
+  - Version: 2.24
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_901ef791/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_24.pext
+    Changelog:
+    - 'Updated localizations'
