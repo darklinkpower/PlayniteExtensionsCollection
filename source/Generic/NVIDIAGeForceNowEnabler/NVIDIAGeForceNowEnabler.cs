@@ -48,11 +48,13 @@ namespace NVIDIAGeForceNowEnabler
         {
             if (!FileSystem.FileExists(gfnDatabasePath))
             {
+                logger.Debug($"Database in {gfnDatabasePath} not found on startup");
                 supportedList = new List<GeforceGame>();
                 return;
             }
 
             supportedList = Serialization.FromJsonFile<List<GeforceGame>>(gfnDatabasePath);
+            logger.Debug($"Deserialized database in {gfnDatabasePath} with {supportedList.Count} entries on startup");
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -107,32 +109,27 @@ namespace NVIDIAGeForceNowEnabler
         private string SatinizeString(string str)
         {
             var satinizedString = str.Replace("Game of the Year Edition", "Game of the Year");
-            satinizedString = Regex.Replace(satinizedString, @"[^\p{L}\p{Nd}]", "").ToLower();
-            return satinizedString;
+            return Regex.Replace(satinizedString, @"[^\p{L}\p{Nd}]", "").ToLower();
         }
 
-        public List<GeforceGame> DownloadGameList(bool showDialogs)
+        public void RefreshGameList(bool showDialogs)
         {
-            var supportedGames = new List<GeforceGame>();
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 try
                 {
                     var downloadedString = HttpDownloader.DownloadString(@"https://static.nvidiagrid.net/supported-public-game-list/gfnpc.json");
-                    supportedGames = Serialization.FromJson<List<GeforceGame>>(downloadedString);
-                    if (supportedGames.Count >= 0)
+                    logger.Debug($"Downloaded nvidia database");
+                    var supportedList = Serialization.FromJson<List<GeforceGame>>(downloadedString);
+                    logger.Debug($"Deserialized database with {supportedList.Count} supported games");
+                    if (supportedList.Count >= 0)
                     {
-                        foreach (var supportedGame in supportedGames)
+                        foreach (var supportedGame in supportedList)
                         {
-                            supportedGame.Title = SatinizeString(supportedGame.Title);
-                            if (supportedGame.Store == "Origin")
-                            {
-                                supportedGame.Title = SatinizeOriginGameName(supportedGame.Title);
-                            }
+                            supportedGame.Title = SatinizeOriginGameName(SatinizeString(supportedGame.Title));
                         }
 
-                        FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(supportedGames));
-                        supportedList = supportedGames;
+                        FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(supportedList));
                     }
                 }
                 catch (Exception e)
@@ -144,8 +141,6 @@ namespace NVIDIAGeForceNowEnabler
                     }
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_DownloadingDatabaseProgressMessage")));
-
-            return supportedGames;
         }
 
         public IEnumerable<Game> GetGamesSupportedLibraries()
@@ -164,8 +159,7 @@ namespace NVIDIAGeForceNowEnabler
                 Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e")
             };
 
-            var gameDatabase = PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
-            return gameDatabase;
+            return PlayniteApi.Database.Games.Where(g => supportedLibraries.Contains(g.PluginId));
         }
 
         private string SatinizeOriginGameName(string gameName)
@@ -183,19 +177,23 @@ namespace NVIDIAGeForceNowEnabler
             var featureName = "NVIDIA GeForce NOW";
             var feature = PlayniteApi.Database.Features.Add(featureName);
 
-            var supportedGames = DownloadGameList(showDialogs);
-            if (supportedGames.Count() == 0)
+            RefreshGameList(showDialogs);
+            if (supportedList.Count() == 0)
             {
                 // In case download failed.
                 // Also sometimes there are issues with the api and it doesn't return any games in the response
+                logger.Debug($"Supported games were 0 so execution was stopped");
                 return;
             }
 
-            var supportedSteamGames = supportedGames.Where(g => g.Store == "Steam");
-            var supportedEpicGames = supportedGames.Where(g => g.Store == "Epic");
-            var supportedOriginGames = supportedGames.Where(g => g.Store == "Origin");
-            var supportedUplayGames = supportedGames.Where(g => g.Store == "Ubisoft Connect");
-            var supportedGogGames = supportedGames.Where(g => g.Store == "GOG");
+
+            // Entries in the database no longer have the Store value in their database
+            // It remains to be seen if this is permanent or temporary
+            //var supportedSteamGames = supportedGames.Where(g => g.Store == "Steam");
+            //var supportedEpicGames = supportedGames.Where(g => g.Store == "Epic");
+            //var supportedOriginGames = supportedGames.Where(g => g.Store == "Origin");
+            //var supportedUplayGames = supportedGames.Where(g => g.Store == "Ubisoft Connect");
+            //var supportedGogGames = supportedGames.Where(g => g.Store == "GOG");
 
             int enabledGamesCount = 0;
             int featureAddedCount = 0;
@@ -205,38 +203,10 @@ namespace NVIDIAGeForceNowEnabler
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 var gameDatabase = GetGamesSupportedLibraries();
+                logger.Debug($"Starting detection of {gameDatabase.Count()} games from supported libraries");
                 foreach (var game in gameDatabase)
                 {
-                    var gameName = SatinizeString(game.Name);
-                    GeforceGame supportedGame = null;
-                    switch (game.PluginId.ToString())
-                    {
-                        case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
-                            //Steam
-                            var steamUrl = string.Format("https://store.steampowered.com/app/{0}", game.GameId);
-                            supportedGame = supportedSteamGames.FirstOrDefault(g => g.SteamUrl == steamUrl);
-                            break;
-                        case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
-                            //Epic
-                            supportedGame = supportedEpicGames.FirstOrDefault(g => g.Title == gameName);
-                            break;
-                        case "85dd7072-2f20-4e76-a007-41035e390724":
-                            //Origin
-                            gameName = SatinizeOriginGameName(gameName);
-                            supportedGame = supportedOriginGames.FirstOrDefault(g => g.Title == gameName);
-                            break;
-                        case "c2f038e5-8b92-4877-91f1-da9094155fc5":
-                            //Uplay
-                            supportedGame = supportedUplayGames.FirstOrDefault(g => g.Title == gameName);
-                            break;
-                        case "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e":
-                            //GOG
-                            supportedGame = supportedGogGames.FirstOrDefault(g => g.Title == gameName);
-                            break;
-                        default:
-                            break;
-                    }
-
+                    var supportedGame = GetDatabaseMatchingEntryForGame(game);
                     if (supportedGame == null)
                     {
                         if (PlayniteUtilities.RemoveFeatureFromGame(PlayniteApi, game, feature))
@@ -312,6 +282,32 @@ namespace NVIDIAGeForceNowEnabler
             PlayniteApi.Dialogs.ShowMessage(results, "NVIDIA GeForce NOW Enabler");
         }
 
+        private GeforceGame GetDatabaseMatchingEntryForGame(Game game)
+        {
+            var gameName = SatinizeOriginGameName(SatinizeString(game.Name));
+            switch (game.PluginId.ToString())
+            {
+                case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
+                    //Steam
+                    var steamUrl = string.Format("https://store.steampowered.com/app/{0}", game.GameId);
+                    return supportedList.FirstOrDefault(g => g.SteamUrl == steamUrl);
+                case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
+                    //Epic
+                    return supportedList.FirstOrDefault(g => g.SteamUrl.IsNullOrEmpty() && g.Title == gameName);
+                case "85dd7072-2f20-4e76-a007-41035e390724":
+                    //Origin
+                    return supportedList.FirstOrDefault(g => g.SteamUrl.IsNullOrEmpty() && g.Title == gameName);
+                case "c2f038e5-8b92-4877-91f1-da9094155fc5":
+                    //Uplay
+                    return supportedList.FirstOrDefault(g => g.SteamUrl.IsNullOrEmpty() && g.Title == gameName);
+                case "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e":
+                    //GOG
+                    return supportedList.FirstOrDefault(g => g.SteamUrl.IsNullOrEmpty() && g.Title == gameName);
+                default:
+                    return null;
+            }
+        }
+
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {
             if (!settings.Settings.ShowPlayActionsOnLaunch)
@@ -319,13 +315,17 @@ namespace NVIDIAGeForceNowEnabler
                 return null;
             }
             
-            if (supportedList.Count == 0)
+            var game = args.Game;
+            // Library plugins set the game installation directory when they are
+            // detected as installed. This is used to detect this and not show the Play
+            // Action if it is detected as installed by the game library plugin.
+            if (!game.InstallDirectory.IsNullOrEmpty())
             {
-                logger.Debug("Supported list was not set");
+                logger.Debug("Game install dir was not empty and was skipped");
                 return null;
             }
 
-            if (!FileSystem.FileExists(geforceNowExecutablePath))
+            if (FileSystem.FileExists(geforceNowExecutablePath))
             {
                 logger.Debug("Geforce Now Executable was not detected");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
@@ -337,67 +337,16 @@ namespace NVIDIAGeForceNowEnabler
                 return null;
             }
 
-            var game = args.Game;
-
-            // Library plugins set the game installation directory when they are
-            // detected as installed. This is used to detect this and not show the Play
-            // Action if it is detected as installed by the game library plugin.
-            if (!string.IsNullOrEmpty(game.InstallDirectory))
+            if (supportedList.Count == 0)
             {
-                logger.Debug("Game install dir was not empty and was skipped");
+                logger.Debug("Supported list was not set");
                 return null;
             }
 
-            var storeName = string.Empty;
-            switch (game.PluginId.ToString())
-            {
-                //Steam
-                case "cb91dfc9-b977-43bf-8e70-55f46e410fab":
-                    storeName = "Steam";
-                    break;
-                //Epic
-                case "00000002-dbd1-46c6-b5d0-b1ba559d10e4":
-                    storeName = "Epic";
-                    break;
-                //Origin
-                case "85dd7072-2f20-4e76-a007-41035e390724":
-                    storeName = "Origin";
-                    break;
-                //Uplay
-                case "c2f038e5-8b92-4877-91f1-da9094155fc5":
-                    storeName = "Ubisoft Connect";
-                    break;
-                //GOG
-                case "aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e":
-                    storeName = "GOG";
-                    break;
-                default:
-                    break;
-            }
-
-            if (storeName == string.Empty)
-            {
-                return null;
-            }
-            
-            GeforceGame supportedGame;
-            if (storeName == "Steam")
-            {
-                var steamUrl = string.Format("https://store.steampowered.com/app/{0}", game.GameId);
-                supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.SteamUrl == steamUrl);
-            }
-            else
-            {
-                var matchingName = SatinizeString(game.Name);
-                if (storeName == "Origin")
-                {
-                    matchingName = SatinizeOriginGameName(matchingName);
-                }
-                supportedGame = supportedList.FirstOrDefault(g => g.Store == storeName && g.Title == matchingName);
-            }
-
+            var supportedGame = GetDatabaseMatchingEntryForGame(game);
             if (supportedGame != null)
             {
+                logger.Debug($"Database entry with id {supportedGame.Id} found on startup for game {game.Name}");
                 return new List<PlayController>()
                 {
                     new NVIDIAGeForceNowEnablerPlayController(game, supportedGame.Id.ToString(), geforceNowExecutablePath, geforceNowWorkingPath)
