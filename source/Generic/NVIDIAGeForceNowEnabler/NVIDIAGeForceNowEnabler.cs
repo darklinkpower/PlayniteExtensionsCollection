@@ -325,7 +325,7 @@ namespace NVIDIAGeForceNowEnabler
                 return null;
             }
 
-            if (FileSystem.FileExists(geforceNowExecutablePath))
+            if (!FileSystem.FileExists(geforceNowExecutablePath))
             {
                 logger.Debug("Geforce Now Executable was not detected");
                 PlayniteApi.Notifications.Add(new NotificationMessage(
