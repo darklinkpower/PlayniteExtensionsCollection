@@ -5,17 +5,17 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Прибрати вибрані ігри з чорного списку Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Налаштувати обрані ігри, щоб примусово призупиняти лише час у грі</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Видалити конфігурацію, щоб примусово призупиняти лише час у грі</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Налаштувати обрані ігри, щоб примусово призупиняти процеси</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Прибрати конфігурацію для примусового призупинення процесів</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Не вдалося зареєструвати налаштовану гарячу клавішу {0}
 
 Можете спробувати іншу комбінацію гарячих клавіш, щоб розв'язати проблему</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Додано {0} ігор до чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Прибрано {0} ігор з чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Налаштовано {0} ігор для примусового призупинення часу у грі при використанні гарячої клавіші.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Configured {0} game(s) to force to suspend playtime and processes when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Прибрано конфігурацію, яка примушувала призупиняти час у грі лише при використанні налаштованої гарячої клавіші з {0} гри/ігор.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Налаштовано {0} ігор для примусового призупинення часу у грі та процесів при використанні гарячої клавіші.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Видалено конфігурацію для примусового призупинення часу у грі та процесів при використанні налаштованої гарячої клавіші з {0} гри/ігор.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Гру призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Гру відновлено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Час у грі призупинено</sys:String>
