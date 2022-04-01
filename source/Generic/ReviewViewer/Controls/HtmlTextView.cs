@@ -32,8 +32,7 @@ namespace ReviewViewer.Controls
             text-decoration: none;
         }
         spoiler {
-            background-color: black;
-            text-decoration: line-through;
+            background-color: {foreground};
         }
         img {
             max-width: 100%;
