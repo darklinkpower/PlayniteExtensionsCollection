@@ -42,10 +42,10 @@
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Допомагає вести облік часу у грі точніше, не враховуючи час, поки гра знаходиться в призупиненому стані</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Виконувати лише для ігор, якими не керують плагіни бібліотек</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Призупиняти підрахунок часу у грі лише глобально, а не в ігрових процесах</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Увімкнувши дану опцію, всі ігри не будуть призупинені при використанні налаштованої гарячої клавіші. Проте весь час, поки опція активна, буде віднятий від часу у грі.
     
-This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game, if you want to have this setting enabled in that game,
-or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to have it disabled on that game.</sys:String>
+Це також може бути застосовано індивідуально для кожної гри, додавши орсобливість &quot;[PlayState] Suspend playtime only&quot; до гри, якщо ви бажаєте щоб цей параметр був увімкнений в цій грі,
+або особливість &quot;[PlayState] Suspend processes&quot;, якщо ви хочете вимкнути цю опцію.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Показувати сповіщення Windows замість вікна сповіщень Playnite</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Увімкнувши цю опцію, ігри показуватимуть сповіщення Windows замість вікна сповіщень Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Показувати час гри поточної сесії у сповіщенні</sys:String>
