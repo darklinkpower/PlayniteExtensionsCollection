@@ -286,7 +286,6 @@ namespace PlayState
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-
             var gameData = GetGameData(currentGame);
             if (gameData != null && gameData.IsSuspended)
             {
@@ -753,41 +752,52 @@ namespace PlayState
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             var game = args.Game;
-            var gameData = GetGameData(game);
-            if (gameData != null)
-            {
-                gameData.GameProcesses = null;
-            }
-
             if (currentSplashWindow != null)
             {
                 currentSplashWindow.Hide();
                 currentSplashWindow.Topmost = false;
             }
 
-            if (settings.Settings.SubstractSuspendedPlaytimeOnStopped)
+            var gameData = GetGameData(game);
+            if (gameData == null)
             {
-                if (game.PluginId == Guid.Empty ||
-                    (game.PluginId != Guid.Empty && !settings.Settings.SubstractOnlyNonLibraryGames))
-                {
-                    var suspendedTime = gameData.Stopwatch.Elapsed;
-                    if (suspendedTime != null)
-                    {
-                        var elapsedSeconds = Convert.ToUInt64(suspendedTime.TotalSeconds);
-                        logger.Debug($"Suspend elapsed seconds for game {game.Name} was {elapsedSeconds}");
-                        ExportPausedTimeInfo(game, elapsedSeconds); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-                        if (elapsedSeconds != 0)
-                        {
-                            var newPlaytime = game.Playtime > elapsedSeconds ? game.Playtime - elapsedSeconds : elapsedSeconds - game.Playtime;
-                            logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
-                            game.Playtime = newPlaytime;
-                            PlayniteApi.Database.Games.Update(game);
-                        }
-                    }
-                }
+                logger.Debug($"PlayState data for {game.Name} was not found on game stopped");
+                return;
             }
 
-            RemoveGame(game);
+            gameData.GameProcesses = null;
+            if (settings.Settings.SubstractSuspendedPlaytimeOnStopped)
+            {
+                SubstractPlaytimeFromPlayStateData(game, gameData);
+            }
+
+            RemovePlayStateData(gameData);
+        }
+
+        private void SubstractPlaytimeFromPlayStateData(Game game, PlayStateData gameData)
+        {
+            if (game.PluginId != Guid.Empty && settings.Settings.SubstractOnlyNonLibraryGames)
+            {
+                return;
+            }
+
+            var suspendedTime = gameData.Stopwatch.Elapsed;
+            if (suspendedTime == null)
+            {
+                logger.Debug($"PlayState data for {game.Name} had null suspendedTime");
+                return;
+            }
+
+            var elapsedSeconds = Convert.ToUInt64(suspendedTime.TotalSeconds);
+            logger.Debug($"Suspend elapsed seconds for game {game.Name} was {elapsedSeconds}");
+            ExportPausedTimeInfo(game, elapsedSeconds); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
+            if (elapsedSeconds != 0)
+            {
+                var newPlaytime = game.Playtime > elapsedSeconds ? game.Playtime - elapsedSeconds : elapsedSeconds - game.Playtime;
+                logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
+                game.Playtime = newPlaytime;
+                PlayniteApi.Database.Games.Update(game);
+            }
         }
 
         private void AddGame(Game game, List<ProcessItem> gameProcesses, bool suspendPlaytimeOnly = false)
@@ -804,17 +814,13 @@ namespace PlayState
             }
         }
 
-        private void RemoveGame(Game game)
+        private void RemovePlayStateData(PlayStateData gameData)
         {
-            var gameData = GetGameData(game);
-            if (gameData != null)
+            playStateData.Remove(gameData);
+            logger.Debug($"Data for game {gameData.Game.Name} with id {gameData.Game.Id} was removed");
+            if (currentGame == gameData.Game)
             {
-                playStateData.Remove(gameData);
-                logger.Debug($"Data for game {game.Name} with id {game.Id} was removed on game stopped");
-                if (currentGame == game)
-                {
-                    currentGame = playStateData.Any() ? playStateData.Last().Game : null;
-                }
+                currentGame = playStateData.Any() ? playStateData.Last().Game : null;
             }
         }
 
