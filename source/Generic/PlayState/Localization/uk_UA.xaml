@@ -5,15 +5,17 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Прибрати вибрані ігри з чорного списку Playstate</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Налаштувати обрані ігри, щоб примусово призупиняти лише час у грі</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Видалити конфігурацію, щоб примусово призупиняти лише час у грі</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Не вдалося зареєструвати налаштовану гарячу клавішу {0}
 
 Можете спробувати іншу комбінацію гарячих клавіш, щоб розв'язати проблему</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Додано {0} ігор до чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Прибрано {0} ігор з чорного списку PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Налаштовано {0} ігор для примусового призупинення часу у грі при використанні гарячої клавіші.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Видалено конфігурацію для примусового призупинення лише часу у грі при використанні налаштованої гарячої клавіші з {0} ігор.
-
-Ігри буде призупинено при використанні гарячої клавіші.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Configured {0} game(s) to force to suspend playtime and processes when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Гру призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Гру відновлено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Час у грі призупинено</sys:String>
@@ -40,9 +42,10 @@
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Допомагає вести облік часу у грі точніше, не враховуючи час, поки гра знаходиться в призупиненому стані</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Виконувати лише для ігор, якими не керують плагіни бібліотек</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Призупиняти підрахунок часу у грі лише глобально, а не в ігрових процесах</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Увімкнувши дану опцію, всі ігри не будуть призупинені при використанні налаштованої гарячої клавіші і тільки час буде зараховано до віднятого з часу у грі, коли вона зупиниться.
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
-Це також можна застосовувати індивідуально для кожної гри, додавши особливість &quot;[PlayState] Suspend playtime only&quot; до гри</sys:String>
+This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game, if you want to have this setting enabled in that game,
+or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to have it disabled on that game.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Показувати сповіщення Windows замість вікна сповіщень Playnite</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Увімкнувши цю опцію, ігри показуватимуть сповіщення Windows замість вікна сповіщень Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Показувати час гри поточної сесії у сповіщенні</sys:String>
