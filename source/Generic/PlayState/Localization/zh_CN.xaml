@@ -5,15 +5,17 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">将所选游戏从 PlayState 黑名单移除</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">将所选游戏配置为强制性地仅挂起游玩时间</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">移除强制性地仅挂起游玩时间的配置</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">已配置的热键 {0} 注册失败
 
 您可以尝试使用不同的热键组合以解决该问题</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">已将 {0} 个游戏添加到 PlayState 黑名单中。</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">已将 {0} 个游戏从 PlayState 黑名单移除。</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">配置了 {0} 个游戏，使其在使用配置的热键时强制性地仅挂起游玩时间。</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">从 {0} 个游戏中移除了使用配置的热键时强制性地仅挂起游玩时间的配置。
-
-当使用配置的热键时，游戏将被挂起。</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Configured {0} game(s) to force to suspend playtime and processes when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">游戏已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">游戏已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">游玩时间已挂起</sys:String>
@@ -40,9 +42,10 @@
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">通过仅保留游戏未挂起时的时间并计入游戏的游玩时间，来帮助得到更精确的游玩时间值。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">仅对不被库插件管理的游戏执行</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">仅挂起全局（而非游戏进程）的游玩时间记录</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">通过启用此选项，在使用已配置的热键时，所有游戏都不会被挂起，但时间被记录（并在游戏停止时从游玩时间扣除）。
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">By enabling this option, all games won't be suspended when using the configured hotkey and only the time will be counted to substracted from the game playtime when it stops.
     
-也可以单独应用于某一个游戏，方法是为其添加一个“[PlayState] Suspend playtime only”的功能特色。</sys:String>
+This can also be applied individually per game by adding a feature named &quot;[PlayState] Suspend playtime only&quot; to a game, if you want to have this setting enabled in that game,
+or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to have it disabled on that game.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">显示原生的 Windows 通知而不是 Playnite 通知窗口</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">启用此选项，游戏将显示原生 Windows 通知，而不是 Playnite 通知窗口。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">在通知消息中显示会话游玩时间</sys:String>
