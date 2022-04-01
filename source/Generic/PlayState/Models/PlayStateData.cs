@@ -16,8 +16,9 @@ namespace PlayState.Models
         public List<ProcessItem> GameProcesses { get; set; }
         public bool IsSuspended { get; set; }
         public bool ProcessesSuspended { get; set; }
+        public bool SuspendPlaytimeOnly { get; set; }
 
-        public PlayStateData(Game game, List<ProcessItem> gameProcesses)
+        public PlayStateData(Game game, List<ProcessItem> gameProcesses, bool suspendPlaytimeOnly)
         {
             Game = game;
             StartDate = DateTime.Now;
@@ -25,6 +26,7 @@ namespace PlayState.Models
             GameProcesses = gameProcesses;
             IsSuspended = false;
             ProcessesSuspended = false;
+            SuspendPlaytimeOnly = suspendPlaytimeOnly;
         }
     }
 }

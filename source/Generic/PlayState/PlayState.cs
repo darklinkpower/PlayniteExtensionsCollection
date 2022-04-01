@@ -38,7 +38,6 @@ namespace PlayState
         private List<string> exclusionList;
         private Window currentSplashWindow;
         private DispatcherTimer timer;
-        private bool suspendPlaytimeOnly = false;
         private Window mainWindow;
         private WindowInteropHelper windowInterop;
         private IntPtr mainWindowHandle;
@@ -303,15 +302,15 @@ namespace PlayState
 
             List<ProcessItem> gameProcesses;
 
-            suspendPlaytimeOnly = false;
+            var suspendPlaytimeOnlyFeature = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase)) : false;
+            var suspendProcessesFeature = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Processes", StringComparison.OrdinalIgnoreCase)) : false;
             if (settings.Settings.SubstractSuspendedPlaytimeOnStopped &&
-                (settings.Settings.GlobalOnlySuspendPlaytime ||
-                game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase))))
+                (settings.Settings.GlobalOnlySuspendPlaytime && !suspendProcessesFeature ||
+                !settings.Settings.GlobalOnlySuspendPlaytime && suspendPlaytimeOnlyFeature))
             {
-                suspendPlaytimeOnly = true;
                 currentGame = game;
                 gameProcesses = null;
-                AddGame(game, gameProcesses);
+                AddGame(game, gameProcesses, true);
                 return;
             }
 
@@ -640,7 +639,7 @@ namespace PlayState
                     gameData.ProcessesSuspended = true;
                 }
 
-                if (gameData.ProcessesSuspended || suspendPlaytimeOnly)
+                if (gameData.ProcessesSuspended || gameData.SuspendPlaytimeOnly)
                 {
                     if (gameData.IsSuspended)
                     {
@@ -791,7 +790,7 @@ namespace PlayState
             RemoveGame(game);
         }
 
-        private void AddGame(Game game, List<ProcessItem> gameProcesses)
+        private void AddGame(Game game, List<ProcessItem> gameProcesses, bool suspendPlaytimeOnly = false)
         {
             if (playStateData.Any(x => x.Game.Id == game.Id))
             {
@@ -799,7 +798,7 @@ namespace PlayState
             }
             else
             {
-                playStateData.Add(new PlayStateData(game, gameProcesses));
+                playStateData.Add(new PlayStateData(game, gameProcesses, suspendPlaytimeOnly));
                 var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
                 logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
             }
@@ -873,6 +872,24 @@ namespace PlayState
                     Action = a => {
                         var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToProcessesSuspendDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Processes");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_ProcessesSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription"),
+                    MenuSection = "@PlayState",
+                    Action = a => {
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Processes");
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_ProcessesSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }
             };
