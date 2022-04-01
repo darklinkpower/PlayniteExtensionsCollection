@@ -200,16 +200,14 @@ namespace PlayniteUtilitiesCommon
 
         public static bool IsGamePcGame(Game game)
         {
-            if (game.Platforms == null)
+            if (!game.Platforms.HasItems())
             {
-                logger.Info($"Game {game.Name} doesn't have platforms set");
                 return false;
             }
 
             if (game.Platforms.Any(x => x.Name == "PC (Windows)" ||
                       !string.IsNullOrEmpty(x.SpecificationId) && x.SpecificationId == "pc_windows"))
             {
-                logger.Info($"Game {game.Name} is PC platform");
                 return true;
             }
 

@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
@@ -98,17 +99,23 @@ namespace GamesSizeCalculator
             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageDone"));
         }
 
-        private void CalculateGameSize(Game game, bool forceNonEmpty)
+        private void CalculateGameSize(Game game, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
         {
-            if (!game.IsInstalled || (!forceNonEmpty && !string.IsNullOrEmpty(game.Version)))
+            if (!game.IsInstalled || (!forceNonEmpty && !game.Version.IsNullOrEmpty()))
             {
                 return;
             }
 
             long size = 0;
-            if (game.Platforms != null && game.Platforms.Any(p => p.Name == "PC (Windows)" || p.Name == "PC"))
+            if (PlayniteUtilities.IsGamePcGame(game))
             {
                 if (string.IsNullOrEmpty(game.InstallDirectory) || !Directory.Exists(game.InstallDirectory))
+                {
+                    return;
+                }
+
+                if (onlyIfNewerThanSetting &&
+                    (Directory.GetLastWriteTime(game.InstallDirectory) < settings.Settings.LastRefreshOnLibUpdate))
                 {
                     return;
                 }
@@ -129,24 +136,30 @@ namespace GamesSizeCalculator
                     return;
                 }
             }
-            else
+            else if (game.Roms.HasItems())
             {
-                var romPath = game.Roms?.FirstOrDefault()?.Path;
-                if (romPath == null)
+                var romPath = FileSystem.FixPathLength(game.Roms.First().Path);
+                if (romPath.IsNullOrEmpty())
                 {
                     return;
                 }
 
-                if (!string.IsNullOrEmpty(game.InstallDirectory))
+                if (!game.InstallDirectory.IsNullOrEmpty())
                 {
                     romPath = romPath.Replace("{InstallDir}", game.InstallDirectory).Replace("\\\\", "\\");
                 }
 
-                if (string.IsNullOrEmpty(romPath) || !FileSystem.FileExists(romPath))
+                if (!FileSystem.FileExists(romPath))
                 {
                     return;
                 }
 
+                if (onlyIfNewerThanSetting &&
+                    (File.GetLastWriteTime(romPath) < settings.Settings.LastRefreshOnLibUpdate))
+                {
+                    return;
+                }
+                
                 try
                 {
                     size = FileSystem.GetFileSizeOnDisk(romPath);
@@ -172,6 +185,7 @@ namespace GamesSizeCalculator
             var fSize = GetBytesReadable(size);
             if (game.Version.IsNullOrEmpty() || (!game.Version.IsNullOrEmpty() && game.Version != fSize))
             {
+                logger.Info($"Updated {game.Name} version field from {game.Version} to {fSize}");
                 game.Version = fSize;
                 PlayniteApi.Database.Games.Update(game);
             }
@@ -190,6 +204,57 @@ namespace GamesSizeCalculator
 
             // Return formatted number with suffix
             return readable.ToString("000.000 GB");
+        }
+
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
+        {
+            if (!settings.Settings.CalculateNewGamesOnLibraryUpdate && !settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
+            {
+                settings.Settings.LastRefreshOnLibUpdate = DateTime.Now;
+                SavePluginSettings(settings.Settings);
+                return;
+            }
+
+            var progressTitle = ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes");
+            var progressOptions = new GlobalProgressOptions(progressTitle, true);
+            progressOptions.IsIndeterminate = false;
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                var games = PlayniteApi.Database.Games.Where(x => x.IsInstalled);
+                a.ProgressMaxValue = games.Count();
+                foreach (var game in games)
+                {
+                    a.CurrentProgressValue++;
+                    if (a.CancelToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
+                    if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
+                    {
+                        if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
+                        {
+                            continue;
+                        }
+
+                        CalculateGameSize(game, false);
+                    }
+                    else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
+                    {
+                        // To make sure only Version fields filled by the extension are
+                        // replaced
+                        if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
+                        {
+                            continue;
+                        }
+
+                        CalculateGameSize(game, true, true);
+                    }
+                };
+            }, progressOptions);
+
+            settings.Settings.LastRefreshOnLibUpdate = DateTime.Now;
+            SavePluginSettings(settings.Settings);
         }
 
     }

@@ -16,5 +16,12 @@
         </TextBlock>
         <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel}"
                   IsChecked="{Binding Settings.CalculateOnGameClose}"/>
+        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel}"
+                  Margin="0,10,0,0"
+                  IsChecked="{Binding Settings.CalculateNewGamesOnLibraryUpdate}"/>
+        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel}"
+                  Margin="0,10,0,0"
+                  ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip}"
+                  IsChecked="{Binding Settings.CalculateModifiedGamesOnLibraryUpdate}"/>
     </StackPanel>
 </UserControl>

@@ -13,6 +13,14 @@ namespace GamesSizeCalculator
         private bool calculateOnGameClose = true;
 
         public bool CalculateOnGameClose { get => calculateOnGameClose; set => SetValue(ref calculateOnGameClose, value); }
+
+        public DateTime LastRefreshOnLibUpdate = DateTime.Now;
+        private bool calculateNewGamesOnLibraryUpdate = true;
+
+        public bool CalculateNewGamesOnLibraryUpdate { get => calculateNewGamesOnLibraryUpdate; set => SetValue(ref calculateNewGamesOnLibraryUpdate, value); }
+        private bool calculateModifiedGamesOnLibraryUpdate = true;
+
+        public bool CalculateModifiedGamesOnLibraryUpdate { get => calculateModifiedGamesOnLibraryUpdate; set => SetValue(ref calculateModifiedGamesOnLibraryUpdate, value); }
     }
 
     public class GamesSizeCalculatorSettingsViewModel : ObservableObject, ISettings
