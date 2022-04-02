@@ -52,9 +52,13 @@
         </DockPanel>
         <TextBlock Text="{DynamicResource LOCPlayState_SettingNotes}" Margin="40,10,0,0" TextWrapping="Wrap"/>
 
+        <CheckBox Content="{DynamicResource LOCPlayState_SettingShowManagerSidebarItem}"
+                  IsChecked="{Binding Settings.ShowManagerSidebarItem}"
+                  Margin="0,20,0,0"/>
+        
         <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
                   IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
-                  Margin="0,20,0,0"/>
+                  Margin="0,10,0,0"/>
         <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
                   IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
                   Margin="0,10,0,0"/>

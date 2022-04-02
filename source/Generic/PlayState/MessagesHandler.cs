@@ -20,16 +20,14 @@ namespace PlayState
         private readonly IPlayniteAPI playniteApi;
         private PlayStateSettingsViewModel settings;
         private Window currentSplashWindow;
-        private readonly PlayStateManagerViewModel playStateManager;
         private readonly bool isWindows10Or11;
         private readonly SplashWindowViewModel splashWindowViewModel;
         private readonly DispatcherTimer timer;
 
-        public MessagesHandler(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, PlayStateManagerViewModel playStateManager, bool isWindows10Or11)
+        public MessagesHandler(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, bool isWindows10Or11)
         {
             this.playniteApi = playniteApi;
             this.settings = playStateSettings;
-            this.playStateManager = playStateManager;
             this.isWindows10Or11 = isWindows10Or11;
             splashWindowViewModel = new SplashWindowViewModel();
 
@@ -56,14 +54,8 @@ namespace PlayState
         /// - "information" for showing the actual status<br/>
         /// </param>
         /// </summary>
-        public void ShowNotification(NotificationTypes status, Game game)
+        public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData)
         {
-            var gameData = playStateManager.GetCurrentGameData();
-            if (gameData == null)
-            {
-                return;
-            }
-
             var sb = new StringBuilder();
             switch (status)
             {
@@ -87,7 +79,7 @@ namespace PlayState
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusInformationMessage")} ");
                     if (gameData.IsSuspended)
                     {
-                        if (gameData.ProcessesSuspended)
+                        if (gameData.SuspendMode == SuspendModes.Processes)
                         {
                             sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
                         }
@@ -98,7 +90,7 @@ namespace PlayState
                     }
                     else
                     {
-                        if (gameData.ProcessesSuspended)
+                        if (gameData.SuspendMode == SuspendModes.Processes)
                         {
                             sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
                         }
@@ -118,22 +110,29 @@ namespace PlayState
             }
             if (settings.Settings.NotificationShowTotalPlaytime)
             {
-                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime(gameData) + game.Playtime)}");
+                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime(gameData) + gameData.Game.Playtime)}");
             }
             var notificationMessage = sb.ToString();
 
             if (settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11)
             {
                 new ToastContentBuilder()
-                    .AddText(game.Name) // First AddText field will act as a title
+                    .AddText(gameData.Game.Name) // First AddText field will act as a title
                     .AddText(notificationMessage)
-                    .AddHeroImage(new Uri(playniteApi.Database.GetFullFilePath(game.BackgroundImage))) // Show game image in the notification
+                    .AddHeroImage(new Uri(playniteApi.Database.GetFullFilePath(gameData.Game.BackgroundImage))) // Show game image in the notification
                     .Show();
             }
             else
             {
-                ShowSplashWindow(game.Name, notificationMessage);
+                ShowSplashWindow(gameData.Game.Name, notificationMessage);
             }
+        }
+
+        public void ShowGenericNotification(string message)
+        {
+            new ToastContentBuilder()
+            .AddText(message)
+            .Show();
         }
 
         public void HideWindow()
@@ -195,6 +194,7 @@ namespace PlayState
             {
                 elapsedSeconds = Convert.ToUInt64(suspendedTime.TotalSeconds);
             }
+
             return Convert.ToUInt64(DateTime.Now.Subtract(gameData.StartDate).TotalSeconds) - elapsedSeconds;
         }
 

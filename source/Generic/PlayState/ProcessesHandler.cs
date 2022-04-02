@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,11 @@ namespace PlayState
 {
     public static class ProcessesHandler
     {
+        [DllImport("ntdll.dll", PreserveSig = false)]
+        public static extern void NtSuspendProcess(IntPtr processHandle);
+        [DllImport("ntdll.dll", PreserveSig = false)]
+        public static extern void NtResumeProcess(IntPtr processHandle);
+
         private static readonly List<string> exclusionList = new List<string>
         {
             "7z.exe",

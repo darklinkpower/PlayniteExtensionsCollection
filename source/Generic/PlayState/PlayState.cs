@@ -8,33 +8,24 @@ using PlayState.ViewModels;
 using PlayState.Views;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Threading;
-using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using PluginsCommon;
 using PlayniteUtilitiesCommon;
-using System.Collections.ObjectModel;
 using System.Reflection;
 
 namespace PlayState
 {
     public class PlayState : GenericPlugin
     {
-        [DllImport("ntdll.dll", PreserveSig = false)]
-        public static extern void NtSuspendProcess(IntPtr processHandle);
-        [DllImport("ntdll.dll", PreserveSig = false)]
-        public static extern void NtResumeProcess(IntPtr processHandle);
+
         private static readonly ILogger logger = LogManager.GetLogger();
 
         private Window mainWindow;
@@ -60,8 +51,8 @@ namespace PlayState
                 HasSettings = true
             };
 
-            playStateManager = new PlayStateManagerViewModel(PlayniteApi);
-            messagesHandler = new MessagesHandler(PlayniteApi, settings, playStateManager, isWindows10Or11);
+            messagesHandler = new MessagesHandler(PlayniteApi, settings, isWindows10Or11);
+            playStateManager = new PlayStateManagerViewModel(PlayniteApi, messagesHandler);
         }
 
         private bool IsWindows10Or11()
@@ -75,17 +66,20 @@ namespace PlayState
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
         {
-            yield return new SidebarItem
+            if (settings.Settings.ShowManagerSidebarItem)
             {
-                Title = "PlayState",
-                Type = SiderbarItemType.View,
-                Icon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png"),
-                Opened = () => {
-                    var view = new PlayStateManagerView();
-                    view.DataContext = playStateManager;
-                    return view;
-                }
-            };
+                yield return new SidebarItem
+                {
+                    Title = "PlayState",
+                    Type = SiderbarItemType.View,
+                    Icon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png"),
+                    Opened = () => {
+                        var view = new PlayStateManagerView();
+                        view.DataContext = playStateManager;
+                        return view;
+                    }
+                };
+            }
         }
 
         // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
@@ -114,9 +108,7 @@ namespace PlayState
 
                 // A notification is shown so Playnite is added to the list
                 // to add Playnite to the priority list
-                new ToastContentBuilder()
-                    .AddText("PlayState")
-                    .Show();
+                messagesHandler.ShowGenericNotification("PlayState");
                 ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
             }
         }
@@ -181,12 +173,16 @@ namespace PlayState
                             var gameData = playStateManager.GetCurrentGameData();
                             if (gameData != null)
                             {
-                                SwitchGameState(gameData);
+                                playStateManager.SwitchGameState(gameData);
                             }
                         }
                         else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
                         {
-                            messagesHandler.ShowNotification(NotificationTypes.Information, playStateManager.CurrentGame);
+                            var gameData = playStateManager.GetCurrentGameData();
+                            if (gameData != null)
+                            {
+                                messagesHandler.ShowGameStatusNotification(NotificationTypes.Information, gameData);
+                            }
                         }
                         handled = true;
                         break;
@@ -204,7 +200,7 @@ namespace PlayState
             var gameData = playStateManager.GetCurrentGameData();
             if (gameData != null && gameData.IsSuspended)
             {
-                SwitchGameState(gameData);
+                playStateManager.SwitchGameState(gameData);
             }
 
             var game = args.Game;
@@ -214,186 +210,124 @@ namespace PlayState
                 return;
             }
 
-            List<ProcessItem> gameProcesses;
-
             var suspendPlaytimeOnlyFeature = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase)) : false;
             var suspendProcessesFeature = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Processes", StringComparison.OrdinalIgnoreCase)) : false;
-            if (settings.Settings.SubstractSuspendedPlaytimeOnStopped &&
-                (settings.Settings.GlobalOnlySuspendPlaytime && !suspendProcessesFeature ||
-                !settings.Settings.GlobalOnlySuspendPlaytime && suspendPlaytimeOnlyFeature))
+            if (!suspendProcessesFeature && settings.Settings.GlobalOnlySuspendPlaytime ||
+                suspendPlaytimeOnlyFeature)
             {
-                playStateManager.CurrentGame = game;
-                gameProcesses = null;
-                playStateManager.AddPlayStateData(game, gameProcesses, true);
+                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
                 return;
             }
 
-            Task.Run(async () =>
-            {
-                playStateManager.CurrentGame = game;
-                gameProcesses = null;
-                logger.Debug($"Changed game to {playStateManager.CurrentGame.Name} game processes");
-                var sourceAction = args.SourceAction;
-                if (sourceAction?.Type == GameActionType.Emulator)
-                {
-                    logger.Debug("Source action is emulator.");
-                    var emulatorProfileId = sourceAction.EmulatorProfileId;
-                    if (emulatorProfileId.StartsWith("#builtin_"))
-                    {
-                        //Currently it isn't possible to obtain the emulator path
-                        //for emulators using Builtin profiles
-                        logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
-                        return;
-                    }
-
-                    var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
-                    var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
-                    if (profile != null)
-                    {
-                        logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-                        gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable.ToLower());
-                        if (gameProcesses.Count > 0)
-                        {
-                            playStateManager.AddPlayStateData(game, gameProcesses);
-                        }
-                    }
-
-                    return;
-                }
-
-                if (game.InstallDirectory.IsNullOrEmpty())
-                {
-                    return;
-                }
-
-                var gameInstallDir = game.InstallDirectory.ToLower();
-
-                // Fix for some games that take longer to start, even when already detected as running
-                await Task.Delay(15000);
-                if (playStateManager.GetIsCurrentGameDifferent(game))
-                {
-                    return;
-                }
-
-                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
-                if (gameProcesses.Count > 0)
-                {
-                    logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
-                    playStateManager.AddPlayStateData(game, gameProcesses);
-                    return;
-                }
-
-                // Waiting is useful for games that use a startup launcher, since
-                // it can take some time before the user launches the game from it
-                await Task.Delay(40000);
-                var filterPaths = true;
-                for (int i = 0; i < 10; i++)
-                {
-                    // This is done to stop execution in case a new game was launched
-                    // or the launched game was closed
-                    if (playStateManager.GetIsCurrentGameDifferent(game))
-                    {
-                        logger.Debug($"Current game has changed. Execution of WMI Query task stopped.");
-                        return;
-                    }
-
-                    // Try a few times with filters.
-                    // If nothing is found, try without filters. This helps in cases
-                    // where the active process is being filtered out by filters
-                    logger.Debug($"Starting WMI loop number {i}");
-                    if (i == 5)
-                    {
-                        logger.Debug("FilterPaths set to false for WMI Query");
-                        filterPaths = false;
-                    }
-
-                    gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir);
-                    if (gameProcesses.Count > 0)
-                    {
-                        logger.Debug($"Found {gameProcesses.Count} game processes");
-                        playStateManager.AddPlayStateData(game, gameProcesses);
-                        return;
-                    }
-                    else
-                    {
-                        await Task.Delay(15000);
-                    }
-                }
-
-                logger.Debug("Couldn't find any game process");
-            });
+            InvokeGameProcessesDetection(args);
         }
 
-        private void SwitchGameState(PlayStateData gameData)
+        private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
         {
-            try
+            var game = args.Game;
+            playStateManager.SetDetectionId(game);
+            logger.Debug($"Changed detection Id game to {game.Name} with Id {game.Id}");
+            var gameProcesses = new List<ProcessItem> { };
+            
+            var sourceAction = args.SourceAction;
+            if (sourceAction?.Type == GameActionType.Emulator)
             {
-                gameData.ProcessesSuspended = false;
-                if (gameData.GameProcesses != null && gameData.GameProcesses.Count > 0)
+                logger.Debug("Source action is emulator.");
+                var emulatorProfileId = sourceAction.EmulatorProfileId;
+                if (emulatorProfileId.StartsWith("#builtin_"))
                 {
-                    foreach (var gameProcess in gameData.GameProcesses)
-                    {
-                        if (gameProcess == null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
-                        {
-                            return;
-                        }
-                        if (gameData.IsSuspended)
-                        {
-                            NtResumeProcess(gameProcess.Process.Handle);
-                        }
-                        else
-                        {
-                            NtSuspendProcess(gameProcess.Process.Handle);
-                        }
-                    }
-                    gameData.ProcessesSuspended = true;
+                    //Currently it isn't possible to obtain the emulator path
+                    //for emulators using Builtin profiles
+                    logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
+                    return;
                 }
 
-                if (gameData.ProcessesSuspended || gameData.SuspendPlaytimeOnly)
+                var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
+                var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
+                if (profile != null)
                 {
-                    if (gameData.IsSuspended)
+                    logger.Debug($"Custom emulator profile executable is {profile.Executable}");
+                    gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable.ToLower());
+                    if (gameProcesses.Count > 0)
                     {
-                        gameData.IsSuspended = false;
-                        if (gameData.ProcessesSuspended)
-                        {
-                            messagesHandler.ShowNotification(NotificationTypes.Resumed, gameData.Game);
-                        }
-                        else
-                        {
-                            messagesHandler.ShowNotification(NotificationTypes.PlaytimeResumed, gameData.Game);
-                        }
-                        gameData.Stopwatch.Stop();
-                        logger.Debug($"Game {gameData.Game.Name} resumed");
-                    }
-                    else
-                    {
-                        gameData.IsSuspended = true;
-                        if (gameData.ProcessesSuspended)
-                        {
-                            messagesHandler.ShowNotification(NotificationTypes.Suspended, gameData.Game);
-                        }
-                        else
-                        {
-                            messagesHandler.ShowNotification(NotificationTypes.PlaytimeSuspended, gameData.Game);
-                        }
-
-                        gameData.Stopwatch.Start();
-                        logger.Debug($"Game {gameData.Game.Name} suspended");
+                        playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
                     }
                 }
+
+                return;
             }
-            catch (Exception e)
+
+            if (game.InstallDirectory.IsNullOrEmpty())
             {
-                logger.Error(e, "Error while suspending or resuming game");
-                gameData.GameProcesses = null;
-                gameData.Stopwatch.Stop();
+                return;
             }
+
+            var gameInstallDir = game.InstallDirectory.ToLower();
+            // Fix for some games that take longer to start, even when already detected as running
+            await Task.Delay(15000);
+            if (!playStateManager.GameMatchedDetectionId(game))
+            {
+                logger.Debug($"Detection Id has changed. Execution of WMI Query task stopped.");
+                return;
+            }
+
+            gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
+            if (gameProcesses.Count > 0)
+            {
+                logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
+                playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
+                return;
+            }
+
+            // Waiting is useful for games that use a startup launcher, since
+            // it can take some time before the user launches the game from it
+            await Task.Delay(40000);
+            var filterPaths = true;
+            for (int i = 0; i < 7; i++)
+            {
+                // This is done to stop execution in case a new game was launched
+                // or the launched game was closed
+                if (!playStateManager.GameMatchedDetectionId(game))
+                {
+                    logger.Debug($"Current game has changed. Execution of WMI Query task stopped.");
+                    return;
+                }
+
+                // Try a few times with filters.
+                // If nothing is found, try without filters. This helps in cases
+                // where the active process is being filtered out by filters
+                logger.Debug($"Starting WMI loop number {i}");
+                if (i == 4)
+                {
+                    logger.Debug("FilterPaths set to false for WMI Query");
+                    filterPaths = false;
+                }
+
+                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir);
+                if (gameProcesses.Count > 0)
+                {
+                    logger.Debug($"Found {gameProcesses.Count} game processes");
+                    playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
+                    return;
+                }
+                else
+                {
+                    await Task.Delay(15000);
+                }
+            }
+
+            logger.Debug("Couldn't find any game process");
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             var game = args.Game;
             messagesHandler.HideWindow();
+
+            if (playStateManager.GameMatchedDetectionId(game))
+            {
+                playStateManager.ResetDetectionId();
+            }
 
             var gameData = playStateManager.GetDataOfGame(game);
             if (gameData == null)

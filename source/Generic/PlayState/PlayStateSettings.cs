@@ -43,6 +43,10 @@ namespace PlayState
         private bool notificationShowTotalPlaytime = true;
         public bool NotificationShowTotalPlaytime { get => notificationShowTotalPlaytime; set => SetValue(ref notificationShowTotalPlaytime, value); }
         public bool WindowsNotificationStyleFirstSetupDone = false;
+
+        [DontSerialize]
+        private bool showManagerSidebarItem = true;
+        public bool ShowManagerSidebarItem { get => showManagerSidebarItem; set => SetValue(ref showManagerSidebarItem, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
