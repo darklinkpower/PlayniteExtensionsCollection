@@ -20,6 +20,7 @@ using Microsoft.Win32;
 using PluginsCommon;
 using PlayniteUtilitiesCommon;
 using System.Reflection;
+using System.Windows.Media;
 
 namespace PlayState
 {
@@ -70,9 +71,13 @@ namespace PlayState
             {
                 yield return new SidebarItem
                 {
-                    Title = "PlayState",
+                    Title = ResourceProvider.GetString("LOCPlayState_PlayStateManagerViewHeaderLabel"),
                     Type = SiderbarItemType.View,
-                    Icon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png"),
+                    Icon = new TextBlock
+                    {
+                        Text = "\u0041",
+                        FontFamily = new FontFamily(new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateiconfont.ttf")), "./#playstateiconfont")
+                    },
                     Opened = () => {
                         var view = new PlayStateManagerView();
                         view.DataContext = playStateManager;
