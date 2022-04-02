@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Launcher_Utility_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_Utility_SettingsHelpLabel">Aide</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription">Lancer Steam avec les actions configurées</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemAddFilterFeatureDescription">Ajouter un mode de filtre aux jeux sélectionnés</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Retirer le mode de filtre des jeux sélectionnés</sys:String>

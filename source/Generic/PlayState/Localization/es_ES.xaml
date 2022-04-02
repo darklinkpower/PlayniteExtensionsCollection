@@ -5,15 +5,17 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Eliminar los juegos seleccionados de la lista de ignorados</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configura los juegos seleccionados para forzar que sólo suspendan el tiempo de juego</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Quitar configuración para forzar el suspender sólo el tiempo de juego</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configurar los juegos seleccionados a forzar la suspensión de procesos</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Quitar configuración para forzar la suspensión de procesos</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Error al registrar las teclas de acceso rápido configuradas {0}
 
 Puedes intentar usar una combinación diferente de teclas para solucionar el problema</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Se añadieron {0} juego(s) a la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Se removieron {0} juego(s) de la lista de exclusión de PlayState.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">{0} juego(s) configurado(s) para forzar a suspender el tiempo de juego al usar la teclas configuradas.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage" xml:space="preserve">Se ha eliminado la configuración para forzar a suspender el tiempo de juego al usar la teclas configuradaw de {0} juego(s).
-
-Los juegos se suspenderán cuando se utilice la teclas configuradas.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Se ha eliminado la configuración para forzar a suspender el tiempo de juego al usar teclas configuradas de {0} juego(s).</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">{0} juego(s) configurado(s) para forzar a suspender el tiempo de juego y procesos al usar la teclas configuradas.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Se ha eliminado la configuración para forzar a suspender el tiempo de juego y procesos al usar teclas configuradas de {0} juego(s).</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Juego suspendido</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Tiempo de juego suspendido</sys:String>
@@ -40,13 +42,16 @@ Para una mejor compatibilidad con los juegos, se requieren algunos ajustes a la 
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Ayuda a mantener un valor de tiempo de juego más preciso en los juegos, manteniendo solo el tiempo en que el juego no se suspendió hacia para el tiempo de juego</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Ejecutar solo para juegos que no estén administrados por plugins de biblioteca</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Solo suspender el conteo de tiempo de juego globalmente y no los procesos de juego</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Al activar esta opción, todos los juegos no se suspenderán cuando se utilice la teclas configuradas y sólo el tiempo se contabilizará para restar el tiempo de juego cuando se detenga.
-
-Esto también se puede aplicar individualmente por juego agregando una característica llamada &quot;[PlayState] Suspend playtime only&quot; a un juego</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Al habilitar esta opción, todos los juegos no se suspenderán cuando se utilice la tecla de acceso directo configurada y sólo el tiempo se contabilizará para restar el tiempo de juego cuando se detenga.
+    
+Esto también se puede aplicar individualmente por juego agregando una característica llamada &quot;[PlayState] Suspender solo el tiempo de juego&quot; a un juego, si quieres tener esta configuración habilitada en ese juego,
+o una característica llamada &quot;[PlayState] Suspender procesos&quot;, si quieres deshabilitarla en ese juego.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Mostrar notificaciones nativas de Windows en lugar de la ventana de notificación de Playnite</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Al activar esta opción, los juegos mostrarán notificaciones nativas de Windows en lugar de la ventana de notificación de Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Mostrar tiempo de juego de la sesión en el mensaje de notificación</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Mostrar el tiempo de juego total en el mensaje de notificación</sys:String>
+    <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Administrador de PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostrar la barra lateral del administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tiempo de juego:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Tiempo total de juego:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} horas {1} minutos</sys:String>
@@ -55,4 +60,15 @@ Esto también se puede aplicar individualmente por juego agregando una caracter�
     <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hora {1} minuto</sys:String>
     <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} segundos</sys:String>
     <sys:String x:Key="LOCPlayState_SecondPlayed">{0} segundo</sys:String>
+
+    <sys:String x:Key="LOCPlayStateYesLabel">Si</sys:String>
+    <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Procesos</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Sólo tiempo de juego</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameLabel">Juego</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Está suspendido</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Cambiar estado del juego</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Establecer como juego activo</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Modo de suspensión</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Juego activo:</sys:String>
 </ResourceDictionary>
