@@ -94,3 +94,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_901ef791/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_14.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_15.pext
+    Changelog:
+    - 'Updated localizations'

@@ -161,3 +161,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.30_a5bb55cf/NVIDIA_GeForce_Now_Enabler_2_24.pext
     Changelog:
     - 'Fix not correctly detecting GeForce NOW executable on game launch'
+  - Version: 2.25
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/NVIDIA_GeForce_Now_Enabler_2_25.pext
+    Changelog:
+    - 'Updated localizations'

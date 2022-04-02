@@ -74,3 +74,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_11.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.12
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_12.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added option to automatically calculate size of newly added games on library update'
+    - 'Added option to automatically calculate size of that have been detected as modified since previous detection on library update'

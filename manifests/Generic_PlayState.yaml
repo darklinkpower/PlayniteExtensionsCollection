@@ -183,3 +183,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.03.25_aae44e45/PlayState_2_26.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.27
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/PlayState_2_27.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to add override feature to force to suspend game processes (By Bancrash)'
+    - 'Added PlayState manager. Can be opened from sidebar'
+    - 'Support to detect multiple game processes at the same time during game start'
+    - 'Misc fixes and improvements'
