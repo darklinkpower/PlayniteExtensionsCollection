@@ -43,6 +43,7 @@ namespace PlayState.ViewModels
         private ObservableCollection<PlayStateData> playStateDataCollection;
         public ObservableCollection<PlayStateData> PlayStateDataCollection { get => playStateDataCollection; set => SetValue(ref playStateDataCollection, value); }
         private static readonly ILogger logger = LogManager.GetLogger();
+        private Dictionary<Guid, string> detectionDictionary = new Dictionary<Guid, string>();
 
         public PlayStateManagerViewModel(IPlayniteAPI playniteApi, MessagesHandler messagesHandler)
         {
@@ -72,6 +73,7 @@ namespace PlayState.ViewModels
                 logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
             }
 
+            RemoveGameFromDetection(game);
             if (setAsCurrentGame)
             {
                 CurrentGame = game;
@@ -231,19 +233,26 @@ namespace PlayState.ViewModels
             }
         }
 
-        internal void SetDetectionId(Game game)
+        internal void AddGameToDetection(Game game)
         {
-            CurrentDetectionId = game.Id;
+            detectionDictionary.Add(game.Id, game.Name);
+            logger.Debug($"Added game {game.Name} with Id {game.Id} to detection dictionary");
         }
 
-        internal void ResetDetectionId()
+        internal bool RemoveGameFromDetection(Game game)
         {
-            CurrentDetectionId = Guid.Empty;
+            var removed = detectionDictionary.Remove(game.Id);
+            if (removed)
+            {
+                logger.Debug($"Removed game {game.Name} with Id {game.Id} from detection dictionary");
+            }
+
+            return removed;
         }
 
-        internal bool GameMatchedDetectionId(Game game)
+        internal bool IsGameBeingDetected(Game game)
         {
-            return game.Id == CurrentDetectionId;
+            return detectionDictionary.ContainsKey(game.Id);
         }
     }
 }

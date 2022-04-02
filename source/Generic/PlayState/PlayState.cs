@@ -233,8 +233,7 @@ namespace PlayState
         private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
         {
             var game = args.Game;
-            playStateManager.SetDetectionId(game);
-            logger.Debug($"Changed detection Id game to {game.Name} with Id {game.Id}");
+            playStateManager.AddGameToDetection(game);
             var gameProcesses = new List<ProcessItem> { };
             
             var sourceAction = args.SourceAction;
@@ -273,9 +272,9 @@ namespace PlayState
             var gameInstallDir = game.InstallDirectory.ToLower();
             // Fix for some games that take longer to start, even when already detected as running
             await Task.Delay(15000);
-            if (!playStateManager.GameMatchedDetectionId(game))
+            if (!playStateManager.IsGameBeingDetected(game))
             {
-                logger.Debug($"Detection Id has changed. Execution of WMI Query task stopped.");
+                logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                 return;
             }
 
@@ -295,9 +294,9 @@ namespace PlayState
             {
                 // This is done to stop execution in case a new game was launched
                 // or the launched game was closed
-                if (!playStateManager.GameMatchedDetectionId(game))
+                if (!playStateManager.IsGameBeingDetected(game))
                 {
-                    logger.Debug($"Current game has changed. Execution of WMI Query task stopped.");
+                    logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                     return;
                 }
 
@@ -332,9 +331,9 @@ namespace PlayState
             var game = args.Game;
             messagesHandler.HideWindow();
 
-            if (playStateManager.GameMatchedDetectionId(game))
+            if (playStateManager.IsGameBeingDetected(game))
             {
-                playStateManager.ResetDetectionId();
+                playStateManager.RemoveGameFromDetection(game);
             }
 
             var gameData = playStateManager.GetDataOfGame(game);
