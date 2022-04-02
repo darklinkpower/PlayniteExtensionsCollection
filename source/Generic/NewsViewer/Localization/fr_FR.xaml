@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_NewsViewer_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_SettingsHelpLabel">Aide</sys:String>
     <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Actualités Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Hauteur maximale des notes d'actualité</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Utiliser la visionneuse compacte lors de l'ouverture des actualités dans le navigateur</sys:String>
