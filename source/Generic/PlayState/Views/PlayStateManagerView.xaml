@@ -11,10 +11,11 @@
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             <con:SuspendModeToStringConverter x:Key="SuspendModeToStringConverter" />
+            <con:BoolToYesNoConverter x:Key="BoolToYesNoConverter" />
         </Grid.Resources>
         <ScrollViewer>
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,0" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                     <TextBlock VerticalAlignment="Center"
                                WindowChrome.IsHitTestVisibleInChrome="True">
                         <Hyperlink Command="{Binding NavigateBackCommand}">
@@ -49,7 +50,7 @@
                                 <GridViewColumn Width="Auto" Header="{DynamicResource LOCPlayState_ManagerIsSuspendedLabel}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding IsSuspended}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding IsSuspended, Converter={StaticResource BoolToYesNoConverter}}" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
