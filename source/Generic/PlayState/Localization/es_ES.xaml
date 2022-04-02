@@ -61,7 +61,7 @@ o una característica llamada &quot;[PlayState] Suspender procesos&quot;, si qui
     <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} segundos</sys:String>
     <sys:String x:Key="LOCPlayState_SecondPlayed">{0} segundo</sys:String>
 
-    <sys:String x:Key="LOCPlayStateYesLabel">Yes</sys:String>
+    <sys:String x:Key="LOCPlayStateYesLabel">Si</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Procesos</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Sólo tiempo de juego</sys:String>
