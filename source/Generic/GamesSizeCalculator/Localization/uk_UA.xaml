@@ -2,9 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Автоматично вираховувати розмір гри після її зупинки</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Automatically calculate the size of a game after if it has been modified on library update</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Updates the game file size if it is detected that the game directory or rom file has been updated since the previous automatic detection</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Automatically calculate the size of a game after it is added on library update</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Автоматично обчислювати розмір гри у випадку, якщо вона була змінена під час оновлення бібліотеки</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Оновлює розмір файлу гри, якщо виявлено, що ігровий каталог або ром-файл оновлювалися після попереднього автоматичного виявлення</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Автоматично обчислювати розмір гри у після її додачі під час оновлення бібліотеки</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Розрахувати розміри вибраних ігор</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Розрахувати розміри вибраних ігор (Перезаписати)</sys:String>
