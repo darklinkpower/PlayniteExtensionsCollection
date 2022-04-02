@@ -50,6 +50,8 @@ or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to hav
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Durch Aktivieren dieser Option werden native Windows-Benachrichtigungen anstelle von Playnite Benachrichtigungen angezeigt.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Zeigt die Spielzeit in der Benachrichtigungsnachricht an</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Gesamte Spielzeit in der Benachrichtigungsnachricht anzeigen</sys:String>
+    <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState manager</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Show PlayState manager sidebar item</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Spielzeit:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Gesamte Spielzeit:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} Stunden {1} Minuten</sys:String>
@@ -58,4 +60,11 @@ or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to hav
     <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} Stunde {1} Minute</sys:String>
     <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} Sekunden</sys:String>
     <sys:String x:Key="LOCPlayState_SecondPlayed">{0} Sekunde</sys:String>
+    
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime Only</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Suspend Mode</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
 </ResourceDictionary>
