@@ -24,6 +24,8 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Win32;
 using PluginsCommon;
 using PlayniteUtilitiesCommon;
+using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace PlayState
 {
@@ -34,22 +36,19 @@ namespace PlayState
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtResumeProcess(IntPtr processHandle);
         private static readonly ILogger logger = LogManager.GetLogger();
-        private Game currentGame;
-        private List<string> exclusionList;
-        private Window currentSplashWindow;
-        private DispatcherTimer timer;
+
         private Window mainWindow;
         private WindowInteropHelper windowInterop;
         private IntPtr mainWindowHandle;
         private HwndSource source = null;
         private bool globalHotkeyRegistered = false;
-        private List<PlayStateData> playStateData;
 
         private PlayStateSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
-        internal SplashWindowViewModel splashWindowViewModel { get; private set; }
 
+        private PlayStateManagerViewModel playStateManager;
+        private MessagesHandler messagesHandler;
         private readonly bool isWindows10Or11;
 
         public PlayState(IPlayniteAPI api) : base(api)
@@ -60,23 +59,9 @@ namespace PlayState
             {
                 HasSettings = true
             };
-            SetExclusionList();
 
-            playStateData = new List<PlayStateData>();
-
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += (src, args) =>
-            {
-                timer.Stop();
-                if (currentSplashWindow != null)
-                {
-                    currentSplashWindow.Hide();
-                    currentSplashWindow.Topmost = false;
-                }
-            };
-
-            splashWindowViewModel = new SplashWindowViewModel();
+            playStateManager = new PlayStateManagerViewModel(PlayniteApi);
+            messagesHandler = new MessagesHandler(PlayniteApi, settings, playStateManager, isWindows10Or11);
         }
 
         private bool IsWindows10Or11()
@@ -86,6 +71,21 @@ namespace PlayState
                 var productName = key?.GetValue("ProductName")?.ToString() ?? string.Empty;
                 return productName.Contains("Windows 10") || productName.Contains("Windows 11");
             }
+        }
+
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            yield return new SidebarItem
+            {
+                Title = "PlayState",
+                Type = SiderbarItemType.View,
+                Icon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png"),
+                Opened = () => {
+                    var view = new PlayStateManagerView();
+                    view.DataContext = playStateManager;
+                    return view;
+                }
+            };
         }
 
         // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
@@ -178,7 +178,7 @@ namespace PlayState
                         uint vkey = ((uint)lParam >> 16) & 0xFFFF;
                         if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
                         {
-                            var gameData = GetGameData(currentGame);
+                            var gameData = playStateManager.GetCurrentGameData();
                             if (gameData != null)
                             {
                                 SwitchGameState(gameData);
@@ -186,7 +186,7 @@ namespace PlayState
                         }
                         else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
                         {
-                            ShowNotification(NotificationTypes.Information, currentGame);
+                            messagesHandler.ShowNotification(NotificationTypes.Information, playStateManager.CurrentGame);
                         }
                         handled = true;
                         break;
@@ -198,95 +198,10 @@ namespace PlayState
             return IntPtr.Zero;
         }
 
-        private void SetExclusionList()
-        {
-            var exclusionListBase = new List<string>
-            {
-                "7z.exe",
-                "7za.exe",
-                "Archive.exe",
-                "asset_.exe",
-                "anetdrop.exe",
-                "Bat_To_Exe_Convertor.exe",
-                "BsSndRpt.exe",
-                "BootBoost.exe",
-                "bootstrap.exe",
-                "cabarc.exe",
-                "CDKey.exe",
-                "Cheat Engine.exe",
-                "cheatengine",
-                "Civ2Map.exe",
-                "config",
-                "CLOSEPW.EXE",
-                "CrashDump",
-                "CrashReport",
-                "crc32.exe",
-                "CreationKit.exe",
-                "CreatureUpload.exe",
-                "EasyHook.exe",
-                "dgVoodooCpl.exe",
-                "dotNet",
-                "doc.exe",
-                "DXSETUP",
-                "dw.exe",
-                "ENBInjector.exe",
-                "HavokBehaviorPostProcess.exe",
-                "help",
-                "install",
-                "Launch_Game.exe",
-                "LangSelect.exe",
-                "Language.exe",
-                "Launch",
-                "loader",
-                "MapCreator.exe",
-                "master_dat_fix_up.exe",
-                "md5sum.exe",
-                "MGEXEgui.exe",
-                "modman.exe",
-                "ModOrganizer.exe",
-                "notepad++.exe",
-                "notification_helper.exe",
-                "oalinst.exe",
-                "PalettestealerSuspender.exe",
-                "pak",
-                "patch",
-                "planet_mapgen.exe",
-                "Papyrus",
-                "RADTools.exe",
-                "readspr.exe",
-                "register.exe",
-                "SekiroFPSUnlocker",
-                "settings",
-                "setup",
-                "SCUEx64.exe",
-                "synchronicity.exe",
-                "syscheck.exe",
-                "SystemSurvey.exe",
-                "TES Construction Set.exe",
-                "Texmod.exe",
-                "unins",
-                "UnityCrashHandler",
-                "x360ce",
-                "Unpack",
-                "UnX_Calibrate",
-                "update",
-                "UnrealCEFSubProcess.exe",
-                "url.exe",
-                "versioned_json.exe",
-                "vcredist",
-                "xtexconv.exe",
-                "xwmaencode.exe",
-                "Website.exe",
-                "wide_on.exe"
-            };
-
-            exclusionList = exclusionListBase.Select(x => x.ToLower()).ToList();
-        }
-
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-            var gameData = GetGameData(currentGame);
+            var gameData = playStateManager.GetCurrentGameData();
             if (gameData != null && gameData.IsSuspended)
             {
                 SwitchGameState(gameData);
@@ -307,17 +222,17 @@ namespace PlayState
                 (settings.Settings.GlobalOnlySuspendPlaytime && !suspendProcessesFeature ||
                 !settings.Settings.GlobalOnlySuspendPlaytime && suspendPlaytimeOnlyFeature))
             {
-                currentGame = game;
+                playStateManager.CurrentGame = game;
                 gameProcesses = null;
-                AddGame(game, gameProcesses, true);
+                playStateManager.AddPlayStateData(game, gameProcesses, true);
                 return;
             }
 
             Task.Run(async () =>
             {
-                currentGame = game;
+                playStateManager.CurrentGame = game;
                 gameProcesses = null;
-                logger.Debug($"Changed game to {currentGame.Name} game processes");
+                logger.Debug($"Changed game to {playStateManager.CurrentGame.Name} game processes");
                 var sourceAction = args.SourceAction;
                 if (sourceAction?.Type == GameActionType.Emulator)
                 {
@@ -336,10 +251,10 @@ namespace PlayState
                     if (profile != null)
                     {
                         logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-                        gameProcesses = GetProcessesWmiQuery(false, string.Empty, profile.Executable.ToLower());
+                        gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable.ToLower());
                         if (gameProcesses.Count > 0)
                         {
-                            AddGame(game, gameProcesses);
+                            playStateManager.AddPlayStateData(game, gameProcesses);
                         }
                     }
 
@@ -355,16 +270,16 @@ namespace PlayState
 
                 // Fix for some games that take longer to start, even when already detected as running
                 await Task.Delay(15000);
-                if (CurrentGameChanged(game))
+                if (playStateManager.GetIsCurrentGameDifferent(game))
                 {
                     return;
                 }
 
-                gameProcesses = GetProcessesWmiQuery(true, gameInstallDir);
+                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
                 if (gameProcesses.Count > 0)
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
-                    AddGame(game, gameProcesses);
+                    playStateManager.AddPlayStateData(game, gameProcesses);
                     return;
                 }
 
@@ -376,7 +291,7 @@ namespace PlayState
                 {
                     // This is done to stop execution in case a new game was launched
                     // or the launched game was closed
-                    if (CurrentGameChanged(game))
+                    if (playStateManager.GetIsCurrentGameDifferent(game))
                     {
                         logger.Debug($"Current game has changed. Execution of WMI Query task stopped.");
                         return;
@@ -392,11 +307,11 @@ namespace PlayState
                         filterPaths = false;
                     }
 
-                    gameProcesses = GetProcessesWmiQuery(filterPaths, gameInstallDir);
+                    gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir);
                     if (gameProcesses.Count > 0)
                     {
                         logger.Debug($"Found {gameProcesses.Count} game processes");
-                        AddGame(game, gameProcesses);
+                        playStateManager.AddPlayStateData(game, gameProcesses);
                         return;
                     }
                     else
@@ -407,210 +322,6 @@ namespace PlayState
 
                 logger.Debug("Couldn't find any game process");
             });
-        }
-
-        private bool CurrentGameChanged(Game game)
-        {
-            if (currentGame == null || currentGame.Id != game.Id)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Method for obtaining the gameData of the asked game.
-        /// </summary>
-        private PlayStateData GetGameData(Game game)
-        {
-            return playStateData.FirstOrDefault(x => x.Game.Id == game.Id);
-        }
-
-        private void CreateSplashWindow()
-        {
-            currentSplashWindow = new Window
-            {
-                WindowStyle = WindowStyle.None,
-                ResizeMode = ResizeMode.NoResize,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                Topmost = false,
-                ShowActivated = false,
-                SizeToContent = SizeToContent.WidthAndHeight,
-                ShowInTaskbar = false,
-                Focusable = false,
-                Content = new SplashWindow(),
-                DataContext = splashWindowViewModel
-            };
-
-            currentSplashWindow.Closed += WindowClosed;
-        }
-
-        private void ShowSplashWindow(string gameName, string notificationMessage)
-        {
-            if (currentSplashWindow == null)
-            {
-                CreateSplashWindow();
-            }
-
-            splashWindowViewModel.GameName = gameName;
-            splashWindowViewModel.NotificationMessage = notificationMessage;
-            currentSplashWindow.Topmost = true;
-            currentSplashWindow.Show();
-            timer.Start();
-        }
-
-        private void WindowClosed(object sender, EventArgs e)
-        {
-            currentSplashWindow.Topmost = false;
-            currentSplashWindow.Closed -= WindowClosed;
-        }
-
-        /// <summary>
-        /// Method for obtaining the real playtime of the actual session, which is the playtime after substracting the paused time.
-        /// </summary>
-        private ulong GetRealPlaytime(PlayStateData gameData)
-        {
-            var suspendedTime = gameData.Stopwatch.Elapsed;
-            ulong elapsedSeconds = 0;
-            if (suspendedTime != null)
-            {
-                elapsedSeconds = Convert.ToUInt64(suspendedTime.TotalSeconds);
-            }
-            return Convert.ToUInt64(DateTime.Now.Subtract(gameData.StartDate).TotalSeconds) - elapsedSeconds;
-        }
-
-        /// <summary>
-        /// Method for obtaining the pertinent "{0} hours {1} minutes" string from playtime in seconds.<br/><br/>
-        /// <param name="playtimeSeconds">Playtime in seconds</param>
-        /// </summary>
-        private string GetHoursString(ulong playtimeSeconds)
-        {
-            var playtime = TimeSpan.FromSeconds(playtimeSeconds);
-            var playtimeHours = playtime.Hours + playtime.Days * 24;
-            if (playtimeHours == 1)
-            {
-                if (playtime.Minutes == 1)
-                {
-                    return string.Format(ResourceProvider.GetString("LOCPlayState_HourMinutePlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
-                }
-                else
-                {
-                    return string.Format(ResourceProvider.GetString("LOCPlayState_HourMinutesPlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
-                }
-            }
-            else if (playtimeHours == 0 && playtime.Minutes == 0) // If the playtime is less than a minute, show the seconds instead
-            {
-                if (playtime.Seconds == 1)
-                {
-                    return string.Format(ResourceProvider.GetString("LOCPlayState_SecondPlayed"), playtime.Seconds.ToString());
-                }
-                else
-                {
-                    return string.Format(ResourceProvider.GetString("LOCPlayState_SecondsPlayed"), playtime.Seconds.ToString());
-                }
-            }
-            else
-            {
-                if (playtime.Minutes == 1)
-                {
-                    return string.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutePlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
-                }
-                else
-                {
-                    return string.Format(ResourceProvider.GetString("LOCPlayState_HoursMinutesPlayed"), playtimeHours.ToString(), playtime.Minutes.ToString());
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method for showing notifications. It will respect the style (Playnite / Windows) notification settings.<br/><br/>
-        /// <param name="status">Status of the game to be notified:<br/>
-        /// - "resumed" for resuming process and playtime<br/>
-        /// - "playtimeResumed" for resuming playtime<br/>
-        /// - "suspended" for suspend process and playtime<br/>
-        /// - "playtimeSuspended" for suspend playtime<br/>
-        /// - "information" for showing the actual status<br/>
-        /// </param>
-        /// </summary>
-        private void ShowNotification(NotificationTypes status, Game game)
-        {
-            var gameData = GetGameData(game);
-            if (gameData == null)
-            {
-                return;
-            }
-
-            var sb = new StringBuilder();
-            switch (status)
-            {
-                case NotificationTypes.Resumed: // for resuming process and playtime
-                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
-                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
-                    break;
-                case NotificationTypes.PlaytimeResumed: // for resuming playtime
-                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
-                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
-                    break;
-                case NotificationTypes.Suspended: // for suspend process and playtime
-                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
-                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
-                    break;
-                case NotificationTypes.PlaytimeSuspended: // for suspend playtime
-                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
-                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
-                    break;
-                case NotificationTypes.Information:
-                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusInformationMessage")} ");
-                    if (gameData.IsSuspended)
-                    {
-                        if (gameData.ProcessesSuspended)
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
-                        }
-                        else
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
-                        }
-                    }
-                    else
-                    {
-                        if (gameData.ProcessesSuspended)
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
-                        }
-                        else
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            if (settings.Settings.NotificationShowSessionPlaytime)
-            {
-                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime(gameData))}");
-            }
-            if (settings.Settings.NotificationShowTotalPlaytime)
-            {
-                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime(gameData) + game.Playtime)}");
-            }
-            var notificationMessage = sb.ToString();
-
-            if (settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11)
-            {
-                new ToastContentBuilder()
-                    .AddText(game.Name) // First AddText field will act as a title
-                    .AddText(notificationMessage)
-                    .AddHeroImage(new Uri(PlayniteApi.Database.GetFullFilePath(game.BackgroundImage))) // Show game image in the notification
-                    .Show();
-            }
-            else
-            {
-                ShowSplashWindow(game.Name, notificationMessage);
-            }
         }
 
         private void SwitchGameState(PlayStateData gameData)
@@ -645,11 +356,11 @@ namespace PlayState
                         gameData.IsSuspended = false;
                         if (gameData.ProcessesSuspended)
                         {
-                            ShowNotification(NotificationTypes.Resumed, gameData.Game);
+                            messagesHandler.ShowNotification(NotificationTypes.Resumed, gameData.Game);
                         }
                         else
                         {
-                            ShowNotification(NotificationTypes.PlaytimeResumed, gameData.Game);
+                            messagesHandler.ShowNotification(NotificationTypes.PlaytimeResumed, gameData.Game);
                         }
                         gameData.Stopwatch.Stop();
                         logger.Debug($"Game {gameData.Game.Name} resumed");
@@ -659,12 +370,13 @@ namespace PlayState
                         gameData.IsSuspended = true;
                         if (gameData.ProcessesSuspended)
                         {
-                            ShowNotification(NotificationTypes.Suspended, gameData.Game);
+                            messagesHandler.ShowNotification(NotificationTypes.Suspended, gameData.Game);
                         }
                         else
                         {
-                            ShowNotification(NotificationTypes.PlaytimeSuspended, gameData.Game);
+                            messagesHandler.ShowNotification(NotificationTypes.PlaytimeSuspended, gameData.Game);
                         }
+
                         gameData.Stopwatch.Start();
                         logger.Debug($"Game {gameData.Game.Name} suspended");
                     }
@@ -678,87 +390,12 @@ namespace PlayState
             }
         }
 
-        private List<ProcessItem> GetProcessesWmiQuery(bool filterPaths, string gameInstallDir, string exactPath = null)
-        {
-            var wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
-            using (var searcher = new ManagementObjectSearcher(wmiQueryString))
-            using (var results = searcher.Get())
-            {
-                // Unfortunately due to Playnite being a 32 bits process, the GetProcess()
-                // method can't access needed values of 64 bits processes, so it's needed
-                // to correlate with data obtained from a WMI query that is exponentially slower.
-                // It needs to be done this way until #1199 is done
-                var query = from p in Process.GetProcesses()
-                            join mo in results.Cast<ManagementObject>()
-                            on p.Id equals (int)(uint)mo["ProcessId"]
-                            select new
-                            {
-                                Process = p,
-                                Path = (string)mo["ExecutablePath"],
-                            };
-
-                var gameProcesses = new List<ProcessItem>();
-                if (exactPath != null)
-                {
-                    foreach (var fItem in query.Where(i => i.Path != null && i.Path.ToLower() == exactPath))
-                    {
-                        gameProcesses.Add(
-                           new ProcessItem
-                           {
-                               ExecutablePath = fItem.Path,
-                               Process = fItem.Process
-                           }
-                       );
-                    }
-                }
-                else
-                {
-                    foreach (var item in query)
-                    {
-                        if (item.Path == null)
-                        {
-                            continue;
-                        }
-
-                        var pathLower = item.Path.ToLower();
-                        if (!pathLower.StartsWith(gameInstallDir))
-                        {
-                            continue;
-                        }
-
-                        if (filterPaths)
-                        {
-                            var fileName = Path.GetFileName(pathLower);
-                            if (exclusionList.Any(e => fileName.Contains(e)))
-                            {
-                                continue;
-                            }
-                        }
-
-                        gameProcesses.Add(
-                            new ProcessItem
-                            {
-                                ExecutablePath = item.Path,
-                                Process = item.Process
-                            }
-                        );
-                    }
-                }
-
-                return gameProcesses;
-            }
-        }
-
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             var game = args.Game;
-            if (currentSplashWindow != null)
-            {
-                currentSplashWindow.Hide();
-                currentSplashWindow.Topmost = false;
-            }
+            messagesHandler.HideWindow();
 
-            var gameData = GetGameData(game);
+            var gameData = playStateManager.GetDataOfGame(game);
             if (gameData == null)
             {
                 logger.Debug($"PlayState data for {game.Name} was not found on game stopped");
@@ -771,7 +408,7 @@ namespace PlayState
                 SubstractPlaytimeFromPlayStateData(game, gameData);
             }
 
-            RemovePlayStateData(gameData);
+            playStateManager.RemovePlayStateData(gameData);
         }
 
         private void SubstractPlaytimeFromPlayStateData(Game game, PlayStateData gameData)
@@ -797,30 +434,6 @@ namespace PlayState
                 logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
                 game.Playtime = newPlaytime;
                 PlayniteApi.Database.Games.Update(game);
-            }
-        }
-
-        private void AddGame(Game game, List<ProcessItem> gameProcesses, bool suspendPlaytimeOnly = false)
-        {
-            if (playStateData.Any(x => x.Game.Id == game.Id))
-            {
-                logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
-            }
-            else
-            {
-                playStateData.Add(new PlayStateData(game, gameProcesses, suspendPlaytimeOnly));
-                var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
-                logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
-            }
-        }
-
-        private void RemovePlayStateData(PlayStateData gameData)
-        {
-            playStateData.Remove(gameData);
-            logger.Debug($"Data for game {gameData.Game.Name} with id {gameData.Game.Id} was removed");
-            if (currentGame == gameData.Game)
-            {
-                currentGame = playStateData.Any() ? playStateData.Last().Game : null;
             }
         }
 
