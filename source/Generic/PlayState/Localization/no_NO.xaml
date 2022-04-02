@@ -60,7 +60,9 @@ or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to hav
     <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} time og {1} minutt</sys:String>
     <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} sekunder</sys:String>
     <sys:String x:Key="LOCPlayState_SecondPlayed">{0} sekund</sys:String>
-    
+
+    <sys:String x:Key="LOCPlayStateYesLabel">Yes</sys:String>
+    <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime Only</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
