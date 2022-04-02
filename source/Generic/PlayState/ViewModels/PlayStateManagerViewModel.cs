@@ -95,6 +95,10 @@ namespace PlayState.ViewModels
             if (CurrentGame == gameData.Game)
             {
                 CurrentGame = playStateDataCollection.Any() ? playStateDataCollection.Last().Game : null;
+                if (SelectedData != null)
+                {
+                    IsSelectedDataCurrentGame = GetIsCurrentGameSame(SelectedData.Game);
+                }
             }
         }
 

@@ -67,8 +67,9 @@
                         </ListView.View>
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Switch game state" Command="{Binding SwitchGameStateCommand}" />
-                                <MenuItem Header="Set as active game"
+                                <MenuItem Header="{DynamicResource LOCPlayState_ManagerSwitchGameStateLabel}"
+                                          Command="{Binding SwitchGameStateCommand}" />
+                                <MenuItem Header="{DynamicResource LOCPlayState_ManagerSetActiveGameLabel}"
                                           Visibility="{Binding IsSelectedDataCurrentGame, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
                                           Command="{Binding SetActiveGameCommand}" />
                             </ContextMenu>

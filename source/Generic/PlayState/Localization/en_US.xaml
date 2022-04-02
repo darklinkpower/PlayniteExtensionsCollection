@@ -66,6 +66,8 @@ or a feature named "[PlayState] Suspend processes", if you want to have it disab
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime Only</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Set as active game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Suspend Mode</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
 </ResourceDictionary>
