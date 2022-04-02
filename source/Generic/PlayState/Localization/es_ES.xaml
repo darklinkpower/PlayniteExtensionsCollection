@@ -67,6 +67,8 @@ o una característica llamada &quot;[PlayState] Suspender procesos&quot;, si qui
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Sólo tiempo de juego</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Juego</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Está suspendido</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Set as active game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Modo de suspensión</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Juego activo:</sys:String>
 </ResourceDictionary>
