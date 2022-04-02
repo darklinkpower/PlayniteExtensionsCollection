@@ -18,8 +18,28 @@ namespace PlayState.ViewModels
         private Guid CurrentDetectionId = Guid.Empty;
         private Game currentGame;
         public Game CurrentGame { get => currentGame; private set => SetValue(ref currentGame, value); }
-        private PlayStateData selectedData;
-        public PlayStateData SelectedData { get => selectedData; set => SetValue(ref selectedData, value); }
+        private bool isSelectedDataCurrentGame = false;
+        public bool IsSelectedDataCurrentGame { get => isSelectedDataCurrentGame; set => SetValue(ref isSelectedDataCurrentGame, value); }
+        public PlayStateData selectedData { get; set; }
+        public PlayStateData SelectedData
+        {
+            get => selectedData;
+            set
+            {
+                selectedData = value;
+                if (selectedData == null || CurrentGame == null)
+                {
+                    IsSelectedDataCurrentGame = false;
+                }
+                else
+                {
+                    IsSelectedDataCurrentGame = GetIsCurrentGameSame(selectedData.Game);
+                }
+
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<PlayStateData> playStateDataCollection;
         public ObservableCollection<PlayStateData> PlayStateDataCollection { get => playStateDataCollection; set => SetValue(ref playStateDataCollection, value); }
         private static readonly ILogger logger = LogManager.GetLogger();
@@ -98,6 +118,16 @@ namespace PlayState.ViewModels
             return false;
         }
 
+        public bool GetIsCurrentGameSame(Game game)
+        {
+            if (CurrentGame == null)
+            {
+                return false;
+            }
+
+            return CurrentGame.Id == game.Id;
+        }
+
         public RelayCommand NavigateBackCommand
         {
             get => new RelayCommand(() =>
@@ -124,6 +154,7 @@ namespace PlayState.ViewModels
                 if (SelectedData != null)
                 {
                     CurrentGame = SelectedData.Game;
+                    IsSelectedDataCurrentGame = GetIsCurrentGameSame(SelectedData.Game);
                 }
             });
         }

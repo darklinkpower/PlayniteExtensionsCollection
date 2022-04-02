@@ -68,7 +68,9 @@
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Switch game state" Command="{Binding SwitchGameStateCommand}" />
-                                <MenuItem Header="Set as active game" Command="{Binding SetActiveGameCommand}" />
+                                <MenuItem Header="Set as active game"
+                                          Visibility="{Binding IsSelectedDataCurrentGame, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                                          Command="{Binding SetActiveGameCommand}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                     </ListView>
