@@ -167,3 +167,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/NVIDIA_GeForce_Now_Enabler_2_25.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.26
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_ddc118cd/NVIDIA_GeForce_Now_Enabler_2_26.pext
+    Changelog:
+    - 'Rework how plugin obtains GeForce Now database data'
+    - 'General improvements for detection of supported games'

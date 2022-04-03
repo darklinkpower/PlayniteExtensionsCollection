@@ -193,3 +193,9 @@ Packages:
     - 'Added PlayState manager. Can be opened from sidebar'
     - 'Support to detect multiple game processes at the same time during game start'
     - 'Misc fixes and improvements'
+  - Version: 2.28
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_ddc118cd/PlayState_2_28.pext
+    Changelog:
+    - 'Updated localizations'

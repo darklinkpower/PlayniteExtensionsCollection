@@ -82,3 +82,9 @@ Packages:
     - 'Updated localizations'
     - 'Added option to automatically calculate size of newly added games on library update'
     - 'Added option to automatically calculate size of that have been detected as modified since previous detection on library update'
+  - Version: 1.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_ddc118cd/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_13.pext
+    Changelog:
+    - 'Updated localizations'

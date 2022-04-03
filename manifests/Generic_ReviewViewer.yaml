@@ -173,3 +173,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_25.pext
     Changelog:
     - 'Spoiler text will now have the same background as the text'
+  - Version: 2.26
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_ddc118cd/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_26.pext
+    Changelog:
+    - 'Updated localizations'
