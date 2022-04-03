@@ -354,7 +354,7 @@ namespace NVIDIAGeForceNowEnabler
             // Library plugins set the game installation directory when they are
             // detected as installed. This is used to detect this and not show the Play
             // Action if it is detected as installed by the game library plugin.
-            if (!game.InstallDirectory.IsNullOrEmpty())
+            if (settings.Settings.OnlyShowActionsForNotLibInstalledGames && !game.InstallDirectory.IsNullOrEmpty())
             {
                 logger.Debug("Game install dir was not empty and was skipped");
                 return null;

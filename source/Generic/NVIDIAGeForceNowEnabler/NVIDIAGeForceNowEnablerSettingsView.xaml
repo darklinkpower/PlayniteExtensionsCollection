@@ -23,14 +23,23 @@
                   IsChecked="{Binding Settings.ExecuteOnLibraryUpdate}"
                   Content="{DynamicResource LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting}"/>
         <CheckBox DockPanel.Dock="Top"
-                  Margin="0,0,0,5"
+                  x:Name="ActionsEnabled"
+                  Margin="0,0,0,0"
                   IsChecked="{Binding Settings.ShowPlayActionsOnLaunch}"
                   Content="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting}"
                   ToolTip="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip}"/>
-        <TextBlock Margin="20,0,0,15" TextWrapping="Wrap"
+        <StackPanel Margin="40,0,0,0"
+                    IsEnabled="{Binding ElementName=ActionsEnabled, Path=IsChecked}">
+            <TextBlock Margin="0,10,10,0" TextWrapping="Wrap"
                    Text="{DynamicResource LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel}" />
+            <CheckBox Margin="0,10,0,0"
+                  IsChecked="{Binding Settings.OnlyShowActionsForNotLibInstalledGames}"
+                  Content="{DynamicResource LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting}"
+                  ToolTip="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip}"/>
+        </StackPanel>
+
         <CheckBox DockPanel.Dock="Top" Name="SetEnabledGamesAsInstalled"
-                  Margin="0,0,0,15"
+                  Margin="0,20,0,15"
                   IsChecked="{Binding Settings.SetEnabledGamesAsInstalled}"
                   Content="{DynamicResource LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting}"/>
     </StackPanel>
