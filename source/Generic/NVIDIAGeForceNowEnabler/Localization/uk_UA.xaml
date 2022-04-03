@@ -2,9 +2,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Допомога</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Оновити сумісний статус ігор</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Видалити дію Geforce NOW з усіх ігор</sys:String>
-
-	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Оновлення ігор сумісних з NVIDIA GeForce NOW...</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Оновлення ігор сумісних з NVIDIA GeForce NOW...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Завантаження бази даних NVIDIA GeForce NOW...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">Ігор сумісних з NVIDIA GeForce NOW в бібліотеці: {0}
 
@@ -13,9 +12,8 @@
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
 Позначено {0} ігор як встановлені.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Дія &quot;Грати&quot; вилучена з {0} ігор</sys:String>
-	
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Оновлювати статус сумісності ігор при запуску Playnite</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Оновлювати статус сумісності ігор при запуску Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Оновлювати статус сумісності ігор при оновленні бібліотеки</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Показати дію для запуску в NVIDIA GeForce NOW для сумісних ігор, які не були встановлені їхніми бібліотеками</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Увімкнені ігри завжди будуть позначені як встановлені коли цю опцію увімкнено.</sys:String>
