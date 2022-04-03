@@ -18,6 +18,9 @@ using PluginsCommon.Web;
 using PlayniteUtilitiesCommon;
 using NVIDIAGeForceNowEnabler.Services;
 using NVIDIAGeForceNowEnabler.Models;
+using NVIDIAGeForceNowEnabler.Views;
+using NVIDIAGeForceNowEnabler.ViewModels;
+using System.Windows;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -120,11 +123,44 @@ namespace NVIDIAGeForceNowEnabler
                 {
                     Description = ResourceProvider.GetString("LOCNgfn_Enabler_MenuItemUpdateStatusDescription"),
                     MenuSection = "@NVIDIA GeForce NOW Enabler",
-                    Action = o => {
+                    Action = _ => {
                         UpdateDatabaseAndGamesStatus(true);
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription"),
+                    MenuSection = "@NVIDIA GeForce NOW Enabler",
+                    Action = _ => {
+                        OpenEditorWindow();
                     }
                 }
             };
+        }
+
+        private void OpenEditorWindow()
+        {
+            DownloadAndRefreshGameList(false);
+            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = true
+            });
+
+            window.Height = 700;
+            window.Width = 900;
+            window.Title = ResourceProvider.GetString("LOCNgfn_Enabler_DatabaseBrowserWindowTitle");
+
+            window.Content = new GfnDatabaseBrowserView();
+            window.DataContext = new GfnDatabaseBrowserViewModel(PlayniteApi, supportedList);
+            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
+
+            // Satinize supported titles after closing window, so they can be used for matching
+            // when launching games
+            SatinizeSupportedListTitles();
         }
 
         public void DownloadAndRefreshGameList(bool showDialogs)
@@ -138,7 +174,6 @@ namespace NVIDIAGeForceNowEnabler
                     {
                         supportedList = downloadedDatabase;
                         FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(supportedList));
-                        SatinizeSupportedListTitles();
                     }
                 }
                 catch (Exception e)
@@ -189,6 +224,7 @@ namespace NVIDIAGeForceNowEnabler
                 return;
             }
 
+            SatinizeSupportedListTitles();
             int enabledGamesCount = 0;
             int featureAddedCount = 0;
             int featureRemovedCount = 0;

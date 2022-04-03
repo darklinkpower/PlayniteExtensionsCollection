@@ -3,6 +3,7 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Update enabled status of games</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">Open NVIDIA GeForce NOW Database browser</sys:String>
     
     <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Updating NVIDIA GeForce NOW Enabled games...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Downloading NVIDIA GeForce NOW database...</sys:String>
@@ -23,4 +24,13 @@ Marked {0} games as Installed.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Launch in Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce Now Database browser</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Copy name to clipboard</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Search:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Store:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Name</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
 </ResourceDictionary>
