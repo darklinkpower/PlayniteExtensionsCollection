@@ -259,40 +259,38 @@ namespace NVIDIAGeForceNowEnabler
 
                 // For Epic they don't share any similarity and remains to be investigated. Examples:
                 // Epic: Pillars of Eternity - Definitive Edition, GameId: bcc75c246fe04e45b0c1f1c3fd52503a, StoreId: bc31288122a7443b818f4e77eed5ce25
+                var useNameMatching = false;
+                var matchingName = string.Empty;
                 if (appStore == AppStore.Epic || appStore == AppStore.Origin)
                 {
-                    var matchingName = SatinizeGameName(game.Name);
-                    foreach (var geforceNowItem in supportedList)
+                    matchingName = SatinizeGameName(game.Name);
+                    useNameMatching = true;
+                }
+
+                foreach (var geforceNowItem in supportedList)
+                {
+                    if (geforceNowItem.Type != AppType.Game)
                     {
-                        foreach (var itemVariant in geforceNowItem.Variants)
+                        continue;
+                    }
+                        
+                    foreach (var itemVariant in geforceNowItem.Variants)
+                    {
+                        if (itemVariant.OsType != OsType.Windows)
                         {
-                            if (itemVariant.OsType != OsType.Windows)
-                            {
-                                continue;
-                            }
-                            
+                            continue;
+                        }
+                        
+                        if (useNameMatching)
+                        {
                             if (itemVariant.AppStore == appStore && itemVariant.Title == matchingName)
                             {
                                 return itemVariant;
                             }
                         }
-                    }
-                }
-                else
-                {
-                    foreach (var geforceNowItem in supportedList)
-                    {
-                        foreach (var itemVariant in geforceNowItem.Variants)
+                        else if (itemVariant.AppStore == appStore && itemVariant.StoreId == game.GameId)
                         {
-                            if (itemVariant.OsType != OsType.Windows)
-                            {
-                                continue;
-                            }
-
-                            if (itemVariant.AppStore == appStore && itemVariant.StoreId == game.GameId)
-                            {
-                                return itemVariant;
-                            }
+                            return itemVariant;
                         }
                     }
                 }
