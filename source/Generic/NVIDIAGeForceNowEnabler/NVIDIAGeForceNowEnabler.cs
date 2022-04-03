@@ -181,7 +181,7 @@ namespace NVIDIAGeForceNowEnabler
             var feature = PlayniteApi.Database.Features.Add(featureName);
 
             DownloadAndRefreshGameList(showDialogs);
-            if (supportedList.Count() == 0)
+            if (supportedList.Count == 0)
             {
                 // In case download failed.
                 // Also sometimes there are issues with the api and it doesn't return any games in the response
@@ -228,6 +228,7 @@ namespace NVIDIAGeForceNowEnabler
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_UpdatingProgressMessage")));
 
+            logger.Info($"Found {enabledGamesCount} enabled games. Added feature to {featureAddedCount} games and removed it from {featureRemovedCount} games. Set {setAsInstalledCount} as installed.");
             if (showDialogs)
             {
                 var results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
