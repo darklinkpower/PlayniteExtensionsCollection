@@ -12,9 +12,9 @@ namespace YouTubeCommon
 {
     public class YouTube
     {
-        static string youtubeResponseRegexStr = @"var ytInitialData = ((.*?(?=(;<\/script>))))";
-        static string youtubeSearchTemplateShort = @"https://www.youtube.com/results?search_query={0}&sp=EgQQARgB";
-        static string youtubeSearchTemplate = @"https://www.youtube.com/results?search_query={0}";
+        private const string youtubeResponseRegexStr = @"var ytInitialData = ((.*?(?=(;<\/script>))))";
+        private const string youtubeSearchTemplateShort = @"https://www.youtube.com/results?search_query={0}&sp=EgQQARgB";
+        private const string youtubeSearchTemplate = @"https://www.youtube.com/results?search_query={0}";
 
         public static List<YoutubeSearchItem> GetYoutubeSearchResults(string searchTerm, bool searchShortVideos)
         {
@@ -63,7 +63,6 @@ namespace YouTubeCommon
                 ChannelName = item.VideoRenderer.OwnerText.Runs[0].Text
             };
         }
-
 
     }
 }

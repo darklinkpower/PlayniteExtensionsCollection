@@ -21,7 +21,6 @@ namespace SteamCommon
         {
             if (IsGameSteamGame(game))
             {
-                logger.Debug("Steam id found for Steam game by pluginId");
                 return game.GameId;
             }
             else if (useLinksDetection)
@@ -39,7 +38,7 @@ namespace SteamCommon
                 return null;
             }
 
-            foreach (Link gameLink in game.Links)
+            foreach (var gameLink in game.Links)
             {
                 var linkMatch = steamLinkRegex.Match(gameLink.Url);
                 if (linkMatch.Success)

@@ -47,17 +47,18 @@ namespace SteamCommon
             return true;
         }
 
+        private const string defaultSteamPath = @"C:\Program Files (x86)\Steam\steam.exe";
         public static string GetSteamInstallationPath()
         {
             using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Valve\Steam"))
             {
                 if (key?.GetValueNames().Contains("SteamExe") == true)
                 {
-                    return key.GetValue("SteamExe")?.ToString().Replace('/', '\\') ?? "C:\\Program Files (x86)\\Steam\\steam.exe";
+                    return key.GetValue("SteamExe")?.ToString().Replace('/', '\\') ?? defaultSteamPath;
                 }
             }
 
-            return "C:\\Program Files (x86)\\Steam\\steam.exe";
+            return defaultSteamPath;
         }
 
         public static void StartSteam(bool restartIfRunning, string arguments = "")
