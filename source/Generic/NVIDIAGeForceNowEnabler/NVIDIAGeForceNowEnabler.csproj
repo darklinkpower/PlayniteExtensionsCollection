@@ -94,7 +94,6 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="Models\GeforceGame.cs" />
     <Compile Include="Models\GfnGraphQlResponse.cs" />
     <Compile Include="NVIDIAGeForceNowEnabler.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerController.cs" />
