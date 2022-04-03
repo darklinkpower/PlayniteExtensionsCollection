@@ -338,12 +338,19 @@ namespace NVIDIAGeForceNowEnabler
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {
+            
             if (!settings.Settings.ShowPlayActionsOnLaunch)
             {
                 return null;
             }
-            
+
             var game = args.Game;
+            // Non library games are not supported so they can be skipped
+            if (game.PluginId == Guid.Empty)
+            {
+                return null;
+            }
+
             // Library plugins set the game installation directory when they are
             // detected as installed. This is used to detect this and not show the Play
             // Action if it is detected as installed by the game library plugin.
