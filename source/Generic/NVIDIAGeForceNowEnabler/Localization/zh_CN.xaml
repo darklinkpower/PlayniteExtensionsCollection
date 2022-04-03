@@ -16,7 +16,8 @@
 
     <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">在 Playnite 启动时更新游戏的已启用状态</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">在库更新时更新游戏的已启用状态</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">为暂未由对应的库安装的兼容游戏，显示在 NVIDIA GeForce NOW 中启动的指令</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">启用此选项，则已启用的游戏总是被标记为已安装。</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">未设置安装目录的游戏，会被检测为暂未由对应的库安装</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">在更新游戏的已启用状态时，将已启用的游戏设为已安装</sys:String>
