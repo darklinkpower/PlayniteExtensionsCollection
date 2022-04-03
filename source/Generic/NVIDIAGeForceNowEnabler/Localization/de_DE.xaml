@@ -2,9 +2,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Aktualisierung des aktivierten Status von Spielen</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_MenuItemRemoveGameActionDescription">Geforce NOW Spiel Aktion aus allen Spielen entfernen</sys:String>
-
-	<sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Aktualisiere NVIDIA GeForce NOW aktivierte Spiele...</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Aktualisiere NVIDIA GeForce NOW aktivierte Spiele...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">NVIDIA GeForce NOW Datenbank herunterladen...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW aktivierte Spiele in der Bibliothek: {0}
 
@@ -13,9 +12,8 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
 {0} Spiele als installiert markiert.</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_GameActionsRemoveResultsMessage">Spielaktion aus {0} Spielen entfernt</sys:String>
-	
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Aktivierte Spiele beim Start von Playnite aktualisieren</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Aktivierte Spiele beim Start von Playnite aktualisieren</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Aktivierter Status von Spielen bei Bibliotheksupdate aktualisieren</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Aktion anzeigen, um in NVIDIA GeForce NOW für kompatible Spiele zu starten, die nicht von ihren Bibliotheken installiert wurden</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Aktivierte Spiele werden immer als installiert gekennzeichnet, wenn diese Option aktiviert ist.</sys:String>
