@@ -18,6 +18,23 @@ namespace PlayniteUtilitiesCommon
             return AddFeatureToGame(PlayniteApi, game, feature);
         }
 
+        public static bool GetGameHasFeature(Game game, string featureName, bool ignoreOrdinalCase = false)
+        {
+            if (!game.Features.HasItems())
+            {
+                return false;
+            }
+            
+            if (ignoreOrdinalCase)
+            {
+                return game.Features.Any(x => x.Name.Equals(featureName, StringComparison.OrdinalIgnoreCase));
+            }
+            else
+            {
+                return game.Features.Any(x => x.Name == featureName);
+            }
+        }
+
         public static bool AddFeatureToGame(IPlayniteAPI PlayniteApi, Game game, GameFeature feature)
         {
             if (game.Features == null)

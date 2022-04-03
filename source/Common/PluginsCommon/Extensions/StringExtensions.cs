@@ -203,6 +203,26 @@ namespace System
             return HttpUtility.UrlDecode(str);
         }
 
+        public static string Base64Encode(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return null;
+            }
+
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(str));
+        }
+
+        public static string Base64Decode(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return null;
+            }
+
+            return Encoding.UTF8.GetString(Convert.FromBase64String(str));
+        }
+
         public static string GetMatchModifiedName(this string str)
         {
             return Regex.Replace(str, @"[^\p{L}\p{Nd}]", "").ToLower();
