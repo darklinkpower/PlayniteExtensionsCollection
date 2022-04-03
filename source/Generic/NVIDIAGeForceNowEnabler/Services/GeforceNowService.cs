@@ -15,29 +15,29 @@ namespace NVIDIAGeForceNowEnabler.Services
     public static class GeforceNowService
     {
         private static ILogger logger = LogManager.GetLogger();
-        private const string graphQlEndpoint = @"https://games.geforce.com/graphql?query=";
+        private const string graphQlEndpoint = @"https://public.games.geforce.com/graphql?query=";
         private const string queryBaseString = @"
         {{
-            apps(vpcId: ""NP-SEA-01"" language: ""en_US"" first: 1300, after: ""{0}"") {{
-              numberReturned
+            apps(vpcId: ""NP-SEA-01"", language: ""en_US"", first: 1300, after: ""{0}"") {{
+              numberReturned,
               pageInfo {{
-                hasNextPage
+                hasNextPage,
                 endCursor
-              }}
+              }},
               items {{
-                id
-                cmsId
-                title
-                type
+                id,
+                cmsId,
+                title,
+                type,
                 variants {{
-                  id
-                  title
-                  appStore
+                  id,
+                  title,
+                  appStore,
                   gfn {{
-                    status
+                    status,
                     releaseDate
                   }}
-                  osType
+                  osType,
                   storeId
                 }}
               }}
@@ -51,7 +51,11 @@ namespace NVIDIAGeForceNowEnabler.Services
             var geforceNowItems = new List<GeforceNowItem>();
             while (true)
             {
-                var queryString = string.Format(queryBaseString, afterValue).UrlEncode();
+                var queryString = string.Format(queryBaseString, afterValue)
+                    .Replace("\r", "")
+                    .Replace("\n", "")
+                    .Replace(" ", "")
+                    .UrlEncode();
                 var uri = graphQlEndpoint + queryString;
                 var downloadedString = HttpDownloader.DownloadString(uri);
                 if (downloadedString.IsNullOrEmpty())
