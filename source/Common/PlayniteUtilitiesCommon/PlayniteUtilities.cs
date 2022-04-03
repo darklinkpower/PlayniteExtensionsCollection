@@ -112,9 +112,8 @@ namespace PlayniteUtilitiesCommon
                 return false;
             }
 
-            if (game.FeatureIds.Any(x => x == feature.Id))
+            if (game.FeatureIds.Remove(feature.Id))
             {
-                game.FeatureIds.Remove(feature.Id);
                 PlayniteApi.Database.Games.Update(game);
                 return true;
             }
