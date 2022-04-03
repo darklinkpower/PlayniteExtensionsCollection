@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultHelp">Aide</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultSearches">Default Searches</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelCustomSearches">Custom Searches</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionEnabled">Enabled</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionName">Name</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionEnabled">Activé</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionName">Nom</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate">Search template</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelRemoveSelected">Remove selected</sys:String>
