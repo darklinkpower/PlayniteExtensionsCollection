@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Oppdater aktivert-status for spill</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">Open NVIDIA GeForce NOW Database browser</sys:String>
     
     <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Oppdaterer NVIDIA GeForce NOW-aktiverte spill...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Laster ned NVIDIA GeForce NOW-database...</sys:String>
@@ -22,4 +23,13 @@ Markerte {0} spill som installert.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Start i Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Markerte {0} spill som installert.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW-programfil ikke funnet i {0}.</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce Now Database browser</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Copy name to clipboard</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Search:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Store:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Name</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
 </ResourceDictionary>

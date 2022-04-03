@@ -67,8 +67,8 @@
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Тільки час у грі</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Гра</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Призупинено</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Set as active game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Змінити стан гри</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Встановити як активну гру</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Режим призупинення</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Активна гра:</sys:String>
 </ResourceDictionary>
