@@ -16,7 +16,8 @@ Marcados {0} juegos como instalados.</sys:String>
 
     <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Actualizar el estado de los juegos habilitado al iniciar Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Actualizar el estado de los juegos habilitado al actualizar la biblioteca</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Mostrar acción para lanzar en NVIDIA GeForce NOW para juegos compatibles que no hayan sido instalados por sus bibliotecas</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Los juegos habilitados siempre se marcarán como instalados cuando esta opción esté habilitada.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Los juegos sin un directorio de instalación establecido son detectados como no instalados por sus bibliotecas</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Establecer juegos habilitados como instalados al actualizar el estado de los juegos habilitados</sys:String>
