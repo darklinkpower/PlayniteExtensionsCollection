@@ -16,7 +16,8 @@ Markerte {0} spill som installert.</sys:String>
 
     <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Oppdater aktivert-status for spill ved oppstart av Playnite</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Oppdater aktivert-status for spill ved bibliotekoppdatering</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Vis handling for å starte i NVIDIA GeForce NOW for kompatible spill som ikke er installert av deres biblioteker</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Aktiverte spill vil alltid bli merket som installert når dette alternativet er aktivert.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Spill uten en valgt installasjonsmappe blir regnet som ikke installert av bibliotekene</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Angi aktiverte spill som installert når du oppdaterer aktivert-status for spill</sys:String>
