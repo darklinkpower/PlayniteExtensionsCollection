@@ -199,3 +199,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_ddc118cd/PlayState_2_28.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.29
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.03_3ad2d023/PlayState_2_29.pext
+    Changelog:
+    - 'Updated localizations'

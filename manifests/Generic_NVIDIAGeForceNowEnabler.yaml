@@ -174,3 +174,10 @@ Packages:
     Changelog:
     - 'Rework how plugin obtains GeForce Now database data'
     - 'General improvements for detection of supported games'
+  - Version: 2.27
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.03_3ad2d023/NVIDIA_GeForce_Now_Enabler_2_27.pext
+    Changelog:
+    - 'Added option to indicate if GeForce Now Play Action should be shown for games that are already installed by their libraries'
+    - 'Added main menu item to open a window with a database browser to view games available on the GeForce NOW service. Game names can be copied from right click context menu.'
