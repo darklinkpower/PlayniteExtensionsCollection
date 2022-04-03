@@ -344,6 +344,10 @@ namespace NVIDIAGeForceNowEnabler
                     new NVIDIAGeForceNowEnablerPlayController(game, supportedGame.Id.ToString(), geforceNowExecutablePath, geforceNowWorkingPath)
                 };
             }
+            else
+            {
+                logger.Debug($"Database entry with for {game.Name} with pluginId {game.PluginId} not found");
+            }
 
             return null;
         }
