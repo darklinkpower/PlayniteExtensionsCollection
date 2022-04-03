@@ -5,8 +5,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Retirer les jeux sélectionnés de la liste noire PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configurer les jeux sélectionnés pour forcer uniquement la suspension du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Retirer la configuration pour forcer la suspension du temps de jeu</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configurer les jeux sélectionnés pour forcer la suspension des processus</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Supprimer la configuration pour forcer la suspension des processus</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Impossible d'enregistrer le raccourci clavier configuré {0}
 
 Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le problème</sys:String>
