@@ -214,6 +214,9 @@ namespace PlayniteUtilitiesCommon
             return false;
         }
 
+        private const string PcWinPlatformName = "PC (Windows)";
+        private const string PcPlatformName = "PC";
+        private const string PcSpecId = "pc_windows";
         public static bool IsGamePcGame(Game game)
         {
             if (!game.Platforms.HasItems())
@@ -221,8 +224,8 @@ namespace PlayniteUtilitiesCommon
                 return false;
             }
 
-            if (game.Platforms.Any(x => x.Name == "PC (Windows)" ||
-                      !string.IsNullOrEmpty(x.SpecificationId) && x.SpecificationId == "pc_windows"))
+            if (game.Platforms.Any(x => x.Name == PcWinPlatformName || x.Name == PcPlatformName ||
+                      !string.IsNullOrEmpty(x.SpecificationId) && x.SpecificationId == PcSpecId))
             {
                 return true;
             }

@@ -176,6 +176,10 @@ namespace GamesSizeCalculator
                     return;
                 }
             }
+            else
+            {
+                return;
+            }
 
             if (size == 0)
             {
