@@ -90,7 +90,7 @@ namespace NVIDIAGeForceNowEnabler
         {
             if (settings.Settings.ExecuteOnStartup)
             {
-                MainMethod(false);
+                UpdateDatabaseAndGamesStatus(false);
             }
         }
 
@@ -98,7 +98,7 @@ namespace NVIDIAGeForceNowEnabler
         {
             if (settings.Settings.ExecuteOnLibraryUpdate)
             {
-                MainMethod(false);
+                UpdateDatabaseAndGamesStatus(false);
             }
         }
 
@@ -121,7 +121,7 @@ namespace NVIDIAGeForceNowEnabler
                     Description = ResourceProvider.GetString("LOCNgfn_Enabler_MenuItemUpdateStatusDescription"),
                     MenuSection = "@NVIDIA GeForce NOW Enabler",
                     Action = o => {
-                        MainMethod(true);
+                        UpdateDatabaseAndGamesStatus(true);
                     }
                 }
             };
@@ -175,7 +175,7 @@ namespace NVIDIAGeForceNowEnabler
                 .Replace("battlefield1revolution", "battlefield1");
         }
 
-        public void MainMethod(bool showDialogs)
+        public void UpdateDatabaseAndGamesStatus(bool showDialogs)
         {
             var featureName = "NVIDIA GeForce NOW";
             var feature = PlayniteApi.Database.Features.Add(featureName);
