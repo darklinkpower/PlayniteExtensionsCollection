@@ -24,10 +24,12 @@ namespace SplashScreen
     public class SplashScreen : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly DispatcherTimer timer;
+        private bool isWindowVideoPlaying;
+        private readonly DispatcherTimer timerCloseWindow;
         private string pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private Window currentSplashWindow;
         private bool? isMusicMutedBackup;
+        private readonly DispatcherTimer timerWindowRemoveTopMost;
 
         private SplashScreenSettingsViewModel settings { get; set; }
 
@@ -41,31 +43,25 @@ namespace SplashScreen
                 HasSettings = true
             };
 
-            //Used for SendKeys workaround to prevent missing input when closing game in FS mode
-            //A timer is used to ensure that Playnite is focused by the time the keys are sent, otherwise the fix
-            //won't work sometimes
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(1500);
-            timer.Tick += new EventHandler(SendKeysFix);
-        }
-
-        private void SendKeysFix(object sender, EventArgs e)
-        {
-            timer.Stop();
-            System.Windows.Forms.SendKeys.SendWait("^{ESC}"); // ^{ESC} is code for ctrl + esc which mimics the windows key.
-            Thread.Sleep(600); //Helps to make sure that inputs are not send to quickly so they are processed correctly
-            System.Windows.Forms.SendKeys.SendWait("^{ESC}");
-        }
-
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            if (settings.Settings.ControllerNoticeShowed)
+            isWindowVideoPlaying = false;
+            timerCloseWindow = new DispatcherTimer();
+            timerCloseWindow.Interval = TimeSpan.FromMilliseconds(60000);
+            timerCloseWindow.Tick += (_, __) =>
             {
-                PlayniteApi.Dialogs.ShowMessage("\n\nSplashScreen extension - Important Information!\n\nThe workaround to fix broken input when closing a game in Fullscreen mode has been added natively in the extension.\n\nThe extension will automatically press the window key twice when closing a game in Fullscreen Mode.\n\nIf you manually added the workaround fix, please remove it from Settings -> Scripts -> Script when game is closed. I have not been able to find a fix for the issue so this fix needs to be used.\n\nSorry for the inconvenience and thanks for understanding.",
-                    "SplashScreen extension - Important Information");
-                settings.Settings.ControllerNoticeShowed = false;
-                SavePluginSettings(settings.Settings);
-            }
+                timerCloseWindow.Stop();
+                currentSplashWindow?.Close();
+            };
+
+            timerWindowRemoveTopMost = new DispatcherTimer();
+            timerWindowRemoveTopMost.Interval = TimeSpan.FromMilliseconds(1500);
+            timerWindowRemoveTopMost.Tick += (_, __) =>
+            {
+                timerWindowRemoveTopMost.Stop();
+                if (currentSplashWindow != null)
+                {
+                    currentSplashWindow.Topmost = false;
+                }
+            };
         }
 
         private void MuteBackgroundMusic()
@@ -98,6 +94,8 @@ namespace SplashScreen
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
+            // TODO Refactor!
+            
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && !settings.Settings.ExecuteInDesktopMode)
             {
                 logger.Info("Execution disabled for Desktop mode in settings");
@@ -112,36 +110,24 @@ namespace SplashScreen
             // In case somebody starts another game or if splash screen was not closed before for some reason
             if (currentSplashWindow != null)
             {
-                // Dispatcher is needed since the window is created on a different thread
-                currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
+                currentSplashWindow.Close();
                 currentSplashWindow = null;
                 RestoreBackgroundMusic();
             }
+            currentSplashWindow = null;
 
             var game = args.Game;
-            if (game.Features != null &&
-                game.Features.Any(x => x.Name.Equals("[Splash Screen] Disable", StringComparison.OrdinalIgnoreCase)))
+            if (PlayniteUtilities.GetGameHasFeature(game, "[Splash Screen] Disable", true))
             {
                 logger.Info($"{game.Name} has splashscreen disable feature");
                 return;
             }
 
-            currentSplashWindow = null;
-            
             var splashImagePath = string.Empty;
             var logoPath = string.Empty;
-            var videoPath = string.Empty;
 
-            var showSplashImage = true;
-            if (game.Features != null)
-            {
-                if (game.Features.Any(x => x.Name == "[Splash Screen] Skip splash image"))
-                {
-                    logger.Info($"Game has splash image skip feature");
-                    showSplashImage = false;
-                }
-            }
-            if (showSplashImage == true)
+            var showSplashImage = !PlayniteUtilities.GetGameHasFeature(game, "[Splash Screen] Skip splash image", true);
+            if (showSplashImage)
             {
                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                 {
@@ -153,7 +139,7 @@ namespace SplashScreen
                 }
             }
 
-            if (showSplashImage == true)
+            if (showSplashImage)
             {
                 var usingGlobalImage = false;
                 if (settings.Settings.UseGlobalSplashImage && !string.IsNullOrEmpty(settings.Settings.GlobalSplashFile))
@@ -186,32 +172,22 @@ namespace SplashScreen
                         logoPath = GetSplashLogoPath(game);
                     }
                 }
-
-                bool closeSplashScreenAutomatic = false;
-                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-                {
-                    closeSplashScreenAutomatic = settings.Settings.CloseSplashScreenDesktopMode;
-                }
-                else
-                {
-                    closeSplashScreenAutomatic = settings.Settings.CloseSplashScreenFullscreenMode;
-                }
             }
 
             if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.ViewVideoDesktopMode) ||
                 (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.ViewVideoFullscreenMode))
             {
-                videoPath = GetSplashVideoPath(game);
-                if (videoPath != string.Empty)
+                var videoPath = GetSplashVideoPath(game);
+                if (!videoPath.IsNullOrEmpty())
                 {
                     CreateSplashVideoWindow(showSplashImage, videoPath, splashImagePath, logoPath);
                 }
-                else if (showSplashImage == true)
+                else if (showSplashImage)
                 {
                     CreateSplashImageWindow(splashImagePath, logoPath);
                 }
             }
-            else if (showSplashImage == true)
+            else if (showSplashImage)
             {
                 CreateSplashImageWindow(splashImagePath, logoPath);
             }
@@ -222,147 +198,129 @@ namespace SplashScreen
             // Mutes Playnite Background music to make sure its not playing when video or splash screen image
             // is active and prevents music not stopping when game is already running
             MuteBackgroundMusic();
+            timerCloseWindow.Stop();
+            currentSplashWindow?.Close();
 
-            // This will tell them main (Playnite) thread when to continue later
-            var stopBlockingEvent = new AutoResetEvent(false);
-
-            // This creates new UI thread for splash window.
-            // This way we can do any UI things we want with our window without affecting Playnite's UI.
-            var splashWindowThread = new Thread(new ThreadStart(() =>
+            var content = new SplashScreenVideo(videoPath);
+            currentSplashWindow = new Window
             {
-                var content = new SplashScreenVideo(videoPath);
-                currentSplashWindow = new Window
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                WindowState = WindowState.Maximized,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Focusable = false,
+                Content = content,
+                // Window is set to topmost to make sure another window won't show over it
+                Topmost = true
+            };
+
+            currentSplashWindow.Closed += SplashWindowClosed;
+            content.VideoPlayer.MediaEnded += (_, __) =>
+            {
+                isWindowVideoPlaying = false;
+            };
+
+            content.VideoPlayer.MediaFailed += (_, __) =>
+            {
+                isWindowVideoPlaying = false;
+            };
+
+            isWindowVideoPlaying = true;
+            currentSplashWindow.Show();
+
+            // To wait until the video stops playing, a progress dialog is used
+            // to make Playnite wait in a non locking way and without sleeping the whole
+            // application
+            PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
+            {
+                while (true)
                 {
-                    WindowStyle = WindowStyle.None,
-                    ResizeMode = ResizeMode.NoResize,
-                    WindowState = WindowState.Maximized,
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    Focusable = false,
-                    Content = content
-                };
-
-                currentSplashWindow.Closed += (_, __) =>
-                {
-                    // To prevent video sound from playing in case window was closed manually
-                    content.VideoPlayer.Source = null;
-
-                    // Apparently necessary to properly cleanup UI thread we created for this window.
-                    currentSplashWindow.Dispatcher.InvokeShutdown();
-
-                    // Unblock main thread and let Playnite start a game. Works if window is closed manually or by event
-                    stopBlockingEvent?.Set();
-                    currentSplashWindow = null;
-                };
-
-                content.VideoPlayer.MediaEnded += async (_, __) =>
-                {
-                    content.VideoPlayer.Source = null;
-                    if (showSplashImage == true)
+                    Thread.Sleep(250);
+                    if (!isWindowVideoPlaying)
                     {
-                        currentSplashWindow.Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath);
-                        // This needs to run async otherwise we would block our UI thread and prevent splash image from showing
-                        await Task.Delay(3000);
-
-                        // Unblock main thread and let Playnite start a game.
-                        stopBlockingEvent?.Set();
-
-                        if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
-                            (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
-                        {
-                            // Closes splash screen after another 60 seconds, but the game is already starting.
-                            await Task.Delay(60000);
-                            currentSplashWindow?.Close();
-                            currentSplashWindow = null;
-                        }
+                        break;
                     }
-                    else
-                    {
-                        // Unblock main thread and let Playnite start a game.
-                        stopBlockingEvent?.Set();
-                        currentSplashWindow?.Close();
-                    }
-                };
+                }
+            }, new GlobalProgressOptions(string.Empty));
 
-                currentSplashWindow.Show();
-                Dispatcher.Run();
-            }));
+            if (showSplashImage)
+            {
+                currentSplashWindow.Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath);
+                PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                {
+                    Thread.Sleep(3000);
+                }, new GlobalProgressOptions(string.Empty));
 
-            splashWindowThread.SetApartmentState(ApartmentState.STA);
-            splashWindowThread.IsBackground = true;
-            splashWindowThread.Start();
+                if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
+                    (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
+                {
+                    timerCloseWindow.Stop();
+                    timerCloseWindow.Start();
+                }
+            }
+            else
+            {
+                currentSplashWindow?.Close();
+            }
 
-            // Blocks execution until the event occurs from splash window
-            stopBlockingEvent.WaitOne();
-            stopBlockingEvent.Dispose();
-            stopBlockingEvent = null;
+            timerWindowRemoveTopMost.Stop();
+            timerWindowRemoveTopMost.Start();
         }
 
         private void CreateSplashImageWindow(string splashImagePath, string logoPath)
         {
             // Mutes Playnite Background music to make sure its not playing when video or splash screen image
             // is active and prevents music not stopping when game is already running
+            timerCloseWindow.Stop();
+
+            currentSplashWindow?.Close();
             MuteBackgroundMusic();
-
-            var stopBlockingEvent = new AutoResetEvent(false);
-            var splashWindowThread = new Thread(new ThreadStart(() =>
+            currentSplashWindow = new Window
             {
-                currentSplashWindow = new Window
-                {
-                    WindowStyle = WindowStyle.None,
-                    ResizeMode = ResizeMode.NoResize,
-                    WindowState = WindowState.Maximized,
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    Focusable = false,
-                    Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath)
-                };
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                WindowState = WindowState.Maximized,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Focusable = false,
+                Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath),
+                // Window is set to topmost to make sure another window won't show over it
+                Topmost = true
+            };
 
-                currentSplashWindow.Closed += (_, __) =>
-                {
-                    // Apparently necessary to properly cleanup UI thread we created for this window.
-                    currentSplashWindow.Dispatcher.InvokeShutdown();
+            currentSplashWindow.Closed += SplashWindowClosed;
+            currentSplashWindow.Show();
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                Thread.Sleep(3000);
+            }, new GlobalProgressOptions(string.Empty));
 
-                    // Unblock main thread and let Playnite start a game. Works if window is closed manually or by event
-                    stopBlockingEvent?.Set();
-                    currentSplashWindow = null;
-                };
+            if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
+                (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
+            {
+                timerCloseWindow.Stop();
+                timerCloseWindow.Start();
+            }
 
-                Task.Delay(3000).ContinueWith(_ =>
-                {
-                    stopBlockingEvent?.Set();
-                });
+            // The window topmost property is set to false after a small time to make sure
+            // Playnite does not restore itself over the created window after the method ends
+            // and it starts launching the game
+            timerWindowRemoveTopMost.Stop();
+            timerWindowRemoveTopMost.Start();
+        }
 
-                if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
-                    (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
-                {
-                    Task.Delay(60000).ContinueWith(_ =>
-                    {
-                        // It needs to be checked if window still exists, in case it was closed manually or
-                        // closed by the extension with game close
-                        if (currentSplashWindow != null)
-                        {
-                            currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
-                            currentSplashWindow = null;
-                        }
-                    });
-                }
-
-                currentSplashWindow.Show();
-                Dispatcher.Run();
-            }));
-
-            splashWindowThread.SetApartmentState(ApartmentState.STA);
-            splashWindowThread.IsBackground = true;
-            splashWindowThread.Start();
-            stopBlockingEvent.WaitOne();
-            stopBlockingEvent.Dispose();
-            stopBlockingEvent = null;
+        private void SplashWindowClosed(object sender, EventArgs e)
+        {
+            timerCloseWindow.Stop();
+            isWindowVideoPlaying = false;
+            currentSplashWindow.Closed -= SplashWindowClosed;
+            currentSplashWindow = null;
         }
 
         private string GetSplashVideoPath(Game game)
         {
-            string videoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4");
+            var videoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4");
 
-            string splashVideo = string.Format(videoPathTemplate, "games", game.Id.ToString());
+            var splashVideo = string.Format(videoPathTemplate, "games", game.Id.ToString());
             if (FileSystem.FileExists(splashVideo))
             {
                 logger.Info(string.Format("Specific game video found in {0}", splashVideo));
@@ -379,7 +337,7 @@ namespace SplashScreen
                 }
             }
 
-            if (game.Platforms != null)
+            if (game.Platforms.HasItems())
             {
                 splashVideo = string.Format(videoPathTemplate, "platforms", game.Platforms[0].Id.ToString());
                 if (FileSystem.FileExists(splashVideo))
@@ -400,7 +358,7 @@ namespace SplashScreen
 
             if (FileSystem.FileExists(splashVideo))
             {
-                logger.Info(string.Format("Playnite mode video for {0} mode found in {1}", PlayniteApi.ApplicationInfo.Mode ,splashVideo));
+                logger.Info(string.Format("Playnite mode video for {0} mode found in {1}", PlayniteApi.ApplicationInfo.Mode, splashVideo));
                 return splashVideo;
             }
             else
@@ -412,16 +370,10 @@ namespace SplashScreen
 
         private string GetSplashLogoPath(Game game)
         {
-            if (settings.Settings.UseIconAsLogo)
+            if (settings.Settings.UseIconAsLogo && game.Icon != null && !game.Icon.StartsWith("http"))
             {
-                if (game.Icon != null)
-                {
-                    if (!game.Icon.StartsWith("http"))
-                    {
-                        logger.Info("Found game icon");
-                        return PlayniteApi.Database.GetFullFilePath(game.Icon);
-                    }
-                }
+                logger.Info("Found game icon");
+                return PlayniteApi.Database.GetFullFilePath(game.Icon);
             }
             else
             {
@@ -439,22 +391,16 @@ namespace SplashScreen
 
         private string GetSplashImagePath(Game game)
         {
-            if (game.BackgroundImage != null)
+            if (game.BackgroundImage != null && !game.BackgroundImage.StartsWith("http"))
             {
-                if (!game.BackgroundImage.StartsWith("http"))
-                {
-                    logger.Info("Found game background image");
-                    return PlayniteApi.Database.GetFullFilePath(game.BackgroundImage);
-                }
+                logger.Info("Found game background image");
+                return PlayniteApi.Database.GetFullFilePath(game.BackgroundImage);
             }
 
-            if (game.Platforms != null)
+            if (game.Platforms.HasItems() && game.Platforms[0].Background != null)
             {
-                if (game.Platforms[0].Background != null)
-                {
-                    logger.Info("Found platform background image");
-                    return PlayniteApi.Database.GetFullFilePath(game.Platforms[0].Background);
-                }
+                logger.Info("Found platform background image");
+                return PlayniteApi.Database.GetFullFilePath(game.Platforms[0].Background);
             }
 
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
@@ -473,13 +419,8 @@ namespace SplashScreen
             // Close splash screen manually it was not closed automatically
             if (currentSplashWindow != null)
             {
-                currentSplashWindow.Dispatcher.Invoke(() => currentSplashWindow.Close());
+                currentSplashWindow.Close();
                 currentSplashWindow = null;
-            }
-
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
-            {
-                timer.Start();
             }
         }
 

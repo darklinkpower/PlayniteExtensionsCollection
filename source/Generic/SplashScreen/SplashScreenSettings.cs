@@ -58,7 +58,6 @@ namespace SplashScreen
             { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentBottomLabel") },
         };
 
-        public bool ControllerNoticeShowed { get; set; } = true;
     }
 
     public class SplashScreenSettingsViewModel : ObservableObject, ISettings
