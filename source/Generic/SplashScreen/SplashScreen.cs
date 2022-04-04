@@ -53,7 +53,7 @@ namespace SplashScreen
             };
 
             timerWindowRemoveTopMost = new DispatcherTimer();
-            timerWindowRemoveTopMost.Interval = TimeSpan.FromMilliseconds(1500);
+            timerWindowRemoveTopMost.Interval = TimeSpan.FromMilliseconds(800);
             timerWindowRemoveTopMost.Tick += (_, __) =>
             {
                 timerWindowRemoveTopMost.Stop();
@@ -89,6 +89,14 @@ namespace SplashScreen
             {
                 PlayniteApi.ApplicationSettings.Fullscreen.IsMusicMuted = false;
                 isMusicMutedBackup = null;
+            }
+        }
+
+        public override void OnGameStarted(OnGameStartedEventArgs args)
+        {
+            if (currentSplashWindow != null)
+            {
+                currentSplashWindow.Topmost = false;
             }
         }
 
