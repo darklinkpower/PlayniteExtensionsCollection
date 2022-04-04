@@ -165,3 +165,9 @@ Packages:
     Changelog:
     - 'Fix extension causing input issues when exiting games under certain circumstances'
     - 'Removed extension pressing windows key to fix input issues on game close'
+  - Version: 2.25
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.04_c78bb00c/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_25.pext
+    Changelog:
+    - 'Fix SplashScreen staying on top of some games'
