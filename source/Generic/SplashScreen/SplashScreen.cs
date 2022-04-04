@@ -24,11 +24,11 @@ namespace SplashScreen
     public class SplashScreen : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private bool isWindowVideoPlaying;
         private readonly DispatcherTimer timerCloseWindow;
         private string pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         private Window currentSplashWindow;
         private bool? isMusicMutedBackup;
+        private EventWaitHandle videoWaitHandle;
         private readonly DispatcherTimer timerWindowRemoveTopMost;
 
         private SplashScreenSettingsViewModel settings { get; set; }
@@ -43,7 +43,7 @@ namespace SplashScreen
                 HasSettings = true
             };
 
-            isWindowVideoPlaying = false;
+            videoWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
             timerCloseWindow = new DispatcherTimer();
             timerCloseWindow.Interval = TimeSpan.FromMilliseconds(60000);
             timerCloseWindow.Tick += (_, __) =>
@@ -225,30 +225,26 @@ namespace SplashScreen
             currentSplashWindow.Closed += SplashWindowClosed;
             content.VideoPlayer.MediaEnded += (_, __) =>
             {
-                isWindowVideoPlaying = false;
+                logger.Debug("MediaEnded event");
+                videoWaitHandle.Set();
             };
 
             content.VideoPlayer.MediaFailed += (_, __) =>
             {
-                isWindowVideoPlaying = false;
+                logger.Debug("MediaFailed event");
+                videoWaitHandle.Set();
             };
 
-            isWindowVideoPlaying = true;
             currentSplashWindow.Show();
 
             // To wait until the video stops playing, a progress dialog is used
             // to make Playnite wait in a non locking way and without sleeping the whole
             // application
+            videoWaitHandle.Reset();
             PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
             {
-                while (true)
-                {
-                    Thread.Sleep(250);
-                    if (!isWindowVideoPlaying)
-                    {
-                        break;
-                    }
-                }
+                videoWaitHandle.WaitOne();
+                logger.Debug("videoWaitHandle.WaitOne() passed");
             }, new GlobalProgressOptions(string.Empty));
 
             if (showSplashImage)
@@ -319,7 +315,7 @@ namespace SplashScreen
         private void SplashWindowClosed(object sender, EventArgs e)
         {
             timerCloseWindow.Stop();
-            isWindowVideoPlaying = false;
+            videoWaitHandle.Set();
             currentSplashWindow.Closed -= SplashWindowClosed;
             currentSplashWindow = null;
         }
