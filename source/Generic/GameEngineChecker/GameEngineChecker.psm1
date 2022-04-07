@@ -21,16 +21,16 @@ function Add-EngineTag
     )
 
     $ExtensionName = "Game Engine Checker"
-    $pcgwApiTemplateSteam = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam+AppID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
-    $pcgwApiTemplateGog = "https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom+ID::{0}&printouts=Uses_engine|Unity_engine_build&format=json"
+    $pcgwApiTemplateSteam = "https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Engines%2C_pageName%3Dtitle&where=Steam_AppID%20HOLDS%20%22{0}%22&format=json"
+    $pcgwApiTemplateGog = "https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Engines%2C_pageName%3Dtitle&where=GOGcom_ID%20HOLDS%20%22{0}%22&format=json"
     $CountertagAdded = 0
    
     $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
     if (Test-Path $steamAppListPath)
     {
-        $AppListLastWrite = (get-item $steamAppListPath).LastWriteTime
-        $TimeSpan = new-timespan -days 1
-        if (((get-date) - $AppListLastWrite) -gt $TimeSpan)
+        $AppListLastWrite = (Get-Item $steamAppListPath).LastWriteTime
+        $TimeSpan = New-Timespan -days 1
+        if (((Get-Date) - $AppListLastWrite) -gt $TimeSpan)
         {
             Get-SteamAppList $steamAppListPath
         }
@@ -39,11 +39,12 @@ function Add-EngineTag
     {
         Get-SteamAppList $steamAppListPath
     }
+
     [object]$steamAppList = [System.IO.File]::ReadAllLines($steamAppListPath) | ConvertFrom-Json
     
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    foreach ($game in $gameDatabase) {
-
+    $webClient = New-Object System.Net.WebClient
+    $webClient.Encoding = [System.Text.Encoding]::UTF8
+    foreach ($game in $PlayniteApi.MainView.SelectedGames) {
         if ($null -eq $game.Platforms)
         {
             continue
@@ -52,18 +53,27 @@ function Add-EngineTag
         {
             $isTargetSpecification = $false
             foreach ($platform in $game.Platforms) {
+                if ($platform.Name -eq "PC (Windows)" -or $platform.Name -eq "PC")
+                {
+                    $isTargetSpecification = $true
+                    break
+                }
+
                 if ($null -eq $platform.SpecificationId)
                 {
                     continue
                 }
+
                 if ($platform.SpecificationId -eq "pc_windows")
                 {
                     $isTargetSpecification = $true
                     break
                 }
             }
+
             if ($isTargetSpecification -eq $false)
             {
+                $__logger.Info("$ExtensionName - Game `"$($game.name)`" is not a PC game")
                 continue
             }
         }
@@ -72,11 +82,14 @@ function Add-EngineTag
         {
             $engineTagPresent = $false
             foreach ($tag in $game.Tags) {
-                if ($tag -match "^[Engine]")
+                if ($tag.Name.StartsWith("[Engine]"))
                 {
+                    $__logger.Info("$ExtensionName - Game `"$($game.name)`" already has engine tag $($tag.Name)")
+                    $engineTagPresent = $true
                     break
                 }
             }
+
             if ($engineTagPresent -eq $true)
             {
                 continue
@@ -103,19 +116,18 @@ function Add-EngineTag
                     break
                 }
             }
+
             if ($null -eq $steamAppId)
             {
                 $__logger.Info("$ExtensionName - SteamId of `"$($game.name)`" not found.")
                 continue
             }
+
             $uri = $pcgwApiTemplateSteam -f $steamAppId
         }
 
         try {
-            $webClient = New-Object System.Net.WebClient
-            $webClient.Encoding = [System.Text.Encoding]::UTF8
             $downloadedString = $webClient.DownloadString($uri)
-            $webClient.Dispose()
             $gameInfo = $DownloadedString | ConvertFrom-Json
         } catch {
             $ErrorMessage = $_.Exception.Message
@@ -123,23 +135,21 @@ function Add-EngineTag
             break
         }
 
-        $printouts = $gameInfo.query.results[0].PSObject.Properties.Value.printouts
-        if ($printouts.Uses_engine.Count -gt 0)
+        if ($gameInfo.cargoquery.Count -eq 0)
         {
-            $engineName = $printouts.Uses_engine[0].fulltext -replace "Engine:", "[Engine] "
-            if (($engineName -eq "[Engine] Unity") -and ($printouts.Unity_engine_build.Count -gt 0))
-            {
-                $engineName = "[Engine] Unity {0}" -f $printouts.Unity_engine_build[-1].split('.')[0]
-            }
-        }
-        else
-        {
-            $__logger.Info("$ExtensionName - `"$($game.name)`" doesn't have Engine information in PCGW.")
+            $__logger.Info("$ExtensionName - `"$($uri)`" did not produce any results")
             continue
         }
+        elseif ($null -eq $gameInfo.cargoquery[0].title.Engines -or [string]::IsNullOrEmpty($gameInfo.cargoquery[0].title.Engines))
+        {
+            $__logger.Info("$ExtensionName - `"$($uri)`" does not have engine data")
+            continue  
+        }
+
+        $engines = $gameInfo.cargoquery[0].title.Engines.Replace("Engine:", "[Engine] ").Split(",")
+        $engineName = $engines[0]
 
         $tag = $PlayniteApi.Database.Tags.Add($engineName)
-    
         if ($game.tagIds -notcontains $tag.Id)
         {
             # Add tag Id to game
@@ -155,12 +165,13 @@ function Add-EngineTag
             
             # Update game in database and increase no media count
             $PlayniteApi.Database.Games.Update($game)
-            $__logger.Info("$ExtensionName - Added `"$tagName`" engine tag to `"$($game.name)`".")
+            $__logger.Info("$ExtensionName - Added `"$engineName`" engine tag to `"$($game.name)`".")
             $CountertagAdded++
         }
     }
 
     # Show finish dialogue with results
+    $webClient.Dispose()
     $PlayniteApi.Dialogs.ShowMessage(([Playnite.SDK.ResourceProvider]::GetString("LOCGame_Engine_Checker_ResultsMessage") -f $CountertagAdded), $ExtensionName)
 }
 
