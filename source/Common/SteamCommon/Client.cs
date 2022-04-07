@@ -61,6 +61,11 @@ namespace SteamCommon
             return defaultSteamPath;
         }
 
+        public static string GetSteamInstallationDirectory()
+        {
+            return Path.GetDirectoryName(GetSteamInstallationPath());
+        }
+
         public static void StartSteam(bool restartIfRunning, string arguments = "")
         {
             string steamInstallationPath = GetSteamInstallationPath();

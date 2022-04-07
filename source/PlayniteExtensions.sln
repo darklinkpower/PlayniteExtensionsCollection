@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayniteControlLocker", "Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchCollection", "Generic\SearchCollection\SearchCollection.csproj", "{67CABEA3-1069-499E-B843-D77F06090C7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveFileView", "Generic\SaveFileView\SaveFileView.csproj", "{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{67CABEA3-1069-499E-B843-D77F06090C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67CABEA3-1069-499E-B843-D77F06090C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67CABEA3-1069-499E-B843-D77F06090C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{5DDB1F18-00EC-47B5-89F9-1D453D1CE999} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{39C43569-FD87-4583-884E-A6E79BCFB598} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{67CABEA3-1069-499E-B843-D77F06090C7A} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
+		{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}
