@@ -50,3 +50,14 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_7.pext
     Changelog:
     - Updated localizations
+  - Version: 2.8
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.07_98fa5f6c/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_8.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Full extension rewrite'
+    - 'Added support to search for game data if automatic search does not find data'
+    - 'Data will be refreshed automatically after closing game'
+    - 'Added option to automatically add save directories as game links when obtaining game data'
+    - 'Added option to automatically add configuration directories as game links when obtaining game data'

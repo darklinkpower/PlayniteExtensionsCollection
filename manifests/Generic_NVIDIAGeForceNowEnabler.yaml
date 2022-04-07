@@ -181,3 +181,9 @@ Packages:
     Changelog:
     - 'Added option to indicate if GeForce Now Play Action should be shown for games that are already installed by their libraries'
     - 'Added main menu item to open a window with a database browser to view games available on the GeForce NOW service. Game names can be copied from right click context menu.'
+  - Version: 2.28
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.07_98fa5f6c/NVIDIA_GeForce_Now_Enabler_2_28.pext
+    Changelog:
+    - 'Updated localizations'
