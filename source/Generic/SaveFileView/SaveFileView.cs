@@ -87,8 +87,7 @@ namespace SaveFileView
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuSection = "Game directories";
-            
+            var menuSection = ResourceProvider.GetString("LOCSaveFileView_MenuSection");
             return new List<GameMenuItem>
             {
                 new GameMenuItem
@@ -112,10 +111,46 @@ namespace SaveFileView
                     Description = ResourceProvider.GetString("LOCSaveFileView_MenuItemRefreshDirectoriesDescription"),
                     MenuSection = menuSection,
                     Action = a => {
-                        /*throw NotImplementedException*/;
+                        RefreshGamesDirectories(args.Games.Distinct());
                     }
                 }
             };
+        }
+
+        private void RefreshGamesDirectories(IEnumerable<Game> games)
+        {
+            var getDataSuccess = 0;
+            var getDataFailed = 0;
+            var progressTitle = ResourceProvider.GetString("LOCSaveFileView_DialogProgressDownloadingData");
+            var progressOptions = new GlobalProgressOptions(progressTitle, true);
+            progressOptions.IsIndeterminate = false;
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                a.ProgressMaxValue = games.Count();
+                foreach (var game in games)
+                {
+                    if (a.CancelToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    a.CurrentProgressValue++;
+                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+
+                    var pathsStorePath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
+                    if (GetGameDirectories(game, pathsStorePath, true))
+                    {
+                        getDataSuccess++;
+                    }
+                    else
+                    {
+                        getDataFailed++;
+                    }
+                }
+            }, progressOptions);
+
+            PlayniteApi.Dialogs.ShowMessage(
+                string.Format(ResourceProvider.GetString("LOCSaveFileView_RefreshResultsMessage"),
+                getDataSuccess, getDataFailed), "Save File View");
         }
 
         private void OpenGamesDirectories(PathType pathType)
@@ -131,7 +166,7 @@ namespace SaveFileView
                 var pathsStorePath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
                 if (!File.Exists(pathsStorePath))
                 {
-                    GetGameDirectories(game, pathsStorePath);
+                    GetGameDirectories(game, pathsStorePath, true);
                     if (!File.Exists(pathsStorePath))
                     {
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCSaveFileView_CouldntGetGameDirectoriesMessage"), game.Name));
@@ -276,22 +311,35 @@ namespace SaveFileView
             return new string[0];
         }
 
-        private bool GetGameDirectories(Game game, string pathsStorePath)
+        private string GetPcgwPageId(Game game, string pathsStorePath, bool useCache, bool isBackgroundDownload = false)
         {
-            var askArgsUri = GetPcgwAskArgsUri(game);
-            if (askArgsUri.IsNullOrEmpty())
+            if (FileSystem.FileExists(pathsStorePath))
+            {
+                return Serialization.FromJsonFile<GameDirectoriesData>(pathsStorePath).PcgwPageId;
+            }
+            
+            var uri = GetPcgwGameIdSearchUri(game);
+            if (!uri.IsNullOrEmpty())
+            {
+                var downloadedString = HttpDownloader.DownloadString(uri);
+                if (!downloadedString.IsNullOrEmpty())
+                {
+                    var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadedString);
+                    return query.CargoQuery.First().Title.PageId;
+                }
+            }
+
+            return GetPcgwPageIdBySearch(game, isBackgroundDownload);
+        }
+
+        private bool GetGameDirectories(Game game, string pathsStorePath, bool useCacheId, bool isBackgroundDownload = false)
+        {
+            var pageId = GetPcgwPageId(game, pathsStorePath, useCacheId, isBackgroundDownload);
+            if (pageId.IsNullOrEmpty())
             {
                 return false;
             }
 
-            var downloadedString = HttpDownloader.DownloadString(askArgsUri);
-            if (downloadedString.IsNullOrEmpty())
-            {
-                return false;
-            }
-
-            var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadedString);
-            var pageId = query.CargoQuery.First().Title.PageId;
             var apiUri = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
             var apiDownloadedString = HttpDownloader.DownloadString(apiUri);
             if (apiDownloadedString.IsNullOrEmpty())
@@ -300,8 +348,39 @@ namespace SaveFileView
             }
 
             var wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(apiDownloadedString);
-            var gameLibraryPluginString = BuiltinExtensions.GetExtensionFromId(game.PluginId).ToString();
+            if (wikiTextQuery.Parse.Wikitext.TextDump.StartsWith("#REDIRECT [["))
+            {
+                // Pages that redirect don't have any data so we have to obtain them
+                // in another request. Example of this is "Horizon Zero Down Complete Edition"
+                var titleMatch = Regex.Match(wikiTextQuery.Parse.Wikitext.TextDump, @"#REDIRECT \[\[(Horizon Zero Dawn)\]\]");
+                if (!titleMatch.Success)
+                {
+                    return false;
+                }
 
+                var apiUri2 = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID%3DPageID&where=Infobox_game._pageName%3D%22{0}%22&format=json", titleMatch.Groups[1].Value.UrlEncode());
+                var apiDownloadedString2 = HttpDownloader.DownloadString(apiUri2);
+                if (apiDownloadedString2.IsNullOrEmpty())
+                {
+                    return false;
+                }
+                var query = Serialization.FromJson<PcgwGameIdCargoQuery>(apiDownloadedString2);
+                pageId = query.CargoQuery.First().Title.PageId;
+                var apiUri3 = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
+                var apiDownloadedString3 = HttpDownloader.DownloadString(apiUri3);
+                if (apiDownloadedString3.IsNullOrEmpty())
+                {
+                    return false;
+                }
+
+                wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(apiDownloadedString3);
+                if (wikiTextQuery.Parse.Wikitext.TextDump.StartsWith("#REDIRECT [["))
+                {
+                    return false;
+                }
+            }
+
+            var gameLibraryPluginString = BuiltinExtensions.GetExtensionFromId(game.PluginId).ToString();
             var configDirectories = GetPathsFromContent(wikiTextQuery.Parse.Wikitext.TextDump, PathType.Config, gameLibraryPluginString);
             var saveDirectories = GetPathsFromContent(wikiTextQuery.Parse.Wikitext.TextDump, PathType.Save, gameLibraryPluginString);
             var gameDirsData = new GameDirectoriesData
@@ -323,8 +402,7 @@ namespace SaveFileView
             var paths = new List<PathData>();
             if (pathMatches.Count == 0)
             {
-                return paths;
-                
+                return paths;         
             }
 
             foreach (Match match in pathMatches)
@@ -424,7 +502,7 @@ namespace SaveFileView
             return paths;
         }
 
-        private string GetPcgwAskArgsUri(Game game)
+        private string GetPcgwGameIdSearchUri(Game game, bool isBackgroundDownload = false)
         {
             var gameLibraryPlugin = BuiltinExtensions.GetExtensionFromId(game.PluginId);
             if (gameLibraryPlugin == BuiltinExtension.SteamLibrary)
@@ -436,13 +514,80 @@ namespace SaveFileView
                 return string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID%3DPageID&where=Infobox_game.GogCom_ID%20HOLDS%20%22{0}%22&format=json", game.GameId.UrlEncode());
             }
 
-            // TODO Search on PCGW with game name
+            return null;
+        }
+
+        private const string pcgwTitleSearchQuery = @"https://www.pcgamingwiki.com/w/api.php?action=query&list=search&srlimit=10&srwhat=title&srsearch={0}&format=json";
+        private string GetPcgwPageIdBySearch(Game game, bool isBackgroundDownload)
+        {
+            var query = GetPcgwSearchQuery(game.Name);
+            if (query == null)
+            {
+                return null;
+            }
+
+            var matchName = game.Name.GetMatchModifiedName();
+            foreach (var item in query.Query.Search)
+            {
+                if (item.Title.GetMatchModifiedName() == matchName)
+                {
+                    return item.PageId.ToString();
+                }
+            }
+
+            if (isBackgroundDownload)
+            {
+                return null;
+            }
+
+            var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(
+                new List<GenericItemOption>(),
+                (a) => GetPcgwSearchOptions(a),
+                game.Name,
+                ResourceProvider.GetString("LOCSaveFileView_DialogTitleSelectPcgwGame"));
+
+            if (selectedItem != null)
+            {
+                return selectedItem.Description;
+            }
+
             return string.Empty;
+        }
+
+        private PcgwTitleSearch GetPcgwSearchQuery(string gameName)
+        {
+            var searchUri = string.Format(pcgwTitleSearchQuery, gameName.UrlEncode());
+            var downloadedString = HttpDownloader.DownloadString(searchUri);
+            if (downloadedString.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            return Serialization.FromJson<PcgwTitleSearch>(downloadedString);
+        }
+
+        private List<GenericItemOption> GetPcgwSearchOptions(string gameName)
+        {
+            var itemOptions = new List<GenericItemOption>();
+            var query = GetPcgwSearchQuery(gameName);
+            if (query == null)
+            {
+                return null;
+            }
+
+            foreach (var item in query.Query.Search)
+            {
+                itemOptions.Add(new GenericItemOption { Name = item.Title, Description = item.PageId.ToString() });
+            }
+
+            return itemOptions;
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            // Add code to be executed when game is preparing to be started.
+            var game = args.Game;
+            var pathsStorePath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
+            var refreshSuccess = GetGameDirectories(game, pathsStorePath, true, true);
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)

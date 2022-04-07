@@ -103,6 +103,7 @@
     <Compile Include="Enums\PathType.cs" />
     <Compile Include="Models\GameDirectoriesData.cs" />
     <Compile Include="Models\PcgwGameIdCargoQuery.cs" />
+    <Compile Include="Models\PcgwTitleSearch.cs" />
     <Compile Include="Models\PcgwWikiTextQuery.cs" />
     <Compile Include="SaveFileView.cs" />
     <Compile Include="SaveFileViewSettings.cs" />
