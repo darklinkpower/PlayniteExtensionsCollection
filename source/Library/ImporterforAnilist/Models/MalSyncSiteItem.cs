@@ -7,7 +7,34 @@ using System.Threading.Tasks;
 
 namespace ImporterforAnilist.Models
 {
-    public partial class MalSyncSiteItem
+    public class MalSyncResponse
+    {
+        [SerializationPropertyName("id")]
+        public long Id { get; set; }
+
+        [SerializationPropertyName("malId")]
+        public long MalId { get; set; }
+
+        [SerializationPropertyName("type")]
+        public string Type { get; set; }
+
+        [SerializationPropertyName("title")]
+        public string Title { get; set; }
+
+        [SerializationPropertyName("url")]
+        public Uri Url { get; set; }
+
+        [SerializationPropertyName("image")]
+        public Uri Image { get; set; }
+
+        [SerializationPropertyName("Sites")]
+        public Dictionary<string, Dictionary<string, MalSyncSiteItem>> Sites { get; set; }
+
+        [SerializationPropertyName("ttl")]
+        public long Ttl { get; set; }
+    }
+
+    public class MalSyncSiteItem
     {
         [SerializationPropertyName("identifier")]
         public string Identifier { get; set; }
