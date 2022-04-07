@@ -175,74 +175,84 @@ namespace SaveFileView
                 }
 
                 var data = Serialization.FromJsonFile<GameDirectoriesData>(pathsStorePath);
-                var pathDefinitions = new List<string>();
-                foreach (var pathData in data.PathsData)
+                var dirDefinitions = GetAvailableDirsFromData(game, replacementDict, data, pathType);
+                if (dirDefinitions.Count > 0)
                 {
-                    if (pathData.Type != pathType)
+                    foreach (var dir in dirDefinitions)
                     {
-                        continue;
-                    }
-
-                    var path = pathData.Path;
-                    // Skip registry paths
-                    if (pcgwRegistryVariables.Any(x => path.Contains(x, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        continue;
-                    }
-
-                    var pathDef = path;
-                    if (!game.InstallDirectory.IsNullOrEmpty())
-                    {
-                        pathDef = path.Replace(@"{{p|game}}", game.InstallDirectory);
-                    }
-                        
-                    foreach (var kv in replacementDict)
-                    {
-                        pathDef = ReplaceCaseInsensitive(pathDef, kv.Key, kv.Value);
-                    }
-
-                    if (!pathDef.Contains("*"))
-                    {
-                        pathDefinitions.Add(pathDef);
-                    }
-                    else
-                    {
-                        foreach (var matchingPath in GetAllMatchingPaths(pathDef))
-                        {
-                            if (matchingPath.IsNullOrEmpty())
-                            {
-                                continue;
-                            }
-
-                            pathDefinitions.Add(matchingPath);
-                        }
+                        ProcessStarter.StartProcess(dir);
                     }
                 }
-
-                var openedDirs = 0;
-                foreach (var path in pathDefinitions.Distinct())
-                {
-                    if (Directory.Exists(path))
-                    {
-                        ProcessStarter.StartProcess(path);
-                        openedDirs++;
-                    }
-                    else if (File.Exists(path))
-                    {
-                        ProcessStarter.StartProcess(Path.GetDirectoryName(path));
-                        openedDirs++;
-                    }
-                }
-
-                if (openedDirs == 0)
+                else
                 {
                     PlayniteApi.Dialogs.ShowMessage(
                         string.Format(ResourceProvider.GetString("LOCSaveFileView_DirectoriesNotDetectedMessage"), game.Name),
                         "Save File View"
                     );
-                    continue;
                 }
             }
+        }
+
+        private List<string> GetAvailableDirsFromData(Game game, Dictionary<string, string> replacementDict, GameDirectoriesData data, PathType pathType)
+        {
+            var dirDefinitions = new List<string>();
+            var pathDefinitions = new List<string>();
+            foreach (var pathData in data.PathsData)
+            {
+                if (pathData.Type != pathType)
+                {
+                    continue;
+                }
+
+                var path = pathData.Path;
+                // Skip registry paths
+                if (pcgwRegistryVariables.Any(x => path.Contains(x, StringComparison.OrdinalIgnoreCase)))
+                {
+                    continue;
+                }
+
+                var pathDef = path;
+                if (!game.InstallDirectory.IsNullOrEmpty())
+                {
+                    pathDef = path.Replace(@"{{p|game}}", game.InstallDirectory);
+                }
+
+                foreach (var kv in replacementDict)
+                {
+                    pathDef = ReplaceCaseInsensitive(pathDef, kv.Key, kv.Value);
+                }
+
+                if (!pathDef.Contains("*"))
+                {
+                    pathDefinitions.Add(pathDef);
+                }
+                else
+                {
+                    foreach (var matchingPath in GetAllMatchingPaths(pathDef))
+                    {
+                        if (matchingPath.IsNullOrEmpty())
+                        {
+                            continue;
+                        }
+
+                        pathDefinitions.Add(matchingPath);
+                    }
+                }
+            }
+
+            foreach (var path in pathDefinitions.Distinct())
+            {
+                if (Directory.Exists(path))
+                {
+                    dirDefinitions.Add(path);
+                }
+                else if (File.Exists(path))
+                {
+                    dirDefinitions.Add(Path.GetDirectoryName(path));
+                }
+            }
+
+            return dirDefinitions;
         }
 
         private static string ReplaceCaseInsensitive(string input, string search, string replacement)
@@ -313,7 +323,7 @@ namespace SaveFileView
 
         private string GetPcgwPageId(Game game, string pathsStorePath, bool useCache, bool isBackgroundDownload = false)
         {
-            if (FileSystem.FileExists(pathsStorePath))
+            if (useCache && FileSystem.FileExists(pathsStorePath))
             {
                 return Serialization.FromJsonFile<GameDirectoriesData>(pathsStorePath).PcgwPageId;
             }
@@ -352,7 +362,7 @@ namespace SaveFileView
             {
                 // Pages that redirect don't have any data so we have to obtain them
                 // in another request. Example of this is "Horizon Zero Down Complete Edition"
-                var titleMatch = Regex.Match(wikiTextQuery.Parse.Wikitext.TextDump, @"#REDIRECT \[\[(Horizon Zero Dawn)\]\]");
+                var titleMatch = Regex.Match(wikiTextQuery.Parse.Wikitext.TextDump, @"#REDIRECT \[\[([^\]]+)\]\]");
                 if (!titleMatch.Success)
                 {
                     return false;
@@ -390,7 +400,70 @@ namespace SaveFileView
             };
 
             FileSystem.WriteStringToFile(pathsStorePath, Serialization.ToJson(gameDirsData));
+            AddPathsLinksToGame(game, gameDirsData);
+
             return true;
+        }
+
+        private const string linkSaveTemplate = @"[Save] ";
+        private const string linkConfigTemplate = @"[Config] ";
+        private void AddPathsLinksToGame(Game game, GameDirectoriesData gameDirsData)
+        {
+            var replacementDict = GetReplacementDict();
+            var linksToAdd = new Dictionary<string, string>();
+            var dirDefinitions = GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Config);
+
+            if (settings.Settings.AddConfigDirsAsLinks)
+            {
+                foreach (var path in GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Config))
+                {
+                    linksToAdd[linkConfigTemplate + path] = @"file:///" + path;
+                }
+            }
+
+            if (settings.Settings.AddSaveDirsAsLinks)
+            {
+                foreach (var path in GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Save))
+                {
+                    linksToAdd[linkSaveTemplate + path] = @"file:///" + path;
+                }
+            }
+
+            var gameUpdated = false;
+            if (game.Links == null)
+            {
+                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link> { };
+            }
+
+            var linksCopy = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+            foreach (var link in linksCopy.ToList())
+            {
+                if (!link.Name.StartsWith(linkSaveTemplate) || !link.Name.StartsWith(linkConfigTemplate))
+                {
+                    continue;
+                }
+
+                if (!linksToAdd.Any(x => x.Value == link.Url))
+                {
+                    game.Links.Remove(link);
+                    gameUpdated = true;
+                }
+            }
+
+            foreach (var linkKv in linksToAdd)
+            {
+                if (!linksCopy.Any(x => x.Url == linkKv.Value))
+                {
+                    linksCopy.Add(new Link { Name = linkKv.Key, Url = linkKv.Value });
+                    gameUpdated = true;
+                }
+            }
+
+            if (gameUpdated)
+            {
+                game.Links = linksCopy;
+                PlayniteApi.Database.Games.Update(game);
+            }
         }
 
         private const char bracketOpen = '{';
