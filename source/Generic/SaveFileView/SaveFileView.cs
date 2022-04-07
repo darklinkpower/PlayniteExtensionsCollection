@@ -24,7 +24,7 @@ namespace SaveFileView
     public class SaveFileView : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static Regex pcgwContentRegex = new Regex(@"{{Game data\/(config|saves)\|[^\|]+\|.*?(?=}}\\n)", RegexOptions.None);
+        private static Regex pcgwContentRegex = new Regex(@"{{Game data\/(config|saves)\|[^\|]+\|.*?(?=}}\n)", RegexOptions.None);
         private readonly List<string> pcgwRegistryVariables;
 
         private SaveFileViewSettingsViewModel settings { get; set; }
@@ -141,65 +141,71 @@ namespace SaveFileView
 
                 var data = Serialization.FromJsonFile<GameDirectoriesData>(pathsStorePath);
                 var pathDefinitions = new List<string>();
-                if (pathType == PathType.Save)
+                foreach (var pathData in data.PathsData)
                 {
-                    foreach (var path in data.SaveDirectories)
+                    if (pathData.Type != pathType)
                     {
-                        // Skip registry paths
-                        if (pcgwRegistryVariables.Any(x => path.Contains(x, StringComparison.OrdinalIgnoreCase)))
-                        {
-                            continue;
-                        }
+                        continue;
+                    }
 
-                        var pathDef = path;
-                        if (!game.InstallDirectory.IsNullOrEmpty())
-                        {
-                            pathDef = path.Replace(@"{{game}}", game.InstallDirectory);
-                        }
+                    var path = pathData.Path;
+                    // Skip registry paths
+                    if (pcgwRegistryVariables.Any(x => path.Contains(x, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        continue;
+                    }
+
+                    var pathDef = path;
+                    if (!game.InstallDirectory.IsNullOrEmpty())
+                    {
+                        pathDef = path.Replace(@"{{p|game}}", game.InstallDirectory);
+                    }
                         
-                        foreach (var kv in replacementDict)
-                        {
-                            pathDef = ReplaceCaseInsensitive(pathDef, kv.Key, kv.Value);
-                        }
+                    foreach (var kv in replacementDict)
+                    {
+                        pathDef = ReplaceCaseInsensitive(pathDef, kv.Key, kv.Value);
+                    }
 
-                        if (!pathDef.Contains("*"))
+                    if (!pathDef.Contains("*"))
+                    {
+                        pathDefinitions.Add(pathDef);
+                    }
+                    else
+                    {
+                        foreach (var matchingPath in GetAllMatchingPaths(pathDef))
                         {
-                            pathDefinitions.Add(pathDef);
-                        }
-                        else
-                        {
-                            foreach (var matchingPath in GetAllMatchingPaths(pathDef))
+                            if (matchingPath.IsNullOrEmpty())
                             {
-                                if (matchingPath.IsNullOrEmpty())
-                                {
-                                    continue;
-                                }
-
-                                pathDefinitions.Add(matchingPath);
+                                continue;
                             }
+
+                            pathDefinitions.Add(matchingPath);
                         }
                     }
                 }
 
-                if (pathDefinitions.Count == 0)
+                var openedDirs = 0;
+                foreach (var path in pathDefinitions.Distinct())
+                {
+                    if (Directory.Exists(path))
+                    {
+                        ProcessStarter.StartProcess(path);
+                        openedDirs++;
+                    }
+                    else if (File.Exists(path))
+                    {
+                        ProcessStarter.StartProcess(Path.GetDirectoryName(path));
+                        openedDirs++;
+                    }
+                }
+
+                if (openedDirs == 0)
                 {
                     PlayniteApi.Dialogs.ShowMessage(
                         string.Format(ResourceProvider.GetString("LOCSaveFileView_DirectoriesNotDetectedMessage"), game.Name),
                         "Save File View"
                     );
                     continue;
-                }
-
-                foreach (var path in pathDefinitions.Distinct())
-                {
-                    if (Directory.Exists(path))
-                    {
-                        ProcessStarter.StartProcess(path);
-                    }
-                    else if (File.Exists(path))
-                    {
-                        ProcessStarter.StartProcess(Path.GetDirectoryName(path));
-                    }
                 }
             }
         }
@@ -254,9 +260,8 @@ namespace SaveFileView
                     else // if this is in the middle of the path (a directory name)
                     {
                         var directories = Directory.EnumerateDirectories(combined, parts[i], SearchOption.TopDirectoryOnly);
-                        var paths = directories.SelectMany(dir =>
+                        return directories.SelectMany(dir =>
                             GetAllMatchingPathsInternal(string.Join(separator.ToString(), parts.Skip(i + 1)), dir));
-                        return paths;
                     }
                 }
             }
@@ -285,20 +290,24 @@ namespace SaveFileView
                 return false;
             }
 
-            var query = Serialization.FromJson<PcgwApiResult>(downloadedString);
-            var gameTitle = query.Query.Results.First().Value.Fulltext;
-            var apiUri = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=query&titles={0}&prop=revisions&rvprop=content&format=json", gameTitle.UrlEncode());
+            var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadedString);
+            var pageId = query.CargoQuery.First().Title.PageId;
+            var apiUri = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
             var apiDownloadedString = HttpDownloader.DownloadString(apiUri);
             if (apiDownloadedString.IsNullOrEmpty())
             {
                 return false;
             }
 
+            var wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(apiDownloadedString);
             var gameLibraryPluginString = BuiltinExtensions.GetExtensionFromId(game.PluginId).ToString();
+
+            var configDirectories = GetPathsFromContent(wikiTextQuery.Parse.Wikitext.TextDump, PathType.Config, gameLibraryPluginString);
+            var saveDirectories = GetPathsFromContent(wikiTextQuery.Parse.Wikitext.TextDump, PathType.Save, gameLibraryPluginString);
             var gameDirsData = new GameDirectoriesData
             {
-                ConfigDirectories = GetPathsFromContent(apiDownloadedString, PathType.Config, gameLibraryPluginString).ToArray(),
-                SaveDirectories = GetPathsFromContent(apiDownloadedString, PathType.Save, gameLibraryPluginString).ToArray()
+                PcgwPageId = pageId,
+                PathsData = configDirectories.Concat(saveDirectories).ToList()
             };
 
             FileSystem.WriteStringToFile(pathsStorePath, Serialization.ToJson(gameDirsData));
@@ -308,10 +317,10 @@ namespace SaveFileView
         private const char bracketOpen = '{';
         private const char bracketClose = '}';
         private const char pathSeparator = '|';
-        private List<string> GetPathsFromContent(string apiDownloadedString, PathType pathType, string gameLibraryPluginString)
+        private List<PathData> GetPathsFromContent(string apiDownloadedString, PathType pathType, string gameLibraryPluginString)
         {
             var pathMatches = pcgwContentRegex.Matches(apiDownloadedString); ;
-            var paths = new List<string>();
+            var paths = new List<PathData>();
             if (pathMatches.Count == 0)
             {
                 return paths;
@@ -329,7 +338,7 @@ namespace SaveFileView
                     continue;
                 }
 
-                var sectionMatch = Regex.Unescape(match.Value);
+                var sectionMatch = match.Value;
                 var sectionVersion = Regex.Match(sectionMatch, @"^{{Game data\/[^\|]+\|([^\|]+)").Groups[1].Value.Trim(); ;
                 // Paths that don't apply to the specific game version are skipped
                 if (sectionVersion == "macOS" || sectionVersion == "OS X" || sectionVersion == "Linux")
@@ -364,7 +373,7 @@ namespace SaveFileView
                 sectionMatch = Regex.Replace(sectionMatch, @"{{code\|[^}]+}}", "{{code}}");
 
                 // Remove all comments
-                sectionMatch = Regex.Replace(sectionMatch, @"<!--[^-]+-->", "{{code}}");
+                sectionMatch = Regex.Replace(sectionMatch, @"<!--[^-]+-->", "");
                 if (sectionMatch.IsNullOrEmpty())
                 {
                     continue;
@@ -387,7 +396,7 @@ namespace SaveFileView
                     {
                         bracketOpenCount = 0;
                         bracketClosedCount = 0;
-                        paths.Add(sb.ToString().Trim());
+                        paths.Add(new PathData { Path = sb.ToString().Trim(), Type = pathType } );
                         sb.Clear();
                         continue;
                     }
@@ -404,7 +413,7 @@ namespace SaveFileView
                     {
                         // We add the last character and create the string
                         sb.Append(c);
-                        paths.Add(sb.ToString().Trim());
+                        paths.Add(new PathData { Path = sb.ToString().Trim(), Type = pathType });
                         break;
                     }
 
@@ -420,11 +429,11 @@ namespace SaveFileView
             var gameLibraryPlugin = BuiltinExtensions.GetExtensionFromId(game.PluginId);
             if (gameLibraryPlugin == BuiltinExtension.SteamLibrary)
             {
-                return string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=Steam+AppID::{0}&format=json", game.GameId.UrlEncode());
+                return string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID%3DPageID&where=Infobox_game.Steam_AppID%20HOLDS%20%22{0}%22&format=json", game.GameId.UrlEncode());
             }
             else if (gameLibraryPlugin == BuiltinExtension.GogLibrary)
             {
-                return string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=askargs&conditions=GOGcom+ID::{0}&format=json", game.GameId.UrlEncode());
+                return string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID%3DPageID&where=Infobox_game.GogCom_ID%20HOLDS%20%22{0}%22&format=json", game.GameId.UrlEncode());
             }
 
             // TODO Search on PCGW with game name

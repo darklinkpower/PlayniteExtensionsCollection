@@ -4,15 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Playnite.SDK.Data;
+using PlayState.Enums;
 
 namespace SaveFileView.Models
 {
-    class GameDirectoriesData
+    public class GameDirectoriesData
     {
-        [SerializationPropertyName("SaveDirectories")]
-        public string[] SaveDirectories { get; set; }
+        [SerializationPropertyName("PcgwPageId")]
+        public string PcgwPageId { get; set; }
 
-        [SerializationPropertyName("ConfigDirectories")]
-        public string[] ConfigDirectories { get; set; }
+        [SerializationPropertyName("PathsData")]
+        public List<PathData> PathsData { get; set; }
+    }
+
+    public class PathData
+    {
+        [SerializationPropertyName("Path")]
+        public string Path { get; set; }
+        [SerializationPropertyName("PathType")]
+        public PathType Type { get; set; }
     }
 }
