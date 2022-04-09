@@ -66,13 +66,13 @@ namespace ResolutionChanger
                 var currentDevMode = DisplayHelper.GetCurrentScreenDevMode();
                 var width = int.Parse(resMatch.Groups[1].Value);
                 var height = int.Parse(resMatch.Groups[2].Value);
-                var resChanged = ChangeResolution(width, height);
+                var resChanged = DisplayHelper.ChangeResolution(width, height, currentDevMode);
                 if (resChanged)
                 {
                     if (devModePriorSet.dmPelsWidth == 0 || devModePriorSet.dmPelsHeight == 0)
                     {
                         devModePriorSet = currentDevMode;
-                        logger.Info($"Stored DevMode with resolution {devModePriorSet.dmPelsWidth}x{devModePriorSet.dmPelsHeight}");
+                        logger.Info($"Stored DevMode. Device: {devModePriorSet.dmDeviceName}. Resolution {devModePriorSet.dmPelsWidth}x{devModePriorSet.dmPelsHeight}");
                     }
                     resolutionChanged = true;
                 }
@@ -84,22 +84,6 @@ namespace ResolutionChanger
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return mainMenuitems;
-        }
-
-        private bool ChangeResolution(int width, int height)
-        {
-            logger.Debug($"Setting resolution to {width}x{height}...");
-            var changeResult = DisplayHelper.ChangeResolution(width, height);
-            if (changeResult == 0)
-            {
-                logger.Info($"Resolution set to {width}x{height}");
-                return true;
-            }
-            else
-            {
-                logger.Info("Failed to set resolution");
-                return false;
-            }
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
@@ -126,7 +110,7 @@ namespace ResolutionChanger
             var width = devModePriorSet.dmPelsWidth;
             var height = devModePriorSet.dmPelsHeight;
             logger.Info($"Restoring previous resolution {width}x{height}");
-            if (ChangeResolution(width, height))
+            if (DisplayHelper.RestoreResolution(devModePriorSet))
             {
                 resolutionChanged = false;
                 devModePriorSet = new DEVMODE();

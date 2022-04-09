@@ -73,19 +73,16 @@ namespace ResolutionChanger
             public static DEVMODE GetCurrentScreenDevMode()
             {
                 DEVMODE dm = new DEVMODE();
-                foreach (var screen in Screen.AllScreens)
-                {
-                    dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
-                    User_32.EnumDisplaySettings(screen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref dm);
-                    break;
-                }
+                var screen = Screen.PrimaryScreen;
+                dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
+                User_32.EnumDisplaySettings(screen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref dm);
 
                 return dm;
             }
             
-            public static int ChangeResolution(int width, int height)
+            public static int ChangeScreenResolution(int width, int height, DEVMODE dm)
             {
-                DEVMODE dm = GetDevMode();
+                logger.Debug($"Setting resolution of device \"{deviceName}\" to {width}x{height}...");
                 if (User_32.EnumDisplaySettings(null, User_32.ENUM_CURRENT_SETTINGS, ref dm))
                 {
                     dm.dmPelsWidth = width;
@@ -94,6 +91,7 @@ namespace ResolutionChanger
                     int iRet = User_32.ChangeDisplaySettings(ref dm, User_32.CDS_TEST);
                     if (iRet == User_32.DISP_CHANGE_FAILED)
                     {
+                        logger.Info($"Failed to set resolution DISP_CHANGE_FAILED");
                         return -1;
                     }
                     else
@@ -102,18 +100,32 @@ namespace ResolutionChanger
                         switch (iRet)
                         {
                             case User_32.DISP_CHANGE_SUCCESSFUL:
+                                logger.Info($"Resolution set to {width}x{height} succesfully");
                                 return 0;
                             case User_32.DISP_CHANGE_RESTART:
+                                logger.Info($"Failed to set resolution DISP_CHANGE_RESTART");
                                 return 1;
                             default:
+                                logger.Info($"Failed to set resolution (default)");
                                 return -1;
                         }
                     }
                 }
                 else
                 {
+                    logger.Info($"Failed to set resolution. EnumDisplaySettings returned false");
                     return -1;
                 }
+            }
+
+            public static bool ChangeResolution(int width, int height, DEVMODE devMode)
+            {
+                return ChangeScreenResolution(width, height, devMode) == 0;
+            }
+
+            public static bool RestoreResolution(DEVMODE devMode)
+            {
+                return ChangeScreenResolution(devMode.dmPelsWidth, devMode.dmPelsHeight, devMode) == 0;
             }
 
             private static DEVMODE GetDevMode()
