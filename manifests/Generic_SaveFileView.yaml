@@ -61,3 +61,9 @@ Packages:
     - 'Data will be refreshed automatically after closing game'
     - 'Added option to automatically add save directories as game links when obtaining game data'
     - 'Added option to automatically add configuration directories as game links when obtaining game data'
+  - Version: 2.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.09_29543d75/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_9.pext
+    Changelog:
+    - 'Updated localizations'
