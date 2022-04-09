@@ -63,7 +63,7 @@ namespace ResolutionChanger
                     continue;
                 }
 
-                var currentDevMode = DisplayHelper.GetCurrentScreenDevMode();
+                var currentDevMode = DisplayHelper.GetMainScreenDevMode();
                 var width = int.Parse(resMatch.Groups[1].Value);
                 var height = int.Parse(resMatch.Groups[2].Value);
                 var resChanged = DisplayHelper.ChangeResolution(width, height, currentDevMode);
@@ -137,10 +137,14 @@ namespace ResolutionChanger
                 }
             };
 
-            detectedResolutions = DisplayHelper.GetPossibleResolutions()
+            var devModes = DisplayHelper.GetMainScreenAvailableDevModes()
                 .Distinct()
-                .OrderByDescending(x => x.Key).ThenByDescending(x => x.Value).ToList();
-            foreach (var resolution in detectedResolutions)
+                .OrderByDescending(dm => dm.dmPelsWidth)
+                .ThenByDescending(dm => dm.dmPelsHeight)
+                .ThenByDescending(dm => dm.dmDisplayFrequency)
+                .ToList();
+            var resolutions = GetAvailableResolutionsFromDevModes(devModes);
+            foreach (var resolution in resolutions)
             {
                 mainMenuitems.Add(
                     new MainMenuItem
@@ -154,6 +158,17 @@ namespace ResolutionChanger
                     }
                 );
             }
+        }
+
+        private List<KeyValuePair<int, int>> GetAvailableResolutionsFromDevModes(List<DEVMODE> dms)
+        {
+            var list = new List<KeyValuePair<int, int>>();
+            foreach (var dm in dms)
+            {
+                list.Add(new KeyValuePair<int, int>(dm.dmPelsWidth, dm.dmPelsHeight));
+            }
+
+            return list.Distinct().ToList();
         }
 
         private void RemoveResolutionConfigurationSelected()

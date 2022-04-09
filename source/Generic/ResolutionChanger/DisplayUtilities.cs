@@ -70,7 +70,7 @@ namespace ResolutionChanger
 
         public static class DisplayHelper
         {
-            public static DEVMODE GetCurrentScreenDevMode()
+            public static DEVMODE GetMainScreenDevMode()
             {
                 DEVMODE dm = new DEVMODE();
                 var screen = Screen.PrimaryScreen;
@@ -82,7 +82,7 @@ namespace ResolutionChanger
             
             public static int ChangeScreenResolution(int width, int height, DEVMODE dm)
             {
-                logger.Debug($"Setting resolution of device \"{deviceName}\" to {width}x{height}...");
+                logger.Debug($"Setting resolution of device \"{dm.dmDeviceName}\" to {width}x{height}...");
                 if (User_32.EnumDisplaySettings(null, User_32.ENUM_CURRENT_SETTINGS, ref dm))
                 {
                     dm.dmPelsWidth = width;
@@ -137,10 +137,9 @@ namespace ResolutionChanger
                 return dm;
             }
 
-            public static List<KeyValuePair<int, int>> GetPossibleResolutions()
+            public static List<DEVMODE> GetScreenAvailableDevModes(DEVMODE dm)
             {
-                var list = new List<KeyValuePair<int, int>>();
-                DEVMODE dm = new DEVMODE();
+                var list = new List<DEVMODE>();
                 int i = 0;
                 try
                 {
@@ -150,7 +149,7 @@ namespace ResolutionChanger
                         var height = dm.dmPelsHeight;
                         if (width != 0 && height != 0)
                         {
-                            list.Add(new KeyValuePair<int, int>(dm.dmPelsWidth, dm.dmPelsHeight));
+                            list.Add(dm);
                         }
 
                         i++;
@@ -162,6 +161,11 @@ namespace ResolutionChanger
                 }
 
                 return list;
+            }
+
+            public static List<DEVMODE> GetMainScreenAvailableDevModes()
+            {
+                return GetScreenAvailableDevModes(GetMainScreenDevMode());
             }
 
             public static string GetResolutionAspectRatio(int width, int height)
