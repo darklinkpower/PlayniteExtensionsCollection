@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Допомога</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Resolution</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frequency</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Очистити конфігурацію роздільної здатності у вибраних іграх</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Clear display frequency configuration from selected games</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Встановити роздільну здатність при запуску {0}x{1} ({2}) для вибраних ігор</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Set launch display frequency to {0}Hz for selected games</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Змінювати роздільну здатність тільки коли не запущено жодної гри</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Готово</sys:String>
 </ResourceDictionary>
