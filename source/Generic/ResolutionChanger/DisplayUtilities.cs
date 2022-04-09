@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using ResolutionChanger.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ResolutionChanger
 {
-    class DisplayUtilities
+    public class DisplayUtilities
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
@@ -80,13 +81,27 @@ namespace ResolutionChanger
                 return dm;
             }
             
-            public static int ChangeScreenResolution(int width, int height, DEVMODE dm)
+            public static int ChangeScreenConfigurationV(DEVMODE dm, int width, int height, int refreshRate)
             {
-                logger.Debug($"Setting resolution of device \"{dm.dmDeviceName}\" to {width}x{height}...");
+                if (width == 0 && height == 0 && refreshRate == 0)
+                {
+                    logger.Debug($"Nothing to set. Width, height and refresh rate is 0");
+                    return 0;
+                }
+
+                logger.Debug($"Setting configuration of device \"{dm.dmDeviceName}\" to {width}x{height} and refresh rate {refreshRate}...");
                 if (User_32.EnumDisplaySettings(null, User_32.ENUM_CURRENT_SETTINGS, ref dm))
                 {
-                    dm.dmPelsWidth = width;
-                    dm.dmPelsHeight = height;
+                    if (width != 0 && height != 0)
+                    {
+                        dm.dmPelsWidth = width;
+                        dm.dmPelsHeight = height;
+                    }
+
+                    if (refreshRate != 0)
+                    {
+                        dm.dmDisplayFrequency = refreshRate;
+                    }
 
                     int iRet = User_32.ChangeDisplaySettings(ref dm, User_32.CDS_TEST);
                     if (iRet == User_32.DISP_CHANGE_FAILED)
@@ -118,14 +133,34 @@ namespace ResolutionChanger
                 }
             }
 
-            public static bool ChangeResolution(int width, int height, DEVMODE devMode)
+            public static bool ChangeDisplayConfiguration(DEVMODE devMode, int width, int height, int refreshRate)
             {
-                return ChangeScreenResolution(width, height, devMode) == 0;
+                return ChangeScreenConfigurationV(devMode, width, height, refreshRate) == 0;
             }
 
-            public static bool RestoreResolution(DEVMODE devMode)
+            public static bool RestoreDisplayConfiguration(DisplayConfigChangeData displayRestoreData)
             {
-                return ChangeScreenResolution(devMode.dmPelsWidth, devMode.dmPelsHeight, devMode) == 0;
+                if (!displayRestoreData.ResolutionChanged && !displayRestoreData.RefreshRateChanged)
+                {
+                    return true;
+                }
+
+                var width = 0;
+                var height = 0;
+                var frequency = 0;
+
+                if (displayRestoreData.ResolutionChanged)
+                {
+                    width = displayRestoreData.DevMode.dmPelsWidth;
+                    height = displayRestoreData.DevMode.dmPelsHeight;
+                }
+
+                if (displayRestoreData.RefreshRateChanged)
+                {
+                    frequency = displayRestoreData.DevMode.dmDisplayFrequency;
+                }
+
+                return ChangeScreenConfigurationV(displayRestoreData.DevMode, width, height, frequency) == 0;
             }
 
             private static DEVMODE GetDevMode()

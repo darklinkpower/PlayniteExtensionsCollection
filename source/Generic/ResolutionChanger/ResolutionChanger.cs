@@ -3,6 +3,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
+using ResolutionChanger.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,8 @@ namespace ResolutionChanger
     public class ResolutionChanger : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private bool resolutionChanged = false;
-        private List<KeyValuePair<int, int>> detectedResolutions;
         private List<MainMenuItem> mainMenuitems;
-        private DEVMODE devModePriorSet = new DEVMODE();
+        private DisplayConfigChangeData displayRestoreData = null;
 
         private ResolutionChangerSettingsViewModel settings { get; set; }
 
@@ -44,7 +43,7 @@ namespace ResolutionChanger
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             var game = args.Game;
-            if (game.Features == null || game.Features.Count == 0)
+            if (!game.Features.HasItems())
             {
                 return;
             }
@@ -55,29 +54,60 @@ namespace ResolutionChanger
                 return;
             }
 
+            var width = 0;
+            var height = 0;
+            var refreshRate = 0;    
             foreach (var feature in game.Features)
             {
-                var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
-                if (!resMatch.Success)
+                if (width == 0 && height == 0)
                 {
-                    continue;
-                }
-
-                var currentDevMode = DisplayHelper.GetMainScreenDevMode();
-                var width = int.Parse(resMatch.Groups[1].Value);
-                var height = int.Parse(resMatch.Groups[2].Value);
-                var resChanged = DisplayHelper.ChangeResolution(width, height, currentDevMode);
-                if (resChanged)
-                {
-                    if (devModePriorSet.dmPelsWidth == 0 || devModePriorSet.dmPelsHeight == 0)
+                    var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
+                    if (resMatch.Success)
                     {
-                        devModePriorSet = currentDevMode;
-                        logger.Info($"Stored DevMode. Device: {devModePriorSet.dmDeviceName}. Resolution {devModePriorSet.dmPelsWidth}x{devModePriorSet.dmPelsHeight}");
+                        width = int.Parse(resMatch.Groups[1].Value);
+                        height = int.Parse(resMatch.Groups[2].Value);
+                        continue;
                     }
-                    resolutionChanged = true;
                 }
 
-                break;
+                if (refreshRate == 0)
+                {
+                    var refreshMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)Hz$", RegexOptions.IgnoreCase);
+                    if (refreshMatch.Success)
+                    {
+                        refreshRate = int.Parse(refreshMatch.Groups[1].Value);
+                    }
+                }
+            }
+
+            if (width == 0 && height == 0 && refreshRate == 0)
+            {
+                return;
+            }
+
+            // If the screen configuration was changed before, restore it before changing it again
+            if (displayRestoreData != null)
+            {
+                var restoreSuccess = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
+                if (restoreSuccess)
+                {
+                    displayRestoreData = null;
+                }
+                else
+                {
+                    // Don't continue if restore failed
+                    return;
+                }
+            }
+
+            var currentDevMode = DisplayHelper.GetMainScreenDevMode();
+            var changeResolution = width != 0 && height != 0;
+            var changeRefreshRate = refreshRate != 0;
+            var displayChanged = DisplayHelper.ChangeDisplayConfiguration(currentDevMode, width, height, refreshRate);
+            if (displayChanged)
+            {
+                displayRestoreData = new DisplayConfigChangeData(currentDevMode, changeResolution, changeRefreshRate);
+                logger.Info($"Stored DevMode. Device: {displayRestoreData.DevMode.dmDeviceName}. Resolution {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}. Frequency: {displayRestoreData.DevMode.dmDisplayFrequency}");
             }
         }
 
@@ -88,7 +118,7 @@ namespace ResolutionChanger
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            if (!resolutionChanged)
+            if (displayRestoreData == null)
             {
                 return;
             }
@@ -102,57 +132,86 @@ namespace ResolutionChanger
                 return;
             }
 
-            if (devModePriorSet.dmPelsWidth == 0 || devModePriorSet.dmPelsHeight == 0)
+            if (displayRestoreData == null)
             {
                 return;
             }
 
-            var width = devModePriorSet.dmPelsWidth;
-            var height = devModePriorSet.dmPelsHeight;
-            logger.Info($"Restoring previous resolution {width}x{height}");
-            if (DisplayHelper.RestoreResolution(devModePriorSet))
+            logger.Info($"Restoring previous display configuration {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}, refresh rate {displayRestoreData.DevMode.dmDisplayFrequency}");
+            var restoreSuccess = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
+            if (restoreSuccess)
             {
-                resolutionChanged = false;
-                devModePriorSet = new DEVMODE();
+                displayRestoreData = null;
             }
             else
             {
-                logger.Info($"Failed to restore resolution");
+                logger.Info($"Failed to restore display configuration");
             }
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            mainMenuitems = new List<MainMenuItem>
-            {
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature"),
-                    MenuSection = "@Resolution Changer",
-                    Action = a =>
-                    {
-                        RemoveResolutionConfigurationSelected();
-                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
-                    }
-                }
-            };
-
             var devModes = DisplayHelper.GetMainScreenAvailableDevModes()
                 .Distinct()
                 .OrderByDescending(dm => dm.dmPelsWidth)
                 .ThenByDescending(dm => dm.dmPelsHeight)
                 .ThenByDescending(dm => dm.dmDisplayFrequency)
                 .ToList();
+
+            var resolutionSection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayResolution");
+            var frequencySection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayFrequency");
+
+            mainMenuitems = new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature"),
+                    MenuSection = $"@Resolution Changer|{resolutionSection}",
+                    Action = a =>
+                    {
+                        RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)x(\d+)$");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                    }
+                },
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature"),
+                    MenuSection = $"@Resolution Changer|{frequencySection}",
+                    Action = a =>
+                    {
+                        RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)Hz$");
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                    }
+                }
+            };
+
             var resolutions = GetAvailableResolutionsFromDevModes(devModes);
             foreach (var resolution in resolutions)
             {
                 mainMenuitems.Add(
                     new MainMenuItem
-                    { 
+                    {
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.GetResolutionAspectRatio(resolution.Key, resolution.Value)),
-                        MenuSection = "@Resolution Changer",
-                        Action = a => {
+                        MenuSection = $"@Resolution Changer|{resolutionSection}",
+                        Action = a =>
+                        {
                             PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Key}x{resolution.Value}");
+                            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                        }
+                    }
+                );
+            }
+
+            foreach (var displayFrequency in devModes.Select(dm => dm.dmDisplayFrequency).Distinct())
+            {
+                mainMenuitems.Add(
+                    new MainMenuItem
+                    {
+                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature"), displayFrequency),
+                        MenuSection = $"@Resolution Changer|{frequencySection}",
+                        Action = a =>
+                        {
+                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {displayFrequency}Hz");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
                     }
@@ -171,7 +230,7 @@ namespace ResolutionChanger
             return list.Distinct().ToList();
         }
 
-        private void RemoveResolutionConfigurationSelected()
+        private void RemoveResolutionConfigurationSelected(string regexDef)
         {
             foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
             {
@@ -180,8 +239,8 @@ namespace ResolutionChanger
                     continue;
                 }
 
-                var rcFeatures = game.Features.Where(x => Regex.IsMatch(x.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase));
-                if (rcFeatures != null && rcFeatures.Count() > 0)
+                var rcFeatures = game.Features.Where(x => Regex.IsMatch(x.Name, regexDef, RegexOptions.IgnoreCase));
+                if (rcFeatures != null)
                 {
                     foreach (var rcFeature in rcFeatures)
                     {
