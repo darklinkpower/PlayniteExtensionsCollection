@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Ayuda</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Resolution</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frequency</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Resolución</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frecuencia</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Borrar la configuración de resolución de los juegos seleccionados</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Clear display frequency configuration from selected games</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Borrar la configuración de frequencia de pantalla de los juegos seleccionados</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Establecer resolución de lanzamiento a {0}x{1} ({2}) para los juegos seleccionados</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Set launch display frequency to {0}Hz for selected games</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Establecer frecuencia de pantalla de inicio a {0}Hz para los juegos seleccionados</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Sólo cambiar resolución cuando no hay juegos en ejecución</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Hecho</sys:String>
 </ResourceDictionary>
