@@ -12,6 +12,7 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             <con:SuspendModeToStringConverter x:Key="SuspendModeToStringConverter" />
             <con:BoolToYesNoConverter x:Key="BoolToYesNoConverter" />
+            <con:IconPathConverter x:Key="IconPathConverter" />
         </Grid.Resources>
         <ScrollViewer>
             <StackPanel>
@@ -39,6 +40,15 @@
                           ItemsSource="{Binding PlayStateDataCollection}">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn Width="42">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Height="32" Width="32" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                   Source="{Binding Game.Icon, Converter={StaticResource IconPathConverter}}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
                                 <GridViewColumn Width="250" Header="{DynamicResource LOCPlayState_ManagerGameLabel}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>

@@ -94,6 +94,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="Converters\BoolToYesNoConverter.cs" />
+    <Compile Include="Converters\IconPathConverter.cs" />
     <Compile Include="Converters\SuspendModeToStringConverter.cs" />
     <Compile Include="Enums\NotificationTypes.cs" />
     <Compile Include="Enums\SuspendModes.cs" />
