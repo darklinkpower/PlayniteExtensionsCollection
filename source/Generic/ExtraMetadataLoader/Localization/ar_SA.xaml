@@ -1,73 +1,73 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">مساعدة</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">إعدادات عامة</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingOtherHeaderLabel">إعدادات أخرى</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">اعدادات الفيديو</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">تفعيل مشغل الفيديو</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">Autoplay videos</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">تشغيل مقاطع الفيديو تلقائيًا</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel">تكرار الفيديو</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel">Play videos initially without sound</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel">Use micro videos instead of full videos by default</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">Use other video type if selected type is not found</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">Stream trailer videos from Steam on demand if available</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">Stream videos in High Definition quality</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">Show playback controls</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel">Opacity of video controls</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">Opacity of video controls when hovering video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel">Vertical alignment of video controls</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">Default audio volume</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel">تشغيل مقاطع الفيديو في البداية بدون صوت</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel">استخدام مقاطع الفيديو الصغيرة بدلاً من مقاطع الفيديو الكاملة افتراضياً</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">استخدام نوع فيديو آخر إذا لم يتم العثور على النوع المحدد</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">بث مقاطع الفيديو الدعائية من Steam عند الطلب إذا كانت متوفرة</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">بث مقاطع الفيديو بجودة عالية</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">إظهار عناصر التشغيل</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel">شفافية ضوابط الفيديو</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">شفافية ضوابط الفيديو عند تحريك الماوس فوقه</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel">المحاذاة العمودية لضوابط الفيديو</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">مستوى الصوت الافتراضي</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel">إعدادات الشعارات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel">تفعيل الشعارات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel">العرض الأقصى للشعارات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel">الطول الأقصى للشعارات</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Horizontal alignment of logos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Vertical alignment of logos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">Enable shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">المحاذاة الأفقية للشعارات</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">المحاذاة العمودية للشعارات</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">تفعيل تأثير الظل</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">عمق تأثير الظل</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">اتجاه تأثير الظل</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Blur radius of shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacity of shadow effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">قطر تمويه تأثير الظل</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">شفافية تأثير الظل</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">إعدادات تحميل الفيديو</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">Details View player settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">Grid View player settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView">Other views player settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">إعدادات المشغل في وضع عرض التفاصيل</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">إعدادات المشغل في وضع عرض الشبكة</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView">إعدادات المشغل في الأوضاع الأخرى</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload">إعدادات تحميل الشعار</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">Logo loader settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">إعدادات محمل الشعار</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl">إعدادات مشغل الفيديو</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel">عرض معاينة الفيديو في حالة عدم تشغيله</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">Use alternative video player (Requires restart and support in custom theme)</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">SteamGridDB API Key:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">استخدام مشغل فيديو بديل (يتطلب إعادة تشغيل ودعم في السمة المخصصة)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">مفتاح SteamGridDB API:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">احصل على مفتاح API</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Include assets marked as &quot;Humor&quot; in searches</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Include assets marked as &quot;Adult Content&quot; in searches</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">تضمين الأصول المميزة بعلامة &quot;فكاهة&quot; في عمليات البحث</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">تضمين الأصول المميزة بعلامة &quot;محتوى للبالغين&quot; في عمليات البحث</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">تحميل مقاطع الفيديو للألعاب المضافة حديثا عند تحديث المكتبة</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Download Micro videos of newly added games on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Download logos of newly added games on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Select logos to download automatically</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">تحميل مقاطع الفيديو الصغيرة للألعاب المضافة حديثا على تحديث المكتبة</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">تحميل شعارات الألعاب المضافة حديثا على تحديث المكتبة</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">حدد الشعارات لتحميلها تلقائيًا</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">فيديو</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Left</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">اليسار</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">الوسط</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Right</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">Top</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">اليمين</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">الأعلى</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">الوسط</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">الأسفل</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo to download for {0}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Select game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Select option</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Overwrite logos of games that already have them?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">Overwrite videos of games that already have them?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">حدد الشعار لتحميله لـ {0}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">اختر لعبة</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">حدد الخيار</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">هل تريد تغيير شعارات الألعاب التي تحتوي عليها بالفعل؟</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">هل تريد تغيير مقاطع الفيديو الألعاب التي تحتوي عليها بالفعل؟</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">جاري تحميل مقاطع الفيديو من Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Downloading Micro videos from Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Downloading logos from Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Downloading logos from SteamGridDB...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Downloading video from YouTube...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">Failed to download video from YouTube. Please try with a different video.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from Google.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Downloading logos of newly added games...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Downloading videos of newly added games...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">جاري تحميل مقاطع الفيديو الصغيرة من Steam...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">جاري تحميل الشعارات من Steam...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">جاري تحميل الشعارات من SteamGridDB...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">جاري تحميل الفيديو من يوتيوب...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">فشل تنزيل الفيديو من يوتيوب. الرجاء المحاولة مع فيديو مختلف.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">فشل تحميل الشعار من Google.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">جاري تحميل شعارات الألعاب المضافة حديثاً...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">جاري تحميل مقاطع الفيديو للألعاب المضافة حديثاً...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">تم.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing">Extra Metadata: لم يتم تعيين مفتاح StreamGridDB API في الإعدادات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured">Extra Metadata: لم يتم تعيين مسار ffmpeg في إعدادات الإضافة</sys:String>
@@ -144,8 +144,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">البحث عن فيديو على اليوتيوب</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">الفيديو غير موجود</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">حدد الشعارات لتنزيلها تلقائياً؟
     
-Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
-Select &quot;No&quot; to manually make selections when necessary.</sys:String>
+حدد &quot;نعم&quot; لتحديد الشعارات لتنزيلها تلقائياً بدون أي تفاعل للمستخدم.
+اختر &quot;لا&quot; لإجراء الاختيارات يدوياً عند الضرورة.</sys:String>
 </ResourceDictionary>
