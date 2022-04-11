@@ -108,14 +108,22 @@ namespace ExtraMetadataLoader.Helpers
             var results = SteamWeb.GetSteamSearchResults(normalizedName);
             results.ForEach(a => a.Name = a.Name.NormalizeGameName());
 
-            // Try to see if there's an exact match, to not prompt the user unless needed
-            var matchingGameName = normalizedName.GetMatchModifiedName();
-            var exactMatch = results.FirstOrDefault(x => x.Name.GetMatchModifiedName() == matchingGameName);
-            if (exactMatch != null)
+            // First try to match with normalized string
+            var exactNormalizedMatches = results.Where(x => x.Name.Equals(normalizedName, StringComparison.OrdinalIgnoreCase));
+            if (exactNormalizedMatches.HasItems() && (isBackgroundDownload || exactNormalizedMatches.Count() == 1))
             {
-                return exactMatch.GameId;
+                return exactNormalizedMatches.First().GameId;
             }
-            else if (!isBackgroundDownload)
+
+            // See if there are matches by removing all symbols, spaces, etc
+            var matchingGameName = normalizedName.GetMatchModifiedName();
+            var exactMatches = results.Where(x => x.Name.GetMatchModifiedName() == matchingGameName);
+            if (exactMatches.HasItems() && (isBackgroundDownload || exactMatches.Count() == 1))
+            {
+                return exactMatches.First().GameId;
+            }
+
+            if (!isBackgroundDownload)
             {
                 var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
                     results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
