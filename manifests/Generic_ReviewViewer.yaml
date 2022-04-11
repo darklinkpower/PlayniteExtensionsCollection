@@ -185,3 +185,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.03_3ad2d023/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_27.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.28
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.11_a8e03b9a/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_28.pext
+    Changelog:
+    - 'Updated localizations'

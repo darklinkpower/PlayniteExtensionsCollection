@@ -85,3 +85,9 @@ Packages:
     - 'Added support to change Display refresh rate when launching games'
     - 'Improved reliability of changing and restoring display configuration'
     - 'Potential fix for extension failing to restore previous resolution on multi monitor setups'
+  - Version: 1.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.11_a8e03b9a/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_13.pext
+    Changelog:
+    - 'Updated localizations'

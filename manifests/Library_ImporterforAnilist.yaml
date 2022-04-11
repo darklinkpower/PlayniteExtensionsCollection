@@ -155,3 +155,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.07_98fa5f6c/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_23.pext
     Changelog:
     - 'Remove extension Newtonsoft dependency'
+  - Version: 2.24
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.11_a8e03b9a/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_24.pext
+    Changelog:
+    - 'Updated localizations'
