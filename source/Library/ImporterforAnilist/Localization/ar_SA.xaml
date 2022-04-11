@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingsHelpLabel">مساعدة</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">رمز دخول الحساب:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">الحصول على رمز الدخول</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">بادئة خصائص البيانات الوصفية:</sys:String>
