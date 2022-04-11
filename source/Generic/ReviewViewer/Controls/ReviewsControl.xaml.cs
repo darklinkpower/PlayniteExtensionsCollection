@@ -41,7 +41,6 @@ namespace ReviewViewer.Controls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
         private readonly DesktopView ActiveViewAtCreation;
         private readonly DispatcherTimer timer;
         IPlayniteAPI PlayniteApi;

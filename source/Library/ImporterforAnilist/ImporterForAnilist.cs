@@ -19,8 +19,8 @@ namespace ImporterforAnilist
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private const string dbImportMessageId = "anilistlibImportError";
-        private static readonly Regex mangadexIdRegex = new Regex(@"^https:\/\/mangadex\.org\/title\/([^\/]+)", RegexOptions.Compiled);
-        private static readonly Regex mangaseeIdRegex = new Regex(@"^https:\/\/mangasee123\.com\/manga\/([^\/]+)", RegexOptions.Compiled);
+        private static readonly Regex mangadexIdRegex = new Regex(@"^https:\/\/mangadex\.org\/title\/([^\/]+)", RegexOptions.None);
+        private static readonly Regex mangaseeIdRegex = new Regex(@"^https:\/\/mangasee123\.com\/manga\/([^\/]+)", RegexOptions.None);
         private ImporterForAnilistSettingsViewModel settings { get; set; }
         public override Guid Id { get; } = Guid.Parse("2366fb38-bf25-45ea-9a78-dcc797ee83c3");
         public override string Name => "Importer for AniList";

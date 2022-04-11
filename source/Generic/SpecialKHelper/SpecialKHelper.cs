@@ -39,7 +39,7 @@ namespace SpecialKHelper
         private readonly string pluginInstallPath;
         private readonly string skifPath;
         private readonly string defaultConfigPath;
-        private static readonly Regex reshadeTechniqueRegex = new Regex(@"technique ([^\s]+)", RegexOptions.Compiled);
+        private static readonly Regex reshadeTechniqueRegex = new Regex(@"technique ([^\s]+)", RegexOptions.None);
 
         private SidebarItemSwitcherViewModel sidebarItemSwitcherViewModel { get; }
         private SpecialKHelperSettingsViewModel settings { get; set; }
