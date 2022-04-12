@@ -5,16 +5,16 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">将所选游戏从 PlayState 黑名单移除</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">将所选游戏配置为强制性地仅挂起游玩时间</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">移除强制性地仅挂起游玩时间的配置</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">将所选游戏配置为强制性地挂起进程</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">移除强制性地挂起进程的配置</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">已配置的热键 {0} 注册失败
 
 您可以尝试使用不同的热键组合以解决该问题</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">已将 {0} 个游戏添加到 PlayState 黑名单中。</sys:String>
     <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">已将 {0} 个游戏从 PlayState 黑名单移除。</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">配置了 {0} 个游戏，使其在使用配置的热键时强制性地仅挂起游玩时间。</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Configured {0} game(s) to force to suspend playtime and processes when using the configured hotkey.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">为 {0} 个游戏移除了“当使用所配置热键时，仅强制挂起游玩时间”的配置。</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">为 {0} 个游戏配置了“当使用所配置热键时，强制挂起游玩时间和进程”。</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">游戏已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">游戏已恢复</sys:String>
