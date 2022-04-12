@@ -10,7 +10,7 @@
     <Grid Margin="10">
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
-            <con:SuspendModeToStringConverter x:Key="SuspendModeToStringConverter" />
+            <con:StatusToStringConverter x:Key="StatusToStringConverter" />
             <con:BoolToYesNoConverter x:Key="BoolToYesNoConverter" />
             <con:IconPathConverter x:Key="IconPathConverter" />
         </Grid.Resources>
@@ -48,7 +48,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                
+
                                 <GridViewColumn Width="250" Header="{DynamicResource LOCPlayState_ManagerGameLabel}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -57,18 +57,17 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCPlayState_ManagerIsSuspendedLabel}">
+                                <GridViewColumn Width="250"  Header="{DynamicResource LOCPlayState_ManagerStatusLabel}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding IsSuspended, Converter={StaticResource BoolToYesNoConverter}}" VerticalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-
-                                <GridViewColumn Width="250"  Header="{DynamicResource LOCPlayState_ManagerSuspendModeLabel}">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding SuspendMode, Converter={StaticResource SuspendModeToStringConverter}}" VerticalAlignment="Center"/>
+                                            <TextBlock VerticalAlignment="Center">
+                                                <TextBlock.Text>
+                                                    <MultiBinding Converter="{StaticResource StatusToStringConverter}">
+                                                        <Binding Path="SuspendMode" />
+                                                        <Binding Path="IsSuspended" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

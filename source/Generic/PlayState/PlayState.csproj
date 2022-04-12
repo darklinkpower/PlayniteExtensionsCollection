@@ -95,7 +95,7 @@
     </Compile>
     <Compile Include="Converters\BoolToYesNoConverter.cs" />
     <Compile Include="Converters\IconPathConverter.cs" />
-    <Compile Include="Converters\SuspendModeToStringConverter.cs" />
+    <Compile Include="Converters\StatusToStringConverter.cs" />
     <Compile Include="Enums\NotificationTypes.cs" />
     <Compile Include="Enums\SuspendModes.cs" />
     <Compile Include="HotkeyHelper.cs" />
