@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">帮助</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">更新游戏的已启用状态</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">Open NVIDIA GeForce NOW Database browser</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">打开 NVIDIA GeForce NOW 数据库浏览器</sys:String>
     
     <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">正在更新已启用 NVIDIA GeForce NOW 的游戏...</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">正在下载 NVIDIA GeForce NOW 数据库...</sys:String>
@@ -16,8 +16,8 @@
 
     <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">在 Playnite 启动时更新游戏的已启用状态</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">在库更新时更新游戏的已启用状态</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">显示在 NVIDIA GeForce NOW 中启动兼容游戏的指令</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">仅显示尚未被其库安装的游戏的指令</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">启用此选项，则已启用的游戏总是被标记为已安装。</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">未设置安装目录的游戏，会被检测为暂未由对应的库安装</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">在更新游戏的已启用状态时，将已启用的游戏设为已安装</sys:String>
@@ -25,12 +25,12 @@
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW 启用器：将 {0} 个游戏标记为已安装。</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">在 {0} 中找不到 NVIDIA Geforce NOW 可执行文件。</sys:String>
     
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce Now Database browser</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Copy name to clipboard</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Store:</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce NOW 数据库浏览器</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">复制名称到剪贴板</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">搜索：</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">商店：</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">名称</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now ID</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">商店</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">商店 ID</sys:String>
 </ResourceDictionary>
