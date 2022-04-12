@@ -15,7 +15,7 @@
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">配置了 {0} 个游戏，使其在使用配置的热键时强制性地仅挂起游玩时间。</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">为 {0} 个游戏移除了“当使用所配置热键时，仅强制挂起游玩时间”的配置。</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">为 {0} 个游戏配置了“当使用所配置热键时，强制挂起游玩时间和进程”。</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">为 {0} 个游戏移除了“当使用所配置热键时，强制挂起游玩时间和进程”的配置。</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">游戏已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">游戏已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">游玩时间已挂起</sys:String>
