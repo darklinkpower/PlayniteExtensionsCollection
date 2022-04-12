@@ -11,7 +11,7 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">下载所选游戏缺失的评论数据</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">描述高度</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">显示评论的帮助度</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Display review date</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">显示审阅日期</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">所有评论：</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">好评：</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">差评：</sys:String>
@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCReview_Viewer_Review">评论：</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewLabel">评论</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">评论</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Posted: {0}</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">已发布：{0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">推荐的</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">不推荐的</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">评论时已有 {0} 小时 {1} 分钟时间</sys:String>
