@@ -69,5 +69,5 @@
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">切换游戏状态</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">设为活跃游戏</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">挂起模式</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">活跃游戏：</sys:String>
 </ResourceDictionary>
