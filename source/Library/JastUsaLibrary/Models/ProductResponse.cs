@@ -147,10 +147,10 @@ namespace JastUsaLibrary.Models
         public ImageType Type { get; set; }
 
         [JsonProperty("priority")]
-        public long Priority { get; set; }
+        public int? Priority { get; set; }
 
         [JsonProperty("id")]
-        public long ImageId { get; set; }
+        public int ImageId { get; set; }
 
         [JsonProperty("type")]
         public string ImageType { get; set; }
@@ -167,8 +167,8 @@ namespace JastUsaLibrary.Models
         [JsonProperty("@id")]
         public string Id { get; set; }
 
-        [JsonProperty("ESRBRating")]
-        public object EsrbRating { get; set; }
+        //[JsonProperty("ESRBRating")]
+        //public string EsrbRating { get; set; }
 
         [JsonProperty("ESRBContent")]
         public object EsrbContent { get; set; }
