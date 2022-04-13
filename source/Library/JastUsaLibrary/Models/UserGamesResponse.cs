@@ -217,7 +217,7 @@ namespace JastUsaLibrary.Models
         public string Type { get; set; }
 
         [SerializationPropertyName("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [SerializationPropertyName("locale")]
         public string Locale { get; set; }

@@ -1,5 +1,7 @@
 ﻿using JastUsaLibrary.Models;
 using JastUsaLibrary.Services;
+using JastUsaLibrary.ViewModels;
+using JastUsaLibrary.Views;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -11,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace JastUsaLibrary
@@ -48,9 +51,8 @@ namespace JastUsaLibrary
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
             var games = new List<GameMetadata>();
-            if (!AccountClient.GetIsUserLoggedIn())
+            if (!GetIsUserLoggedIn())
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
                 return games;
             }
 
@@ -80,6 +82,17 @@ namespace JastUsaLibrary
             return games;
         }
 
+        private bool GetIsUserLoggedIn()
+        {
+            if (!AccountClient.GetIsUserLoggedIn())
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
+                return false;
+            }
+
+            return true;
+        }
+
         public override LibraryMetadataProvider GetMetadataDownloader()
         {
             return new JastUsaLibraryMetadataProvider(userGamesCachePath);
@@ -94,5 +107,98 @@ namespace JastUsaLibrary
         {
             return new JastUsaLibrarySettingsView();
         }
+
+        public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
+        {
+            if (args.Game.PluginId != Id)
+            {
+                return null;
+            }
+
+            var options = new List<MessageBoxOption>
+            {
+                new MessageBoxOption("Download"),
+                new MessageBoxOption("Select installed game"),
+                new MessageBoxOption("Cancel", false, true),
+            };
+
+            var game = args.Game;
+            var selected = PlayniteApi.Dialogs.ShowMessage("Select action", "JAST USA Library", System.Windows.MessageBoxImage.None, options);
+            if (!selected.IsCancel)
+            {
+                if (selected == options[0]) // Download option
+                {
+                    OpenGameDownloadsWindow(game);
+                }
+                else if (selected == options[1]) // Select install option
+                {
+
+                }
+            }
+
+
+            return null;
+        }
+
+        private List<InstallController> GetFakeController(Game game)
+        {
+            return new List<InstallController> { new FakeInstallController(game) };
+        }
+
+        private GameTranslationsResponse GetGameTranslations(Game game)
+        {
+            if (!FileSystem.FileExists(userGamesCachePath))
+            {
+                return null;
+            }
+
+            if (!GetIsUserLoggedIn())
+            {
+                return null;
+            }
+
+            var cache = Serialization.FromJsonFile<List<JastProduct>>(userGamesCachePath);
+            var gameVariant = cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == game.GameId);
+            if (gameVariant == null)
+            {
+                return null;
+            }
+
+            var gameTranslations = gameVariant.ProductVariant.Game.Translations.Where(x => x.Key == "en_US");
+            if (gameTranslations.Count() == 0)
+            {
+                return null;
+            }
+
+            return AccountClient.GetGameTranslations(gameTranslations.First().Value.Id);
+        }
+
+        private void OpenGameDownloadsWindow(Game game)
+        {
+            var gameTranslations = GetGameTranslations(game);
+            if (gameTranslations == null)
+            {
+                return;
+            }
+
+            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = true
+            });
+
+            window.Height = 700;
+            window.Width = 900;
+            window.Title = "JAST USA Downloader";
+
+            window.Content = new GameDownloadsView();
+            window.DataContext = new GameDownloadsViewModel(game, gameTranslations, AccountClient);
+            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
+        }
     }
+
+
 }

@@ -3,13 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
-        <Button Content="Login" Command="{Binding LoginCommand}" />
+    <UserControl.Resources>
+        <sys:Boolean x:Key="True">True</sys:Boolean>
+        <sys:Boolean x:Key="False">False</sys:Boolean>
+    </UserControl.Resources>
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Authenticate" HorizontalAlignment="Left"                         
+                    Command="{Binding LoginCommand}" Margin="0,5,5,5"/>
+            <TextBlock VerticalAlignment="Center" Margin="10,5,5,5">
+                <TextBlock.Tag>
+                    <PriorityBinding>
+                        <Binding Path="IsUserLoggedIn" IsAsync="True" />
+                        <Binding Source="{x:Null}" />
+                    </PriorityBinding>
+                </TextBlock.Tag>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Style.Triggers>
+                            <Trigger Property="Tag" Value="{StaticResource True}">
+                                <Setter Property="Text" Value="User is authenticated" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{StaticResource False}">
+                                <Setter Property="Text" Value="Requires authentication" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Null}">
+                                <Setter Property="Text" Value="Checking authentication status..." />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
     </StackPanel>
 </UserControl>

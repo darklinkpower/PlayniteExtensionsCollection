@@ -34,13 +34,21 @@ namespace JastUsaLibrary
             }
         }
 
-        private bool isLoggedIn;
-        public bool IsLoggedIn
+        private bool? isUserLoggedIn = null;
+        public bool? IsUserLoggedIn
         {
-            get => isLoggedIn;
+            get
+            {
+                if (isUserLoggedIn == null)
+                {
+                    isUserLoggedIn = accountClient.GetIsUserLoggedIn();
+                }
+
+                return isUserLoggedIn;
+            }
             set
             {
-                isLoggedIn = value;
+                isUserLoggedIn = value;
                 OnPropertyChanged();
             }
         }
@@ -71,7 +79,7 @@ namespace JastUsaLibrary
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
-            IsLoggedIn = accountClient.GetIsUserLoggedIn();
+            isUserLoggedIn = null;
         }
 
         public void CancelEdit()
@@ -108,7 +116,7 @@ namespace JastUsaLibrary
         private void Login()
         {
             playniteApi.Dialogs.ShowMessage("Close window after loggin in", "Jast USA Library");
-            IsLoggedIn = accountClient.Login();
+            IsUserLoggedIn = accountClient.Login();
         }
     }
 }

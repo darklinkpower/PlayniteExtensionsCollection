@@ -23,8 +23,10 @@ namespace JastUsaLibrary.Services
         private readonly string tokensPath;
         private const string loginUrl = @"https://jastusa.com/my-account";
         private const string jastDomain = @"jastusa.com";
+        private const string baseApiUrl = @"https://app.jastusa.com/api/";
         private const string getGamesUrlTemplate = @"https://app.jastusa.com/api/v2/shop/account/user-games-dev?localeCode=en_US&phrase=&page={0}&itemsPerPage=1000";
         private const string tokenRefreshUrl = @"https://app.jastusa.com/api/v2/shop/authentication-refresh?refresh_token={0}";
+        private const string generateLinkUrl = @"https://app.jastusa.com/api/v2/shop/account/user-games/generate-link";
 
         public JastUsaAccountClient(IPlayniteAPI api, string tokensPath)
         {
@@ -87,6 +89,7 @@ namespace JastUsaLibrary.Services
             try
             {
                 var url = string.Format(tokenRefreshUrl, refreshTokenValue);
+                client.Headers.Clear();
                 var responseString = client.DownloadString(url);
                 var tokensResponse = Serialization.FromJson<AuthenticationRefreshResponse>(responseString);
                 Encryption.EncryptToFile(
@@ -134,16 +137,20 @@ namespace JastUsaLibrary.Services
             {
                 using (var webView = playniteApi.WebViews.CreateView(1024, 800, Colors.Black))
                 {
-                    webView.LoadingChanged += async (s, e) =>
-                    {
-                        var address = webView.GetCurrentAddress();
-                        var source = await webView.GetPageSourceAsync();
-                        if (source.Contains(@"<div class=""account-mobile__logout"">") || source.Contains(@"<div class=""sidebar-mobile"" logged-in=""true"">"))
-                        {
-                            isLoggedIn = true;
-                            //webView.Close();
-                        }
-                    };
+
+                    // We can't reliably close the window on login because the user token
+                    // cookie is not set inmediatamente after loggin in. It gets set after a small time
+
+                    //webView.LoadingChanged += async (s, e) =>
+                    //{
+                    //    var address = webView.GetCurrentAddress();
+                    //    var source = await webView.GetPageSourceAsync();
+                    //    if (source.Contains(@"<div class=""account-mobile__logout"">") || source.Contains(@"<div class=""sidebar-mobile"" logged-in=""true"">"))
+                    //    {
+                    //        isLoggedIn = true;
+                    //        webView.Close();
+                    //    }
+                    //};
 
                     webView.DeleteDomainCookies(jastDomain);
                     webView.Navigate(loginUrl);
@@ -159,6 +166,51 @@ namespace JastUsaLibrary.Services
             return RefreshTokens();
         }
 
+        public GameTranslationsResponse GetGameTranslations(int translationId)
+        {
+            var tokens = LoadTokens();
+            if (tokens == null)
+            {
+                return null;
+            }
+
+            client.Headers.Clear();
+            client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
+            var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
+            var responseString = client.DownloadString(translationsUrl);
+            if (responseString.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            var response = Serialization.FromJson<GameTranslationsResponse>(responseString);
+            foreach (var gameLinkItem in response.GamePathLinks.HydraMember.ToList())
+            {
+                if (!gameLinkItem.Platforms.Any(x => x == "windows"))
+                {
+                    response.GamePathLinks.HydraMember.Remove(gameLinkItem);
+                }
+            }
+
+            foreach (var gameLinkItem in response.GamePatchLinks.HydraMember.ToList())
+            {
+                if (!gameLinkItem.Platforms.Any(x => x == "windows"))
+                {
+                    response.GamePathLinks.HydraMember.Remove(gameLinkItem);
+                }
+            }
+
+            foreach (var gameLinkItem in response.GameExtraLinks.HydraMember.ToList())
+            {
+                if (!gameLinkItem.Platforms.Any(x => x == "windows"))
+                {
+                    response.GamePathLinks.HydraMember.Remove(gameLinkItem);
+                }
+            }
+
+            return response;
+        }
+
         internal List<JastProduct> GetGames()
         {
             var products = new List<JastProduct>();
@@ -167,21 +219,6 @@ namespace JastUsaLibrary.Services
             {
                 return products;
             }
-
-            //using (var webView = playniteApi.WebViews.CreateOffscreenView())
-            //{
-            //    var cookie = webView.GetCookies().FirstOrDefault(x => x.Domain == jastDomain && x.Name == @"auth._token.local");
-            //    if (cookie != null && cookie.Value != "false")
-            //    {
-            //        bearerToken = cookie.Value.UrlDecode();
-            //    }
-            //}
-
-            //if (bearerToken.IsNullOrEmpty())
-            //{
-            //    logger.Error("Couldn't get bearer token from cookie");
-            //    return products;
-            //}
 
             client.Headers.Clear();
             client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
@@ -208,6 +245,33 @@ namespace JastUsaLibrary.Services
 
             client.Headers.Clear();
             return products;
+        }
+
+        internal string GetAssetDownloadLinkAsync(int gameId, int gameLinkId)
+        {
+            var tokens = LoadTokens();
+            if (tokens == null)
+            {
+                return null;
+            }
+
+            client.Headers.Clear();
+            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+            client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
+
+            var requestParams = Serialization.ToJson(new GenerateLinkRequest { downloaded = false, gameId = gameId, gameLinkId = gameLinkId });
+
+            try
+            {
+                var response = client.UploadString(new Uri(generateLinkUrl), "POST", requestParams);
+                return Serialization.FromJson<GenerateLinkResponse>(response).Url;
+            }
+            catch (Exception e)
+            {
+                playniteApi.Dialogs.ShowErrorMessage($"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}. Error: {e.Message}", "JAST USA Library");
+                logger.Error(e, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}");
+                return null;
+            }
         }
     }
 }

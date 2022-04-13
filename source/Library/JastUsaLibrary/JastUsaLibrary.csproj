@@ -97,6 +97,7 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="GameController.cs" />
     <Compile Include="JastUsaLibraryClient.cs" />
     <Compile Include="JastUsaLibrary.cs" />
     <Compile Include="JastUsaLibraryMetadataProvider.cs" />
@@ -105,10 +106,18 @@
       <DependentUpon>JastUsaLibrarySettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthenticationRefreshResponse.cs" />
+    <Compile Include="Models\GameTranslationsResponse.cs" />
+    <Compile Include="Models\GenerateLinkRequest.cs" />
+    <Compile Include="Models\GenerateLinkResponse.cs" />
     <Compile Include="Models\ProductResponse.cs" />
     <Compile Include="Models\UserGamesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JastUsaAccountClient.cs" />
+    <Compile Include="Services\JastUsaServices.cs" />
+    <Compile Include="ViewModels\GameDownloadsViewModel.cs" />
+    <Compile Include="Views\GameDownloadsView.xaml.cs">
+      <DependentUpon>GameDownloadsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -133,6 +142,10 @@
     <Page Include="Localization\en_US.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GameDownloadsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
