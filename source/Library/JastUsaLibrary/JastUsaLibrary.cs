@@ -99,6 +99,27 @@ namespace JastUsaLibrary
             return new JastUsaLibrarySettingsView();
         }
 
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            if (args.Games.Last().PluginId != Id)
+            {
+                return null;
+            }
+
+            var game = args.Games.Last();
+            return new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = string.Format("View downloads for {0}", game.Name),
+                    MenuSection = "JAST USA",
+                    Action = a => {
+                        OpenGameDownloadsWindow(game);
+                    }
+                }
+            };
+        }
+
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
         {
             if (args.Game.PluginId != Id)
