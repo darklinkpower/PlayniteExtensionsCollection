@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Aiuto</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">Email:</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Password:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">User is authenticated</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Requires authentication</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">User is not authenticated</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">View downloads for {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Download</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Select installed game</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Browse and select game</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Cancel</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Select an action</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">JAST USA Downloader</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Download</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Game downloads</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patches</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extras</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Authentication credentials are incorrect</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Error occurred during Login.
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Autenticati</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">Visualizza i download per {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Scarica</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Sfoglia e seleziona il gioco</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Annulla</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Seleziona un'azione</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">Scaricatore JAST USA</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Nome</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Scarica</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patch</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extra</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Le credenziali di autenticazione non sono valide</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Errore durante l'accesso.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Error occurred when obtaining download link.
+Errore: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Errore durante l'ottenimento del link di download.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Could not obtain authentication tokens</sys:String>
+Errore: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Impossibile ottenere i token di autenticazione</sys:String>
 </ResourceDictionary>
