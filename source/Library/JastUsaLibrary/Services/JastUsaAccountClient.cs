@@ -20,81 +20,59 @@ namespace JastUsaLibrary.Services
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteApi;
         private readonly WebClient client;
-        private readonly string tokensPath;
+        private readonly string authenticationPath;
         private const string loginUrl = @"https://jastusa.com/my-account";
         private const string jastDomain = @"jastusa.com";
         private const string baseApiUrl = @"https://app.jastusa.com/api/";
         private const string getGamesUrlTemplate = @"https://app.jastusa.com/api/v2/shop/account/user-games-dev?localeCode=en_US&phrase=&page={0}&itemsPerPage=1000";
         private const string tokenRefreshUrl = @"https://app.jastusa.com/api/v2/shop/authentication-refresh?refresh_token={0}";
         private const string generateLinkUrl = @"https://app.jastusa.com/api/v2/shop/account/user-games/generate-link";
+        private const string authenticationTokenUrl = @"https://app.jastusa.com/api/v2/shop/authentication-token";
 
-        public JastUsaAccountClient(IPlayniteAPI api, string tokensPath)
+        public JastUsaAccountClient(IPlayniteAPI api, string authenticationPath)
         {
             playniteApi = api;
             client = new WebClient {Encoding = Encoding.UTF8};
-            this.tokensPath = tokensPath;
+            this.authenticationPath = authenticationPath;
         }
 
         public bool GetIsUserLoggedIn()
         {
-            //using (var webView = playniteApi.WebViews.CreateOffscreenView())
-            //{
-            //    webView.NavigateAndWait(loginUrl);
-            //    //var cookie = webView.GetCookies().FirstOrDefault(x => x.Domain == jastDomain && x.Name == @"auth._token.local");
-            //    //if (cookie == null && cookie.Value == "false")
-            //    //{
-            //    //    webView.Close();
-            //    //    return GetAndStoreTokens(cookie.Value);
-            //    //}
-
-            //    // Try to refresh token
-
-
-            //    webView.Close();
-            //}
-
-            return RefreshTokens();
+            return GetAuthenticationToken() != null;
         }
 
-        private bool RefreshTokens()
+        private AuthenticationTokenRequest LoadAuthentication()
         {
-            var tokens = LoadTokens();
-            if (tokens != null)
+            if (!FileSystem.FileExists(authenticationPath))
             {
-                var refreshSuccess = GetAndStoreTokensResponse(tokens.RefreshToken);
-                if (refreshSuccess)
-                {
-                    return true;
-                }
+                return null;
             }
 
-            using (var webView = playniteApi.WebViews.CreateOffscreenView())
+            try
             {
-                var refreshCookie = webView.GetCookies().FirstOrDefault(x => x.Domain == jastDomain && x.Name == @"refreshToken");
-                if (refreshCookie != null && refreshCookie.Value != "false")
-                {
-                    webView.Close();
-                    return GetAndStoreTokensResponse(refreshCookie.Value);
-                }
-
-                var refreshCookiess = webView.GetCookies().Where(x => x.Domain == jastDomain);
-                webView.Close();
-                return false;
+                return Serialization.FromJson<AuthenticationTokenRequest>(
+                    Encryption.DecryptFromFile(
+                        authenticationPath,
+                        Encoding.UTF8,
+                        WindowsIdentity.GetCurrent().User.Value));
             }
+            catch (Exception e)
+            {
+                logger.Error(e, "Failed to load saved authentication.");
+                FileSystem.DeleteFileSafe(authenticationPath);
+            }
+
+            return null;
         }
 
-
-        private bool GetAndStoreTokensResponse(string refreshTokenValue)
+        private bool SaveAuthentication(AuthenticationTokenRequest authentication)
         {
             try
             {
-                var url = string.Format(tokenRefreshUrl, refreshTokenValue);
-                client.Headers.Clear();
-                var responseString = client.DownloadString(url);
-                var tokensResponse = Serialization.FromJson<AuthenticationRefreshResponse>(responseString);
+                var serializedJson = Serialization.ToJson(authentication);
                 Encryption.EncryptToFile(
-                    tokensPath,
-                    responseString,
+                    authenticationPath,
+                    serializedJson,
                     Encoding.UTF8,
                     WindowsIdentity.GetCurrent().User.Value);
                 logger.Debug("Tokens stored");
@@ -102,80 +80,83 @@ namespace JastUsaLibrary.Services
             }
             catch (Exception e)
             {
-                logger.Error(e, "Failed to get tokens response");
-                FileSystem.DeleteFile(tokensPath);
+                logger.Error(e, "Failed to store Authentication response");
+                FileSystem.DeleteFileSafe(authenticationPath);
                 return false;
             }
         }
-
-        private AuthenticationRefreshResponse LoadTokens()
+        public bool Login(string loginEmail, string loginPassword)
         {
-            if (FileSystem.FileExists(tokensPath))
+            FileSystem.DeleteFile(authenticationPath);
+
+            var authentication = new AuthenticationTokenRequest(loginEmail, loginPassword);
+            if (GetAuthenticationToken(authentication, true) != null)
             {
-                try
-                {
-                    return Serialization.FromJson<AuthenticationRefreshResponse>(
-                        Encryption.DecryptFromFile(
-                            tokensPath,
-                            Encoding.UTF8,
-                            WindowsIdentity.GetCurrent().User.Value));
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, "Failed to load saved tokens.");
-                }
+                return SaveAuthentication(authentication);
+            }
+
+            return false;
+        }
+
+        public AuthenticationToken GetAuthenticationToken()
+        {
+            var authentication = LoadAuthentication();
+            if (authentication != null)
+            {
+                return GetAuthenticationToken(authentication);
             }
 
             return null;
         }
 
-        public bool Login()
+        public AuthenticationToken GetAuthenticationToken(AuthenticationTokenRequest authentication, bool showErrors = false)
         {
-            FileSystem.DeleteFile(tokensPath);
-            var isLoggedIn = false;
             try
             {
-                using (var webView = playniteApi.WebViews.CreateView(1024, 800, Colors.Black))
+                client.Headers.Clear();
+                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                var requestParams = Serialization.ToJson(authentication);
+                var response = client.UploadString(new Uri(authenticationTokenUrl), "POST", requestParams);
+                return Serialization.FromJson<AuthenticationToken>(response);
+            }
+            catch (WebException e)
+            {
+                if (showErrors)
                 {
-
-                    // We can't reliably close the window on login because the user token
-                    // cookie is not set inmediatamente after loggin in. It gets set after a small time
-
-                    //webView.LoadingChanged += async (s, e) =>
-                    //{
-                    //    var address = webView.GetCurrentAddress();
-                    //    var source = await webView.GetPageSourceAsync();
-                    //    if (source.Contains(@"<div class=""account-mobile__logout"">") || source.Contains(@"<div class=""sidebar-mobile"" logged-in=""true"">"))
-                    //    {
-                    //        isLoggedIn = true;
-                    //        webView.Close();
-                    //    }
-                    //};
-
-                    webView.DeleteDomainCookies(jastDomain);
-                    webView.Navigate(loginUrl);
-                    webView.OpenDialog();
+                    if (e.Status == WebExceptionStatus.ProtocolError)
+                    {
+                        playniteApi.Dialogs.ShowErrorMessage($"Authentication credentials are incorrect", "JAST USA Library");
+                    }
+                    else
+                    {
+                        playniteApi.Dialogs.ShowErrorMessage($"Error during login. Error: {e.Message}", "JAST USA Library");
+                    }
                 }
+
+                logger.Error(e, $"Failed during GetAuthenticationToken. WebException status: {e.Status}");
+                return null;
             }
             catch (Exception e)
             {
-                playniteApi.Dialogs.ShowErrorMessage("Failed to authenticate user.", "");
-                logger.Error(e, "Failed to authenticate user.");
-            }
+                if (showErrors)
+                {
+                    playniteApi.Dialogs.ShowErrorMessage($"Failed during login. Error: {e.Message}", "JAST USA Library");
+                }
 
-            return RefreshTokens();
+                logger.Error(e, $"Failed during GetAuthenticationToken");
+                return null;
+            }
         }
 
-        public GameTranslationsResponse GetGameTranslations(int translationId)
+        public GameTranslationsResponse GetGameTranslations(AuthenticationToken authenticationToken, int translationId)
         {
-            var tokens = LoadTokens();
-            if (tokens == null)
+            if (authenticationToken == null)
             {
                 return null;
             }
 
             client.Headers.Clear();
-            client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
+            client.Headers.Add(@"Authorization", "Bearer " + authenticationToken.Token.UrlDecode());
             var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
             var responseString = client.DownloadString(translationsUrl);
             if (responseString.IsNullOrEmpty())
@@ -211,17 +192,16 @@ namespace JastUsaLibrary.Services
             return response;
         }
 
-        internal List<JastProduct> GetGames()
+        internal List<JastProduct> GetGames(AuthenticationToken authenticationToken)
         {
             var products = new List<JastProduct>();
-            var tokens = LoadTokens();
-            if (tokens == null)
+            if (authenticationToken == null)
             {
                 return products;
             }
 
             client.Headers.Clear();
-            client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
+            client.Headers.Add(@"Authorization", "Bearer " + authenticationToken.Token.UrlDecode());
             var currentPage = 0;
             while (true)
             {
@@ -249,7 +229,7 @@ namespace JastUsaLibrary.Services
 
         internal string GetAssetDownloadLinkAsync(int gameId, int gameLinkId)
         {
-            var tokens = LoadTokens();
+            var tokens = GetAuthenticationToken();
             if (tokens == null)
             {
                 return null;
@@ -266,10 +246,10 @@ namespace JastUsaLibrary.Services
                 var response = client.UploadString(new Uri(generateLinkUrl), "POST", requestParams);
                 return Serialization.FromJson<GenerateLinkResponse>(response).Url;
             }
-            catch (Exception e)
+            catch (WebException e)
             {
                 playniteApi.Dialogs.ShowErrorMessage($"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}. Error: {e.Message}", "JAST USA Library");
-                logger.Error(e, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}");
+                logger.Error(e, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}. WebException status: {e.Status}");
                 return null;
             }
         }

@@ -33,14 +33,14 @@ namespace JastUsaLibrary
         public override LibraryClient Client { get; } = new JastUsaLibraryClient();
         public JastUsaAccountClient AccountClient;
         private readonly string userGamesCachePath;
-        private readonly string tokensPath;
+        private readonly string authenticationPath;
         private const string jastMediaUrlTemplate = @"https://app.jastusa.com/media/image/{0}";
 
         public JastUsaLibrary(IPlayniteAPI api) : base(api)
         {
             userGamesCachePath = Path.Combine(GetPluginUserDataPath(), "userGamesCache.json");
-            tokensPath = Path.Combine(GetPluginUserDataPath(), "tokens.json");
-            AccountClient = new JastUsaAccountClient(api, tokensPath);
+            authenticationPath = Path.Combine(GetPluginUserDataPath(), "authentication.json");
+            AccountClient = new JastUsaAccountClient(api, authenticationPath);
             settings = new JastUsaLibrarySettingsViewModel(this, PlayniteApi, AccountClient);
             Properties = new LibraryPluginProperties
             {
@@ -51,12 +51,14 @@ namespace JastUsaLibrary
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
             var games = new List<GameMetadata>();
-            if (!GetIsUserLoggedIn())
+            var authenticationToken = AccountClient.GetAuthenticationToken();
+            if (authenticationToken == null) // User is not logged in
             {
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
                 return games;
             }
 
-            var jastProducts = AccountClient.GetGames();
+            var jastProducts = AccountClient.GetGames(authenticationToken);
             if (jastProducts.Count > 0)
             {
                 FileSystem.WriteStringToFile(userGamesCachePath, Serialization.ToJson(jastProducts), true);
@@ -80,17 +82,6 @@ namespace JastUsaLibrary
             }
 
             return games;
-        }
-
-        private bool GetIsUserLoggedIn()
-        {
-            if (!AccountClient.GetIsUserLoggedIn())
-            {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
-                return false;
-            }
-
-            return true;
         }
 
         public override LibraryMetadataProvider GetMetadataDownloader()
@@ -152,8 +143,10 @@ namespace JastUsaLibrary
                 return null;
             }
 
-            if (!GetIsUserLoggedIn())
+            var authenticationToken = AccountClient.GetAuthenticationToken();
+            if (authenticationToken == null) // User is not logged in
             {
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
                 return null;
             }
 
@@ -170,7 +163,7 @@ namespace JastUsaLibrary
                 return null;
             }
 
-            return AccountClient.GetGameTranslations(gameTranslations.First().Value.Id);
+            return AccountClient.GetGameTranslations(authenticationToken, gameTranslations.First().Value.Id);
         }
 
         private void OpenGameDownloadsWindow(Game game)

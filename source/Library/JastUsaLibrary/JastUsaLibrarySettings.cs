@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace JastUsaLibrary
@@ -49,6 +50,17 @@ namespace JastUsaLibrary
             set
             {
                 isUserLoggedIn = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string loginEmail = string.Empty;
+        public string LoginEmail
+        {
+            get => loginEmail;
+            set
+            {
+                loginEmail = value;
                 OnPropertyChanged();
             }
         }
@@ -105,18 +117,21 @@ namespace JastUsaLibrary
             return true;
         }
 
-        public RelayCommand LoginCommand
+        public RelayCommand<PasswordBox> LoginCommand
         {
-            get => new RelayCommand(() =>
+            get => new RelayCommand<PasswordBox>((a) =>
             {
-                Login();
+                Login(a);
             });
         }
 
-        private void Login()
+        private void Login(PasswordBox passwordBox)
         {
-            playniteApi.Dialogs.ShowMessage("Close window after loggin in", "Jast USA Library");
-            IsUserLoggedIn = accountClient.Login();
+            if (!LoginEmail.IsNullOrEmpty() && !passwordBox.Password.IsNullOrEmpty())
+            {
+                isUserLoggedIn = null;
+                IsUserLoggedIn = accountClient.Login(LoginEmail, passwordBox.Password);
+            }
         }
     }
 }

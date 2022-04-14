@@ -106,6 +106,8 @@
       <DependentUpon>JastUsaLibrarySettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AuthenticationRefreshResponse.cs" />
+    <Compile Include="Models\AuthenticationTokenRequest.cs" />
+    <Compile Include="Models\AuthenticationTokenResponse.cs" />
     <Compile Include="Models\GameTranslationsResponse.cs" />
     <Compile Include="Models\GenerateLinkRequest.cs" />
     <Compile Include="Models\GenerateLinkResponse.cs" />
