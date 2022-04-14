@@ -166,6 +166,8 @@ namespace JastUsaLibrary.Services
             }
 
             var response = Serialization.FromJson<GameTranslationsResponse>(responseString);
+
+            // We remove all the assets that are not for Windows because Playnite only supports windows after all
             foreach (var gameLinkItem in response.GamePathLinks.HydraMember.ToList())
             {
                 if (!gameLinkItem.Platforms.Any(x => x == "windows"))

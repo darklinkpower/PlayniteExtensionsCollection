@@ -130,8 +130,8 @@ namespace JastUsaLibrary
             var options = new List<MessageBoxOption>
             {
                 new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageDownloadOption")),
-                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectInstalledOption")),
-                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageBrowseForGameOption")),
+                //new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectInstalledOption")),
+                //new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageBrowseForGameOption")),
                 new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageCancelOption"), false, true),
             };
 
@@ -143,14 +143,14 @@ namespace JastUsaLibrary
                 {
                     OpenGameDownloadsWindow(game);
                 }
-                else if (selected == options[1]) // Select install option
-                {
+                //else if (selected == options[1]) // Select install option
+                //{
 
-                }
-                else if (selected == options[2]) // Browse for executable option
-                {
+                //}
+                //else if (selected == options[2]) // Browse for executable option
+                //{
 
-                }
+                //}
             }
 
 
