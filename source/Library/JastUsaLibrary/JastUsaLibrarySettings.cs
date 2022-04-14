@@ -92,6 +92,7 @@ namespace JastUsaLibrary
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
             isUserLoggedIn = null;
+            LoginEmail = string.Empty;
         }
 
         public void CancelEdit()
