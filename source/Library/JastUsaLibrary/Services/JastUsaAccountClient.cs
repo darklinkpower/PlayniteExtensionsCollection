@@ -85,6 +85,7 @@ namespace JastUsaLibrary.Services
                 return false;
             }
         }
+
         public bool Login(string loginEmail, string loginPassword)
         {
             FileSystem.DeleteFile(authenticationPath);
@@ -125,11 +126,11 @@ namespace JastUsaLibrary.Services
                 {
                     if (e.Status == WebExceptionStatus.ProtocolError)
                     {
-                        playniteApi.Dialogs.ShowErrorMessage($"Authentication credentials are incorrect", "JAST USA Library");
+                        playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials"), "JAST USA Library");
                     }
                     else
                     {
-                        playniteApi.Dialogs.ShowErrorMessage($"Error during login. Error: {e.Message}", "JAST USA Library");
+                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), e.Message), "JAST USA Library");
                     }
                 }
 
@@ -140,7 +141,7 @@ namespace JastUsaLibrary.Services
             {
                 if (showErrors)
                 {
-                    playniteApi.Dialogs.ShowErrorMessage($"Failed during login. Error: {e.Message}", "JAST USA Library");
+                    playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), e.Message), "JAST USA Library");
                 }
 
                 logger.Error(e, $"Failed during GetAuthenticationToken");
@@ -232,6 +233,7 @@ namespace JastUsaLibrary.Services
             var tokens = GetAuthenticationToken();
             if (tokens == null)
             {
+                playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens"), "JAST USA Library");
                 return null;
             }
 
@@ -248,7 +250,7 @@ namespace JastUsaLibrary.Services
             }
             catch (WebException e)
             {
-                playniteApi.Dialogs.ShowErrorMessage($"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}. Error: {e.Message}", "JAST USA Library");
+                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), e.Message), "JAST USA Library");
                 logger.Error(e, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}. WebException status: {e.Status}");
                 return null;
             }

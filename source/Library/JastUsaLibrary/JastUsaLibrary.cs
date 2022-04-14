@@ -54,7 +54,7 @@ namespace JastUsaLibrary
             var authenticationToken = AccountClient.GetAuthenticationToken();
             if (authenticationToken == null) // User is not logged in
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
                 return games;
             }
 
@@ -111,7 +111,7 @@ namespace JastUsaLibrary
             {
                 new GameMenuItem
                 {
-                    Description = string.Format("View downloads for {0}", game.Name),
+                    Description = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads"), game.Name),
                     MenuSection = "JAST USA",
                     Action = a => {
                         OpenGameDownloadsWindow(game);
@@ -129,13 +129,14 @@ namespace JastUsaLibrary
 
             var options = new List<MessageBoxOption>
             {
-                new MessageBoxOption("Download"),
-                new MessageBoxOption("Select installed game"),
-                new MessageBoxOption("Cancel", false, true),
+                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageDownloadOption")),
+                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectInstalledOption")),
+                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageBrowseForGameOption")),
+                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageCancelOption"), false, true),
             };
 
             var game = args.Game;
-            var selected = PlayniteApi.Dialogs.ShowMessage("Select action", "JAST USA Library", System.Windows.MessageBoxImage.None, options);
+            var selected = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectActionLabel"), "JAST USA Library", System.Windows.MessageBoxImage.None, options);
             if (!selected.IsCancel)
             {
                 if (selected == options[0]) // Download option
@@ -143,6 +144,10 @@ namespace JastUsaLibrary
                     OpenGameDownloadsWindow(game);
                 }
                 else if (selected == options[1]) // Select install option
+                {
+
+                }
+                else if (selected == options[2]) // Browse for executable option
                 {
 
                 }
@@ -167,7 +172,7 @@ namespace JastUsaLibrary
             var authenticationToken = AccountClient.GetAuthenticationToken();
             if (authenticationToken == null) // User is not logged in
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "User is not logged in", NotificationType.Error, () => OpenSettingsView()));
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
                 return null;
             }
 
@@ -203,7 +208,7 @@ namespace JastUsaLibrary
 
             window.Height = 700;
             window.Width = 900;
-            window.Title = "JAST USA Downloader";
+            window.Title = ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderWindowTitle");
 
             window.Content = new GameDownloadsView();
             window.DataContext = new GameDownloadsViewModel(game, gameTranslations, AccountClient);

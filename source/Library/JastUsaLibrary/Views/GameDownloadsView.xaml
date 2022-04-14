@@ -11,13 +11,13 @@
             <StackPanel>
                 <Label Content="{Binding Game.Name}" />
                 <TabControl SelectedIndex="{Binding SelectedTabItemIndex}" Margin="0,15,0,0">
-                    <TabItem Header="Game downloads"
+                    <TabItem Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads}"
                              Visibility="{Binding GameTranslationsResponse.GamePathLinks.HydraMember, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
-                        <ListView SelectionMode="Single"  Margin="0,0,10,0"
+                        <ListView SelectionMode="Single"  Margin="0,10,10,0"
                               ItemsSource="{Binding GameTranslationsResponse.GamePathLinks.HydraMember}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="250" Header="Name">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderNameLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Label}" VerticalAlignment="Center"/>
@@ -25,10 +25,10 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="250" Header="Download">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Content="Download"
+                                                <Button Content="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadLabel}"
                                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
                                                         Path=DataContext.GetAndOpenDownloadLinkCommand}"
                                                         CommandParameter="{Binding}"/>
@@ -41,13 +41,13 @@
                         </ListView>
                     </TabItem>
 
-                    <TabItem Header="Patches"
+                    <TabItem Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderPatches}"
                              Visibility="{Binding GameTranslationsResponse.GamePatchLinks.HydraMember, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
-                        <ListView SelectionMode="Single"  Margin="0,0,10,0"
+                        <ListView SelectionMode="Single"  Margin="0,10,10,0"
                                   ItemsSource="{Binding GameTranslationsResponse.GamePatchLinks.HydraMember}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="250" Header="Name">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderNameLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Label}" VerticalAlignment="Center"/>
@@ -55,10 +55,10 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="250" Header="Download">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Content="Download"
+                                                <Button Content="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadLabel}"
                                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
                                                         Path=DataContext.GetAndOpenDownloadLinkCommand}"
                                                         CommandParameter="{Binding}"/>
@@ -71,13 +71,13 @@
                         </ListView>
                     </TabItem>
 
-                    <TabItem Header="Extras"
+                    <TabItem Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderExtras}"
                              Visibility="{Binding GameTranslationsResponse.GameExtraLinks.HydraMember, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
-                        <ListView SelectionMode="Single"  Margin="0,0,10,0"
+                        <ListView SelectionMode="Single"  Margin="0,10,10,0"
                                   ItemsSource="{Binding GameTranslationsResponse.GameExtraLinks.HydraMember}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="250" Header="Name">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderNameLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Label}" VerticalAlignment="Center"/>
@@ -85,10 +85,10 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="250" Header="Download">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Content="Download"
+                                                <Button Content="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadLabel}"
                                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
                                                         Path=DataContext.GetAndOpenDownloadLinkCommand}"
                                                         CommandParameter="{Binding}"/>
