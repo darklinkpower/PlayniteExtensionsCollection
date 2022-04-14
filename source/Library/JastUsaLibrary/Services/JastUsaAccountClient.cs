@@ -243,7 +243,7 @@ namespace JastUsaLibrary.Services
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
 
-            var requestParams = Serialization.ToJson(new GenerateLinkRequest { downloaded = false, gameId = gameId, gameLinkId = gameLinkId });
+            var requestParams = Serialization.ToJson(new GenerateLinkRequest { downloaded = true, gameId = gameId, gameLinkId = gameLinkId });
 
             try
             {
