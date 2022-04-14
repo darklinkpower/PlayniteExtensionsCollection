@@ -71,10 +71,11 @@ namespace JastUsaLibrary
                 metadata.BackgroundImage = new MetadataFile(string.Format(jastMediaUrlTemplate, backgroundImage.Path));
             }
 
+            metadata.Links = new List<Link> { new Link("Store", @"https://jastusa.com/games/" + productResponse.Code) };
             var urlAttributes = productResponse.Attributes.Where(x => x.Code.EndsWith("_url") && x.Value.First().StartsWith("http"));
             if (urlAttributes.Count() > 0)
             {
-                metadata.Links = urlAttributes.Select(x => new Link { Name = x.Code.Replace("_", " ").ToTitleCase(), Url = x.Value.First() }).ToList();
+                metadata.Links.AddRange(urlAttributes.Select(x => new Link(x.Code.Replace("_", " ").ToTitleCase(), x.Value.First())));
             }
 
             var tags = GetMultipleAttributeMatch(productResponse, "tag");
