@@ -5,3 +5,10 @@ Version: 1.0
 Module: JastUsaLibrary.dll
 Type: GameLibrary
 Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Playnite Forums thread
+      Url: https://playnite.link/forum/thread-1203.html
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
