@@ -245,6 +245,33 @@ namespace JastUsaLibrary
             return null;
         }
 
+        public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
+        {
+            if (args.Game.PluginId != Id)
+            {
+                return null;
+            }
+
+            var game = args.Game;
+            var gameInstallCache = GetGameInstallCache();
+            var gameCache = gameInstallCache.FirstOrDefault(x => x.GameId == game.GameId);
+            if (gameCache == null)
+            {
+                return null;
+            }
+
+            gameInstallCache.Remove(gameCache);
+            SaveGameInstallCache(gameInstallCache);
+
+            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageUninstallNotice"), "JAST USA Library");
+            if (FileSystem.FileExists(gameCache.Program.Path))
+            {
+                ProcessStarter.StartProcess(Path.GetDirectoryName(gameCache.Program.Path));
+            }
+            
+            return new List<UninstallController> { new FakeUninstallController(game) };
+        }
+
         private List<InstallController> AddGameToCache(Game game, Program selectedProgram)
         {
             var cache = new GameInstallCache

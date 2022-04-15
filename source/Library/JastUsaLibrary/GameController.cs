@@ -28,18 +28,19 @@ namespace JastUsaLibrary
             InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
             return;
         }
+    }
 
-        public async void StartInstallWatcher()
+    public class FakeUninstallController : UninstallController
+    {
+        public FakeUninstallController(Game game) : base(game)
         {
-            await Task.Run(async () =>
-            {
-                while (true)
-                {
-                    await Task.Delay(10000);
-                    return;
-                }
-            });
+            Name = "Uninstall";
         }
 
+        public override void Uninstall(UninstallActionArgs args)
+        {
+            InvokeOnUninstalled(new GameUninstalledEventArgs());
+        }
     }
+
 }
