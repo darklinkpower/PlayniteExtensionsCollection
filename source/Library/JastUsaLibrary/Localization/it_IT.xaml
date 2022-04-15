@@ -7,8 +7,8 @@
     <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Downloads directory:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Browse…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Cartella dei download:</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Sfoglia…</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">Visualizza i download per {0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Scarica</sys:String>
@@ -17,22 +17,22 @@
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Annulla</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Seleziona un'azione</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">Scaricatore JAST USA</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Open downloads directory</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Apri cartella dei download</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Nome</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Scarica</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patch</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extra</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Downloading…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Downloaded {0} of {1}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Time remaining: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Download in corso…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Scaricati {0} di {1}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Tempo rimanente: {0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0}/s</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">File &quot;{0}&quot; has already been downloaded</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">File downloaded successfully to &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">There was an error while downloading the file</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} hours {1:00} minutes</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat">{0:0#} minutes {1:00} seconds</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat">{0} seconds</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Il file &quot;{0}&quot; è già stato scaricato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">File scaricato correttamente su &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">Si è verificato un errore durante il download del file</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} ore {1:00} minuti</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat">{0:0#} minuti {1:00} secondi</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat">{0} secondi</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Le credenziali di autenticazione non sono valide</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Errore durante l'accesso.
 
