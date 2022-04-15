@@ -353,3 +353,9 @@ Packages:
     Changelog:
     - 'Do not use first Steam search match automatically if there are multiple matches'
     - 'Small improvement to Steam search automatic game detection'
+  - Version: 1.50
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_9bdaf3ae/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_50.pext
+    Changelog:
+    - 'Updated localizations'
