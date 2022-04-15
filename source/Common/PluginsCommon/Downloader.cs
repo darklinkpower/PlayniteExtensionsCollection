@@ -174,17 +174,27 @@ namespace PluginsCommon.Web
         {
             logger.Debug($"Downloading data from {url} to {path}.");
             FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-
+            var downloadCompleted = false;
             try
             {
                 using (var webClient = new WebClient())
                 {
                     webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
-                    webClient.DownloadFileCompleted += (s, e) => webClient.Dispose();
+                    webClient.DownloadFileCompleted += (s, e) =>
+                    {
+                        // This event also triggers if the Cancellation Token cancels the download
+                        // so we have to check if it was not what stopped the download
+                        if (!cancelToken.IsCancellationRequested)
+                        {
+                            downloadCompleted = true;
+                        }
+
+                        webClient.Dispose();
+                    };
+
                     using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
                     {
                         webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
-                        return true;
                     }
                 }
 
@@ -194,7 +204,7 @@ namespace PluginsCommon.Web
                 logger.Warn("Download canceled.");
             }
 
-            return false;
+            return downloadCompleted;
         }
 
         public async Task DownloadFileAsync(string url, string path, Action<DownloadProgressChangedEventArgs> progressHandler)

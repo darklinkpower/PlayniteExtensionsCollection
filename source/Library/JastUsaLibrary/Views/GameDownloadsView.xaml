@@ -23,7 +23,15 @@
                     <TextBlock Text="{Binding Game.Name}" Margin="0,10,0,0" TextWrapping="Wrap" FontSize="16"
                                MaxWidth="{Binding ElementName=BttnDirOpen, Path=ActualWidth}"/>
                     <Button x:Name="BttnDirOpen" MinWidth="200" HorizontalAlignment="Left" Content="{DynamicResource LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel}" Margin="0,10,0,0" Command="{Binding OpenDownloadsDirectory}" />
-                    
+
+                    <CheckBox Content="{DynamicResource LOCJast_Usa_Library_JastDownloaderExtractZipOnDownload}"
+                              Margin="0,10,0,0"
+                              IsChecked="{Binding SettingsViewModel.Settings.ExtractDownloadedZips}" />
+
+                    <CheckBox Content="{DynamicResource LOCJast_Usa_Library_JastDownloaderDeleteZipsOnExtract}"
+                              Margin="0,10,0,0"
+                              IsEnabled="{Binding SettingsViewModel.Settings.ExtractDownloadedZips}"
+                              IsChecked="{Binding SettingsViewModel.Settings.DeleteDownloadedZips}" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Margin="10,0,0,0">

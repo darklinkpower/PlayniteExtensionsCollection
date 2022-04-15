@@ -385,6 +385,9 @@ namespace JastUsaLibrary
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             window.ShowDialog();
+
+            // Done so any changes to settings to extract and delete zips are saved
+            SavePluginSettings(settings.Settings);
         }
     }
 

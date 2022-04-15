@@ -7,6 +7,7 @@ using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -44,7 +45,19 @@ namespace JastUsaLibrary.ViewModels
         }
 
         private readonly IPlayniteAPI playniteApi;
-        private readonly JastUsaLibrarySettingsViewModel settingsViewModel;
+
+        private JastUsaLibrarySettingsViewModel settingsViewModel;
+        public JastUsaLibrarySettingsViewModel SettingsViewModel
+        {
+            get => settingsViewModel;
+            set
+            {
+                settingsViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private Game game;
         public Game Game
         {
@@ -60,9 +73,9 @@ namespace JastUsaLibrary.ViewModels
         {
             get
             {
-                if (!settingsViewModel.Settings.DownloadsPath.IsNullOrEmpty())
+                if (!SettingsViewModel.Settings.DownloadsPath.IsNullOrEmpty())
                 {
-                    var path = Path.Combine(settingsViewModel.Settings.DownloadsPath, game.GameId);
+                    var path = Path.Combine(SettingsViewModel.Settings.DownloadsPath, game.GameId);
                     FileSystem.CreateDirectory(path);
                     return path;
                 }
@@ -76,11 +89,12 @@ namespace JastUsaLibrary.ViewModels
             }
         }
 
+        private static readonly ILogger logger = LogManager.GetLogger();
         public GameDownloadsViewModel(IPlayniteAPI playniteApi, Game game, GameTranslationsResponse gameTranslationsResponse, JastUsaAccountClient accountClient, JastUsaLibrarySettingsViewModel settingsViewModel)
         {
             GameTranslationsResponse = gameTranslationsResponse;
             this.playniteApi = playniteApi;
-            this.settingsViewModel = settingsViewModel;
+            this.SettingsViewModel = settingsViewModel;
             Game = game;
             this.accountClient = accountClient;
             if (gameTranslationsResponse.GamePathLinks.HydraMember.Count > 0)
@@ -130,10 +144,28 @@ namespace JastUsaLibrary.ViewModels
             var tempFileName = fileName + ".tmp";
             var downloadPath = Path.Combine(DownloadDirectory, tempFileName);
             var finalDownloadPath = Path.Combine(DownloadDirectory, fileName);
+
             if (FileSystem.FileExists(finalDownloadPath))
             {
                 playniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl"), fileName));
                 return;
+            }
+
+            // For zip files, detect if the extracted files are present and ask user if they want to download anyway
+            if (Path.GetExtension(fileName).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+            {
+                var extractDirectory = Path.Combine(DownloadDirectory, Path.GetFileNameWithoutExtension(fileName));
+                if (FileSystem.DirectoryExists(extractDirectory))
+                {
+                    var selection = playniteApi.Dialogs.ShowMessage(
+                        string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected"), fileName, extractDirectory),
+                        ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderWindowTitle"),
+                        MessageBoxButton.YesNo);
+                    if (selection != MessageBoxResult.Yes)
+                    {
+                        return;
+                    }
+                }
             }
 
             var downloadSuccess = false;
@@ -190,18 +222,55 @@ namespace JastUsaLibrary.ViewModels
                 downloadCanceled = a.CancelToken.IsCancellationRequested;
             }, progressOptions);
 
-            if (downloadSuccess)
-            {
-                FileSystem.MoveFile(downloadPath, finalDownloadPath);
-                playniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage"), finalDownloadPath));
-            }
-            else
+            if (!downloadSuccess)
             {
                 FileSystem.DeleteFileSafe(downloadPath);
                 if (!downloadCanceled) // Download failed
                 {
                     playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderFileDownloadError"), "");
                 }
+
+                return;
+            }
+
+            FileSystem.MoveFile(downloadPath, finalDownloadPath);
+            if (SettingsViewModel.Settings.ExtractDownloadedZips && Path.GetExtension(finalDownloadPath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+            {
+                var destinationDirectory = Path.Combine(Path.GetDirectoryName(finalDownloadPath), Path.GetFileNameWithoutExtension(finalDownloadPath));
+                ExtractZip(finalDownloadPath, destinationDirectory, SettingsViewModel.Settings.DeleteDownloadedZips);
+            }
+
+            playniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage"), finalDownloadPath));
+        }
+
+        private void ExtractZip(string filePath, string destinationDirectory, bool deleteSourceZip)
+        {
+            // If directory exists, don't extract to not replace any data
+            if (FileSystem.DirectoryExists(destinationDirectory))
+            {
+                logger.Debug($"Zip extraction aborted because extraction directory {destinationDirectory} already existed");
+                return;
+            }
+
+            try
+            {
+                playniteApi.Dialogs.ActivateGlobalProgress((_) =>
+                {
+                    logger.Info($"Decompressing database zip file {filePath} to {destinationDirectory}. Delete source file; {deleteSourceZip}...");
+                    FileSystem.CreateDirectory(destinationDirectory);
+                    ZipFile.ExtractToDirectory(filePath, destinationDirectory);
+                    logger.Info("Decompressed database zip file");
+
+                    if (deleteSourceZip)
+                    {
+                        FileSystem.DeleteFileSafe(filePath);
+                    }
+                }, new GlobalProgressOptions(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderExtractingZip"), Path.GetFileName(filePath), destinationDirectory)));
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error while decompressing file {filePath}");
+                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderExtractZipError"), filePath), "");
             }
         }
 

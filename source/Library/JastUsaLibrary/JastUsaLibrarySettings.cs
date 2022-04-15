@@ -15,6 +15,10 @@ namespace JastUsaLibrary
     {
         private string downloadsPath = string.Empty;
         public string DownloadsPath { get => downloadsPath; set => SetValue(ref downloadsPath, value); }
+        private bool extractDownloadedZips = true;
+        public bool ExtractDownloadedZips { get => extractDownloadedZips; set => SetValue(ref extractDownloadedZips, value); }
+        private bool deleteDownloadedZips = false;
+        public bool DeleteDownloadedZips { get => deleteDownloadedZips; set => SetValue(ref deleteDownloadedZips, value); }
     }
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings
