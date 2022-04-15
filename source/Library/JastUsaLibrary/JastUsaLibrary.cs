@@ -211,7 +211,7 @@ namespace JastUsaLibrary
             window.Title = ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderWindowTitle");
 
             window.Content = new GameDownloadsView();
-            window.DataContext = new GameDownloadsViewModel(game, gameTranslations, AccountClient);
+            window.DataContext = new GameDownloadsViewModel(PlayniteApi, game, gameTranslations, AccountClient, settings);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 

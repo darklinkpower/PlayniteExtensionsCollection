@@ -49,5 +49,13 @@
                 </TextBlock.Style>
             </TextBlock>
         </StackPanel>
+
+        <DockPanel Margin="0,15,0,0">
+            <Button DockPanel.Dock="Right" VerticalAlignment="Center"
+                    Margin="10,0,0,0" Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectDownloadDirectoryCommand}" />
+            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+            <TextBox Margin="10,0,0,0" VerticalAlignment="Center"
+                     Text="{Binding Settings.DownloadsPath}" IsReadOnly="True" />
+        </DockPanel>
     </StackPanel>
 </UserControl>

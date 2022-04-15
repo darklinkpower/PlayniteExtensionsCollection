@@ -13,7 +13,8 @@ namespace JastUsaLibrary
 {
     public class JastUsaLibrarySettings : ObservableObject
     {
-
+        private string downloadsPath = string.Empty;
+        public string DownloadsPath { get => downloadsPath; set => SetValue(ref downloadsPath, value); }
     }
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings
@@ -133,6 +134,18 @@ namespace JastUsaLibrary
                 isUserLoggedIn = null;
                 IsUserLoggedIn = accountClient.Login(LoginEmail, passwordBox.Password);
             }
+        }
+
+        public RelayCommand SelectDownloadDirectoryCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                var selectedDir = playniteApi.Dialogs.SelectFolder();
+                if (!selectedDir.IsNullOrEmpty())
+                {
+                    settings.DownloadsPath = selectedDir;
+                }
+            });
         }
     }
 }

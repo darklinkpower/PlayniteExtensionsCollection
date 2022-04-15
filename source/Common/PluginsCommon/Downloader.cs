@@ -170,6 +170,33 @@ namespace PluginsCommon.Web
             }
         }
 
+        public bool DownloadFile(string url, string path, CancellationToken cancelToken, Action<DownloadProgressChangedEventArgs> progressHandler)
+        {
+            logger.Debug($"Downloading data from {url} to {path}.");
+            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
+
+            try
+            {
+                using (var webClient = new WebClient())
+                {
+                    webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
+                    webClient.DownloadFileCompleted += (s, e) => webClient.Dispose();
+                    using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
+                    {
+                        webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
+                        return true;
+                    }
+                }
+
+            }
+            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+            {
+                logger.Warn("Download canceled.");
+            }
+
+            return false;
+        }
+
         public async Task DownloadFileAsync(string url, string path, Action<DownloadProgressChangedEventArgs> progressHandler)
         {
             logger.Debug($"Downloading data async from {url} to {path}.");

@@ -74,6 +74,11 @@ namespace PluginsCommon.Web
             downloader.DownloadFile(url, path, cancelToken);
         }
 
+        public static bool DownloadFile(string url, string path, CancellationToken cancelToken, Action<DownloadProgressChangedEventArgs> progressHandler)
+        {
+            return downloader.DownloadFile(url, path, cancelToken, progressHandler);
+        }
+
         public static HttpStatusCode GetResponseCode(string url)
         {
             try
