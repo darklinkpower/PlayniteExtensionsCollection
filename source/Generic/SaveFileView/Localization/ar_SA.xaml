@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSaveFileView_MenuSection">Game directories</sys:String>
-    <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveDirectoriesDescription">Open game(s) save directories</sys:String>
-    <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveConfigurationDescription">Open game(s) configuration directories</sys:String>
-    <sys:String x:Key="LOCSaveFileView_MenuItemRefreshDirectoriesDescription">Refresh directories from PCGamingWiki</sys:String>
-    <sys:String x:Key="LOCSaveFileView_RefreshResultsMessage" xml:space="preserve">Done.
+    <sys:String x:Key="LOCSaveFileView_MenuSection">مجلدات اللعبة</sys:String>
+    <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveDirectoriesDescription">فتح مجلدات حفظ اللعبة/الالعاب</sys:String>
+    <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveConfigurationDescription">فتح مجلدات الإعدادات اللعبة/الالعاب</sys:String>
+    <sys:String x:Key="LOCSaveFileView_MenuItemRefreshDirectoriesDescription">تحديث المجلدات من PCGamingWiki</sys:String>
+    <sys:String x:Key="LOCSaveFileView_RefreshResultsMessage" xml:space="preserve">تم.
         
-Obtained data of {0} game(s).
-Could not obtain data of {1} game(s).</sys:String>
-    <sys:String x:Key="LOCSaveFileView_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">Couldn't get PCGamingWiki page for {0}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">Couldn't obtain directories for game {0}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Directories not detected for {0}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">Downloading game data…</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">Select PCGamingWiki game</sys:String>
+تم الحصول على بيانات {0} لعبة.
+تعذر الحصول على بيانات {1} لعبة.</sys:String>
+    <sys:String x:Key="LOCSaveFileView_GenericFileDownloadErrorMessage">خطأ في تحميل الملف من الصفحة url &quot;{0}&quot;. الخطأ: {1}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">تعذر الحصول على صفحة PCGamingWiki لـ {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">تعذر الحصول على مجلدات اللعبة {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">لم يتم اكتشاف مجلدات {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">جاري تحميل بيانات اللعبة…</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">تحديد لعبة من PCGamingWiki</sys:String>
 
-    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">Add Save directories as links to games when updating data</sys:String>
-    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">Add Configuration directories as links to games when updating data</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">إضافة مجلدات الحفظ كروابط إلى الألعاب عند تحديث البيانات</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">إضافة مجلدات الإعدادات كروابط إلى الألعاب عند تحديث البيانات</sys:String>
 </ResourceDictionary>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Aiuto</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">Email:</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Password:</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Autenticati</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Cartella dei download:</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Sfoglia…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">Visualizza i download per {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Scarica</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Sfoglia e seleziona il gioco</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Annulla</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Seleziona un'azione</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">Scaricatore JAST USA</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Apri cartella dei download</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Nome</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Scarica</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patch</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extra</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Download in corso…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Scaricati {0} di {1}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Tempo rimanente: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0}/s</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Il file &quot;{0}&quot; è già stato scaricato</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">File successfully downloaded to &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">Si è verificato un errore durante il download del file</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} ore {1:00} minuti</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat">{0:0#} minuti {1:00} secondi</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat">{0} secondi</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
+
+Download the file anyway?</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractingZip">Extracting zip file &quot;{0}&quot; to &quot;{1}&quot;…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipError" xml:space="preserve">Error during &quot;{0}&quot; zip file extraction.
+    
+Error: {1}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipOnDownload">Extract zips after downloading</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDeleteZipsOnExtract">Delete zips after extraction</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Le credenziali di autenticazione non sono valide</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Errore durante l'accesso.
+
+Errore: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Errore durante l'ottenimento del link di download.
+
+Errore: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Impossibile ottenere i token di autenticazione</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">Previously selected executable for the game has been unlinked.
+        
+Due to technical limitations, it's not possible for the plugin to uninstall or remove the game files by itself, so please do that manually.</sys:String>
+</ResourceDictionary>
