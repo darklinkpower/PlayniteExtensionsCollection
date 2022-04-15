@@ -11,16 +11,22 @@ namespace JastUsaLibrary
 {
     public class FakeInstallController : InstallController
     {
+        private string installDir;
 
-        public FakeInstallController(Game game) : base(game)
+        public FakeInstallController(Game game, string installDir) : base(game)
         {
-
+            this.installDir = installDir;
         }
-
 
         public override void Install(InstallActionArgs args)
         {
-            StartInstallWatcher();
+            var installInfo = new GameInstallationData()
+            {
+                InstallDirectory = installDir
+            };
+
+            InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
+            return;
         }
 
         public async void StartInstallWatcher()
