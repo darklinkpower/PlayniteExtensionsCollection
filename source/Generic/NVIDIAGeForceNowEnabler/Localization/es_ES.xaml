@@ -20,7 +20,8 @@ Marcados {0} juegos como instalados.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Mostrar sólo la acción de los juegos que no estén ya instalados por sus bibliotecas</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Los juegos habilitados siempre se marcarán como instalados cuando esta opción esté habilitada.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Los juegos sin un directorio de instalación establecido son detectados como no instalados por sus bibliotecas</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Establecer juegos habilitados como instalados al actualizar el estado de los juegos habilitados</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Iniciar en Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marcados {0} juegos como instalados.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">Ejecutable de NVIDIA GeForce NOW no encontrado en {0}.</sys:String>
@@ -33,4 +34,7 @@ Marcados {0} juegos como instalados.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">Id de GeForce Now</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Tienda</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Id de la tienda</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
 </ResourceDictionary>
