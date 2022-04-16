@@ -199,3 +199,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_9bdaf3ae/NVIDIA_GeForce_Now_Enabler_2_30.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.31
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.16_2df94ecb/NVIDIA_GeForce_Now_Enabler_2_31.pext
+    Changelog:
+    - 'Made extension a library plugin'
+    - 'Added option to import owned games available on the service as separate entries, imported as part of the plugin library. Disabled by default'
