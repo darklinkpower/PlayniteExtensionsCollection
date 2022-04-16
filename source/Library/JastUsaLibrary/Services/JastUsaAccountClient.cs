@@ -209,18 +209,28 @@ namespace JastUsaLibrary.Services
             while (true)
             {
                 currentPage++;
-                var url = string.Format(getGamesUrlTemplate, currentPage);
-                var responseString = client.DownloadString(url);
-                var response = Serialization.FromJson<UserGamesResponse>(responseString);
-
-                foreach (var product in response.Products.JastProducts)
+                try
                 {
-                    products.Add(product);
+                    var url = string.Format(getGamesUrlTemplate, currentPage);
+                    var responseString = client.DownloadString(url);
+
+                    var response = Serialization.FromJson<UserGamesResponse>(responseString);
+
+                    foreach (var product in response.Products.JastProducts)
+                    {
+                        products.Add(product);
+                    }
+
+                    logger.Debug($"GetGames current page: {currentPage}, total pages: {response.Pages}");
+                    if (response.Pages == currentPage)
+                    {
+                        break;
+                    }
                 }
-
-                if (response.Pages == currentPage)
+                catch (WebException e)
                 {
-                    break;
+                    logger.Error(e, $"Error during GetGames. WebException status: {e.Status}");
+                    throw;
                 }
             }
 
