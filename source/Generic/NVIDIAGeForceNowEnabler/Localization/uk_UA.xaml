@@ -20,7 +20,8 @@
     <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Показувати дію лише для ігор, які ще не встановлені їхніми бібліотеками</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Увімкнені ігри завжди будуть позначені як встановлені коли цю опцію увімкнено.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Ігри без набору каталогів встановлення визначаються як не встановлені їхніми бібліотеками</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Встановити сумісні ігри як встановлені при оновлені статусу сумісності ігор</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Запустити в Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Позначено {0} ігор як встановлені.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW не знайдено в {0}.</sys:String>
@@ -33,4 +34,7 @@
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Магазин</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Id Магазину</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
 </ResourceDictionary>
