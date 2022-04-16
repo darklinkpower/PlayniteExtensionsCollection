@@ -20,7 +20,8 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Aktivierte Spiele werden immer als installiert gekennzeichnet, wenn diese Option aktiviert ist.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Spiele ohne Installationsverzeichnis werden von ihren Bibliotheken als nicht installiert erkannt</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Aktivierte Spiele als installiert beim Aktualisieren des aktivierten Status von Spielen festlegen</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">In Nvidia GeForce NOW starten</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW aktiverer: {0} Spiele als installiert markiert.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW ausführbare Datei nicht in {0} gefunden.</sys:String>
@@ -33,4 +34,7 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
 </ResourceDictionary>
