@@ -20,7 +20,8 @@ Retrait de la fonction &quot;{3}&quot; à {4} jeux.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Afficher uniquement l'action pour les jeux qui ne sont pas déjà installés par leurs bibliothèques</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Les jeux activés seront toujours marqués comme installés lorsque cette option est activée.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Les jeux sans répertoire d'installation sont détectés comme non installés par leurs bibliothèques</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Définir les jeux activés comme installés lors de la mise à jour de l'état des jeux</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Lancer avec Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">Activateur de NVIDIA GeForce Now : {0} jeux marqués comme installés.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">L'exécutable NVIDIA GeForce NOW n'a pas été trouvé dans {0}.</sys:String>
@@ -33,4 +34,7 @@ Retrait de la fonction &quot;{3}&quot; à {4} jeux.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">ID GeForce Now</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Boutique</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">ID boutique</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
 </ResourceDictionary>
