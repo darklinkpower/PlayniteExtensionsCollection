@@ -222,8 +222,6 @@ namespace JastUsaLibrary.Services
                 {
                     break;
                 }
-
-                break;
             }
 
             client.Headers.Clear();
