@@ -20,7 +20,8 @@ Marked {0} games as Installed.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Enabled games will always be marked as installed when this option is enabled.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Games without a installation directory set are detected as not installed by their libraries</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Set enabled games as installed when updating enabled status of games</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Launch in Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
@@ -33,4 +34,7 @@ Marked {0} games as Installed.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
 </ResourceDictionary>
