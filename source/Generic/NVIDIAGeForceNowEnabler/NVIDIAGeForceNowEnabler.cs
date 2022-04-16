@@ -24,19 +24,20 @@ using System.Windows;
 
 namespace NVIDIAGeForceNowEnabler
 {
-    public class NVIDIAGeForceNowEnabler : GenericPlugin
+    public class NVIDIAGeForceNowEnabler : LibraryPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string geforceNowWorkingPath;
-        private readonly string geforceNowExecutablePath;
+        public readonly string geforceNowExecutablePath;
         private readonly string gfnDatabasePath;
         private List<GeforceNowItem> supportedList;
         private Dictionary<Guid, AppStore> pluginIdToAppStore;
+        private bool databaseUpdatedOnGetGames = false;
 
         private NVIDIAGeForceNowEnablerSettingsViewModel settings { get; set; }
-
+        public override LibraryClient Client { get; } = new NVIDIAGeForceNowClient();
         public override Guid Id { get; } = Guid.Parse("5f2dfd12-5f13-46fe-bcdd-64eb53ace26a");
-
+        public override string Name => "NVIDIA GeForce NOW";
         public NVIDIAGeForceNowEnabler(IPlayniteAPI api) : base(api)
         {
             settings = new NVIDIAGeForceNowEnablerSettingsViewModel(this);
@@ -44,7 +45,7 @@ namespace NVIDIAGeForceNowEnabler
             geforceNowExecutablePath = Path.Combine(geforceNowWorkingPath, "GeForceNOWStreamer.exe");
             gfnDatabasePath = Path.Combine(GetPluginUserDataPath(), "gfnDatabase.json");
             LoadDatabaseFromFile();
-            Properties = new GenericPluginProperties
+            Properties = new LibraryPluginProperties
             {
                 HasSettings = true
             };
@@ -101,8 +102,51 @@ namespace NVIDIAGeForceNowEnabler
         {
             if (settings.Settings.ExecuteOnLibraryUpdate)
             {
-                UpdateDatabaseAndGamesStatus(false);
+                var updateDatabase = !databaseUpdatedOnGetGames;
+                UpdateDatabaseAndGamesStatus(false, !updateDatabase);
             }
+
+            databaseUpdatedOnGetGames = false;
+        }
+
+        public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
+        {
+            // To prevent downloading the database again during OnLibraryUpdated event
+            databaseUpdatedOnGetGames = false;
+            var games = new List<GameMetadata>();
+            if(!settings.Settings.ImportDatabaseAsLibrary)
+            {
+                
+                return games;
+            }
+
+            databaseUpdatedOnGetGames = DownloadAndRefreshGameList(false);
+            if (supportedList.Count == 0)
+            {
+                return games;
+            }
+
+
+            foreach (var game in PlayniteApi.Database.Games)
+            {
+                var geforceEntry = GetDatabaseMatchingEntryForGame(game);
+                if (geforceEntry == null)
+                {
+                    continue;
+                }
+
+                var newGame = new GameMetadata
+                {
+                    Name = geforceEntry.Title.RemoveTrademarks(),
+                    GameId = geforceEntry.Id.ToString(),
+                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    IsInstalled = true
+                };
+
+                games.Add(newGame);
+            }
+
+            return games;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -163,8 +207,9 @@ namespace NVIDIAGeForceNowEnabler
             SatinizeSupportedListTitles();
         }
 
-        public void DownloadAndRefreshGameList(bool showDialogs)
+        public bool DownloadAndRefreshGameList(bool showDialogs)
         {
+            var databaseUpdated = false;
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 try
@@ -174,6 +219,7 @@ namespace NVIDIAGeForceNowEnabler
                     {
                         supportedList = downloadedDatabase;
                         FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(supportedList));
+                        databaseUpdated = true;
                     }
                 }
                 catch (Exception e)
@@ -185,6 +231,8 @@ namespace NVIDIAGeForceNowEnabler
                     }
                 }
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCNgfn_Enabler_DownloadingDatabaseProgressMessage")));
+
+            return databaseUpdated;
         }
 
         private void SatinizeSupportedListTitles()
@@ -210,12 +258,15 @@ namespace NVIDIAGeForceNowEnabler
                 .Replace("battlefield1revolution", "battlefield1");
         }
 
-        public void UpdateDatabaseAndGamesStatus(bool showDialogs)
+        public void UpdateDatabaseAndGamesStatus(bool showDialogs, bool updateDatabase = true)
         {
             var featureName = "NVIDIA GeForce NOW";
             var feature = PlayniteApi.Database.Features.Add(featureName);
 
-            DownloadAndRefreshGameList(showDialogs);
+            if (updateDatabase)
+            {
+                DownloadAndRefreshGameList(showDialogs);
+            }
             if (supportedList.Count == 0)
             {
                 // In case download failed.
@@ -252,8 +303,7 @@ namespace NVIDIAGeForceNowEnabler
                             logger.Info(string.Format("Feature added to \"{0}\"", game.Name));
                         }
 
-                        if ((settings.Settings.SetEnabledGamesAsInstalled || settings.Settings.ShowPlayActionsOnLaunch)
-                            && game.IsInstalled == false)
+                        if (settings.Settings.ShowPlayActionsOnLaunch && !game.IsInstalled)
                         {
                             game.IsInstalled = true;
                             setAsInstalledCount++;
@@ -269,7 +319,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 var results = string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults1Message"),
                     enabledGamesCount, featureName, featureAddedCount, featureName, featureRemovedCount);
-                if (settings.Settings.SetEnabledGamesAsInstalled == true)
+                if (settings.Settings.ShowPlayActionsOnLaunch)
                 {
                     results += string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_UpdateResults3Message"), setAsInstalledCount);
                 }
@@ -338,13 +388,20 @@ namespace NVIDIAGeForceNowEnabler
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {
-            
+            var game = args.Game;
+            if (game.PluginId == Id)
+            {
+                return new List<PlayController>()
+                {
+                    new NVIDIAGeForceNowEnablerPlayController(game, game.GameId, geforceNowExecutablePath, geforceNowWorkingPath)
+                };
+            }
+
             if (!settings.Settings.ShowPlayActionsOnLaunch)
             {
                 return null;
             }
 
-            var game = args.Game;
             // Non library games are not supported so they can be skipped
             if (game.PluginId == Guid.Empty)
             {

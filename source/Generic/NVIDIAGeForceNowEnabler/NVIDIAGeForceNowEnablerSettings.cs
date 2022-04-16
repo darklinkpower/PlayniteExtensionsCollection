@@ -13,13 +13,8 @@ namespace NVIDIAGeForceNowEnabler
         public bool ExecuteOnStartup { get; set; } = false;
         public bool ExecuteOnLibraryUpdate { get; set; } = true;
         public bool ShowPlayActionsOnLaunch { get; set; } = true;
-        public bool SetEnabledGamesAsInstalled { get; set; } = false;
         public bool OnlyShowActionsForNotLibInstalledGames { get; set; } = true;
-
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
+        public bool ImportDatabaseAsLibrary { get; set; } = false;
     }
 
     public class NVIDIAGeForceNowEnablerSettingsViewModel : ObservableObject, ISettings

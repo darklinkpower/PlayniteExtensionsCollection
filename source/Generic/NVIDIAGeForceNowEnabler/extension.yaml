@@ -1,9 +1,9 @@
 Id: NVIDIA_GeForce_Now_Enabler
-Name: NVIDIA GeForce NOW Enabler
+Name: NVIDIA GeForce NOW Library
 Author: darklinkpower
 Version: 2.30
 Module: NVIDIAGeForceNowEnabler.dll
-Type: GenericPlugin
+Type: GameLibrary
 Icon: icon.png
 Links:
     - Name: GitHub

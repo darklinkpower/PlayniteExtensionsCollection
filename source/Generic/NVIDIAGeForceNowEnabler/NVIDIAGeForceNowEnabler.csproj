@@ -95,6 +95,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="Models\GfnGraphQlResponse.cs" />
+    <Compile Include="NVIDIAGeForceNowClient.cs" />
     <Compile Include="NVIDIAGeForceNowEnabler.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerController.cs" />
     <Compile Include="NVIDIAGeForceNowEnablerSettings.cs" />
