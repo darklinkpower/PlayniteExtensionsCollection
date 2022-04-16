@@ -1,0 +1,36 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Hjelp</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Oppdater aktivert-status for spill</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">Åpne NVIDIA GeForce NOW databaseutforsker</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Oppdaterer NVIDIA GeForce NOW-aktiverte spill...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Laster ned NVIDIA GeForce NOW-database...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW-aktiverte spill i biblioteket: {0}
+
+Lagt til&quot;{1}&quot; funksjon til {2} spill.
+Fjernet &quot;{3}&quot; funksjon fra {4} spill.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
+
+Markerte {0} spill som installert.</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Oppdater aktivert-status for spill ved oppstart av Playnite</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Oppdater aktivert-status for spill ved bibliotekoppdatering</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Aktiverte spill vil alltid bli merket som installert når dette alternativet er aktivert.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Spill uten en valgt installasjonsmappe blir regnet som ikke installert av bibliotekene</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SetEnabledGamesAsInstalledSetting">Angi aktiverte spill som installert når du oppdaterer aktivert-status for spill</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Start i Nvidia GeForce NOW</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Markerte {0} spill som installert.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW-programfil ikke funnet i {0}.</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce NOW databaseutforsker</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Kopier navn til utklippstavlen</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Søk:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Butikk:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Navn</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce NOW ID</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Butikk</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Butikk-ID</sys:String>
+</ResourceDictionary>
