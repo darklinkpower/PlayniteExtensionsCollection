@@ -16,8 +16,8 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
 
     <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Aktivierte Spiele beim Start von Playnite aktualisieren</sys:String>
 	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Aktivierter Status von Spielen bei Bibliotheksupdate aktualisieren</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Aktion anzeigen, um kompatible Spiele in NVIDIA GeForce NOW zu starten</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Nur Aktion für Spiele anzeigen, die noch nicht in ihren Bibliotheken installiert sind</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Aktivierte Spiele werden immer als installiert gekennzeichnet, wenn diese Option aktiviert ist.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Spiele ohne Installationsverzeichnis werden von ihren Bibliotheken als nicht installiert erkannt</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
@@ -26,14 +26,14 @@ Die Funktion &quot;{3}&quot; von {4} Spielen entfernt.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW aktiverer: {0} Spiele als installiert markiert.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW ausführbare Datei nicht in {0} gefunden.</sys:String>
     
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce Now Database browser</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Copy name to clipboard</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Store:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce NOW Datenbank Browser</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Name in Zwischenablage kopieren</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Suchen:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Shop:</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce NOW ID</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Shop</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Shop ID</sys:String>
 
     <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
