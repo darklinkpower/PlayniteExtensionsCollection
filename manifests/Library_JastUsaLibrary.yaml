@@ -12,3 +12,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_d5401715/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_1.pext
     Changelog:
     - 'Fix not importing all games from user library'
+  - Version: 1.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.18_1bfa38a6/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_2.pext
+    Changelog:
+    - 'Updated localizations'
