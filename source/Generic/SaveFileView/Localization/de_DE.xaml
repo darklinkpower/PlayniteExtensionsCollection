@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSaveFileView_MenuSection">Game directories</sys:String>
+    <sys:String x:Key="LOCSaveFileView_MenuSection">Spielverzeichnisse</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveDirectoriesDescription">Spiel-Speicherverzeichnisse öffnen</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveConfigurationDescription">Öffne Spiel-Konfigurationsverzeichnisse</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemRefreshDirectoriesDescription">Verzeichnisse von PCGamingWiki aktualisieren</sys:String>
@@ -12,9 +12,9 @@ Konnte keine Daten für {1} Spiel(en) abrufen.</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">Konnte PCGamingWiki-Seite für {0} nicht laden</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">Konnte Verzeichnisse für Spiel {0} nicht abrufen</sys:String>
     <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Verzeichnisse für {0} nicht erkannt</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">Downloading game data…</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">Select PCGamingWiki game</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">Spieldaten werden heruntergeladen…</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">PCGamingWiki Spiel auswählen</sys:String>
 
-    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">Add Save directories as links to games when updating data</sys:String>
-    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">Add Configuration directories as links to games when updating data</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">Speichere Verzeichnisse als Links zu Spielen beim Aktualisieren von Daten hinzufügen</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">Konfigurations Verzeichnisse als Links zu Spielen beim Aktualisieren von Daten hinzufügen</sys:String>
 </ResourceDictionary>

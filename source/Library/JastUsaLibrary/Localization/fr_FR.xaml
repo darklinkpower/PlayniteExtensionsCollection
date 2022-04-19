@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">Email:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Password:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">User is authenticated</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Aide</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">E-mail :</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Mot de passe :</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Authentification</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">L'utilisateur est authentifié</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Requires authentication</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Downloads directory:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Browse…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">User is not authenticated</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">View downloads for {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Vérification du statut d'authentification…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Dossier de téléchargement :</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Parcourir…</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">L'utilisateur n'est pas authentifié</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">Voir les téléchargements pour {0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Download</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Select installed game</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Browse and select game</sys:String>
