@@ -108,6 +108,7 @@
       <DependentUpon>PlayStateSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProcessesHandler.cs" />
+    <Compile Include="Programs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PlayStateManagerViewModel.cs" />
     <Compile Include="ViewModels\SplashWindowViewModel.cs" />

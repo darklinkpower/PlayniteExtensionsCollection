@@ -269,7 +269,23 @@ namespace PlayState
                 return;
             }
 
-            var gameInstallDir = game.InstallDirectory.ToLower();
+            var gameInstallDir = game.InstallDirectory;
+
+            // Games from Xbox library are UWP apps. UWP apps run from the primary drive, e.g. "C:\".
+            // If the game install location is not in the primary drive, Windows creates a symlink from the real files
+            // to the primary drive and starts running the game from there. For this reason, we need to obtain the location
+            // from where the game is running for Xbox game by detecting installed UWP apps as the Xbox plugin
+            // reports the real installation directory in the games and not the fake one in C:\
+            if (game.PluginId == Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287"))
+            {
+                gameInstallDir = Programs.GetUwpWorkdirFromGameId(game.GameId);
+                if (gameInstallDir.IsNullOrEmpty() || !FileSystem.DirectoryExists(gameInstallDir))
+                {
+                    playStateManager.RemoveGameFromDetection(game);
+                    return;
+                }
+            }
+
             // Fix for some games that take longer to start, even when already detected as running
             await Task.Delay(15000);
             if (!playStateManager.IsGameBeingDetected(game))
@@ -278,6 +294,7 @@ namespace PlayState
                 return;
             }
 
+            gameInstallDir = gameInstallDir.ToLower();
             gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
             if (gameProcesses.Count > 0)
             {
