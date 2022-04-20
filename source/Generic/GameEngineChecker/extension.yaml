@@ -1,7 +1,7 @@
 Id: Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db
 Name: Game Engine Checker
 Author: darklinkpower
-Version: 2.7
+Version: 2.8
 Module: GameEngineChecker.psm1
 Type: Script
 Icon: icon.jpg

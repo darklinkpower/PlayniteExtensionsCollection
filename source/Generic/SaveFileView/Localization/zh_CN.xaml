@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSaveFileView_MenuSection">游戏目录</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveDirectoriesDescription">打开游戏保存目录</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveConfigurationDescription">打开游戏配置目录</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemRefreshDirectoriesDescription">从 PCGamingWiki 来刷新目录</sys:String>
@@ -11,4 +12,9 @@
     <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">无法得到 {0} 的 PCGamingWiki 页面</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">无法获取游戏 {0} 的目录</sys:String>
     <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">未检测到 {0} 的目录</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">正在下载游戏数据…</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">选择 PCGamingWiki 游戏</sys:String>
+
+    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">在更新数据时为游戏添加保存目录的链接</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">在更新数据时为游戏添加配置目录的链接</sys:String>
 </ResourceDictionary>

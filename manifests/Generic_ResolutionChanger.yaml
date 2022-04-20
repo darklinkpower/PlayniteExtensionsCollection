@@ -76,3 +76,30 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.02_01d659e6/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_11.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.12
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.09_29543d75/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_12.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to change Display refresh rate when launching games'
+    - 'Improved reliability of changing and restoring display configuration'
+    - 'Potential fix for extension failing to restore previous resolution on multi monitor setups'
+  - Version: 1.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.11_a8e03b9a/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_13.pext
+    Changelog:
+    - 'Updated localizations'
+  - Version: 1.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_9bdaf3ae/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_14.pext
+    Changelog:
+    - 'Updated localizations'
+  - Version: 1.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.18_1bfa38a6/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_15.pext
+    Changelog:
+    - 'Updated localizations'

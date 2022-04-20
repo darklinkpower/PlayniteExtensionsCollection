@@ -96,6 +96,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="DisplayUtilities.cs" />
+    <Compile Include="Models\DisplayConfigChangeData.cs" />
     <Compile Include="ResolutionChanger.cs" />
     <Compile Include="ResolutionChangerSettings.cs" />
     <Compile Include="ResolutionChangerSettingsView.xaml.cs">

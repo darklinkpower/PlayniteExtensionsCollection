@@ -13,6 +13,10 @@ namespace PluginsCommon
     /// </summary>
     public static class Encryption
     {
+        // For security reasons, the class will add a secret value to the passwords provided to the methods
+        // The class secret is changed to a private one during build to increase security
+        private const string secret = "PublicSecret";
+        
         public static byte[] GenerateRandomSalt()
         {
             byte[] data = new byte[32];
@@ -32,7 +36,7 @@ namespace PluginsCommon
             byte[] salt = GenerateRandomSalt();
             using (var outFile = new FileStream(filePath, FileMode.Create))
             {
-                var passwordBytes = Encoding.UTF8.GetBytes(password);
+                var passwordBytes = Encoding.UTF8.GetBytes(password + secret);
                 using (var AES = new RijndaelManaged())
                 {
                     AES.KeySize = 256;
@@ -60,7 +64,7 @@ namespace PluginsCommon
 
         public static string DecryptFromFile(string inputFile, Encoding encoding, string password)
         {
-            var passwordBytes = Encoding.UTF8.GetBytes(password);
+            var passwordBytes = Encoding.UTF8.GetBytes(password + secret);
             var salt = new byte[32];
             using (var fsCrypt = new FileStream(inputFile, FileMode.Open))
             {

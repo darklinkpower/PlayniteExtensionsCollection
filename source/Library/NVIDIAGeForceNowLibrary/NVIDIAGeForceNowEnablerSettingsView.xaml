@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="NVIDIAGeForceNowEnabler.NVIDIAGeForceNowEnablerSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel Margin="20">
+        <TabControl>
+            <TabItem Header="{DynamicResource LOCNgfn_Enabler_SettingsLibraryHeaderLabel}">
+                <StackPanel>
+                    <TextBlock VerticalAlignment="Center" Margin="0,10,0,20">
+                        <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler"
+                                   Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                   CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                            <Run Text="{DynamicResource LOCNgfn_Enabler_SettingsHelpLabel}" />
+                        </Hyperlink>
+                    </TextBlock>
+
+                    <CheckBox DockPanel.Dock="Top" Name="DatabaseLibraryImport"
+                              Margin="0,0,0,0"
+                              IsChecked="{Binding Settings.ImportDatabaseAsLibrary}"
+                              Content="{DynamicResource LOCNgfn_Enabler_SettingsImportDatabaseToLibrary}"/>
+                    <TextBlock Margin="40,5,0,0" TextWrapping="Wrap"
+                               Text="{DynamicResource LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote}" />
+                </StackPanel>
+
+            </TabItem>
+            <TabItem Header="{DynamicResource LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel}">
+                <StackPanel>
+                    <TextBlock VerticalAlignment="Center" Margin="0,10,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCNgfn_Enabler_SettingsHelpLabel}" />
+                </Hyperlink>
+                    </TextBlock>
+                    <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnStartup"
+                              Margin="0,0,0,15"
+                              IsChecked="{Binding Settings.ExecuteOnStartup}"
+                              Content="{DynamicResource LOCNgfn_Enabler_ExecuteOnStartupSetting}"/>
+                    <CheckBox DockPanel.Dock="Top" Name="CheckExecuteOnLibraryUpdate"
+                              Margin="0,0,0,15"
+                              IsChecked="{Binding Settings.ExecuteOnLibraryUpdate}"
+                              Content="{DynamicResource LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting}"/>
+                    <CheckBox DockPanel.Dock="Top"
+                              x:Name="ActionsEnabled"
+                              Margin="0,0,0,0"
+                              IsChecked="{Binding Settings.ShowPlayActionsOnLaunch}"
+                              Content="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting}"
+                              ToolTip="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip}"/>
+                    <StackPanel Margin="40,0,0,0"
+                                IsEnabled="{Binding ElementName=ActionsEnabled, Path=IsChecked}">
+                        <TextBlock Margin="0,10,10,0" TextWrapping="Wrap"
+                                   Text="{DynamicResource LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel}" />
+                        <CheckBox Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.OnlyShowActionsForNotLibInstalledGames}"
+                                  Content="{DynamicResource LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting}"
+                                  ToolTip="{DynamicResource LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip}"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </TabItem>
+        </TabControl>
+    </StackPanel>
+</UserControl>

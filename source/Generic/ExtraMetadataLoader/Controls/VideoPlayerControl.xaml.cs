@@ -29,7 +29,7 @@ namespace ExtraMetadataLoader
     public partial class VideoPlayerControl : PluginUserControl, INotifyPropertyChanged
     {
         private static readonly ILogger logger = LogManager.GetLogger(); 
-        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.Compiled);
+        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.None);
         public enum ActiveVideoType { Microtrailer, Trailer, None }; 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)

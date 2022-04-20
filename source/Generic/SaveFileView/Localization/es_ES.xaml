@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSaveFileView_MenuSection">Directorios de juego</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveDirectoriesDescription">Abrir directorio(s) de guardado de juegos</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveConfigurationDescription">Abrir directorio(s) de configuración de juegos</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemRefreshDirectoriesDescription">Actualizar directorios de PCGamingWiki</sys:String>
@@ -11,4 +12,9 @@ No se pudieron obtener datos de {1} juego(s).</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">No se pudo obtener la página PCGamingWiki para {0}</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">No se pudo obtener directorios para el juego {0}</sys:String>
     <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Directorios no detectados para {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">Descargando datos del juego…</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">Selecciona el juego de PCGamingWiki</sys:String>
+
+    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">Añadir directorios de guardado como enlaces a los juegos al actualizar datos</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">Añadir directorios de configuración como enlaces a los juegos al actualizar datos</sys:String>
 </ResourceDictionary>

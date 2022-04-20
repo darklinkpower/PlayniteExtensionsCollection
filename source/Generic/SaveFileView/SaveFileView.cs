@@ -413,19 +413,19 @@ namespace SaveFileView
             var linksToAdd = new Dictionary<string, string>();
             var dirDefinitions = GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Config);
 
-            if (settings.Settings.AddConfigDirsAsLinks)
-            {
-                foreach (var path in GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Config))
-                {
-                    linksToAdd[linkConfigTemplate + path] = @"file:///" + path;
-                }
-            }
-
             if (settings.Settings.AddSaveDirsAsLinks)
             {
                 foreach (var path in GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Save))
                 {
                     linksToAdd[linkSaveTemplate + path] = @"file:///" + path;
+                }
+            }
+            
+            if (settings.Settings.AddConfigDirsAsLinks)
+            {
+                foreach (var path in GetAvailableDirsFromData(game, replacementDict, gameDirsData, PathType.Config))
+                {
+                    linksToAdd[linkConfigTemplate + path] = @"file:///" + path;
                 }
             }
 

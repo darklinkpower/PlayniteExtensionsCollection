@@ -116,11 +116,20 @@ namespace PlayState
 
             if (settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11)
             {
-                new ToastContentBuilder()
+                var toastNotification = new ToastContentBuilder()
                     .AddText(gameData.Game.Name) // First AddText field will act as a title
-                    .AddText(notificationMessage)
-                    .AddHeroImage(new Uri(playniteApi.Database.GetFullFilePath(gameData.Game.BackgroundImage))) // Show game image in the notification
-                    .Show();
+                    .AddText(notificationMessage);
+
+                if (!gameData.Game.BackgroundImage.IsNullOrEmpty())
+                {
+                    var backgroundImage = playniteApi.Database.GetFullFilePath(gameData.Game.BackgroundImage);
+                    if (!backgroundImage.IsNullOrEmpty())
+                    {
+                        toastNotification.AddHeroImage(new Uri(backgroundImage));
+                    }
+                }
+
+                toastNotification.Show();
             }
             else
             {

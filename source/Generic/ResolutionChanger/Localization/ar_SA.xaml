@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Clear resolution configuration from selected games</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Set launch resolution to {0}x{1} ({2}) for selected games</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Only change resolution when there are not games running</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Done</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">مساعدة</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">دقة الوضوح</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">التردد</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">مسح إعدادات الدقة من الألعاب المحددة</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">مسح إعدادات تردد العرض من الألعاب المحددة</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">تعيين دقة التشغيل إلى {0}x{1} ({2}) للألعاب المحددة</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">تعيين تردد عرض التشغيل إلى {0}هرتز للألعاب المحددة</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">تغيير فقط عندما لا تكون هناك ألعاب قيد التشغيل</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">تم</sys:String>
 </ResourceDictionary>

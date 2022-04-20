@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using ResolutionChanger.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ResolutionChanger
 {
-    class DisplayUtilities
+    public class DisplayUtilities
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
@@ -70,30 +71,42 @@ namespace ResolutionChanger
 
         public static class DisplayHelper
         {
-            public static DEVMODE GetCurrentScreenDevMode()
+            public static DEVMODE GetMainScreenDevMode()
             {
                 DEVMODE dm = new DEVMODE();
-                foreach (var screen in Screen.AllScreens)
-                {
-                    dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
-                    User_32.EnumDisplaySettings(screen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref dm);
-                    break;
-                }
+                var screen = Screen.PrimaryScreen;
+                dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
+                User_32.EnumDisplaySettings(screen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref dm);
 
                 return dm;
             }
             
-            public static int ChangeResolution(int width, int height)
+            public static int ChangeScreenConfigurationV(DEVMODE dm, int width, int height, int refreshRate)
             {
-                DEVMODE dm = GetDevMode();
+                if (width == 0 && height == 0 && refreshRate == 0)
+                {
+                    logger.Debug($"Nothing to set. Width, height and refresh rate is 0");
+                    return 0;
+                }
+
+                logger.Debug($"Setting configuration of device \"{dm.dmDeviceName}\" to {width}x{height} and refresh rate {refreshRate}...");
                 if (User_32.EnumDisplaySettings(null, User_32.ENUM_CURRENT_SETTINGS, ref dm))
                 {
-                    dm.dmPelsWidth = width;
-                    dm.dmPelsHeight = height;
+                    if (width != 0 && height != 0)
+                    {
+                        dm.dmPelsWidth = width;
+                        dm.dmPelsHeight = height;
+                    }
+
+                    if (refreshRate != 0)
+                    {
+                        dm.dmDisplayFrequency = refreshRate;
+                    }
 
                     int iRet = User_32.ChangeDisplaySettings(ref dm, User_32.CDS_TEST);
                     if (iRet == User_32.DISP_CHANGE_FAILED)
                     {
+                        logger.Info($"Failed to set resolution DISP_CHANGE_FAILED");
                         return -1;
                     }
                     else
@@ -102,18 +115,52 @@ namespace ResolutionChanger
                         switch (iRet)
                         {
                             case User_32.DISP_CHANGE_SUCCESSFUL:
+                                logger.Info($"Resolution set to {width}x{height} succesfully");
                                 return 0;
                             case User_32.DISP_CHANGE_RESTART:
+                                logger.Info($"Failed to set resolution DISP_CHANGE_RESTART");
                                 return 1;
                             default:
+                                logger.Info($"Failed to set resolution (default)");
                                 return -1;
                         }
                     }
                 }
                 else
                 {
+                    logger.Info($"Failed to set resolution. EnumDisplaySettings returned false");
                     return -1;
                 }
+            }
+
+            public static bool ChangeDisplayConfiguration(DEVMODE devMode, int width, int height, int refreshRate)
+            {
+                return ChangeScreenConfigurationV(devMode, width, height, refreshRate) == 0;
+            }
+
+            public static bool RestoreDisplayConfiguration(DisplayConfigChangeData displayRestoreData)
+            {
+                if (!displayRestoreData.ResolutionChanged && !displayRestoreData.RefreshRateChanged)
+                {
+                    return true;
+                }
+
+                var width = 0;
+                var height = 0;
+                var frequency = 0;
+
+                if (displayRestoreData.ResolutionChanged)
+                {
+                    width = displayRestoreData.DevMode.dmPelsWidth;
+                    height = displayRestoreData.DevMode.dmPelsHeight;
+                }
+
+                if (displayRestoreData.RefreshRateChanged)
+                {
+                    frequency = displayRestoreData.DevMode.dmDisplayFrequency;
+                }
+
+                return ChangeScreenConfigurationV(displayRestoreData.DevMode, width, height, frequency) == 0;
             }
 
             private static DEVMODE GetDevMode()
@@ -125,10 +172,9 @@ namespace ResolutionChanger
                 return dm;
             }
 
-            public static List<KeyValuePair<int, int>> GetPossibleResolutions()
+            public static List<DEVMODE> GetScreenAvailableDevModes(DEVMODE dm)
             {
-                var list = new List<KeyValuePair<int, int>>();
-                DEVMODE dm = new DEVMODE();
+                var list = new List<DEVMODE>();
                 int i = 0;
                 try
                 {
@@ -138,7 +184,7 @@ namespace ResolutionChanger
                         var height = dm.dmPelsHeight;
                         if (width != 0 && height != 0)
                         {
-                            list.Add(new KeyValuePair<int, int>(dm.dmPelsWidth, dm.dmPelsHeight));
+                            list.Add(dm);
                         }
 
                         i++;
@@ -150,6 +196,11 @@ namespace ResolutionChanger
                 }
 
                 return list;
+            }
+
+            public static List<DEVMODE> GetMainScreenAvailableDevModes()
+            {
+                return GetScreenAvailableDevModes(GetMainScreenDevMode());
             }
 
             public static string GetResolutionAspectRatio(int width, int height)

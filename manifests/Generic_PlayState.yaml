@@ -205,3 +205,16 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.03_3ad2d023/PlayState_2_29.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.30
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_9bdaf3ae/PlayState_2_30.pext
+    Changelog:
+    - 'Updated localizations'
+  - Version: 2.31
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.18_1bfa38a6/PlayState_2_31.pext
+    Changelog:
+    - 'Fix extension no longetr working for Xbox Library games not installed in the main drive'
+    - 'Fix error after suspending game when using toast notifications if game does not have a background image'

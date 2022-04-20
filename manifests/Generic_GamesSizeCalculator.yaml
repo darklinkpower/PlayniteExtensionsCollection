@@ -94,3 +94,15 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.03_3ad2d023/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_14.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.07_98fa5f6c/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_15.pext
+    Changelog:
+    - 'Updated localizations'
+  - Version: 1.16
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_9bdaf3ae/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_16.pext
+    Changelog:
+    - 'Updated localizations'

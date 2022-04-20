@@ -1,8 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Hilfe</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Auflösung</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frequenz</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Lösche Auflösungskonfiguration von ausgewählten Spielen</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Konfiguration der Anzeigefrequenz von ausgewählten Spielen löschen</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Setze die Startauflösung auf {0}x{1} ({2}) für ausgewählte Spiele</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Startanzeigefrequenz für ausgewählte Spiele auf {0}Hz einstellen</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Auflösung nur ändern, wenn keine Spiele laufen</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Fertig</sys:String>
 </ResourceDictionary>

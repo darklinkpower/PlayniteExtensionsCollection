@@ -10,7 +10,6 @@ using ImporterforAnilist.Models;
 using System.Net.Http;
 using System.Threading;
 using Playnite.SDK.Data;
-using Newtonsoft.Json.Linq;
 
 namespace ImporterforAnilist
 {
@@ -25,7 +24,7 @@ namespace ImporterforAnilist
         public const string MalSyncAnilistEndpoint = @"https://api.malsync.moe/mal/{0}/anilist:{1}";
         public const string MalSyncMyanimelistEndpoint = @"https://api.malsync.moe/mal/{0}/{1}";
         private readonly string propertiesPrefix = @"";
-        private MalSyncRateLimiter malSyncRateLimiter;
+        private readonly MalSyncRateLimiter malSyncRateLimiter;
 
         public override void Dispose()
         {
@@ -145,22 +144,14 @@ namespace ImporterforAnilist
                     var contents = response.Result.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(contents.Result) && contents.Result != "Not found in the fire")
                     {
-                        JObject jsonObject = JObject.Parse(contents.Result);
-                        if (jsonObject["Sites"] != null)
+                        var malSyncResponse = Serialization.FromJson<MalSyncResponse>(contents.Result);
+                        foreach (var site in malSyncResponse.Sites)
                         {
-                            foreach (var site in jsonObject["Sites"])
+                            var siteName = site.Key;
+                            foreach (var siteItem in site.Value)
                             {
-                                string siteName = site.Path.Replace("Sites.", "");
-
-                                foreach (var siteItem in site)
-                                {
-                                    foreach (var item in siteItem)
-                                    {
-                                        string str = item.First().ToString();
-                                        var malSyncItem = Serialization.FromJson<MalSyncSiteItem>(str);
-                                        metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
-                                    }
-                                }
+                                var malSyncItem = siteItem.Value;
+                                metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
                             }
                         }
                     }

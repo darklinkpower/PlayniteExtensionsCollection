@@ -82,7 +82,7 @@ namespace System
             return source.Remove(source.LastIndexOf(value, comp));
         }
 
-        public static string ToTileCase(this string source, CultureInfo culture = null)
+        public static string ToTitleCase(this string source, CultureInfo culture = null)
         {
             if (source.IsNullOrEmpty())
             {

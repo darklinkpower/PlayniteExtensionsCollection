@@ -1,0 +1,40 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">帮助</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">更新游戏的已启用状态</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">打开 NVIDIA GeForce NOW 数据库浏览器</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">正在更新已启用 NVIDIA GeForce NOW 的游戏...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">正在下载 NVIDIA GeForce NOW 数据库...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">库中已启用 NVIDIA Geforce NOW 的游戏：{0}
+
+为 {2} 个游戏添加了功能特色“{1}”。
+为 {4} 个游戏移除了功能特色“{3}”。</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
+
+已将 {0} 个游戏标记为已安装。</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">在 Playnite 启动时更新游戏的已启用状态</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">在库更新时更新游戏的已启用状态</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">显示在 NVIDIA GeForce NOW 中启动兼容游戏的指令</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">仅显示尚未被其库安装的游戏的指令</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">启用此选项，则已启用的游戏总是被标记为已安装。</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">未设置安装目录的游戏，会被检测为暂未由对应的库安装</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">将已拥有游戏作为单独条目导入游戏库</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">对游戏所有权的探测对象是已由其他库导入到 Playnite 的游戏</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">在 Nvidia GeForce NOW 中启动</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW 启用器：将 {0} 个游戏标记为已安装。</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">在 {0} 中找不到 NVIDIA Geforce NOW 可执行文件。</sys:String>
+    
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce NOW 数据库浏览器</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">复制名称到剪贴板</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">搜索：</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">商店：</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">名称</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now ID</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">商店</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">商店 ID</sys:String>
+
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">库</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">其他库</sys:String>
+</ResourceDictionary>

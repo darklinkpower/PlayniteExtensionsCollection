@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSaveFileView_MenuSection">Game directories</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveDirectoriesDescription">Åpne spillets lagringsmappe</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemOpenSaveConfigurationDescription">Åpne spillets konfigurasjonsmappe</sys:String>
     <sys:String x:Key="LOCSaveFileView_MenuItemRefreshDirectoriesDescription">Oppdater mapper fra PCGamingWiki</sys:String>
@@ -11,4 +12,9 @@ Kunne ikke hente data for {1} spill.</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">Kunne ikke hente PCGamingWiki-side for {0}</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">Kunne ikke hente mapper for {0}</sys:String>
     <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Mapper ikke funnet for {0}</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">Downloading game data…</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">Select PCGamingWiki game</sys:String>
+
+    <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">Add Save directories as links to games when updating data</sys:String>
+    <sys:String x:Key="LOCSaveFileView_SettingAddConfigDirsAsLinks">Add Configuration directories as links to games when updating data</sys:String>
 </ResourceDictionary>
