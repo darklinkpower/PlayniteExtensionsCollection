@@ -18,3 +18,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.18_1bfa38a6/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_2.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.19_8a60d91b/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_3.pext
+    Changelog:
+    - 'Add Source property to "JAST USA" for new added games'
