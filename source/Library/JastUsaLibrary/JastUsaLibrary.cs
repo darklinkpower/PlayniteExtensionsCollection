@@ -96,7 +96,8 @@ namespace JastUsaLibrary
                     GameId = jastProduct.ProductVariant.GameId.ToString(),
                     BackgroundImage = new MetadataFile(string.Format(jastMediaUrlTemplate, jastProduct.ProductVariant.ProductImageBackground)),
                     CoverImage = new MetadataFile(string.Format(jastMediaUrlTemplate, jastProduct.ProductVariant.ProductImage)),
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
+                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    Source = new MetadataNameProperty("JAST USA")
                 };
 
                 if (installedGames.TryGetValue(game.GameId, out var installed))
