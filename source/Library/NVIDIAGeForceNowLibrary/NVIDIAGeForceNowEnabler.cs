@@ -140,6 +140,7 @@ namespace NVIDIAGeForceNowEnabler
                     Name = geforceEntry.Title.RemoveTrademarks(),
                     GameId = geforceEntry.Id.ToString(),
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    Source = new MetadataNameProperty("NVIDIA GeForce NOW"),
                     IsInstalled = true
                 };
 
