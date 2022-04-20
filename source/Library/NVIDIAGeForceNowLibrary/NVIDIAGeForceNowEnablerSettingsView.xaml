@@ -10,7 +10,7 @@
         <TabControl>
             <TabItem Header="{DynamicResource LOCNgfn_Enabler_SettingsLibraryHeaderLabel}">
                 <StackPanel>
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                    <TextBlock VerticalAlignment="Center" Margin="0,10,0,20">
                         <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler"
                                    Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
                                    CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
@@ -29,7 +29,7 @@
             </TabItem>
             <TabItem Header="{DynamicResource LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel}">
                 <StackPanel>
-                    <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                    <TextBlock VerticalAlignment="Center" Margin="0,10,0,20">
                 <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/NVIDIA-GeForce-NOW-Enabler"
                            Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
