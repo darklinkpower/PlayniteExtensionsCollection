@@ -20,8 +20,8 @@ Contrassegnati {0} giochi come installati.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Mostra l'azione solo per i giochi che non sono già installati dalle loro librerie</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">I giochi abilitati saranno sempre marcati come installati quando questa opzione è abilitata.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">I giochi senza un set di cartelle di installazione vengono rilevati come non installati dalle loro librerie</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Importa i giochi che possiedi della libreria di gioco come voce separata</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">La proprietà dei giochi viene rilevata da giochi che sono già stati importati da altre librerie in Playnite</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Avvia in Nvidia GeForce NOW</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Contrassegnati {0} giochi come installati.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">Eseguibile di NVIDIA GeForce NOW non trovato in {0}.</sys:String>
@@ -35,6 +35,6 @@ Contrassegnati {0} giochi come installati.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Negozio</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">ID negozio</sys:String>
 
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Libreria</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Altre librerie</sys:String>
 </ResourceDictionary>
