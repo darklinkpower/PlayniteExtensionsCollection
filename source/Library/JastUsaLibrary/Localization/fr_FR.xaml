@@ -12,12 +12,12 @@
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">L'utilisateur n'est pas authentifié</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">Voir les téléchargements pour {0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Téléchargement</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Select installed game</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Browse and select game</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Sélectionnez le jeu installé</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Parcourir et sélectionner un jeu</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Annuler</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Select an action</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">JAST USA Downloader</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Open downloads directory</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Choisissez une action</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">Téléchargeur JAST USA</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Ouvrir le dossier des téléchargements</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Nom</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Téléchargement</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Téléchargements de jeux</sys:String>
@@ -27,7 +27,7 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">{0} téléchargés sur {1}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Temps restant : {0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0}/s</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">File &quot;{0}&quot; has already been downloaded</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Le fichier &quot;{0}&quot; a déjà été téléchargé</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">File successfully downloaded to &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">There was an error while downloading the file</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} hours {1:00} minutes</sys:String>
