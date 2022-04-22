@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Enter password value number {0}</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Password was incorrect</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite will close.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart" xml:space="preserve">Password was correct.
+    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Справка</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Введите пароль значения номер {0}</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Неверный пароль</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite будет закрыт.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteFullModeStart" xml:space="preserve">Пароль верный.
 
-Playnite will start normally without any limitation!</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteControlModeStart">Playnite will start in control mode.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableDesktopMode">Enable extension for Desktop Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableFullscreenMode">Enable extension for Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ClosePlayniteOnPwFail">Close Playnite if password is incorrect</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PlayniteStartingFsModeMessage">Playnite will start in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_SetPasswordLabel">Configure password</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnterPasswordMessage">Please enter the password to be used by the extension, selecting a combination of 6 &quot;Yes&quot; and &quot;No&quot; choices</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RepeatPasswordMessage">Please repeat the entered password combination</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordSetSuccessMessage">Password set successfully</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordCombinationsNotSame" xml:space="preserve">Password combinations were different.
+Playnite будет запущен нормально без ограничений!</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteControlModeStart">Playnite будет запущен в режиме управления.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableDesktopMode">Включить расширение для обычного режима</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableFullscreenMode">Включить расширение для полноэкранного режима</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ClosePlayniteOnPwFail">Закрыть Playnite если пароль неверный</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PlayniteStartingFsModeMessage">Playnite будет запущен в полноэкранном режиме</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_SetPasswordLabel">Конфигурация пароля</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnterPasswordMessage">Введите пароль, который будет использоваться расширением, выбрав комбинацию из 6 &quot;Да&quot; и &quot;Нет&quot;</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RepeatPasswordMessage">Пожалуйста, повторите комбинацию введенных паролей</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordSetSuccessMessage">Пароль успешно установлен</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PasswordCombinationsNotSame" xml:space="preserve">Комбинации паролей отличается.
 
-Password was not set.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">Unlock settings</sys:String>
+Пароль не был установлен.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">Разблокировать настройки</sys:String>
 
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">Allow to delete games</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">Allow to favorite games</sys:String>
