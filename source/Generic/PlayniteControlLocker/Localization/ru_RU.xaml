@@ -21,12 +21,12 @@ Playnite будет запущен нормально без ограничен�
 Пароль не был установлен.</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_UnlockSettingsLabel">Разблокировать настройки</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">Allow to delete games</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">Allow to favorite games</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowHidingGames">Allow to hide games</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowDeletingGames">Разрешить удалять игры</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowFavoritingGames">Разрешить избранные игры</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_AllowHidingGames">Разрешить скрытые игры</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsLabel">Control mode settings</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsNote" xml:space="preserve">This mode is enabled if the password is incorrect and the extension is not configured to close Playnite.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsLabel">Настройки режима управления</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ControlModeSettingsNote" xml:space="preserve">Этот режим включен, если пароль неверный и расширение не настроено для закрытия Playnite.</sys:String>
 
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RestartApplyNote" xml:space="preserve">Changing settings require restarting Playnite to apply and to work correctly.</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_RestartApplyNote" xml:space="preserve">Изменение настроек требует перезапуска Playnite для применения и правильной работы.</sys:String>
 </ResourceDictionary>
