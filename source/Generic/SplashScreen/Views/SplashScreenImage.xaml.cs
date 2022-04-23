@@ -22,32 +22,9 @@ namespace SplashScreen.Views
     /// </summary>
     public partial class SplashScreenImage : UserControl
     {
-        public SplashScreenImage(SplashScreenSettings settings, string splashImagePath, string logoPath)
+        public SplashScreenImage()
         {
             InitializeComponent();
-            if (!string.IsNullOrEmpty(splashImagePath))
-            {
-                BackgroundImage.Source = new BitmapImage(new Uri(splashImagePath));
-            }
-            if (!string.IsNullOrEmpty(logoPath))
-            {
-                LogoImage.Source = new BitmapImage(new Uri(logoPath));
-                LogoImage.VerticalAlignment = settings.LogoVerticalAlignment;
-                switch (settings.LogoHorizontalAlignment)
-                {
-                    case HorizontalAlignment.Left:
-                        LogoImage.SetValue(Grid.ColumnProperty, 0);
-                        break;
-                    case HorizontalAlignment.Center:
-                        LogoImage.SetValue(Grid.ColumnProperty, 1);
-                        break;
-                    case HorizontalAlignment.Right:
-                        LogoImage.SetValue(Grid.ColumnProperty, 2);
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
 }

@@ -13,12 +13,40 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Image Name="BackgroundImage" Stretch="UniformToFill"
-               HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3"/>
-        <Image Name="LogoImage" Stretch="Uniform"
-               HorizontalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="1" Margin="20">
+               HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="Source" Value="{Binding SplashImagePath, Converter={StaticResource ImageStringToImageConverter}}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SplashImagePath}" Value="{x:Null}">
+                            <Setter Property="Source" Value="{x:Null}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <Image Name="LogoImage" Stretch="Uniform" VerticalAlignment="{Binding Settings.LogoVerticalAlignment}"
+               HorizontalAlignment="Center" Grid.ColumnSpan="1" Margin="20">
             <Image.Effect>
                 <DropShadowEffect Direction="0" Color="#FF000000" ShadowDepth="0" BlurRadius="40" />
             </Image.Effect>
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Setter Property="Source" Value="{Binding LogoPath, Converter={StaticResource ImageStringToImageConverter}}" />
+                    <Setter Property="Grid.Column" Value="0" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SplashImagePath}" Value="{x:Null}">
+                            <Setter Property="Source" Value="{x:Null}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Center">
+                            <Setter Property="Grid.Column" Value="1" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Right">
+                            <Setter Property="Grid.Column" Value="2" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
         </Image>
         <Border Background="Black" Grid.Column="0" Grid.ColumnSpan="3">
             <Border.Style>

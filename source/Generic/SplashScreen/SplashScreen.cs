@@ -249,7 +249,7 @@ namespace SplashScreen
 
             if (showSplashImage)
             {
-                currentSplashWindow.Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath);
+                currentSplashWindow.Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(settings.Settings, splashImagePath, logoPath) };
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     Thread.Sleep(3000);
@@ -286,7 +286,7 @@ namespace SplashScreen
                 WindowState = WindowState.Maximized,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 Focusable = false,
-                Content = new SplashScreenImage(settings.Settings, splashImagePath, logoPath),
+                Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(settings.Settings, splashImagePath, logoPath) },
                 // Window is set to topmost to make sure another window won't show over it
                 Topmost = true
             };
