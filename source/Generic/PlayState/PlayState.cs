@@ -204,9 +204,9 @@ namespace PlayState
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
             var gameData = playStateManager.GetCurrentGameData();
 
-            // Resume current game if manager is not enabled, since otherwise it won't be possible
-            // to resume it
-            if (!settings.Settings.ShowManagerSidebarItem && gameData != null && gameData.IsSuspended)
+            // Resume current game if manager is not enabled or Playnite is in Fullscreen Mode,
+            // since otherwise it won't be possible to resume it
+            if ((!settings.Settings.ShowManagerSidebarItem || PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen) && gameData != null && gameData.IsSuspended)
             {
                 playStateManager.SwitchGameState(gameData);
             }
