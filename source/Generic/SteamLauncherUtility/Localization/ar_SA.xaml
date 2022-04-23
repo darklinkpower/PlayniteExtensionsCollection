@@ -14,6 +14,7 @@
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">تشغيل Steam في وضع الصورة الكبيرة عند بدء اللعبة على وضع Desktop</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">تعطيل متصفح Steam عند بدء اللعبة على وضع ملء الشاشة</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">تشغيل Steam في وضع الصورة الكبيرة عند بدء اللعبة على وضع ملء الشاشة</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">إغلاق Steam إذا تم اكتشافه على أنه قيد التشغيل قبل بدء اللعبة</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Restart Steam if it's running with the incorrect launch configuration for the launched game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration &quot;{0}&quot;</sys:String>
     
 </ResourceDictionary>
