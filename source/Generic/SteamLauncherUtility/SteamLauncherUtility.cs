@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,33 +39,76 @@ namespace SteamLauncherUtility
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
-            if (!game.IsInstalled)
-            {
-                return;
-            }
-
             if (!Steam.IsGameSteamGame(game))
             {
                 return;
             }
 
+            if (!settings.Settings.RestartIfRunningIncorrectArgs && SteamClient.GetIsSteamRunning())
+            {
+                return;
+            }
+
             var modeFeatureName = GetModeFeatureName();
+            var argumentsList = GetSteamLaunchArguments();
             if (game.Features != null)
             {
                 var featureFound = game.Features.Any(f => f.Name.Equals(modeFeatureName, StringComparison.OrdinalIgnoreCase));
-                if (settings.Settings.LaunchMode == 0 && featureFound)
+
+                // Mode 0: Global mode. Mode 1: Selective mode
+                if ((settings.Settings.LaunchMode == 0 && featureFound) || (settings.Settings.LaunchMode == 1 && !featureFound))
                 {
-                    logger.Info(string.Format("Stopped execution in game \"{0}\". Global mode and game has \"{1}\" feature", game.Name, modeFeatureName));
-                    return;
-                }
-                else if (settings.Settings.LaunchMode == 1 && !featureFound)
-                {
-                    logger.Info(string.Format("Stopped execution in game \"{0}\". Selective mode and game doesn't have \"{1}\" feature", game.Name, modeFeatureName));
+                    logger.Info(string.Format("Stopped execution in game \"{0}\". Mode \"{1}\". Feature: \"{2}\". Found: \"{3}\"", game.Name, settings.Settings.LaunchMode, modeFeatureName, featureFound));
+                    if (IsSteamRunningWithArgs(argumentsList))
+                    {
+                        SteamClient.StartSteam(true, string.Empty);
+                    }
+
                     return;
                 }
             }
 
-            SteamClient.StartSteam(settings.Settings.CloseSteamIfRunning, GetSteamLaunchArguments());
+            if (IsSteamRunningWithArgs(argumentsList))
+            {
+                return;
+            }
+
+            var argumentsString = argumentsList.Aggregate((a, b) => a + " " + b);
+            SteamClient.StartSteam(true, argumentsString);
+        }
+
+        private bool IsSteamRunningWithArgs(List<string> argumentsList)
+        {
+            if (!SteamClient.GetIsSteamRunning())
+            {
+                return false;
+            }
+
+            var wmiQuery = string.Format("select CommandLine from Win32_Process where Name='{0}'", "steam.exe");
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(wmiQuery))
+            {
+                using (ManagementObjectCollection retObjectCollection = searcher.Get())
+                {
+                    foreach (ManagementObject retObject in retObjectCollection)
+                    {
+                        var startArguments = retObject["CommandLine"].ToString();
+                        if (startArguments.IsNullOrEmpty())
+                        {
+                            continue;
+                        }
+
+                        logger.Debug($"Steam is running with arguments {startArguments}");
+                        var matchingArgsCount = argumentsList.Where(x => startArguments.Contains(x, StringComparison.OrdinalIgnoreCase)).Count();
+                        if (argumentsList.Count == matchingArgsCount)
+                        {
+                            logger.Debug($"Steam is running with same arguments");
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -86,7 +130,15 @@ namespace SteamLauncherUtility
                     Description = ResourceProvider.GetString("LOCSteam_Launcher_UtilityMenuItemLaunchSteamConfiguredActionsDescription"),
                     MenuSection = "@Steam Launcher Utility",
                     Action = a => {
-                        SteamClient.StartSteam(settings.Settings.CloseSteamIfRunning, GetSteamLaunchArguments());
+                        var argumentsList = GetSteamLaunchArguments();
+                        var argumentsString = argumentsList.Aggregate((x, b) => x + " " + b);
+                        if (IsSteamRunningWithArgs(argumentsList))
+                        {
+                            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs"), argumentsString), "Steam Launcher Utility");
+                            return;
+                        }
+
+                        SteamClient.StartSteam(true, argumentsString);
                     }
                 },
                 new MainMenuItem
@@ -120,41 +172,43 @@ namespace SteamLauncherUtility
             }
         }
 
-        public string GetSteamLaunchArguments()
+        public List<string> GetSteamLaunchArguments()
         {
-            var sb = new StringBuilder();
+            var argumentsList = new List<string>();
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 if (settings.Settings.DisableSteamWebBrowserOnDesktopMode)
                 {
-                    sb.Append("-no-browser ");
+                    argumentsList.Add("-no-browser");
                 }
+
                 if (settings.Settings.LaunchSteamBpmOnDesktopMode)
                 {
-                    sb.Append("-bigpicture ");
+                    argumentsList.Add("-bigpicture");
                 }
                 else
                 {
-                    sb.Append("-silent ");
+                    argumentsList.Add("-silent");
                 }
             }
             else if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
                 if (settings.Settings.DisableSteamWebBrowserOnFullscreenMode)
                 {
-                    sb.Append("-no-browser ");
+                    argumentsList.Add("-no-browser");
                 }
+
                 if (settings.Settings.LaunchSteamBpmOnFullscreenMode)
                 {
-                    sb.Append("-bigpicture ");
+                    argumentsList.Add("-bigpicture");
                 }
                 else
                 {
-                    sb.Append("-silent ");
+                    argumentsList.Add("-silent");
                 }
             }
 
-            return sb.ToString();
+            return argumentsList;
         }
 
         public void AddModeFeature()

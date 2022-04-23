@@ -15,7 +15,7 @@ namespace SteamLauncherUtility
         public bool LaunchSteamBpmOnDesktopMode { get; set; } = false;
         public bool DisableSteamWebBrowserOnFullscreenMode { get; set; } = true;
         public bool LaunchSteamBpmOnFullscreenMode { get; set; } = false;
-        public bool CloseSteamIfRunning { get; set; } = false;
+        public bool RestartIfRunningIncorrectArgs { get; set; } = true;
     }
 
     public class SteamLauncherUtilitySettingsViewModel : ObservableObject, ISettings

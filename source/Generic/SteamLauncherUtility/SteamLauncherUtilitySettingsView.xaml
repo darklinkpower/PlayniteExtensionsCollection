@@ -41,7 +41,7 @@
                   Content="{DynamicResource LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting}"/>
         <CheckBox DockPanel.Dock="Top" Name="CheckboxCloseSteamIfRunning"
                   Margin="0,0,0,15"
-                  IsChecked="{Binding Settings.CloseSteamIfRunning}"
-                  Content="{DynamicResource LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting}"/>
+                  IsChecked="{Binding Settings.RestartIfRunningIncorrectArgs}"
+                  Content="{DynamicResource LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting}"/>
     </StackPanel>
 </UserControl>
