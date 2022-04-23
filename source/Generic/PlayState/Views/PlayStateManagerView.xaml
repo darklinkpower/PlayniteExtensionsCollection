@@ -39,6 +39,17 @@
                           ItemsSource="{Binding PlayStateDataCollection}">
                         <ListView.View>
                             <GridView>
+                                <GridViewColumn Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                                                   Margin="3" Height="24" Width="24"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Source="{Binding Game.Icon, Mode=OneWay, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={StaticResource DefaultGameIcon}}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
                                 <GridViewColumn Width="250" Header="{DynamicResource LOCPlayState_ManagerGameLabel}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
