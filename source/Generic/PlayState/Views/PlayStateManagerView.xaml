@@ -111,11 +111,15 @@
                     </ListView>
                     <StackPanel Grid.Column="1"
                             Visibility="{Binding CurrentGame, Converter={StaticResource NullToVisibilityConverter}}">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <TextBlock Text="{DynamicResource LOCPlayState_ManagerActiveGameLabel}" />
                             <TextBlock Margin="5,0,0,0" Text="{Binding CurrentGame.Name}" />
                         </StackPanel>
 
+                        <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" StretchDirection="Both"
+                               Margin="30,10,30,0" MaxHeight="500"
+                               HorizontalAlignment="Center" VerticalAlignment="Top"
+                               Source="{Binding CurrentGame.CoverImage, Mode=OneWay, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={StaticResource DefaultGameCover}}" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
