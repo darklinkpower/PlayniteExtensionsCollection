@@ -14,6 +14,7 @@ Utiliza las funciones del plugin del submenú de extensiones para añadir las ca
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Iniciar Steam en el modo de Big Picture al iniciar un juego en el modo de escritorio</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Desactivar el navegador web de Steam al iniciar un juego en modo pantalla completa</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Iniciar Steam en el modo de Big Picture al iniciar un juego en modo pantalla completa</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Cerrar Steam si es detectado como ejecutando antes de iniciar el juego</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Reiniciar Steam si se está ejecutando con la configuración de lanzamiento incorrecta para el juego lanzado</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam ya se está ejecutando con la configuración de inicio &quot;{0}&quot;</sys:String>
     
 </ResourceDictionary>

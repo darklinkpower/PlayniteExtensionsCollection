@@ -14,6 +14,7 @@ Benutze die Plugin-Funktionen im Erweiterungs-Untermenü, um die Filterfunktione
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Starte Steam im Big Picture Modus beim Starten eines Spiels im Desktop-Modus</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Steam Webbrowser deaktivieren, wenn ein Spiel im Vollbild-Modus gestartet wird</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Starte Steam im Big Picture Modus beim Starten eines Spiels im Vollbild-Modus</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Steam schließen, wenn es vor dem Start des Spiels als ausgeführt erkannt wird</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Restart Steam if it's running with the incorrect launch configuration for the launched game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration &quot;{0}&quot;</sys:String>
     
 </ResourceDictionary>

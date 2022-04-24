@@ -71,4 +71,7 @@ ou une fonctionnalité nommée &quot;[PlayState] Suspendre les processus&quot;, 
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Définir en tant que jeu actif</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Mode Suspendu</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Jeu actif :</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
 </ResourceDictionary>

@@ -14,6 +14,7 @@ Bruk utvidelsesfunksjonene i undermenyen for å legge til filtreringsfunksjonene
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Start Steam i Big Picture Mode når du starter et spill i skrivebordsmodus</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Deaktiver Steam-nettleser når du starter et spill i fullskjermsmodus</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Start Steam i Big Picture Mode når du starter et spill i fullskjermsmodus</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Lukk Steam hvis programmet kjører før spillet startes</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Restart Steam if it's running with the incorrect launch configuration for the launched game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration &quot;{0}&quot;</sys:String>
     
 </ResourceDictionary>

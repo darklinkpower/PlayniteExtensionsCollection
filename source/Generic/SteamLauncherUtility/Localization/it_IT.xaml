@@ -14,6 +14,7 @@ Utilizzare le funzioni plugin dal sottomenu estensioni per aggiungere le funzion
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Avvia Steam in modalità Big Picture quando si avvia una partita in modalità Desktop</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Disabilita il browser di Steam quando si avvia una partita in modalità schermo intero</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Avvia Steam in modalità Big Picture quando si avvia una partita in modalità a schermo intero</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityCloseSteamIfRunningSetting">Chiudi Steam se viene rilevato come in esecuzione prima di avviare il gioco</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Riavvia Steam se è in esecuzione con la configurazione di lancio errata per il gioco lanciato</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam è già in esecuzione con la configurazione di lancio &quot;{0}&quot;</sys:String>
     
 </ResourceDictionary>
