@@ -71,4 +71,7 @@
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Встановити як активну гру</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Режим призупинення</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Активна гра:</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
 </ResourceDictionary>
