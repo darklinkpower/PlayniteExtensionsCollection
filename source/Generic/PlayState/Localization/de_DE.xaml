@@ -71,4 +71,7 @@ oder eine Funktion namens &quot;[PlayState] Prozesse anhalten&quot;, wenn Sie di
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Als aktives Spiel einstellen</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Unterbrechungsmodus</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Aktives Spiel:</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
 </ResourceDictionary>
