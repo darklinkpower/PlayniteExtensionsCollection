@@ -71,4 +71,7 @@ or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to hav
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Set as active game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Suspend Mode</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
 </ResourceDictionary>
