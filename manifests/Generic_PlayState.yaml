@@ -218,3 +218,13 @@ Packages:
     Changelog:
     - 'Fix extension no longetr working for Xbox Library games not installed in the main drive'
     - 'Fix error after suspending game when using toast notifications if game does not have a background image'
+  - Version: 2.32
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.23_3f5693d2/PlayState_2_32.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Previous game will be resumed if another game is launched and Playnite is running in Fullscreen Mode'
+    - 'Show game icon in PlayState Manager grid'
+    - 'Added column to PlayState Manager grid with buttons to suspend, resume and set a game as active'
+    - 'Show cover image of active game in PlayState Manager'
