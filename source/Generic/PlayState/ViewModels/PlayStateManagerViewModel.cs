@@ -153,6 +153,17 @@ namespace PlayState.ViewModels
             });
         }
 
+        public RelayCommand<PlayStateData> SwitchGameBindingStateCommand
+        {
+            get => new RelayCommand<PlayStateData>((a) =>
+            {
+                if (a != null)
+                {
+                    SwitchGameState(a);
+                }
+            });
+        }
+
         public RelayCommand SetActiveGameCommand
         {
             get => new RelayCommand(() =>
@@ -161,6 +172,17 @@ namespace PlayState.ViewModels
                 {
                     CurrentGame = SelectedData.Game;
                     IsSelectedDataCurrentGame = GetIsCurrentGameSame(SelectedData.Game);
+                }
+            });
+        }
+
+        public RelayCommand<PlayStateData> SetActiveGameBindingStateCommand
+        {
+            get => new RelayCommand<PlayStateData>((a) =>
+            {
+                if (a != null)
+                {
+                    CurrentGame = a.Game;
                 }
             });
         }

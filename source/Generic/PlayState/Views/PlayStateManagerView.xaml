@@ -66,14 +66,37 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="250"  Header="{DynamicResource LOCPlayState_ManagerSuspendModeLabel}">
+                                <GridViewColumn Width="250" Header="{DynamicResource LOCPlayState_ManagerSuspendModeLabel}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding SuspendMode, Converter={StaticResource SuspendModeToStringConverter}}" VerticalAlignment="Center"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-
+                                
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCPlayState_ManagerGridHeaderActionsLabel}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Content="{DynamicResource LOCPlayState_ManagerGameSuspendLabel}"
+                                                        Margin="0,0,5,0"
+                                                        Visibility="{Binding IsSuspended, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SwitchGameBindingStateCommand}"
+                                                        CommandParameter="{Binding}" />
+                                                <Button Content="{DynamicResource LOCPlayState_ManagerGameResumeLabel}"
+                                                        Margin="0,0,5,0"
+                                                        Visibility="{Binding IsSuspended, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SwitchGameBindingStateCommand}"
+                                                        CommandParameter="{Binding}" />
+                                                <Button Content="{DynamicResource LOCPlayState_ManagerSetActiveGameLabel}"
+                                                        Margin="0,0,5,0"
+                                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.SetActiveGameBindingStateCommand}"
+                                                        CommandParameter="{Binding}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
                             </GridView>
                         </ListView.View>
                         <ListView.ContextMenu>
