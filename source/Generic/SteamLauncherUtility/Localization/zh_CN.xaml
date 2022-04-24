@@ -14,7 +14,7 @@
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">在桌面模式下启动游戏时，以大屏幕模式启动 Steam</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">在全屏模式下启动游戏时，禁用 Steam 网页浏览器</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">在全屏模式下启动游戏时，以大屏幕模式启动 Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Restart Steam if it's running with the incorrect launch configuration for the launched game</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">若 Steam 以（对于所启动游戏）错误的启动配置运行，则将其重新启动</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam 已经以启动配置“{0}”运行。</sys:String>
     
 </ResourceDictionary>
