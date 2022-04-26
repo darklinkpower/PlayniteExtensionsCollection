@@ -659,6 +659,11 @@ namespace SaveFileView
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
             var game = args.Game;
+            if (!PlayniteUtilities.IsGamePcGame(game))
+            {
+                return;
+            }
+
             var pathsStorePath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
             var refreshSuccess = GetGameDirectories(game, pathsStorePath, true, true);
         }
