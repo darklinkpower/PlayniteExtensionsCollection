@@ -95,6 +95,11 @@ namespace ImporterforAnilist
                     break;
             }
 
+            if (entry.UpdatedAt != 0)
+            {
+                game.LastActivity = DateTimeOffset.FromUnixTimeSeconds(entry.UpdatedAt).LocalDateTime;
+            }
+
             if (settings.Settings.UpdateProgressOnLibUpdate == true)
             {
                 game.Version = GetEntryVersionString(entry);
@@ -226,6 +231,16 @@ namespace ImporterforAnilist
                 if (existingEntry.Version != versionString)
                 {
                     existingEntry.Version = versionString;
+                    updateGame = true;
+                }
+            }
+
+            if (entry.UpdatedAt != 0)
+            {
+                var updatedTime = DateTimeOffset.FromUnixTimeSeconds(entry.UpdatedAt).LocalDateTime;
+                if (existingEntry.LastActivity == null || updatedTime > existingEntry.LastActivity)
+                {
+                    existingEntry.LastActivity = updatedTime;
                     updateGame = true;
                 }
             }
