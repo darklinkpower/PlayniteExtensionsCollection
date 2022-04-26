@@ -10,10 +10,10 @@ namespace ImporterforAnilist.Models
     public class MalSyncResponse
     {
         [SerializationPropertyName("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [SerializationPropertyName("malId")]
-        public long MalId { get; set; }
+        public int? MalId { get; set; }
 
         [SerializationPropertyName("type")]
         public string Type { get; set; }
