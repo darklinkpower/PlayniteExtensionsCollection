@@ -33,6 +33,9 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="StartPage.SDK">
+      <HintPath>..\..\..\..\packages\StartPageSDK\StartPage.SDK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -112,6 +115,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PlayStateManagerViewModel.cs" />
     <Compile Include="ViewModels\SplashWindowViewModel.cs" />
+    <Compile Include="Views\PlayStateManagerStartPageView.xaml.cs">
+      <DependentUpon>PlayStateManagerStartPageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlayStateManagerView.xaml.cs">
       <DependentUpon>PlayStateManagerView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PlayStateSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayStateManagerStartPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

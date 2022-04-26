@@ -21,10 +21,11 @@ using PluginsCommon;
 using PlayniteUtilitiesCommon;
 using System.Reflection;
 using System.Windows.Media;
+using StartPage.SDK;
 
 namespace PlayState
 {
-    public class PlayState : GenericPlugin
+    public class PlayState : GenericPlugin, IStartPageExtension
     {
 
         private static readonly ILogger logger = LogManager.GetLogger();
@@ -483,5 +484,40 @@ namespace PlayState
         {
             return new PlayStateSettingsView();
         }
+
+        public StartPageExtensionArgs GetAvailableStartPageViews()
+        {
+            var views = new List<StartPageViewArgsBase> {
+                new StartPageViewArgsBase
+                {
+                    ViewId = "PlayStateManager",
+                    Name = ResourceProvider.GetString("LOCPlayState_PlayStateManagerViewHeaderLabel"),
+                    Description = ResourceProvider.GetString("LOCPlayState_PlayStateManagerViewHeaderLabel")
+                }
+            };
+
+            return new StartPageExtensionArgs() { ExtensionName = "PlayState", Views = views };
+        }
+
+        public object GetStartPageView(string viewId, Guid instanceId)
+        {
+            if (viewId == "PlayStateManager")
+            {
+                return new PlayStateManagerStartPageView() { DataContext = playStateManager };
+            }
+
+            return null;
+        }
+
+        public Control GetStartPageViewSettings(string viewId, Guid instanceId)
+        {
+            return null;
+        }
+
+        public void OnViewRemoved(string viewId, Guid instanceId)
+        {
+            
+        }
+
     }
 }
