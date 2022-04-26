@@ -235,3 +235,10 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added PlayState Manager view for StartPage extension view'
+  - Version: 2.34
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.26_705efa27/PlayState_2_34.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Small improvement during game processes scanning'
