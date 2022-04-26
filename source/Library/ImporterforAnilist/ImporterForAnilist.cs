@@ -406,7 +406,8 @@ namespace ImporterforAnilist
                 Type = AutomaticPlayActionType.File,
                 Arguments = url,
                 WorkingDir = Path.GetDirectoryName(settings.Settings.BrowserPath),
-                TrackingMode = TrackingMode.Process
+                TrackingPath = Path.GetDirectoryName(settings.Settings.BrowserPath),
+                TrackingMode = TrackingMode.Directory
             };
         }
 
