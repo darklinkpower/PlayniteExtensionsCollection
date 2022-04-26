@@ -228,3 +228,10 @@ Packages:
     - 'Show game icon in PlayState Manager grid'
     - 'Added column to PlayState Manager grid with buttons to suspend, resume and set a game as active'
     - 'Show cover image of active game in PlayState Manager'
+  - Version: 2.33
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.25_222dfdd3/PlayState_2_33.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added PlayState Manager view for StartPage extension view'

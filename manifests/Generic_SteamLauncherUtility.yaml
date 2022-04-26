@@ -133,3 +133,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added option to restart Steam if launch arguments are incorrect for the launched game. Enabled by default'
+  - Version: 2.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.25_222dfdd3/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_21.pext
+    Changelog:
+    - 'Updated localizations'
