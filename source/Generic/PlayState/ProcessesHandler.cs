@@ -120,8 +120,14 @@ namespace PlayState
                 var gameProcesses = new List<ProcessItem>();
                 if (exactPath != null)
                 {
-                    foreach (var fItem in query.Where(i => i.Path != null && i.Path.ToLower() == exactPath))
+                    foreach (var fItem in query)
                     {
+                        if (fItem.Path.IsNullOrEmpty() ||
+                            !fItem.Path.Equals(exactPath, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            continue;
+                        }
+
                         gameProcesses.Add(
                            new ProcessItem
                            {
@@ -135,24 +141,16 @@ namespace PlayState
                 {
                     foreach (var item in query)
                     {
-                        if (item.Path == null)
+                        if (item.Path.IsNullOrEmpty() ||
+                            !item.Path.StartsWith(gameInstallDir, StringComparison.InvariantCultureIgnoreCase))
                         {
                             continue;
                         }
 
-                        var pathLower = item.Path.ToLower();
-                        if (!pathLower.StartsWith(gameInstallDir))
+                        if (filterPaths &&
+                            exclusionList.Any(e => Path.GetFileName(item.Path).Contains(e, StringComparison.InvariantCultureIgnoreCase)))
                         {
                             continue;
-                        }
-
-                        if (filterPaths)
-                        {
-                            var fileName = Path.GetFileName(pathLower);
-                            if (exclusionList.Any(e => fileName.Contains(e)))
-                            {
-                                continue;
-                            }
                         }
 
                         gameProcesses.Add(

@@ -80,9 +80,7 @@ namespace PlayState
                         FontFamily = new FontFamily(new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateiconfont.ttf")), "./#playstateiconfont")
                     },
                     Opened = () => {
-                        var view = new PlayStateManagerView();
-                        view.DataContext = playStateManager;
-                        return view;
+                        return new PlayStateManagerView { DataContext = playStateManager };
                     }
                 };
             }
@@ -255,7 +253,7 @@ namespace PlayState
                 if (profile != null)
                 {
                     logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-                    gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable.ToLower());
+                    gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
                     if (gameProcesses.Count > 0)
                     {
                         playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
@@ -295,7 +293,6 @@ namespace PlayState
                 return;
             }
 
-            gameInstallDir = gameInstallDir.ToLower();
             gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
             if (gameProcesses.Count > 0)
             {
