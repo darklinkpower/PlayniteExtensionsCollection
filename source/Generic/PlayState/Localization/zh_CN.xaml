@@ -70,7 +70,7 @@
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">设为活跃游戏</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">挂起模式</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">活跃游戏：</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">指令</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">继续游戏</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">挂起游戏</sys:String>
 </ResourceDictionary>
