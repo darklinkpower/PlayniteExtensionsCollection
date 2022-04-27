@@ -107,6 +107,7 @@
     <Compile Include="Models\MalSyncSiteItem.cs" />
     <Compile Include="Models\MediaEntryResponse.cs" />
     <Compile Include="Models\MediaListCollectionResponse.cs" />
+    <Compile Include="Models\UpdateMediaListEntriesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AnilistAccountClient.cs" />
   </ItemGroup>

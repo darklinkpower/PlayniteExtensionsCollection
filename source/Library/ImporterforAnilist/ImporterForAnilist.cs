@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.IO;
 using System.Text.RegularExpressions;
 using PluginsCommon;
+using Playnite.SDK.Data;
 
 namespace ImporterforAnilist
 {
@@ -27,7 +28,9 @@ namespace ImporterforAnilist
         public override LibraryClient Client { get; } = new ImporterForAnilistClient();
         public MalSyncRateLimiter MalSyncRateLimiter { get; } = new MalSyncRateLimiter();
 
-
+        private string anilistLibraryCachePath;
+        internal AnilistAccountClient accountApi;
+        internal Dictionary<string, int> idsCache = new Dictionary<string, int>();
         public CompletionStatus CompletionStatusPlanWatch { get; private set; }
         public CompletionStatus CompletionStatusWatching { get; private set; }
         public CompletionStatus CompletionStatusPaused { get; private set; }
@@ -43,6 +46,9 @@ namespace ImporterforAnilist
                 HasSettings = true,
                 HasCustomizedGameImport = true
             };
+
+            anilistLibraryCachePath = Path.Combine(GetPluginUserDataPath(), "libraryCache.json");
+            accountApi = new AnilistAccountClient(PlayniteApi, settings);
         }
 
         public GameMetadata EntryToGameMetadata(Entry entry)
@@ -100,7 +106,7 @@ namespace ImporterforAnilist
                 game.LastActivity = DateTimeOffset.FromUnixTimeSeconds(entry.UpdatedAt).LocalDateTime;
             }
 
-            if (settings.Settings.UpdateProgressOnLibUpdate == true)
+            if (settings.Settings.UpdateProgressOnLibUpdate)
             {
                 game.Version = GetEntryVersionString(entry);
             }
@@ -153,66 +159,69 @@ namespace ImporterforAnilist
         public override IEnumerable<Game> ImportGames(LibraryImportGamesArgs args)
         {
             var importedGames = new List<Game>();
-            InitializeStatuses();
-            if (string.IsNullOrEmpty(settings.Settings.AccountAccessCode))
+            if (settings.Settings.AccountAccessCode.IsNullOrEmpty())
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage(
                     dbImportMessageId,
                     ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured"),
                     NotificationType.Error));
+
+                return importedGames;
             }
-            else
+
+            if (!accountApi.GetIsLoggedIn())
             {
-                var accountApi = new AnilistAccountClient(PlayniteApi, settings.Settings.AccountAccessCode);
-                if (string.IsNullOrEmpty(accountApi.anilistUsername))
-                {
-                    //Username could not be obtained
-                    PlayniteApi.Notifications.Add(new NotificationMessage(
-                        dbImportMessageId,
-                        ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained"),
-                        NotificationType.Error));
-                }
-                else
-                {
-                    logger.Info($"AniList username: {accountApi.anilistUsername}");
-                    if (settings.Settings.ImportAnimeLibrary == true)
-                    {
-                        var animeEntries = accountApi.GetEntries("ANIME");
-                        logger.Debug($"Found {animeEntries.Count} Anime items");
-                        foreach (var entry in animeEntries)
-                        {
-                            var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
-                            if (existingEntry != null)
-                            {
-                                UpdateExistingEntry(entry, existingEntry);
-                            }
-                            else
-                            {
-                                importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
-                            }
-                        }
-                    }
+                //Username could not be obtained
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    dbImportMessageId,
+                    ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained"),
+                    NotificationType.Error));
 
-                    if (settings.Settings.ImportMangaLibrary == true)
+                return importedGames;
+            }
+
+            InitializeStatuses();
+            var libraryCache = new Dictionary<string, int>();
+            if (settings.Settings.ImportAnimeLibrary)
+            {
+                var animeEntries = accountApi.GetEntries("ANIME");
+                logger.Debug($"Found {animeEntries.Count} Anime items");
+                foreach (var entry in animeEntries)
+                {
+                    libraryCache.Add(entry.Media.Id.ToString(), entry.Id);
+                    var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
+                    if (existingEntry != null)
                     {
-                        var mangaEntries = accountApi.GetEntries("MANGA");
-                        logger.Debug($"Found {mangaEntries.Count} Manga items");
-                        foreach (var entry in mangaEntries)
-                        {
-                            var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
-                            if (existingEntry != null)
-                            {
-                                UpdateExistingEntry(entry, existingEntry);
-                            }
-                            else
-                            {
-                                importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
-                            }
-                        }
+                        UpdateExistingEntry(entry, existingEntry);
+                    }
+                    else
+                    {
+                        importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
                     }
                 }
             }
 
+            if (settings.Settings.ImportMangaLibrary)
+            {
+                var mangaEntries = accountApi.GetEntries("MANGA");
+                logger.Debug($"Found {mangaEntries.Count} Manga items");
+                foreach (var entry in mangaEntries)
+                {
+                    libraryCache.Add(entry.Media.Id.ToString(), entry.Id);
+                    var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
+                    if (existingEntry != null)
+                    {
+                        UpdateExistingEntry(entry, existingEntry);
+                    }
+                    else
+                    {
+                        importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
+                    }
+                }
+            }
+
+            FileSystem.WriteStringToFile(anilistLibraryCachePath, Serialization.ToJson(libraryCache));
+            idsCache = libraryCache;
             return importedGames;
         }
 
@@ -275,52 +284,9 @@ namespace ImporterforAnilist
 
             if (settings.Settings.UpdateCompletionStatusOnLibUpdate == true && entry.Status != null)
             {
-                switch (entry.Status)
+                if (UpdateGameCompletionStatusFromEntryStatus(existingEntry, entry.Status))
                 {
-                    case EntryStatus.Current:
-                        if (CompletionStatusWatching != null && existingEntry.CompletionStatusId != CompletionStatusWatching.Id)
-                        {
-                            existingEntry.CompletionStatusId = CompletionStatusWatching.Id;
-                            updateGame = true;
-                        }
-                        break;
-                    case EntryStatus.Planning:
-                        if (CompletionStatusPlanWatch != null && existingEntry.CompletionStatusId != CompletionStatusPlanWatch.Id)
-                        {
-                            existingEntry.CompletionStatusId = CompletionStatusPlanWatch.Id;
-                            updateGame = true;
-                        }
-                        break;
-                    case EntryStatus.Completed:
-                        if (CompletionStatusCompleted != null && existingEntry.CompletionStatusId != CompletionStatusCompleted.Id)
-                        {
-                            existingEntry.CompletionStatusId = CompletionStatusCompleted.Id;
-                            updateGame = true;
-                        }
-                        break;
-                    case EntryStatus.Dropped:
-                        if (CompletionStatusDropped != null && existingEntry.CompletionStatusId != CompletionStatusDropped.Id)
-                        {
-                            existingEntry.CompletionStatusId = CompletionStatusDropped.Id;
-                            updateGame = true;
-                        }
-                        break;
-                    case EntryStatus.Paused:
-                        if (CompletionStatusPaused != null && existingEntry.CompletionStatusId != CompletionStatusPaused.Id)
-                        {
-                            existingEntry.CompletionStatusId = CompletionStatusPaused.Id;
-                            updateGame = true;
-                        }
-                        break;
-                    case EntryStatus.Repeating:
-                        if (CompletionStatusRewatching != null && existingEntry.CompletionStatusId != CompletionStatusRewatching.Id)
-                        {
-                            existingEntry.CompletionStatusId = CompletionStatusRewatching.Id;
-                            updateGame = true;
-                        }
-                        break;
-                    default:
-                        break;
+                    updateGame = true;
                 }
             }
 
@@ -328,6 +294,59 @@ namespace ImporterforAnilist
             {
                 PlayniteApi.Database.Games.Update(existingEntry);
             }
+        }
+
+        internal bool UpdateGameCompletionStatusFromEntryStatus(Game existingEntry, EntryStatus? entryStatus)
+        {
+            switch (entryStatus)
+            {
+                case EntryStatus.Current:
+                    if (CompletionStatusWatching != null && existingEntry.CompletionStatusId != CompletionStatusWatching.Id)
+                    {
+                        existingEntry.CompletionStatusId = CompletionStatusWatching.Id;
+                        return true;
+                    }
+                    break;
+                case EntryStatus.Planning:
+                    if (CompletionStatusPlanWatch != null && existingEntry.CompletionStatusId != CompletionStatusPlanWatch.Id)
+                    {
+                        existingEntry.CompletionStatusId = CompletionStatusPlanWatch.Id;
+                        return true;
+                    }
+                    break;
+                case EntryStatus.Completed:
+                    if (CompletionStatusCompleted != null && existingEntry.CompletionStatusId != CompletionStatusCompleted.Id)
+                    {
+                        existingEntry.CompletionStatusId = CompletionStatusCompleted.Id;
+                        return true;
+                    }
+                    break;
+                case EntryStatus.Dropped:
+                    if (CompletionStatusDropped != null && existingEntry.CompletionStatusId != CompletionStatusDropped.Id)
+                    {
+                        existingEntry.CompletionStatusId = CompletionStatusDropped.Id;
+                        return true;
+                    }
+                    break;
+                case EntryStatus.Paused:
+                    if (CompletionStatusPaused != null && existingEntry.CompletionStatusId != CompletionStatusPaused.Id)
+                    {
+                        existingEntry.CompletionStatusId = CompletionStatusPaused.Id;
+                        return true;
+                    }
+                    break;
+                case EntryStatus.Repeating:
+                    if (CompletionStatusRewatching != null && existingEntry.CompletionStatusId != CompletionStatusRewatching.Id)
+                    {
+                        existingEntry.CompletionStatusId = CompletionStatusRewatching.Id;
+                        return true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return false;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -343,6 +362,137 @@ namespace ImporterforAnilist
         public override LibraryMetadataProvider GetMetadataDownloader()
         {
             return new AnilistMetadataProvider(this, PlayniteApi, settings.Settings.PropertiesPrefix, MalSyncRateLimiter);
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            if (!args.Games.Any(x => x.PluginId == Id))
+            {
+                return null;
+            }
+
+            var menuSection = ResourceProvider.GetString("LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus");
+            return new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCImporter_For_Anilist_SettingStatusCompletedLabel"),
+                    MenuSection = menuSection,
+                    Action = a => {
+                        UpdateGamesCompletionStatus(a.Games, EntryStatus.Completed);
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCImporter_For_Anilist_SettingStatusWatchingLabel"),
+                    MenuSection = menuSection,
+                    Action = a => {
+                        UpdateGamesCompletionStatus(a.Games, EntryStatus.Current);
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCImporter_For_Anilist_SettingStatusPlanWatchLabel"),
+                    MenuSection = menuSection,
+                    Action = a => {
+                        UpdateGamesCompletionStatus(a.Games, EntryStatus.Planning);
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCImporter_For_Anilist_SettingStatusDroppedLabel"),
+                    MenuSection = menuSection,
+                    Action = a => {
+                        UpdateGamesCompletionStatus(a.Games, EntryStatus.Dropped);
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCImporter_For_Anilist_SettingStatusPausedLabel"),
+                    MenuSection = menuSection,
+                    Action = a => {
+                        UpdateGamesCompletionStatus(a.Games, EntryStatus.Paused);
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCImporter_For_Anilist_SettingStatusRewatchingLabel"),
+                    MenuSection = menuSection,
+                    Action = a => {
+                        UpdateGamesCompletionStatus(a.Games, EntryStatus.Repeating);
+                    }
+                },
+            };
+        }
+
+        private void UpdateGamesCompletionStatus(List<Game> games, EntryStatus entryStatus)
+        {
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                if (!idsCache.HasItems())
+                {
+                    if (!File.Exists(anilistLibraryCachePath))
+                    {
+                        logger.Debug("Cache not set and cache file not found");
+                        return;
+                    }
+
+                    idsCache = Serialization.FromJsonFile<Dictionary<string, int>>(anilistLibraryCachePath);
+                }
+
+                if (!accountApi.GetIsLoggedIn())
+                {
+                    //Username could not be obtained
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        dbImportMessageId,
+                        ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained"),
+                        NotificationType.Error));
+
+                    return;
+                }
+
+                var gamesToUpdate = new Dictionary<int, Game>();
+                foreach (var game in games.Distinct())
+                {
+                    if (game.PluginId != Id)
+                    {
+                        continue;
+                    }
+
+                    var gameIdInt = int.Parse(game.GameId);
+                    if (idsCache.TryGetValue(game.GameId, out var id))
+                    {
+                        gamesToUpdate.Add(id, game);
+                        continue;
+                    }
+
+                    logger.Debug($"Matching entry for {game.Name} with Id {game.GameId} not found during UpdateGamesCompletionStatus");
+                }
+
+                var updateIdsResult = accountApi.UpdateEntriesStatuses(gamesToUpdate.Select(x => x.Key).ToList(), entryStatus);
+                if (updateIdsResult == null)
+                {
+                    return;
+                }
+
+                InitializeStatuses();
+                foreach (var gameToUpdate in gamesToUpdate)
+                {
+                    var updatedEntry = updateIdsResult.Data.UpdateMediaListEntries.FirstOrDefault(x => x.Id == gameToUpdate.Key);
+                    if (updatedEntry == null)
+                    {
+                        logger.Debug($"Updated entry not found. {gameToUpdate.Value.Name}, {gameToUpdate.Value.GameId}, {gameToUpdate.Key}");
+                        continue;
+                    }
+
+                    var updatedCompletionStatus = UpdateGameCompletionStatusFromEntryStatus(gameToUpdate.Value, updatedEntry.Status);
+                    if (updatedCompletionStatus)
+                    {
+                        PlayniteApi.Database.Games.Update(gameToUpdate.Value);
+                    }
+                }
+
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses"), true));
         }
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)

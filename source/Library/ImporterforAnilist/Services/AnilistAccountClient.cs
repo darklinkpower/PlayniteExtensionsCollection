@@ -14,28 +14,51 @@ namespace ImporterforAnilist.Services
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI api;
-        private readonly string accountAccessCode = string.Empty;
         private readonly string apiListQueryString = @"";
-        public readonly string anilistUsername = string.Empty;
+        public string anilistUsername = string.Empty;
         public const string GraphQLEndpoint = @"https://graphql.AniList.co";
-        private readonly string getUsernameQueryString = @"query {
-            Viewer {
-                name
-                id
-                options {
-	                displayAdultContent
-	            }
-	            mediaListOptions {
-	              scoreFormat
-	            }
-              }
-            }";
+        private HttpClient client = new HttpClient();
+        private IPlayniteAPI playniteApi;
+        private ImporterForAnilistSettingsViewModel settings;
+        private const string getUsernameQueryString = @"
+query {
+    Viewer {
+        name
+        id
+        options {
+            displayAdultContent
+        }
+        mediaListOptions {
+            scoreFormat
+        }
+    }
+}";
 
-        public AnilistAccountClient(IPlayniteAPI api, string accountAccessCode)
+        private const string updateIdsStatusQuery = @"
+mutation ($ids: [Int], $status: MediaListStatus) {
+    UpdateMediaListEntries (ids: $ids, status: $status) {
+        id
+        status
+    }
+}";
+        public bool GetIsLoggedIn()
         {
-            this.api = api;
-            this.accountAccessCode = accountAccessCode;
-            this.anilistUsername = GetUsername();
+            anilistUsername = GetUsername();
+            if (!anilistUsername.IsNullOrEmpty())
+            {
+                logger.Info($"AniList username: {anilistUsername}");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public AnilistAccountClient(IPlayniteAPI playniteApi, ImporterForAnilistSettingsViewModel settings)
+        {
+            this.playniteApi = playniteApi;
+            this.settings = settings;
             this.apiListQueryString = @"
                 query GetListByUsername($userName: String!, $type: MediaType!) {
                     list: MediaListCollection(userName: $userName, type: $type, forceSingleCompletedList: true) {
@@ -101,24 +124,24 @@ namespace ImporterforAnilist.Services
 
         public string GetApiPostResponse(Dictionary<string, string> postParams)
         {
-            using (var client = new HttpClient())
+            try
             {
-                try
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {settings.Settings.AccountAccessCode}");
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+                var postParamsString = Serialization.ToJson(postParams);
+                client.DefaultRequestHeaders.Add("Body", postParamsString);
+                using (var encodedParams = new FormUrlEncodedContent(postParams))
                 {
-                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accountAccessCode}");
-                    client.DefaultRequestHeaders.Add("Accept", "application/json");
-                    string postParamsString = Serialization.ToJson(postParams);
-                    client.DefaultRequestHeaders.Add("Body", postParamsString);
-
-                    var response = client.PostAsync(GraphQLEndpoint, new FormUrlEncodedContent(postParams));
+                    var response = client.PostAsync(GraphQLEndpoint, encodedParams);
                     var contents = response.Result.Content.ReadAsStringAsync();
                     return contents.Result;
                 }
-                catch (Exception e)
-                {
-                    logger.Error(e, "Failed to process post request.");
-                    return string.Empty;
-                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Failed to process post request.");
+                return string.Empty;
             }
         }
 
@@ -129,14 +152,46 @@ namespace ImporterforAnilist.Services
                 { "query", getUsernameQueryString },
                 { "variables", "" }
             };
-
-            string response = GetApiPostResponse(postParams);
+            
+            var response = GetApiPostResponse(postParams);
             if (string.IsNullOrEmpty(response))
             {
                 return string.Empty;
             }
             var anilistUser = Serialization.FromJson<AnilistUser>(response);
             return anilistUser.Data.Viewer?.Name ?? string.Empty;
+        }
+
+        public UpdateMediaListEntriesResponse UpdateEntriesStatuses(List<int> Ids, EntryStatus newStatus)
+        {
+            var vars = @"
+            {{
+              ""ids"": [{0}],
+              ""status"": ""{1}""
+            }}";
+
+            var varsEnc = string.Format(vars, string.Join(", ", Ids), newStatus.ToString().ToUpperInvariant());
+            var postParams = new Dictionary<string, string>
+                {
+                    { "query", updateIdsStatusQuery },
+                    { "variables", varsEnc }
+                };
+
+            var response = GetApiPostResponse(postParams);
+            if (response.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            try
+            {
+                return Serialization.FromJson<UpdateMediaListEntriesResponse>(response);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Error during UpdateEntriesStatuses");
+                return null;
+            }
         }
 
         public List<Entry> GetEntries(string listType)
@@ -171,6 +226,7 @@ namespace ImporterforAnilist.Services
                     entriesList.Add(entry);
                 }
             }
+
             return entriesList;
         }
     }

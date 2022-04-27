@@ -27,4 +27,6 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Rewatching/Rereading</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">Could not obtain AniList username. Verify that the configured access code is valid</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">AniList access code has not been configured in the library settings</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses">Updating status of entries on AniList…</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus">AniList status</sys:String>
 </ResourceDictionary>
