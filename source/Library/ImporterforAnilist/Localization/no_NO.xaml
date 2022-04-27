@@ -24,6 +24,9 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Droppet</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Fullført</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Ser på nytt/Leser på nytt</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel">Import last update date on AniList as last activity during library update</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">Kunne ikke hente AniList-brukernavn. Kontroller at den konfigurerte tilgangskoden er gyldig</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">AniList-tilgangskode er ikke konfigurert i biblioteksinnstillingene</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses">Updating status of entries on AniList…</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus">AniList status</sys:String>
 </ResourceDictionary>
