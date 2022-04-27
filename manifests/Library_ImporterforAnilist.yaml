@@ -173,3 +173,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.26_705efa27/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_26.pext
     Changelog:
     - 'Fix error when obtaining metadata'
+  - Version: 2.27
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.26_67026f26/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_27.pext
+    Changelog:
+    - 'Added option to import last update date on AniList as last activity when updating library'
+    - 'Add game menu items to update entries statuses on AniList'
