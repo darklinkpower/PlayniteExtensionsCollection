@@ -244,7 +244,7 @@ namespace ImporterforAnilist
                 }
             }
 
-            if (entry.UpdatedAt != 0)
+            if (settings.Settings.UpdateLastActivityOnLibUpdate && entry.UpdatedAt != 0)
             {
                 var updatedTime = DateTimeOffset.FromUnixTimeSeconds(entry.UpdatedAt).LocalDateTime;
                 if (existingEntry.LastActivity == null || updatedTime > existingEntry.LastActivity)

@@ -18,6 +18,7 @@ namespace ImporterforAnilist
         public bool ImportMangaLibrary { get; set; } = true;
         public bool UpdateUserScoreOnLibUpdate { get; set; } = true;
         public bool UpdateCompletionStatusOnLibUpdate { get; set; } = true;
+        public bool UpdateLastActivityOnLibUpdate { get; set; } = true;
         public bool UpdateProgressOnLibUpdate { get; set; } = false;
         private string browserPath = string.Empty;
         public string BrowserPath { get => browserPath; set => SetValue(ref browserPath, value); }

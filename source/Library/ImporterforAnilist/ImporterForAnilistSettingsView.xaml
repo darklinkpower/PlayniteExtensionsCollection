@@ -32,6 +32,7 @@
             </DockPanel>
             <CheckBox Name="ImportAnimeLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportAnimeLibrary}" Content="{DynamicResource LOCImporter_For_Anilist_ImportAnimeSetting}"/>
             <CheckBox Name="ImportMangaLibrary" Margin="0,10,0,0" IsChecked="{Binding Settings.ImportMangaLibrary}" Content="{DynamicResource LOCImporter_For_Anilist_ImportMangaSetting}"/>
+            <CheckBox Name="UpdateLastActivityOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateLastActivityOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel}"/>
             <CheckBox Name="UpdateUserScoreOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateUserScoreOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdaterUserscoreSetting}"/>
             <CheckBox Name="UpdateCompletionStatusOnLibUpdate" Margin="0,10,0,0" IsChecked="{Binding Settings.UpdateCompletionStatusOnLibUpdate}" Content="{DynamicResource LOCImporter_For_Anilist_UpdateCompletionStatusSetting}"/>
             <StackPanel Margin="40,10,0,0" IsEnabled="{Binding ElementName=UpdateCompletionStatusOnLibUpdate, Path=IsChecked}">
