@@ -24,9 +24,9 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Abgelegt</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Abgeschlossen</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Erneutes Ansehen/Erneutes Lesen</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel">Import last update date on AniList as last activity during library update</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel">Importieren des letzten Aktualisierungsdatums auf AniList als letzte Aktivität während der Bibliotheksaktualisierung</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">AniList Benutzername konnte nicht abgerufen werden. Überprüfen Sie, ob der konfigurierte Zugangscode gültig ist</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">AniList Zugangscode wurde in den Bibliothekseinstellungen nicht konfiguriert</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses">Updating status of entries on AniList…</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses">Aktualisierung des Status der Einträge auf AniList...</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus">AniList status</sys:String>
 </ResourceDictionary>
