@@ -15,6 +15,6 @@ Benutze die Plugin-Funktionen im Erweiterungs-Untermenü, um die Filterfunktione
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Steam Webbrowser deaktivieren, wenn ein Spiel im Vollbild-Modus gestartet wird</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Starte Steam im Big Picture Modus beim Starten eines Spiels im Vollbild-Modus</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Starten Sie Steam neu, wenn es mit der falschen Startkonfiguration für das gestartete Spiel ausgeführt wird</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam läuft bereits mit der Startkonfiguration &quot;{0}&quot;</sys:String>
     
 </ResourceDictionary>
