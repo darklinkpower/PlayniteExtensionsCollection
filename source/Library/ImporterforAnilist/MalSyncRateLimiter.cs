@@ -10,16 +10,8 @@ namespace ImporterforAnilist
 {
     public class MalSyncRateLimiter
     {
-        private DispatcherTimer Timer;
+        private readonly DispatcherTimer Timer;
         private int apiReqRemaining;
-        public int ApiReqRemaining
-        {
-            get => apiReqRemaining;
-            private set
-            {
-                apiReqRemaining = value;
-            }
-        }
 
         public MalSyncRateLimiter()
         {
@@ -32,12 +24,24 @@ namespace ImporterforAnilist
             Timer.Tick += new EventHandler(Timer_Tick);
         }
 
+        public void WaitForSlot()
+        {
+            Thread.Sleep(5000);
+            if (apiReqRemaining == 0)
+            {
+                Thread.Sleep(5000);
+            }
+
+            Decrease();
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (apiReqRemaining < 17)
             {
-                ApiReqRemaining++;
+                apiReqRemaining++;
             }
+
             if (apiReqRemaining == 17)
             {
                 Timer.Stop();
@@ -48,8 +52,9 @@ namespace ImporterforAnilist
         {
             if (apiReqRemaining > 0)
             {
-                ApiReqRemaining--;
+                apiReqRemaining--;
             }
+
             if (apiReqRemaining < 17 && !Timer.IsEnabled)
             {
                 Timer.Start();

@@ -134,12 +134,7 @@ namespace ImporterforAnilist
 
                 try
                 {
-                    if (malSyncRateLimiter.ApiReqRemaining == 0)
-                    {
-                        Thread.Sleep(5000);
-                    }
-
-                    malSyncRateLimiter.Decrease();
+                    malSyncRateLimiter.WaitForSlot();
                     var response = client.GetAsync(string.Format(queryUri));
                     var contents = response.Result.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(contents.Result) && contents.Result != "Not found in the fire")
