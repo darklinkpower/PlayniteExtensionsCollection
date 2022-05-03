@@ -140,13 +140,16 @@ namespace ImporterforAnilist
                     if (!string.IsNullOrEmpty(contents.Result) && contents.Result != "Not found in the fire")
                     {
                         var malSyncResponse = Serialization.FromJson<MalSyncResponse>(contents.Result);
-                        foreach (var site in malSyncResponse.Sites)
+                        if (malSyncResponse.Sites != null)
                         {
-                            var siteName = site.Key;
-                            foreach (var siteItem in site.Value)
+                            foreach (var site in malSyncResponse.Sites)
                             {
-                                var malSyncItem = siteItem.Value;
-                                metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
+                                var siteName = site.Key;
+                                foreach (var siteItem in site.Value)
+                                {
+                                    var malSyncItem = siteItem.Value;
+                                    metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
+                                }
                             }
                         }
                     }
