@@ -66,7 +66,12 @@ namespace SteamCommon
             return Path.GetDirectoryName(GetSteamInstallationPath());
         }
 
-        public static void StartSteam(bool restartIfRunning, string arguments = "")
+        public static void StartSteam(bool restartIfRunning, List<string> argumentsList)
+        {
+            StartSteam(restartIfRunning, argumentsList.Aggregate((x, b) => x + " " + b));
+        }
+
+       public static void StartSteam(bool restartIfRunning, string arguments = "")
         {
             string steamInstallationPath = GetSteamInstallationPath();
             if (!FileSystem.FileExists(steamInstallationPath))

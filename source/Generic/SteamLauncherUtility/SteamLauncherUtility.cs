@@ -22,6 +22,7 @@ namespace SteamLauncherUtility
     public class SteamLauncherUtility : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
 
         private SteamLauncherUtilitySettingsViewModel settings { get; set; }
 
@@ -49,6 +50,12 @@ namespace SteamLauncherUtility
                 return;
             }
 
+            if (PlayniteApi.Database.Games.Any(x => x.IsRunning && x.PluginId == steamPluginId))
+            {
+                logger.Info("A Steam game was detected as running and execution was stopped");
+                return;
+            }
+
             var modeFeatureName = GetModeFeatureName();
             var argumentsList = GetSteamLaunchArguments();
             if (game.Features != null)
@@ -73,8 +80,7 @@ namespace SteamLauncherUtility
                 return;
             }
 
-            var argumentsString = argumentsList.Aggregate((a, b) => a + " " + b);
-            SteamClient.StartSteam(true, argumentsString);
+            SteamClient.StartSteam(true, argumentsList);
         }
 
         private bool IsSteamRunningWithArgs(List<string> argumentsList)
