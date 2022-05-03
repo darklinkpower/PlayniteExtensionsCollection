@@ -26,7 +26,6 @@ namespace ImporterforAnilist
 
         public void WaitForSlot()
         {
-            Thread.Sleep(5000);
             if (apiReqRemaining == 0)
             {
                 Thread.Sleep(5000);
