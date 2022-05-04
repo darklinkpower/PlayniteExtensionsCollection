@@ -101,12 +101,14 @@ namespace ImporterforAnilist
                 {
                     { "id", game.GameId }
                 };
-                string variablesJson = Serialization.ToJson(variables);
+
+                var variablesJson = Serialization.ToJson(variables);
                 var postParams = new Dictionary<string, string>
                 {
                     { "query", apiListQueryString },
                     { "variables", variablesJson }
                 };
+
                 var response = client.PostAsync(GraphQLEndpoint, new FormUrlEncodedContent(postParams));
                 var contents = response.Result.Content.ReadAsStringAsync();
 
@@ -120,51 +122,64 @@ namespace ImporterforAnilist
                 logger.Error(e, $"Failed to process AniList query");
             }
 
-            if (!string.IsNullOrEmpty(type))
-            {
-                string queryUri = string.Empty;
-                if (!string.IsNullOrEmpty(idMal))
-                {
-                    queryUri = string.Format(MalSyncMyanimelistEndpoint, type, idMal);
-                }
-                else
-                {
-                    queryUri = string.Format(MalSyncAnilistEndpoint, type, game.GameId);
-                }
+            GetMalSyncData(game, metadata, type, idMal);
+            return metadata;
+        }
 
-                try
-                {
-                    malSyncRateLimiter.WaitForSlot();
-                    var response = client.GetAsync(string.Format(queryUri));
-                    var contents = response.Result.Content.ReadAsStringAsync();
-                    if (!contents.Result.IsNullOrEmpty() && contents.Status == TaskStatus.RanToCompletion && contents.Result != "Not found in the fire" && contents.Result != "Request failed with status code 404")
-                    {
-                        var malSyncResponse = Serialization.FromJson<MalSyncResponse>(contents.Result);
-                        if (malSyncResponse.Sites != null)
-                        {
-                            foreach (var site in malSyncResponse.Sites)
-                            {
-                                var siteName = site.Key;
-                                foreach (var siteItem in site.Value)
-                                {
-                                    var malSyncItem = siteItem.Value;
-                                    metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        logger.Info($"MalSync query {queryUri} doesn't have data");
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Failed to process MalSync query {queryUri}");
-                }
+        private void GetMalSyncData(Game game, GameMetadata metadata, string type, string idMal)
+        {
+            if (type.IsNullOrEmpty())
+            {
+                return;
+            }
+            
+            var queryUri = string.Format(MalSyncAnilistEndpoint, type, game.GameId);
+            if (!idMal.IsNullOrEmpty())
+            {
+                queryUri = string.Format(MalSyncMyanimelistEndpoint, type, idMal);
             }
 
-            return metadata;
+            try
+            {
+                malSyncRateLimiter.WaitForSlot();
+                var response = client.GetAsync(queryUri);
+                var contents = response.Result.Content.ReadAsStringAsync();
+                if (contents.Status != TaskStatus.RanToCompletion || contents.Result.IsNullOrEmpty())
+                {
+                    return;
+                }
+
+                if (contents.Result == "Not found in the fire" || contents.Result == "Request failed with status code 404")
+                {
+                    logger.Info($"MalSync query {queryUri} doesn't have data");
+                    return;
+                }
+
+                var malSyncResponse = Serialization.FromJson<MalSyncResponse>(contents.Result);
+                AddMalSyncLinksToMetadata(metadata, malSyncResponse);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Failed to process MalSync query {queryUri}");
+            }
+        }
+
+        private static void AddMalSyncLinksToMetadata(GameMetadata metadata, MalSyncResponse malSyncResponse)
+        {
+            if (malSyncResponse.Sites == null)
+            {
+                return;
+            }
+
+            foreach (var site in malSyncResponse.Sites)
+            {
+                var siteName = site.Key;
+                foreach (var siteItem in site.Value)
+                {
+                    var malSyncItem = siteItem.Value;
+                    metadata.Links.Add(new Link(string.Format("{0} - {1}", siteName, malSyncItem.Title), malSyncItem.Url));
+                }
+            }
         }
     }
 }
