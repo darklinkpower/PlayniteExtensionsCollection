@@ -24,6 +24,9 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Покинуто</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Завершено</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Передивляюся/Перечитую</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel">Імпортувати останню дату оновлення в AniList як останню активність під час оновлення бібліотеки</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">Не вдалося отримати ім'я користувача AniList. Переконайтеся, що налаштований код доступу дійсний</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">Код доступу AniList не налаштовано в налаштуваннях бібліотеки</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses">Оновлення статусу записів у списку AniList…</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus">Статус AniList</sys:String>
 </ResourceDictionary>

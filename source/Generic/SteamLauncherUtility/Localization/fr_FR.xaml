@@ -14,7 +14,7 @@ Utilisez les fonctions du plugin à partir du sous-menu des extensions pour ajou
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Lancez Steam en mode Big Picture lorsque vous démarrez un jeu en mode bureau</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Désactiver le navigateur Web Steam lorsque vous démarrez un jeu en mode plein écran</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Lancez Steam en mode Big Picture lorsque vous démarrez un jeu en mode plein écran</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Restart Steam if it's running with the incorrect launch configuration for the launched game</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Redémarrez Steam s'il fonctionne avec une configuration de lancement incorrecte pour le jeu lancé</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam est déjà en cours d'exécution avec la configuration de lancement «{0}»</sys:String>
     
 </ResourceDictionary>

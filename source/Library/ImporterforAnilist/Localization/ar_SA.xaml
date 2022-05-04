@@ -24,6 +24,9 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">ألغيت</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">مكتمل</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">إعادة المشاهدة/القراءة</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel">Import last update date on AniList as last activity during library update</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained">تعذر الحصول على اسم مستخدم AniList. تحقق من أن رمز الوصول الذي تم تكوينه صالح</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured">لم يتم تكوين رمز وصول AniList في إعدادات المكتبة</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_DialogMessageUpdatingEntriesStatuses">Updating status of entries on AniList…</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus">AniList status</sys:String>
 </ResourceDictionary>
