@@ -69,6 +69,11 @@ namespace ReviewViewer
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool isControlVisible = false;
+        [DontSerialize]
+        public bool IsControlVisible { get => isControlVisible; set => SetValue(ref isControlVisible, value); }
     }
 
     public class ReviewViewerSettingsViewModel : ObservableObject, ISettings

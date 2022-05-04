@@ -2,6 +2,7 @@
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using PluginsCommon.Web;
 using ReviewViewer.Models;
@@ -83,6 +84,17 @@ namespace ReviewViewer.Controls
             }
         }
 
+        private Visibility controlVisibility = Visibility.Collapsed;
+        public Visibility ControlVisibility
+        {
+            get => controlVisibility;
+            set
+            {
+                controlVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ReviewSearchType selectedReviewSearch = ReviewSearchType.All;
         public ReviewSearchType SelectedReviewSearch
         {
@@ -97,8 +109,8 @@ namespace ReviewViewer.Controls
         private ILogger logger = LogManager.GetLogger();
         private string pluginUserDataPath;
 
-        string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
-        private string steamApiLanguage;
+        private const string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
+        private string steamApiLanguage = string.Empty;
 
         private bool multipleReviewsAvailable = false;
 
@@ -402,6 +414,7 @@ namespace ReviewViewer.Controls
             SelectedReviewText = string.Empty;
             ReviewHelpfulnessHelpful = string.Empty;
             ReviewHelpfulnessFunny = string.Empty;
+            SettingsModel.Settings.IsControlVisible = false;
             CalculatedScore = "-";
         }
 
@@ -418,9 +431,11 @@ namespace ReviewViewer.Controls
                 return;
             }
 
-            if (newContext == null)
+            if (newContext == null || (!Steam.IsGameSteamGame(newContext) && !PlayniteUtilities.IsGamePcGame(newContext)))
             {
                 ResetBindingValues();
+                ControlVisibility = Visibility.Collapsed;
+                SettingsModel.Settings.IsControlVisible = false;
                 return;
             }
 
@@ -431,21 +446,24 @@ namespace ReviewViewer.Controls
         public void UpdateReviewsContext()
         {
             ResetBindingValues();
-
-            string reviewSearchType;
+            ControlVisibility = Visibility.Visible;
+            SettingsModel.Settings.IsControlVisible = true;
             switch (selectedReviewSearch)
             {
                 case ReviewSearchType.Positive:
-                    reviewSearchType = "positive";
+                    UpdateReviewsContextByType("positive");
                     break;
                 case ReviewSearchType.Negative:
-                    reviewSearchType = "negative";
+                    UpdateReviewsContextByType("negative");
                     break;
                 default:
-                    reviewSearchType = "all";
+                    UpdateReviewsContextByType("all");
                     break;
             }
+        }
 
+        private void UpdateReviewsContextByType(string reviewSearchType)
+        {
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
             if (!FileSystem.FileExists(gameDataPath))
             {

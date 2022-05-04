@@ -26,7 +26,7 @@ namespace ReviewViewer
         private static readonly ILogger logger = LogManager.GetLogger();
         private string steamApiLanguage;
 
-        private ReviewViewerSettingsViewModel settings { get; set; }
+        public ReviewViewerSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("ca24e37a-76d9-49bf-89ab-d3cba4a54bd1");
 
