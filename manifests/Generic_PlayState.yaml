@@ -242,3 +242,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Small improvement during game processes scanning'
+  - Version: 2.35
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.04_5cdc0260/PlayState_2_35.pext
+    Changelog:
+    - 'Updated localizations'

@@ -139,3 +139,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.25_222dfdd3/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_21.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.22
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.04_5cdc0260/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_22.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Prevent plugin from restarting Steam if another Steam game is running when launching a game'

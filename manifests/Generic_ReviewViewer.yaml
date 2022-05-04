@@ -203,3 +203,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.23_3f5693d2/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_30.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.31
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.04_5cdc0260/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_31.pext
+    Changelog:
+    - 'Hide Steam reviews control if game is not a PC or Steam game'
+    - 'Expose value to themes that indicates if the Steam reviews control is visible'

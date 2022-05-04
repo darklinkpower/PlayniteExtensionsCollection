@@ -180,3 +180,9 @@ Packages:
     Changelog:
     - 'Added option to import last update date on AniList as last activity when updating library'
     - 'Add game menu items to update entries statuses on AniList'
+  - Version: 2.28
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.04_5cdc0260/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_28.pext
+    Changelog:
+    - 'Improvements and fixes to metadata download'
