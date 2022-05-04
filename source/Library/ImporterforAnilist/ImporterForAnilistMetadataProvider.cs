@@ -137,7 +137,7 @@ namespace ImporterforAnilist
                     malSyncRateLimiter.WaitForSlot();
                     var response = client.GetAsync(string.Format(queryUri));
                     var contents = response.Result.Content.ReadAsStringAsync();
-                    if (!string.IsNullOrEmpty(contents.Result) && contents.Result != "Not found in the fire")
+                    if (!contents.Result.IsNullOrEmpty() && contents.Status == TaskStatus.RanToCompletion && contents.Result != "Not found in the fire" && contents.Result != "Request failed with status code 404")
                     {
                         var malSyncResponse = Serialization.FromJson<MalSyncResponse>(contents.Result);
                         if (malSyncResponse.Sites != null)
