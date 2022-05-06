@@ -495,7 +495,7 @@ namespace InstallationStatusUpdater
 
         public void AddIgnoreFeature()
         {
-            var featureAddedCount = PlayniteUtilities.AddTagToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore"); ;
+            var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore"); ;
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage"),
                 featureAddedCount.ToString()), "Installation Status Updater"
@@ -504,7 +504,7 @@ namespace InstallationStatusUpdater
 
         public void RemoveIgnoreFeature()
         {
-            var featureRemovedCount = PlayniteUtilities.RemoveTagFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore");
+            var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore");
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage"), 
                 featureRemovedCount.ToString()), "Installation Status Updater"
