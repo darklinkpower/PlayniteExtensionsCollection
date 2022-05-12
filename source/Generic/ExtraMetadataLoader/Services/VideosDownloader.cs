@@ -198,6 +198,11 @@ namespace ExtraMetadataLoader.Services
             if (result != 0)
             {
                 logger.Error($"Failed to get video information: {videoPath}, {result}, {stdErr}");
+                playniteApi.Notifications.Add(new NotificationMessage(
+                    new Guid().ToString(),
+                    string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail"), videoPath, result, stdErr),
+                    NotificationType.Error)
+                );
                 return null;
             }
 
@@ -238,7 +243,12 @@ namespace ExtraMetadataLoader.Services
                     var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
                     if (result != 0)
                     {
-                        logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
+                        logger.Error($"Failed to process video in ffmpeg: {videoPath}, {result}, {stdErr}");
+                        playniteApi.Notifications.Add(new NotificationMessage(
+                            new Guid().ToString(),
+                            string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, result, stdErr),
+                            NotificationType.Error)
+                        );
                         success = false;
                     }
                 }
@@ -250,7 +260,12 @@ namespace ExtraMetadataLoader.Services
                     var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
                     if (result != 0)
                     {
-                        logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
+                        logger.Error($"Failed to process video in ffmpeg: {videoPath}, {result}, {stdErr}");
+                        playniteApi.Notifications.Add(new NotificationMessage(
+                            new Guid().ToString(),
+                            string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, result, stdErr),
+                            NotificationType.Error)
+                        );
                         success = false;
                     }
                 }
@@ -280,7 +295,12 @@ namespace ExtraMetadataLoader.Services
                 var result = ProcessStarter.StartProcessWait(settings.FfmpegPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
                 if (result != 0)
                 {
-                    logger.Error($"Failed to process video in ffmpeg: {result}, {stdErr}");
+                    logger.Error($"Failed to process video in ffmpeg: {videoPath}, {result}, {stdErr}");
+                    playniteApi.Notifications.Add(new NotificationMessage(
+                        new Guid().ToString(),
+                        string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, result, stdErr),
+                        NotificationType.Error)
+                    );
                     success = false;
                 }
             }
@@ -310,6 +330,7 @@ namespace ExtraMetadataLoader.Services
             {
                 return false;
             }
+
             var args = string.Format("-v --force-overwrites -o \"{0}\" -f \"mp4\" \"{1}\"", tempDownloadPath, $"https://www.youtube.com/watch?v={videoId}");
             if (!settings.YoutubeCookiesPath.IsNullOrEmpty() && FileSystem.FileExists(settings.YoutubeCookiesPath))
             {
@@ -318,7 +339,12 @@ namespace ExtraMetadataLoader.Services
             var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, out var stdOut, out var stdErr);
             if (result != 0)
             {
-                logger.Error($"Failed to download video in youtube-dlp: {result}, {stdErr}");
+                logger.Error($"Failed to download video in youtube-dlp: {videoId}, {result}, {stdErr}");
+                playniteApi.Notifications.Add(new NotificationMessage(
+                    new Guid().ToString(),
+                    string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail"), videoId, result, stdErr),
+                    NotificationType.Error)
+                );
                 return false;
             }
             else
