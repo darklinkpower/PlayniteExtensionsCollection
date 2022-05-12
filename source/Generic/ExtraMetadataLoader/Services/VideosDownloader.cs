@@ -336,7 +336,7 @@ namespace ExtraMetadataLoader.Services
             {
                 args = string.Format("-v --force-overwrites -o \"{0}\" --cookies \"{1}\" -f \"mp4\" \"{2}\"", tempDownloadPath, settings.YoutubeCookiesPath, $"https://www.youtube.com/watch?v={videoId}");
             }
-            var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), false, out var stdOut, out var stdErr);
+            var result = ProcessStarter.StartProcessWait(settings.YoutubeDlPath, args, Path.GetDirectoryName(settings.FfmpegPath), true, out var stdOut, out var stdErr);
             if (result != 0)
             {
                 logger.Error($"Failed to download video in youtube-dlp: {videoId}, {result}, {stdErr}");
