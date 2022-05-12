@@ -356,6 +356,7 @@ namespace ExtraMetadataLoader
                         }
                         DownloadYoutubeVideosBatch();
                         UpdatePlayersData();
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
                 new GameMenuItem
