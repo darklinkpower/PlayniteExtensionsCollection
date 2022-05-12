@@ -148,4 +148,10 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     
 Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
 Select &quot;No&quot; to manually make selections when necessary.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
+Failed to get video information: {0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
+Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
+Error during download of video from YouTube: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>
