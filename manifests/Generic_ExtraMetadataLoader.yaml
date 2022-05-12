@@ -359,3 +359,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.15_9bdaf3ae/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_50.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.51
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.12_9fbf7bb0/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_51.pext
+    Changelog:
+    - 'Fix YouTube downloads failing if temporary file was not deleted during a previous download'
+    - 'Show notifications if there are errors during video downloads and processing'
+    - 'Command line window of YouTube video downloads will no longer be displayed'
