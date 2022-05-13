@@ -149,7 +149,7 @@
 Виберіть &quot;Так&quot;, щоб логотипи завантажувалися повністю автоматично.
 Виберіть &quot;Ні&quot;, щоб при можливості робити вибір вручну.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
-Failed to get video information: {0}, {1}, {2}.</sys:String>
+Не вдалося отримати інформацію про відео: {0}, {1}, {2}.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
 Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
