@@ -16,7 +16,8 @@ namespace PlayState.ViewModels
     {
         private readonly IPlayniteAPI playniteApi;
         private readonly MessagesHandler messagesHandler;
-        private readonly PlayStateSettingsViewModel settings;
+        private PlayStateSettingsViewModel settings;
+        public PlayStateSettingsViewModel Settings { get => settings; private set => SetValue(ref settings, value); }
         private Guid CurrentDetectionId = Guid.Empty;
         private Game currentGame;
         public Game CurrentGame { get => currentGame; private set => SetValue(ref currentGame, value); }
@@ -53,7 +54,7 @@ namespace PlayState.ViewModels
         {
             this.playniteApi = playniteApi;
             this.messagesHandler = messagesHandler;
-            this.settings = playStateSettings;
+            Settings = playStateSettings;
             PlayStateDataCollection = new ObservableCollection<PlayStateData>();
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(4000);

@@ -17,6 +17,10 @@
             <StackPanel>
                 <TextBlock Text="{DynamicResource LOCPlayState_PlayStateManagerViewHeaderLabel}" Margin="0,0,0,5"
                            FontSize="{DynamicResource FontSizeLarge}" FontWeight="Bold" />
+                <CheckBox IsChecked="{Binding Settings.Settings.UseForegroundAutomaticSuspend}"
+                          Content="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspend}"
+                          ToolTip="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}"
+                          Margin="0,0,0,5"/>
                 <StackPanel Visibility="{Binding CurrentGame, Converter={StaticResource NullToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,5">
                         <TextBlock Text="{DynamicResource LOCPlayState_ManagerActiveGameLabel}" />
