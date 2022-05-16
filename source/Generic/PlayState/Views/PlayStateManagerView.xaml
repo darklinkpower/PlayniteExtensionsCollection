@@ -122,7 +122,7 @@
                             <TextBlock Margin="5,0,0,0" Text="{Binding CurrentGame.Name}" />
                         </StackPanel>
 
-                        <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" StretchDirection="Both"
+                        <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"  StretchDirection="Both"
                                Margin="30,10,30,0" MaxHeight="500"
                                HorizontalAlignment="Center" VerticalAlignment="Top"
                                Source="{Binding CurrentGame.CoverImage, Mode=OneWay, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={StaticResource DefaultGameCover}}" />
