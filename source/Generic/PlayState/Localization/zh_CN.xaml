@@ -22,8 +22,8 @@
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">游玩时间已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">信息：</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">指令：</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">常规</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">通知消息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">已配置挂起/恢复快捷键：</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">已配置信息快捷键：</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">显示一个通知，展示当前游戏的暂停状态和其他信息</sys:String>
@@ -51,12 +51,12 @@
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">启用此选项，游戏将显示原生 Windows 通知，而不是 Playnite 通知窗口。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">在通知消息中显示会话游玩时间</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">在通知消息中显示总游玩时间</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">如果游戏不是活动窗口，自动挂起游戏</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">此功能因所运行游戏的挂起模式而异。
 
-Game suspend: Games will be suspended automatically when they are not the active window but they need to be manually resumed to get back into the game.
+游戏挂起：当游戏不是活动窗口时，游戏将被自动挂起，但需要手动恢复以重新进入游戏。
 
-Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
+游戏时间挂起：游戏将被挂起，并在游戏窗口改变活动状态时自动恢复。</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState 管理器</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">显示 PlayState 管理器侧边栏项目</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">游玩时间：</sys:String>
