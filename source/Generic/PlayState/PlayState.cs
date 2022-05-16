@@ -54,7 +54,7 @@ namespace PlayState
             };
 
             messagesHandler = new MessagesHandler(PlayniteApi, settings, isWindows10Or11);
-            playStateManager = new PlayStateManagerViewModel(PlayniteApi, messagesHandler);
+            playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings, messagesHandler);
         }
 
         private bool IsWindows10Or11()
@@ -217,19 +217,27 @@ namespace PlayState
                 return;
             }
 
-            var suspendPlaytimeOnlyFeature = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase)) : false;
-            var suspendProcessesFeature = game.Features != null ? game.Features.Any(a => a.Name.Equals("[PlayState] Suspend Processes", StringComparison.OrdinalIgnoreCase)) : false;
+            var suspendPlaytimeOnlyFeature = game.Features?.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase)) == true;
+            var suspendProcessesFeature = game.Features?.Any(a => a.Name.Equals("[PlayState] Suspend Processes", StringComparison.OrdinalIgnoreCase)) == true;
             if (!suspendProcessesFeature && settings.Settings.GlobalOnlySuspendPlaytime ||
                 suspendPlaytimeOnlyFeature)
             {
-                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
+                if (settings.Settings.UseForegroundAutomaticSuspend)
+                {
+                    InvokeGameProcessesDetection(args, SuspendModes.Playtime);
+                }
+                else
+                {
+                    playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
+                }
+
                 return;
             }
 
-            InvokeGameProcessesDetection(args);
+            InvokeGameProcessesDetection(args, SuspendModes.Processes);
         }
 
-        private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
+        private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args, SuspendModes suspendMode)
         {
             var game = args.Game;
             playStateManager.AddGameToDetection(game);
@@ -256,7 +264,7 @@ namespace PlayState
                     gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
                     if (gameProcesses.Count > 0)
                     {
-                        playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
+                        playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
                     }
                 }
 
@@ -297,7 +305,7 @@ namespace PlayState
             if (gameProcesses.Count > 0)
             {
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
-                playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
+                playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
                 return;
             }
 
@@ -329,7 +337,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0)
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
-                    playStateManager.AddPlayStateData(game, SuspendModes.Processes, gameProcesses);
+                    playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
                     return;
                 }
                 else
@@ -339,6 +347,10 @@ namespace PlayState
             }
 
             logger.Debug("Couldn't find any game process");
+            if (suspendMode == SuspendModes.Playtime)
+            {
+                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
+            }
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)

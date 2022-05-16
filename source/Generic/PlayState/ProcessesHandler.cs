@@ -17,6 +17,8 @@ namespace PlayState
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtResumeProcess(IntPtr processHandle);
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
 
         private static readonly List<string> exclusionList = new List<string>
         {
@@ -166,5 +168,11 @@ namespace PlayState
                 return gameProcesses;
             }
         }
+
+        public static IntPtr GetForegroundWindowHandle()
+        {
+            return GetForegroundWindow();
+        }
+
     }
 }

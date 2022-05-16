@@ -62,7 +62,13 @@
         <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
                   IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
                   Margin="0,10,0,0"/>
-
+        <CheckBox x:Name="CbUseForegroundAutomaticSuspend"
+                  Content="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspend}"
+                  IsChecked="{Binding Settings.UseForegroundAutomaticSuspend}"
+                  Margin="0,10,0,0"/>
+        <TextBlock Text="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}" TextWrapping="Wrap"
+                   Margin="40,10,0,0"
+                   IsEnabled="{Binding ElementName=CbUseForegroundAutomaticSuspend, Path=IsChecked}"/>
         <StackPanel Margin="0,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
             <CheckBox x:Name="ShowWindowsNotifications" Content="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel}"
                   IsChecked="{Binding Settings.GlobalShowWindowsNotificationsStyle}"

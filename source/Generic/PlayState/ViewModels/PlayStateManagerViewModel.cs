@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace PlayState.ViewModels
 {
@@ -15,6 +16,7 @@ namespace PlayState.ViewModels
     {
         private readonly IPlayniteAPI playniteApi;
         private readonly MessagesHandler messagesHandler;
+        private readonly PlayStateSettingsViewModel settings;
         private Guid CurrentDetectionId = Guid.Empty;
         private Game currentGame;
         public Game CurrentGame { get => currentGame; private set => SetValue(ref currentGame, value); }
@@ -42,14 +44,43 @@ namespace PlayState.ViewModels
 
         private ObservableCollection<PlayStateData> playStateDataCollection;
         public ObservableCollection<PlayStateData> PlayStateDataCollection { get => playStateDataCollection; set => SetValue(ref playStateDataCollection, value); }
+
+        private readonly DispatcherTimer timer;
         private static readonly ILogger logger = LogManager.GetLogger();
         private Dictionary<Guid, string> detectionDictionary = new Dictionary<Guid, string>();
 
-        public PlayStateManagerViewModel(IPlayniteAPI playniteApi, MessagesHandler messagesHandler)
+        public PlayStateManagerViewModel(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, MessagesHandler messagesHandler)
         {
             this.playniteApi = playniteApi;
             this.messagesHandler = messagesHandler;
+            this.settings = playStateSettings;
             PlayStateDataCollection = new ObservableCollection<PlayStateData>();
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(4000);
+            timer.Tick += new EventHandler(UpdateAutomaticStates);
+        }
+
+        private void UpdateAutomaticStates(object sender, EventArgs e)
+        {
+            if (!settings.Settings.UseForegroundAutomaticSuspend || !playStateDataCollection.HasItems())
+            {
+                return;
+            }
+            
+            var foregroundWindowHandle = ProcessesHandler.GetForegroundWindowHandle();
+            foreach (var playstateData in PlayStateDataCollection)
+            {
+                if (!playstateData.HasProcesses)
+                {
+                    continue;
+                }
+                
+                var isForeground = playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle);
+                if (isForeground == playstateData.IsSuspended)
+                {
+                    SwitchGameState(playstateData);
+                }
+            }
         }
 
         /// <summary>
@@ -79,6 +110,9 @@ namespace PlayState.ViewModels
                 CurrentGame = game;
                 logger.Debug($"Changed current game to {game.Name}");
             }
+
+            timer.Stop();
+            timer.Start();
         }
 
         public void RemovePlayStateData(Game game)
@@ -101,6 +135,11 @@ namespace PlayState.ViewModels
                 {
                     IsSelectedDataCurrentGame = GetIsCurrentGameSame(SelectedData.Game);
                 }
+            }
+
+            if (!playStateDataCollection.HasItems())
+            {
+                timer.Stop();
             }
         }
 
@@ -253,6 +292,9 @@ namespace PlayState.ViewModels
                 gameData.GameProcesses = null;
                 gameData.Stopwatch.Stop();
             }
+
+            timer.Stop();
+            timer.Start();
         }
 
         internal void AddGameToDetection(Game game)

@@ -47,6 +47,9 @@ namespace PlayState
         [DontSerialize]
         private bool showManagerSidebarItem = true;
         public bool ShowManagerSidebarItem { get => showManagerSidebarItem; set => SetValue(ref showManagerSidebarItem, value); }
+        [DontSerialize]
+        private bool useForegroundAutomaticSuspend = false;
+        public bool UseForegroundAutomaticSuspend { get => useForegroundAutomaticSuspend; set => SetValue(ref useForegroundAutomaticSuspend, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
