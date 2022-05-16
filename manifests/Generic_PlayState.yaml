@@ -248,3 +248,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.04_5cdc0260/PlayState_2_35.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.36
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.16_0b18e6fb/PlayState_2_36.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added option to automatically suspend games if they are not the active window. Disabled by default'
+    - 'Layout changes and improvements to settings view'
+    - 'Added checkbox to enable or disable option to automatically suspend games to PlayState Manager sidebar and StartPage extension views'
+    - 'Improved scaling quality of active game cover image in PlayState Manager view'

@@ -367,3 +367,9 @@ Packages:
     - 'Fix YouTube downloads failing if temporary file was not deleted during a previous download'
     - 'Show notifications if there are errors during video downloads and processing'
     - 'Command line window of YouTube video downloads will no longer be displayed'
+  - Version: 1.52
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.16_0b18e6fb/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_52.pext
+    Changelog:
+    - 'Updated localizations'
