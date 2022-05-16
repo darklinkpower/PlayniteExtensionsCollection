@@ -6,98 +6,116 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
-                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState"
-                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
-                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                    <Run Text="{DynamicResource LOCPlayState_SettingsHelpLabel}" />
-                </Hyperlink>
-        </TextBlock>
+    <TabControl Margin="20">
+        <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderGeneral}">
+            <ScrollViewer>
+                <StackPanel Margin="0,20,0,0">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                        <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState"
+                                   Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                   CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                            <Run Text="{DynamicResource LOCPlayState_SettingsHelpLabel}" />
+                        </Hyperlink>
+                    </TextBlock>
 
-        <DockPanel LastChildFill="False" Margin="0,0,0,0">
-            <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredHotkeyLabel}"
-                       DockPanel.Dock="Left"
-                       VerticalAlignment="Center"/>
-            <TextBox x:Name="TbHotkey"
-                     Text="{Binding Settings.HotkeyText}"
-                     DockPanel.Dock="Left"
-                     IsReadOnly="True" MinWidth="200"
-                     VerticalAlignment="Center"
-                     Margin="10,0,0,0" Focusable="False" />
-            <Button x:Name="SetHotkeyButton"
-                    DockPanel.Dock="Left"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
-                    Click="SetHotkeyButton_Click"/>
-        </DockPanel>
-        <DockPanel LastChildFill="False" Margin="0,10,0,0">
-            <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredInformationHotkeyLabel}"
-                       ToolTip="{DynamicResource LOCPlayState_SettingConfiguredInformationHotkeyTooltip}"
-                       DockPanel.Dock="Left"
-                       VerticalAlignment="Center"/>
-            <TextBox x:Name="TbInformationHotkey"
-                     Text="{Binding Settings.InformationHotkeyText}"
-                     DockPanel.Dock="Left"
-                     IsReadOnly="True" MinWidth="200"
-                     VerticalAlignment="Center"
-                     Margin="10,0,0,0" Focusable="False" />
-            <Button x:Name="SetInformationHotkeyButton"
-                    DockPanel.Dock="Left"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
-                    Click="SetInformationHotkeyButton_Click"/>
-        </DockPanel>
-        <TextBlock Text="{DynamicResource LOCPlayState_SettingNotes}" Margin="40,10,0,0" TextWrapping="Wrap"/>
+                    <DockPanel LastChildFill="False" Margin="0,0,0,0">
+                        <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredHotkeyLabel}"
+                                   DockPanel.Dock="Left"
+                                   VerticalAlignment="Center"/>
+                        <TextBox x:Name="TbHotkey"
+                                 Text="{Binding Settings.HotkeyText}"
+                                 DockPanel.Dock="Left"
+                                 IsReadOnly="True" MinWidth="200"
+                                 VerticalAlignment="Center"
+                                 Margin="10,0,0,0" Focusable="False" />
+                        <Button x:Name="SetHotkeyButton"
+                                DockPanel.Dock="Left"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
+                                Click="SetHotkeyButton_Click"/>
+                    </DockPanel>
+                    <DockPanel LastChildFill="False" Margin="0,10,0,0">
+                        <TextBlock Text="{DynamicResource LOCPlayState_SettingConfiguredInformationHotkeyLabel}"
+                                   ToolTip="{DynamicResource LOCPlayState_SettingConfiguredInformationHotkeyTooltip}"
+                                   DockPanel.Dock="Left"
+                                   VerticalAlignment="Center"/>
+                        <TextBox x:Name="TbInformationHotkey"
+                                 Text="{Binding Settings.InformationHotkeyText}"
+                                 DockPanel.Dock="Left"
+                                 IsReadOnly="True" MinWidth="200"
+                                 VerticalAlignment="Center"
+                                 Margin="10,0,0,0" Focusable="False" />
+                        <Button x:Name="SetInformationHotkeyButton"
+                                DockPanel.Dock="Left"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
+                                Click="SetInformationHotkeyButton_Click"/>
+                    </DockPanel>
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingNotes}" Margin="40,10,0,0" TextWrapping="Wrap"/>
 
-        <CheckBox Content="{DynamicResource LOCPlayState_SettingShowManagerSidebarItem}"
-                  IsChecked="{Binding Settings.ShowManagerSidebarItem}"
-                  Margin="0,20,0,0"/>
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingShowManagerSidebarItem}"
+                              IsChecked="{Binding Settings.ShowManagerSidebarItem}"
+                              Margin="0,20,0,0"/>
+
+                    <CheckBox x:Name="CbUseForegroundAutomaticSuspend"
+                              Content="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspend}"
+                              IsChecked="{Binding Settings.UseForegroundAutomaticSuspend}"
+                              Margin="0,10,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}" TextWrapping="Wrap"
+                               Margin="40,10,0,0"
+                               IsEnabled="{Binding ElementName=CbUseForegroundAutomaticSuspend, Path=IsChecked}"/>
+
+                    <CheckBox x:Name="CbSubstractOnSuspended" Content="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel}"
+                              IsChecked="{Binding Settings.SubstractSuspendedPlaytimeOnStopped}"
+                              ToolTip="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip}"
+                              Margin="0,20,0,10"/>
+                    <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="40,0,0,0">
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
+                                  IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel}"
+                                  ToolTip="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip}"
+                                  IsChecked="{Binding Settings.GlobalOnlySuspendPlaytime}" Margin="0,0,0,10"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+
+        <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderGNotificationMessages}">
+            <ScrollViewer>
+                <StackPanel Margin="0,20,0,0">
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
+                              IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
+                              Margin="0,0,0,0"/>
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
+                              IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
+                              Margin="0,10,0,0"/>
+
+                    <StackPanel Margin="0,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
+                        <CheckBox x:Name="ShowWindowsNotifications" Content="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel}"
+                                  IsChecked="{Binding Settings.GlobalShowWindowsNotificationsStyle}"
+                                  ToolTip="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip}"
+                                  Margin="0,0,0,0"/>
+                        <TextBlock Text="{DynamicResource LOCPlayState_SettingsWinNotificationNote}" TextWrapping="Wrap"
+                                   Margin="40,10,0,0"
+                                   IsEnabled="{Binding ElementName=ShowWindowsNotifications, Path=IsChecked}"/>
+
+                        <TextBlock VerticalAlignment="Center" Margin="40,10,0,0">
+                            <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration"
+                                       Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                       CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                                <Run Text="{DynamicResource LOCPlayState_SettingsHelpLabel}" />
+                            </Hyperlink>
+                        </TextBlock>
+
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </TabItem>
         
-        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
-                  IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
-                  Margin="0,10,0,0"/>
-        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
-                  IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
-                  Margin="0,10,0,0"/>
-        <CheckBox x:Name="CbUseForegroundAutomaticSuspend"
-                  Content="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspend}"
-                  IsChecked="{Binding Settings.UseForegroundAutomaticSuspend}"
-                  Margin="0,10,0,0"/>
-        <TextBlock Text="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}" TextWrapping="Wrap"
-                   Margin="40,10,0,0"
-                   IsEnabled="{Binding ElementName=CbUseForegroundAutomaticSuspend, Path=IsChecked}"/>
-        <StackPanel Margin="0,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
-            <CheckBox x:Name="ShowWindowsNotifications" Content="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel}"
-                  IsChecked="{Binding Settings.GlobalShowWindowsNotificationsStyle}"
-                  ToolTip="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip}"
-                  Margin="0,10,0,0"/>
-            <TextBlock Text="{DynamicResource LOCPlayState_SettingsWinNotificationNote}" TextWrapping="Wrap"
-                   Margin="40,10,0,0"
-                   IsEnabled="{Binding ElementName=ShowWindowsNotifications, Path=IsChecked}"/>
+    </TabControl>
 
-            <TextBlock VerticalAlignment="Center" Margin="40,10,0,0">
-                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration"
-                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
-                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                    <Run Text="{DynamicResource LOCPlayState_SettingsHelpLabel}" />
-                </Hyperlink>
-            </TextBlock>
-            
-        </StackPanel>
-
-        <CheckBox x:Name="CbSubstractOnSuspended" Content="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel}"
-                  IsChecked="{Binding Settings.SubstractSuspendedPlaytimeOnStopped}"
-                  ToolTip="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip}"
-                  Margin="0,20,0,10"/>
-        <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="40,0,0,0">
-            <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
-                      IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
-            <CheckBox Content="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel}"
-                      ToolTip="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip}"
-                      IsChecked="{Binding Settings.GlobalOnlySuspendPlaytime}" Margin="0,0,0,10"/>
-        </StackPanel>
-    </StackPanel>
 </UserControl>
