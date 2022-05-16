@@ -1,4 +1,5 @@
-﻿using ExtraMetadataLoader.Helpers;
+﻿using ExtraMetadataLoader.Controls;
+using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
 using ExtraMetadataLoader.Views;
@@ -46,7 +47,7 @@ namespace ExtraMetadataLoader
             };
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "VideoLoaderControl", "VideoLoaderControlAlternative", "LogoLoaderControl" },
+                ElementList = new List<string> { "VideoLoaderControl", "VideoLoaderControlAlternative", "LogoLoaderControl", "YouTubeEmbeddedVideoControl" },
                 SourceName = "ExtraMetadataLoader",
             });
 
@@ -93,6 +94,7 @@ namespace ExtraMetadataLoader
             {
                 return new LogoLoaderControl(PlayniteApi, settings);
             }
+
             if (args.Name == "VideoLoaderControl")
             {
                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
@@ -139,6 +141,11 @@ namespace ExtraMetadataLoader
                 }
             }
             
+            if (args.Name == "YouTubeEmbeddedVideoControl")
+            {
+                return new YouTubeEmbeddedVideoControl(GetPluginUserDataPath(), PlayniteApi, settings);
+            }
+
             return null;
         }
 
