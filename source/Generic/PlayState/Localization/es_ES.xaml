@@ -22,6 +22,8 @@ Puedes intentar usar una combinación diferente de teclas para solucionar el pro
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tiempo de juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Información:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Acción:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Mensajes de notificación</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Tecla de suspensión/Reanudación configurada:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Tecla de acceso rápido de información:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Muestra una notificación que muestra el estado actual de pausa y otra información del juego activo</sys:String>
@@ -50,6 +52,12 @@ o una característica llamada &quot;[PlayState] Suspender procesos&quot;, si qui
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Al activar esta opción, los juegos mostrarán notificaciones nativas de Windows en lugar de la ventana de notificación de Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Mostrar tiempo de juego de la sesión en el mensaje de notificación</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Mostrar el tiempo de juego total en el mensaje de notificación</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Suspender automáticamente los juegos si no son la ventana activa</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">Esta funcionalidad funcionará de forma diferente dependiendo del modo de suspensión del juego en ejecución.
+
+Suspensión del juego: Los juegos se suspenderán automáticamente cuando no sean la ventana activa, pero deben ser reanudados manualmente para volver al juego.
+
+Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán automáticamente cuando la ventana del juego cambie de estado activo.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostrar la barra lateral del administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tiempo de juego:</sys:String>

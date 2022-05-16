@@ -148,4 +148,10 @@ Il ridimensionamento è raccomandato perché le immagini di grandi dimensioni po
     
 Selezionare &quot;Sì&quot; per selezionare automaticamente i loghi da scaricare senza alcuna interazione utente.
 Seleziona &quot;No&quot; per effettuare manualmente le selezioni quando necessario.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Caricatore di metadati extra
+Non è stato possibile ottenere le informazioni del video: {0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Caricatore di metadati extra
+Elaborazione del video in ffmpeg fallita: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Caricatore di metadati extra
+Errore durante il download del video da YouTube: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>

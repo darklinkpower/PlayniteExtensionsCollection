@@ -148,4 +148,10 @@
     
 Выберите «Да», чтобы автоматически выбирать логотипы для загрузки без какого-либо взаимодействия с пользователем.
 Выберите «Нет», чтобы при необходимости  выбирать логотипы вручную.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
+Ошибка при получении информации из видео: {0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
+Ошибка при обработке видео в ffmpeg: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
+Ошибка при загрузке видео с YouTube: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>

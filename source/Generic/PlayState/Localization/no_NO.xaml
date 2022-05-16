@@ -22,6 +22,8 @@ Du kan prøve å bruke en annen hurtigtastkombinasjon for å løse problemet</sy
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spilletid er gjenopptatt</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informasjon:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Handling:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notification messages</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfigurert pause-/gjenoppta-hurtigtast:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Konfigurert informasjonshurtigtast:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Viser et varsel som gir deg gjeldende pausestatus og annen informasjon om det aktive spillet</sys:String>
@@ -50,6 +52,12 @@ or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to hav
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Ved å aktivere dette alternativet, vil spill bruke standard Windows-varsler i stedet for Playnites varslingsvindu.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Vis spilletid for økt i varsel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Vis total spilletid i varsel</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
+
+Game suspend: Games will be suspended automatically when they are not the active window but they need to be manually resumed to get back into the game.
+
+Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Show PlayState manager sidebar item</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Spilletid:</sys:String>

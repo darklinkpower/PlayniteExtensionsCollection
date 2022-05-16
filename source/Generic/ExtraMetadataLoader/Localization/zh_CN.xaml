@@ -148,4 +148,10 @@
 
 选择“是”来自动选择要下载的徽标，不需要用户交互。
 选择“否”则在必要时手动进行选择。</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
+获取视频信息失败：{0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
+在 ffmpeg 中处理视频失败：{0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
+在从 YouTube 上下载视频时发生错误：{0}, {1}, {2}</sys:String>
 </ResourceDictionary>

@@ -148,4 +148,10 @@ Se recomienda reducir el tamaño porque las imágenes grandes pueden hacer que P
     
 Selecciona &quot;Si&quot; para seleccionar automáticamente los logos para descargar sin ninguna interacción del usuario.
 Seleccione &quot;No&quot; para hacer selecciones manualmente cuando sea necesario.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
+Error al obtener información del vídeo: {0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
+Error al procesar el video en ffmpeg: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
+Error durante la descarga de vídeo de YouTube: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>

@@ -148,4 +148,10 @@ Es wird empfohlen die Größe zu reduzieren, da große Bilder Playnite verlangsa
     
 Wählen Sie &quot;Ja&quot;. um automatisch die herunterzuladenden Logos auszuwählen, ohne dass der Benutzer eingreifen muss.
 Wählen Sie &quot;Nein&quot;. um bei Bedarf manuell eine Auswahl zu treffen.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
+Fehler beim Abrufen von Video-Informationen: {0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
+Fehler beim Verarbeiten des Videos in ffmpeg: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
+Fehler beim Herunterladen eines Videos von YouTube: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>
