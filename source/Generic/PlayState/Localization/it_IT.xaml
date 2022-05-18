@@ -22,8 +22,8 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tempo di gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informazioni:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Azione:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Generale</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messaggi di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Scorciatoia sospendi/riprendi configurata:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Scorciatoia Informazioni configurate:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra una notifica che mostra lo stato di pausa corrente e altre informazioni del gioco attivo</sys:String>
@@ -52,12 +52,13 @@ o una funzionalità chiamata &quot;[PlayState] Sospendi i processi&quot;, se vuo
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Attivando questa opzione, i giochi mostreranno le notifiche native di Windows invece della finestra di notifica di Playnie.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Visualizza il tempo di gioco della sessione nel messaggio di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Visualizza il tempo di gioco totale nel messaggio di notifica</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Sospendi automaticamente i giochi se non sono la finestra attiva</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">Questa funzionalità funzionerà in modo diverso a seconda della modalità di sospensione del gioco in esecuzione.
 
-Game suspend: Games will be suspended automatically when they are not the active window but they need to be manually resumed to get back into the game.
+Sospensione del gioco: i giochi saranno sospesi automaticamente quando non sono la finestra attiva, ma devono essere ripresi manualmente per tornare al gioco.
 
-Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
+Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamente quando la finestra di gioco cambierà lo stato attivo.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestore stati di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostra l'elemento della barra laterale &quot;Gestore stati di gioco&quot;</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tempo di gioco:</sys:String>

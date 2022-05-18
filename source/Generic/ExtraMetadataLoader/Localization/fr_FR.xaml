@@ -149,9 +149,9 @@ Le redimensionnement est recommandé car les grandes images peuvent ralentir Pla
 Sélectionnez &quot;Oui&quot; pour sélectionner automatiquement les logos à télécharger sans aucune interaction utilisateur.
 Sélectionnez &quot;Non&quot; pour faire manuellement des sélections si nécessaire.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
-Failed to get video information: {0}, {1}, {2}.</sys:String>
+Impossible d'obtenir les informations vidéo : {0}, {1}, {2}.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
-Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
+Impossible de traiter la vidéo dans ffmpeg : {0}, {1}, {2}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
-Error during download of video from YouTube: {0}, {1}, {2}</sys:String>
+Erreur lors du téléchargement de la vidéo depuis YouTube : {0}, {1}, {2}</sys:String>
 </ResourceDictionary>

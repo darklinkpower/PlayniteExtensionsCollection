@@ -58,6 +58,7 @@
 Гру призупинено: гру буде призупинено автоматично, коли вона не буду активним вікном, але щоб повернутися до гри її потрібно поновити вручну.
 
 Час у грі призупинено: гру буде призупинено та відновлено автоматично, коли вікно гри змінює активний стан.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Менеджер PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Показувати кнопку менеджера PlayState на бічній панелі</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Час гри:</sys:String>

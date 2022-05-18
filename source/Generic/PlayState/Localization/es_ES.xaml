@@ -58,6 +58,7 @@ o una característica llamada &quot;[PlayState] Suspender procesos&quot;, si qui
 Suspensión del juego: Los juegos se suspenderán automáticamente cuando no sean la ventana activa, pero deben ser reanudados manualmente para volver al juego.
 
 Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán automáticamente cuando la ventana del juego cambie de estado activo.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Llevar las ventanas de juegos al primer plano cuando se reanudan</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostrar la barra lateral del administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tiempo de juego:</sys:String>
