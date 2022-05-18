@@ -58,6 +58,7 @@ or a feature named &quot;[PlayState] Suspend processes&quot;, if you want to hav
 Game suspend: Games will be suspended automatically when they are not the active window but they need to be manually resumed to get back into the game.
 
 Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Show PlayState manager sidebar item</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Spilletid:</sys:String>
