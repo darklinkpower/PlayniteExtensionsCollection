@@ -46,7 +46,7 @@ namespace PlayState.ViewModels
         private ObservableCollection<PlayStateData> playStateDataCollection;
         public ObservableCollection<PlayStateData> PlayStateDataCollection { get => playStateDataCollection; set => SetValue(ref playStateDataCollection, value); }
 
-        private readonly DispatcherTimer timer;
+        private readonly DispatcherTimer automaticStateUpdateTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
         private Dictionary<Guid, string> detectionDictionary = new Dictionary<Guid, string>();
 
@@ -56,9 +56,22 @@ namespace PlayState.ViewModels
             this.messagesHandler = messagesHandler;
             Settings = playStateSettings;
             PlayStateDataCollection = new ObservableCollection<PlayStateData>();
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(4000);
-            timer.Tick += new EventHandler(UpdateAutomaticStates);
+            automaticStateUpdateTimer = new DispatcherTimer();
+            automaticStateUpdateTimer.Interval = TimeSpan.FromMilliseconds(4000);
+            automaticStateUpdateTimer.Tick += new EventHandler(UpdateAutomaticStates);
+        }
+
+
+        private void SetAutomaticStateUpdaterTimer()
+        {
+            if (playStateDataCollection.HasItems())
+            {
+                automaticStateUpdateTimer.Start();
+            }
+            else
+            {
+                automaticStateUpdateTimer.Stop();
+            }
         }
 
         private void UpdateAutomaticStates(object sender, EventArgs e)
@@ -112,8 +125,7 @@ namespace PlayState.ViewModels
                 logger.Debug($"Changed current game to {game.Name}");
             }
 
-            timer.Stop();
-            timer.Start();
+            SetAutomaticStateUpdaterTimer();
         }
 
         public void RemovePlayStateData(Game game)
@@ -138,10 +150,7 @@ namespace PlayState.ViewModels
                 }
             }
 
-            if (!playStateDataCollection.HasItems())
-            {
-                timer.Stop();
-            }
+            SetAutomaticStateUpdaterTimer();
         }
 
         public PlayStateData GetCurrentGameData()
@@ -294,8 +303,8 @@ namespace PlayState.ViewModels
                 gameData.Stopwatch.Stop();
             }
 
-            timer.Stop();
-            timer.Start();
+            automaticStateUpdateTimer.Stop();
+            automaticStateUpdateTimer.Start();
         }
 
         internal void AddGameToDetection(Game game)
