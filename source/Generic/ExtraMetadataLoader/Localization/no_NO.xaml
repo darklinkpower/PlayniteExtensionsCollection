@@ -149,9 +149,9 @@ Mindre bilder anbefales fordi store bilder kan gjøre Playnite tregere.</sys:Str
 Velg &quot;Ja&quot; for å automatisk velge logoene som skal lastes ned uten noen brukerinteraksjon.
 Velg &quot;Nei&quot; for å manuelt gjøre valg når nødvendig.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
-Failed to get video information: {0}, {1}, {2}.</sys:String>
+Henting av videoinformasjon mislyktes: {0}, {1}, {2}.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
-Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
+Prosessering av video med ffmpeg mislyktes: {0}, {1}, {2}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
-Error during download of video from YouTube: {0}, {1}, {2}</sys:String>
+Feil ved nedlasting av video fra YouTube: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>
