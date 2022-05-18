@@ -258,3 +258,11 @@ Packages:
     - 'Layout changes and improvements to settings view'
     - 'Added checkbox to enable or disable option to automatically suspend games to PlayState Manager sidebar and StartPage extension views'
     - 'Improved scaling quality of active game cover image in PlayState Manager view'
+  - Version: 2.37
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.18_f685bd4f/PlayState_2_37.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added option to automatically bring the games window to foreground when resuming them. Disabled by default'
+    - 'Games that have have not been in foreground at least once and are using processes suspend mode will now not be suspended by the automatic suspend functionality to prevent suspending them while they are still in initial startup process'
