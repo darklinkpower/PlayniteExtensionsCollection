@@ -73,6 +73,8 @@ namespace PlayState.ViewModels
             }
         }
 
+
+
         private void UpdateAutomaticStates(object sender, EventArgs e)
         {
             if (!settings.Settings.UseForegroundAutomaticSuspend || !playStateDataCollection.HasItems())
@@ -308,6 +310,11 @@ namespace PlayState.ViewModels
                         logger.Debug($"Game {gameData.Game.Name} suspended in mode {gameData.SuspendMode}");
                     }
                 }
+
+                if (settings.Settings.BringResumedToForeground && !gameData.IsSuspended)
+                {
+                    BringGameWindowToFront(gameData);
+                }
             }
             catch (Exception e)
             {
@@ -318,6 +325,35 @@ namespace PlayState.ViewModels
 
             automaticStateUpdateTimer.Stop();
             automaticStateUpdateTimer.Start();
+        }
+
+        private void BringGameWindowToFront(PlayStateData playstateData)
+        {
+            if (!playstateData.HasProcesses)
+            {
+                return;
+            }
+            
+            var foregroundWindowHandle = ProcessesHandler.GetForegroundWindowHandle();
+
+            // Check if game window is already in foreground
+            if (playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle))
+            {
+                return;
+            }
+
+            var windowHandle = playstateData.GameProcesses
+                .FirstOrDefault(x => x.Process.MainWindowHandle != null && x.Process.MainWindowHandle != IntPtr.Zero)
+                .Process.MainWindowHandle;
+
+            try
+            {
+                ProcessesHandler.RestoreAndFocusWindow(windowHandle);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error while restoring game window of game {playstateData.Game.Name}, {windowHandle}");
+            }
         }
 
         internal void AddGameToDetection(Game game)

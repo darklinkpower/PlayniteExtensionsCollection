@@ -50,6 +50,9 @@ namespace PlayState
         [DontSerialize]
         private bool useForegroundAutomaticSuspend = false;
         public bool UseForegroundAutomaticSuspend { get => useForegroundAutomaticSuspend; set => SetValue(ref useForegroundAutomaticSuspend, value); }
+        [DontSerialize]
+        private bool bringResumedToForeground = false;
+        public bool BringResumedToForeground { get => bringResumedToForeground; set => SetValue(ref bringResumedToForeground, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
