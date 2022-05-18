@@ -25,6 +25,7 @@ namespace PlayState.Models
 
         private SuspendModes suspendMode;
         public SuspendModes SuspendMode { get => suspendMode; set => SetValue(ref suspendMode, value); }
+        public bool HasBeenInForeground = false;
 
         public PlayStateData(Game game, List<ProcessItem> gameProcesses, SuspendModes suspendMode)
         {

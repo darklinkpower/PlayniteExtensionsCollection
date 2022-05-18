@@ -61,7 +61,6 @@ namespace PlayState.ViewModels
             automaticStateUpdateTimer.Tick += new EventHandler(UpdateAutomaticStates);
         }
 
-
         private void SetAutomaticStateUpdaterTimer()
         {
             if (playStateDataCollection.HasItems())
@@ -90,6 +89,20 @@ namespace PlayState.ViewModels
                 }
                 
                 var isForeground = playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle);
+
+                // We check if the game window has been in the foreground at least once. This is done to
+                // prevent suspending the game processes automatically before they are still in loading state
+                // and have not even shown their game windows. Mostly intended for games with long startup times
+                if (!playstateData.HasBeenInForeground && playstateData.SuspendMode == SuspendModes.Processes)
+                {
+                    if (!isForeground)
+                    {
+                        continue;
+                    }
+
+                    playstateData.HasBeenInForeground = true;
+                }
+
                 if (isForeground == playstateData.IsSuspended)
                 {
                     SwitchGameState(playstateData);
