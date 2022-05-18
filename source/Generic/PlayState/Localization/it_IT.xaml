@@ -58,6 +58,7 @@ o una funzionalità chiamata &quot;[PlayState] Sospendi i processi&quot;, se vuo
 Sospensione del gioco: i giochi saranno sospesi automaticamente quando non sono la finestra attiva, ma devono essere ripresi manualmente per tornare al gioco.
 
 Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamente quando la finestra di gioco cambierà lo stato attivo.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestore stati di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostra l'elemento della barra laterale &quot;Gestore stati di gioco&quot;</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tempo di gioco:</sys:String>
