@@ -58,6 +58,7 @@ oder eine Funktion namens &quot;[PlayState] Prozesse anhalten&quot;, wenn Sie di
 Spiel unterbrechen: Spiele werden automatisch unterbrochen, wenn sie nicht das aktive Fenster sind, aber sie müssen manuell fortgesetzt werden, um wieder in das Spiel zu gelangen.
 
 Spielzeit unterbrechen: Spiele werden unterbrochen und automatisch fortgesetzt, wenn das Spielfenster den aktiven Status ändert.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState Manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState Manager Seitenleiste anzeigen</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Spielzeit:</sys:String>
