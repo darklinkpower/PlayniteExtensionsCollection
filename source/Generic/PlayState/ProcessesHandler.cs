@@ -17,16 +17,6 @@ namespace PlayState
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtResumeProcess(IntPtr processHandle);
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern bool ShowWindowAsync(IntPtr windowHandle, int nCmdShow);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern bool SetForegroundWindow(IntPtr windowHandle);
-        public const int SW_SHOW = 5;
-        public const int SW_RESTORE = 9;
-        public const int SW_SHOWDEFAULT = 10;
 
         private static readonly List<string> exclusionList = new List<string>
         {
@@ -177,16 +167,6 @@ namespace PlayState
             }
         }
 
-        public static IntPtr GetForegroundWindowHandle()
-        {
-            return GetForegroundWindow();
-        }
 
-        public static void RestoreAndFocusWindow(IntPtr windowHandle)
-        {
-            ShowWindowAsync(windowHandle, SW_SHOWDEFAULT);
-            ShowWindowAsync(windowHandle, SW_SHOW);
-            SetForegroundWindow(windowHandle);
-        }
     }
 }

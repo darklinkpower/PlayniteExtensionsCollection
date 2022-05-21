@@ -85,7 +85,7 @@ namespace PlayState.ViewModels
             }
 
             openWindowsUpdated = false;
-            var foregroundWindowHandle = ProcessesHandler.GetForegroundWindowHandle();
+            var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
             foreach (var playstateData in PlayStateDataCollection)
             {
                 if (!playstateData.HasProcesses)
@@ -354,7 +354,7 @@ namespace PlayState.ViewModels
                 return;
             }
             
-            var foregroundWindowHandle = ProcessesHandler.GetForegroundWindowHandle();
+            var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
 
             // Check if game window is already in foreground
             if (playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle))
@@ -368,7 +368,7 @@ namespace PlayState.ViewModels
 
             try
             {
-                ProcessesHandler.RestoreAndFocusWindow(windowHandle);
+                WindowsHelper.RestoreAndFocusWindow(windowHandle);
             }
             catch (Exception e)
             {
