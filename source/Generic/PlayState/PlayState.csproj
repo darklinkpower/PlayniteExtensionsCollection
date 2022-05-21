@@ -124,6 +124,7 @@
     <Compile Include="Views\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

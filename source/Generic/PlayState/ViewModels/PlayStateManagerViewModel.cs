@@ -49,6 +49,8 @@ namespace PlayState.ViewModels
         private readonly DispatcherTimer automaticStateUpdateTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
         private Dictionary<Guid, string> detectionDictionary = new Dictionary<Guid, string>();
+        private Dictionary<IntPtr, string> openWindows;
+        private bool openWindowsUpdated = false;
 
         public PlayStateManagerViewModel(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, MessagesHandler messagesHandler)
         {
@@ -81,7 +83,8 @@ namespace PlayState.ViewModels
             {
                 return;
             }
-            
+
+            openWindowsUpdated = false;
             var foregroundWindowHandle = ProcessesHandler.GetForegroundWindowHandle();
             foreach (var playstateData in PlayStateDataCollection)
             {
@@ -103,6 +106,23 @@ namespace PlayState.ViewModels
                     }
 
                     playstateData.HasBeenInForeground = true;
+                }
+
+                // We check if the game window is open to prevent suspending a game process whose window
+                // is not being displayed, which can cause issues. Instances of this could be when a game
+                // is in exit procedure, has closed its window but is still running
+                if (!isForeground && !playstateData.IsSuspended && playstateData.SuspendMode == SuspendModes.Processes)
+                {
+                    if (!openWindowsUpdated)
+                    {
+                        openWindows = WindowsHelper.GetOpenWindows();
+                    }
+
+                    if (!openWindows.Any(x => playstateData.GameProcesses.Any(y => y.Process.MainWindowHandle == x.Key)))
+                    {
+                        logger.Debug($"Game {playstateData.Game.Name} was not in foreground but its window could not be found");
+                        continue;
+                    }
                 }
 
                 if (isForeground == playstateData.IsSuspended)
