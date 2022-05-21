@@ -266,3 +266,9 @@ Packages:
     - 'Updated localizations'
     - 'Added option to automatically bring the games window to foreground when resuming them. Disabled by default'
     - 'Games that have have not been in foreground at least once and are using processes suspend mode will now not be suspended by the automatic suspend functionality to prevent suspending them while they are still in initial startup process'
+  - Version: 2.38
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/<ReleaseName>/PlayState_2_38.pext
+    Changelog:
+    - 'Prevent automatic update functionality from suspending game processes if the game window is no longer open but processes are still running, to prevent issues when suspending games that are in closing procedure'
