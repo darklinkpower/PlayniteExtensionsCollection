@@ -269,6 +269,6 @@ Packages:
   - Version: 2.38
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-05-21
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/<ReleaseName>/PlayState_2_38.pext
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.21_ae874fc6/PlayState_2_38.pext
     Changelog:
     - 'Prevent automatic update functionality from suspending game processes if the game window is no longer open but processes are still running, to prevent issues when suspending games that are in closing procedure'
