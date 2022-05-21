@@ -21,7 +21,7 @@ namespace SteamCommon
             return processes.Length > 0;
         }
 
-        private static bool GetIsSteamBpmRunning()
+        public static bool GetIsSteamBpmRunning()
         {
             if (!GetIsSteamRunning())
             {
