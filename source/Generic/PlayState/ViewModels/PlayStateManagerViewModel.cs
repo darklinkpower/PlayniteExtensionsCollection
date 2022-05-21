@@ -134,6 +134,7 @@ namespace PlayState.ViewModels
                 if (!openWindowsUpdated)
                 {
                     openWindows = WindowsHelper.GetOpenWindows();
+                    openWindowsUpdated = true;
                 }
 
                 if (!openWindows.Any(x => playstateData.GameProcesses.Any(y => y.Process.MainWindowHandle == x.Key)))
