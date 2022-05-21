@@ -43,12 +43,12 @@
                 <CheckBox Margin="0,10,0,0" Content="{DynamicResource LOCSpecial_K_Helper_SettingRunOnlyPcGames}"
                       IsChecked="{Binding Settings.OnlyExecutePcGames}" />
 
-                <!--<StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                     <TextBlock Text="{DynamicResource LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning}" VerticalAlignment="Center"/>
                     <ComboBox MinWidth="100" Margin="10,0,0,0" VerticalAlignment="Center"
                           SelectedValue="{Binding Settings.SteamOverlayForBpm}"
                           beh:SelectorBehaviors.EnumSource="{x:Type skM:SteamOverlay}" />
-                </StackPanel>-->
+                </StackPanel>
                 
                 <Separator Margin="0,10,0,0"/>
 

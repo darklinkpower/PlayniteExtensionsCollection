@@ -39,6 +39,7 @@ namespace SpecialKHelper
         private readonly string pluginInstallPath;
         private readonly string skifPath;
         private readonly string defaultConfigPath;
+        private bool steamBpmEnvVarSet = false;
         private static readonly Regex reshadeTechniqueRegex = new Regex(@"technique ([^\s]+)", RegexOptions.None);
 
         private SidebarItemSwitcherViewModel sidebarItemSwitcherViewModel { get; }
@@ -117,31 +118,24 @@ namespace SpecialKHelper
             return string.Join(",", techniqueList);
         }
 
-        public override void OnGameStarted(OnGameStartedEventArgs args)
-        {
-            //RemoveBpmEnvVariable();
-        }
-
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
             var startServices = GetShouldStartService(game);
 
-            //if (SteamCommon.IsGameSteamGame(game))
-            //{
-            //    RemoveBpmEnvVariable();
-            //}
-            //else
-            //{
-            //    if (settings.Settings.SteamOverlayForBpm == SteamOverlay.BigPictureMode && GetIsSteamBpmRunning())
-            //    {
-            //        SetBpmEnvVariable();
-            //    }
-            //    else
-            //    {
-            //        RemoveBpmEnvVariable();
-            //    }
-            //}
+            if (steamBpmEnvVarSet)
+            {
+                if (settings.Settings.SteamOverlayForBpm != SteamOverlay.BigPictureMode
+                    || Steam.IsGameSteamGame(game)
+                    || !SteamClient.GetIsSteamBpmRunning())
+                {
+                    RemoveBpmEnvVariable();
+                }
+            }
+            else if (settings.Settings.SteamOverlayForBpm == SteamOverlay.BigPictureMode && SteamClient.GetIsSteamBpmRunning())
+            {
+                SetBpmEnvVariable();
+            }
 
             var startSuccess32 = false;
             var startSuccess64 = false;
@@ -175,6 +169,8 @@ namespace SpecialKHelper
             {
                 Environment.SetEnvironmentVariable("SteamTenfoot", string.Empty, EnvironmentVariableTarget.Process);
             }
+
+            steamBpmEnvVarSet = false;
         }
 
         private void SetBpmEnvVariable()
@@ -186,6 +182,8 @@ namespace SpecialKHelper
             {
                 Environment.SetEnvironmentVariable("SteamTenfoot", "1", EnvironmentVariableTarget.Process);
             }
+
+            steamBpmEnvVarSet = true;
         }
 
         private void ValidateReshadeConfiguration(Game game)
@@ -508,7 +506,11 @@ namespace SpecialKHelper
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            //RemoveBpmEnvVariable();
+            if (steamBpmEnvVarSet)
+            {
+                RemoveBpmEnvVariable();
+            }
+
             var cpuArchitectures = new string[] { "32", "64" };
             foreach (var cpuArchitecture in cpuArchitectures)
             {
