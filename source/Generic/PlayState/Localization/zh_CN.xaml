@@ -57,7 +57,7 @@
 游戏挂起：当游戏不是活动窗口时，游戏将被自动挂起，但需要手动恢复以重新进入游戏。
 
 游戏时间挂起：游戏将被挂起，并在游戏窗口改变活动状态时自动恢复。</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">恢复游戏时将其窗口带到前景</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState 管理器</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">显示 PlayState 管理器侧边栏项目</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">游玩时间：</sys:String>
