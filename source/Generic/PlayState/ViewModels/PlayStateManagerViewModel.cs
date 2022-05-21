@@ -94,35 +94,14 @@ namespace PlayState.ViewModels
                 }
                 
                 var isForeground = playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle);
-
-                // We check if the game window has been in the foreground at least once. This is done to
-                // prevent suspending the game processes automatically before they are still in loading state
-                // and have not even shown their game windows. Mostly intended for games with long startup times
-                if (!playstateData.HasBeenInForeground && playstateData.SuspendMode == SuspendModes.Processes)
+                if (!playstateData.HasBeenInForeground && isForeground)
                 {
-                    if (!isForeground)
-                    {
-                        continue;
-                    }
-
                     playstateData.HasBeenInForeground = true;
                 }
 
-                // We check if the game window is open to prevent suspending a game process whose window
-                // is not being displayed, which can cause issues. Instances of this could be when a game
-                // is in exit procedure, has closed its window but is still running
-                if (!isForeground && !playstateData.IsSuspended && playstateData.SuspendMode == SuspendModes.Processes)
+                if (!ContinueAutomaticStateExecution(playstateData, isForeground))
                 {
-                    if (!openWindowsUpdated)
-                    {
-                        openWindows = WindowsHelper.GetOpenWindows();
-                    }
-
-                    if (!openWindows.Any(x => playstateData.GameProcesses.Any(y => y.Process.MainWindowHandle == x.Key)))
-                    {
-                        logger.Debug($"Game {playstateData.Game.Name} was not in foreground but its window could not be found");
-                        continue;
-                    }
+                    continue;
                 }
 
                 if (isForeground == playstateData.IsSuspended)
@@ -130,6 +109,41 @@ namespace PlayState.ViewModels
                     SwitchGameState(playstateData);
                 }
             }
+        }
+
+        private bool ContinueAutomaticStateExecution(PlayStateData playstateData, bool isForeground)
+        {
+            if (playstateData.SuspendMode != SuspendModes.Processes)
+            {
+                return true;
+            }
+
+            // We check if the game window has been in the foreground at least once. This is done to
+            // prevent suspending the game processes automatically before they are still in loading state
+            // and have not even shown their game windows. Mostly intended for games with long startup times
+            if (!playstateData.HasBeenInForeground)
+            {
+                return false;
+            }
+
+            // We check if the game window is open to prevent suspending a game process whose window
+            // is not being displayed, which can cause issues. Instances of this could be when a game
+            // is in exit procedure, has closed its window but is still running
+            if (!isForeground && !playstateData.IsSuspended)
+            {
+                if (!openWindowsUpdated)
+                {
+                    openWindows = WindowsHelper.GetOpenWindows();
+                }
+
+                if (!openWindows.Any(x => playstateData.GameProcesses.Any(y => y.Process.MainWindowHandle == x.Key)))
+                {
+                    logger.Debug($"Game {playstateData.Game.Name} was not in foreground but its window could not be found");
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
