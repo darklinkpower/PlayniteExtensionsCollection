@@ -31,7 +31,9 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">顶</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">中</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">底</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">为所有游戏使用一个全局的序幕图像</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">如果可用，在全局序幕图像中使用游戏徽标</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">浏览...</sys:String>
