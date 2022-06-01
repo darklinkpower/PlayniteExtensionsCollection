@@ -43,6 +43,9 @@ namespace PlayState
         private PlayStateManagerViewModel playStateManager;
         private MessagesHandler messagesHandler;
         private readonly bool isWindows10Or11;
+        private const string featureBlacklist = "[PlayState] Blacklist";
+        private const string featureSuspendPlaytime = "[PlayState] Suspend Playtime only";
+        private const string featureSuspendProcesses = "[PlayState] Suspend Processes";
 
         public PlayState(IPlayniteAPI api) : base(api)
         {
@@ -211,14 +214,14 @@ namespace PlayState
             }
 
             var game = args.Game;
-            if (game.Features != null && game.Features.Any(a => a.Name.Equals("[PlayState] Blacklist", StringComparison.OrdinalIgnoreCase)))
+            if (PlayniteUtilities.GetGameHasFeature(game, featureBlacklist, true))
             {
                 logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
                 return;
             }
 
-            var suspendPlaytimeOnlyFeature = game.Features?.Any(a => a.Name.Equals("[PlayState] Suspend Playtime only", StringComparison.OrdinalIgnoreCase)) == true;
-            var suspendProcessesFeature = game.Features?.Any(a => a.Name.Equals("[PlayState] Suspend Processes", StringComparison.OrdinalIgnoreCase)) == true;
+            var suspendPlaytimeOnlyFeature = PlayniteUtilities.GetGameHasFeature(game, featureSuspendPlaytime, true);
+            var suspendProcessesFeature = PlayniteUtilities.GetGameHasFeature(game, featureSuspendProcesses, true);
             if (!suspendProcessesFeature && settings.Settings.GlobalOnlySuspendPlaytime ||
                 suspendPlaytimeOnlyFeature)
             {
@@ -453,7 +456,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToBlacklistDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Blacklist");
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureBlacklist);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
@@ -462,7 +465,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromBlacklistDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Blacklist");
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureBlacklist);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 },
@@ -471,8 +474,8 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToPlaytimeSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
-                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Processes");
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendPlaytime);
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendProcesses);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
@@ -481,7 +484,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendPlaytime);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 },
@@ -490,8 +493,8 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToProcessesSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Processes");
-                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Playtime only");
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendProcesses);
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendPlaytime);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_ProcessesSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
@@ -500,7 +503,7 @@ namespace PlayState
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription"),
                     MenuSection = "@PlayState",
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[PlayState] Suspend Processes");
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendProcesses);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_ProcessesSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }
