@@ -30,6 +30,8 @@ namespace SplashScreen
         private bool? isMusicMutedBackup;
         private EventWaitHandle videoWaitHandle;
         private readonly DispatcherTimer timerWindowRemoveTopMost;
+        private const string featureNameSplashScreenDisable = "[Splash Screen] Disable";
+        private const string featureNameSkipSplashImage = "[Splash Screen] Skip splash image";
 
         private SplashScreenSettingsViewModel settings { get; set; }
 
@@ -125,7 +127,7 @@ namespace SplashScreen
             currentSplashWindow = null;
 
             var game = args.Game;
-            if (PlayniteUtilities.GetGameHasFeature(game, "[Splash Screen] Disable", true))
+            if (PlayniteUtilities.GetGameHasFeature(game, featureNameSplashScreenDisable, true))
             {
                 logger.Info($"{game.Name} has splashscreen disable feature");
                 return;
@@ -190,7 +192,7 @@ namespace SplashScreen
 
         private bool GetShowSplashImage(Game game)
         {
-            if (PlayniteUtilities.GetGameHasFeature(game, "[Splash Screen] Skip splash image", true))
+            if (PlayniteUtilities.GetGameHasFeature(game, featureNameSkipSplashImage, true))
             {
                 return false;
             }
@@ -462,7 +464,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemAdd-DisableFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Disable");
+                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureNameSplashScreenDisable);
                     }
                 },
                 new MainMenuItem
@@ -470,7 +472,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemRemove-DisableFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Disable");
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureNameSplashScreenDisable);
                     }
                 },
                 new MainMenuItem
@@ -478,7 +480,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemAdd-ImageSkipFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Skip splash image");
+                        PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureNameSkipSplashImage);
                     }
                 },
                 new MainMenuItem
@@ -486,7 +488,7 @@ namespace SplashScreen
                     Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemRemove-ImageSkipFeature"),
                     MenuSection = "@Splash Screen",
                     Action = a => {
-                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Splash Screen] Skip splash image");
+                        PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureNameSkipSplashImage);
                     }
                 }
             };
