@@ -31,7 +31,9 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Øverst</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Midtstilt</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Nederst</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Bruk et globalt bilde for alle spill</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Bruk spilllogo i globalt splashscreen-bilde hvis tilgjengelig</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Bla gjennom…</sys:String>

@@ -31,7 +31,9 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">الأعلى</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">الوسط</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">الأسفل</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">استخدام صورة بداية عامة لجميع الألعاب</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">استخدم شعار اللعبة في صورة البداية العالمية إذا كان متاحًا</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">تصفح...</sys:String>
