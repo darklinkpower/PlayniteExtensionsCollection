@@ -241,72 +241,46 @@ namespace PlayState
         {
             var game = args.Game;
             playStateManager.AddGameToDetection(game);
-            var gameProcesses = new List<ProcessItem> { };
-            
-            var sourceAction = args.SourceAction;
-            if (sourceAction?.Type == GameActionType.Emulator)
-            {
-                logger.Debug("Source action is emulator.");
-                var emulatorProfileId = sourceAction.EmulatorProfileId;
-                if (emulatorProfileId.StartsWith("#builtin_"))
-                {
-                    //Currently it isn't possible to obtain the emulator path
-                    //for emulators using Builtin profiles
-                    logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
-                    return;
-                }
-
-                var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
-                var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
-                if (profile != null)
-                {
-                    logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-                    gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
-                    if (gameProcesses.Count > 0)
-                    {
-                        playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
-                    }
-                }
-
-                return;
-            }
-
-            if (game.InstallDirectory.IsNullOrEmpty())
+            var sourceActionHandled = ScanGameSourceAction(args.Game, args.SourceAction, suspendMode);
+            if (sourceActionHandled)
             {
                 return;
             }
 
-            var gameInstallDir = game.InstallDirectory;
-
-            // Games from Xbox library are UWP apps. UWP apps run from the primary drive, e.g. "C:\".
-            // If the game install location is not in the primary drive, Windows creates a symlink from the real files
-            // to the primary drive and starts running the game from there. For this reason, we need to obtain the location
-            // from where the game is running for Xbox game by detecting installed UWP apps as the Xbox plugin
-            // reports the real installation directory in the games and not the fake one in C:\
-            if (game.PluginId == Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287"))
+            var gameInstallDir = GetGameInstallDir(args.Game);
+            if (!gameInstallDir.IsNullOrEmpty())
             {
-                gameInstallDir = Programs.GetUwpWorkdirFromGameId(game.GameId);
-                if (gameInstallDir.IsNullOrEmpty() || !FileSystem.DirectoryExists(gameInstallDir))
+                var scanHandled = await ScanGameProcessesFromDirectoryAsync(game, gameInstallDir, suspendMode);
+                if (scanHandled)
                 {
-                    playStateManager.RemoveGameFromDetection(game);
                     return;
                 }
             }
 
+            // If no processes were found, playtime suspend mode can still be added as fallback.
+            // Only missing functionality will be automatic suspending when game window is not in foreground
+            if (suspendMode == SuspendModes.Playtime)
+            {
+                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
+            }
+        }
+
+        private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir, SuspendModes suspendMode)
+        {
             // Fix for some games that take longer to start, even when already detected as running
             await Task.Delay(15000);
             if (!playStateManager.IsGameBeingDetected(game))
             {
                 logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
-                return;
+                return true;
             }
 
-            gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
+            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
             if (gameProcesses.Count > 0)
             {
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
                 playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
-                return;
+                return true;
             }
 
             // Waiting is useful for games that use a startup launcher, since
@@ -320,7 +294,7 @@ namespace PlayState
                 if (!playStateManager.IsGameBeingDetected(game))
                 {
                     logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
-                    return;
+                    return true;
                 }
 
                 // Try a few times with filters.
@@ -338,7 +312,7 @@ namespace PlayState
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
                     playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
-                    return;
+                    return true;
                 }
                 else
                 {
@@ -347,10 +321,63 @@ namespace PlayState
             }
 
             logger.Debug("Couldn't find any game process");
-            if (suspendMode == SuspendModes.Playtime)
+            return false;
+        }
+
+        private string GetGameInstallDir(Game game)
+        {
+            // Games from Xbox library are UWP apps. UWP apps run from the primary drive, e.g. "C:\".
+            // If the game install location is not in the primary drive, Windows creates a symlink from the real files
+            // to the primary drive and starts running the game from there. For this reason, we need to obtain the location
+            // from where the game is running for Xbox game by detecting installed UWP apps as the Xbox plugin
+            // reports the real installation directory in the games and not the fake one in C:\
+            if (game.PluginId == Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287"))
             {
-                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
+                var gameInstallDir = Programs.GetUwpWorkdirFromGameId(game.GameId);
+                if (gameInstallDir.IsNullOrEmpty() || !FileSystem.DirectoryExists(gameInstallDir))
+                {
+                    playStateManager.RemoveGameFromDetection(game);
+                    return gameInstallDir;
+                }
             }
+            else if (!game.InstallDirectory.IsNullOrEmpty())
+            {
+                return game.InstallDirectory;
+            }
+
+            return null;
+        }
+
+        private bool ScanGameSourceAction(Game game, GameAction sourceAction, SuspendModes suspendMode)
+        {
+            if (sourceAction == null || sourceAction.Type != GameActionType.Emulator)
+            {
+                return false;
+            }
+
+            logger.Debug("Source action is emulator.");
+            var emulatorProfileId = sourceAction.EmulatorProfileId;
+            if (emulatorProfileId.StartsWith("#builtin_"))
+            {
+                //Currently it isn't possible to obtain the emulator path
+                //for emulators using Builtin profiles
+                logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
+                return true;
+            }
+
+            var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
+            var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
+            if (profile != null)
+            {
+                logger.Debug($"Custom emulator profile executable is {profile.Executable}");
+                var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
+                if (gameProcesses.Count > 0)
+                {
+                    playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
+                }
+            }
+
+            return true;
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
@@ -358,11 +385,7 @@ namespace PlayState
             var game = args.Game;
             messagesHandler.HideWindow();
 
-            if (playStateManager.IsGameBeingDetected(game))
-            {
-                playStateManager.RemoveGameFromDetection(game);
-            }
-
+            playStateManager.RemoveGameFromDetection(game);
             var gameData = playStateManager.GetDataOfGame(game);
             if (gameData == null)
             {
