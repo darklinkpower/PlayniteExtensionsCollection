@@ -36,8 +36,10 @@
                       IsChecked="{Binding Settings.UseBlackSplashscreen}"
                       Margin="0,20,0,0" />
 
+                <CheckBox IsChecked="{Binding Settings.SplashImageUseFadeInAnimation}" Content="{DynamicResource LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel}" Margin="0,10,0,0"/>
                 <CheckBox Name="ShowLogoInSplashscreen" IsChecked="{Binding Settings.ShowLogoInSplashscreen}" Content="{DynamicResource LOCSplashScreen_SettingCBshowLogoInSplashscreen}" Margin="0,20,0,0"/>
                 <StackPanel Margin="40,0,0,0" IsEnabled="{Binding ElementName=ShowLogoInSplashscreen, Path=IsChecked}">
+                    <CheckBox IsChecked="{Binding Settings.SplashLogoUseFadeInAnimation}" Content="{DynamicResource LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel}" Margin="0,10,0,0"/>
                     <CheckBox IsChecked="{Binding Settings.UseIconAsLogo}" Content="{DynamicResource LOCSplashScreen_SettingCBuseIconAsLogo}"
                               Margin="0,10,0,0" />
                     <DockPanel Margin="0,10,0,0">

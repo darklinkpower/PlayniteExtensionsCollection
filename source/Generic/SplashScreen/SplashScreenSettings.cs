@@ -42,6 +42,28 @@ namespace SplashScreen
             }
         }
 
+        private bool splashImageUseFadeInAnimation { get; set; } = true;
+        public bool SplashImageUseFadeInAnimation
+        {
+            get => splashImageUseFadeInAnimation;
+            set
+            {
+                splashImageUseFadeInAnimation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool splashLogoUseFadeInAnimation { get; set; } = true;
+        public bool SplashLogoUseFadeInAnimation
+        {
+            get => splashLogoUseFadeInAnimation;
+            set
+            {
+                splashLogoUseFadeInAnimation = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DontSerialize]
         public Dictionary<HorizontalAlignment, string> LogoHorizontalSource { get; set; } = new Dictionary<HorizontalAlignment, string>
         {

@@ -32,11 +32,18 @@
             </Image.Effect>
             <Image.Style>
                 <Style TargetType="Image">
-                    <Setter Property="Source" Value="{Binding LogoPath, Converter={StaticResource ImageStringToImageConverter}}" />
+                    <Setter Property="Source" Value="{x:Null}" />
                     <Setter Property="Grid.Column" Value="0" />
+                    <Setter Property="Opacity" Value="1.0" />
+                    <Setter Property="Tag" Value="False" />
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding LogoPath, Converter={StaticResource NullToBoolConverter}}" Value="True">
+                            <Setter Property="Source" Value="{Binding LogoPath, Converter={StaticResource ImageStringToImageConverter}}" />
+                            <Setter Property="Tag" Value="True" />
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding SplashImagePath}" Value="{x:Null}">
                             <Setter Property="Source" Value="{x:Null}" />
+                            <Setter Property="Tag" Value="False" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Center">
                             <Setter Property="Grid.Column" Value="1" />
@@ -44,24 +51,61 @@
                         <DataTrigger Binding="{Binding Settings.LogoHorizontalAlignment}" Value="Right">
                             <Setter Property="Grid.Column" Value="2" />
                         </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
+                                <Condition Binding="{Binding Settings.SplashLogoUseFadeInAnimation}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Source, Converter={StaticResource NullToBoolConverter}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:2.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.EnterActions>
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </Image.Style>
         </Image>
+        
         <Border Background="Black" Grid.Column="0" Grid.ColumnSpan="3">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Opacity" Value="1.0" />
+                    <Setter Property="Opacity" Value="0.0" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True">
-                            <DataTrigger.EnterActions>
+                        
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
+                                <Condition Binding="{Binding Settings.SplashImageUseFadeInAnimation}" Value="True" />
+                                <Condition Binding="{Binding ElementName=LogoImage, Path=Tag}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:1.9" />
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:0.80" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                        </DataTrigger>
+                            </MultiDataTrigger.EnterActions>
+                        </MultiDataTrigger>
+                        
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
+                                <Condition Binding="{Binding Settings.SplashImageUseFadeInAnimation}" Value="True" />
+                                <Condition Binding="{Binding ElementName=LogoImage, Path=Tag}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:1.9" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiDataTrigger.EnterActions>
+                        </MultiDataTrigger>
+                        
                     </Style.Triggers>
                 </Style>
             </Border.Style>
