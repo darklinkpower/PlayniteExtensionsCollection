@@ -223,17 +223,8 @@ namespace SplashScreen
             };
 
             currentSplashWindow.Closed += SplashWindowClosed;
-            content.VideoPlayer.MediaEnded += (_, __) =>
-            {
-                logger.Debug("MediaEnded event");
-                videoWaitHandle.Set();
-            };
-
-            content.VideoPlayer.MediaFailed += (_, __) =>
-            {
-                logger.Debug("MediaFailed event");
-                videoWaitHandle.Set();
-            };
+            content.VideoPlayer.MediaEnded += VideoPlayer_MediaEnded;
+            content.VideoPlayer.MediaFailed += VideoPlayer_MediaFailed;
 
             currentSplashWindow.Show();
 
@@ -244,6 +235,8 @@ namespace SplashScreen
             PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
             {
                 videoWaitHandle.WaitOne();
+                content.VideoPlayer.MediaEnded -= VideoPlayer_MediaEnded;
+                content.VideoPlayer.MediaFailed -= VideoPlayer_MediaFailed;
                 logger.Debug("videoWaitHandle.WaitOne() passed");
             }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false });
 
@@ -269,6 +262,16 @@ namespace SplashScreen
 
             timerWindowRemoveTopMost.Stop();
             timerWindowRemoveTopMost.Start();
+        }
+
+        private void VideoPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            videoWaitHandle.Set();
+        }
+
+        private void VideoPlayer_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            videoWaitHandle.Set();
         }
 
         private void CreateSplashImageWindow(string splashImagePath, string logoPath)
