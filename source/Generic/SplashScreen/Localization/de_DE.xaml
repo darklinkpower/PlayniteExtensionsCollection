@@ -31,7 +31,9 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Oben</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Mitte</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Unten</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Ein globales Splash Bild für alle Spiele verwenden</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Verwende das Spiellogo im globalen Splash Bild, falls verfügbar</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Durchsuchen...</sys:String>
