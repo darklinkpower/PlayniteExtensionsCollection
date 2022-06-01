@@ -53,7 +53,7 @@ namespace SplashScreen
             }
         }
 
-        private bool splashLogoUseFadeInAnimation { get; set; } = true;
+        private bool splashLogoUseFadeInAnimation { get; set; } = false;
         public bool SplashLogoUseFadeInAnimation
         {
             get => splashLogoUseFadeInAnimation;
