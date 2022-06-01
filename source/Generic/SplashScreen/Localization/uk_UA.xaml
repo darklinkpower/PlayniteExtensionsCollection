@@ -31,7 +31,9 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Вгорі</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">По центру</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Внизу</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">Використовувати глобальну екран-заставку для всіх ігор</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">Використовувати логотип гри на глобальному екрані-заставці при наявності</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingGlobalSplashImageBrowse">Огляд...</sys:String>
