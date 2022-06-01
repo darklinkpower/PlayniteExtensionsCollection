@@ -245,7 +245,7 @@ namespace SplashScreen
             {
                 videoWaitHandle.WaitOne();
                 logger.Debug("videoWaitHandle.WaitOne() passed");
-            }, new GlobalProgressOptions(string.Empty));
+            }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false });
 
             if (showSplashImage)
             {
@@ -296,7 +296,7 @@ namespace SplashScreen
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 Thread.Sleep(3000);
-            }, new GlobalProgressOptions(string.Empty));
+            }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false});
 
             if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                 (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
