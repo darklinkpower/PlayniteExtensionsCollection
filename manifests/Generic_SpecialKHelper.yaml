@@ -91,3 +91,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.21_ae874fc6/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_13.pext
     Changelog:
     - 'Added option to run Steam Big Picture Mode overlay for non Steam games. Be aware that the overlay via this method has missing functionality.'
+  - Version: 1.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.01_36b61c72/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_14.pext
+    Changelog:
+    - 'Prevent extension from searching for game SteamId for non Steam games if Steam overlay setting is not enabled'
