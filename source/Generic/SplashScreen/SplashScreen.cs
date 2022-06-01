@@ -103,7 +103,7 @@ namespace SplashScreen
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             // TODO Refactor!
-            
+
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && !settings.Settings.ExecuteInDesktopMode)
             {
                 logger.Info("Execution disabled for Desktop mode in settings");
@@ -134,23 +134,12 @@ namespace SplashScreen
             var splashImagePath = string.Empty;
             var logoPath = string.Empty;
 
-            var showSplashImage = !PlayniteUtilities.GetGameHasFeature(game, "[Splash Screen] Skip splash image", true);
-            if (showSplashImage)
-            {
-                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-                {
-                    showSplashImage = settings.Settings.ViewImageSplashscreenDesktopMode;
-                }
-                else
-                {
-                    showSplashImage = settings.Settings.ViewImageSplashscreenFullscreenMode;
-                }
-            }
+            var showSplashImage = GetShowSplashImage(game);
 
             if (showSplashImage)
             {
                 var usingGlobalImage = false;
-                if (settings.Settings.UseGlobalSplashImage && !string.IsNullOrEmpty(settings.Settings.GlobalSplashFile))
+                if (settings.Settings.UseGlobalSplashImage && !settings.Settings.GlobalSplashFile.IsNullOrEmpty())
                 {
                     var globalSplashImagePath = Path.Combine(GetPluginUserDataPath(), settings.Settings.GlobalSplashFile);
                     if (FileSystem.FileExists(globalSplashImagePath))
@@ -189,15 +178,30 @@ namespace SplashScreen
                 if (!videoPath.IsNullOrEmpty())
                 {
                     CreateSplashVideoWindow(showSplashImage, videoPath, splashImagePath, logoPath);
-                }
-                else if (showSplashImage)
-                {
-                    CreateSplashImageWindow(splashImagePath, logoPath);
+                    return;
                 }
             }
-            else if (showSplashImage)
+            
+            if (showSplashImage)
             {
                 CreateSplashImageWindow(splashImagePath, logoPath);
+            }
+        }
+
+        private bool GetShowSplashImage(Game game)
+        {
+            if (PlayniteUtilities.GetGameHasFeature(game, "[Splash Screen] Skip splash image", true))
+            {
+                return false;
+            }
+
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                return settings.Settings.ViewImageSplashscreenDesktopMode;
+            }
+            else
+            {
+                return settings.Settings.ViewImageSplashscreenFullscreenMode;
             }
         }
 
@@ -246,7 +250,7 @@ namespace SplashScreen
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     Thread.Sleep(3000);
-                }, new GlobalProgressOptions(string.Empty));
+                }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false });
 
                 if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
                     (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
