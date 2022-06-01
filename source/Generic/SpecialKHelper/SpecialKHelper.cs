@@ -157,8 +157,7 @@ namespace SpecialKHelper
                 return;
             }
 
-            ValidateDefaultProfile();
-            ConfigureSteamApiInject(game);
+            ValidateDefaultProfile(game);
             ValidateReshadeConfiguration(game);
         }
 
@@ -229,7 +228,7 @@ namespace SpecialKHelper
             }
         }
 
-        private void ValidateDefaultProfile()
+        private void ValidateDefaultProfile(Game game)
         {
             if (!FileSystem.FileExists(defaultConfigPath))
             {
@@ -243,6 +242,7 @@ namespace SpecialKHelper
             if (settings.Settings.EnableStOverlayOnNewProfiles)
             {
                 updatedValues += ValidateIniValue(ini, "Steam.System", "PreLoadSteamOverlay", "true");
+                ConfigureSteamApiInject(game);
             }
             else
             {
