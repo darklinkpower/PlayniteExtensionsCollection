@@ -147,6 +147,7 @@ namespace GamePassCatalogBrowser
         public int AddGamePassListToLibrary (List<GamePassGame> gamePassGamesList)
         {
             var i = 0;
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (GamePassGame game in gamePassGamesList.ToList())
             {
                 if (GameIdsInLibrary.Contains(game.GameId) == false)

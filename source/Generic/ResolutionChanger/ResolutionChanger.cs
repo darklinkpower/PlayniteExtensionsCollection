@@ -232,9 +232,10 @@ namespace ResolutionChanger
 
         private void RemoveResolutionConfigurationSelected(string regexDef)
         {
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
             {
-                if (game.FeatureIds == null)
+                if (!game.FeatureIds.HasItems())
                 {
                     continue;
                 }

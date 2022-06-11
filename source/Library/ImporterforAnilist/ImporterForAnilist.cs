@@ -427,6 +427,7 @@ namespace ImporterforAnilist
 
         private void UpdateGamesCompletionStatus(List<Game> games, EntryStatus entryStatus)
         {
+            using (PlayniteApi.Database.BufferedUpdate())
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 if (!idsCache.HasItems())

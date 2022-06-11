@@ -284,6 +284,7 @@ namespace NVIDIAGeForceNowEnabler
 
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
+                using (PlayniteApi.Database.BufferedUpdate())
                 foreach (var game in PlayniteApi.Database.Games)
                 {
                     var supportedGame = GetDatabaseMatchingEntryForGame(game);

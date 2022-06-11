@@ -778,6 +778,7 @@ namespace ExtraMetadataLoader
                         microvideoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Video Micro missing");
                     }
 
+                    using (PlayniteApi.Database.BufferedUpdate())
                     foreach (var game in PlayniteApi.Database.Games)
                     {
                         if (logoMissingTag != null)
@@ -791,6 +792,7 @@ namespace ExtraMetadataLoader
                                 PlayniteUtilities.AddTagToGame(PlayniteApi, game, logoMissingTag);
                             }
                         }
+
                         if (videoMissingTag != null)
                         {
                             if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
@@ -802,6 +804,7 @@ namespace ExtraMetadataLoader
                                 PlayniteUtilities.AddTagToGame(PlayniteApi, game, videoMissingTag);
                             }
                         }
+
                         if (microvideoMissingTag != null)
                         {
                             if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoMicroPath(game)))

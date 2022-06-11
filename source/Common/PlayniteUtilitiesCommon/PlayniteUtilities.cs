@@ -62,6 +62,8 @@ namespace PlayniteUtilitiesCommon
         public static int AddFeatureToGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, GameFeature feature)
         {
             var addedCount = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in games)
             {
                 if (AddFeatureToGame(PlayniteApi, game, feature))
@@ -76,6 +78,8 @@ namespace PlayniteUtilitiesCommon
         public static int RemoveFeatureFromGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, string featureName)
         {
             var removedCount = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in games)
             {
                 if (RemoveFeatureFromGame(PlayniteApi, game, featureName))
@@ -154,6 +158,8 @@ namespace PlayniteUtilitiesCommon
         public static int AddTagToGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, Tag tag)
         {
             var addedCount = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in games)
             {
                 if (AddTagToGame(PlayniteApi, game, tag))
@@ -168,6 +174,8 @@ namespace PlayniteUtilitiesCommon
         public static int RemoveTagFromGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, string tagName)
         {
             var removedCount = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in games)
             {
                 if (RemoveTagFromGame(PlayniteApi, game, tagName))

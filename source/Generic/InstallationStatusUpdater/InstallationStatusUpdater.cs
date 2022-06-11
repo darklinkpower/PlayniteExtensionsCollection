@@ -24,6 +24,7 @@ namespace InstallationStatusUpdater
         private static readonly ILogger logger = LogManager.GetLogger();
         private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
+        private const string driveTagPrefix = "[Install Drive]";
         private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
         private DispatcherTimer timer;
         private Window mainWindow;
@@ -515,21 +516,26 @@ namespace InstallationStatusUpdater
         {
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var gameDatabase = PlayniteApi.Database.Games;
-                var driveTagPrefix = "[Install Drive]";
-                foreach (Game game in gameDatabase)
+                var drivesTagsDictionary = new Dictionary<string, Tag>();
+                using (PlayniteApi.Database.BufferedUpdate())
+                foreach (var game in PlayniteApi.Database.Games)
                 {
-                    string tagName = string.Empty;
-                    if (!string.IsNullOrEmpty(game.InstallDirectory) && game.IsInstalled == true)
+                    var tagName = string.Empty;
+                    if (!game.InstallDirectory.IsNullOrEmpty() && game.IsInstalled)
                     {
-                        FileInfo s = new FileInfo(game.InstallDirectory);
-                        string sourceDrive = Path.GetPathRoot(s.FullName).ToUpper();
-                        tagName = string.Format("{0} {1}", driveTagPrefix, sourceDrive);
-                        Tag driveTag = PlayniteApi.Database.Tags.Add(tagName);
-                        PlayniteUtilities.AddTagToGame(PlayniteApi, game, driveTag);
+                        var s = new FileInfo(game.InstallDirectory);
+                        var sourceDrive = Path.GetPathRoot(s.FullName).ToUpper();
+                        tagName = $"{driveTagPrefix} {sourceDrive}";
+                        if (!drivesTagsDictionary.ContainsKey(tagName))
+                        {
+                            var driveTag = PlayniteApi.Database.Tags.Add(tagName);
+                            drivesTagsDictionary.Add(tagName, driveTag);
+                        }
+
+                        PlayniteUtilities.AddTagToGame(PlayniteApi, game, drivesTagsDictionary[tagName]);
                     }
 
-                    if (game.Tags == null)
+                    if (!game.Tags.HasItems())
                     {
                         continue;
                     }

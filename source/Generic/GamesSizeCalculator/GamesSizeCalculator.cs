@@ -84,6 +84,8 @@ namespace GamesSizeCalculator
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 a.ProgressMaxValue = games.Count();
+
+                using (PlayniteApi.Database.BufferedUpdate())
                 foreach (var game in games)
                 {
                     if (a.CancelToken.IsCancellationRequested)
@@ -226,6 +228,8 @@ namespace GamesSizeCalculator
             {
                 var games = PlayniteApi.Database.Games.Where(x => x.IsInstalled);
                 a.ProgressMaxValue = games.Count();
+
+                using (PlayniteApi.Database.BufferedUpdate())
                 foreach (var game in games)
                 {
                     a.CurrentProgressValue++;

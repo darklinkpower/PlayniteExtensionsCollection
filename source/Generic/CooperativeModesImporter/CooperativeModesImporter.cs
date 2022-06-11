@@ -198,6 +198,8 @@ namespace CooperativeModesImporter
 
             featuresDictionary = new Dictionary<string, GameFeature>();
             var updatedGames = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in games)
             {
                 if (game.Platforms == null || game.Platforms.Count < 0
@@ -230,6 +232,8 @@ namespace CooperativeModesImporter
             var database = Serialization.FromJson<CooperativeDatabase>(File.ReadAllText(databasePath));
             featuresDictionary = new Dictionary<string, GameFeature>();
             var updatedGames = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in PlayniteApi.MainView.SelectedGames)
             {
                 if (game.Platforms == null || game.Platforms.Count < 0
