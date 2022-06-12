@@ -33,12 +33,8 @@ namespace SpecialKHelper
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string emptyReshadePreset;
-        private readonly string reshadeBase;
-        private readonly string reshadeIniPath;
         private readonly FileIniDataParser iniParser;
         private readonly string pluginInstallPath;
-        private readonly string skifPath;
-        private readonly string defaultConfigPath;
         private bool steamBpmEnvVarSet = false;
         private static readonly Regex reshadeTechniqueRegex = new Regex(@"technique ([^\s]+)", RegexOptions.None);
 
@@ -50,12 +46,7 @@ namespace SpecialKHelper
         public SpecialKHelper(IPlayniteAPI api) : base(api)
         {
             pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            skifPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Mods", "SpecialK");
-            defaultConfigPath = Path.Combine(skifPath, "Global", "default_SpecialK.ini");
-
             emptyReshadePreset = Path.Combine(pluginInstallPath, "Resources", "ReshadeDefaultPreset.ini");
-            reshadeBase = Path.Combine(skifPath, @"PlugIns\ThirdParty\ReShade");
-            reshadeIniPath = Path.Combine(reshadeBase, "ReShade.ini");
 
             iniParser = new FileIniDataParser();
             iniParser.Parser.Configuration.AssigmentSpacer = string.Empty;
@@ -88,7 +79,28 @@ namespace SpecialKHelper
             }
         }
 
-        public string GetReshadeTechniqueSorting()
+        private static string GetSpecialKPath()
+        {
+            using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Kaldaien\Special K"))
+            {
+                if (key == null)
+                {
+                    logger.Debug("Special K Registry subkey not found");
+                    return null;
+                }
+
+                var pathValue = key.GetValue("Path");
+                if (pathValue == null)
+                {
+                    logger.Debug("Special K Path registry key not found");
+                    return null;
+                }
+
+                return pathValue.ToString();
+            }
+        }
+
+        public string GetReshadeTechniqueSorting(string reshadeBase)
         {
             var shadersDirectory = Path.Combine(reshadeBase, "reshade-shaders", "Shaders");
             if (!Directory.Exists(shadersDirectory))
@@ -139,16 +151,27 @@ namespace SpecialKHelper
 
             var startSuccess32 = false;
             var startSuccess64 = false;
+            var skifPath = GetSpecialKPath();
+            if (skifPath.IsNullOrEmpty())
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "sk_registryNotFound",
+                    ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
+                    NotificationType.Error
+                ));
+                return;
+            }
+
             if (startServices)
             {
-                startSuccess32 = StartSpecialkService("32");
-                startSuccess64 = StartSpecialkService("64");
+                startSuccess32 = StartSpecialkService(skifPath, "32");
+                startSuccess64 = StartSpecialkService(skifPath, "64");
             }
             else
             {
                 //Check if leftover service is running and close it
-                StopSpecialkService("32");
-                StopSpecialkService("64");
+                StopSpecialkService(skifPath, "32");
+                StopSpecialkService(skifPath, "64");
             }
 
             if (!startServices || !startSuccess32 || !startSuccess64)
@@ -157,8 +180,8 @@ namespace SpecialKHelper
                 return;
             }
 
-            ValidateDefaultProfile(game);
-            ValidateReshadeConfiguration(game);
+            ValidateDefaultProfile(game, skifPath);
+            ValidateReshadeConfiguration(game, skifPath);
         }
 
         private void RemoveBpmEnvVariable()
@@ -185,8 +208,11 @@ namespace SpecialKHelper
             steamBpmEnvVarSet = true;
         }
 
-        private void ValidateReshadeConfiguration(Game game)
+        private void ValidateReshadeConfiguration(Game game, string skifPath)
         {
+            var reshadeBase = Path.Combine(skifPath, @"PlugIns\ThirdParty\ReShade");
+            var reshadeIniPath = Path.Combine(reshadeBase, "ReShade.ini");
+
             if (!Directory.Exists(reshadeBase))
             {
                 logger.Warn($"Reshade directory not found in {reshadeBase}");
@@ -199,7 +225,7 @@ namespace SpecialKHelper
             if (!FileSystem.FileExists(gameReshadePreset))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(gameReshadePreset));
-                var techniqueSortingLine = GetReshadeTechniqueSorting();
+                var techniqueSortingLine = GetReshadeTechniqueSorting(reshadeBase);
                 if (!techniqueSortingLine.IsNullOrEmpty())
                 {
                     FileSystem.WriteStringToFile(gameReshadePreset, $"PreprocessorDefinitions=\nTechniques=\nTechniqueSorting={techniqueSortingLine}", true);
@@ -228,8 +254,9 @@ namespace SpecialKHelper
             }
         }
 
-        private void ValidateDefaultProfile(Game game)
+        private void ValidateDefaultProfile(Game game, string skifPath)
         {
+            var defaultConfigPath = Path.Combine(skifPath, "Global", "default_SpecialK.ini");
             if (!FileSystem.FileExists(defaultConfigPath))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(defaultConfigPath));
@@ -242,7 +269,7 @@ namespace SpecialKHelper
             if (settings.Settings.EnableStOverlayOnNewProfiles)
             {
                 updatedValues += ValidateIniValue(ini, "Steam.System", "PreLoadSteamOverlay", "true");
-                ConfigureSteamApiInject(game);
+                ConfigureSteamApiInject(game, skifPath);
             }
             else
             {
@@ -420,7 +447,7 @@ namespace SpecialKHelper
             }
         }
 
-        private bool ConfigureSteamApiInject(Game game)
+        private bool ConfigureSteamApiInject(Game game, string skifPath)
         {
             if (Steam.IsGameSteamGame(game))
             {
@@ -484,6 +511,7 @@ namespace SpecialKHelper
             // As an alternative in case file creation fails or created steam id file
             // is not used, we attempt to modify the default profile
             // so the id gets copied if a new profile is created
+            var defaultConfigPath = Path.Combine(skifPath, "Global", "default_SpecialK.ini");
             if (FileSystem.FileExists(defaultConfigPath))
             {
                 IniData ini = iniParser.ReadFile(defaultConfigPath);
@@ -510,15 +538,25 @@ namespace SpecialKHelper
             {
                 RemoveBpmEnvVariable();
             }
+            var skifPath = GetSpecialKPath();
+            if (skifPath.IsNullOrEmpty())
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "sk_registryNotFound",
+                    ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
+                    NotificationType.Error
+                ));
+                return;
+            }
 
             var cpuArchitectures = new string[] { "32", "64" };
             foreach (var cpuArchitecture in cpuArchitectures)
             {
-                StopSpecialkService(cpuArchitecture);
+                StopSpecialkService(skifPath, cpuArchitecture);
             }
         }
 
-        private bool StartSpecialkService(string cpuArchitecture)
+        private bool StartSpecialkService(string skifPath, string cpuArchitecture)
         {
             var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
             if (FileSystem.FileExists(servletPid))
@@ -589,7 +627,7 @@ namespace SpecialKHelper
             return false;
         }
 
-        private bool StopSpecialkService(string cpuArchitecture)
+        private bool StopSpecialkService(string skifPath, string cpuArchitecture)
         {
             var servletPid = Path.Combine(skifPath, "Servlet", "SpecialK" + cpuArchitecture + ".pid");
             if (!FileSystem.FileExists(servletPid))
@@ -732,6 +770,17 @@ namespace SpecialKHelper
 
         private void OpenEditorWindow(string searchTerm = null)
         {
+            var skifPath = GetSpecialKPath();
+            if (skifPath.IsNullOrEmpty())
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage(
+                    "sk_registryNotFound",
+                    ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
+                    NotificationType.Error
+                ));
+                return;
+            }
+
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false,
