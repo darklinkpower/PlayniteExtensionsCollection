@@ -16,6 +16,7 @@ Ten en cuenta que un control necesita estar conectado y habilitado para que se a
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Eliminar característica para activar la ejecución en el modo selectivo</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Selecciona el juego a usar para la configuración de Steam o cancela para usar una opción genérica</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Clave de registro de Special K no encontrada</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Archivo de Special K no encontrado en {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">El servicio {0} de Special K no se pudo iniciar</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Editor de perfiles de Special K</sys:String>
