@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesIdUrlDescription">Import game(s) with Steam Id or URL</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription">Import game(s) from Depressurizer Profile</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_ResultsMessage">Added {0} new Steam games.</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">Enter Steam game Id or URL:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Warning. Couldn't verify if obtained AppId &quot;{0}&quot; is valid.
-Add this and all unknown AppIds?</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">Could not obtain any valid Steam AppId.</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesIdUrlDescription">Importar jogo(s) com o Steam Id ou URL</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_MenuItemAddGamesDepressurizerDescription">Importar jogo(s) do perfil Depressurizer</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_ResultsMessage">Adicionado(s) {0} novos jogos da Steam.</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">Insira o ID ou URL do jogo Steam:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Aviso. Não foi possível verificar se o AppId &quot;{0} obtido é válido.
+Adicionar este e todos AppIds desconhecidos?</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">Erro ao baixar a informação do jogo para o AppId &quot;{0}&quot;. Erro: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">Não foi possível obter qualquer Id Steam válido.</sys:String>
 </ResourceDictionary>
