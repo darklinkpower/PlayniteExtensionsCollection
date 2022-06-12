@@ -269,7 +269,11 @@ namespace SpecialKHelper
             if (settings.Settings.EnableStOverlayOnNewProfiles)
             {
                 updatedValues += ValidateIniValue(ini, "Steam.System", "PreLoadSteamOverlay", "true");
-                ConfigureSteamApiInject(game, skifPath);
+                var steamId = ConfigureSteamApiInject(game);
+                if (!steamId.IsNullOrEmpty())
+                {
+                    updatedValues += ValidateIniValue(ini, "Steam.System", "AppID", "steamId");
+                }
             }
             else
             {
@@ -447,11 +451,11 @@ namespace SpecialKHelper
             }
         }
 
-        private bool ConfigureSteamApiInject(Game game, string skifPath)
+        private string ConfigureSteamApiInject(Game game)
         {
             if (Steam.IsGameSteamGame(game))
             {
-                return true;
+                return null;
             }
 
             var appIdTextPath = string.Empty;
@@ -461,7 +465,7 @@ namespace SpecialKHelper
                 appIdTextPath = Path.Combine(game.InstallDirectory, "steam_appid.txt");
                 if (FileSystem.FileExists(appIdTextPath))
                 {
-                    return true;
+                    return null;
                 }
             }
 
@@ -472,7 +476,7 @@ namespace SpecialKHelper
             if (FileSystem.FileExists(historyFlagFile))
             {
                 previousId = FileSystem.ReadStringFromFile(historyFlagFile).Trim();
-                logger.Warn($"Detected attempt flag file for game {game.Name} in {historyFlagFile}. Previous Id: {previousId}");
+                logger.Info($"Detected attempt flag file for game {game.Name} in {historyFlagFile}. Previous Id: {previousId}");
             }
 
             var steamId = "0";
@@ -508,28 +512,13 @@ namespace SpecialKHelper
                 }
             }
 
-            // As an alternative in case file creation fails or created steam id file
-            // is not used, we attempt to modify the default profile
-            // so the id gets copied if a new profile is created
-            var defaultConfigPath = Path.Combine(skifPath, "Global", "default_SpecialK.ini");
-            if (FileSystem.FileExists(defaultConfigPath))
-            {
-                IniData ini = iniParser.ReadFile(defaultConfigPath);
-                var currentAppId = ini["Steam.System"]["AppID"];
-                if (currentAppId == null || currentAppId != steamId)
-                {
-                    ini["Steam.System"]["AppID"] = steamId;
-                    iniParser.WriteFile(defaultConfigPath, ini, Encoding.UTF8);
-                }
-            }
-
             // Flag file so we don't attempt to search again in future startups.
             if (!FileSystem.FileExists(historyFlagFile))
             {
                 FileSystem.WriteStringToFile(historyFlagFile, steamId, true);
             }
             
-            return true;
+            return steamId;
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
