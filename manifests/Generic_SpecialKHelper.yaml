@@ -97,3 +97,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.01_36b61c72/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_14.pext
     Changelog:
     - 'Prevent extension from searching for game SteamId for non Steam games if Steam overlay setting is not enabled'
+  - Version: 1.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.11_f6b6813d/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_15.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Performance improvements to games processing'
+    - 'Fix extension not locating Special K files in latest nightly builds'

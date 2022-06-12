@@ -206,3 +206,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.06_bad3b108/Installation_Status_Updater_2_30.pext
     Changelog:
     - 'Fix adding a Tag instead of a Feature in the menu item to add the ignore feature'
+  - Version: 2.31
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.11_f6b6813d/Installation_Status_Updater_2_31.pext
+    Changelog:
+    - 'Performance improvements to games processing'

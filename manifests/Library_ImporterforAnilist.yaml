@@ -186,3 +186,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.05.04_5cdc0260/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_28.pext
     Changelog:
     - 'Improvements and fixes to metadata download'
+  - Version: 2.29
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.11_f6b6813d/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_29.pext
+    Changelog:
+    - 'Performance improvements to games processing'
