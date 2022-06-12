@@ -16,6 +16,7 @@ Beachten Sie, dass ein Controller angeschlossen und für Steam Controller aktivi
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Funktion entfernen, um die Ausführung im Selektiven Modus zu aktivieren</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Wählen Sie das Spiel aus, das Sie für die Steam Konfiguration verwenden möchten, oder brechen Sie den Vorgang ab, um eine generische Option zu verwenden</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Special K registry key not found</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Spezial K Datei nicht gefunden in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Spezieller K {0} Dienst konnte nicht gestartet werden</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Speziel K Profil Editor</sys:String>
