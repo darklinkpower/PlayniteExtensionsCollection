@@ -24,7 +24,7 @@ namespace CooperativeModesImporter
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string databaseZipPath;
         private readonly string databasePath;
-        private readonly int currentDatabaseVersion = 4;
+        private readonly int currentDatabaseVersion = 5;
         private readonly Dictionary<string, string> specIdToSystemDictionary;
         private Dictionary<string, GameFeature> featuresDictionary;
 
