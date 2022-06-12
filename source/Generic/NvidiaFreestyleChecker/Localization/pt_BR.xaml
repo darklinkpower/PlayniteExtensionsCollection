@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_MenuItemCheckFreestyleEnabledGamesDescription">Check for Freestyle supported games in library</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage">Couldn't download NVIDIA Freestyle database. Error: {0}</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage">Error: Not found any freestyle supported games.</sys:String>
-    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">NVIDIA Freestyle supported games in library: {0}
-Added &quot;{1}&quot; feature to {2} game(s).</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_MenuItemCheckFreestyleEnabledGamesDescription">Verificar jogos suportados por Freestyle na biblioteca</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NvidiaJsonDownloadFailErrorMessage">Não foi possível baixar o banco de dados NVIDIA Freestyle. Erro: {0}</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_NoSupportedGamesErrorMessage">Erro: Não foi encontrado nenhum jogo com suporte ao freestyle.</sys:String>
+    <sys:String x:Key="LOCNVIDIA_Freestyle_Checker_ResultsMessage" xml:space="preserve">NVIDIA Freestyle suporta jogos na biblioteca: {0}
+Adicionado &quot;{1}&quot; recurso para {2} jogo(s).</sys:String>
 </ResourceDictionary>
