@@ -16,6 +16,7 @@ Vær oppmerksom på at en kontroller må være koblet til og aktivert som Steam-
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Fjern funksjon for å aktivere kjøring i global modus</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Velg spill du vil bruke til Steam-konfigurasjon eller avbryt for å bruke et generisk valg</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Special K registry key not found</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K-fil ikke funnet i {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K-tjeneste for {0} kunne ikke startes</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Redigeringsverktøy for Special K-profiler</sys:String>
