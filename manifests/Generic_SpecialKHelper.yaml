@@ -105,3 +105,9 @@ Packages:
     - 'Updated localizations'
     - 'Performance improvements to games processing'
     - 'Fix extension not locating Special K files in latest nightly builds'
+  - Version: 1.16
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.12_ba5d3473/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_16.pext
+    Changelog:
+    - 'Fix steam Id value not being saved to Special K profiles on first launch'
