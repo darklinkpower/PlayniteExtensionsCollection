@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Browse Game Pass Catalog</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Add all Catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Reset Cache</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Ajuda</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Navegar no Catálogo do Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Adicionar todos os catálogos à biblioteca Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Resetar Cache</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass catalog has been reset.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Are you sure you want to add all the Game Pass catalog to your library?</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Could not obtain Game Pass catalog.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Added {0} new games to the Playnite library.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} added to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">O catálogo do Game Pass foi redefinido.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Tem certeza de que deseja adicionar todo o catálogo do Game Pass à sua biblioteca?</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Não foi possível obter o catálogo do Game Pass.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">Adicionado {0} novos jogos à biblioteca do Playnite.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} adicionado à biblioteca Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Atualizando Catálogo do Game Pass...</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Atualizando Catálogo do Game Pass e adicionando jogos...</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Coleção:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Categoria:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Procurar:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Desenvolvedor:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publicadora:</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">View in Xbox app</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">View in Microsoft Store</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Add to Playnite library</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">Ver no aplicativo Xbox</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInStore">Ver na loja da Microsoft</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewAddToLibrary">Adicionar à biblioteca Playnite</sys:String>
 
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Game Pass catalog region:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Update Game Pass catalog on library update</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notify of Game Pass catalog updates</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Add expired tag to games removed from Game Pass</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Add newly added games when updating the Game Pass catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Remove removed games when updating the Game Pass catalog from the Playnite library if they have not been played</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogRegionLabel">Região de catálogo do Game Pass:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsUpdateOnLibUpdate">Atualizar catálogo do Game Pass na atualização da biblioteca</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsNotifyCatalogUpdates">Notificar sobre atualizações de catálogo do Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddTagRemovedGames">Adicionar tag expirada aos jogos removidos do Game Pass</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsAddNewCatalogGamesAuto">Adicionar jogos adicionados recentemente ao atualizar o catálogo do Game Pass para a biblioteca do Playnite</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsRemoveCatalogGamesAuto">Remova os jogos removidos quando atualizar o catálogo do Game Pass da biblioteca do Playnite caso eles não tenham sido jogados</sys:String>
 </ResourceDictionary>
