@@ -68,7 +68,7 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
     <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hora(s) {1} minuto(s)</sys:String>
     <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hora {1} minuto</sys:String>
     <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} segundos</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} segundos</sys:String>
 
     <sys:String x:Key="LOCPlayStateYesLabel">Sim</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">Não</sys:String>
