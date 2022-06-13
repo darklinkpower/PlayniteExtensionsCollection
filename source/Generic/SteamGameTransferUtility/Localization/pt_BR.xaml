@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription">Launch utility window</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Ajuda</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription">Iniciar janela do utilitário</sys:String>
 
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Restart Steam after processing games to reflect changes on Steam if necessary</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Delete source game after copying game or if game is detected in target library</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Reinicie o Steam após processar os jogos para refletir as alterações no Steam, se necessário</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Exclua o jogo de origem após copiar o jogo ou se o jogo for detectado na biblioteca de destino</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Target Library:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Open</sys:String>
     <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
