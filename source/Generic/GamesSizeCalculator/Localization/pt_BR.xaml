@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Automatically calculate the size of a game after it is stopped</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Automatically calculate the size of a game after if it has been modified on library update</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Updates the game file size if it is detected that the game directory or rom file has been updated since the previous automatic detection</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Automatically calculate the size of a game after it is added on library update</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Ajuda</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Calcular automaticamente o tamanho de um jogo depois que ele for parado</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Calcule automaticamente o tamanho de um jogo depois se ele foi modificado na atualização da biblioteca</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Atualiza o tamanho do arquivo do jogo se ele for detectado que o diretório ou arquivo da rom do jogo foi atualizado desde a detecção automática anterior</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Calcular automaticamente o tamanho de um jogo depois de adicionado na atualização da biblioteca</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calculate sizes of selected games</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calculate sizes of selected games (Force overwrite)</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calcular o tamanho dos jogos selecionados</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calcular tamanhos dos jogos selecionados (Forçar substituição)</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Calculating sizes…</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Done</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Calculando tamanhos…</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Feito</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error while getting directory size in {0} of game {1}. {2}</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error while getting rom file size in {0} of game {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Calculadora de Tamanho dos Jogos: Erro ao obter o tamanho do diretório em {0} do jogo {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Calculadora de Tamanho dos Jogos: Erro ao obter o tamanho do arquivo da rom em {0} do jogo {1}. {2}</sys:String>
 </ResourceDictionary>
