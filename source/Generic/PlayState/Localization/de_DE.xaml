@@ -23,7 +23,7 @@ Sie können versuchen, eine andere HotKey Kombination zu verwenden, um das Probl
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informationen:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Aktion:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Allgemein</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Benachrichtigungen</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Benachrichtigungsmeldungen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Konfiguriertes Sperren/Fortsetzen Hotkey:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Konfigurierte Informationstaste:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Zeigt eine Benachrichtigung an, die den aktuellen Pausenstatus und andere Informationen des aktiven Spiels anzeigt</sys:String>
@@ -52,13 +52,13 @@ oder eine Funktion namens &quot;[PlayState] Prozesse anhalten&quot;, wenn Sie di
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Durch Aktivieren dieser Option werden native Windows-Benachrichtigungen anstelle von Playnite Benachrichtigungen angezeigt.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Zeigt die Spielzeit in der Benachrichtigungsnachricht an</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Gesamte Spielzeit in der Benachrichtigungsnachricht anzeigen</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Spiele automatisch unterbrechen, wenn sie nicht das aktive Fenster sind</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">Dies funktioniert unterschiedlich je nach Aussetzmodus des laufenden Spiels.
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatisches Aussetzen von Spielen, wenn sie nicht das aktive Fenster sind</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">Diese Funktion funktioniert je nach Unterbrechungsmodus des laufenden Spiels unterschiedlich.
 
-Spiel unterbrechen: Spiele werden automatisch unterbrochen, wenn sie nicht das aktive Fenster sind, aber sie müssen manuell fortgesetzt werden, um wieder in das Spiel zu gelangen.
+Spiel unterbrechen: Spiele werden automatisch unterbrochen, wenn sie nicht das aktive Fenster sind, aber sie müssen manuell wieder aufgenommen werden, um wieder ins Spiel zu gelangen.
 
-Spielzeit unterbrechen: Spiele werden unterbrochen und automatisch fortgesetzt, wenn das Spielfenster den aktiven Status ändert.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
+Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufgenommen, wenn das Spielfenster seinen aktiven Zustand ändert.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Spielfenster in den Vordergrund bringen, wenn sie wiederaufgenommen werden</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState Manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState Manager Seitenleiste anzeigen</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Spielzeit:</sys:String>
