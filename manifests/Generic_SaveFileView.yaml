@@ -85,3 +85,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.26_705efa27/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_12.pext
     Changelog:
     - 'Fix attempting to download data from PCGamingWiki for non PC games'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_13.pext
+    Changelog:
+    - 'Updated localizations'

@@ -1,7 +1,7 @@
 Id: Twitch_Add_Link
 Name: Twitch link importer
 Author: darklinkpower
-Version: 2.8
+Version: 2.9
 Module: TwitchAddLink.psm1
 Type: Script
 Icon: icon.png

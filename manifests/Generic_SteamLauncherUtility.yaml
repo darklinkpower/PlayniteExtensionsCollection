@@ -146,3 +146,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Prevent plugin from restarting Steam if another Steam game is running when launching a game'
+  - Version: 2.23
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_23.pext
+    Changelog:
+    - 'Updated localizations'

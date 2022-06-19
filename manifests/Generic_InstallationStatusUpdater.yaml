@@ -212,3 +212,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.11_f6b6813d/Installation_Status_Updater_2_31.pext
     Changelog:
     - 'Performance improvements to games processing'
+  - Version: 2.32
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Installation_Status_Updater_2_32.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix errors when game paths contain invalid characters'

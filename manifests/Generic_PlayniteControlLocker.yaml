@@ -36,3 +36,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.23_3f5693d2/PlayniteControlLocker_e7c39fe7-bec1-4691-a818-b9ba1470ad21_1_5.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/PlayniteControlLocker_e7c39fe7-bec1-4691-a818-b9ba1470ad21_1_6.pext
+    Changelog:
+    - 'Updated localizations'

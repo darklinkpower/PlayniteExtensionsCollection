@@ -281,3 +281,9 @@ Packages:
     - 'Fix extension looking for open windows multiple times when multiple games are running'
     - 'Games that fail to scan game processes will falback to suspend mode'
     - 'Improvements to game processes detection'
+  - Version: 2.40
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/PlayState_2_40.pext
+    Changelog:
+    - 'Updated localizations'

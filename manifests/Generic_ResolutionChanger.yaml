@@ -110,3 +110,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Performance improvements to games processing'
+  - Version: 1.17
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_17.pext
+    Changelog:
+    - 'Updated localizations'

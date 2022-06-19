@@ -386,3 +386,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Performance improvements to games processing'
+  - Version: 1.55
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_55.pext
+    Changelog:
+    - 'Updated localizations'

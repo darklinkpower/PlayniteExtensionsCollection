@@ -1,7 +1,7 @@
 Id: Log_Open_a755c30f-580a-491e-9584-6c5314f6e254
 Name: Log Open
 Author: darklinkpower
-Version: 2.7
+Version: 2.8
 Module: LogOpen.psm1
 Type: Script
 Icon: icon.png

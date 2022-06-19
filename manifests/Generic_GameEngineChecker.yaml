@@ -56,3 +56,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix extension failing to obtain data after PCGamingWiki API changes'
+  - Version: 2.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_9.pext
+    Changelog:
+    - 'Updated localizations'

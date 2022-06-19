@@ -210,3 +210,9 @@ Packages:
     Changelog:
     - 'Hide Steam reviews control if game is not a PC or Steam game'
     - 'Expose value to themes that indicates if the Steam reviews control is visible'
+  - Version: 2.32
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_32.pext
+    Changelog:
+    - 'Updated localizations'

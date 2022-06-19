@@ -1,7 +1,7 @@
 Id: Links_Sorter
 Name: Links Sorter
 Author: darklinkpower
-Version: 2.5
+Version: 2.6
 Module: LinksSorter.psm1
 Type: Script
 Icon: icon.png

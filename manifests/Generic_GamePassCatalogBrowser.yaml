@@ -125,3 +125,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Performance improvements to games processing'
+  - Version: 2.19
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_19.pext
+    Changelog:
+    - 'Updated localizations'

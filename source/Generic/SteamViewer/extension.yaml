@@ -1,7 +1,7 @@
 Id: Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac
 Name: Steam Viewer
 Author: darklinkpower
-Version: 2.9
+Version: 2.10
 Module: SteamViewer.psm1
 Type: Script
 Icon: icon.png

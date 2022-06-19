@@ -68,3 +68,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix not processing images in cache without file extension'
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Image_Cache_Size_Saver_2_11.pext
+    Changelog:
+    - 'Updated localizations'
