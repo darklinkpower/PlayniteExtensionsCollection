@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCLinks_Sorter_MenuItemFormatSelectedDescription">Sort links in selected games</sys:String>
-    <sys:String x:Key="LOCLinks_Sorter_MenuItemFormatAllDescription">Sort links in all games</sys:String>
-    <sys:String x:Key="LOCLinks_Sorter_ResultsMessage">Sorted the links of {0} games(s)</sys:String>
+    <sys:String x:Key="LOCLinks_Sorter_MenuItemFormatSelectedDescription">Ordenar links em jogos selecionados</sys:String>
+    <sys:String x:Key="LOCLinks_Sorter_MenuItemFormatAllDescription">Ordenar links em todos os jogos</sys:String>
+    <sys:String x:Key="LOCLinks_Sorter_ResultsMessage">Ordenado os links de {0} jogos(s)</sys:String>
 </ResourceDictionary>

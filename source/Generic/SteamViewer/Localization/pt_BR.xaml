@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Components</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Activate product</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Componentes</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Ativar Produto</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">Downloads</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Friends</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Screenshots</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Settings</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Store Page</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Community Hub</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussions</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Achievements</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">View in Steam Library</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Amigos</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">Novidades</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Capturas de Tela</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Configurações</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Página da Loja</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Central da comunidade</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussões</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guias</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">Notícias</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Conquistas</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Loja de Pontos</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Ver na Biblioteca Steam</sys:String>
 </ResourceDictionary>
