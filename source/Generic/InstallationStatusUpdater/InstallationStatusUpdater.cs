@@ -22,9 +22,13 @@ namespace InstallationStatusUpdater
     public class InstallationStatusUpdater : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled);
+        private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled | RegexOptions.CultureInvariant);
         private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
         private const string driveTagPrefix = "[Install Drive]";
+        private const char backslash = '\\';
+        private const char fordwslash = '/';
+        private const char doubleDot = ':';
+        private static readonly HashSet<char> invalidFileChars = new HashSet<char>(Path.GetInvalidFileNameChars());
         private List<FileSystemWatcher> dirWatchers = new List<FileSystemWatcher>();
         private DispatcherTimer timer;
         private Window mainWindow;
@@ -279,21 +283,22 @@ namespace InstallationStatusUpdater
                 return false;
             }
 
-            if (driveRegex.IsMatch(rom.Path))
+            var romPath = RemoveInvalidPathChars(rom.Path);
+            if (driveRegex.IsMatch(romPath))
             {
-                return File.Exists(rom.Path);
+                return File.Exists(romPath);
             }
 
-            string romFullPath = rom.Path;
-            if (!string.IsNullOrEmpty(installDirectory))
+            string romFullPath = romPath;
+            if (!installDirectory.IsNullOrEmpty())
             {
-                if (installDirVarRegex.IsMatch(rom.Path))
+                if (installDirVarRegex.IsMatch(romPath))
                 {
-                    romFullPath = rom.Path.Replace("{InstallDir}", installDirectory);
+                    romFullPath = romPath.Replace("{InstallDir}", installDirectory);
                 }
                 else
                 {
-                    romFullPath = Path.Combine(installDirectory, rom.Path);
+                    romFullPath = Path.Combine(installDirectory, romPath);
                 }
             }
 
@@ -330,7 +335,7 @@ namespace InstallationStatusUpdater
 
         public static bool DetectIsFileActionInstalled(GameAction gameAction, string installDirectory)
         {
-            if (string.IsNullOrEmpty(gameAction.Path))
+            if (gameAction.Path.IsNullOrEmpty())
             {
                 return false;
             }
@@ -349,21 +354,21 @@ namespace InstallationStatusUpdater
                 }
             }
 
-            if (driveRegex.IsMatch(gameAction.Path))
+            var fullfilePath = RemoveInvalidPathChars(gameAction.Path);
+            if (driveRegex.IsMatch(fullfilePath))
             {
-                return File.Exists(gameAction.Path);
+                return File.Exists(fullfilePath);
             }
 
-            var fullfilePath = gameAction.Path;
-            if (!string.IsNullOrEmpty(installDirectory))
+            if (!installDirectory.IsNullOrEmpty())
             {
-                if (installDirVarRegex.IsMatch(gameAction.Path))
+                if (installDirVarRegex.IsMatch(fullfilePath))
                 {
-                    fullfilePath = gameAction.Path.Replace("{InstallDir}", installDirectory);
+                    fullfilePath = fullfilePath.Replace("{InstallDir}", installDirectory);
                 }
                 else
                 {
-                    fullfilePath = Path.Combine(installDirectory, gameAction.Path);
+                    fullfilePath = Path.Combine(installDirectory, fullfilePath);
                 }
             }
 
@@ -395,10 +400,7 @@ namespace InstallationStatusUpdater
                 }
                 else if (gameAction.Type == GameActionType.File)
                 {
-                    if (DetectIsFileActionInstalled(gameAction, installDirectory))
-                    {
-                        return true;
-                    }
+                    return DetectIsFileActionInstalled(gameAction, installDirectory);
                 }
             }
 
@@ -407,10 +409,9 @@ namespace InstallationStatusUpdater
 
         public void DetectInstallationStatus(bool showResultsDialog)
         {
-            var gameCollection = PlayniteApi.Database.Games;
             int markedInstalled = 0;
             int markedUninstalled = 0;
-            foreach (Game game in gameCollection)
+            foreach (var game in PlayniteApi.Database.Games)
             {
                 if (SkipGame(game))
                 {
@@ -472,13 +473,23 @@ namespace InstallationStatusUpdater
             return false;
         }
 
+        public static string RemoveInvalidPathChars(string str)
+        {
+            if (!str.Any(c => invalidFileChars.Contains(c) && c != backslash && c != fordwslash && c != doubleDot))
+            {
+                return str;
+            }
+
+            return new string(str.Where(c => !invalidFileChars.Contains(c) || c == backslash || c == fordwslash || c == doubleDot).ToArray());
+        }
+
         public bool IsGameInstalled(Game game)
         {
             var isInstalled = false;
             var installDirectory = string.Empty;
-            if (!string.IsNullOrEmpty(game.InstallDirectory))
+            if (!game.InstallDirectory.IsNullOrEmpty())
             {
-                installDirectory = game.InstallDirectory.ToLower();
+                installDirectory = RemoveInvalidPathChars(game.InstallDirectory.ToLower());
             }
 
             if (game.GameActions != null && game.GameActions.Count > 0)
