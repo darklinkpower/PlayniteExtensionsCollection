@@ -11,6 +11,12 @@ namespace SteamCommon.Models
     public class StoreSearchResult : GenericItemOption
     {
         public string GameId { get; set; }
+        public double PriceOriginal { get; set; }
+        public double PriceFinal { get; set; }
+        public bool IsDiscounted { get; set; }
+        public int DiscountPercentage { get; set; }
+        public string StoreUrl { get; set; }
+        public string BannerImageUrl { get; set; }
     }
 
     public partial class SteamAppDetails

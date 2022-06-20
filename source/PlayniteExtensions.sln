@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaveFileView", "Generic\Sav
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JastUsaLibrary", "Library\JastUsaLibrary\JastUsaLibrary.csproj", "{DB33EC10-055B-4644-97CE-B2D983A9B1DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamSearch", "Generic\SteamSearch\SteamSearch.csproj", "{EF364832-C1EE-4829-A2CA-C7B66FAFC5C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{DB33EC10-055B-4644-97CE-B2D983A9B1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB33EC10-055B-4644-97CE-B2D983A9B1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB33EC10-055B-4644-97CE-B2D983A9B1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF364832-C1EE-4829-A2CA-C7B66FAFC5C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF364832-C1EE-4829-A2CA-C7B66FAFC5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF364832-C1EE-4829-A2CA-C7B66FAFC5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF364832-C1EE-4829-A2CA-C7B66FAFC5C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +187,7 @@ Global
 		{67CABEA3-1069-499E-B843-D77F06090C7A} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{B572D4F6-EBDB-475E-A0D6-CE4CE050AB47} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{DB33EC10-055B-4644-97CE-B2D983A9B1DD} = {4168396D-8C15-4892-A09B-95E94B24B510}
+		{EF364832-C1EE-4829-A2CA-C7B66FAFC5C1} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}
