@@ -411,6 +411,7 @@ namespace InstallationStatusUpdater
         {
             int markedInstalled = 0;
             int markedUninstalled = 0;
+            using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in PlayniteApi.Database.Games)
             {
                 if (SkipGame(game))
