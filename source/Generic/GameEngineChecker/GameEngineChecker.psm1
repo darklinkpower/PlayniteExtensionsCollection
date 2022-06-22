@@ -25,7 +25,7 @@ function Add-EngineTag
     $pcgwApiTemplateGog = "https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Engines%2C_pageName%3Dtitle&where=GOGcom_ID%20HOLDS%20%22{0}%22&format=json"
     $CountertagAdded = 0
    
-    $steamAppListPath = Join-Path -Path [System.IO.Path]::GetTempPath() -ChildPath 'SteamAppList.json'
+    $steamAppListPath = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath 'SteamAppList.json'
     if (Test-Path $steamAppListPath)
     {
         $AppListLastWrite = (Get-Item $steamAppListPath).LastWriteTime
