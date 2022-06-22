@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Plugins;
+﻿using Playnite.SDK;
+using Playnite.SDK.Plugins;
 using PluginsCommon;
 using SteamCommon;
 using SteamCommon.Models;
@@ -12,12 +13,15 @@ namespace SteamSearch
 {
     public class SteamSearcher : SearchContext
     {
-        public SteamSearcher()
+        private SteamSearchSettingsViewModel settings;
+
+        public SteamSearcher(SteamSearchSettingsViewModel settings)
         {
             Description = "Enter search term";
             Label = "Steam Store";
-            Hint = "Some hint here";
+            Hint = "Search for games in the Steam Store";
             Delay = 450;
+            this.settings = settings;
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -27,7 +31,7 @@ namespace SteamSearch
                 return null;
             }
             
-            var searchResults = SteamWeb.GetSteamSearchResults(args.SearchTerm);
+            var searchResults = GetStoreSearchResults(args.SearchTerm);
             if (args.CancelToken.IsCancellationRequested)
             {
                 return null;
@@ -54,6 +58,18 @@ namespace SteamSearch
             }
 
             return $"Current Price: ${string.Format("{0:N2}", searchResult.PriceFinal)}";
+        }
+
+        private List<StoreSearchResult> GetStoreSearchResults(string searchTerm)
+        {
+            if (settings.Settings.UseManualCurrency)
+            {
+                return SteamWeb.GetSteamSearchResults(searchTerm, settings.Settings.SelectedManualCountry);
+            }
+            else
+            {
+                return SteamWeb.GetSteamSearchResults(searchTerm, null);
+            }
         }
     }
 }

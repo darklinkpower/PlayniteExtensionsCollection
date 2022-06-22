@@ -16,15 +16,16 @@ namespace SteamCommon
     {
         private static ILogger logger = LogManager.GetLogger();
         private const string steamGameSearchUrl = @"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998";
+
         public static List<GenericItemOption> GetSteamSearchGenericItemOptions(string searchTerm)
         {
             return GetSteamSearchResults(searchTerm).Select(x => new GenericItemOption(x.Name, x.GameId)).ToList();
         }
 
-        public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm)
+        public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null)
         {
             var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpDownloader.DownloadStringAsync(string.Format(steamGameSearchUrl, searchTerm)).GetAwaiter().GetResult();
+            var searchPageSrc = HttpDownloader.DownloadStringAsync(GetStoreSearchUrl(searchTerm, steamApiCountry)).GetAwaiter().GetResult();
             if (!string.IsNullOrEmpty(searchPageSrc))
             {
                 var parser = new HtmlParser();
@@ -69,6 +70,17 @@ namespace SteamCommon
 
             logger.Debug($"Obtained {results.Count} games from Steam search term {searchTerm}");
             return results;
+        }
+
+        private static string GetStoreSearchUrl(string searchTerm, string steamApiCountry)
+        {
+            var searchUrl = string.Format(steamGameSearchUrl, searchTerm);
+            if (!steamApiCountry.IsNullOrEmpty())
+            {
+                searchUrl += $"&cc={steamApiCountry}";
+            }
+
+            return searchUrl;
         }
 
         private static double GetSearchOriginalPrice(double priceFinal, int discountPercentage)

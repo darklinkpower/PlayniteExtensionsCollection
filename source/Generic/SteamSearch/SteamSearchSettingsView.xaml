@@ -5,10 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
-    </StackPanel>
+    <ScrollViewer Margin="20">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding Settings.UseManualCurrency}"
+                      VerticalAlignment="Center"
+                      Content="Use specific currency in searches" />
+                <ComboBox IsEnabled="{Binding Settings.UseManualCurrency}"
+                          Margin="10,0,0,0" MinWidth="100"
+                          VerticalAlignment="Center"
+                          ItemsSource="{Binding SteamCountriesDictionary}"
+                          SelectedValuePath="Key"
+                          DisplayMemberPath="Value"
+                          SelectedValue="{Binding Settings.SelectedManualCountry}" />
+            </StackPanel>
+        </StackPanel>
+
+    </ScrollViewer>
 </UserControl>

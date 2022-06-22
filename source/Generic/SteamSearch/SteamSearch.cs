@@ -27,7 +27,10 @@ namespace SteamSearch
                 HasSettings = true
             };
 
-            Searches = new List<SearchSupport> { new SearchSupport("st", "Search on Steam", new SteamSearcher()) };
+            Searches = new List<SearchSupport>
+            {
+                new SearchSupport("st", "Search on Steam", new SteamSearcher(settings))
+            };
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

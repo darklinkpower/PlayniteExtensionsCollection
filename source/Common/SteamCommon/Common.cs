@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -129,6 +130,107 @@ namespace SteamCommon
                 default:
                     return "english";
             }
+        }
+
+        public static Dictionary<string, string> GetSteamCurrenciesDictionary()
+        {
+            return new Dictionary<string, string>
+            {
+                { "USD", "United States Dollar" },
+                { "GBP", "United Kingdom Pound" },
+                { "EUR", "European Union Euro" },
+                { "CHF", "Swiss Francs" },
+                { "RUB", "Russian Rouble" },
+                { "PLN", "Polish Złoty" },
+                { "BRL", "Brazilian Reals" },
+                { "JPY", "Japanese Yen" },
+                { "NOK", "Norwegian Krone" },
+                { "IDR", "Indonesian Rupiah" },
+                { "MYR", "Malaysian Ringgit" },
+                { "PHP", "Philippine Peso" },
+                { "SGD", "Singapore Dollar" },
+                { "THB", "Thai Baht" },
+                { "VND", "Vietnamese Dong" },
+                { "KRW", "South Korean Won" },
+                { "TRY", "Turkish Lira" },
+                { "UAH", "Ukrainian Hryvnia" },
+                { "MXN", "Mexican Peso" },
+                { "CAD", "Canadian Dollars" },
+                { "AUD", "Australian Dollars" },
+                { "NZD", "New Zealand Dollar" },
+                { "CNY", "Chinese Renminbi (yuan)" },
+                { "INR", "Indian Rupee" },
+                { "CLP", "Chilean Peso" },
+                { "PEN", "Peruvian Sol" },
+                { "COP", "Colombian Peso" },
+                { "ZAR", "South African Rand" },
+                { "HKD", "Hong Kong Dollar" },
+                { "TWD", "New Taiwan Dollar" },
+                { "SAR", "Saudi Riyal" },
+                { "AED", "United Arab Emirates Dirham" },
+                { "ARS", "Argentine Peso" },
+                { "ILS", "Israeli New Shekel" },
+                { "KZT", "Kazakhstani Tenge" },
+                { "KWD", "Kuwaiti Dinar" },
+                { "QAR", "Qatari Riyal" },
+                { "CRC", "Costa Rican Colón" },
+                { "UYU", "Uruguayan Peso" }
+            };
+        }
+
+        public static Dictionary<string, string> GetCountryLocCurrencyDictionary()
+        {
+            var twoLetterCountryCodes = new List<string>
+            {
+                "US",
+                "GB",
+                "ES",
+                "CH",
+                "RU",
+                "PL",
+                "BR",
+                "JP",
+                "NO",
+                "ID",
+                "MY",
+                "PH",
+                "SG",
+                "TH",
+                "VN",
+                "KR",
+                "TR",
+                "UA",
+                "MX",
+                "CA",
+                "AU",
+                "NZ",
+                "CN",
+                "IN",
+                "CL",
+                "PE",
+                "CO",
+                "ZA",
+                "HK",
+                "TW",
+                "SA",
+                "AE",
+                "AR",
+                "IL",
+                "KZ",
+                "KW",
+                "QA",
+                "CR",
+                "UY"
+            };
+
+            var apiDictionary = new Dictionary<string, string>();
+            foreach (var countryCode in twoLetterCountryCodes)
+            {
+                var regionInfo = new RegionInfo(countryCode);
+                apiDictionary[countryCode] = $"{regionInfo.CurrencyNativeName} ({regionInfo.ISOCurrencySymbol})";
+            }
+
+            return apiDictionary;
         }
     }
 }
