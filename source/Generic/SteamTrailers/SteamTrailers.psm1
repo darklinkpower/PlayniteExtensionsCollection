@@ -115,7 +115,7 @@ function Set-GlobalAppList
     )
     
     # Get Steam AppList
-    $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
+    $steamAppListPath = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath 'SteamAppList.json'
     if (!(Test-Path $steamAppListPath) -or ($forceDownload -eq $true))
     {
         Get-SteamAppList $steamAppListPath
@@ -170,7 +170,7 @@ function Get-SteamAppId
     if ((!$appId) -and ($appListDownloaded -eq $false))
     {
         # Download Steam AppList if game was not found in local Steam AppList database and local Steam AppList database is older than 2 days
-        $steamAppListPath = Join-Path -Path $env:TEMP -ChildPath 'SteamAppList.json'
+        $steamAppListPath = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath 'SteamAppList.json'
         $AppListLastWrite = (Get-Item $steamAppListPath).LastWriteTime
         $timeSpan = New-Timespan -days 2
         if (((Get-date) - $AppListLastWrite) -gt $timeSpan)

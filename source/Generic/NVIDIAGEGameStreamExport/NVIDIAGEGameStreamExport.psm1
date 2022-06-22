@@ -56,7 +56,7 @@ function NVIDIAGameStreamExport
 
         # Create Nvidia game shortcut file in temp folder // Move after to correct path, done as a fix in case path has incompatible characters with WshShell
         $lnkPath = Join-Path -Path $nvidiaShorcutsPath -ChildPath $($gameName + '.lnk')
-        $lnkTempPath = Join-Path -Path $env:temp -ChildPath "LnkTmp.lnk"
+        $lnkTempPath = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath "LnkTmp.lnk"
         New-Item -ItemType File -Path $lnkTempPath -Force
         $wshShell = New-Object -ComObject WScript.Shell
         $shortcut = $wshShell.CreateShortcut($lnkTempPath)
