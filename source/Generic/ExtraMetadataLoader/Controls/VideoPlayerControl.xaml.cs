@@ -164,16 +164,16 @@ namespace ExtraMetadataLoader
         private void SetControlTextBlockStyle()
         {
             // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
-            if (ResourceProvider.GetResource("BaseTextBlockStyle") is Style baseStyle &&
+            var baseStyleName = "BaseTextBlockStyle";
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                baseStyleName = "TextBlockBaseStyle";
+            }
+
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle &&
                 baseStyle.TargetType == typeof(TextBlock))
             {
                 var implicitStyle = new Style(typeof(TextBlock), baseStyle);
-                Resources.Add(typeof(TextBlock), implicitStyle);
-            }
-            else if (ResourceProvider.GetResource("TextBlockBaseStyle") is Style fsBaseStyle &&
-                fsBaseStyle.TargetType == typeof(TextBlock))
-            {
-                var implicitStyle = new Style(typeof(TextBlock), fsBaseStyle);
                 Resources.Add(typeof(TextBlock), implicitStyle);
             }
         }
