@@ -157,6 +157,25 @@ namespace ExtraMetadataLoader
             updatePlayerTimer = new DispatcherTimer();
             updatePlayerTimer.Interval = TimeSpan.FromMilliseconds(220);
             updatePlayerTimer.Tick += new EventHandler(UpdaterPlayerTimer_Tick);
+
+            SetControlTextBlockStyle();
+        }
+
+        private void SetControlTextBlockStyle()
+        {
+            // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
+            if (ResourceProvider.GetResource("BaseTextBlockStyle") is Style baseStyle &&
+                baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
+            else if (ResourceProvider.GetResource("TextBlockBaseStyle") is Style fsBaseStyle &&
+                fsBaseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), fsBaseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
         }
 
         private void UpdaterPlayerTimer_Tick(object sender, EventArgs e)

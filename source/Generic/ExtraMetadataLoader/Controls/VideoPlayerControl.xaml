@@ -7,9 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Name="ControlGrid" Visibility="{Binding ControlVisibility}" MinHeight="120">
-        <Grid.Resources>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
-        </Grid.Resources>
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
