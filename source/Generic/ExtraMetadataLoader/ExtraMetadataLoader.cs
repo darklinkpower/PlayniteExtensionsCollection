@@ -112,7 +112,7 @@ namespace ExtraMetadataLoader
                 if (genericVideoControl == null && !settings.Settings.EnableAlternativeGenericVideoPlayer)
                 {
                     genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                    return gridVideoControl;
+                    return genericVideoControl;
                 }
             }
 
