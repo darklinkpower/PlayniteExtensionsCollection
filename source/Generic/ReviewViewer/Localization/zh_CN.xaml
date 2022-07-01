@@ -8,7 +8,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">数据刷新完成。</sys:String>
 
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">若在 Steam 上可用，使用 Playnite 所用语言搜索评论</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">下载所选游戏缺失的评论数据</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Review data download on game selection</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Download if review data is missing</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">If data is older than days:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">描述高度</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">显示评论的帮助度</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">显示审阅日期</sys:String>
