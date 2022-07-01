@@ -8,7 +8,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Aktualisierung der Daten abgeschlossen.</sys:String>
 
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Benutze die von Playnite verwendete Sprache um nach Bewertungen zu suchen, wenn sie auf Steam verfügbar ist</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Bewertungsdaten zur Spielauswahl herunterladen, falls diese nicht vorhanden sind</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Review data download on game selection</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Download if review data is missing</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">If data is older than days:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Beschreibungshöhe</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Hilfreich bei der Bewertung anzeigen</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Datum der Überprüfung anzeigen</sys:String>
