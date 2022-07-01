@@ -34,6 +34,29 @@ namespace ReviewViewer
             }
         }
 
+        private bool downloadDataIfOlderThanDays { get; set; } = true;
+        public bool DownloadDataIfOlderThanDays
+        {
+            get => downloadDataIfOlderThanDays;
+            set
+            {
+                downloadDataIfOlderThanDays = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private int downloadIfOlderThanValue { get; set; } = 7;
+        public int DownloadIfOlderThanValue
+        {
+            get => downloadIfOlderThanValue;
+            set
+            {
+                downloadIfOlderThanValue = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DontSerialize]
         private double descriptionHeight { get; set; } = 180;
         public double DescriptionHeight

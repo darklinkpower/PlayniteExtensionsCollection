@@ -465,22 +465,18 @@ namespace ReviewViewer.Controls
         private void UpdateReviewsContextByType(string reviewSearchType)
         {
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
-            if (!FileSystem.FileExists(gameDataPath))
+            if (FileSystem.FileExists(gameDataPath))
+            {
+                DownloadReviewDataIfOlder(gameDataPath, reviewSearchType);
+            }
+            else
             {
                 if (!SettingsModel.Settings.DownloadDataOnGameSelection)
                 {
                     return;
                 }
 
-                var currentSteamId = Steam.GetGameSteamId(currentGame, true);
-                if (currentSteamId == null)
-                {
-                    MainPanelVisibility = Visibility.Collapsed;
-                    return;
-                }
-
-                var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
-                HttpDownloader.DownloadJsonFileAsync(uri, gameDataPath).GetAwaiter().GetResult();
+                DownloadReviewData(gameDataPath, reviewSearchType);
                 if (!FileSystem.FileExists(gameDataPath))
                 {
                     return;
@@ -494,6 +490,7 @@ namespace ReviewViewer.Controls
             catch (Exception e)
             {
                 logger.Error(e, $"Error deserializing file {gameDataPath}. Error: {e.Message}.");
+                return;
             }
 
             if (Reviews.Success != 1)
@@ -527,15 +524,41 @@ namespace ReviewViewer.Controls
             MainPanelVisibility = Visibility.Visible;
         }
 
+        private void DownloadReviewDataIfOlder(string gameDataPath, string reviewSearchType)
+        {
+            if (!SettingsModel.Settings.DownloadDataIfOlderThanDays)
+            {
+                return;
+            }
+
+            var fi = new FileInfo(gameDataPath);
+            if (fi.LastWriteTime < DateTime.Now.AddDays(-SettingsModel.Settings.DownloadIfOlderThanValue))
+            {
+                DownloadReviewData(gameDataPath, reviewSearchType);
+            }
+        }
+
+        private void DownloadReviewData(string gameDataPath, string reviewSearchType)
+        {
+            var currentSteamId = Steam.GetGameSteamId(currentGame, true);
+            if (currentSteamId == null)
+            {
+                MainPanelVisibility = Visibility.Collapsed;
+                return;
+            }
+
+            var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
+            HttpDownloader.DownloadJsonFileAsync(uri, gameDataPath).GetAwaiter().GetResult();
+        }
+
         private void CalculateUserScore()
         {
             // From https://steamdb.info/blog/steamdb-rating/
-            
             double totalReviews = Reviews.QuerySummary.TotalReviews;
             double totalPositiveReviews = Reviews.QuerySummary.TotalPositive;
             double reviewScore = totalPositiveReviews / totalReviews;
             var score = reviewScore - (reviewScore - 0.5) * Math.Pow(2, -Math.Log10(totalReviews + 1));
-            CalculatedScore = string.Format("{0}{1}", Math.Round(score * 100, 2).ToString(), "%");
+            CalculatedScore = string.Format("{0}%", Math.Round(score * 100, 2).ToString());
         }
 
     }
