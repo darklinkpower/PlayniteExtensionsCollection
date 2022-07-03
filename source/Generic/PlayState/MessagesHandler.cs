@@ -18,7 +18,7 @@ namespace PlayState
     public class MessagesHandler
     {
         private readonly IPlayniteAPI playniteApi;
-        private PlayStateSettingsViewModel settings;
+        private readonly PlayStateSettingsViewModel settings;
         private Window currentSplashWindow;
         private readonly bool isWindows10Or11;
         private readonly SplashWindowViewModel splashWindowViewModel;
@@ -27,13 +27,13 @@ namespace PlayState
         public MessagesHandler(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, bool isWindows10Or11)
         {
             this.playniteApi = playniteApi;
-            this.settings = playStateSettings;
+            settings = playStateSettings;
             this.isWindows10Or11 = isWindows10Or11;
             splashWindowViewModel = new SplashWindowViewModel();
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += (src, args) =>
+            timer.Tick += (_, __) =>
             {
                 timer.Stop();
                 if (currentSplashWindow != null)
@@ -56,6 +56,11 @@ namespace PlayState
         /// </summary>
         public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData)
         {
+            if (!settings.Settings.EnableNotificationMessages)
+            {
+                return;
+            }
+            
             var sb = new StringBuilder();
             switch (status)
             {
@@ -112,8 +117,8 @@ namespace PlayState
             {
                 sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_TotalPlaytime")} {GetHoursString(GetRealPlaytime(gameData) + gameData.Game.Playtime)}");
             }
-            var notificationMessage = sb.ToString();
 
+            var notificationMessage = sb.ToString();
             if (settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11)
             {
                 var toastNotification = new ToastContentBuilder()

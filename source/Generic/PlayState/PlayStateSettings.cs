@@ -53,6 +53,9 @@ namespace PlayState
         [DontSerialize]
         private bool bringResumedToForeground = false;
         public bool BringResumedToForeground { get => bringResumedToForeground; set => SetValue(ref bringResumedToForeground, value); }
+        [DontSerialize]
+        private bool enableNotificationMessages = true;
+        public bool EnableNotificationMessages { get => enableNotificationMessages; set => SetValue(ref enableNotificationMessages, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
