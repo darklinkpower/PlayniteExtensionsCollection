@@ -11,5 +11,11 @@ namespace PlayState.Models
     {
         public string ExecutablePath;
         public Process Process;
+
+        public ProcessItem(Process process, string executablePath)
+        {
+            ExecutablePath = executablePath;
+            Process = process;
+        }
     }
 }
