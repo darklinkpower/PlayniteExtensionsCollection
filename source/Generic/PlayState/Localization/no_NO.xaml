@@ -29,6 +29,7 @@ Du kan prøve å bruke en annen hurtigtastkombinasjon for å løse problemet</sy
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Viser et varsel som gir deg gjeldende pausestatus og annen informasjon om det aktive spillet</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Endre hurtigtast</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Trykk hurtigtast nå</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Merk:
 
 Den konfigurerte hurtigtasten vil ikke kunne brukes i andre programmer.
