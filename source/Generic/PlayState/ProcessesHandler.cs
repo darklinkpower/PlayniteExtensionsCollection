@@ -13,6 +13,7 @@ namespace PlayState
 {
     public static class ProcessesHandler
     {
+        private const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
@@ -98,9 +99,8 @@ namespace PlayState
             "wide_on.exe"
         };
 
-        public static List<ProcessItem> GetProcessesWmiQuery(bool filterPaths, string gameInstallDir, string exactPath = null)
+        public static List<ProcessItem> GetProcessesWmiQuery(bool useExclusionList, string gameInstallDir, string exactPath = null)
         {
-            var wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
             using (var searcher = new ManagementObjectSearcher(wmiQueryString))
             using (var results = searcher.Get())
             {
@@ -111,62 +111,55 @@ namespace PlayState
                 var query = from p in Process.GetProcesses()
                             join mo in results.Cast<ManagementObject>()
                             on p.Id equals (int)(uint)mo["ProcessId"]
-                            select new
-                            {
-                                Process = p,
-                                Path = (string)mo["ExecutablePath"],
-                            };
+                            select new ProcessItem(p, (string)mo["ExecutablePath"]);
 
                 var gameProcesses = new List<ProcessItem>();
-                if (exactPath != null)
+                if (!exactPath.IsNullOrEmpty())
                 {
-                    foreach (var fItem in query)
-                    {
-                        if (fItem.Path.IsNullOrEmpty() ||
-                            !fItem.Path.Equals(exactPath, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            continue;
-                        }
-
-                        gameProcesses.Add(
-                           new ProcessItem
-                           {
-                               ExecutablePath = fItem.Path,
-                               Process = fItem.Process
-                           }
-                       );
-                    }
+                    AddGameProcessesExactPath(exactPath, query, gameProcesses);
                 }
                 else
                 {
-                    foreach (var item in query)
-                    {
-                        if (item.Path.IsNullOrEmpty() ||
-                            !item.Path.StartsWith(gameInstallDir, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            continue;
-                        }
-
-                        if (filterPaths &&
-                            exclusionList.Any(e => Path.GetFileName(item.Path).Contains(e, StringComparison.InvariantCultureIgnoreCase)))
-                        {
-                            continue;
-                        }
-
-                        gameProcesses.Add(
-                            new ProcessItem
-                            {
-                                ExecutablePath = item.Path,
-                                Process = item.Process
-                            }
-                        );
-                    }
+                    AddGameProcessesThatStartWithPath(useExclusionList, gameInstallDir, query, gameProcesses);
                 }
 
                 return gameProcesses;
             }
         }
 
+        private static void AddGameProcessesExactPath(string exactPath, IEnumerable<ProcessItem> query, List<ProcessItem> gameProcesses)
+        {
+            foreach (var queryItem in query)
+            {
+                if (queryItem.ExecutablePath.IsNullOrEmpty() ||
+                    !queryItem.ExecutablePath.Equals(exactPath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    continue;
+                }
+
+                gameProcesses.Add(queryItem);
+            }
+        }
+
+        private static void AddGameProcessesThatStartWithPath(bool useExclusionList, string startPath, IEnumerable<ProcessItem> query, List<ProcessItem> gameProcesses)
+        {
+            foreach (var queryItem in query)
+            {
+                if (queryItem.ExecutablePath.IsNullOrEmpty() ||
+                    !queryItem.ExecutablePath.StartsWith(startPath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (useExclusionList &&
+                    exclusionList.Any(e => Path.GetFileName(queryItem.ExecutablePath).Contains(e, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    continue;
+                }
+
+                gameProcesses.Add(queryItem);
+            }
+        }
 
     }
 }
