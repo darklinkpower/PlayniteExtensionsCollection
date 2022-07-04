@@ -29,7 +29,7 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra una notifica che mostra lo stato di pausa corrente e altre informazioni del gioco attivo</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambia scorciatoia</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Premi il tasto di scelta rapida ora</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Abilita messaggi di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Note:
 
 I tasti di scelta rapida configurati non potranno essere utilizzati in altre applicazioni.
