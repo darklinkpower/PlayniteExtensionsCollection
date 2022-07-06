@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass Katalog wurde zurückgesetzt.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Bist Du sicher, dass du den gesamten Game Pass Katalog deiner Bibliothek hinzufügen möchtest?</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage">Konnte den Game Pass Katalog nicht abrufen.</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">{0} neue Spiele zur Playnite-Bibliothek hinzugefügt.</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGamesResultsMessage">{0} neue Spiele zur Playnite Bibliothek hinzugefügt.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddGameResultsMessage">{0} zur Playnite-Bibliothek hinzugefügt</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Aktualisiere Game Pass Katalog...</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Aktualisiere Game Pass Katalog und füge Spiele hinzu...</sys:String>

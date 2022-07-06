@@ -8,7 +8,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Обновление данных завершено.</sys:String>
 
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Использовать язык Playnite для поиска обзоров, если он доступен в Steam</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Загрузить данные обзора для выборанной игры, если они отсутствуют</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Review data download on game selection</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Download if review data is missing</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">If data is older than days:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Высота описания</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Показывать полезность обзора</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Показывать дату обзора</sys:String>

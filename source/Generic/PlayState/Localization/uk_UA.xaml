@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показує повідомлення з поточним станом паузи та іншу інформацію про активну гру</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Змінити гарячу клавішу</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Натисніть гарячу клавішу</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Увімкнути текст сповіщень</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Примітки:
 
 Налаштовані гарячі клавіші не можна буде використовувати в інших додатках.

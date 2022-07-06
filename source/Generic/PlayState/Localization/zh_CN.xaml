@@ -29,6 +29,7 @@
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">显示一个通知，展示当前游戏的暂停状态和其他信息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">更改热键</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">请按热键</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">备注：
 
 已配置的热键不能被用于其他应用程序。

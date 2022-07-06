@@ -8,7 +8,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Dataoppdatering fullført.</sys:String>
 
     <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Bruk språk som brukes av Playnite til å søke etter omtaler hvis det er tilgjengelig på Steam</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Last ned omtaledata for valgte spill der det mangler</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Review data download on game selection</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Download if review data is missing</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">If data is older than days:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Omtalefeltets høyde</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Vis data om omtalens kvalitet</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Vis omtaledato</sys:String>

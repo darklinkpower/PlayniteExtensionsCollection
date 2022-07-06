@@ -29,6 +29,7 @@ Você pode tentar usar uma combinação diferente de Tecla de Atalho para possiv
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra uma notificação que exibe o estado atual de pausa e outras informações do jogo ativo</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Alterar Tecla de Atalhado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Pressione a Tecla de Atalho agora</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Nota:
 
 As teclas de atalho configuradas não poderão ser usadas em outras aplicações.
