@@ -29,7 +29,7 @@ Puedes intentar usar una combinación diferente de teclas para solucionar el pro
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Muestra una notificación que muestra el estado actual de pausa y otra información del juego activo</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambiar teclas</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Pulsa las teclas ahora</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Habilitar las notificaciones</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notas:
 
 Las teclas configuradas no se podrán utilizar en otras aplicaciones.
