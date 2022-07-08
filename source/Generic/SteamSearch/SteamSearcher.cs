@@ -30,7 +30,7 @@ namespace SteamSearch
             {
                 return null;
             }
-            
+
             var searchResults = GetStoreSearchResults(args.SearchTerm);
             if (args.CancelToken.IsCancellationRequested)
             {
@@ -43,7 +43,7 @@ namespace SteamSearch
                 searchItems.Add(new SearchItem($"{searchResult.Name}", new SearchItemAction("Open on web", () => { ProcessStarter.StartUrl(searchResult.StoreUrl); }))
                 {
                     Description = GetSearchItemDescription(searchResult),
-                    //Icon = new Uri(searchResult.BannerImageUrl),
+                    Icon = searchResult.BannerImageUrl,
                 });
             }
 
