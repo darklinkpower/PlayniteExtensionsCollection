@@ -125,6 +125,14 @@ namespace ExtraMetadataLoader.ViewModels
             }
             var webView = PlayniteApi.WebViews.CreateOffscreenView(webViewSettings);
             webView.NavigateAndWait(url);
+
+            if (webView.GetCurrentAddress().StartsWith(@"https://consent.google.com", StringComparison.OrdinalIgnoreCase))
+            {
+                // This rejects Google's consent form for cookies
+                RejectGoogleCookiesConsent(webView).GetAwaiter().GetResult();
+                webView.NavigateAndWait(url);
+            }
+
             var pageSource = webView.GetPageSource();
             pageSource = Regex.Replace(pageSource, @"\r\n?|\n", string.Empty);
             var matches = Regex.Matches(pageSource, @"\[""(https:\/\/encrypted-[^,]+?)"",\d+,\d+\],\[""(http.+?)"",(\d+),(\d+)\]");
@@ -145,6 +153,12 @@ namespace ExtraMetadataLoader.ViewModels
             }
 
             SearchItems = images;
+        }
+
+        private static async Task RejectGoogleCookiesConsent(IWebView webView)
+        {
+            await webView.EvaluateScriptAsync(@"document.getElementsByTagName('form')[0].submit();");
+            await Task.Delay(3000);
         }
 
         public RelayCommand<object> DownloadSelectedImageCommand
