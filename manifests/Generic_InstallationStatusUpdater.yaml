@@ -219,3 +219,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix errors when game paths contain invalid characters'
+  - Version: 2.33
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/Installation_Status_Updater_2_33.pext
+    Changelog:
+    - 'Performance improvements to games processing'

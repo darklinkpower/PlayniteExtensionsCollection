@@ -392,3 +392,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_55.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.56
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_56.pext
+    Changelog:
+    - 'Implemented new configurable video player controls for use in custom themes'
+    - 'Fix crash when loading video control in Fullscreen Mode'
+    - 'Fix not being logged out from google if user is already logged in when using the Login button'
+    - 'Potential fix to prevent not obtaining images when searching for logos on Google'

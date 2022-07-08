@@ -287,3 +287,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/PlayState_2_40.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.41
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/PlayState_2_41.pext
+    Changelog:
+    - 'Add setting to enable or disable notifications'

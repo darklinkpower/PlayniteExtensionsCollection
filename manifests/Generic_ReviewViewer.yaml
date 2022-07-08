@@ -216,3 +216,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_32.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.33
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_33.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added option to refresh review data if older than set days on game selection. Enabled by default and set to 7 days.'
