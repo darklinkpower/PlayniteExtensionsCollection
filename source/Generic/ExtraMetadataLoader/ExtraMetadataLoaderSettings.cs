@@ -827,7 +827,7 @@ namespace ExtraMetadataLoader
         public void LoginToYoutube()
         {
             var webView = playniteApi.WebViews.CreateView(700, 700);
-            webView.LoadingChanged += (s, e) =>
+            webView.LoadingChanged += (_, __) =>
             {
                 var address = webView.GetCurrentAddress();
                 if (address == "https://www.youtube.com/")
@@ -835,6 +835,9 @@ namespace ExtraMetadataLoader
                     webView.Close();
                 }
             };
+
+            webView.DeleteDomainCookies(@".google.com");
+            webView.DeleteDomainCookies(@"accounts.google.com");
             webView.Navigate("https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue");
             webView.OpenDialog();
             webView.Dispose();
