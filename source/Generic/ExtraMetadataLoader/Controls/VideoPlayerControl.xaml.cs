@@ -71,6 +71,28 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private bool isSoundEnabled = false;
+        public bool IsSoundEnabled
+        {
+            get => isSoundEnabled;
+            set
+            {
+                isSoundEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool displayControls = true;
+        public bool DisplayControls
+        {
+            get => displayControls;
+            set
+            {
+                displayControls = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool isPlayerMuted = false;
         public bool IsPlayerMuted
         {
@@ -126,7 +148,7 @@ namespace ExtraMetadataLoader
             }
         }
 
-        public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings, string pluginDataPath)
+        public VideoPlayerControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings, string pluginDataPath, bool isConfiguredControl = false, bool displayControls = true, bool useSound = true)
         {
             InitializeComponent();
             this.pluginDataPath = pluginDataPath;
@@ -135,7 +157,9 @@ namespace ExtraMetadataLoader
             DataContext = this;
 
             useMicrovideosSource = settings.Settings.UseMicrotrailersDefault;
-            if (settings.Settings.StartNoSound)
+            IsSoundEnabled = useSound;
+            DisplayControls = displayControls;
+            if (settings.Settings.StartNoSound || !IsSoundEnabled)
             {
                 IsPlayerMuted = true;
             }
@@ -144,7 +168,7 @@ namespace ExtraMetadataLoader
             volumeSlider.Value = initialVolumeValue;
             VideoPlayerVolume = initialVolumeValue;
 
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            if (!isConfiguredControl && PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
@@ -310,7 +334,7 @@ namespace ExtraMetadataLoader
         private void player_MediaEnded(object sender, EventArgs e)
         {
             if (activeVideoType == ActiveVideoType.Trailer && SettingsModel.Settings.RepeatTrailerVideos
-                || activeVideoType == ActiveVideoType.Microtrailer)
+                || activeVideoType == ActiveVideoType.Microtrailer || !displayControls)
             {
                 player.Position = new TimeSpan(0, 0, 0);
                 MediaPlay();
@@ -384,7 +408,7 @@ namespace ExtraMetadataLoader
             }
 
             SettingsModel.Settings.NewContextVideoAvailable = true;
-            if (SettingsModel.Settings.AutoPlayVideos)
+            if (SettingsModel.Settings.AutoPlayVideos || !displayControls)
             {
                 MediaPlay();
             }

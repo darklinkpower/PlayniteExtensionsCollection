@@ -74,7 +74,7 @@
                     </Style.Triggers>
                 </Style>
             </Border.Style>
-            <WrapPanel>
+            <WrapPanel Visibility="{Binding DisplayControls, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Button DockPanel.Dock="Left" Name="PlayButton" Command="{Binding VideoPlayCommand}" 
                          Margin="0,0,10,0" Padding="5" Visibility="{Binding SettingsModel.Settings.IsVideoPlaying, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
                     <Button.Content>
@@ -87,20 +87,23 @@
                         <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xECA5;" FontSize="24" />
                     </Button.Content>
                 </Button>
-                <Button DockPanel.Dock="Left" Name="MuteButton" Command="{Binding VideoMuteCommand}"
-                        Visibility="{Binding IsPlayerMuted, Converter={StaticResource BooleanToVisibilityConverter}}"
-                        Margin="0,0,10,0" Padding="5">
-                    <Button.Content>
-                        <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xECB8;" FontSize="24" />
-                    </Button.Content>
-                </Button>
-                <Button DockPanel.Dock="Left" Name="UnmuteButton" Command="{Binding VideoMuteCommand}"
-                        Visibility="{Binding IsPlayerMuted, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
-                        Margin="0,0,10,0" Padding="5">
-                    <Button.Content>
-                        <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xECB7;" FontSize="24" />
-                    </Button.Content>
-                </Button>
+                <DockPanel DockPanel.Dock="Left" Visibility="{Binding IsSoundEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button  Name="MuteButton" Command="{Binding VideoMuteCommand}"
+                            Visibility="{Binding IsPlayerMuted, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Margin="0,0,10,0" Padding="5">
+                        <Button.Content>
+                            <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xECB8;" FontSize="24" />
+                        </Button.Content>
+                    </Button>
+                    <Button DockPanel.Dock="Left" Name="UnmuteButton" Command="{Binding VideoMuteCommand}"
+                            Visibility="{Binding IsPlayerMuted, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                            Margin="0,0,10,0" Padding="5">
+                        <Button.Content>
+                            <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xECB7;" FontSize="24" />
+                        </Button.Content>
+                    </Button>
+                </DockPanel>
+
                 <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeProgress}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                 <TextBlock DockPanel.Dock="Left" Text="/" VerticalAlignment="Center" Margin="0,0,0,0"/>
                 <TextBlock DockPanel.Dock="Left" Text="{Binding PlaybackTimeTotal}" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -120,7 +123,7 @@
                         <Slider x:Name="timelineSlider" Height="{Binding ElementName=playbackProgressBar, Path=ActualHeight}" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Center"
                                 Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" />
                     </Grid>
-                    <DockPanel Grid.Column="1">
+                    <DockPanel Grid.Column="1" Visibility="{Binding IsSoundEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="{StaticResource FontIcoFont}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                 Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.025"/>

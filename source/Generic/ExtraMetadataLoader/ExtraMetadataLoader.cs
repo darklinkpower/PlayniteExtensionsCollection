@@ -32,6 +32,8 @@ namespace ExtraMetadataLoader
         private VideoPlayerControl detailsVideoControl;
         private VideoPlayerControl gridVideoControl;
         private VideoPlayerControl genericVideoControl;
+        private List<VideoPlayerControl> configuredVideoControls = new List<VideoPlayerControl>();
+        private List<VideoPlayerControl> fullscreenModeVideoControls = new List<VideoPlayerControl>();
 
         public ExtraMetadataLoaderSettingsViewModel settings { get; private set; }
 
@@ -46,7 +48,17 @@ namespace ExtraMetadataLoader
             };
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "VideoLoaderControl", "VideoLoaderControlAlternative", "LogoLoaderControl" },
+                ElementList = new List<string>
+                {
+                    "VideoLoaderControl",
+                    "VideoLoaderControlAlternative",
+                    "VideoLoaderControl_Controls_Sound",
+                    "VideoLoaderControl_Controls_NoSound",
+                    "VideoLoaderControl_NoControls_NoSound",
+                    "VideoLoaderControl_NoControls_Sound",
+                    "LogoLoaderControl"
+                },
+
                 SourceName = "ExtraMetadataLoader",
             });
 
@@ -93,20 +105,78 @@ namespace ExtraMetadataLoader
             {
                 return new LogoLoaderControl(PlayniteApi, settings);
             }
+
             if (args.Name == "VideoLoaderControl")
             {
-                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+                return GetVideoLoaderControl();
+            }
+
+            if (args.Name == "VideoLoaderControlAlternative")
+            {
+                return GetVideoLoaderAlternativeControl();
+            }
+
+            if (args.Name.StartsWith("VideoLoaderControl_"))
+            {
+                return GetVideoLoaderControlConfigured(args.Name);
+            }
+
+            return null;
+        }
+
+        private Control GetVideoLoaderControlConfigured(string controlName)
+        {
+            char splitChar = '_';
+            var split = controlName.Split(splitChar);
+            var displayControls = !split.Any(x => x.Equals("NoControls", StringComparison.OrdinalIgnoreCase));
+            var useSound = !split.Any(x => x.Equals("NoSound", StringComparison.OrdinalIgnoreCase));
+
+            var newVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath(), true, displayControls, useSound);
+            configuredVideoControls.Add(newVideoControl);
+
+            return newVideoControl;
+        }
+
+        private Control GetVideoLoaderAlternativeControl()
+        {
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                return null;
+            }
+
+            if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && settings.Settings.EnableAlternativeDetailsVideoPlayer)
+            {
+                detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                return detailsVideoControl;
+            }
+            else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && settings.Settings.EnableAlternativeGridVideoPlayer)
+            {
+                gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                return gridVideoControl;
+            }
+
+            if (genericVideoControl == null && settings.Settings.EnableAlternativeGenericVideoPlayer)
+            {
+                genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                return genericVideoControl;
+            }
+
+            return null;
+        }
+
+        private Control GetVideoLoaderControl()
+        {
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && !settings.Settings.EnableAlternativeDetailsVideoPlayer)
                 {
-                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && !settings.Settings.EnableAlternativeDetailsVideoPlayer)
-                    {
-                        detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                        return detailsVideoControl;
-                    }
-                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && !settings.Settings.EnableAlternativeGridVideoPlayer)
-                    {
-                        gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                        return gridVideoControl;
-                    }
+                    detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                    return detailsVideoControl;
+                }
+                else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && !settings.Settings.EnableAlternativeGridVideoPlayer)
+                {
+                    gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                    return gridVideoControl;
                 }
 
                 if (genericVideoControl == null && !settings.Settings.EnableAlternativeGenericVideoPlayer)
@@ -115,30 +185,13 @@ namespace ExtraMetadataLoader
                     return genericVideoControl;
                 }
             }
-
-            if (args.Name == "VideoLoaderControlAlternative")
+            else
             {
-                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-                {
-                    if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && settings.Settings.EnableAlternativeDetailsVideoPlayer)
-                    {
-                        detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                        return detailsVideoControl;
-                    }
-                    else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && settings.Settings.EnableAlternativeGridVideoPlayer)
-                    {
-                        gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                        return gridVideoControl;
-                    }
-
-                    if (genericVideoControl == null && settings.Settings.EnableAlternativeGenericVideoPlayer)
-                    {
-                        genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                        return gridVideoControl;
-                    }
-                }
+                var fullscreenModeVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+                fullscreenModeVideoControls.Add(fullscreenModeVideoControl);
+                return fullscreenModeVideoControl;
             }
-            
+
             return null;
         }
 
@@ -150,6 +203,16 @@ namespace ExtraMetadataLoader
             detailsVideoControl?.ResetPlayerValues();
             gridVideoControl?.ResetPlayerValues();
             genericVideoControl?.ResetPlayerValues();
+
+            foreach (var videoControl in configuredVideoControls)
+            {
+                videoControl.ResetPlayerValues();
+            }
+
+            foreach (var videoControl in fullscreenModeVideoControls)
+            {
+                videoControl.ResetPlayerValues();
+            }
         }
 
         private void UpdatePlayersData()
@@ -176,6 +239,16 @@ namespace ExtraMetadataLoader
             detailsVideoControl?.MediaPause();
             gridVideoControl?.MediaPause();
             genericVideoControl?.MediaPause();
+
+            foreach (var videoControl in configuredVideoControls)
+            {
+                videoControl.MediaPause();
+            }
+
+            foreach (var videoControl in fullscreenModeVideoControls)
+            {
+                videoControl.MediaPause();
+            }
         }
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
