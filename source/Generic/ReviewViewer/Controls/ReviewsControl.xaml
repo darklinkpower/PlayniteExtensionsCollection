@@ -13,7 +13,7 @@
         </StackPanel.Resources>
         <StackPanel Visibility="{Binding MainPanelVisibility, Mode=OneWay}">
             <StackPanel DockPanel.Dock="Left" Margin="0,0,0,10">
-                <StackPanel Orientation="Horizontal" >
+                <DockPanel>
                     <Viewbox Stretch="Uniform" Height="50" VerticalAlignment="Center"
                              Visibility="{Binding ThumbsUpVisibility}">
                         <Canvas Width="256" Height="256" Canvas.Left="0" Canvas.Top="0">
@@ -69,14 +69,24 @@
                     </Viewbox>
 
                     <StackPanel Margin="10,0,0,0">
-                        <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewRecommendedLabel}"
-                                   Visibility="{Binding ThumbsUpVisibility}" />
-                        <TextBlock Text="{DynamicResource LOCReview_Viewer_ReviewNotRecommendedLabel}"
-                                   Visibility="{Binding ThumbsDownVisibility}" />
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Content="&#xEF1F;"
+                                    FontFamily="{DynamicResource FontIcoFont}"
+                                    Margin="10,0,0,0"
+                                    Visibility="{Binding CurrentSteamId, Converter={StaticResource NullToVisibilityConverter}}"
+                                    Command="{Binding OpenSelectedReviewCommand}" VerticalAlignment="Center" />
+                            <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                                       Text="{DynamicResource LOCReview_Viewer_ReviewRecommendedLabel}"
+                                       Visibility="{Binding ThumbsUpVisibility}" />
+                            <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                                       Text="{DynamicResource LOCReview_Viewer_ReviewNotRecommendedLabel}"
+                                       Visibility="{Binding ThumbsDownVisibility}" />
+                        </DockPanel>
+
                         <TextBlock Text="{Binding FormattedPlaytime}" Opacity="0.75" />
                         <TextBlock Text="{Binding TotalFormattedPlaytime}" Opacity="0.75" />
                     </StackPanel>
-                </StackPanel>
+                </DockPanel>
                 <TextBlock Text="{Binding ReviewPostedDate}"
                            Visibility="{Binding SettingsModel.Settings.DisplayReviewDate, Converter={StaticResource BooleanToVisibilityConverter}}"
                            Margin="0,10,0,0" Opacity="0.75" />

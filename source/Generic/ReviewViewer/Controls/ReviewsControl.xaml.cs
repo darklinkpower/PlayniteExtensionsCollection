@@ -110,6 +110,7 @@ namespace ReviewViewer.Controls
         private string pluginUserDataPath;
 
         private const string reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
+        private const string reviewUrlFormat = @"https://steamcommunity.com/profiles/{0}/recommended/{1}/";
         private string steamApiLanguage = string.Empty;
 
         private bool multipleReviewsAvailable = false;
@@ -123,6 +124,17 @@ namespace ReviewViewer.Controls
             set
             {
                 reviews = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string currenSteamId = null;
+        public string CurrenSteamId
+        {
+            get => currenSteamId;
+            set
+            {
+                currenSteamId = value;
                 OnPropertyChanged();
             }
         }
@@ -354,6 +366,18 @@ namespace ReviewViewer.Controls
             }, (a) => selectedReviewSearch != ReviewSearchType.Positive);
         }
 
+        public RelayCommand<object> OpenSelectedReviewCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                if (selectedReview != null && !currenSteamId.IsNullOrEmpty())
+                {
+                    var reviewUrl = string.Format(reviewUrlFormat, selectedReview.Author.Steamid, currenSteamId);
+                    ProcessStarter.StartUrl(reviewUrl);
+                }
+            });
+        }
+
         void SwitchPositiveReviews()
         {
             selectedReviewSearch = ReviewSearchType.Positive;
@@ -446,6 +470,7 @@ namespace ReviewViewer.Controls
         public void UpdateReviewsContext()
         {
             ResetBindingValues();
+            CurrenSteamId = Steam.GetGameSteamId(currentGame, true);
             ControlVisibility = Visibility.Visible;
             SettingsModel.Settings.IsControlVisible = true;
             switch (selectedReviewSearch)
