@@ -223,3 +223,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added option to refresh review data if older than set days on game selection. Enabled by default and set to 7 days.'
+  - Version: 2.34
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.09_ddb1ff18/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_34.pext
+    Changelog:
+    - 'Added button to open review in browser'

@@ -30,3 +30,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.04.23_3f5693d2/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_4.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.5
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-09
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.09_ddb1ff18/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_5.pext
+    Changelog:
+    - 'Added LibraryIcon to plugin'
