@@ -13,6 +13,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using PluginsCommon;
 using Playnite.SDK.Data;
+using System.Reflection;
 
 namespace ImporterforAnilist
 {
@@ -25,6 +26,7 @@ namespace ImporterforAnilist
         private ImporterForAnilistSettingsViewModel settings { get; set; }
         public override Guid Id { get; } = Guid.Parse("2366fb38-bf25-45ea-9a78-dcc797ee83c3");
         public override string Name => "Importer for AniList";
+        public override string LibraryIcon { get; }
         public override LibraryClient Client { get; } = new ImporterForAnilistClient();
         public MalSyncRateLimiter MalSyncRateLimiter { get; } = new MalSyncRateLimiter();
 
@@ -47,6 +49,7 @@ namespace ImporterforAnilist
                 HasCustomizedGameImport = true
             };
 
+            LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             anilistLibraryCachePath = Path.Combine(GetPluginUserDataPath(), "libraryCache.json");
             accountApi = new AnilistAccountClient(PlayniteApi, settings);
         }
