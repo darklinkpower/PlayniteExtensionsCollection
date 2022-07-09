@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using JastUsaLibrary.ProgramsHelper.Models;
+using System.Reflection;
 
 namespace JastUsaLibrary
 {
@@ -26,6 +27,7 @@ namespace JastUsaLibrary
         private JastUsaLibrarySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("d407a620-5953-4ca4-a25c-8194c8559381");
+        public override string LibraryIcon { get; }
 
         // Change to something more appropriate
         public override string Name => "JAST USA";
@@ -49,6 +51,8 @@ namespace JastUsaLibrary
             {
                 HasSettings = true
             };
+
+            LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
         }
 
         private List<GameInstallCache> GetGameInstallCache()
