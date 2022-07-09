@@ -21,6 +21,7 @@ using NVIDIAGeForceNowEnabler.Models;
 using NVIDIAGeForceNowEnabler.Views;
 using NVIDIAGeForceNowEnabler.ViewModels;
 using System.Windows;
+using System.Reflection;
 
 namespace NVIDIAGeForceNowEnabler
 {
@@ -38,6 +39,7 @@ namespace NVIDIAGeForceNowEnabler
         public override LibraryClient Client { get; } = new NVIDIAGeForceNowClient();
         public override Guid Id { get; } = Guid.Parse("5f2dfd12-5f13-46fe-bcdd-64eb53ace26a");
         public override string Name => "NVIDIA GeForce NOW";
+        public override string LibraryIcon { get; }
         public NVIDIAGeForceNowEnabler(IPlayniteAPI api) : base(api)
         {
             settings = new NVIDIAGeForceNowEnablerSettingsViewModel(this);
@@ -50,6 +52,7 @@ namespace NVIDIAGeForceNowEnabler
                 HasSettings = true
             };
 
+            LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             SetEnumsDictionary();
         }
 
