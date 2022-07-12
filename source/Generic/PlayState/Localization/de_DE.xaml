@@ -7,6 +7,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Entferne Konfiguration, um nur die Spielzeit zu unterbrechen</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Ausgewählte Spiele so konfigurieren, dass sie zum Anhalten von Prozessen gezwungen werden</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Konfiguration entfernen, um das Anhalten von Prozessen zu erzwingen</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Fehler beim Registrieren des konfigurierten Hotkey {0}
 
 Sie können versuchen, eine andere HotKey Kombination zu verwenden, um das Problem möglicherweise zu beheben</sys:String>
