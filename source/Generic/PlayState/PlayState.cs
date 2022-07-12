@@ -41,6 +41,7 @@ namespace PlayState
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
 
         private PlayStateManagerViewModel playStateManager;
+        private readonly string playstateIconImagePath;
         private MessagesHandler messagesHandler;
         private readonly bool isWindows10Or11;
         private const string featureBlacklist = "[PlayState] Blacklist";
@@ -58,6 +59,7 @@ namespace PlayState
 
             messagesHandler = new MessagesHandler(PlayniteApi, settings, isWindows10Or11);
             playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings, messagesHandler);
+            playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
         }
 
         private bool IsWindows10Or11()
@@ -508,6 +510,48 @@ namespace PlayState
                     }
                 }
             };
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            var game = args.Games.LastOrDefault();
+            if (game == null)
+            {
+                return null;
+            }
+
+            var isGameSuspended = playStateManager.GetIsGameSuspended(game);
+            if (isGameSuspended == null)
+            {
+                return null;
+            }
+
+            return new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = GetGameMenuSwitchStatusDescription(game, isGameSuspended),
+                    Icon = playstateIconImagePath,
+                    Action = a =>
+                    {
+                        playStateManager.SwitchGameState(game);
+                    }
+                }
+            };
+        }
+
+        private string GetGameMenuSwitchStatusDescription(Game game, bool? isGameSuspended)
+        {
+            if (isGameSuspended == true)
+            {
+                return string.Format(ResourceProvider.GetString("LOCPlayState_GameMenuItemResumeGameDescription"), game.Name);
+            }
+            else if (isGameSuspended == false)
+            {
+                return string.Format(ResourceProvider.GetString("LOCPlayState_GameMenuItemSuspendGameDescription"), game.Name);
+            }
+
+            return string.Empty;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

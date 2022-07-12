@@ -233,6 +233,17 @@ namespace PlayState.ViewModels
             return CurrentGame.Id == game.Id;
         }
 
+        public bool? GetIsGameSuspended(Game game)
+        {
+            var data = GetDataOfGame(game);
+            if (data != null)
+            {
+                return data.IsSuspended;
+            }
+
+            return null;
+        }
+
         public RelayCommand NavigateBackCommand
         {
             get => new RelayCommand(() =>
@@ -286,6 +297,15 @@ namespace PlayState.ViewModels
             });
         }
 
+        public void SwitchGameState(Game game)
+        {
+            var playstateData = GetDataOfGame(game);
+            if (playstateData != null)
+            {
+                SwitchGameState(playstateData);
+            }
+        }
+        
         public void SwitchGameState(PlayStateData gameData)
         {
             try
