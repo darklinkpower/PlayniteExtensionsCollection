@@ -7,6 +7,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">移除强制性地仅挂起游玩时间的配置</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">将所选游戏配置为强制性地挂起进程</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">移除强制性地挂起进程的配置</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">已配置的热键 {0} 注册失败
 
 您可以尝试使用不同的热键组合以解决该问题</sys:String>
