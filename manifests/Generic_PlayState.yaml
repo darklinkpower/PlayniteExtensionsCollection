@@ -293,3 +293,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/PlayState_2_41.pext
     Changelog:
     - 'Add setting to enable or disable notifications'
+  - Version: 2.42
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.12_b25decc4/PlayState_2_42.pext
+    Changelog:
+    - 'Added support to suspend and resume games from right click Game Menu'
