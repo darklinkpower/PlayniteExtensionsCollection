@@ -137,3 +137,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_20.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.12_b41484b1/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_21.pext
+    Changelog:
+    - 'Fix failing to obtain catalog games correctly. If data is missing, please use the Reset Cache menu option'
