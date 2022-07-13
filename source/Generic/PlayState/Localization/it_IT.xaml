@@ -7,8 +7,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Rimuovi la configurazione per forzare la sospensione solo dell'ora di riproduzione</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configura i giochi selezionati per forzare la sospensione dei processi</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Rimuovi la configurazione per forzare la sospensione dei processi</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Sospendi {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Riprendi {0}</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Impossibile registrare il tasto di scelta rapida configurata {0}
 
 Puoi provare a usare una combinazione di tasti di scelta rapida diversa per risolvere il problema</sys:String>
