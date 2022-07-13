@@ -190,61 +190,66 @@ namespace GamePassCatalogBrowser.Services
                     continue;
                 }
 
-                if (!product.Properties.PackageFamilyName.IsNullOrEmpty())
-                {
-                    continue;
-                }
-
-                if (!addChildProducts)
-                {
-                    continue;
-                }
-
-                var marketProperties = product.MarketProperties.FirstOrDefault();
-                if (marketProperties == null)
-                {
-                    continue;
-                }
-
-                var idsForDataRequest = new List<string>();
                 var childSubproductsList = new List<string>();
-                foreach (RelatedProduct relatedProduct in marketProperties.RelatedProducts)
+                if (product.Properties.PackageFamilyName.IsNullOrEmpty())
                 {
-                    if (relatedProduct.RelationshipType == "Bundle" || relatedProduct.RelationshipType == "Parent")
+                    if (addChildProducts)
                     {
-                        childSubproductsList.Add(relatedProduct.RelatedProductId);
-                        if (!gamePassGamesList.Any(g => g.ProductId.Equals(relatedProduct.RelatedProductId)))
-                        {
-                            idsForDataRequest.Add(relatedProduct.RelatedProductId);
-                        }
-                    }
-                }
-
-                if (idsForDataRequest.Count == 0)
-                {
-                    continue;
-                }
-
-                var bigIdsParam = string.Join(",", idsForDataRequest);
-                var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
-                try
-                {
-                    var response = HttpDownloader.DownloadString(catalogDataApiUrl);
-                    if (!response.IsNullOrEmpty())
-                    {
-                        AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(response), false, gameProductType, true, product.ProductId);
+                        AddGamePassProductsFromPackage(product, gameProductType, childSubproductsList);
                     }
                     else
                     {
-                        logger.Info($"Request {catalogDataApiUrl} not completed");
+                        continue;
                     }
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error in ApiRequest {catalogDataApiUrl}");
                 }
 
                 AddGamePassGameFromProduct(gameProductType, isChildProduct, parentProductId, product, childSubproductsList);
+            }
+        }
+
+        private void AddGamePassProductsFromPackage(CatalogProduct product, ProductType gameProductType, List<string> childSubproductsList)
+        {
+            var marketProperties = product.MarketProperties.FirstOrDefault();
+            if (marketProperties == null)
+            {
+                return;
+            }
+
+            var idsForDataRequest = new List<string>();
+            foreach (RelatedProduct relatedProduct in marketProperties.RelatedProducts)
+            {
+                if (relatedProduct.RelationshipType == "Bundle" || relatedProduct.RelationshipType == "Parent")
+                {
+                    childSubproductsList.Add(relatedProduct.RelatedProductId);
+                    if (!gamePassGamesList.Any(g => g.ProductId.Equals(relatedProduct.RelatedProductId)))
+                    {
+                        idsForDataRequest.Add(relatedProduct.RelatedProductId);
+                    }
+                }
+            }
+
+            if (idsForDataRequest.Count == 0)
+            {
+                return;
+            }
+
+            var bigIdsParam = string.Join(",", idsForDataRequest);
+            var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
+            try
+            {
+                var response = HttpDownloader.DownloadString(catalogDataApiUrl);
+                if (!response.IsNullOrEmpty())
+                {
+                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(response), false, gameProductType, true, product.ProductId);
+                }
+                else
+                {
+                    logger.Info($"Request {catalogDataApiUrl} not completed");
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error in ApiRequest {catalogDataApiUrl}");
             }
         }
 
