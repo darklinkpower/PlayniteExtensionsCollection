@@ -58,7 +58,7 @@ namespace SteamGameTransferUtility
 
                 int SecondItemStartQuote = RegionToReadIn.IndexOf('"', CurrentPos);
                 int SecondItemStartBraceleft = RegionToReadIn.IndexOf('{', CurrentPos);
-                if (SecondItemStartBraceleft == -1 || SecondItemStartQuote < SecondItemStartBraceleft)
+                if (SecondItemStartQuote != -1 && (SecondItemStartBraceleft == -1 || SecondItemStartQuote < SecondItemStartBraceleft))
                 {
                     int SecondItemEndQuote = RegionToReadIn.IndexOf('"', SecondItemStartQuote + 1);
                     string SecondItem = RegionToReadIn.Substring(SecondItemStartQuote + 1, SecondItemEndQuote - SecondItemStartQuote - 1);
