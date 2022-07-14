@@ -271,7 +271,7 @@ namespace SteamGameTransferUtility.ViewModels
                         if (deleteSourceGame)
                         {
                             FileSystem.DeleteDirectory(sourceGameDirectoryPath, true);
-                            File.Delete(sourceManifestPath);
+                            FileSystem.DeleteFileSafe(sourceManifestPath);
                             logger.Info($"Deleted source files of game {game.Name} in {sourceGameDirectoryPath}");
                             deletedSourceFilesCount++;
                         }
@@ -286,7 +286,7 @@ namespace SteamGameTransferUtility.ViewModels
                     string targetGameDirectoryPath = Path.Combine(targetLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
                     if (Directory.Exists(targetGameDirectoryPath))
                     {
-                        Directory.Delete(targetGameDirectoryPath, true);
+                        FileSystem.DeleteDirectory(targetGameDirectoryPath, true);
                         logger.Info(string.Format("Deleted directory: {0}", targetGameDirectoryPath));
                     }
 
@@ -298,8 +298,8 @@ namespace SteamGameTransferUtility.ViewModels
 
                     if (deleteSourceGame)
                     {
-                        Directory.Delete(sourceGameDirectoryPath, true);
-                        File.Delete(sourceManifestPath);
+                        FileSystem.DeleteDirectory(sourceGameDirectoryPath, true);
+                        FileSystem.DeleteFileSafe(sourceManifestPath);
                         logger.Info("Deleted source files");
                         deletedSourceFilesCount++;
                     }
