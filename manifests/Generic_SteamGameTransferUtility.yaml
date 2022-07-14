@@ -133,3 +133,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_20.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.14_66adc02d/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_21.pext
+    Changelog:
+    - 'Fix failing to copy games due to failing to parse the game Steam installation manifest'
+    - 'Fix failing to delete game installation directories that contain file or directories that are read only'
