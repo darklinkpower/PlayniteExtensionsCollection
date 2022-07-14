@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace SteamSearch
             }
         }
 
-        private Dictionary<string, string> steamCountriesDictionary;
+        private Dictionary<string, string> steamCountriesDictionary = new Dictionary<string, string>();
         public Dictionary<string, string> SteamCountriesDictionary { get => steamCountriesDictionary; set => SetValue(ref steamCountriesDictionary, value); }
 
         public SteamSearchSettingsViewModel(SteamSearch plugin)
@@ -53,8 +54,11 @@ namespace SteamSearch
             {
                 Settings = new SteamSearchSettings();
             }
-
-            SteamCountriesDictionary = Steam.GetCountryLocCurrencyDictionary();
+            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(x => new RegionInfo(x.LCID));
+            foreach (var region in regions)
+            {
+                SteamCountriesDictionary[region.TwoLetterISORegionName] = region.NativeName;
+            }
         }
 
         public void BeginEdit()
