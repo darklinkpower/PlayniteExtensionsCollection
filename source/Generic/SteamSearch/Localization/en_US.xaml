@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSteam_Search_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Use specific country for the Steam Store searches</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Steam Store</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">Enter the search term</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearcherHint">Search for games in the Steam Store</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Open on web</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Open on Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">{0}% off</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Current Price: {0:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Original Price: {0:N2}</sys:String>
+</ResourceDictionary>

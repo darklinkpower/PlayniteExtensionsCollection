@@ -14,8 +14,8 @@ namespace SteamSearch
     {
         private string selectedManualCountry = "US";
         public string SelectedManualCountry { get => selectedManualCountry; set => SetValue(ref selectedManualCountry, value); }
-        private bool useManualCurrency = false;
-        public bool UseManualCurrency { get => useManualCurrency; set => SetValue(ref useManualCurrency, value); }
+        private bool useCountryStore = false;
+        public bool UseCountryStore { get => useCountryStore; set => SetValue(ref useCountryStore, value); }
     }
 
     public class SteamSearchSettingsViewModel : ObservableObject, ISettings

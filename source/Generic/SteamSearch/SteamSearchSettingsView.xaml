@@ -8,10 +8,10 @@
     <ScrollViewer Margin="20">
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <CheckBox IsChecked="{Binding Settings.UseManualCurrency}"
+                <CheckBox IsChecked="{Binding Settings.UseCountryStore}"
                       VerticalAlignment="Center"
-                      Content="Use specific currency in searches" />
-                <ComboBox IsEnabled="{Binding Settings.UseManualCurrency}"
+                      Content="{DynamicResource LOCSteam_Search_SettingsUseCountryStoreLabel}" />
+                <ComboBox IsEnabled="{Binding Settings.UseCountryStore}"
                           Margin="10,0,0,0" MinWidth="100"
                           VerticalAlignment="Center"
                           ItemsSource="{Binding SteamCountriesDictionary}"

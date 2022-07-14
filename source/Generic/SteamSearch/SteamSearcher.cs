@@ -18,9 +18,9 @@ namespace SteamSearch
 
         public SteamSearcher(SteamSearchSettingsViewModel settings)
         {
-            Description = "Enter search term";
-            Label = "Steam Store";
-            Hint = "Search for games in the Steam Store";
+            Description = ResourceProvider.GetString("LOCSteam_Search_SearcherDescriptionLabel");
+            Label = ResourceProvider.GetString("LOCSteam_Search_SteamStoreLabel");
+            Hint = ResourceProvider.GetString("LOCSteam_Search_SearcherHint");
             Delay = 450;
             this.settings = settings;
         }
@@ -50,14 +50,16 @@ namespace SteamSearch
         private static SearchItem GetSearchItemFromSearchResult(StoreSearchResult searchResult)
         {
             var searchItemsDescription = GetSearchItemDescription(searchResult);
-            var searchItem = new SearchItem($"{searchResult.Name}", new SearchItemAction("Open on web", () => { ProcessStarter.StartUrl(searchResult.StoreUrl); }))
+            var searchItem = new SearchItem($"{searchResult.Name}",
+                new SearchItemAction(ResourceProvider.GetString("LOCSteam_Search_ItemActionLabelOpenOnWeb"),
+                () => { ProcessStarter.StartUrl(searchResult.StoreUrl); }))
             {
                 Description = searchItemsDescription,
                 Icon = searchResult.BannerImageUrl,
             };
 
             searchItem.SecondaryAction = new SearchItemAction(
-                "Open on Steam",
+                ResourceProvider.GetString("LOCSteam_Search_ItemActionLabelOpenOnSteam"),
                 () => { ProcessStarter.StartUrl(string.Format(steamUriOpenUrlMask, searchResult.StoreUrl));});
 
             return searchItem;
@@ -67,15 +69,20 @@ namespace SteamSearch
         {
             if (searchResult.IsDiscounted)
             {
-                return $"{searchResult.DiscountPercentage}% off - Current Price: ${string.Format("{0:N2}", searchResult.PriceFinal)} - Original Price: ${string.Format("{0:N2}", searchResult.PriceOriginal)}";
+                return string.Join(" - ", new string[3]
+                {
+                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionDiscountPercentDescription"), searchResult.DiscountPercentage),
+                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionCurrentPriceDescription"), searchResult.PriceFinal),
+                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionOriginalPriceDescription"), searchResult.PriceOriginal)
+                });
             }
 
-            return $"Current Price: ${string.Format("{0:N2}", searchResult.PriceFinal)}";
+            return string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionCurrentPriceDescription"), searchResult.PriceFinal);
         }
 
         private List<StoreSearchResult> GetStoreSearchResults(string searchTerm)
         {
-            if (settings.Settings.UseManualCurrency)
+            if (settings.Settings.UseCountryStore)
             {
                 return SteamWeb.GetSteamSearchResults(searchTerm, settings.Settings.SelectedManualCountry);
             }
