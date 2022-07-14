@@ -268,9 +268,9 @@ namespace SteamGameTransferUtility.ViewModels
                         logger.Info(errorMessage);
                         skippedGamesCount++;
 
-                        if (deleteSourceGame == true)
+                        if (deleteSourceGame)
                         {
-                            Directory.Delete(sourceGameDirectoryPath, true);
+                            FileSystem.DeleteDirectory(sourceGameDirectoryPath, true);
                             File.Delete(sourceManifestPath);
                             logger.Info($"Deleted source files of game {game.Name} in {sourceGameDirectoryPath}");
                             deletedSourceFilesCount++;
