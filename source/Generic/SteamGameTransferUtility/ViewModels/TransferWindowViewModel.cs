@@ -244,8 +244,11 @@ namespace SteamGameTransferUtility.ViewModels
                     continue;
                 }
 
+                AcfReader acfReader = new AcfReader(sourceManifestPath);
+                ACF_Struct sourceAcf = acfReader.ACFFileToStruct();
+
                 // Check if game source directory exists
-                var sourceGameDirectoryPath = Path.Combine(sourceLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
+                var sourceGameDirectoryPath = Path.Combine(sourceLibraryPath, "common", GetAcfAppSubItem(sourceAcf, "installdir"));
                 if (!Directory.Exists(sourceGameDirectoryPath))
                 {
                     var errorMessage = string.Format(ResourceProvider.GetString("LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected"), game.Name, sourceGameDirectoryPath);
@@ -259,7 +262,7 @@ namespace SteamGameTransferUtility.ViewModels
                 var targetManifestPath = Path.Combine(targetLibraryPath, gameManifest);
                 if (FileSystem.FileExists(targetManifestPath))
                 {
-                    var sourceBuildId = int.Parse(GetAcfAppSubItem(sourceManifestPath, "buildid"));
+                    var sourceBuildId = int.Parse(GetAcfAppSubItem(sourceAcf, "buildid"));
                     var targetBuildId = int.Parse(GetAcfAppSubItem(targetManifestPath, "buildid"));
 
                     if (sourceBuildId <= targetBuildId)
@@ -283,7 +286,7 @@ namespace SteamGameTransferUtility.ViewModels
                 var sourceDirectorySize = CalculateSize(sourceGameDirectoryPath);
                 var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
-                    string targetGameDirectoryPath = Path.Combine(targetLibraryPath, "common", GetAcfAppSubItem(sourceManifestPath, "installdir"));
+                    string targetGameDirectoryPath = Path.Combine(targetLibraryPath, "common", GetAcfAppSubItem(sourceAcf, "installdir"));
                     if (Directory.Exists(targetGameDirectoryPath))
                     {
                         FileSystem.DeleteDirectory(targetGameDirectoryPath, true);
@@ -320,6 +323,11 @@ namespace SteamGameTransferUtility.ViewModels
         {
             AcfReader acfReader = new AcfReader(acfPath);
             ACF_Struct acfStruct = acfReader.ACFFileToStruct();
+            return acfStruct.SubACF["AppState"].SubItems[subItemName];
+        }
+
+        public string GetAcfAppSubItem(ACF_Struct acfStruct, string subItemName)
+        {
             return acfStruct.SubACF["AppState"].SubItems[subItemName];
         }
 
