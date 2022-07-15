@@ -199,7 +199,7 @@ namespace ExtraMetadataLoader.Services
             {
                 logger.Error($"Failed to get video information: {videoPath}, {result}, {stdErr}");
                 playniteApi.Notifications.Add(new NotificationMessage(
-                    new Guid().ToString(),
+                    Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail"), videoPath, result, stdErr),
                     NotificationType.Error)
                 );
@@ -245,7 +245,7 @@ namespace ExtraMetadataLoader.Services
                     {
                         logger.Error($"Failed to process video in ffmpeg: {videoPath}, {result}, {stdErr}");
                         playniteApi.Notifications.Add(new NotificationMessage(
-                            new Guid().ToString(),
+                            Guid.NewGuid().ToString(),
                             string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, result, stdErr),
                             NotificationType.Error)
                         );
@@ -262,7 +262,7 @@ namespace ExtraMetadataLoader.Services
                     {
                         logger.Error($"Failed to process video in ffmpeg: {videoPath}, {result}, {stdErr}");
                         playniteApi.Notifications.Add(new NotificationMessage(
-                            new Guid().ToString(),
+                            Guid.NewGuid().ToString(),
                             string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, result, stdErr),
                             NotificationType.Error)
                         );
@@ -297,7 +297,7 @@ namespace ExtraMetadataLoader.Services
                 {
                     logger.Error($"Failed to process video in ffmpeg: {videoPath}, {result}, {stdErr}");
                     playniteApi.Notifications.Add(new NotificationMessage(
-                        new Guid().ToString(),
+                        Guid.NewGuid().ToString(),
                         string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail"), videoPath, result, stdErr),
                         NotificationType.Error)
                     );
@@ -341,7 +341,7 @@ namespace ExtraMetadataLoader.Services
             {
                 logger.Error($"Failed to download video in youtube-dlp: {videoId}, {result}, {stdErr}");
                 playniteApi.Notifications.Add(new NotificationMessage(
-                    new Guid().ToString(),
+                    Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail"), videoId, result, stdErr),
                     NotificationType.Error)
                 );

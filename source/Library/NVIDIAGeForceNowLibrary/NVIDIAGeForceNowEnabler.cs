@@ -332,7 +332,7 @@ namespace NVIDIAGeForceNowEnabler
             }
             else if (setAsInstalledCount > 0)
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage(new Guid().ToString(),
+                PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults"), setAsInstalledCount),
                     NotificationType.Info));
             }

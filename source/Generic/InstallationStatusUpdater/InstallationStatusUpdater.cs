@@ -453,7 +453,7 @@ namespace InstallationStatusUpdater
                     return;
                 }
                 
-                PlayniteApi.Notifications.Add(new NotificationMessage(new Guid().ToString(),
+                PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults"), markedInstalled, markedUninstalled),
                     NotificationType.Info));
             }
