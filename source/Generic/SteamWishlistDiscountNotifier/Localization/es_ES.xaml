@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Ayuda</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Utilice un país específico para las búsquedas en la tienda de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Autenticar</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Comprobando el estado de la autenticación…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">El usuario está autenticado</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requiere autenticación</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervalo en minutos para comprobar las actualizaciones en la lista de deseados:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Abrir páginas de tienda en el navegador web en lugar del cliente de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
+
+Error al comprobar la lista de deseados de Steam. Se requiere autenticación.</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">¡&quot;{0}&quot; está en descuento en Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Descuento: {0}%</sys:String>
+</ResourceDictionary>
