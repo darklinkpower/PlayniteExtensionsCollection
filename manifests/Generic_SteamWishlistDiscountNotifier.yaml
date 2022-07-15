@@ -1,2 +1,8 @@
 AddonId: SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_0.pext
+    Changelog:
+    - 'Initial release'

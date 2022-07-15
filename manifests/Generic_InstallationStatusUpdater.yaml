@@ -225,3 +225,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/Installation_Status_Updater_2_33.pext
     Changelog:
     - 'Performance improvements to games processing'
+  - Version: 2.34
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/Installation_Status_Updater_2_34.pext
+    Changelog:
+    - 'Fix failing to add some notifications after one has been displayed'

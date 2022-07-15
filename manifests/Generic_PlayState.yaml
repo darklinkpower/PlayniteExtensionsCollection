@@ -299,3 +299,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.12_b25decc4/PlayState_2_42.pext
     Changelog:
     - 'Added support to suspend and resume games from right click Game Menu'
+  - Version: 2.43
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/PlayState_2_43.pext
+    Changelog:
+    - 'Updated localizations'

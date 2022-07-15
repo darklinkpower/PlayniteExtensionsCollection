@@ -242,3 +242,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.09_ddb1ff18/NVIDIA_GeForce_Now_Enabler_2_37.pext
     Changelog:
     - 'Added LibraryIcon to plugin'
+  - Version: 2.38
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/NVIDIA_GeForce_Now_Enabler_2_38.pext
+    Changelog:
+    - 'Fix failing to add some notifications after one has been displayed'

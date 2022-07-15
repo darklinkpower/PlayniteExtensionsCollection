@@ -401,3 +401,9 @@ Packages:
     - 'Fix crash when loading video control in Fullscreen Mode'
     - 'Fix not being logged out from google if user is already logged in when using the Login button'
     - 'Potential fix to prevent not obtaining images when searching for logos on Google'
+  - Version: 1.57
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_57.pext
+    Changelog:
+    - 'Fix failing to add some notifications after one has been displayed'
