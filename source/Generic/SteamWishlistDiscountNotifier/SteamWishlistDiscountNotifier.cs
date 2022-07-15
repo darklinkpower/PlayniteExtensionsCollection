@@ -45,14 +45,18 @@ namespace SteamWishlistDiscountNotifier
             wishlistCachePath = Path.Combine(GetPluginUserDataPath(), "WishlistCache.json");
             wishlistCheckTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMinutes(settings.Settings.WishlistAutoCheckIntervalMins),
+                Interval = TimeSpan.FromMinutes(1),
             };
             wishlistCheckTimer.Tick += new EventHandler(WishlistCheckTimer_Tick);
         }
 
         private void WishlistCheckTimer_Tick(object sender, EventArgs e)
         {
-            StartWishlistCheck();
+            if (DateTime.Now >
+                 settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins))
+            {
+                StartWishlistCheck();
+            }
         }
 
         private void StartWishlistCheck()

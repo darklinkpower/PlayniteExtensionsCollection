@@ -92,10 +92,6 @@ namespace SteamWishlistDiscountNotifier
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
             plugin.SavePluginSettings(Settings);
-            if (Settings.WishlistAutoCheckIntervalMins != editingClone.WishlistAutoCheckIntervalMins)
-            {
-                plugin.wishlistCheckTimer.Interval = TimeSpan.FromMinutes(Settings.WishlistAutoCheckIntervalMins);
-            }
         }
 
         public bool VerifySettings(out List<string> errors)
