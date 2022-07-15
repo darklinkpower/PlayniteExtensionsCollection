@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using SteamWishlistDiscountNotifier.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,25 +11,43 @@ namespace SteamWishlistDiscountNotifier
 {
     public class SteamLogin
     {
-        public static string GetLoggedInSteamId64(IWebView webView)
+        public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)
         {
             webView.NavigateAndWait(@"https://steamcommunity.com/my/recommended/");
-            var source = webView.GetPageSource();
-            var idMatch = Regex.Match(source, @"g_steamID = ""(\d+)""");
-            if (idMatch.Success)
+            var address = webView.GetCurrentAddress();
+            if (address.IsNullOrEmpty())
             {
-                return idMatch.Groups[1].Value;
+                status = AuthStatus.NoConnection;
+                steamId = null;
+                return;
             }
-            else
+            else if (address.StartsWith(@"https://steamcommunity.com/id/") ||
+                address.StartsWith(@"https://steamcommunity.com/profiles/"))
             {
-                idMatch = Regex.Match(source, @"steamid"":""(\d+)""");
+                var source = webView.GetPageSource();
+                var idMatch = Regex.Match(source, @"g_steamID = ""(\d+)""");
                 if (idMatch.Success)
                 {
-                    return idMatch.Groups[1].Value;
+                    status = AuthStatus.Ok;
+                    steamId = idMatch.Groups[1].Value;
+                    return;
+                }
+                else
+                {
+                    idMatch = Regex.Match(source, @"steamid"":""(\d+)""");
+                    if (idMatch.Success)
+                    {
+                        status = AuthStatus.Ok;
+                        steamId = idMatch.Groups[1].Value;
+                        return;
+                    }
                 }
             }
 
-            return null;
+            status = AuthStatus.AuthRequired;
+            steamId = null;
+
+            return;
         }
     }
 }

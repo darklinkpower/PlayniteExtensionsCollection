@@ -12,6 +12,7 @@ namespace SteamWishlistDiscountNotifier.Enums
         Checking,
         AuthRequired,
         PrivateAccount,
-        Failed
+        Failed,
+        NoConnection
     }
 }

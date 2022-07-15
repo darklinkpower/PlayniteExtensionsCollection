@@ -40,6 +40,9 @@
                             <Trigger Property="Tag" Value="{x:Static enums:AuthStatus.Ok}">
                                 <Setter Property="Text" Value="{DynamicResource LOCSteam_Wishlist_Notif_LoggedIn}" />
                             </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static enums:AuthStatus.NoConnection}">
+                                <Setter Property="Text" Value="{DynamicResource LOCSteam_Wishlist_Notif_NoConnection}" />
+                            </Trigger>
                             <Trigger Property="Tag" Value="{x:Static enums:AuthStatus.AuthRequired}">
                                 <Setter Property="Text" Value="{DynamicResource LOCSteam_Wishlist_Notif_NotLoggedIn}" />
                             </Trigger>

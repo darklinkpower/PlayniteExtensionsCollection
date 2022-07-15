@@ -5,6 +5,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
 using PluginsCommon.Web;
+using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
 using System;
 using System.Collections.Generic;
@@ -66,12 +67,16 @@ namespace SteamWishlistDiscountNotifier
                 wishlistCheckTimer.Stop();
                 using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
                 {
-                    var steamId = SteamLogin.GetLoggedInSteamId64(webView);
-                    if (!steamId.IsNullOrEmpty())
+                    SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                    if (status == AuthStatus.NoConnection)
+                    {
+                        return;
+                    }
+                    else if (status == AuthStatus.Ok)
                     {
                         UpdateAndNotifyWishlistDiscounts(steamId, webView);
                     }
-                    else
+                    else if (status == AuthStatus.AuthRequired)
                     {
                         PlayniteApi.Notifications.Add(new NotificationMessage(
                             Guid.NewGuid().ToString(),

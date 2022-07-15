@@ -18,7 +18,6 @@ namespace SteamWishlistDiscountNotifier
         public bool OpenUrlsInBrowser { get => openUrlsInBrowser; set => SetValue(ref openUrlsInBrowser, value); }
         private int wishlistAutoCheckIntervalMins = 60;
         public int WishlistAutoCheckIntervalMins { get => wishlistAutoCheckIntervalMins; set => SetValue(ref wishlistAutoCheckIntervalMins, value); }
-        public string SteamId = null;
     }
 
     public class SteamWishlistDiscountNotifierSettingsViewModel : ObservableObject, ISettings
@@ -38,16 +37,22 @@ namespace SteamWishlistDiscountNotifier
             }
         }
 
+        private AuthStatus checkedStatus = AuthStatus.Checking;
+
         public AuthStatus AuthStatus
         {
             get
             {
-                if (!Settings.SteamId.IsNullOrEmpty())
+                if (checkedStatus != AuthStatus.Checking)
                 {
-                    return AuthStatus.Ok;
+                    return checkedStatus;
                 }
 
-                return AuthStatus.AuthRequired;
+                using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView())
+                {
+                    SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                    return status;
+                }
             }
         }
 
@@ -68,16 +73,14 @@ namespace SteamWishlistDiscountNotifier
             {
                 Settings = new SteamWishlistDiscountNotifierSettings();
             }
+
+            checkedStatus = AuthStatus.Checking;
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
-            using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView())
-            {
-                Settings.SteamId = SteamLogin.GetLoggedInSteamId64(webView);
-            }
         }
 
         public void CancelEdit()
@@ -115,26 +118,37 @@ namespace SteamWishlistDiscountNotifier
         {
             try
             {
-                var steamId = string.Empty;
+                var status = AuthStatus.AuthRequired;
                 using (var view = plugin.PlayniteApi.WebViews.CreateView(675, 440))
                 {
                     view.LoadingChanged += async (s, e) =>
                     {
                         var address = view.GetCurrentAddress();
-                        if (address.Contains(@"steamcommunity.com"))
+                        if (address.IsNullOrEmpty())
+                        {
+                            status = AuthStatus.NoConnection;
+                            view.Close();
+                        }
+                        else if (address.Contains(@"steamcommunity.com"))
                         {
                             var source = await view.GetPageSourceAsync();
+                            if (source == @"<html><head></head><body></body></html>")
+                            {
+                                status = AuthStatus.NoConnection;
+                                view.Close();
+                            }
+
                             var idMatch = Regex.Match(source, @"g_steamID = ""(\d+)""");
                             if (idMatch.Success)
                             {
-                                steamId = idMatch.Groups[1].Value;
+                                status = AuthStatus.Ok;
                             }
                             else
                             {
                                 idMatch = Regex.Match(source, @"steamid"":""(\d+)""");
                                 if (idMatch.Success)
                                 {
-                                    steamId = idMatch.Groups[1].Value;
+                                    status = AuthStatus.Ok;
                                 }
                             }
 
@@ -147,16 +161,11 @@ namespace SteamWishlistDiscountNotifier
 
                     view.DeleteDomainCookies(".steamcommunity.com");
                     view.DeleteDomainCookies("steamcommunity.com");
-                    Settings.SteamId = null;
                     view.Navigate(@"https://steamcommunity.com/login/home/?goto=");
                     view.OpenDialog();
                 }
 
-                if (!steamId.IsNullOrEmpty())
-                {
-                    Settings.SteamId = steamId;
-                }
-
+                checkedStatus = status;
                 OnPropertyChanged(nameof(AuthStatus));
             }
             catch (Exception e)
