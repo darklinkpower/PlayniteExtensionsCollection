@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3F4C540-1237-4D3E-A835-DFD546361BD0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SteamWishlistDiscountNotifier</RootNamespace>
+    <AssemblyName>SteamWishlistDiscountNotifier</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
+      <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
+      <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Downloader.cs">
+      <Link>Shared\PluginsCommon\Downloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Encryption.cs">
+      <Link>Shared\PluginsCommon\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\EnumExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\FileSystem.cs">
+      <Link>Shared\PluginsCommon\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\GlobalCommands.cs">
+      <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\HttpDownloader.cs">
+      <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
+    <Compile Include="Enums\AuthStatus.cs" />
+    <Compile Include="Models\DiscountedItemCache.cs" />
+    <Compile Include="Models\SteamWishlistResponse.cs" />
+    <Compile Include="SteamLogin.cs" />
+    <Compile Include="SteamWishlistDiscountNotifier.cs" />
+    <Compile Include="SteamWishlistDiscountNotifierSettings.cs" />
+    <Compile Include="SteamWishlistDiscountNotifierSettingsView.xaml.cs">
+      <DependentUpon>SteamWishlistDiscountNotifierSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="app.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Localization\en_US.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="SteamWishlistDiscountNotifierSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
+  </PropertyGroup>
+</Project>
