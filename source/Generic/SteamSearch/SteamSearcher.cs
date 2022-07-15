@@ -49,12 +49,11 @@ namespace SteamSearch
 
         private static SearchItem GetSearchItemFromSearchResult(StoreSearchResult searchResult)
         {
-            var searchItemsDescription = GetSearchItemDescription(searchResult);
             var searchItem = new SearchItem($"{searchResult.Name}",
                 new SearchItemAction(ResourceProvider.GetString("LOCSteam_Search_ItemActionLabelOpenOnWeb"),
                 () => { ProcessStarter.StartUrl(searchResult.StoreUrl); }))
             {
-                Description = searchItemsDescription,
+                Description = GetSearchItemDescription(searchResult),
                 Icon = searchResult.BannerImageUrl,
             };
 

@@ -5,3 +5,8 @@ Version: 1.0
 Module: SteamSearch.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
