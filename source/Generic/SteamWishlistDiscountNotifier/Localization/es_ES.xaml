@@ -6,6 +6,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Comprobando el estado de la autenticación…</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">El usuario está autenticado</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requiere autenticación</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Sin conexión</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervalo en minutos para comprobar las actualizaciones en la lista de deseados:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Abrir páginas de tienda en el navegador web en lugar del cliente de Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier

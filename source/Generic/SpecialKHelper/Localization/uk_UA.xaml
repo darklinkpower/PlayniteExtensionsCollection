@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Допомога</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingsHelpLabel">Довідка</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Відкрити редактор профілів Special K</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">Відкрийте конфігурацію контролера Steam для &quot;{0}&quot;</sys:String>
@@ -21,7 +21,7 @@
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Сервіс {0} Special K не може бути запущений</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Редактор профілів Special K</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Допомога</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Довідка</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Готово</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Режим виконання Special K:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Глобальний Режим: сервіси Special K запускаються під час запуску всіх ігор, окрім тих, які мають особливість &quot;[SK] Global Mode Disable&quot;, додану розширенням

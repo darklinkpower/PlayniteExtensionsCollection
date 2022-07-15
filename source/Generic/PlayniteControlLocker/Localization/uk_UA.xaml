@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Допомога</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_SettingsHelpLabel">Довідка</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessageEnterPassword">Введіть значення пароля номер {0}</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePasswordIncorrect">Невірний пароль</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteClosing">Playnite буде закрито.</sys:String>

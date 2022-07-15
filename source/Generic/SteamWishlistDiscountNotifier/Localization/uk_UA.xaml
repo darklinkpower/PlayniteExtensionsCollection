@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Use specific country for the Steam Store searches</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">User is authenticated</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requires authentication</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Interval in minutes to check updates in wishlist:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Open store pages in web browser instead of the Steam client</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Довідка</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Використовувати конкретну країну для пошуку в магазині Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Автентифікувати</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Перевірка стану автентифікації…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Користувача автентифіковано</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Необхідна автентифікація</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">No connection</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Інтервал у хвилинах для перевірки оновлень у списку бажань:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Відкривати сторінки магазину у веббраузері, замість клієнта Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
 
-Failed to check Steam wishlist. Authentication is required.</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; is on sale on Steam!</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Discount: {0}%</sys:String>
+Не вдалося перевірити список бажань Steam. Необхідна автентифікація.</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; на розпродажі у Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Знижка: {0}%</sys:String>
 </ResourceDictionary>
