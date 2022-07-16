@@ -7,8 +7,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Retirer la configuration pour forcer la suspension du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configurer les jeux sélectionnés pour forcer la suspension des processus</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Supprimer la configuration pour forcer la suspension des processus</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspendre {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Reprendre {0}</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Impossible d'enregistrer le raccourci clavier configuré {0}
 
 Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le problème</sys:String>
@@ -31,7 +31,7 @@ Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le pro
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Affiche une notification qui affiche l'état de pause en cours et les autres informations de la jeu actif</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Changer le raccourci clavier</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Appuyez sur le raccourci clavier maintenant</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Activer les notifications</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Remarques :
 
 Les raccourcis clavier configurés ne pourront pas être utilisés dans d'autres applications.
