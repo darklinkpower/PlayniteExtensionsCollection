@@ -305,3 +305,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/PlayState_2_43.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.44
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_28e91eba/PlayState_2_44.pext
+    Changelog:
+    - 'Fix crash if the same game is started multiple times'
