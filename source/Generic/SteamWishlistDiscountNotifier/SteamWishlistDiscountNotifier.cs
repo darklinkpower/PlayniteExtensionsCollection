@@ -225,6 +225,14 @@ namespace SteamWishlistDiscountNotifier
                     break;
                 }
 
+                // Success 2 means that the logged account doesn't have permissions to check the
+                // wishlist. Check in case logged account has changed in the period between obtaining
+                // the steamId and getting the wishlist
+                if (pageSource == @"{""success"":2}")
+                {
+                    return null;
+                }
+
                 var response = Serialization.FromJson<Dictionary<string, SteamWishlistResponse>>(pageSource);
                 foreach (var wishlistItem in response.Values)
                 {
