@@ -28,6 +28,7 @@ namespace SteamWishlistDiscountNotifier
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/sub/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
+        private const string notLoggedInNotifId = @"Steam_Wishlist_Notif_AuthRequired";
         private string wishlistCachePath;
         public readonly DispatcherTimer wishlistCheckTimer;
 
@@ -74,12 +75,13 @@ namespace SteamWishlistDiscountNotifier
                     }
                     else if (status == AuthStatus.Ok)
                     {
+                        PlayniteApi.Notifications.Remove(notLoggedInNotifId);
                         UpdateAndNotifyWishlistDiscounts(steamId, webView);
                     }
                     else if (status == AuthStatus.AuthRequired)
                     {
                         PlayniteApi.Notifications.Add(new NotificationMessage(
-                            Guid.NewGuid().ToString(),
+                            notLoggedInNotifId,
                             ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn"),
                             NotificationType.Info,
                             () => OpenSettingsView()
