@@ -69,6 +69,7 @@ namespace SteamWishlistDiscountNotifier
                 using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
                 {
                     SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                    logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
                     if (status == AuthStatus.NoConnection)
                     {
                         return;
@@ -89,6 +90,7 @@ namespace SteamWishlistDiscountNotifier
                     }
                 }
 
+                logger.Debug($"Finished checking for wishlist");
                 wishlistCheckTimer.Start();
             });
         }
@@ -218,6 +220,7 @@ namespace SteamWishlistDiscountNotifier
                 var endIndex = pageSource.LastIndexOf('}'); ;
                 if (startIndex == -1 || endIndex == -1)
                 {
+                    logger.Debug($"Wishlist check finished in {url}");
                     break;
                 }
 
@@ -232,6 +235,7 @@ namespace SteamWishlistDiscountNotifier
                 // the steamId and getting the wishlist
                 if (pageSource == @"{""success"":2}")
                 {
+                    logger.Debug($"Page {url}, Sucess 2");
                     return null;
                 }
 
@@ -258,6 +262,7 @@ namespace SteamWishlistDiscountNotifier
                 currentPage++;
             }
 
+            logger.Debug($"Wishlist check obtained {currentDiscountedItems.Count} items");
             return currentDiscountedItems;
         }
 
