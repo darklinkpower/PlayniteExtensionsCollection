@@ -13,3 +13,11 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Improved detection of login status'
+  - Version: 1.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.16_741af60b/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_2.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix failing to obtain wishlist data for some accounts'
+    - 'Fix failing to obtain wishlist data if user had series, videos, hardware or mods wishlisted'
