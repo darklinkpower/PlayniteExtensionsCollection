@@ -211,10 +211,15 @@ namespace SteamWishlistDiscountNotifier
                 var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
                 webView.NavigateAndWait(url);
                 var pageSource = webView.GetPageSource();
-                pageSource = HttpUtility.HtmlDecode(pageSource)
-                    .Replace(@"<html><head><meta name=""color-scheme"" content=""light dark""></head><body><pre style=""word-wrap: break-word; white-space: pre-wrap;"">", "")
-                    .Replace(@"</pre></body></html>", "");
-                
+                pageSource = HttpUtility.HtmlDecode(pageSource);
+                var startIndex = pageSource.IndexOf('{');
+                var endIndex = pageSource.LastIndexOf('}'); ;
+                if (startIndex == -1 || endIndex == -1)
+                {
+                    break;
+                }
+
+                pageSource = pageSource.Substring(startIndex, endIndex - startIndex + 1);
                 if (pageSource.IsNullOrEmpty() || pageSource == "[]")
                 {
                     break;
