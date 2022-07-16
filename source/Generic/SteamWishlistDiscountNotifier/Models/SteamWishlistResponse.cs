@@ -89,7 +89,7 @@ namespace SteamWishlistDiscountNotifier.Models
 
     public enum ReviewDesc { Mixed, MostlyPositive, NoUserReviews, Overwhelmingly_Positive, OverwhelminglyPositive, Positive, VeryPositive };
 
-    public enum TypeEnum { Game, Dlc, Music, Application, Series, Video };
+    public enum TypeEnum { Game, Dlc, Music, Application, Series, Video, Hardware, Mod };
 
     public partial struct ReleaseDate
     {
