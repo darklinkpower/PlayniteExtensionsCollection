@@ -205,6 +205,11 @@ namespace PlayState
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
+            if (playStateManager.IsGameBeingDetected(args.Game))
+            {
+                return;
+            }
+            
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
             var gameData = playStateManager.GetCurrentGameData();
 
