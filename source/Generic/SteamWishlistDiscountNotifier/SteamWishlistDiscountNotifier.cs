@@ -24,6 +24,7 @@ namespace SteamWishlistDiscountNotifier
     public class SteamWishlistDiscountNotifier : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly int currentDatabaseVersion = 1;
         private static readonly Regex discBlockParseRegex = new Regex(@"discount_original_price"">(\S+) ([^<]+).+(?=discount_final_price)[^ ]+ ([^<]+)", RegexOptions.Compiled);
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/sub/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
@@ -153,12 +154,47 @@ namespace SteamWishlistDiscountNotifier
 
         private void AddNotifyDiscount(DiscountedItemCache newDiscount)
         {
+            if (!GetShouldDisplayNotification(newDiscount))
+            {
+                return;
+            }
+            
             PlayniteApi.Notifications.Add(new NotificationMessage(
                 Guid.NewGuid().ToString(),
                 GetDiscountNotificationMessage(newDiscount),
                 NotificationType.Info,
                 () => OpenDiscountedItemUrl(newDiscount.Id)
             ));
+        }
+
+        private bool GetShouldDisplayNotification(DiscountedItemCache newDiscount)
+        {
+            if (settings.Settings.NotificationMinDiscount > newDiscount.DiscountPercent)
+            {
+                return false;
+            }
+
+            switch (newDiscount.WishlistItem.Type)
+            {
+                case TypeEnum.Game:
+                    return settings.Settings.NotifyDiscountsTypeGame;
+                case TypeEnum.Dlc:
+                    return settings.Settings.NotifyDiscountsTypeDlc;
+                case TypeEnum.Music:
+                    return settings.Settings.NotifyDiscountsTypeMusic;
+                case TypeEnum.Application:
+                    return settings.Settings.NotifyDiscountsTypeApplication;
+                case TypeEnum.Video:
+                    return settings.Settings.NotifyDiscountsTypeVideo;
+                case TypeEnum.Series:
+                    return settings.Settings.NotifyDiscountsTypeVideo;
+                case TypeEnum.Hardware:
+                    return settings.Settings.NotifyDiscountsTypeHardware;
+                case TypeEnum.Mod:
+                    return settings.Settings.NotifyDiscountsTypeMod;
+                default:
+                    return true;
+            }
         }
 
         private void OpenDiscountedItemUrl(double subId)
@@ -249,7 +285,7 @@ namespace SteamWishlistDiscountNotifier
                             continue;
                         }
 
-                        var discountedItem = GetDiscountedItemFromSub(wishlistItem.Name, sub);
+                        var discountedItem = GetDiscountedItemFromSub(wishlistItem, sub);
                         if (discountedItem == null)
                         {
                             continue;
@@ -266,7 +302,7 @@ namespace SteamWishlistDiscountNotifier
             return currentDiscountedItems;
         }
 
-        private DiscountedItemCache GetDiscountedItemFromSub(string name, Sub sub)
+        private DiscountedItemCache GetDiscountedItemFromSub(SteamWishlistResponse wishlistItem, Sub sub)
         {
             var regexMatch = discBlockParseRegex.Match(sub.DiscountBlock);
             if (!regexMatch.Success)
@@ -277,12 +313,13 @@ namespace SteamWishlistDiscountNotifier
 
             return new DiscountedItemCache
             {
-                Name = HttpUtility.HtmlDecode(name),
+                Name = HttpUtility.HtmlDecode(wishlistItem.Name),
                 Id = sub.Id,
                 PriceOriginal = GetParsedPrice(regexMatch.Groups[2].Value),
                 PriceFinal = GetParsedPrice(regexMatch.Groups[3].Value),
                 Currency = regexMatch.Groups[1].Value,
-                DiscountPercent = sub.DiscountPct
+                DiscountPercent = sub.DiscountPct,
+                WishlistItem = wishlistItem
             };
         }
 
@@ -305,7 +342,18 @@ namespace SteamWishlistDiscountNotifier
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            if (DateTime.Now >
+            if (settings.Settings.DatabaseVersion < currentDatabaseVersion)
+            {
+                if (FileSystem.FileExists(wishlistCachePath))
+                {
+                    FileSystem.DeleteFileSafe(wishlistCachePath);
+                }
+
+                settings.Settings.DatabaseVersion = currentDatabaseVersion;
+                SavePluginSettings(settings.Settings);
+            }
+            
+            if (!FileSystem.FileExists(wishlistCachePath) || DateTime.Now >
                 settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins))
             {
                 StartWishlistCheck();

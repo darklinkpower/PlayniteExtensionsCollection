@@ -14,5 +14,6 @@ namespace SteamWishlistDiscountNotifier.Models
         public double PriceFinal { get; set; }
         public string Currency { get; set; }
         public double DiscountPercent { get; set; }
+        public SteamWishlistResponse WishlistItem { get; set; }
     }
 }

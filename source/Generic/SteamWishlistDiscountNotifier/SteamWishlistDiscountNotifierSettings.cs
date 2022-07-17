@@ -16,8 +16,26 @@ namespace SteamWishlistDiscountNotifier
         public DateTime LastWishlistUpdate { get => lastWishlistUpdate; set => SetValue(ref lastWishlistUpdate, value); }
         private bool openUrlsInBrowser = false;
         public bool OpenUrlsInBrowser { get => openUrlsInBrowser; set => SetValue(ref openUrlsInBrowser, value); }
+        private int databaseVersion = 0;
+        public int DatabaseVersion { get => databaseVersion; set => SetValue(ref databaseVersion, value); }
         private int wishlistAutoCheckIntervalMins = 60;
         public int WishlistAutoCheckIntervalMins { get => wishlistAutoCheckIntervalMins; set => SetValue(ref wishlistAutoCheckIntervalMins, value); }
+        private int notificationMinDiscount = 1;
+        public int NotificationMinDiscount { get => notificationMinDiscount; set => SetValue(ref notificationMinDiscount, value); }
+        private bool notifyDiscountsTypeGame = true;
+        public bool NotifyDiscountsTypeGame { get => notifyDiscountsTypeGame; set => SetValue(ref notifyDiscountsTypeGame, value); }
+        private bool notifyDiscountsTypeDlc = true;
+        public bool NotifyDiscountsTypeDlc { get => notifyDiscountsTypeDlc; set => SetValue(ref notifyDiscountsTypeDlc, value); }
+        private bool notifyDiscountsTypeMusic = true;
+        public bool NotifyDiscountsTypeMusic { get => notifyDiscountsTypeMusic; set => SetValue(ref notifyDiscountsTypeMusic, value); }
+        private bool notifyDiscountsTypeApplication = true;
+        public bool NotifyDiscountsTypeApplication { get => notifyDiscountsTypeApplication; set => SetValue(ref notifyDiscountsTypeApplication, value); }
+        private bool notifyDiscountsTypeVideo = true;
+        public bool NotifyDiscountsTypeVideo { get => notifyDiscountsTypeVideo; set => SetValue(ref notifyDiscountsTypeVideo, value); }
+        private bool notifyDiscountsTypeHardware = true;
+        public bool NotifyDiscountsTypeHardware { get => notifyDiscountsTypeHardware; set => SetValue(ref notifyDiscountsTypeHardware, value); }
+        private bool notifyDiscountsTypeMod = true;
+        public bool NotifyDiscountsTypeMod { get => notifyDiscountsTypeMod; set => SetValue(ref notifyDiscountsTypeMod, value); }
     }
 
     public class SteamWishlistDiscountNotifierSettingsViewModel : ObservableObject, ISettings
