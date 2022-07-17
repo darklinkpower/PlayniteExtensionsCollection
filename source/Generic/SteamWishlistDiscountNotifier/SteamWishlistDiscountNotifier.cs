@@ -176,21 +176,21 @@ namespace SteamWishlistDiscountNotifier
 
             switch (newDiscount.WishlistItem.Type)
             {
-                case TypeEnum.Game:
+                case StoreItemType.Game:
                     return settings.Settings.NotifyDiscountsTypeGame;
-                case TypeEnum.Dlc:
+                case StoreItemType.Dlc:
                     return settings.Settings.NotifyDiscountsTypeDlc;
-                case TypeEnum.Music:
+                case StoreItemType.Music:
                     return settings.Settings.NotifyDiscountsTypeMusic;
-                case TypeEnum.Application:
+                case StoreItemType.Application:
                     return settings.Settings.NotifyDiscountsTypeApplication;
-                case TypeEnum.Video:
+                case StoreItemType.Video:
                     return settings.Settings.NotifyDiscountsTypeVideo;
-                case TypeEnum.Series:
+                case StoreItemType.Series:
                     return settings.Settings.NotifyDiscountsTypeVideo;
-                case TypeEnum.Hardware:
+                case StoreItemType.Hardware:
                     return settings.Settings.NotifyDiscountsTypeHardware;
-                case TypeEnum.Mod:
+                case StoreItemType.Mod:
                     return settings.Settings.NotifyDiscountsTypeMod;
                 default:
                     return true;

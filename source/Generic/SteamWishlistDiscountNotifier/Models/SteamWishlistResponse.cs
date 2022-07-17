@@ -40,7 +40,7 @@ namespace SteamWishlistDiscountNotifier.Models
         public Sub[] Subs { get; set; }
 
         [SerializationPropertyName("type")]
-        public TypeEnum Type { get; set; }
+        public StoreItemType Type { get; set; }
 
         [SerializationPropertyName("screenshots")]
         public string[] Screenshots { get; set; }
@@ -89,7 +89,18 @@ namespace SteamWishlistDiscountNotifier.Models
 
     public enum ReviewDesc { Mixed, MostlyPositive, NoUserReviews, Overwhelmingly_Positive, OverwhelminglyPositive, Positive, VeryPositive };
 
-    public enum TypeEnum { Game, Dlc, Music, Application, Series, Video, Hardware, Mod };
+    public enum StoreItemType
+    {
+        Game = 0,
+        Dlc = 1,
+        Music = 2,
+        Application = 3,
+        Series = 4,
+        Video = 5,
+        Hardware = 6,
+        Mod = 7,
+        Demo = 8
+    };
 
     public partial struct ReleaseDate
     {
