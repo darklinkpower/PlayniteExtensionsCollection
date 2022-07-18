@@ -95,8 +95,8 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="Enums\AuthStatus.cs" />
-    <Compile Include="Models\DiscountedItemCache.cs" />
-    <Compile Include="Models\SteamWishlistResponse.cs" />
+    <Compile Include="Models\WishlistItemCache.cs" />
+    <Compile Include="Models\SteamWishlistItem.cs" />
     <Compile Include="SteamLogin.cs" />
     <Compile Include="SteamWishlistDiscountNotifier.cs" />
     <Compile Include="SteamWishlistDiscountNotifierSettings.cs" />
@@ -104,6 +104,10 @@
       <DependentUpon>SteamWishlistDiscountNotifierSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SteamWishlistViewerViewModel.cs" />
+    <Compile Include="Views\SteamWishlistViewerView.xaml.cs">
+      <DependentUpon>SteamWishlistViewerView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -122,6 +126,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="SteamWishlistDiscountNotifierSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SteamWishlistViewerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

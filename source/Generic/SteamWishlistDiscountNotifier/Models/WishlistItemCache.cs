@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SteamWishlistDiscountNotifier.Models
 {
-    public class DiscountedItemCache
+    public class WishlistItemCache
     {
         public string Name { get; set; }
         public double Id { get; set; }
@@ -14,6 +14,7 @@ namespace SteamWishlistDiscountNotifier.Models
         public double PriceFinal { get; set; }
         public string Currency { get; set; }
         public double DiscountPercent { get; set; }
-        public SteamWishlistResponse WishlistItem { get; set; }
+        public bool IsDiscounted { get; set; }
+        public SteamWishlistItem WishlistItem { get; set; }
     }
 }

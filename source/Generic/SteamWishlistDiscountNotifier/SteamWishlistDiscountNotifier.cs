@@ -7,6 +7,8 @@ using PluginsCommon;
 using PluginsCommon.Web;
 using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
+using SteamWishlistDiscountNotifier.ViewModels;
+using SteamWishlistDiscountNotifier.Views;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,6 +28,7 @@ namespace SteamWishlistDiscountNotifier
         private static readonly ILogger logger = LogManager.GetLogger();
         private static readonly int currentDatabaseVersion = 1;
         private static readonly Regex discBlockParseRegex = new Regex(@"discount_original_price"">(\S+) ([^<]+).+(?=discount_final_price)[^ ]+ ([^<]+)", RegexOptions.Compiled);
+        private static readonly Regex discBlockNoDiscountParseRegex = new Regex(@"discount_final_price"">(\S+) ([^<]+)", RegexOptions.Compiled);
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/sub/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
@@ -60,6 +63,74 @@ namespace SteamWishlistDiscountNotifier
             {
                 StartWishlistCheck();
             }
+        }
+
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            yield return new SidebarItem
+            {
+                Title = "View Steam Wishlist",
+                Type = SiderbarItemType.View,
+                Icon = new TextBlock { Text = "Test" },
+                Opened = () => {
+                    return GetSteamWishlistViewerSidebarView();
+                }
+            };
+        }
+
+        private SteamWishlistViewerView GetSteamWishlistViewerSidebarView()
+        {
+            var wishlistItems = new List<WishlistItemCache>();
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                wishlistItems = GetSteamCompleteWishlist();
+            }, new GlobalProgressOptions("Obtaining Steam Wishlist data...", true));
+
+            if (wishlistItems != null && wishlistItems.Count > 0)
+            {
+                return new SteamWishlistViewerView { DataContext = new SteamWishlistViewerViewModel(PlayniteApi, wishlistItems) };
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private List<WishlistItemCache> GetSteamCompleteWishlist()
+        {
+            using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
+            {
+                SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
+                if (status == AuthStatus.NoConnection)
+                {
+                    return null;
+                }
+                else if (status == AuthStatus.Ok)
+                {
+                    PlayniteApi.Notifications.Remove(notLoggedInNotifId);
+                    var wishlistItems = GetWishlistDiscounts(steamId, webView, true);
+                    if (wishlistItems == null)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return wishlistItems.Select(x => x.Value).ToList();
+                    }
+                }
+                else if (status == AuthStatus.AuthRequired)
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        notLoggedInNotifId,
+                        ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn"),
+                        NotificationType.Info,
+                        () => OpenSettingsView()
+                    ));
+                }
+            }
+
+            return null;
         }
 
         private void StartWishlistCheck()
@@ -98,7 +169,7 @@ namespace SteamWishlistDiscountNotifier
 
         private int? UpdateAndNotifyWishlistDiscounts(string steamId, IWebView webView)
         {
-            var wishlistDiscounts = GetWishlistDiscounts(steamId, webView);
+            var wishlistDiscounts = GetWishlistDiscounts(steamId, webView, false);
             if (wishlistDiscounts == null)
             {
                 return null;
@@ -152,7 +223,7 @@ namespace SteamWishlistDiscountNotifier
             return cacheRemovals + cacheAdditions;
         }
 
-        private void AddNotifyDiscount(DiscountedItemCache newDiscount)
+        private void AddNotifyDiscount(WishlistItemCache newDiscount)
         {
             if (!GetShouldDisplayNotification(newDiscount))
             {
@@ -167,7 +238,7 @@ namespace SteamWishlistDiscountNotifier
             ));
         }
 
-        private bool GetShouldDisplayNotification(DiscountedItemCache newDiscount)
+        private bool GetShouldDisplayNotification(WishlistItemCache newDiscount)
         {
             if (settings.Settings.NotificationMinDiscount > newDiscount.DiscountPercent)
             {
@@ -210,7 +281,7 @@ namespace SteamWishlistDiscountNotifier
             }
         }
 
-        private string GetDiscountNotificationMessage(DiscountedItemCache newDiscount)
+        private string GetDiscountNotificationMessage(WishlistItemCache newDiscount)
         {
             return string.Join("\n", new string[3]
             {
@@ -220,7 +291,7 @@ namespace SteamWishlistDiscountNotifier
             });
         }
 
-        private bool HasDiscountDataChanged(DiscountedItemCache cachedDiscount, DiscountedItemCache newDiscount)
+        private bool HasDiscountDataChanged(WishlistItemCache cachedDiscount, WishlistItemCache newDiscount)
         {
             if (cachedDiscount.PriceFinal != newDiscount.PriceFinal ||
                 cachedDiscount.Currency != newDiscount.Currency ||
@@ -232,77 +303,132 @@ namespace SteamWishlistDiscountNotifier
             return false;
         }
 
-        private List<DiscountedItemCache> GetWishlistCache()
+        private List<WishlistItemCache> GetWishlistCache()
         {
             if (FileSystem.FileExists(wishlistCachePath))
             {
-                return Serialization.FromJsonFile<List<DiscountedItemCache>>(wishlistCachePath);
+                return Serialization.FromJsonFile<List<WishlistItemCache>>(wishlistCachePath);
             }
 
-            return new List<DiscountedItemCache>();
+            return new List<WishlistItemCache>();
         }
 
-        private Dictionary<double, DiscountedItemCache> GetWishlistDiscounts(string steamId, IWebView webView)
+        private Dictionary<double, WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems)
         {
             var currentPage = 0;
-            var currentDiscountedItems = new Dictionary<double, DiscountedItemCache>();
+            var wishlistItems = new Dictionary<double, WishlistItemCache>();
             while (true)
             {
-                var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
-                webView.NavigateAndWait(url);
-                var pageSource = webView.GetPageSource();
-                pageSource = HttpUtility.HtmlDecode(pageSource);
-                var startIndex = pageSource.IndexOf('{');
-                var endIndex = pageSource.LastIndexOf('}'); ;
-                if (startIndex == -1 || endIndex == -1)
+                var pageSource = GetWishlistPageSource(webView, steamId, currentPage);
+                if (pageSource == null)
                 {
-                    logger.Debug($"Wishlist check finished in {url}");
-                    break;
-                }
-
-                pageSource = pageSource.Substring(startIndex, endIndex - startIndex + 1);
-                if (pageSource.IsNullOrEmpty() || pageSource == "[]")
-                {
-                    break;
-                }
-
-                // Success 2 means that the logged account doesn't have permissions to check the
-                // wishlist. Check in case logged account has changed in the period between obtaining
-                // the steamId and getting the wishlist
-                if (pageSource == @"{""success"":2}")
-                {
-                    logger.Debug($"Page {url}, Sucess 2");
                     return null;
                 }
+                else if (pageSource == string.Empty)
+                {
+                    break;
+                }
 
-                var response = Serialization.FromJson<Dictionary<string, SteamWishlistResponse>>(pageSource);
+                var response = Serialization.FromJson<Dictionary<string, SteamWishlistItem>>(pageSource);
                 foreach (var wishlistItem in response.Values)
                 {
                     foreach (var sub in wishlistItem.Subs)
                     {
-                        if (sub.DiscountPct == 0)
-                        {
-                            continue;
-                        }
-
-                        var discountedItem = GetDiscountedItemFromSub(wishlistItem, sub);
-                        if (discountedItem == null)
-                        {
-                            continue;
-                        }
-
-                        currentDiscountedItems[discountedItem.Id] = discountedItem;
+                        AddWishlistItemToDictionary(wishlistItems, wishlistItem, sub, getNonDiscountedItems);
                     }
                 }
 
                 currentPage++;
             }
 
-            logger.Debug($"Wishlist check obtained {currentDiscountedItems.Count} items");
-            return currentDiscountedItems;
+            logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");
+            return wishlistItems;
         }
 
-        private DiscountedItemCache GetDiscountedItemFromSub(SteamWishlistResponse wishlistItem, Sub sub)
+        private static string GetWishlistPageSource(IWebView webView, string steamId, int currentPage)
+        {
+            var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
+            webView.NavigateAndWait(url);
+            var pageSource = webView.GetPageSource();
+            pageSource = HttpUtility.HtmlDecode(pageSource);
+            var startIndex = pageSource.IndexOf('{');
+            var endIndex = pageSource.LastIndexOf('}'); ;
+            if (startIndex == -1 || endIndex == -1)
+            {
+                logger.Debug($"Wishlist check finished in {url}");
+                return string.Empty;
+            }
+
+            pageSource = pageSource.Substring(startIndex, endIndex - startIndex + 1);
+            if (pageSource.IsNullOrEmpty() || pageSource == "[]")
+            {
+                return string.Empty;
+            }
+
+            // Success 2 means that the logged account doesn't have permissions to check the
+            // wishlist. Check in case logged account has changed in the period between obtaining
+            // the steamId and getting the wishlist
+            if (pageSource == @"{""success"":2}")
+            {
+                logger.Debug($"Page {url}, Sucess 2");
+                return null;
+            }
+
+            return pageSource;
+        }
+
+        private void AddWishlistItemToDictionary(Dictionary<double, WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub, bool getNonDiscountedItems)
+        {
+            if (sub.DiscountPct == 0)
+            {
+                if (!getNonDiscountedItems)
+                {
+                    return;
+                }
+
+                var nonDiscountedItem = GetNonDiscountedItemFromSub(wishlistItem, sub);
+                if (nonDiscountedItem == null)
+                {
+                    return;
+                }
+
+                wishlistItems[nonDiscountedItem.Id] = nonDiscountedItem;
+            }
+            else
+            {
+                var discountedItem = GetDiscountedItemFromSub(wishlistItem, sub);
+                if (discountedItem == null)
+                {
+                    return;
+                }
+
+                wishlistItems[discountedItem.Id] = discountedItem;
+            }
+        }
+
+        private WishlistItemCache GetNonDiscountedItemFromSub(SteamWishlistItem wishlistItem, Sub sub)
+        {
+            var regexMatch = discBlockNoDiscountParseRegex.Match(sub.DiscountBlock);
+            if (!regexMatch.Success)
+            {
+                logger.Warn($"Failed to parse sub discount block: {sub.DiscountBlock}");
+                return null;
+            }
+
+            return new WishlistItemCache
+            {
+                Name = HttpUtility.HtmlDecode(wishlistItem.Name),
+                Id = sub.Id,
+                PriceOriginal = GetParsedPrice(regexMatch.Groups[2].Value),
+                PriceFinal = GetParsedPrice(regexMatch.Groups[2].Value),
+                Currency = regexMatch.Groups[1].Value,
+                DiscountPercent = sub.DiscountPct,
+                WishlistItem = wishlistItem,
+                IsDiscounted = false
+            };
+        }
+
+        private WishlistItemCache GetDiscountedItemFromSub(SteamWishlistItem wishlistItem, Sub sub)
         {
             var regexMatch = discBlockParseRegex.Match(sub.DiscountBlock);
             if (!regexMatch.Success)
@@ -311,7 +437,7 @@ namespace SteamWishlistDiscountNotifier
                 return null;
             }
 
-            return new DiscountedItemCache
+            return new WishlistItemCache
             {
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
                 Id = sub.Id,
@@ -319,7 +445,8 @@ namespace SteamWishlistDiscountNotifier
                 PriceFinal = GetParsedPrice(regexMatch.Groups[3].Value),
                 Currency = regexMatch.Groups[1].Value,
                 DiscountPercent = sub.DiscountPct,
-                WishlistItem = wishlistItem
+                WishlistItem = wishlistItem,
+                IsDiscounted = true
             };
         }
 

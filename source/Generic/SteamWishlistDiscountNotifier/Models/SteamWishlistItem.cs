@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SteamWishlistDiscountNotifier.Models
 {
-    public class SteamWishlistResponse
+    public class SteamWishlistItem
     {
         [SerializationPropertyName("name")]
         public string Name { get; set; }
