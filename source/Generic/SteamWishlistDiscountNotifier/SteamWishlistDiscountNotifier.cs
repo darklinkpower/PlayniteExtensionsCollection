@@ -33,7 +33,8 @@ namespace SteamWishlistDiscountNotifier
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
         private const string notLoggedInNotifId = @"Steam_Wishlist_Notif_AuthRequired";
-        private string wishlistCachePath;
+        private readonly string wishlistCachePath;
+        private readonly string bannerImagesCachePath;
         public readonly DispatcherTimer wishlistCheckTimer;
 
         private SteamWishlistDiscountNotifierSettingsViewModel settings { get; set; }
@@ -49,6 +50,7 @@ namespace SteamWishlistDiscountNotifier
             };
 
             wishlistCachePath = Path.Combine(GetPluginUserDataPath(), "WishlistCache.json");
+            bannerImagesCachePath = Path.Combine(GetPluginUserDataPath(), "BannerImages");
             wishlistCheckTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMinutes(1),
@@ -84,6 +86,7 @@ namespace SteamWishlistDiscountNotifier
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 wishlistItems = GetSteamCompleteWishlist();
+                SetWishlistItemsBannerPaths(wishlistItems);
             }, new GlobalProgressOptions("Obtaining Steam Wishlist data...", true));
 
             if (wishlistItems != null && wishlistItems.Count > 0)
@@ -93,6 +96,35 @@ namespace SteamWishlistDiscountNotifier
             else
             {
                 return null;
+            }
+        }
+
+        private void SetWishlistItemsBannerPaths(List<WishlistItemCache> wishlistItems)
+        {
+            if (wishlistItems == null)
+            {
+                return;
+            }
+            
+            foreach (var wishlistItem in wishlistItems)
+            {
+                var bannerPath = Path.Combine(bannerImagesCachePath, wishlistItem.Id + ".jpg");
+                if (File.Exists(bannerPath))
+                {
+                    wishlistItem.BannerImagePath = bannerPath;
+                    continue;
+                }
+
+                try
+                {
+                    var ss = wishlistItem.WishlistItem.Capsule.ToString();
+                    HttpDownloader.DownloadFile(wishlistItem.WishlistItem.Capsule.ToString(), bannerPath);
+                    wishlistItem.BannerImagePath = bannerPath;
+                }
+                catch (Exception e)
+                {
+
+                }
             }
         }
 

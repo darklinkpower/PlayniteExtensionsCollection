@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:PluginsCommon.Converters"
              xmlns:local="clr-namespace:SteamWishlistDiscountNotifier.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -10,110 +11,177 @@
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             <DataTemplate x:Key="WishlistItemTemplate">
-                <Border Margin="0,1,0,0">
-                    <DockPanel LastChildFill="False">
-                        <!--<Viewbox DockPanel.Dock="Left">
-                            <Image Width="46" Height="21.5"
-                                    Source="{Binding WishlistItem.Capsule, IsAsync=True, Converter={StaticResource ImageStringToImageConverter}}"
-                                    DockPanel.Dock="Top"
-                                    Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Center"/>
-                        </Viewbox>-->
-                        <StackPanel DockPanel.Dock="Left">
-                            <TextBlock Text="{Binding Name}" Margin="0,3,0,0"
+                <Grid Margin="0" Background="#3d4c5d">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="135" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Image Height="60" Grid.Column="0"
+                           Margin="2"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Source="{Binding BannerImagePath, IsAsync=True, Converter={StaticResource ImageStringToImageConverter}}"
+                           Stretch="Uniform" StretchDirection="Both"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                                    Margin="5,0,0,0">
+                        <TextBlock Text="{Binding Name}" Margin="0,3,0,0"
                                        HorizontalAlignment="Left" VerticalAlignment="Center"
                                        FontWeight="Bold"
                                        TextTrimming="CharacterEllipsis"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="12" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="OVERALL REVIEWS:"
+                        <Grid Margin="0,3,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="12" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Overall Reviews:"
                                            Grid.Column="0" Grid.Row="0"
                                            Opacity="0.60" />
-                                <TextBlock Text="RELEASE DATE"
+                            <TextBlock Text="Release Date:"
                                            Grid.Column="0" Grid.Row="1"
                                            Opacity="0.60" />
-                                <TextBlock Text="{Binding WishlistItem.ReviewDesc}"
+                            <TextBlock Text="Tags:"
+                                           Grid.Column="0" Grid.Row="2"
+                                           Opacity="0.60" />
+                            <TextBlock Text="{Binding WishlistItem.ReviewDesc}"
+                                       Foreground="#66c0f4"
                                            Grid.Column="2" Grid.Row="0" />
-                                <TextBlock Text="{Binding WishlistItem.ReleaseString}"
+                            <TextBlock Text="{Binding WishlistItem.ReleaseString}"
                                            Grid.Column="2" Grid.Row="1" />
-                            </Grid>
                             <TextBlock Text="{Binding WishlistItem.Tags, Converter={StaticResource ListToStringConverter}, ConverterParameter=', '}"
-                                       TextWrapping="Wrap"
-                                       Grid.Column="1" Grid.Row="1" />
-                        </StackPanel>
-                        
-                        <Border Background="Gray" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
-                            <DockPanel>
-                                <Border Background="YellowGreen" MinWidth="60"
+                                           TextWrapping="Wrap"
+                                           Grid.Column="2" Grid.Row="2" />
+                        </Grid>
+
+                    </StackPanel>
+
+                    <Border Grid.Column="2" Background="#313d4a" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
+                        <DockPanel>
+                            <Border Background="#3f5436" MinWidth="60"
                                         Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <TextBlock Text="{Binding DiscountPercent, StringFormat='-{0}%'}"
+                                <TextBlock Text="{Binding DiscountPercent, StringFormat='-{0}%'}"
+                                               Foreground="#a4d007"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
                                                FontSize="20" />
-                                </Border>
-                                <StackPanel VerticalAlignment="Center" MinWidth="90" Margin="2,0,2,0">
-                                    <TextBlock Opacity="0.85" TextDecorations="StrikeThrough"
-                                               HorizontalAlignment="Center"
-                                               Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Currency" />
-                                                <Binding Path="PriceOriginal" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                    <TextBlock HorizontalAlignment="Center">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Currency" />
-                                                <Binding Path="PriceFinal" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </StackPanel>
-                                
-                                <StackPanel>
-                                    <Button Content="Open on Steam"
+                            </Border>
+                            <StackPanel VerticalAlignment="Center" MinWidth="120" Margin="2,0,2,0">
+                                <TextBlock Opacity="0.85" TextDecorations="StrikeThrough"
+                                           Foreground="#707e89"
+                                           HorizontalAlignment="Center"
+                                           Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:00} {1:N2}">
+                                            <Binding Path="Currency" />
+                                            <Binding Path="PriceOriginal" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock HorizontalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1:N2}">
+                                            <Binding Path="Currency" />
+                                            <Binding Path="PriceFinal" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel>
+                                <Button Content="Open on Steam"
                                             Margin="0,0,0,0"
                                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamCommand}"
                                             CommandParameter="{Binding}" />
-                                    <Button Content="Open on web"
+                                <Button Content="Open on web"
                                             Margin="0,10,0,0"
                                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnWebCommand}"
                                             CommandParameter="{Binding}" />
-                                </StackPanel>
-                            </DockPanel>
-                        </Border>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
 
-                    </DockPanel>
-                </Border>
+                </Grid>
             </DataTemplate>
         </Grid.Resources>
-        <DockPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,20,0,0" DockPanel.Dock="Top">
-                <TextBlock Text="Search:" VerticalAlignment="Center"/>
-                <TextBox Margin="10,0,0,0" MinWidth="200"
+        <DockPanel DockPanel.Dock="Top">
+            <ScrollViewer Padding="5,20,5,5" Background="#808a9c">
+                <StackPanel>
+                    <TextBlock Text="Search:" VerticalAlignment="Center"/>
+                    <TextBox Margin="0,5,0,0" MinWidth="200"
                              Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                              VerticalAlignment="Center"/>
-                <CheckBox Margin="10,0,0,0" IsChecked="{Binding FilterOnlyDiscounted}"
+                    <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterOnlyDiscounted}"
                               VerticalAlignment="Center"
                               Content="Only discounted items"/>
-            </StackPanel>
-            <ListBox Margin="0,10,0,0" ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
+                    <StackPanel IsEnabled="{Binding FilterOnlyDiscounted}">
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock  Text="Minimum Discount:" />
+                            <TextBlock Text="{Binding FilterMinimumDiscount, StringFormat=' {0}%'}" />
+                        </StackPanel>
+                        <Slider Value="{Binding FilterMinimumDiscount}"
+                            Margin="0,5,0,0"
+                            IsSnapToTickEnabled="True" TickFrequency="1"
+                            Minimum="0" Maximum="99" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBlock VerticalAlignment="Center"
+                                   Text="Maximum Price:" />
+                        <TextBox MinWidth="65" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBox.Text>
+                                <Binding Path="FilterMaximumPrice"
+                                         UpdateSourceTrigger="PropertyChanged" 
+                                         ValidatesOnDataErrors="True"
+                                         NotifyOnValidationError="True"
+                                         Converter="{conv:NullableIntToStringConverter}">
+                                    <Binding.ValidationRules>
+                                        <conv:NullableIntFieldValidation MinValue="0" MaxValue="999999" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+
+                    <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterItemTypeGame}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeGame}"/>
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeDlc}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeDlc}"/>
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeMusic}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeMusic}"/>
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeApplication}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeApplication}"/>
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeVideo}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeVideo}"/>
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeHardware}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeHardware}"/>
+                </StackPanel>
+            </ScrollViewer>
+            <ListBox Margin="5,25,0,0" ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
                      IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     Background="#202326"
                      BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource WishlistItemTemplate}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True"
+                                      VirtualizingStackPanel.VirtualizationMode="Recycling">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
             </ListBox>
         </DockPanel>
     </Grid>
