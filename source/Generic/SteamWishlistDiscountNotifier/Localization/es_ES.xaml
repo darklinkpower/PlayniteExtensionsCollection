@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Ayuda</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Utilice un país específico para las búsquedas en la tienda de Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Minimum discount required to display notifications:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Display notification for items of type:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Autenticar</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Comprobando el estado de la autenticación…</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">El usuario está autenticado</sys:String>
@@ -14,4 +15,11 @@
 Error al comprobar la lista de deseados de Steam. Se requiere autenticación.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">¡&quot;{0}&quot; está en descuento en Steam!</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Descuento: {0}%</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Games</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Donwloadable content</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Music</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">Software</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Videos</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Hardware</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
 </ResourceDictionary>
