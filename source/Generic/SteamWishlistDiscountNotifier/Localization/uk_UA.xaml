@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Довідка</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Minimum discount required to display notifications:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Display notification for items of type:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Мінімальна знижка, необхідна для показу сповіщень:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Показувати сповіщення про елементи типу:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Автентифікувати</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Перевірка стану автентифікації…</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Користувача автентифіковано</sys:String>
@@ -15,11 +15,11 @@
 Не вдалося перевірити список бажань Steam. Необхідна автентифікація.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; на розпродажі у Steam!</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Знижка: {0}%</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Games</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Donwloadable content</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Music</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">Software</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Videos</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Hardware</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Ігри</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Завантажуваний вміст</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Музика</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">Програмне забезпечення</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Відео</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Апаратне забезпечення</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Модифікації</sys:String>
 </ResourceDictionary>
