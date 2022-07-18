@@ -24,10 +24,15 @@ namespace GamesSizeCalculator.Steam
             var depotData = await GetRelevantDepots(appId);
             RemoveRegionalMainDepots(ref depotData);
 
-            if (includeDLC)
-                return depotData.Sum(d => d.FileSize);
-            else
-                return depotData.Where(d => !d.IsDLC).Sum(d => d.FileSize);
+            IEnumerable<DepotInfo> filteredDepots = depotData;
+
+            if (!includeDLC)
+                filteredDepots = filteredDepots.Where(d => !d.IsDLC);
+
+            if (!includeOptional)
+                filteredDepots = filteredDepots.Where(d => !d.Optional);
+
+            return filteredDepots.Sum(d => d.FileSize);
         }
 
         private void RemoveRegionalMainDepots(ref List<DepotInfo> depots)

@@ -51,20 +51,26 @@ namespace GamesSizeCalculator.Tests
             long expectedBaseSize =
                 1790331721L +
                 109784184L + //WW
-                12807162011L;
+                12807162011L+
+                //asia
+                102629169L+
+                88449227L+
+                1786744869L;
 
             long expectedDLCsize =
                 28037350L +
                 30841083L +
                 1147L +
                 3718567700L +
-                525L; 
+                525L;
 
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
+
             var completeSize = await calc.GetInstallSizeAsync(243470);
-            var baseSize = await calc.GetInstallSizeAsync(243470, false, false);
             Assert.NotNull(completeSize);
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
+
+            var baseSize = await calc.GetInstallSizeAsync(243470, false, false);
             Assert.NotNull(baseSize);
             Assert.Equal(expectedBaseSize, baseSize);
         }
@@ -82,12 +88,12 @@ namespace GamesSizeCalculator.Tests
             //7993844118
 
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
-            var completeSize = await calc.GetInstallSizeAsync(48190);
-            var minimalSize = await calc.GetInstallSizeAsync(48190, false, false);
 
+            var completeSize = await calc.GetInstallSizeAsync(48190);
             Assert.NotNull(completeSize);
             Assert.Equal(1954919585L + 9529023303L + 7993844118L, completeSize.Value);
 
+            var minimalSize = await calc.GetInstallSizeAsync(48190, false, false);
             Assert.NotNull(minimalSize);
             Assert.Equal(9529023303L + 7993844118L, minimalSize.Value);
         }
