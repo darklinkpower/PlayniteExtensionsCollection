@@ -29,7 +29,7 @@ namespace SteamWishlistDiscountNotifier
         private static readonly int currentDatabaseVersion = 1;
         private static readonly Regex discBlockParseRegex = new Regex(@"discount_original_price"">(\S+) ([^<]+).+(?=discount_final_price)[^ ]+ ([^<]+)", RegexOptions.Compiled);
         private static readonly Regex discBlockNoDiscountParseRegex = new Regex(@"discount_final_price"">(\S+) ([^<]+)", RegexOptions.Compiled);
-        private const string steamStoreSubUrlMask = @"https://store.steampowered.com/sub/{0}/";
+        private const string steamStoreUrlMask = @"https://store.steampowered.com/app/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
         private const string notLoggedInNotifId = @"Steam_Wishlist_Notif_AuthRequired";
@@ -108,7 +108,7 @@ namespace SteamWishlistDiscountNotifier
             
             foreach (var wishlistItem in wishlistItems)
             {
-                var bannerPath = Path.Combine(bannerImagesCachePath, wishlistItem.Id + ".jpg");
+                var bannerPath = Path.Combine(bannerImagesCachePath, wishlistItem.StoreId + ".jpg");
                 if (File.Exists(bannerPath))
                 {
                     wishlistItem.BannerImagePath = bannerPath;
@@ -117,7 +117,6 @@ namespace SteamWishlistDiscountNotifier
 
                 try
                 {
-                    var ss = wishlistItem.WishlistItem.Capsule.ToString();
                     HttpDownloader.DownloadFile(wishlistItem.WishlistItem.Capsule.ToString(), bannerPath);
                     wishlistItem.BannerImagePath = bannerPath;
                 }
@@ -148,7 +147,7 @@ namespace SteamWishlistDiscountNotifier
                     }
                     else
                     {
-                        return wishlistItems.Select(x => x.Value).ToList();
+                        return wishlistItems;
                     }
                 }
                 else if (status == AuthStatus.AuthRequired)
@@ -201,8 +200,8 @@ namespace SteamWishlistDiscountNotifier
 
         private int? UpdateAndNotifyWishlistDiscounts(string steamId, IWebView webView)
         {
-            var wishlistDiscounts = GetWishlistDiscounts(steamId, webView, false);
-            if (wishlistDiscounts == null)
+            var wishlistItems = GetWishlistDiscounts(steamId, webView, false);
+            if (wishlistItems == null)
             {
                 return null;
             }
@@ -212,9 +211,15 @@ namespace SteamWishlistDiscountNotifier
             var cacheAdditions = 0;
 
             // Check for changes in existing cache
+            var wishlistDiscounts = new Dictionary<double, WishlistItemCache>();
+            foreach (var wishlistItem in wishlistItems)
+            {
+                wishlistDiscounts[(double)wishlistItem.SubId] = wishlistItem;
+            }
+
             foreach (var cachedDiscount in wishlistCache.ToList())
             {
-                if (wishlistDiscounts.TryGetValue(cachedDiscount.Id, out var newDiscount))
+                if (wishlistDiscounts.TryGetValue((double)cachedDiscount.SubId, out var newDiscount))
                 {
                     if (HasDiscountDataChanged(cachedDiscount, newDiscount))
                     {
@@ -236,7 +241,7 @@ namespace SteamWishlistDiscountNotifier
             // Check new items in discount
             foreach (var wishlistDiscount in wishlistDiscounts)
             {
-                if (!wishlistCache.Any(x => x.Id == wishlistDiscount.Key))
+                if (!wishlistCache.Any(x => x.SubId == wishlistDiscount.Key))
                 {
                     wishlistCache.Add(wishlistDiscount.Value);
                     cacheAdditions++;
@@ -266,7 +271,7 @@ namespace SteamWishlistDiscountNotifier
                 Guid.NewGuid().ToString(),
                 GetDiscountNotificationMessage(newDiscount),
                 NotificationType.Info,
-                () => OpenDiscountedItemUrl(newDiscount.Id)
+                () => OpenDiscountedItemUrl(newDiscount.StoreId)
             ));
         }
 
@@ -300,9 +305,9 @@ namespace SteamWishlistDiscountNotifier
             }
         }
 
-        private void OpenDiscountedItemUrl(double subId)
+        private void OpenDiscountedItemUrl(string steamStoreId)
         {
-            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, subId);
+            var subIdSteamUrl = string.Format(steamStoreUrlMask, steamStoreId);
             if (settings.Settings.OpenUrlsInBrowser)
             {
                 ProcessStarter.StartUrl(subIdSteamUrl);
@@ -319,7 +324,7 @@ namespace SteamWishlistDiscountNotifier
             {
                 string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOnSaleLabel"), newDiscount.Name) + "\n",
                 string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), newDiscount.DiscountPercent),
-                string.Format("{0} {1} -> {0} {2}", newDiscount.Currency, newDiscount.PriceOriginal.ToString("0.00"), newDiscount.PriceFinal.ToString("0.00"))
+                string.Format("{0} {1} -> {0} {2}", newDiscount.Currency, ((double)newDiscount.PriceOriginal).ToString("0.00"), ((double)newDiscount.PriceFinal).ToString("0.00"))
             });
         }
 
@@ -345,10 +350,10 @@ namespace SteamWishlistDiscountNotifier
             return new List<WishlistItemCache>();
         }
 
-        private Dictionary<double, WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems)
+        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems)
         {
             var currentPage = 0;
-            var wishlistItems = new Dictionary<double, WishlistItemCache>();
+            var wishlistItems = new List<WishlistItemCache>();
             while (true)
             {
                 var pageSource = GetWishlistPageSource(webView, steamId, currentPage);
@@ -364,9 +369,16 @@ namespace SteamWishlistDiscountNotifier
                 var response = Serialization.FromJson<Dictionary<string, SteamWishlistItem>>(pageSource);
                 foreach (var wishlistItem in response.Values)
                 {
-                    foreach (var sub in wishlistItem.Subs)
+                    if (wishlistItem.Subs.HasItems())
                     {
-                        AddWishlistItemToDictionary(wishlistItems, wishlistItem, sub, getNonDiscountedItems);
+                        foreach (var sub in wishlistItem.Subs)
+                        {
+                            AddWishlistItemToList(wishlistItems, wishlistItem, sub, getNonDiscountedItems);
+                        }
+                    }
+                    else if (getNonDiscountedItems)
+                    {
+                        AddWishlistItemNoSubsToList(wishlistItems, wishlistItem);
                     }
                 }
 
@@ -375,6 +387,22 @@ namespace SteamWishlistDiscountNotifier
 
             logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");
             return wishlistItems;
+        }
+
+        private void AddWishlistItemNoSubsToList(List<WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem)
+        {
+            wishlistItems.Add(new WishlistItemCache
+            {
+                Name = HttpUtility.HtmlDecode(wishlistItem.Name),
+                StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
+                SubId = null,
+                PriceOriginal = null,
+                PriceFinal = null,
+                Currency = null,
+                DiscountPercent = 0,
+                WishlistItem = wishlistItem,
+                IsDiscounted = false
+            });
         }
 
         private static string GetWishlistPageSource(IWebView webView, string steamId, int currentPage)
@@ -409,7 +437,7 @@ namespace SteamWishlistDiscountNotifier
             return pageSource;
         }
 
-        private void AddWishlistItemToDictionary(Dictionary<double, WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub, bool getNonDiscountedItems)
+        private void AddWishlistItemToList(List<WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub, bool getNonDiscountedItems)
         {
             if (sub.DiscountPct == 0)
             {
@@ -424,7 +452,7 @@ namespace SteamWishlistDiscountNotifier
                     return;
                 }
 
-                wishlistItems[nonDiscountedItem.Id] = nonDiscountedItem;
+                wishlistItems.Add(nonDiscountedItem);
             }
             else
             {
@@ -434,7 +462,7 @@ namespace SteamWishlistDiscountNotifier
                     return;
                 }
 
-                wishlistItems[discountedItem.Id] = discountedItem;
+                wishlistItems.Add(discountedItem);
             }
         }
 
@@ -450,7 +478,8 @@ namespace SteamWishlistDiscountNotifier
             return new WishlistItemCache
             {
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
-                Id = sub.Id,
+                StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
+                SubId = sub.Id,
                 PriceOriginal = GetParsedPrice(regexMatch.Groups[2].Value),
                 PriceFinal = GetParsedPrice(regexMatch.Groups[2].Value),
                 Currency = regexMatch.Groups[1].Value,
@@ -472,7 +501,8 @@ namespace SteamWishlistDiscountNotifier
             return new WishlistItemCache
             {
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
-                Id = sub.Id,
+                StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
+                SubId = sub.Id,
                 PriceOriginal = GetParsedPrice(regexMatch.Groups[2].Value),
                 PriceFinal = GetParsedPrice(regexMatch.Groups[3].Value),
                 Currency = regexMatch.Groups[1].Value,

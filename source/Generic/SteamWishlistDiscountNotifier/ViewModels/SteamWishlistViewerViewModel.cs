@@ -15,7 +15,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
     {
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
-        private const string steamStoreSubUrlMask = @"https://store.steampowered.com/sub/{0}/";
+        private const string steamStoreSubUrlMask = @"https://store.steampowered.com/app/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private List<WishlistItemCache> wishlistItemsCollection;
         public List<WishlistItemCache> WishlistItemsCollection
@@ -249,13 +249,13 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 
         private void OpenWishlistItemOnSteam(WishlistItemCache wishlistItem)
         {
-            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.Id);
+            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
             ProcessStarter.StartUrl(string.Format(steamUriOpenUrlMask, subIdSteamUrl));
         }
 
         private void OpenWishlistItemOnWeb(WishlistItemCache wishlistItem)
         {
-            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.Id);
+            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
            ProcessStarter.StartUrl(subIdSteamUrl);
         }
     }

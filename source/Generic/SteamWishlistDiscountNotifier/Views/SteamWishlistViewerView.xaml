@@ -7,11 +7,18 @@
              xmlns:local="clr-namespace:SteamWishlistDiscountNotifier.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
+    <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+            <SolidColorBrush Color="#b2b8bd" x:Key="SubtitleColorBrush" />
+            <SolidColorBrush Color="#3f5436" x:Key="DiscountPercentAreaBackgroundBrush" />
+            <SolidColorBrush Color="#a4d007" x:Key="DiscountPercentTextForegroundBrush" />
+            <SolidColorBrush Color="#707e89" x:Key="DiscountBlockStrikeTextForegroundBrush" />
+            <SolidColorBrush Color="#202326" x:Key="ItemsPanelBackgroundBrush" />
+            <SolidColorBrush Color="#313d4a" x:Key="DiscountBlockBackgroundBrush" />
+            <SolidColorBrush Color="#3d4c5d" x:Key="WishlistItemBackgroundBrush" />
             <DataTemplate x:Key="WishlistItemTemplate">
-                <Grid Margin="0" Background="#3d4c5d">
+                <Grid Margin="0" Background="{StaticResource WishlistItemBackgroundBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="135" />
                         <ColumnDefinition Width="*" />
@@ -26,11 +33,11 @@
                            HorizontalAlignment="Left"/>
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center"
-                                    Margin="5,0,0,0">
+                                Margin="5,0,0,0">
                         <TextBlock Text="{Binding Name}" Margin="0,3,0,0"
-                                       HorizontalAlignment="Left" VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       TextTrimming="CharacterEllipsis"/>
+                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   TextTrimming="CharacterEllipsis"/>
                         <Grid Margin="0,3,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -43,39 +50,47 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Text="Overall Reviews:"
-                                           Grid.Column="0" Grid.Row="0"
-                                           Opacity="0.60" />
+                                       Foreground="{StaticResource SubtitleColorBrush}"
+                                       FontWeight="Medium"
+                                       Grid.Column="0" Grid.Row="0" />
                             <TextBlock Text="Release Date:"
-                                           Grid.Column="0" Grid.Row="1"
-                                           Opacity="0.60" />
+                                       Foreground="{StaticResource SubtitleColorBrush}"
+                                       FontWeight="Medium"
+                                       Grid.Column="0" Grid.Row="1" />
                             <TextBlock Text="Tags:"
-                                           Grid.Column="0" Grid.Row="2"
-                                           Opacity="0.60" />
+                                       Grid.Column="0" Grid.Row="2"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource SubtitleColorBrush}" />
                             <TextBlock Text="{Binding WishlistItem.ReviewDesc}"
                                        Foreground="#66c0f4"
-                                           Grid.Column="2" Grid.Row="0" />
+                                       FontWeight="Medium"
+                                       Grid.Column="2" Grid.Row="0" />
                             <TextBlock Text="{Binding WishlistItem.ReleaseString}"
-                                           Grid.Column="2" Grid.Row="1" />
+                                       Foreground="{StaticResource SubtitleColorBrush}"
+                                       FontWeight="Medium"
+                                       Grid.Column="2" Grid.Row="1" />
                             <TextBlock Text="{Binding WishlistItem.Tags, Converter={StaticResource ListToStringConverter}, ConverterParameter=', '}"
-                                           TextWrapping="Wrap"
-                                           Grid.Column="2" Grid.Row="2" />
+                                       TextWrapping="Wrap"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource SubtitleColorBrush}"
+                                       Grid.Column="2" Grid.Row="2" />
                         </Grid>
 
                     </StackPanel>
 
-                    <Border Grid.Column="2" Background="#313d4a" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
+                    <Border Grid.Column="2" Background="{StaticResource DiscountBlockBackgroundBrush}" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
                         <DockPanel>
-                            <Border Background="#3f5436" MinWidth="60"
-                                        Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Border Background="{StaticResource DiscountPercentAreaBackgroundBrush}" MinWidth="60"
+                                    Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <TextBlock Text="{Binding DiscountPercent, StringFormat='-{0}%'}"
-                                               Foreground="#a4d007"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               FontSize="20" />
+                                           Foreground="{StaticResource DiscountPercentTextForegroundBrush}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="20" />
                             </Border>
                             <StackPanel VerticalAlignment="Center" MinWidth="120" Margin="2,0,2,0">
                                 <TextBlock Opacity="0.85" TextDecorations="StrikeThrough"
-                                           Foreground="#707e89"
+                                           Foreground="{StaticResource DiscountBlockStrikeTextForegroundBrush}"
                                            HorizontalAlignment="Center"
                                            Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBlock.Text>
@@ -112,7 +127,7 @@
             </DataTemplate>
         </Grid.Resources>
         <DockPanel DockPanel.Dock="Top">
-            <ScrollViewer Padding="5,20,5,5" Background="#808a9c">
+            <ScrollViewer Padding="5,30,5,5">
                 <StackPanel>
                     <TextBlock Text="Search:" VerticalAlignment="Center"/>
                     <TextBox Margin="0,5,0,0" MinWidth="200"
@@ -127,11 +142,11 @@
                             <TextBlock Text="{Binding FilterMinimumDiscount, StringFormat=' {0}%'}" />
                         </StackPanel>
                         <Slider Value="{Binding FilterMinimumDiscount}"
-                            Margin="0,5,0,0"
-                            IsSnapToTickEnabled="True" TickFrequency="1"
-                            Minimum="0" Maximum="99" />
+                                Margin="0,5,0,0"
+                                IsSnapToTickEnabled="True" TickFrequency="1"
+                                Minimum="0" Maximum="100" />
                     </StackPanel>
-
+                    
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <TextBlock VerticalAlignment="Center"
                                    Text="Maximum Price:" />
@@ -170,19 +185,24 @@
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeHardware}"/>
                 </StackPanel>
             </ScrollViewer>
-            <ListBox Margin="5,25,0,0" ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
-                     IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     Background="#202326"
-                     BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource WishlistItemTemplate}">
-                <ListBox.Template>
-                    <ControlTemplate>
-                        <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True"
+            <Border Background="{StaticResource ItemsPanelBackgroundBrush}"
+                    Padding="5,35,5,2">
+                <ListBox ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
+                         IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource WishlistItemTemplate}">
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" 
+                                      
+                                      Padding="5,35,0,0"
                                       VirtualizingStackPanel.VirtualizationMode="Recycling">
-                            <ItemsPresenter />
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </ListBox.Template>
-            </ListBox>
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListBox.Template>
+                </ListBox>
+            </Border>
+
         </DockPanel>
     </Grid>
 </UserControl>
