@@ -21,3 +21,13 @@ Packages:
     - 'Updated localizations'
     - 'Fix failing to obtain wishlist data for some accounts'
     - 'Fix failing to obtain wishlist data if user had series, videos, hardware or mods wishlisted'
+  - Version: 1.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.19_67d9a62b/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_3.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added sidebar view to display and filter Steam wishlist'
+    - 'Added options to set minimum discount and option to choose what type of items that are discounted should be notified'
+    - 'Fix failing to obtain wishlist data if user had demos wishlisted'
+    - 'Fix stopping automatically checking for discounts if there was no internet during a check'
