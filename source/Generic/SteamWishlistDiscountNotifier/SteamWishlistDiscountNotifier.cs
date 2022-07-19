@@ -76,7 +76,7 @@ namespace SteamWishlistDiscountNotifier
         {
             yield return new SidebarItem
             {
-                Title = "View Steam Wishlist",
+                Title = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_SidebarTitle"),
                 Type = SiderbarItemType.View,
                 Icon = new TextBlock
                 {
@@ -97,7 +97,7 @@ namespace SteamWishlistDiscountNotifier
             {
                 wishlistItems = GetSteamCompleteWishlist();
                 SetWishlistItemsBannerPaths(wishlistItems);
-            }, new GlobalProgressOptions("Obtaining Steam Wishlist data...", true));
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_ObtainingWishlistMessage"), true));
 
             if (wishlistItems != null)
             {

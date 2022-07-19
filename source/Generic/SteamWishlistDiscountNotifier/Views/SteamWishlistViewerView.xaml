@@ -67,15 +67,15 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="Overall Reviews:"
+                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews}"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        FontWeight="Medium"
                                        Grid.Column="0" Grid.Row="0" />
-                            <TextBlock Text="Release Date:"
+                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate}"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        FontWeight="Medium"
                                        Grid.Column="0" Grid.Row="1" />
-                            <TextBlock Text="Tags:"
+                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
                                        Grid.Column="0" Grid.Row="2"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}" />
@@ -129,11 +129,11 @@
                             </StackPanel>
 
                             <StackPanel VerticalAlignment="Center">
-                                <Button Content="Open on web"
+                                <Button Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb}"
                                         Margin="0,10,0,5"
                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnWebCommand}"
                                         CommandParameter="{Binding}" />
-                                <Button Content="Open on Steam"
+                                <Button Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam}"
                                         Margin="0,5,0,10"
                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamCommand}"
                                         CommandParameter="{Binding}" />
@@ -147,16 +147,16 @@
         <DockPanel DockPanel.Dock="Top">
             <ScrollViewer Padding="5,30,5,5">
                 <StackPanel>
-                    <TextBlock Text="Search:" VerticalAlignment="Center"/>
+                    <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelSearch}" VerticalAlignment="Center"/>
                     <TextBox Margin="0,5,0,0" MinWidth="200"
                              Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                              VerticalAlignment="Center"/>
                     <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterOnlyDiscounted}"
                               VerticalAlignment="Center"
-                              Content="Only discounted items"/>
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted}"/>
                     <StackPanel IsEnabled="{Binding FilterOnlyDiscounted}">
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <TextBlock  Text="Minimum Discount:" />
+                            <TextBlock  Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount}" />
                             <TextBlock Text="{Binding FilterMinimumDiscount, StringFormat=' {0}%'}" />
                         </StackPanel>
                         <Slider Value="{Binding FilterMinimumDiscount}"
@@ -167,7 +167,7 @@
                     
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <TextBlock VerticalAlignment="Center"
-                                   Text="Maximum Price:" />
+                                   Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice}" />
                         <TextBox MinWidth="65" VerticalAlignment="Center" Margin="10,0,0,0">
                             <TextBox.Text>
                                 <Binding Path="FilterMaximumPrice"
@@ -243,7 +243,7 @@
                     Padding="5,35,5,2">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5,0,0,10">
-                        <TextBlock Text="Total items:" />
+                        <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems}" />
                         <TextBlock Text="{Binding ElementName=LbCollection, Path=Items.Count, StringFormat=' {0}'}" />
                     </StackPanel>
                     <ListBox DockPanel.Dock="Top" x:Name="LbCollection" ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"

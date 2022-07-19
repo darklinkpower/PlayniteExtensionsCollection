@@ -211,21 +211,20 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             wishlistCollectionView.Filter = FilterWishlistCollection;
             WishlistSortingTypes = new Dictionary<WishlistViewSorting, string>
             {
-                [WishlistViewSorting.Name] = "Name",
-                [WishlistViewSorting.Rank] = "Rank",
-                [WishlistViewSorting.Discount] = "Discount",
-                [WishlistViewSorting.Price] = "Price",
-                [WishlistViewSorting.ReleaseDate] = "Release Date"
+                [WishlistViewSorting.Name] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName"),
+                [WishlistViewSorting.Rank] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank"),
+                [WishlistViewSorting.Discount] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount"),
+                [WishlistViewSorting.Price] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice"),
+                [WishlistViewSorting.ReleaseDate] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate")
             };
 
             WishlistSortingOrders = new Dictionary<ListSortDirection, string>
             {
-                [ListSortDirection.Ascending] = "Ascending",
-                [ListSortDirection.Descending] = "Descending",
+                [ListSortDirection.Ascending] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending"),
+                [ListSortDirection.Descending] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending"),
             };
 
             wishlistCollectionView.SortDescriptions.Add(new SortDescription(GetSortingDescription(), selectedSortingDirection));
-
             DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
         }
 
