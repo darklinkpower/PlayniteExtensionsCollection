@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SteamWishlistDiscountNotifier
 {
+    // TODO Refactor and move everything data-obtain related here
     public class SteamLogin
     {
         public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)

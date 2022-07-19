@@ -93,23 +93,25 @@ namespace SteamWishlistDiscountNotifier
         private SteamWishlistViewerView GetSteamWishlistViewerSidebarView()
         {
             var wishlistItems = new List<WishlistItemCache>();
+            var tokenWasCancelled = false;
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                wishlistItems = GetSteamCompleteWishlist();
-                SetWishlistItemsBannerPaths(wishlistItems);
+                wishlistItems = GetSteamCompleteWishlist(a);
+                SetWishlistItemsBannerPaths(wishlistItems, a);
+                tokenWasCancelled = a.CancelToken.IsCancellationRequested;
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_ObtainingWishlistMessage"), true));
 
-            if (wishlistItems != null)
-            {
-                return new SteamWishlistViewerView { DataContext = new SteamWishlistViewerViewModel(PlayniteApi, wishlistItems, pluginInstallPath) };
-            }
-            else
+            if (wishlistItems == null || tokenWasCancelled)
             {
                 return null;
             }
+            else
+            {
+                return new SteamWishlistViewerView { DataContext = new SteamWishlistViewerViewModel(PlayniteApi, wishlistItems, pluginInstallPath) };
+            }
         }
 
-        private void SetWishlistItemsBannerPaths(List<WishlistItemCache> wishlistItems)
+        private void SetWishlistItemsBannerPaths(List<WishlistItemCache> wishlistItems, GlobalProgressActionArgs a)
         {
             if (wishlistItems == null)
             {
@@ -118,6 +120,11 @@ namespace SteamWishlistDiscountNotifier
             
             foreach (var wishlistItem in wishlistItems)
             {
+                if (a.CancelToken.IsCancellationRequested)
+                {
+                    return;
+                }
+                
                 var bannerPath = Path.Combine(bannerImagesCachePath, wishlistItem.StoreId + ".jpg");
                 if (File.Exists(bannerPath))
                 {
@@ -137,7 +144,7 @@ namespace SteamWishlistDiscountNotifier
             }
         }
 
-        private List<WishlistItemCache> GetSteamCompleteWishlist()
+        private List<WishlistItemCache> GetSteamCompleteWishlist(GlobalProgressActionArgs a)
         {
             using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
             {
@@ -150,7 +157,7 @@ namespace SteamWishlistDiscountNotifier
                 else if (status == AuthStatus.Ok)
                 {
                     PlayniteApi.Notifications.Remove(notLoggedInNotifId);
-                    var wishlistItems = GetWishlistDiscounts(steamId, webView, true);
+                    var wishlistItems = GetWishlistDiscounts(steamId, webView, true, a);
                     if (wishlistItems == null)
                     {
                         return null;
@@ -360,12 +367,17 @@ namespace SteamWishlistDiscountNotifier
             return new List<WishlistItemCache>();
         }
 
-        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems)
+        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems, GlobalProgressActionArgs a = null)
         {
             var currentPage = 0;
             var wishlistItems = new List<WishlistItemCache>();
             while (true)
             {
+                if (a?.CancelToken.IsCancellationRequested == true)
+                {
+                    return null;
+                }
+                
                 var pageSource = GetWishlistPageSource(webView, steamId, currentPage);
                 if (pageSource == null)
                 {
