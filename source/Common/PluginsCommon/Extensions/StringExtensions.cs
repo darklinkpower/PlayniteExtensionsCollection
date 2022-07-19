@@ -301,6 +301,16 @@ namespace System
             return resultStringBuilder.ToString();
         }
 
+        public static bool ContainsInvariantCulture(this string source, string value, CompareOptions compareOptions)
+        {
+            return CultureInfo.InvariantCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
+        }
+
+        public static bool ContainsCurrentCulture(this string source, string value, CompareOptions compareOptions)
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
+        }
+
         //From https://github.com/DanHarltey/Fastenshtein
         /// <summary>
         /// Compares the two values to find the minimum Levenshtein distance. 

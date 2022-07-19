@@ -5,6 +5,7 @@ using SteamWishlistDiscountNotifier.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
     {
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly char[] textMatchSplitter = new char[] { ' ' };
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/app/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         public Dictionary<WishlistViewSorting, string> WishlistSortingTypes { get; }
@@ -67,7 +69,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             get { return wishlistCollectionView; }
         }
 
-
+        private string[] searchFilterSplit = new string[0];
 
         private string searchString = string.Empty;
         public string SearchString
@@ -77,6 +79,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             {
                 searchString = value;
                 OnPropertyChanged();
+                searchFilterSplit = searchString.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
                 wishlistCollectionView.Refresh();
             }
         }
@@ -243,7 +246,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 return false;
             }
 
-            if (!SearchString.IsNullOrEmpty() && !wishlistItem.Name.Contains(SearchString, StringComparison.InvariantCultureIgnoreCase))
+            if (!MatchTextFilter(wishlistItem.Name))
             {
                 return false;
             }
@@ -251,6 +254,41 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             if (!IsItemCacheTypeFilterEnabled(wishlistItem))
             {
                 return false;
+            }
+
+            return true;
+        }
+
+        // Based on https://github.com/JosefNemec/Playnite
+        public bool MatchTextFilter(string toMatch)
+        {
+            if (searchString.IsNullOrWhiteSpace())
+            {
+                return true;
+            }
+
+            if (!searchString.IsNullOrWhiteSpace() && toMatch.IsNullOrWhiteSpace())
+            {
+                return false;
+            }
+
+            if (searchString.IsNullOrWhiteSpace() && toMatch.IsNullOrWhiteSpace())
+            {
+                return true;
+            }
+
+            if (searchString.Length > toMatch.Length)
+            {
+                return false;
+            }
+
+            var toMatchSplit = toMatch.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var word in searchFilterSplit)
+            {
+                if (!toMatchSplit.Any(a => a.ContainsInvariantCulture(word, CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols | CompareOptions.IgnoreNonSpace)))
+                {
+                    return false;
+                }
             }
 
             return true;
