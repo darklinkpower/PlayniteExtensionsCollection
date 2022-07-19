@@ -23,17 +23,23 @@ namespace GamesSizeCalculator.Steam
         {
             var depotData = await GetRelevantDepots(appId);
             if (depotData == null)
+            {
                 return null;
+            }
 
             RemoveRegionalMainDepots(ref depotData);
 
             IEnumerable<DepotInfo> filteredDepots = depotData;
 
             if (!includeDLC)
+            {
                 filteredDepots = filteredDepots.Where(d => !d.IsDLC);
+            }
 
             if (!includeOptional)
+            {
                 filteredDepots = filteredDepots.Where(d => !d.Optional);
+            }
 
             return filteredDepots.Sum(d => d.FileSize);
         }
@@ -70,7 +76,9 @@ namespace GamesSizeCalculator.Steam
                     case "row":
                     case "ww":
                         if (biggestDepotsCopy.Count == 1) //don't remove the last big depot
+                        {
                             return;
+                        }
 
                         biggestDepotsCopy.Remove(depot);
                         depots.Remove(depot);
@@ -85,12 +93,16 @@ namespace GamesSizeCalculator.Steam
         private static string GetLastWord(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
+            {
                 return s;
+            }
 
             s = s.Trim();
             int i = s.LastIndexOfAny(new[] { ' ', '_' });
             if (i == -1)
+            {
                 return s;
+            }
 
             string lastWord = s.Substring(i + 1);
             if (lastWord.Equals("content", StringComparison.InvariantCultureIgnoreCase)
@@ -124,7 +136,9 @@ namespace GamesSizeCalculator.Steam
 
                 var maxsizeStr = GetValue(depot, "maxsize");
                 if (maxsizeStr == null || !long.TryParse(maxsizeStr, out long maxsize))
+                {
                     continue;
+                }
 
                 var sharedinstallNode = GetValue(depot, "sharedinstall");
                 if (sharedinstallNode == "1")
@@ -180,14 +194,18 @@ namespace GamesSizeCalculator.Steam
         private KeyValue GetKeyValueNode(KeyValue kv, params string[] names)
         {
             if (kv == null || kv == KeyValue.Invalid)
+            {
                 return null;
+            }
 
             KeyValue node = kv;
             foreach (var name in names)
             {
                 node = node[name];
                 if (node == null || node == KeyValue.Invalid)
+                {
                     return null;
+                }
             }
             return node;
         }

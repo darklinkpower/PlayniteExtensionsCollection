@@ -32,12 +32,16 @@ namespace GamesSizeCalculator.Steam
         private bool CopyFileFromPackagedFallback()
         {
             if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
+            {
                 return false;
+            }
 
             FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
 
             if (!packagedFallbackFile.Exists)
+            {
                 return false;
+            }
 
             File.Copy(PackagedFallbackPath, LocalPath, overwrite: true);
             return true;
@@ -46,12 +50,16 @@ namespace GamesSizeCalculator.Steam
         private bool PackagedFallbackIsNewerThan(FileInfo f)
         {
             if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
+            {
                 return false;
+            }
 
             FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
 
             if (!packagedFallbackFile.Exists || !f.Exists)
+            {
                 return false;
+            }
 
             return packagedFallbackFile.LastWriteTime > f.LastWriteTime;
         }
@@ -70,9 +78,13 @@ namespace GamesSizeCalculator.Steam
                 RefreshCache();
             }
             if (Encoding == null)
+            {
                 return File.ReadAllText(LocalPath);
+            }
             else
+            {
                 return File.ReadAllText(LocalPath, Encoding);
+            }
         }
 
         public void RefreshCache()

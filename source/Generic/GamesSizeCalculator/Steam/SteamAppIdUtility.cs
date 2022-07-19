@@ -37,7 +37,9 @@ namespace GamesSizeCalculator.Steam
         public string GetSteamGameId(Game game)
         {
             if (game.PluginId == SteamLibraryPluginId)
+            {
                 return game.GameId;
+            }
 
             if (game.Links != null)
             {
@@ -45,12 +47,16 @@ namespace GamesSizeCalculator.Steam
                 {
                     var match = SteamUrlRegex.Match(link.Url);
                     if (match.Success)
+                    {
                         return match.Groups["id"].Value;
+                    }
                 }
             }
 
             if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
+            {
                 return appId.ToString();
+            }
 
             return null;
         }
@@ -75,7 +81,9 @@ namespace GamesSizeCalculator.Steam
                 var normalizedTitle = NormalizeTitle(app.Name);
 
                 if (output.ContainsKey(normalizedTitle))
+                {
                     continue;
+                }
 
                 output.Add(normalizedTitle, app.Appid);
             }
