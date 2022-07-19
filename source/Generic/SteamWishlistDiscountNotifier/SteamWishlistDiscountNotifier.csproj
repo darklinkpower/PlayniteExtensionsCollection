@@ -95,6 +95,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="Enums\AuthStatus.cs" />
+    <Compile Include="Enums\WishlistViewSorting.cs" />
     <Compile Include="Models\WishlistItemCache.cs" />
     <Compile Include="Models\SteamWishlistItem.cs" />
     <Compile Include="SteamLogin.cs" />
@@ -139,7 +140,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\DefaultBanner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>

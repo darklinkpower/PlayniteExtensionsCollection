@@ -17,22 +17,40 @@
             <SolidColorBrush Color="#202326" x:Key="ItemsPanelBackgroundBrush" />
             <SolidColorBrush Color="#313d4a" x:Key="DiscountBlockBackgroundBrush" />
             <SolidColorBrush Color="#3d4c5d" x:Key="WishlistItemBackgroundBrush" />
+            <SolidColorBrush Color="#b9bfc6" x:Key="RankForegroundBrush" />
+            <SolidColorBrush Color="#313d4a" x:Key="RankBorderSeparatorBrush" />
+            <BitmapImage x:Key="DefaultBannerBitmap" UriSource="{Binding DefaultBannerUri}" CacheOption="Default" />
             <DataTemplate x:Key="WishlistItemTemplate">
                 <Grid Margin="0" Background="{StaticResource WishlistItemBackgroundBrush}">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="135" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Image Height="60" Grid.Column="0"
+                    <Border Grid.Column="0" Padding="0,0,0,3"
+                            MinWidth="50" BorderThickness="0,0,3,0"
+                            BorderBrush="{StaticResource RankBorderSeparatorBrush}">
+                        <TextBlock Text="{Binding WishlistItem.Priority}"
+                                  Foreground="{StaticResource RankForegroundBrush}"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Bottom" />
+                    </Border>
+                    <Image Height="60" Grid.Column="1"
                            Margin="2"
                            RenderOptions.BitmapScalingMode="Fant"
-                           Source="{Binding BannerImagePath, IsAsync=True, Converter={StaticResource ImageStringToImageConverter}}"
                            Stretch="Uniform" StretchDirection="Both"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Left"/>
-
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                           HorizontalAlignment="Left">
+                        <Image.Source>
+                            <PriorityBinding>
+                                <Binding Path="BannerImagePath" Converter="{StaticResource ImageStringToImageConverterCached}" IsAsync="True"/>
+                                <!--<Binding Source="{StaticResource DefaultBannerBitmap}" />-->
+                            </PriorityBinding>
+                        </Image.Source>
+                    </Image>
+                    
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center"
                                 Margin="5,0,0,0">
                         <TextBlock Text="{Binding Name}" Margin="0,3,0,0"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -78,7 +96,7 @@
 
                     </StackPanel>
 
-                    <Border Grid.Column="2" Background="{StaticResource DiscountBlockBackgroundBrush}" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
+                    <Border Grid.Column="3" Background="{StaticResource DiscountBlockBackgroundBrush}" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
                         <DockPanel>
                             <Border Background="{StaticResource DiscountPercentAreaBackgroundBrush}" MinWidth="60"
                                     Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -110,15 +128,15 @@
                                 </TextBlock>
                             </StackPanel>
 
-                            <StackPanel>
-                                <Button Content="Open on Steam"
-                                            Margin="0,0,0,0"
-                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamCommand}"
-                                            CommandParameter="{Binding}" />
+                            <StackPanel VerticalAlignment="Center">
                                 <Button Content="Open on web"
-                                            Margin="0,10,0,0"
-                                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnWebCommand}"
-                                            CommandParameter="{Binding}" />
+                                        Margin="0,10,0,5"
+                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnWebCommand}"
+                                        CommandParameter="{Binding}" />
+                                <Button Content="Open on Steam"
+                                        Margin="0,5,0,10"
+                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamCommand}"
+                                        CommandParameter="{Binding}" />
                             </StackPanel>
                         </DockPanel>
                     </Border>
@@ -183,24 +201,66 @@
                     <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeHardware}"
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeHardware}"/>
+
+                    <TextBlock Text="Sorting:" Margin="0,15,0,0" />
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Sort By:"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="0" />
+                        <TextBlock Text="Order:"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="2" />
+                        <ComboBox ItemsSource="{Binding WishlistSortingTypes}"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  Grid.Column="1" Grid.Row="0"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding SelectedSortingType}" />
+                        <ComboBox ItemsSource="{Binding WishlistSortingOrders}"
+                                  Grid.Column="1" Grid.Row="2"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding SelectedSortingDirection}" />
+                    </Grid>
+                    <DockPanel>
+
+                    </DockPanel>
                 </StackPanel>
             </ScrollViewer>
             <Border Background="{StaticResource ItemsPanelBackgroundBrush}"
                     Padding="5,35,5,2">
-                <ListBox ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
-                         IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource WishlistItemTemplate}">
-                    <ListBox.Template>
-                        <ControlTemplate>
-                            <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" 
-                                      
-                                      Padding="5,35,0,0"
-                                      VirtualizingStackPanel.VirtualizationMode="Recycling">
-                                <ItemsPresenter />
-                            </ScrollViewer>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                </ListBox>
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5,0,0,10">
+                        <TextBlock Text="Total items:" />
+                        <TextBlock Text="{Binding ElementName=LbCollection, Path=Items.Count, StringFormat=' {0}'}" />
+                    </StackPanel>
+                    <ListBox DockPanel.Dock="Top" x:Name="LbCollection" ItemsSource="{Binding WishlistCollectionView}" SelectedItem="{Binding SelectedWishlistItem}"
+                             Margin="0,0,0,0"
+                             IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource WishlistItemTemplate}">
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" 
+                                              Padding="5,0,0,0"
+                                              VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                    </ListBox>
+                </DockPanel>
             </Border>
 
         </DockPanel>

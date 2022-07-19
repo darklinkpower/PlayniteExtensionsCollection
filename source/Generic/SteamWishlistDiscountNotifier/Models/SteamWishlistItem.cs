@@ -28,7 +28,7 @@ namespace SteamWishlistDiscountNotifier.Models
         public long ReviewsPercent { get; set; }
 
         [SerializationPropertyName("release_date")]
-        public ReleaseDate? ReleaseDate { get; set; }
+        public double? ReleaseDate { get; set; }
 
         [SerializationPropertyName("release_string")]
         public string ReleaseString { get; set; }

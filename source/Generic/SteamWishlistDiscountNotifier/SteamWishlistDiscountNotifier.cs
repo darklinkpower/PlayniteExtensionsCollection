@@ -14,11 +14,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace SteamWishlistDiscountNotifier
@@ -33,6 +36,7 @@ namespace SteamWishlistDiscountNotifier
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
         private const string notLoggedInNotifId = @"Steam_Wishlist_Notif_AuthRequired";
+        private readonly string pluginInstallPath;
         private readonly string wishlistCachePath;
         private readonly string bannerImagesCachePath;
         public readonly DispatcherTimer wishlistCheckTimer;
@@ -49,6 +53,7 @@ namespace SteamWishlistDiscountNotifier
                 HasSettings = true
             };
 
+            pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             wishlistCachePath = Path.Combine(GetPluginUserDataPath(), "WishlistCache.json");
             bannerImagesCachePath = Path.Combine(GetPluginUserDataPath(), "BannerImages");
             wishlistCheckTimer = new DispatcherTimer
@@ -73,7 +78,12 @@ namespace SteamWishlistDiscountNotifier
             {
                 Title = "View Steam Wishlist",
                 Type = SiderbarItemType.View,
-                Icon = new TextBlock { Text = "Test" },
+                Icon = new TextBlock
+                {
+                    Text = char.ConvertFromUtf32(0xed71),
+                    FontSize = 20,
+                    FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+                },
                 Opened = () => {
                     return GetSteamWishlistViewerSidebarView();
                 }
@@ -89,9 +99,9 @@ namespace SteamWishlistDiscountNotifier
                 SetWishlistItemsBannerPaths(wishlistItems);
             }, new GlobalProgressOptions("Obtaining Steam Wishlist data...", true));
 
-            if (wishlistItems != null && wishlistItems.Count > 0)
+            if (wishlistItems != null)
             {
-                return new SteamWishlistViewerView { DataContext = new SteamWishlistViewerViewModel(PlayniteApi, wishlistItems) };
+                return new SteamWishlistViewerView { DataContext = new SteamWishlistViewerViewModel(PlayniteApi, wishlistItems, pluginInstallPath) };
             }
             else
             {
@@ -369,6 +379,7 @@ namespace SteamWishlistDiscountNotifier
                 var response = Serialization.FromJson<Dictionary<string, SteamWishlistItem>>(pageSource);
                 foreach (var wishlistItem in response.Values)
                 {
+                    wishlistItem.ReleaseString = HttpUtility.HtmlDecode(wishlistItem.ReleaseString);
                     if (wishlistItem.Subs.HasItems())
                     {
                         foreach (var sub in wishlistItem.Subs)
@@ -383,6 +394,9 @@ namespace SteamWishlistDiscountNotifier
                 }
 
                 currentPage++;
+
+                // Just in case Steam could rate limit if constant requests are made
+                Thread.Sleep(250);
             }
 
             logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");

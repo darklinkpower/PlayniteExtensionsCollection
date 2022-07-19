@@ -1,13 +1,16 @@
 ﻿using Playnite.SDK;
 using PluginsCommon;
+using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace SteamWishlistDiscountNotifier.ViewModels
 {
@@ -17,6 +20,33 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         private static readonly ILogger logger = LogManager.GetLogger();
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/app/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
+        public Dictionary<WishlistViewSorting, string> WishlistSortingTypes { get; }
+        public Dictionary<ListSortDirection, string> WishlistSortingOrders { get; }
+        private WishlistViewSorting selectedSortingType = WishlistViewSorting.Rank;
+        public WishlistViewSorting SelectedSortingType
+        {
+            get { return selectedSortingType; }
+            set
+            {
+                selectedSortingType = value;
+                OnPropertyChanged();
+                UpdateWishlistSorting();
+            }
+        }
+
+        private ListSortDirection selectedSortingDirection = ListSortDirection.Ascending;
+        public ListSortDirection SelectedSortingDirection
+        {
+            get { return selectedSortingDirection; }
+            set
+            {
+                
+                selectedSortingDirection = value;
+                OnPropertyChanged();
+                UpdateWishlistSorting();
+            }
+        }
+
         private List<WishlistItemCache> wishlistItemsCollection;
         public List<WishlistItemCache> WishlistItemsCollection
         {
@@ -36,6 +66,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         {
             get { return wishlistCollectionView; }
         }
+
+
 
         private string searchString = string.Empty;
         public string SearchString
@@ -84,7 +116,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        private int filterMaximumPrice = 0;
+        private int filterMaximumPrice = 999999;
         public int FilterMaximumPrice
         {
             get { return filterMaximumPrice; }
@@ -168,12 +200,30 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, List<WishlistItemCache> wishlistItems)
+        public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, List<WishlistItemCache> wishlistItems, string pluginInstallPath)
         {
             this.playniteApi = playniteApi;
             WishlistItemsCollection = wishlistItems;
             wishlistCollectionView = CollectionViewSource.GetDefaultView(WishlistItemsCollection);
             wishlistCollectionView.Filter = FilterWishlistCollection;
+            WishlistSortingTypes = new Dictionary<WishlistViewSorting, string>
+            {
+                [WishlistViewSorting.Name] = "Name",
+                [WishlistViewSorting.Rank] = "Rank",
+                [WishlistViewSorting.Discount] = "Discount",
+                [WishlistViewSorting.Price] = "Price",
+                [WishlistViewSorting.ReleaseDate] = "Release Date"
+            };
+
+            WishlistSortingOrders = new Dictionary<ListSortDirection, string>
+            {
+                [ListSortDirection.Ascending] = "Ascending",
+                [ListSortDirection.Descending] = "Descending",
+            };
+
+            wishlistCollectionView.SortDescriptions.Add(new SortDescription(GetSortingDescription(), selectedSortingDirection));
+
+            DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
         }
 
         bool FilterWishlistCollection(object item)
@@ -188,7 +238,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 }
             }
 
-            if (FilterMaximumPrice != 0 && wishlistItem.PriceFinal > FilterMaximumPrice)
+            if (wishlistItem.PriceFinal > FilterMaximumPrice)
             {
                 return false;
             }
@@ -226,8 +276,38 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                     return FilterItemTypeHardware;
                 case StoreItemType.Mod:
                     return FilterItemTypeGame;
+                case StoreItemType.Demo:
+                    return FilterItemTypeGame;
                 default:
                     return true;
+            }
+        }
+
+        private void UpdateWishlistSorting()
+        {
+            using (wishlistCollectionView.DeferRefresh())
+            {
+                wishlistCollectionView.SortDescriptions.Clear();
+                wishlistCollectionView.SortDescriptions.Add(new SortDescription(GetSortingDescription(), selectedSortingDirection));
+            }
+        }
+
+        private string GetSortingDescription()
+        {
+            switch (selectedSortingType)
+            {
+                case WishlistViewSorting.Name:
+                    return "Name";
+                case WishlistViewSorting.Rank:
+                    return "WishlistItem.Priority";
+                case WishlistViewSorting.Discount:
+                    return "DiscountPercent";
+                case WishlistViewSorting.Price:
+                    return "PriceFinal";
+                case WishlistViewSorting.ReleaseDate:
+                    return "WishlistItem.ReleaseDate";
+                default:
+                    return "Name";
             }
         }
 
@@ -247,6 +327,19 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             });
         }
 
+        public Uri DefaultBannerUri { get; }
+
+        //private BitmapImage defaultBannerImage;
+        //public BitmapImage DefaultBannerImage
+        //{
+        //    get { return defaultBannerImage; }
+        //    set
+        //    {
+        //        defaultBannerImage = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+
         private void OpenWishlistItemOnSteam(WishlistItemCache wishlistItem)
         {
             var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
@@ -256,7 +349,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         private void OpenWishlistItemOnWeb(WishlistItemCache wishlistItem)
         {
             var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
-           ProcessStarter.StartUrl(subIdSteamUrl);
+            ProcessStarter.StartUrl(subIdSteamUrl);
         }
     }
 }
