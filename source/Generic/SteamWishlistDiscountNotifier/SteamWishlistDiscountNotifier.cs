@@ -190,11 +190,7 @@ namespace SteamWishlistDiscountNotifier
                 {
                     SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
                     logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
-                    if (status == AuthStatus.NoConnection)
-                    {
-                        return;
-                    }
-                    else if (status == AuthStatus.Ok)
+                    if (status == AuthStatus.Ok)
                     {
                         PlayniteApi.Notifications.Remove(notLoggedInNotifId);
                         UpdateAndNotifyWishlistDiscounts(steamId, webView);
