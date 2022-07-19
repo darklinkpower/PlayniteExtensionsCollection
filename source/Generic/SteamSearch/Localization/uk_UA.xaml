@@ -8,8 +8,8 @@
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Відкрити в Інтернеті</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Відкрити у Steam</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">Знижка {0}%</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Current Price: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Original Price: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Free</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Not released</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Поточна ціна: {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Початкова ціна: {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Безплатно</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Не випущено</sys:String>
 </ResourceDictionary>
