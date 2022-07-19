@@ -22,6 +22,9 @@ namespace GamesSizeCalculator.Steam
         public async Task<long?> GetInstallSizeAsync(uint appId, bool includeDLC = true, bool includeOptional = true)
         {
             var depotData = await GetRelevantDepots(appId);
+            if (depotData == null)
+                return null;
+
             RemoveRegionalMainDepots(ref depotData);
 
             IEnumerable<DepotInfo> filteredDepots = depotData;
@@ -81,6 +84,9 @@ namespace GamesSizeCalculator.Steam
 
         private static string GetLastWord(string s)
         {
+            if (string.IsNullOrWhiteSpace(s))
+                return s;
+
             s = s.Trim();
             int i = s.LastIndexOfAny(new[] { ' ', '_' });
             if (i == -1)

@@ -51,10 +51,10 @@ namespace GamesSizeCalculator.Tests
             long expectedBaseSize =
                 1790331721L +
                 109784184L + //WW
-                12807162011L+
+                12807162011L +
                 //asia
-                102629169L+
-                88449227L+
+                102629169L +
+                88449227L +
                 1786744869L;
 
             long expectedDLCsize =
@@ -78,29 +78,37 @@ namespace GamesSizeCalculator.Tests
         [Fact]
         public async Task AssassinsCreedBrotherhood()
         {
-            //optional
-            //1954919585
-
-            //normal
-            //9529023303
-
-            //WW?
-            //7993844118
+            long normal = 9529023303L;
+            long optional = 1954919585L;
+            long worldwide = 7993844118L;            
 
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
 
             var completeSize = await calc.GetInstallSizeAsync(48190);
             Assert.NotNull(completeSize);
-            Assert.Equal(1954919585L + 9529023303L + 7993844118L, completeSize.Value);
+            Assert.Equal(normal + optional + worldwide, completeSize.Value);
 
             var minimalSize = await calc.GetInstallSizeAsync(48190, false, false);
             Assert.NotNull(minimalSize);
-            Assert.Equal(9529023303L + 7993844118L, minimalSize.Value);
+            Assert.Equal(normal + worldwide, minimalSize.Value);
+        }
+
+        [Fact]
+        public async Task TheDoor()
+        {
+            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
+
+            var completeSize = await calc.GetInstallSizeAsync(1360440);
+            Assert.Null(completeSize);
+
+            var minimalSize = await calc.GetInstallSizeAsync(1360440, false, false);
+            Assert.Null(minimalSize);
         }
 
         //[Theory]
         //[InlineData(243470u)]
         //[InlineData(48190u)]
+        //[InlineData(1360440u)]
         public async Task Serialize(uint appId)
         {
             SteamApiClient client = new SteamApiClient();
