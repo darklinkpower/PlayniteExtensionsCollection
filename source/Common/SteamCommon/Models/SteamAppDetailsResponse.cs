@@ -14,9 +14,12 @@ namespace SteamCommon.Models
         public double PriceOriginal { get; set; }
         public double PriceFinal { get; set; }
         public bool IsDiscounted { get; set; }
+        public bool IsFree { get; set; }
+        public bool IsReleased { get; set; }
         public int DiscountPercentage { get; set; }
         public string StoreUrl { get; set; }
         public string BannerImageUrl { get; set; }
+        public string Currency { get; set; }
     }
 
     public partial class SteamAppDetails

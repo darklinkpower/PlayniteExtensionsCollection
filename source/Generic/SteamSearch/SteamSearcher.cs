@@ -66,17 +66,27 @@ namespace SteamSearch
 
         private static string GetSearchItemDescription(StoreSearchResult searchResult)
         {
+            if (!searchResult.IsReleased)
+            {
+                return ResourceProvider.GetString("LOCSteam_Search_ItemActionDescriptionNotReleasedGame");
+            }
+
+            if (searchResult.IsFree)
+            {
+                return ResourceProvider.GetString("LOCSteam_Search_ItemActionDescriptionFreeGame");
+            }
+
             if (searchResult.IsDiscounted)
             {
                 return string.Join(" - ", new string[3]
                 {
                     string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionDiscountPercentDescription"), searchResult.DiscountPercentage),
-                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionCurrentPriceDescription"), searchResult.PriceFinal),
-                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionOriginalPriceDescription"), searchResult.PriceOriginal)
+                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionCurrentPriceDescription"), searchResult.Currency, searchResult.PriceFinal),
+                    string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionOriginalPriceDescription"), searchResult.Currency, searchResult.PriceOriginal)
                 });
             }
 
-            return string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionCurrentPriceDescription"), searchResult.PriceFinal);
+            return string.Format(ResourceProvider.GetString("LOCSteam_Search_ItemActionCurrentPriceDescription"), searchResult.Currency, searchResult.PriceFinal);
         }
 
         private List<StoreSearchResult> GetStoreSearchResults(string searchTerm)

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -47,7 +48,9 @@ namespace SteamCommon
                     var discountPercentage = GetSteamSearchDiscount(priceData);
                     var priceFinal = GetSteamSearchFinalPrice(priceData);
                     var priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
-                    var isDiscounted = priceFinal != priceOriginal;
+                    var isDiscounted = priceFinal != priceOriginal && priceOriginal != 0;
+                    //var isFree = priceFinal == priceOriginal && priceOriginal == 0;
+                    GetCurrencyFromSearchPriceDiv(gameElem.QuerySelector(".search_price"), out var currency, out var isReleased, out var isFree);
 
                     //Urls
                     var storeUrl = gameElem.GetAttribute("href");
@@ -63,6 +66,9 @@ namespace SteamCommon
                         IsDiscounted = isDiscounted,
                         DiscountPercentage = discountPercentage,
                         StoreUrl = storeUrl,
+                        IsFree = isFree,
+                        IsReleased = isReleased,
+                        Currency = currency,
                         BannerImageUrl = capsuleUrl
                     });
                 }
@@ -70,6 +76,44 @@ namespace SteamCommon
 
             logger.Debug($"Obtained {results.Count} games from Steam search term {searchTerm}");
             return results;
+        }
+
+        private static void GetCurrencyFromSearchPriceDiv(AngleSharp.Dom.IElement element, out string currency, out bool isReleased, out bool isFree)
+        {
+            if (element.ChildElementCount == 2)
+            {
+                // Discounted Item
+                isReleased = true;
+                currency = GetCurrencyFromPriceString(element.Children[0].Children[0].InnerHtml);
+                isFree = currency == null;
+            }
+            else if (!element.InnerHtml.IsNullOrWhiteSpace())
+            {
+                // Non discounted item
+                isReleased = true;
+                currency = GetCurrencyFromPriceString(element.InnerHtml);
+                isFree = currency == null;
+            }
+            else
+            {
+                // Unreleased
+                isReleased = false;
+                currency = null;
+                isFree = false;
+            }
+
+            return;
+        }
+
+        private static string GetCurrencyFromPriceString(string priceString)
+        {
+            if (!Regex.IsMatch(priceString, @"\d"))
+            {
+                // Game is free
+                return null;
+            }
+
+            return Regex.Match(priceString, @"[^\s]+").Value;
         }
 
         private static string GetStoreSearchUrl(string searchTerm, string steamApiCountry)
