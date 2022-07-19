@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Довідка</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Використовувати конкретну країну для пошуку в магазині Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Мінімальна знижка, необхідна для показу сповіщень:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Показувати сповіщення про елементи типу:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Автентифікувати</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Перевірка стану автентифікації…</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Користувача автентифіковано</sys:String>
@@ -14,4 +15,30 @@
 Не вдалося перевірити список бажань Steam. Необхідна автентифікація.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; на розпродажі у Steam!</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Знижка: {0}%</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Ігри</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Downloadable content</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Музика</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">Програмне забезпечення</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Відео</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Апаратне забезпечення</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Модифікації</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">View Steam Wishlist</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Obtaining Steam Wishlist data…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Name</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Rank</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Discount</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Price</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Release Date</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Ascending</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Descending</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Search:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted">Only discounted items</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Minimum discount:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Maximum price:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Total items:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Overall Reviews:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Release Date:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Tags:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Open on web</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Open on Steam</sys:String>
 </ResourceDictionary>

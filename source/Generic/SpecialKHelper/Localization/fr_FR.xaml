@@ -16,7 +16,7 @@ Sachez qu'un contrôleur doit être connecté et activé pour que la fenêtre de
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature">Supprimer la fonctionnalité pour activer l'exécution en mode sélectif</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Sélectionnez le jeu à utiliser pour la configuration Steam ou annulez pour utiliser une option générique</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Special K registry key not found</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Clé de registre spéciale K introuvable</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Fichier Special K introuvable dans {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Le service Special K {0} n'a pas pu être démarré</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Éditeur de profil Special K</sys:String>
