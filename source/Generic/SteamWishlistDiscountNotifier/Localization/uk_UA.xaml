@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Користувача автентифіковано</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Необхідна автентифікація</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Відсутнє зʼєднання</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Enable wishlist discount notifications</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Увімкнути сповіщення списку бажань</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Інтервал у хвилинах для перевірки оновлень у списку бажань:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Відкривати сторінки магазину у веббраузері, замість клієнта Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
