@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Ajuda</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Calcular automaticamente o tamanho de um jogo depois que ele for parado</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Calcule automaticamente o tamanho de um jogo depois se ele foi modificado na atualização da biblioteca</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Atualiza o tamanho do arquivo do jogo se ele for detectado que o diretório ou arquivo da rom do jogo foi atualizado desde a detecção automática anterior</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Calcular automaticamente o tamanho de um jogo depois de adicionado na atualização da biblioteca</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Apply this data also for games that are not from the Steam library</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Include all DLC in size calculation</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calcular o tamanho dos jogos selecionados</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calcular tamanhos dos jogos selecionados (Forçar substituição)</sys:String>
