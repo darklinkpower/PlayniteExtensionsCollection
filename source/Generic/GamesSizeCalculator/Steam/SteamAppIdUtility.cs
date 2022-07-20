@@ -1,4 +1,8 @@
-﻿using Playnite.SDK.Models;
+﻿using GamesSizeCalculator.Models;
+using Playnite.SDK.Data;
+using Playnite.SDK.Models;
+using PluginsCommon;
+using PluginsCommon.Web;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -63,23 +67,19 @@ namespace GamesSizeCalculator.Steam
 
         private Dictionary<string, int> GetSteamIdsByTitle()
         {
-            string tempPath = Path.Combine(Path.GetTempPath(), "SteamAppList.json");
+            var tempPath = Path.Combine(Path.GetTempPath(), "SteamAppList.json");
             var file = new FileInfo(tempPath);
             if (!file.Exists || file.LastWriteTime < DateTime.Now.AddHours(-18))
             {
-                using (var client = new WebClient())
-                {
-                    client.DownloadFile("https://api.steampowered.com/ISteamApps/GetAppList/v2/", tempPath);
-                }
+                HttpDownloader.DownloadFile("https://api.steampowered.com/ISteamApps/GetAppList/v2/", tempPath);
             }
-            var jsonStr = File.ReadAllText(tempPath, Encoding.UTF8);
-            var jsonContent = Newtonsoft.Json.JsonConvert.DeserializeObject<AppListRoot>(jsonStr);
 
+            var jsonStr = FileSystem.ReadStringFromFile(tempPath, true);
+            var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
             Dictionary<string, int> output = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
             foreach (var app in jsonContent.Applist.Apps)
             {
                 var normalizedTitle = NormalizeTitle(app.Name);
-
                 if (output.ContainsKey(normalizedTitle))
                 {
                     continue;
@@ -87,23 +87,8 @@ namespace GamesSizeCalculator.Steam
 
                 output.Add(normalizedTitle, app.Appid);
             }
+
             return output;
-        }
-
-        private class AppListRoot
-        {
-            public AppList Applist { get; set; }
-        }
-
-        private class AppList
-        {
-            public List<SteamApp> Apps { get; set; } = new List<SteamApp>();
-        }
-
-        private class SteamApp
-        {
-            public int Appid { get; set; }
-            public string Name { get; set; }
         }
     }
 }

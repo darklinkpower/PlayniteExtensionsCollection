@@ -339,10 +339,17 @@ namespace PluginsCommon
             }
         }
 
-        public static string ReadStringFromFile(string path)
+        public static string ReadStringFromFile(string path, bool useUtf8 = false)
         {
             path = FixPathLength(path);
-            return File.ReadAllText(path);
+            if (useUtf8)
+            {
+                return File.ReadAllText(path, Encoding.UTF8);
+            }
+            else
+            {
+                return File.ReadAllText(path);
+            }
         }
 
         public static void WriteStringToFileSafe(string path, string content, int retryAttempts = 5)

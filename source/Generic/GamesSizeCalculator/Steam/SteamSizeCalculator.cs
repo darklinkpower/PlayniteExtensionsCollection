@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using GamesSizeCalculator.Models;
+using Playnite.SDK;
 using SteamKit2;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,13 @@ namespace GamesSizeCalculator.Steam
 {
     public class SteamSizeCalculator
     {
+        private ILogger logger = LogManager.GetLogger();
+        public ISteamApiClient SteamApiClient { get; }
+
         public SteamSizeCalculator(ISteamApiClient steamApiClient)
         {
             SteamApiClient = steamApiClient;
         }
-
-        private ILogger logger = LogManager.GetLogger();
-
-        public ISteamApiClient SteamApiClient { get; }
 
         public async Task<long?> GetInstallSizeAsync(uint appId, bool includeDLC = true, bool includeOptional = true)
         {
@@ -75,7 +75,7 @@ namespace GamesSizeCalculator.Steam
                     case "china":
                     case "row":
                     case "ww":
-                        if (biggestDepotsCopy.Count == 1) //don't remove the last big depot
+                        if (biggestDepotsCopy.Count == 1) // Don't remove the last big depot
                         {
                             return;
                         }
@@ -90,25 +90,25 @@ namespace GamesSizeCalculator.Steam
             }
         }
 
-        private static string GetLastWord(string s)
+        private static string GetLastWord(string str)
         {
-            if (string.IsNullOrWhiteSpace(s))
+            if (str.IsNullOrWhiteSpace())
             {
-                return s;
+                return str;
             }
 
-            s = s.Trim();
-            int i = s.LastIndexOfAny(new[] { ' ', '_' });
+            str = str.Trim();
+            var i = str.LastIndexOfAny(new[] { ' ', '_' });
             if (i == -1)
             {
-                return s;
+                return str;
             }
 
-            string lastWord = s.Substring(i + 1);
+            var lastWord = str.Substring(i + 1);
             if (lastWord.Equals("content", StringComparison.InvariantCultureIgnoreCase)
                 || lastWord.Equals("depot", StringComparison.InvariantCultureIgnoreCase))
             {
-                string retryStr = s.Remove(i).Trim();
+                string retryStr = str.Remove(i).Trim();
                 return GetLastWord(retryStr);
             }
             else
@@ -128,7 +128,6 @@ namespace GamesSizeCalculator.Steam
             }
 
             var output = new List<DepotInfo>();
-
             foreach (var depot in depots.Children)
             {
                 var id = GetValue(depot);
@@ -155,7 +154,7 @@ namespace GamesSizeCalculator.Steam
                 }
 
                 var oslist = GetValue(depot, "config", "oslist");
-                if (!string.IsNullOrEmpty(oslist) && !oslist.Contains("windows", StringComparison.CurrentCultureIgnoreCase))
+                if (!oslist.IsNullOrEmpty() && !oslist.Contains("windows", StringComparison.CurrentCultureIgnoreCase))
                 {
                     logger.Debug($"Skipping depot \"{name}\" because its OS list is \"{oslist}\"");
                     continue;
@@ -171,24 +170,6 @@ namespace GamesSizeCalculator.Steam
             }
 
             return output;
-        }
-
-        private class DepotInfo
-        {
-            public DepotInfo(string id, string name, long fileSize, bool isDlc, bool optional)
-            {
-                Id = id;
-                Name = name;
-                FileSize = fileSize;
-                IsDLC = isDlc;
-                Optional = optional;
-            }
-
-            public string Id { get; set; }
-            public string Name { get; set; }
-            public long FileSize { get; set; }
-            public bool IsDLC { get; }
-            public bool Optional { get; }
         }
 
         private KeyValue GetKeyValueNode(KeyValue kv, params string[] names)

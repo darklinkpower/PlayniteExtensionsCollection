@@ -109,15 +109,16 @@ namespace GamesSizeCalculator
         private Steam.ISteamAppIdUtility GetDefaultSteamAppUtility()
         {
             var appListCache = new Steam.CachedFileDownloader("https://api.steampowered.com/ISteamApps/GetAppList/v2/",
-                                                        Path.Combine(GetPluginUserDataPath(), "SteamAppList.json"),
-                                                        TimeSpan.FromDays(3),
-                                                        Encoding.UTF8);
+                    Path.Combine(GetPluginUserDataPath(), "SteamAppList.json"),
+                    TimeSpan.FromDays(3),
+                    Encoding.UTF8);
+
             return new Steam.SteamAppIdUtility(appListCache);
         }
 
         private long GetInstalledGameSize(Game game, DateTime? onlyIfNewerThan = null)
         {
-            if (string.IsNullOrEmpty(game.InstallDirectory) || !Directory.Exists(game.InstallDirectory))
+            if (game.InstallDirectory.IsNullOrEmpty() || !Directory.Exists(game.InstallDirectory))
             {
                 return 0;
             }
@@ -136,7 +137,7 @@ namespace GamesSizeCalculator
             {
                 logger.Error(e, $"Error while getting directory size in {game.InstallDirectory} of game {game.Name}");
                 PlayniteApi.Notifications.Messages.Add(
-                    new NotificationMessage(game.Id.ToString(),
+                    new NotificationMessage("GetInstalledGameSize" + game.Id.ToString(),
                         string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize"), game.InstallDirectory, game.Name, e.Message),
                         NotificationType.Error)
                     );
@@ -177,7 +178,7 @@ namespace GamesSizeCalculator
             {
                 logger.Error(e, $"Error while getting rom file size in {romPath}");
                 PlayniteApi.Notifications.Messages.Add(
-                    new NotificationMessage(game.Id.ToString(),
+                    new NotificationMessage("GetRomSizeError" + game.Id.ToString(),
                         string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize"), game.InstallDirectory, game.Name, e.Message),
                         NotificationType.Error)
                 );
@@ -275,49 +276,53 @@ namespace GamesSizeCalculator
             progressOptions.IsIndeterminate = false;
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var games = PlayniteApi.Database.Games.Where(x => x.IsInstalled);
-                a.ProgressMaxValue = games.Count();
-
-                using (PlayniteApi.Database.BufferedUpdate())
-                using (var steamClient = new Steam.SteamApiClient())
-                {
-                    var steamSizeCalculator = new Steam.SteamSizeCalculator(steamClient);
-                    var steamAppIdUtility = GetDefaultSteamAppUtility();
-                    foreach (var game in games)
-                    {
-                        a.CurrentProgressValue++;
-                        if (a.CancelToken.IsCancellationRequested)
-                        {
-                            break;
-                        }
-
-                        if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
-                        {
-                            if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
-                            {
-                                continue;
-                            }
-
-                            CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, false);
-                        }
-                        else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
-                        {
-                            // To make sure only Version fields filled by the extension are
-                            // replaced
-                            if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
-                            {
-                                continue;
-                            }
-
-                            CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, true, true);
-                        }
-                    };
-                }
+                ProcessGamesOnLibUpdate(a);
             }, progressOptions);
 
             settings.Settings.LastRefreshOnLibUpdate = DateTime.Now;
             SavePluginSettings(settings.Settings);
         }
 
+        private void ProcessGamesOnLibUpdate(GlobalProgressActionArgs a)
+        {
+            var games = PlayniteApi.Database.Games.Where(x => x.IsInstalled);
+            a.ProgressMaxValue = games.Count();
+
+            using (PlayniteApi.Database.BufferedUpdate())
+            using (var steamClient = new Steam.SteamApiClient())
+            {
+                var steamSizeCalculator = new Steam.SteamSizeCalculator(steamClient);
+                var steamAppIdUtility = GetDefaultSteamAppUtility();
+                foreach (var game in games)
+                {
+                    a.CurrentProgressValue++;
+                    if (a.CancelToken.IsCancellationRequested)
+                    {
+                        break;
+                    }
+
+                    if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
+                    {
+                        if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
+                        {
+                            continue;
+                        }
+
+                        CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, false);
+                    }
+                    else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
+                    {
+                        // To make sure only Version fields filled by the extension are
+                        // replaced
+                        if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
+                        {
+                            continue;
+                        }
+
+                        CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, true, true);
+                    }
+                };
+            }
+        }
     }
 }

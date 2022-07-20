@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Net;
+using PluginsCommon.Web;
+using PluginsCommon;
 
 namespace GamesSizeCalculator.Steam
 {
@@ -14,6 +16,12 @@ namespace GamesSizeCalculator.Steam
 
     public class CachedFileDownloader : ICachedFile
     {
+        public string OnlinePath { get; }
+        public string LocalPath { get; }
+        public TimeSpan MaxCacheAge { get; }
+        public Encoding Encoding { get; }
+        public string PackagedFallbackPath { get; }
+
         public CachedFileDownloader(string onlinePath, string localPath, TimeSpan maxCacheAge, Encoding encoding = null, string packagedFallbackPath = null)
         {
             OnlinePath = onlinePath;
@@ -23,15 +31,9 @@ namespace GamesSizeCalculator.Steam
             PackagedFallbackPath = packagedFallbackPath;
         }
 
-        public string OnlinePath { get; }
-        public string LocalPath { get; }
-        public TimeSpan MaxCacheAge { get; }
-        public Encoding Encoding { get; }
-        public string PackagedFallbackPath { get; }
-
         private bool CopyFileFromPackagedFallback()
         {
-            if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
+            if (PackagedFallbackPath.IsNullOrWhiteSpace())
             {
                 return false;
             }
@@ -43,19 +45,18 @@ namespace GamesSizeCalculator.Steam
                 return false;
             }
 
-            File.Copy(PackagedFallbackPath, LocalPath, overwrite: true);
+            FileSystem.CopyFile(PackagedFallbackPath, LocalPath, true);
             return true;
         }
 
         private bool PackagedFallbackIsNewerThan(FileInfo f)
         {
-            if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
+            if (PackagedFallbackPath.IsNullOrWhiteSpace())
             {
                 return false;
             }
 
             FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
-
             if (!packagedFallbackFile.Exists || !f.Exists)
             {
                 return false;
@@ -67,7 +68,6 @@ namespace GamesSizeCalculator.Steam
         public string GetFileContents()
         {
             var f = new FileInfo(LocalPath);
-
             if ((!f.Exists || PackagedFallbackIsNewerThan(f)) && CopyFileFromPackagedFallback())
             {
                 f.Refresh();
@@ -79,7 +79,7 @@ namespace GamesSizeCalculator.Steam
             }
             if (Encoding == null)
             {
-                return File.ReadAllText(LocalPath);
+                return FileSystem.ReadStringFromFile(LocalPath);
             }
             else
             {
@@ -89,10 +89,7 @@ namespace GamesSizeCalculator.Steam
 
         public void RefreshCache()
         {
-            using (var w = new WebClient())
-            {
-                w.DownloadFile(OnlinePath, LocalPath);
-            }
+            HttpDownloader.DownloadFile(OnlinePath, LocalPath);
         }
     }
 }
