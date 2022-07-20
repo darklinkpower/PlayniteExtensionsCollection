@@ -46,14 +46,12 @@ namespace GamesSizeCalculator
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuSection = ResourceProvider.GetString("LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator");
-
             return new List<GameMenuItem>
             {
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames"),
-                    MenuSection = menuSection,
+                    MenuSection = "Games Size Calculator",
                     Action = a =>
                     {
                         UpdateGamesListSizes(args.Games.Distinct().ToList(), false);
@@ -62,7 +60,7 @@ namespace GamesSizeCalculator
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce"),
-                    MenuSection = menuSection,
+                    MenuSection = "Games Size Calculator",
                     Action = a =>
                     {
                         UpdateGamesListSizes(args.Games.Distinct().ToList(), true);
