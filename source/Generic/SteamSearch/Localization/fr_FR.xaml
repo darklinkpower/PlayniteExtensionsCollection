@@ -8,6 +8,8 @@
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Ouvrir sur le web</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Ouvrir dans Steam</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">{0}% de réduction</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Prix actuel : {0:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Prix d'origine : {0:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Current Price: {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Original Price: {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Free</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Not released</sys:String>
 </ResourceDictionary>

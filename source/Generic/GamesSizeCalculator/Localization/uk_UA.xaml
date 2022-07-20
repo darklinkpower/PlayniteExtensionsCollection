@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Довідка</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel">Автоматично вираховувати розмір гри після її зупинки</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Автоматично обчислювати розмір гри у випадку, якщо вона була змінена під час оновлення бібліотеки</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Оновлює розмір файлу гри, якщо виявлено, що ігровий каталог або ром-файл оновлювалися після попереднього автоматичного виявлення</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Автоматично обчислювати розмір гри у після її додачі під час оновлення бібліотеки</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel">Отримувати приблизний розмір встановлення у Steam для не встановлених ігор ПК</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Застосовувати ці дані також для ігор не з бібліотеки Steam</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Включати усі DLC до розрахунку розміру</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Включати необов'язковий вміст до розрахунку розміру</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Необов'язковий вміст охоплює такі речі, як вміст з Deluxe edition, який недоступний у вигляді DLC</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Розрахувати розміри вибраних ігор</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Розрахувати розміри вибраних ігор (Перезаписати)</sys:String>
