@@ -125,3 +125,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_19.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.20_52a8c64a/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_20.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added option to configure if the extension should notify of wishlist discounts'

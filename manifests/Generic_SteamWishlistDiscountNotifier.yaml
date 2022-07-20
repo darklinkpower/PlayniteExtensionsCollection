@@ -31,3 +31,10 @@ Packages:
     - 'Added options to set minimum discount and option to choose what type of items that are discounted should be notified'
     - 'Fix failing to obtain wishlist data if user had demos wishlisted'
     - 'Fix stopping automatically checking for discounts if there was no internet during a check'
+  - Version: 1.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.20_52a8c64a/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_4.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to obtain estimated install size data from Steam (By Jeshibu)'
