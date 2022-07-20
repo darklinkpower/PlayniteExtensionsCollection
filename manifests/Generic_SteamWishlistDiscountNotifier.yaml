@@ -37,4 +37,4 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.20_52a8c64a/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_4.pext
     Changelog:
     - 'Updated localizations'
-    - 'Added support to obtain estimated install size data from Steam (By Jeshibu)'
+    - 'Added option to configure if the extension should notify of wishlist discounts'
