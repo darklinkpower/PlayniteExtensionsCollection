@@ -424,9 +424,6 @@ namespace SteamWishlistDiscountNotifier
                 }
 
                 currentPage++;
-
-                // Just in case Steam could rate limit if constant requests are made
-                Thread.Sleep(250);
             }
 
             logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");
