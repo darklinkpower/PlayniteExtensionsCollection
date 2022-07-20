@@ -14,6 +14,8 @@ namespace SteamWishlistDiscountNotifier
     {
         private DateTime lastWishlistUpdate = DateTime.MinValue;
         public DateTime LastWishlistUpdate { get => lastWishlistUpdate; set => SetValue(ref lastWishlistUpdate, value); }
+        private bool enableWishlistNotifications = true;
+        public bool EnableWishlistNotifications { get => enableWishlistNotifications; set => SetValue(ref enableWishlistNotifications, value); }
         private bool openUrlsInBrowser = false;
         public bool OpenUrlsInBrowser { get => openUrlsInBrowser; set => SetValue(ref openUrlsInBrowser, value); }
         private int databaseVersion = 0;
@@ -55,20 +57,20 @@ namespace SteamWishlistDiscountNotifier
             }
         }
 
-        private AuthStatus checkedStatus = AuthStatus.Checking;
-
+        public AuthStatus CheckedStatus = AuthStatus.Checking;
         public AuthStatus AuthStatus
         {
             get
             {
-                if (checkedStatus != AuthStatus.Checking)
+                if (CheckedStatus != AuthStatus.Checking)
                 {
-                    return checkedStatus;
+                    return CheckedStatus;
                 }
 
                 using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView())
                 {
                     SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                    CheckedStatus = status;
                     return status;
                 }
             }
@@ -92,7 +94,7 @@ namespace SteamWishlistDiscountNotifier
                 Settings = new SteamWishlistDiscountNotifierSettings();
             }
 
-            checkedStatus = AuthStatus.Checking;
+            CheckedStatus = AuthStatus.Checking;
         }
 
         public void BeginEdit()
@@ -183,7 +185,7 @@ namespace SteamWishlistDiscountNotifier
                     view.OpenDialog();
                 }
 
-                checkedStatus = status;
+                CheckedStatus = status;
                 OnPropertyChanged(nameof(AuthStatus));
             }
             catch (Exception e)

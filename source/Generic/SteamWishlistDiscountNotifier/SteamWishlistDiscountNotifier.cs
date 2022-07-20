@@ -40,6 +40,7 @@ namespace SteamWishlistDiscountNotifier
         private readonly string wishlistCachePath;
         private readonly string bannerImagesCachePath;
         public readonly DispatcherTimer wishlistCheckTimer;
+        private int authRequiredTicks = 0;
 
         private SteamWishlistDiscountNotifierSettingsViewModel settings { get; set; }
 
@@ -65,6 +66,25 @@ namespace SteamWishlistDiscountNotifier
 
         private void WishlistCheckTimer_Tick(object sender, EventArgs e)
         {
+            // Done to prevent constantly checking for the wishlist when
+            // the user has been detected to not have been authenticated
+            // Since cookies are shared between extensions, it's possible that
+            // the user authenticates via other plugin, which would cause this
+            // plugin to not know the new status. For this reason, we only stop
+            // checking for maximum 10 minutes before checking again
+            if (settings.CheckedStatus == AuthStatus.AuthRequired &&
+                authRequiredTicks < 10)
+            {
+                authRequiredTicks++;
+                return;
+            }
+
+            authRequiredTicks = 0;
+            if (!settings.Settings.EnableWishlistNotifications)
+            {
+                return;
+            }
+
             if (DateTime.Now >
                  settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins))
             {
@@ -149,6 +169,7 @@ namespace SteamWishlistDiscountNotifier
             using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
             {
                 SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                settings.CheckedStatus = status;
                 logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
                 if (status == AuthStatus.NoConnection)
                 {
@@ -189,6 +210,7 @@ namespace SteamWishlistDiscountNotifier
                 using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
                 {
                     SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                    settings.CheckedStatus = status;
                     logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
                     if (status == AuthStatus.Ok)
                     {
