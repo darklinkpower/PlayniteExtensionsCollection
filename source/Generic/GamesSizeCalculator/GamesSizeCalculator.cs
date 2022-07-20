@@ -1,9 +1,11 @@
-﻿using Playnite.SDK;
+﻿using GamesSizeCalculator.SteamSizeCalculation;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,14 +71,6 @@ namespace GamesSizeCalculator
             };
         }
 
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            if (settings.Settings.CalculateOnGameClose)
-            {
-                CalculateGameSize(args.Game, null, null, false);
-            }
-        }
-
         private void UpdateGamesListSizes(List<Game> games, bool forceNonEmpty)
         {
             var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes"), true);
@@ -86,9 +80,9 @@ namespace GamesSizeCalculator
                 a.ProgressMaxValue = games.Count();
 
                 using (PlayniteApi.Database.BufferedUpdate())
-                using (var steamClient = new Steam.SteamApiClient())
+                using (var steamClient = new SteamApiClient())
                 {
-                    var steamSizeCalculator = new Steam.SteamSizeCalculator(steamClient);
+                    var steamSizeCalculator = new SteamSizeCalculator(steamClient);
                     var steamAppIdUtility = GetDefaultSteamAppUtility();
                     foreach (var game in games)
                     {
@@ -96,6 +90,7 @@ namespace GamesSizeCalculator
                         {
                             break;
                         }
+
                         a.CurrentProgressValue++;
                         a.Text = $"{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                         CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, forceNonEmpty);
@@ -106,17 +101,17 @@ namespace GamesSizeCalculator
             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageDone"));
         }
 
-        private Steam.ISteamAppIdUtility GetDefaultSteamAppUtility()
+        private ISteamAppIdUtility GetDefaultSteamAppUtility()
         {
-            var appListCache = new Steam.CachedFileDownloader("https://api.steampowered.com/ISteamApps/GetAppList/v2/",
+            var appListCache = new CachedFileDownloader("https://api.steampowered.com/ISteamApps/GetAppList/v2/",
                     Path.Combine(GetPluginUserDataPath(), "SteamAppList.json"),
                     TimeSpan.FromDays(3),
                     Encoding.UTF8);
 
-            return new Steam.SteamAppIdUtility(appListCache);
+            return new SteamAppIdUtility(appListCache);
         }
 
-        private long GetInstalledGameSize(Game game, DateTime? onlyIfNewerThan = null)
+        private long GetGameDirectorySize(Game game, DateTime? onlyIfNewerThan = null)
         {
             if (game.InstallDirectory.IsNullOrEmpty() || !Directory.Exists(game.InstallDirectory))
             {
@@ -146,7 +141,7 @@ namespace GamesSizeCalculator
             }
         }
 
-        private long GetRomSize(Game game, DateTime? onlyIfNewerThan = null)
+        private long GetGameRomSize(Game game, DateTime? onlyIfNewerThan = null)
         {
             var romPath = FileSystem.FixPathLength(game.Roms.First().Path);
             if (romPath.IsNullOrEmpty())
@@ -187,7 +182,7 @@ namespace GamesSizeCalculator
             }
         }
 
-        private long GetSteamInstallSizeOnline(Game game, Steam.SteamSizeCalculator sizeCalculator, Steam.ISteamAppIdUtility appIdUtility)
+        private long GetSteamInstallSizeOnline(Game game, SteamSizeCalculator sizeCalculator, ISteamAppIdUtility appIdUtility)
         {
             var appIdStr = appIdUtility.GetSteamGameId(game);
             if (!uint.TryParse(appIdStr, out uint appId))
@@ -207,7 +202,7 @@ namespace GamesSizeCalculator
             }
         }
 
-        private void CalculateGameSize(Game game, Steam.SteamSizeCalculator steamSizeCalculator, Steam.ISteamAppIdUtility steamAppIdUtility, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
+        private void CalculateGameSize(Game game, SteamSizeCalculator steamSizeCalculator, ISteamAppIdUtility steamAppIdUtility, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
         {
             if (!forceNonEmpty && !game.Version.IsNullOrEmpty())
             {
@@ -221,16 +216,19 @@ namespace GamesSizeCalculator
             {
                 if (game.IsInstalled)
                 {
-                    size = GetInstalledGameSize(game, onlyIfNewerThan);
+                    size = GetGameDirectorySize(game, onlyIfNewerThan);
                 }
                 else if (settings.Settings.GetUninstalledGameSizeFromSteam && steamSizeCalculator != null && steamAppIdUtility != null)
                 {
-                    size = GetSteamInstallSizeOnline(game, steamSizeCalculator, steamAppIdUtility);
+                    if (Steam.IsGameSteamGame(game) || settings.Settings.GetSizeFromSteamNonSteamGames)
+                    {
+                        size = GetSteamInstallSizeOnline(game, steamSizeCalculator, steamAppIdUtility);
+                    }
                 }
             }
             else if (game.IsInstalled && game.Roms.HasItems())
             {
-                size = GetRomSize(game, onlyIfNewerThan);
+                size = GetGameRomSize(game, onlyIfNewerThan);
             }
 
             if (size == 0)
@@ -289,9 +287,9 @@ namespace GamesSizeCalculator
             a.ProgressMaxValue = games.Count();
 
             using (PlayniteApi.Database.BufferedUpdate())
-            using (var steamClient = new Steam.SteamApiClient())
+            using (var steamClient = new SteamApiClient())
             {
-                var steamSizeCalculator = new Steam.SteamSizeCalculator(steamClient);
+                var steamSizeCalculator = new SteamSizeCalculator(steamClient);
                 var steamAppIdUtility = GetDefaultSteamAppUtility();
                 foreach (var game in games)
                 {

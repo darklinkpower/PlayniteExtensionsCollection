@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
@@ -99,6 +102,18 @@
     </Compile>
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\steamcommon\Client.cs">
+      <Link>Shared\SteamCommon\Client.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\steamcommon\Common.cs">
+      <Link>Shared\SteamCommon\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\steamcommon\models\SteamAppDetailsResponse.cs">
+      <Link>Shared\SteamCommon\Models\SteamAppDetailsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\steamcommon\Web.cs">
+      <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
     <Compile Include="GamesSizeCalculator.cs" />
     <Compile Include="GamesSizeCalculatorSettings.cs" />

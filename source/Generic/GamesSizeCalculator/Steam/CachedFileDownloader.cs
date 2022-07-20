@@ -6,7 +6,7 @@ using System.Net;
 using PluginsCommon.Web;
 using PluginsCommon;
 
-namespace GamesSizeCalculator.Steam
+namespace GamesSizeCalculator.SteamSizeCalculation
 {
     public interface ICachedFile
     {

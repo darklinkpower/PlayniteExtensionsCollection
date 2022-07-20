@@ -7,15 +7,13 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+        <TextBlock VerticalAlignment="Center" Margin="0,0,0,0">
                 <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Games-Size-Calculator"
                            Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
                     <Run Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsHelpLabel}" />
                 </Hyperlink>
         </TextBlock>
-        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameCloseLabel}"
-                  IsChecked="{Binding Settings.CalculateOnGameClose}"/>
         <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel}"
                   Margin="0,10,0,0"
                   IsChecked="{Binding Settings.CalculateNewGamesOnLibraryUpdate}"/>
@@ -23,17 +21,22 @@
                   Margin="0,10,0,0"
                   ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip}"
                   IsChecked="{Binding Settings.CalculateModifiedGamesOnLibraryUpdate}"/>
-        <CheckBox Content="For uninstalled PC games, fetch install size from Steam"
+        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel}"
                   Margin="0,10,0,0"
                   IsChecked="{Binding Settings.GetUninstalledGameSizeFromSteam}"/>
-        <CheckBox Content="Include all DLC in size calculation"
-                  Margin="20,5,0,0"
-                  IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}"
-                  IsChecked="{Binding Settings.IncludeDlcInSteamCalculation}"/>
-        <CheckBox Content="Include optional content in size calculation"
-                  Margin="20,5,0,0"
-                  ToolTip="Optional content encompasses things like deluxe edition content that's not available as DLC"
-                  IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}"
-                  IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
+        <StackPanel Margin="40,0,0,0"
+                    IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}">
+            <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel}"
+                      Margin="0,10,0,0"
+                      IsChecked="{Binding Settings.GetSizeFromSteamNonSteamGames}"/>
+            <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel}"
+                      Margin="0,10,0,0"
+                      IsChecked="{Binding Settings.IncludeDlcInSteamCalculation}"/>
+            <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel}"
+                      Margin="0,10,0,0"
+                      ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip}"
+                      IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>

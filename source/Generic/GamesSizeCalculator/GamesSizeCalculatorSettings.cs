@@ -10,23 +10,20 @@ namespace GamesSizeCalculator
 {
     public class GamesSizeCalculatorSettings : ObservableObject
     {
-        private bool calculateOnGameClose = true;
-
-        public bool CalculateOnGameClose { get => calculateOnGameClose; set => SetValue(ref calculateOnGameClose, value); }
-
         public DateTime LastRefreshOnLibUpdate = DateTime.Now;
+        
         private bool calculateNewGamesOnLibraryUpdate = true;
-
         public bool CalculateNewGamesOnLibraryUpdate { get => calculateNewGamesOnLibraryUpdate; set => SetValue(ref calculateNewGamesOnLibraryUpdate, value); }
+        
         private bool calculateModifiedGamesOnLibraryUpdate = true;
-
         public bool CalculateModifiedGamesOnLibraryUpdate { get => calculateModifiedGamesOnLibraryUpdate; set => SetValue(ref calculateModifiedGamesOnLibraryUpdate, value); }
-
         private bool getUninstalledGameSizeFromSteam = true;
-        private bool includeDlcInSteamCalculation = false;
-        private bool includeOptionalInSteamCalculation = false;
         public bool GetUninstalledGameSizeFromSteam { get => getUninstalledGameSizeFromSteam; set => SetValue(ref getUninstalledGameSizeFromSteam, value); }
+        private bool getSizeFromSteamNonSteamGames = true;
+        public bool GetSizeFromSteamNonSteamGames { get => getSizeFromSteamNonSteamGames; set => SetValue(ref getSizeFromSteamNonSteamGames, value); }
+        private bool includeDlcInSteamCalculation = false;
         public bool IncludeDlcInSteamCalculation { get => includeDlcInSteamCalculation; set => SetValue(ref includeDlcInSteamCalculation, value); }
+        private bool includeOptionalInSteamCalculation = false;
         public bool IncludeOptionalInSteamCalculation { get => includeOptionalInSteamCalculation; set => SetValue(ref includeOptionalInSteamCalculation, value); }
     }
 

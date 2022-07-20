@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator.Steam
+namespace GamesSizeCalculator.SteamSizeCalculation
 {
     public class SteamApiClient : IDisposable, ISteamApiClient
     {

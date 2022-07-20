@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator.Steam
+namespace GamesSizeCalculator.SteamSizeCalculation
 {
     public interface ISteamApiClient : IDisposable
     {

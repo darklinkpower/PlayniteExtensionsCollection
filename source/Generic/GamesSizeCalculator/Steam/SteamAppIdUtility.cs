@@ -1,8 +1,10 @@
 ﻿using GamesSizeCalculator.Models;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
 using PluginsCommon.Web;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,13 +14,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator.Steam
+namespace GamesSizeCalculator.SteamSizeCalculation
 {
     public class SteamAppIdUtility : ISteamAppIdUtility
     {
         private static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
         private static readonly Regex SteamUrlRegex = new Regex(@"^https?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
         private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
+        private static readonly ILogger logger = LogManager.GetLogger();
 
         private Dictionary<string, int> _steamIds;
         private Dictionary<string, int> SteamIdsByTitle
@@ -35,7 +38,7 @@ namespace GamesSizeCalculator.Steam
 
         private static string NormalizeTitle(string title)
         {
-            return NonLetterOrDigitCharacterRegex.Replace(title, string.Empty);
+            return NonLetterOrDigitCharacterRegex.Replace(title, string.Empty).ToLower();
         }
 
         public string GetSteamGameId(Game game)
@@ -62,7 +65,7 @@ namespace GamesSizeCalculator.Steam
                 return appId.ToString();
             }
 
-            return null;
+            return SteamWeb.GetSteamIdFromSearch(game.Name);
         }
 
         private Dictionary<string, int> GetSteamIdsByTitle()
@@ -76,7 +79,7 @@ namespace GamesSizeCalculator.Steam
 
             var jsonStr = FileSystem.ReadStringFromFile(tempPath, true);
             var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
-            Dictionary<string, int> output = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
+            Dictionary<string, int> output = new Dictionary<string, int>();
             foreach (var app in jsonContent.Applist.Apps)
             {
                 var normalizedTitle = NormalizeTitle(app.Name);

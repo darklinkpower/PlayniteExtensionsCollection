@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Playnite.SDK;
+﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,22 +73,22 @@ namespace SteamCommon.Models
 
             public class Movie
             {
-                [JsonProperty("id")]
+                [SerializationPropertyName("id")]
                 public uint Id { get; set; }
 
-                [JsonProperty("name")]
+                [SerializationPropertyName("name")]
                 public string Name { get; set; }
 
-                [JsonProperty("thumbnail")]
+                [SerializationPropertyName("thumbnail")]
                 public Uri Thumbnail { get; set; }
 
-                [JsonProperty("webm")]
+                [SerializationPropertyName("webm")]
                 public Mp4 Webm { get; set; }
 
-                [JsonProperty("mp4")]
+                [SerializationPropertyName("mp4")]
                 public Mp4 Mp4 { get; set; }
 
-                [JsonProperty("highlight")]
+                [SerializationPropertyName("highlight")]
                 public bool Highlight { get; set; }
             }
 
@@ -124,7 +124,7 @@ namespace SteamCommon.Models
             public List<Screenshot> screenshots;
             public Support support_info;
 
-            [JsonProperty("movies")]
+            [SerializationPropertyName("movies")]
             public List<Movie> Movies;
         }
 
@@ -140,10 +140,10 @@ namespace SteamCommon.Models
 
         public class Mp4
         {
-            [JsonProperty("480")]
+            [SerializationPropertyName("480")]
             public Uri Q480 { get; set; }
 
-            [JsonProperty("max")]
+            [SerializationPropertyName("max")]
             public Uri Max { get; set; }
         }
     }

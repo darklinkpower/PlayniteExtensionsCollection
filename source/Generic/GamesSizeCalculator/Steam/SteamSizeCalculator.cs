@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator.Steam
+namespace GamesSizeCalculator.SteamSizeCalculation
 {
     public class SteamSizeCalculator
     {
@@ -147,14 +147,14 @@ namespace GamesSizeCalculator.Steam
                 }
 
                 var language = GetValue(depot, "config", "language");
-                if (!string.IsNullOrEmpty(language) && !"english".Equals(language, StringComparison.InvariantCultureIgnoreCase))
+                if (!language.IsNullOrEmpty() && !"english".Equals(language, StringComparison.InvariantCultureIgnoreCase))
                 {
                     logger.Debug($"Skipping depot \"{name}\" because its language is \"{language}\"");
                     continue;
                 }
 
                 var oslist = GetValue(depot, "config", "oslist");
-                if (!oslist.IsNullOrEmpty() && !oslist.Contains("windows", StringComparison.CurrentCultureIgnoreCase))
+                if (!oslist.IsNullOrEmpty() && !oslist.Contains("windows", StringComparison.InvariantCultureIgnoreCase))
                 {
                     logger.Debug($"Skipping depot \"{name}\" because its OS list is \"{oslist}\"");
                     continue;

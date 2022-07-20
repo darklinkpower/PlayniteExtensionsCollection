@@ -23,6 +23,24 @@ namespace SteamCommon
             return GetSteamSearchResults(searchTerm).Select(x => new GenericItemOption(x.Name, x.GameId)).ToList();
         }
 
+        public static string GetSteamIdFromSearch(string searchTerm)
+        {
+            var normalizedName = searchTerm.NormalizeGameName();
+            var results = GetSteamSearchResults(normalizedName);
+            results.ForEach(a => a.Name = a.Name.NormalizeGameName());
+
+            var matchingGameName = normalizedName.GetMatchModifiedName();
+            var exactMatch = results.FirstOrDefault(x => x.Name.GetMatchModifiedName() == matchingGameName);
+            if (exactMatch != null)
+            {
+                logger.Info($"Found steam id for search {searchTerm} via steam search, Id: {exactMatch.GameId}");
+                return exactMatch.GameId;
+            }
+
+            logger.Info($"Steam id for search {searchTerm} not found");
+            return null;
+        }
+
         public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null)
         {
             var results = new List<StoreSearchResult>();
@@ -49,7 +67,6 @@ namespace SteamCommon
                     var priceFinal = GetSteamSearchFinalPrice(priceData);
                     var priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
                     var isDiscounted = priceFinal != priceOriginal && priceOriginal != 0;
-                    //var isFree = priceFinal == priceOriginal && priceOriginal == 0;
                     GetCurrencyFromSearchPriceDiv(gameElem.QuerySelector(".search_price"), out var currency, out var isReleased, out var isFree);
 
                     //Urls
