@@ -23,5 +23,17 @@
                   Margin="0,10,0,0"
                   ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip}"
                   IsChecked="{Binding Settings.CalculateModifiedGamesOnLibraryUpdate}"/>
+        <CheckBox Content="For uninstalled PC games, fetch install size from Steam"
+                  Margin="0,10,0,0"
+                  IsChecked="{Binding Settings.GetUninstalledGameSizeFromSteam}"/>
+        <CheckBox Content="Include all DLC in size calculation"
+                  Margin="20,5,0,0"
+                  IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}"
+                  IsChecked="{Binding Settings.IncludeDlcInSteamCalculation}"/>
+        <CheckBox Content="Include optional content in size calculation"
+                  Margin="20,5,0,0"
+                  ToolTip="Optional content encompasses things like deluxe edition content that's not available as DLC"
+                  IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}"
+                  IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
     </StackPanel>
 </UserControl>

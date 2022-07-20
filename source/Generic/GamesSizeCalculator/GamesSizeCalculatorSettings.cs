@@ -21,6 +21,13 @@ namespace GamesSizeCalculator
         private bool calculateModifiedGamesOnLibraryUpdate = true;
 
         public bool CalculateModifiedGamesOnLibraryUpdate { get => calculateModifiedGamesOnLibraryUpdate; set => SetValue(ref calculateModifiedGamesOnLibraryUpdate, value); }
+
+        private bool getUninstalledGameSizeFromSteam = true;
+        private bool includeDlcInSteamCalculation = false;
+        private bool includeOptionalInSteamCalculation = false;
+        public bool GetUninstalledGameSizeFromSteam { get => getUninstalledGameSizeFromSteam; set => SetValue(ref getUninstalledGameSizeFromSteam, value); }
+        public bool IncludeDlcInSteamCalculation { get => includeDlcInSteamCalculation; set => SetValue(ref includeDlcInSteamCalculation, value); }
+        public bool IncludeOptionalInSteamCalculation { get => includeOptionalInSteamCalculation; set => SetValue(ref includeOptionalInSteamCalculation, value); }
     }
 
     public class GamesSizeCalculatorSettingsViewModel : ObservableObject, ISettings
