@@ -160,7 +160,7 @@ namespace SteamWishlistDiscountNotifier
                 }
                 catch (Exception e)
                 {
-
+                    logger.Error(e, $"Error downloading banner image {wishlistItem.WishlistItem.Capsule.ToString()}");
                 }
             }
         }
