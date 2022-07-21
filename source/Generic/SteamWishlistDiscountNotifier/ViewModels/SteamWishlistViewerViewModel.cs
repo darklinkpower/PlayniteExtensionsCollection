@@ -119,6 +119,18 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
+        private int filterMinimumPrice = 0;
+        public int FilterMinimumPrice
+        {
+            get { return filterMinimumPrice; }
+            set
+            {
+                filterMinimumPrice = value;
+                OnPropertyChanged();
+                wishlistCollectionView.Refresh();
+            }
+        }
+
         private int filterMaximumPrice = 999999;
         public int FilterMaximumPrice
         {
@@ -240,9 +252,20 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 }
             }
 
-            if (wishlistItem.PriceFinal > FilterMaximumPrice)
+            if (FilterMinimumPrice != 0)
             {
-                return false;
+                if (!wishlistItem.PriceFinal.HasValue || wishlistItem.PriceFinal <= FilterMinimumPrice)
+                {
+                    return false;
+                }
+            }
+
+            if (FilterMaximumPrice != 999999)
+            {
+                if (!wishlistItem.PriceFinal.HasValue || wishlistItem.PriceFinal > FilterMaximumPrice)
+                {
+                    return false;
+                }
             }
 
             if (!MatchTextFilter(wishlistItem.Name))

@@ -164,11 +164,40 @@
                                 IsSnapToTickEnabled="True" TickFrequency="1"
                                 Minimum="0" Maximum="100" />
                     </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBlock VerticalAlignment="Center"
+
+                    <Grid Margin="0,10,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice}" />
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 MinWidth="65" VerticalAlignment="Center" Margin="10,0,0,0">
+                            <TextBox.Text>
+                                <Binding Path="FilterMinimumPrice"
+                                         UpdateSourceTrigger="PropertyChanged" 
+                                         ValidatesOnDataErrors="True"
+                                         NotifyOnValidationError="True"
+                                         Converter="{conv:NullableIntToStringConverter}">
+                                    <Binding.ValidationRules>
+                                        <conv:NullableIntFieldValidation MinValue="0" MaxValue="999999" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   VerticalAlignment="Center"
                                    Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice}" />
-                        <TextBox MinWidth="65" VerticalAlignment="Center" Margin="10,0,0,0">
+                        <TextBox Grid.Row="2" Grid.Column="1"
+                                 MinWidth="65" VerticalAlignment="Center" Margin="10,0,0,0">
                             <TextBox.Text>
                                 <Binding Path="FilterMaximumPrice"
                                          UpdateSourceTrigger="PropertyChanged" 
@@ -181,8 +210,8 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                    </StackPanel>
-
+                    </Grid>
+                    
                     <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterItemTypeGame}"
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeGame}"/>
