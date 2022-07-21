@@ -391,7 +391,10 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                SearchString = string.Empty;
+                if (SearchString != string.Empty)
+                {
+                    SearchString = string.Empty;
+                }
             });
         }
 
@@ -399,7 +402,10 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                FilterMinimumPrice = 0;
+                if (FilterMinimumPrice != 0)
+                {
+                    FilterMinimumPrice = 0;
+                }
             });
         }
 
@@ -407,7 +413,10 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                FilterMaximumPrice = 999999;
+                if (FilterMaximumPrice != 999999)
+                {
+                    FilterMaximumPrice = 999999;
+                }
             });
         }
 
