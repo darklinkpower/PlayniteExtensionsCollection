@@ -132,3 +132,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added support to obtain estimated install size data from Steam for uninstalled PC games (By Jeshibu)'
+  - Version: 1.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.21_1b4ba1dd/GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9_1_21.pext
+    Changelog:
+    - 'Updated localizations'

@@ -38,3 +38,12 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added option to configure if the extension should notify of wishlist discounts'
+  - Version: 1.5
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.21_1b4ba1dd/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_5.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added buttons to reset search and prices filters to wishlist viewer'
+    - 'Added filter to filter by minimum price to wishlist viewer'
+    - 'Fix failing to get wishlist items for some currencies'
