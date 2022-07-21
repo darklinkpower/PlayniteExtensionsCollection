@@ -30,8 +30,9 @@ namespace SteamWishlistDiscountNotifier
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private static readonly int currentDatabaseVersion = 1;
-        private static readonly Regex discBlockParseRegex = new Regex(@"discount_original_price"">(\S+) ([^<]+).+(?=discount_final_price)[^ ]+ ([^<]+)", RegexOptions.Compiled);
-        private static readonly Regex discBlockNoDiscountParseRegex = new Regex(@"discount_final_price"">(\S+) ([^<]+)", RegexOptions.Compiled);
+        private static readonly Regex discBlockParseRegex = new Regex(@"discount_original_price"">([^<]+).+(?=discount_final_price)discount_final_price"">([^<]+)", RegexOptions.Compiled);
+        private static readonly Regex discBlockNoDiscountParseRegex = new Regex(@"discount_final_price"">([^<]+)", RegexOptions.Compiled);
+        private static char[] numberChars = {'0','1', '2', '3', '4', '5', '6', '7', '8', '9'};
         private const string steamStoreUrlMask = @"https://store.steampowered.com/app/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
@@ -471,7 +472,7 @@ namespace SteamWishlistDiscountNotifier
             // the steamId and getting the wishlist
             if (pageSource == @"{""success"":2}")
             {
-                logger.Debug($"Page {url}, Sucess 2");
+                logger.Warn($"Page {url}, Success 2");
                 return null;
             }
 
@@ -512,7 +513,13 @@ namespace SteamWishlistDiscountNotifier
             var regexMatch = discBlockNoDiscountParseRegex.Match(sub.DiscountBlock);
             if (!regexMatch.Success)
             {
-                logger.Warn($"Failed to parse sub discount block: {sub.DiscountBlock}");
+                logger.Warn($"GetNonDiscountedItemFromSub Failed to parse sub discount block: {sub.DiscountBlock}");
+                return null;
+            }
+
+            GetPriceValues(regexMatch.Groups[1].Value, out var currencyCode, out var priceFinal);
+            if (currencyCode.IsNullOrEmpty() || priceFinal == null)
+            {
                 return null;
             }
 
@@ -521,9 +528,9 @@ namespace SteamWishlistDiscountNotifier
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
                 StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
                 SubId = sub.Id,
-                PriceOriginal = GetParsedPrice(regexMatch.Groups[2].Value),
-                PriceFinal = GetParsedPrice(regexMatch.Groups[2].Value),
-                Currency = regexMatch.Groups[1].Value,
+                PriceOriginal = priceFinal,
+                PriceFinal = priceFinal,
+                Currency = currencyCode,
                 DiscountPercent = sub.DiscountPct,
                 WishlistItem = wishlistItem,
                 IsDiscounted = false
@@ -535,7 +542,14 @@ namespace SteamWishlistDiscountNotifier
             var regexMatch = discBlockParseRegex.Match(sub.DiscountBlock);
             if (!regexMatch.Success)
             {
-                logger.Warn($"Failed to parse sub discount block: {sub.DiscountBlock}");
+                logger.Warn($"GetDiscountedItemFromSub Failed to parse sub discount block : {sub.DiscountBlock}");
+                return null;
+            }
+
+            GetPriceValues(regexMatch.Groups[1].Value, out var _, out var priceOriginal);
+            GetPriceValues(regexMatch.Groups[2].Value, out var currencyCode, out var priceFinal);
+            if (currencyCode.IsNullOrEmpty() || priceOriginal == null || priceFinal == null)
+            {
                 return null;
             }
 
@@ -544,13 +558,32 @@ namespace SteamWishlistDiscountNotifier
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
                 StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
                 SubId = sub.Id,
-                PriceOriginal = GetParsedPrice(regexMatch.Groups[2].Value),
-                PriceFinal = GetParsedPrice(regexMatch.Groups[3].Value),
-                Currency = regexMatch.Groups[1].Value,
+                PriceOriginal = priceOriginal,
+                PriceFinal = priceFinal,
+                Currency = currencyCode,
                 DiscountPercent = sub.DiscountPct,
                 WishlistItem = wishlistItem,
                 IsDiscounted = true
             };
+        }
+
+        private void GetPriceValues(string parsedBlock, out string currencyCode, out double? currencyValue)
+        {
+            parsedBlock = parsedBlock.Trim();
+            var firstNumberIndex = parsedBlock.IndexOfAny(numberChars);
+            var lastNumberIndex = parsedBlock.LastIndexOfAny(numberChars);
+
+            if (firstNumberIndex == -1 || lastNumberIndex == -1)
+            {
+                logger.Error($"Failed to parsed money parsed block \"{parsedBlock}\", firstNumberIndex {firstNumberIndex}, lastNumberIndex {lastNumberIndex}");
+                currencyCode = null;
+                currencyValue = null;
+                return;
+            }
+
+            var currencyValueStr = parsedBlock.Substring(firstNumberIndex, lastNumberIndex - firstNumberIndex + 1);
+            currencyValue = GetParsedPrice(currencyValueStr);
+            currencyCode = parsedBlock.Remove(firstNumberIndex, lastNumberIndex - firstNumberIndex + 1).Trim();
         }
 
         private double GetParsedPrice(string str)
