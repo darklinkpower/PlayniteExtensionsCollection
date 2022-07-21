@@ -11,6 +11,9 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 {
     public class SteamSizeCalculator
     {
+        private string[] regionalWords = new[] { "eu", "europe", "row", "en", "english", "ww", "asia", "aus", "australia", "nz", "usa", "us", "ru", "russia",
+            "germany", "deutschland", "de", "es", "sa", "cn", "china", "chinese", "schinese", "tchinese", "jp", "japanese", "fr", "french" };
+
         private ILogger logger = LogManager.GetLogger();
         public ISteamApiClient SteamApiClient { get; }
 
@@ -27,7 +30,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 return null;
             }
 
-            RemoveRegionalMainDepots(ref depotData);
+            RemoveRegionalDepots(ref depotData);
 
             IEnumerable<DepotInfo> filteredDepots = depotData;
 
@@ -36,7 +39,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 filteredDepots = filteredDepots.Where(d => !d.IsDLC);
             }
 
-            if (!includeOptional)
+            if (!includeOptional && !depotData.All(d => d.Optional)) //If everything is optional, don't filter out optional depots
             {
                 filteredDepots = filteredDepots.Where(d => !d.Optional);
             }
@@ -44,49 +47,75 @@ namespace GamesSizeCalculator.SteamSizeCalculation
             return filteredDepots.Sum(d => d.FileSize);
         }
 
-        private void RemoveRegionalMainDepots(ref List<DepotInfo> depots)
+        private class DepotGroupingInfo
         {
-            var biggestDepotSize = depots.Max(d => d.FileSize);
-            var biggestDepots = depots.Where(d => d.FileSize > biggestDepotSize * 0.95).OrderBy(d => d.FileSize).ToList();
-            var biggestDepotsCopy = new List<DepotInfo>(biggestDepots);
-            foreach (var depot in biggestDepots)
-            {
-                var lastWordInName = GetLastWord(depot.Name)?.ToLowerInvariant();
-                switch (lastWordInName)
-                {
-                    case null:
-                        break;
-                    case "eu":
-                    case "europe":
-                    case "asia":
-                    case "aus":
-                    case "australia":
-                    case "nz":
-                    case "usa":
-                    case "us":
-                    case "ru":
-                    case "russia":
-                    case "germany":
-                    case "deutschland":
-                    case "de":
-                    case "es":
-                    case "sa":
-                    case "cn":
-                    case "china":
-                    case "row":
-                    case "ww":
-                        if (biggestDepotsCopy.Count == 1) // Don't remove the last big depot
-                        {
-                            return;
-                        }
+            public string BaseName { get; set; }
+            public string RegionWord { get; set; }
+            public int Rank { get; set; }
+            public DepotInfo Depot { get; set; }
+        }
 
-                        biggestDepotsCopy.Remove(depot);
-                        depots.Remove(depot);
-                        logger.Debug($"Removed depot {depot.Name}");
-                        break;
-                    default:
-                        break;
+        private void RemoveRegionalDepots(ref List<DepotInfo> allDepots)
+        {
+            var grouped = allDepots.Select(ParseDepotName).GroupBy(d => d.BaseName);
+            foreach (var group in grouped)
+            {
+                var key = group.Key;
+                var orderedDepots = group.OrderBy(d => d.Depot.Optional).ThenBy(d => d.RegionWord == null ? -2 : Array.IndexOf(regionalWords, d.RegionWord)).ToList();
+                if (orderedDepots.Count == 1)
+                {
+                    continue;
                 }
+
+                string logString = $"Depot group {key}, {orderedDepots.Count} depots:";
+
+                for (int i = 0; i < orderedDepots.Count; i++)
+                {
+                    var depotData = orderedDepots[i];
+                    string depotLogString = $"{depotData.Depot.Id} - {depotData.Depot.Name}, optional: {depotData.Depot.Optional}, dlc: {depotData.Depot.IsDLC}, size: {depotData.Depot.FileSize}, {depotData.BaseName}|{depotData.RegionWord}|{depotData.Rank}";
+
+                    if (i == 0)
+                    {
+                        logString += "Keeping depot: " + depotLogString;
+                    }
+                    else
+                    {
+                        logString += "Removing depot: " + depotLogString;
+                        allDepots.Remove(depotData.Depot);
+                    }
+                }
+                logger.Debug(logString);
+            }
+        }
+
+        private DepotGroupingInfo ParseDepotName(DepotInfo depot)
+        {
+            var baseName = RemoveRegionWords(depot.Name, out string regionWord);
+            int rank = string.IsNullOrWhiteSpace(regionWord) ? -2 : Array.IndexOf(regionalWords, regionWord);
+            return new DepotGroupingInfo { BaseName = baseName, RegionWord = regionWord, Depot = depot, Rank = rank };
+        }
+
+        private string RemoveRegionWords(string str, out string regionalWord)
+        {
+            var words = str.Split(new[] { ' ', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
+            var wordsStack = new Stack<string>(words);
+            var lastWord = wordsStack.Pop();
+            if (new[] { "content", "depot" }.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase))
+            {
+                lastWord = wordsStack.Pop();
+            }
+
+            if (regionalWords.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase))
+            {
+                regionalWord = lastWord.ToLowerInvariant();
+                var baseStringWords = new string[wordsStack.Count];
+                wordsStack.CopyTo(baseStringWords, 0);
+                return string.Join(" ", baseStringWords.Reverse());
+            }
+            else
+            {
+                regionalWord = null;
+                return string.Join(" ", words);
             }
         }
 
@@ -98,7 +127,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
             }
 
             str = str.Trim();
-            var i = str.LastIndexOfAny(new[] { ' ', '_' });
+            var i = str.LastIndexOfAny(new[] { ' ', '_', '-' });
             if (i == -1)
             {
                 return str;

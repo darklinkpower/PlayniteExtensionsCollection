@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 
 namespace GamesSizeCalculator.SteamSizeCalculation
 {
+    //TODO: match names disregarding ® or ™
+    //Examples: The Sims™ 3, Bejeweled® 3
     public class SteamAppIdUtility : ISteamAppIdUtility
     {
         private static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");

@@ -39,9 +39,7 @@ namespace GamesSizeCalculator.Tests
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
             var completeSize = await calc.GetInstallSizeAsync(976730);
             var baseSize = await calc.GetInstallSizeAsync(976730, false, false);
-            Assert.NotNull(completeSize);
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
-            Assert.NotNull(baseSize);
             Assert.Equal(expectedBaseSize, baseSize);
         }
 
@@ -49,29 +47,25 @@ namespace GamesSizeCalculator.Tests
         public async Task Watch_Dogs()
         {
             long expectedBaseSize =
-                1790331721L +
-                109784184L + //WW
-                12807162011L +
-                //asia
-                102629169L +
-                88449227L +
-                1786744869L;
+                1790331721L + //Watch Dogs English
+                102629169L + //Watch_Dogs Binaries ASIA 
+                88449227L + //Watch_Dogs Support ASIA
+                1786744869L + //Watch_Dogs English ASIA
+                12807162011L; //Watch Dogs Common
 
             long expectedDLCsize =
-                28037350L +
-                30841083L +
-                1147L +
-                3718567700L +
-                525L;
+                28037350L + //Watch_Dogs - DLC 0 (293055) Depot
+                30841083L + //Watch_Dogs - DLC 1 (293057) Depot
+                1147L + //Watch_Dogs - DLC 2 (293059) Depot
+                3718567700L + //Watch_Dogs - DLC 3 (293061) Depot
+                525L; //Watch_Dogs Season Pass Uplay Activation (293054) Depot
 
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
 
             var completeSize = await calc.GetInstallSizeAsync(243470);
-            Assert.NotNull(completeSize);
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
 
             var baseSize = await calc.GetInstallSizeAsync(243470, false, false);
-            Assert.NotNull(baseSize);
             Assert.Equal(expectedBaseSize, baseSize);
         }
 
@@ -80,84 +74,63 @@ namespace GamesSizeCalculator.Tests
         {
             long normal = 9529023303L;
             long optional = 1954919585L;
-            long worldwide = 7993844118L;            
+            long worldwide = 7993844118L;
 
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
 
             var completeSize = await calc.GetInstallSizeAsync(48190);
-            Assert.NotNull(completeSize);
             Assert.Equal(normal + optional + worldwide, completeSize.Value);
 
             var minimalSize = await calc.GetInstallSizeAsync(48190, false, false);
-            Assert.NotNull(minimalSize);
             Assert.Equal(normal + worldwide, minimalSize.Value);
         }
 
         [Fact]
-        public async Task TheDoor()
+        public async Task MissingDepotsReturnNull()
         {
             var calc = new SteamSizeCalculator(new FakeSteamApiClient());
 
-            var completeSize = await calc.GetInstallSizeAsync(1360440);
-            Assert.Null(completeSize);
+            //The Door (unreleased)
+            Assert.Null(await calc.GetInstallSizeAsync(1360440));
 
-            var minimalSize = await calc.GetInstallSizeAsync(1360440, false, false);
-            Assert.Null(minimalSize);
+            //Castle Crashers
+            Assert.Null(await calc.GetInstallSizeAsync(204360));
+
+            //Two Point Hospital
+            Assert.Null(await calc.GetInstallSizeAsync(535930));
+
+            //PC Building Simulator
+            Assert.Null(await calc.GetInstallSizeAsync(621060));
+        }
+
+        [Fact]
+        public async Task Metro2033()
+        {
+            //For some reason, every depot for Metro 2033 is marked optional
+            long expectedSize = 5028692647L + 2884284795L;
+
+            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
+
+            var completeSize = await calc.GetInstallSizeAsync(43110);
+            Assert.Equal(expectedSize, completeSize);
+
+            var minimalSize = await calc.GetInstallSizeAsync(43110, false, false);
+            Assert.Equal(expectedSize, minimalSize);
         }
 
         //[Theory]
         //[InlineData(243470u)]
         //[InlineData(48190u)]
         //[InlineData(1360440u)]
+        //[InlineData(204360u)] //Castle Crashers
+        //[InlineData(621060u)] //PC Building Simulator
+        //[InlineData(43110u)] //Metro 2033
+        //[InlineData(535930u)] //Two Point Hospital
         public async Task Serialize(uint appId)
         {
             SteamApiClient client = new SteamApiClient();
             var productInfo = await client.GetProductInfo(appId);
             File.WriteAllText($@"D:\code\{appId}.json", Newtonsoft.Json.JsonConvert.SerializeObject(productInfo));
-        }
-    }
-
-    internal class FakeSteamApiClient : ISteamApiClient
-    {
-        public FakeSteamApiClient()
-        {
-        }
-
-        public bool IsConnected { get; set; }
-
-        public bool IsLoggedIn { get; set; }
-        public string FilePath { get; }
-
-        public async Task<SteamKit2.EResult> Connect()
-        {
-            IsConnected = true;
-            return SteamKit2.EResult.OK;
-        }
-
-        public void Dispose()
-        {
-            Logout();
-        }
-
-        public async Task<SteamKit2.KeyValue> GetProductInfo(uint id)
-        {
-            await Login();
-            string fileContent = File.ReadAllText($"./Data/{id}.json");
-            var output = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamKit2.KeyValue>(fileContent);
-            return output;
-        }
-
-        public async Task<SteamKit2.EResult> Login()
-        {
-            IsConnected = true;
-            IsLoggedIn = true;
-            return SteamKit2.EResult.OK;
-        }
-
-        public void Logout()
-        {
-            IsConnected = false;
-            IsLoggedIn = false;
         }
     }
 }
