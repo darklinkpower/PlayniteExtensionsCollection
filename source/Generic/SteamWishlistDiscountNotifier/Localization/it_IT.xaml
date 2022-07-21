@@ -35,6 +35,7 @@ Impossibile controllare la lista dei desideri di Steam. È richiesta l'autentica
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Cerca:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted">Solo elementi scontati</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Sconto minimo:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Minimum price:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Prezzo massimo:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Totale elementi:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Recensioni generali:</sys:String>
