@@ -148,9 +148,19 @@
             <ScrollViewer Padding="5,30,5,5">
                 <StackPanel>
                     <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelSearch}" VerticalAlignment="Center"/>
-                    <TextBox Margin="0,5,0,0" MinWidth="200"
-                             Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
-                             VerticalAlignment="Center"/>
+                    <DockPanel Margin="0,5,0,0">
+                        <Button DockPanel.Dock="Right"
+                                FontFamily="{StaticResource FontIcoFont}"
+                                Content="&#xEF00;"
+                                HorizontalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                Command="{Binding ResetSearchStringCommand}"
+                                Margin="5,0,0,0" />
+                        <TextBox MinWidth="200"
+                                 DockPanel.Dock="Right"
+                                 Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
+                                 VerticalAlignment="Center"/>
+                    </DockPanel>
                     <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterOnlyDiscounted}"
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted}"/>
@@ -167,6 +177,7 @@
 
                     <Grid Margin="0,10,0,0">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -193,6 +204,14 @@
                             </TextBox.Text>
                         </TextBox>
 
+                        <Button Grid.Row="0" Grid.Column="2"
+                                FontFamily="{StaticResource FontIcoFont}"
+                                Content="&#xEF00;"
+                                HorizontalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                Command="{Binding ResetFilterMinimumPriceCommand}"
+                                Margin="5,0,0,0" />
+                        
                         <TextBlock Grid.Row="2" Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice}" />
@@ -210,6 +229,14 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
+
+                        <Button Grid.Row="2" Grid.Column="2"
+                                FontFamily="{StaticResource FontIcoFont}"
+                                Content="&#xEF00;"
+                                HorizontalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                Command="{Binding ResetFilterMaximumPriceCommand}"
+                                Margin="5,0,0,0" />
                     </Grid>
                     
                     <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterItemTypeGame}"

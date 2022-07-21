@@ -387,6 +387,30 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             });
         }
 
+        public RelayCommand ResetSearchStringCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                SearchString = string.Empty;
+            });
+        }
+
+        public RelayCommand ResetFilterMinimumPriceCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                FilterMinimumPrice = 0;
+            });
+        }
+
+        public RelayCommand ResetFilterMaximumPriceCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                FilterMaximumPrice = 999999;
+            });
+        }
+
         public Uri DefaultBannerUri { get; }
 
         //private BitmapImage defaultBannerImage;
