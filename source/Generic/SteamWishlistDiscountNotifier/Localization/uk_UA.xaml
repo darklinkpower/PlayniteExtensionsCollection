@@ -30,7 +30,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Знижка</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Ціна</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Дата випуску</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date Added</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Дата додавання</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">За зростанням</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">За спаданням</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Пошук:</sys:String>
