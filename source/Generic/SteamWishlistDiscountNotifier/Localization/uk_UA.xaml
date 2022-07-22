@@ -35,7 +35,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Пошук:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted">Тільки товари зі знижкою</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Мінімальна знижка:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Minimum price:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Мінімальна ціна:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Максимальна ціна:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Усього товарів:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Загальні оцінки:</sys:String>
