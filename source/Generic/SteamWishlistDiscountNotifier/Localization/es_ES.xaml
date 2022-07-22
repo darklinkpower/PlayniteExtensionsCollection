@@ -30,7 +30,7 @@ Error al comprobar la lista de deseados de Steam. Se requiere autenticación.</s
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Descuento</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Precio</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Fecha de lanzamiento</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date Added</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Fecha de adición</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Ascendente</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Descendente</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Buscar:</sys:String>
