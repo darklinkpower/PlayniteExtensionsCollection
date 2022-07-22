@@ -227,7 +227,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 [WishlistViewSorting.Rank] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank"),
                 [WishlistViewSorting.Discount] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount"),
                 [WishlistViewSorting.Price] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice"),
-                [WishlistViewSorting.ReleaseDate] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate")
+                [WishlistViewSorting.ReleaseDate] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate"),
+                [WishlistViewSorting.Added] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded")
             };
 
             WishlistSortingOrders = new Dictionary<ListSortDirection, string>
@@ -366,6 +367,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                     return "PriceFinal";
                 case WishlistViewSorting.ReleaseDate:
                     return "WishlistItem.ReleaseDate";
+                case WishlistViewSorting.Added:
+                    return "WishlistItem.Added";
                 default:
                     return "Name";
             }

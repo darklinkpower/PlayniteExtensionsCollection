@@ -12,6 +12,7 @@ namespace SteamWishlistDiscountNotifier.Enums
         Rank,
         Discount,
         Price,
-        ReleaseDate
+        ReleaseDate,
+        Added
     }
 }

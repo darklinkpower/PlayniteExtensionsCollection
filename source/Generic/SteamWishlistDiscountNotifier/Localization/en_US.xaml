@@ -31,6 +31,7 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Discount</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Price</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Release Date</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date Added</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Ascending</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Descending</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Search:</sys:String>
