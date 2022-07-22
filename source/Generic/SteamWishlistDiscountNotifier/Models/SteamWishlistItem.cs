@@ -99,7 +99,8 @@ namespace SteamWishlistDiscountNotifier.Models
         Video = 5,
         Hardware = 6,
         Mod = 7,
-        Demo = 8
+        Demo = 8,
+        Tool = 9
     };
 
     public partial struct ReleaseDate
