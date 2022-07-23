@@ -17,6 +17,8 @@ Beachten Sie, dass ein Controller angeschlossen und für Steam Controller aktivi
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Wählen Sie das Spiel aus, das Sie für die Steam Konfiguration verwenden möchten, oder brechen Sie den Vorgang ab, um eine generische Option zu verwenden</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Spezieller K Registrierungsschlüssel nicht gefunden</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">Special K executable not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">Special K directory not found in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Spezial K Datei nicht gefunden in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Spezieller K {0} Dienst konnte nicht gestartet werden</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Speziel K Profil Editor</sys:String>
@@ -79,4 +81,8 @@ Profil Pfad: {1}</sys:String>
 Zeigt an, ob die Erweiterung beim Starten eines Spiels die Spezial K Dienste starten darf.
 Wenn diese Einstellung deaktiviert ist, werden die Dienste unabhängig von Einstellungen oder Konfiguration nicht gestartet.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Erweiterte Seitenleiste anzeigen um den Erweiterungsstatus zu wechseln</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Special K location:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use if you want to use Special K in a specific location or if you are using a portable installation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Browse…</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Remove</sys:String>
 </ResourceDictionary>

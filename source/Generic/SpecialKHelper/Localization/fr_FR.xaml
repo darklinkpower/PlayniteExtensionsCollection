@@ -17,6 +17,8 @@ Sachez qu'un contrôleur doit être connecté et activé pour que la fenêtre de
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Sélectionnez le jeu à utiliser pour la configuration Steam ou annulez pour utiliser une option générique</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Clé de registre spéciale K introuvable</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">Special K executable not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">Special K directory not found in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Fichier Special K introuvable dans {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Le service Special K {0} n'a pas pu être démarré</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Éditeur de profil Special K</sys:String>
@@ -79,4 +81,8 @@ Chemin du profil : {1}</sys:String>
 Indique si l'extension est autorisée à démarrer les services de Special K lors du démarrage d'un jeu.
 Si cette option est désactivée, les services ne seront pas démarrés, peu importe les paramètres ou la configuration.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Afficher l'icône dans le panneau latéral pour changer l'état de l'extension</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Special K location:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use if you want to use Special K in a specific location or if you are using a portable installation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Browse…</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Remove</sys:String>
 </ResourceDictionary>

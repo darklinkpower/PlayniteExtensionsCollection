@@ -17,6 +17,8 @@
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Виберіть гру для конфігурації Steam, або виберіть скасування для використання загальних параметрів</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Ключ реєстру Special K не знайдено</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">Виконуваний файл Special K не знайдено в {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">Директорію Special K не знайдено в {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Файл Special K не знайдено в {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Сервіс {0} Special K не може бути запущений</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Редактор профілів Special K</sys:String>
@@ -79,4 +81,8 @@
 Вказує, чи дозволено розширенню запускати Special K під час запуску гри.
 Якщо вимкнено, служби не будуть запущені незалежно від налаштувань чи конфігурації.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Показувати кнопку на бічній панелі, щоб перемикати стан розширення</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Розташування Special K:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Використовуйте якщо хочете користуватися Special K, що знаходиться в конкретному місці, або якщо використовуєте портативну версію</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Огляд…</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Вилучити</sys:String>
 </ResourceDictionary>
