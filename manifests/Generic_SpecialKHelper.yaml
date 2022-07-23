@@ -123,3 +123,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.19_67d9a62b/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_18.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.19
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.23_101d5820/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_19.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to set a custom Special K executable to use. Can be used for portable Special K installations'

@@ -47,3 +47,11 @@ Packages:
     - 'Added buttons to reset search and prices filters to wishlist viewer'
     - 'Added filter to filter by minimum price to wishlist viewer'
     - 'Fix failing to get wishlist items for some currencies'
+  - Version: 1.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.23_101d5820/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_6.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to sort wishlist by date added in Wishlist Viewer'
+    - 'Fix failing to obtain wishlist data if user had Tools wishlisted'
