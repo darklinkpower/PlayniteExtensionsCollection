@@ -17,6 +17,8 @@ Tieni presente che un controller deve essere attualmente connesso e abilitato pe
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Seleziona il gioco da usare per la configurazione di Steam o annulla per usare un'opzione generica</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Chiave di registro di Special K non trovata</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">Special K executable not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">Special K directory not found in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K non trovata in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Impossibile avviare il servizio Special K {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Editor dei profili Special K</sys:String>
@@ -79,4 +81,8 @@ Percorso del profilo: {1}</sys:String>
 Indica se l'estensione è autorizzata ad avviare i servizi Special K quando si avvia una partita.
 Se questo set è disabilitato, i servizi non saranno avviati a prescindere dalle impostazioni o dalla configurazione.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Mostra l'elemento barra laterale delle estensioni per cambiare lo stato dell'estensione</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Special K location:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use if you want to use Special K in a specific location or if you are using a portable installation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Browse…</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Remove</sys:String>
 </ResourceDictionary>
