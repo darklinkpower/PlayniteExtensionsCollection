@@ -7,15 +7,17 @@
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Remove mode filter feature from selected games</sys:String>
 
     <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSetting">Steam Launch Utility mode:</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeGlobalMode">Global Mode</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSelectiveMode">Selective Mode</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeTooltip" xml:space="preserve">Global Mode: Actions are done on all Steam games except blocked games.
 Selective Mode: Actions are done only on games that have been allowed.
 
 Use the plugin functions from the extensions submenu to add the filtering features.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnDesktopModeSetting">Disable Steam web browser when starting a game on Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnDesktopModeSetting">Launch Steam in Big Picture Mode when starting a game on Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserOnFullscreenModeSetting">Disable Steam web browser when starting a game on Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmOnFullscreenModeSetting">Launch Steam in Big Picture Mode when starting a game on Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Disable Steam web browser when starting a game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Launch Steam in Big Picture Mode when starting a game</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Restart Steam if it's running with the incorrect launch configuration for the launched game</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam is already running with the launch configuration "{0}"</sys:String>
-    
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Desktop Mode</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Additional arguments:</sys:String>
 </ResourceDictionary>

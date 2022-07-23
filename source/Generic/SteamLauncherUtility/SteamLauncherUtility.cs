@@ -192,10 +192,6 @@ namespace SteamLauncherUtility
                 {
                     argumentsList.Add("-bigpicture");
                 }
-                else
-                {
-                    argumentsList.Add("-silent");
-                }
             }
             else if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
@@ -208,13 +204,39 @@ namespace SteamLauncherUtility
                 {
                     argumentsList.Add("-bigpicture");
                 }
-                else
+            }
+
+            var additionalArguments = GetAdditionalArguments();
+            foreach (var additionalArgument in additionalArguments)
+            {
+                if (additionalArgument.IsNullOrWhiteSpace())
                 {
-                    argumentsList.Add("-silent");
+                    continue;
                 }
+
+                argumentsList.Add(additionalArgument);
+            }
+
+            // Using -silent argument makes Steam unable to launch
+            // in Big Picture Mode
+            if (!argumentsList.Any(x => x.Equals("-bigpicture", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                argumentsList.Add("-silent");
             }
 
             return argumentsList;
+        }
+
+        private string[] GetAdditionalArguments()
+        {
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                return settings.Settings.DesktopModeAdditionalArgs.Split(' ');
+            }
+            else
+            {
+                return settings.Settings.FullscreenModeAdditionalArgs.Split(' ');
+            }
         }
 
         public void AddModeFeature()
