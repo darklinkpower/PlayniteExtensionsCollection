@@ -16,6 +16,8 @@ Be aware that a controller needs to be currently connected and enabled for Steam
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">Select game to use for Steam configuration or cancel to use a generic option</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">Special K registry key not found</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">Special K executable not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">Special K directory not found in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">Special K file not found in {0}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">Special K {0} service could not be started</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K Profile Editor</sys:String>
@@ -78,4 +80,8 @@ Profile path: {1}</sys:String>
 Indicates if the extension is allowed to start the Special K services when starting a game.
 If this set as disabled, the services won't be started no matter the settings or configuration.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Show extension sidebar item to switch extension state</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Special K location:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use if you want to use Special K in a specific location or if you are using a portable installation</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Browse…</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Remove</sys:String>
 </ResourceDictionary>

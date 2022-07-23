@@ -44,6 +44,8 @@ namespace SpecialKHelper
 
         private bool stopIfEasyAntiCheat = true;
         public bool StopIfEasyAntiCheat { get => stopIfEasyAntiCheat; set => SetValue(ref stopIfEasyAntiCheat, value); }
+        private string customSpecialKPath = string.Empty;
+        public string CustomSpecialKPath { get => customSpecialKPath; set => SetValue(ref customSpecialKPath, value); }
     }
 
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings
@@ -118,5 +120,24 @@ namespace SpecialKHelper
             });
         }
 
+        public RelayCommand BrowseSelectSpecialKExecutableCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                var filePath = plugin.PlayniteApi.Dialogs.SelectFile("SKIF|SKIF.exe");
+                if (!filePath.IsNullOrEmpty())
+                {
+                    settings.CustomSpecialKPath = filePath;
+                }
+            });
+        }
+
+        public RelayCommand RemoveSpecialKExecutableCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                settings.CustomSpecialKPath = string.Empty;
+            });
+        }
     }
 }

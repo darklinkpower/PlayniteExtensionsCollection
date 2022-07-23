@@ -28,6 +28,18 @@
                 </StackPanel>
                 <TextBlock Margin="20,10,0,0" Text="{DynamicResource LOCSpecial_K_Helper_SettingSkExecutionModeNote}" TextWrapping="Wrap"/>
 
+                <DockPanel Margin="0,15,0,0">
+                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                               Text="{DynamicResource LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel}"
+                               ToolTip="{DynamicResource LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip}" />
+                    <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCSpecial_K_Helper_RemoveLabel}"
+                            Command="{Binding RemoveSpecialKExecutableCommand}" />
+                    <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCSpecial_K_Helper_BrowseLabel}"
+                            Command="{Binding BrowseSelectSpecialKExecutableCommand}" />
+                    <TextBox Margin="10,0,0,0" Text="{Binding Settings.CustomSpecialKPath}" IsReadOnly="True"
+                             ToolTip="{DynamicResource LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip}" />
+                </DockPanel>
+                
                 <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.ShowSidebarItem}"
                           Content="{DynamicResource LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher}"
                           ToolTip="{DynamicResource LOCSpecial_K_Helper_SidebarTooltip}" />

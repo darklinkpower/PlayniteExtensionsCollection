@@ -79,13 +79,38 @@ namespace SpecialKHelper
             }
         }
 
-        private static string GetSpecialKPath()
+        private string GetSpecialKPath()
         {
+            if (!settings.Settings.CustomSpecialKPath.IsNullOrEmpty())
+            {
+                if (FileSystem.FileExists(settings.Settings.CustomSpecialKPath))
+                {
+                    return Path.GetDirectoryName(settings.Settings.CustomSpecialKPath);
+                }
+                else
+                {
+                    logger.Warn($"Special K Registry Directory not found in {settings.Settings.CustomSpecialKPath}");
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "sk_customExeNotFound",
+                        string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound"), settings.Settings.CustomSpecialKPath),
+                        NotificationType.Error,
+                        () => OpenSettingsView()
+                    ));
+                }
+            }
+            
             using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Kaldaien\Special K"))
             {
                 if (key == null)
                 {
                     logger.Debug("Special K Registry subkey not found");
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "sk_registryNotFound",
+                        ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
+                        NotificationType.Error,
+                        () => OpenSettingsView()
+                    ));
+
                     return null;
                 }
 
@@ -93,10 +118,32 @@ namespace SpecialKHelper
                 if (pathValue == null)
                 {
                     logger.Debug("Special K Path registry key not found");
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "sk_registryNotFound",
+                        ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
+                        NotificationType.Error,
+                        () => OpenSettingsView()
+                    ));
+
                     return null;
                 }
 
-                return pathValue.ToString();
+                var directory = pathValue.ToString();
+                if (FileSystem.DirectoryExists(directory))
+                {
+                    return directory;
+                }
+                else
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        "sk_directoryNotFound",
+                        string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound"), directory),
+                        NotificationType.Error,
+                        () => OpenSettingsView()
+                    ));
+
+                    return null;
+                }
             }
         }
 
@@ -154,11 +201,6 @@ namespace SpecialKHelper
             var skifPath = GetSpecialKPath();
             if (skifPath.IsNullOrEmpty())
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage(
-                    "sk_registryNotFound",
-                    ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
-                    NotificationType.Error
-                ));
                 return;
             }
 
