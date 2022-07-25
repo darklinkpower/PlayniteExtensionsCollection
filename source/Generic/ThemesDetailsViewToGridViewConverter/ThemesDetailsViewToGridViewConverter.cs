@@ -24,6 +24,8 @@ namespace ThemesDetailsViewToGridViewConverter
         private const string themeIdStardust = @"Stardust 2.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002";
         private const string themeIdMythic = @"Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8";
         private const string themeIdHarmony = @"Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047";
+        private const string themeIdDhDawn = @"felixkmh_DesktopTheme_DH_Dawn";
+        private const string themeIdDhNight = @"felixkmh_DuplicateHider_Night_Theme";
         private const string messagesCaption = "darklinkpower's Grid View Converter";
 
         private readonly string baseThemesDirectory;
@@ -56,9 +58,14 @@ namespace ThemesDetailsViewToGridViewConverter
 
         public void ProcessAllSupportedThemes()
         {
-            var themesIds = new string[4]
+            var themesIds = new List<string>
             {
-                themeIdHelium, themeIdStardust, themeIdMythic, themeIdHarmony
+                themeIdHelium,
+                themeIdStardust,
+                themeIdMythic,
+                themeIdHarmony,
+                themeIdDhDawn,
+                themeIdDhNight
             };
 
             foreach (var themeId in themesIds)
@@ -216,9 +223,9 @@ namespace ThemesDetailsViewToGridViewConverter
                 messagesCaption);
         }
 
-        private string GetThemeSubdirectory(string activeDesktopTheme)
+        private string GetThemeSubdirectory(string themeId)
         {
-            switch (activeDesktopTheme)
+            switch (themeId)
             {
                 case themeIdHelium:
                     return "8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1";
@@ -228,6 +235,10 @@ namespace ThemesDetailsViewToGridViewConverter
                     return "Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8";
                 case themeIdHarmony:
                     return "Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047";
+                case themeIdDhDawn:
+                    return "felixkmh_DesktopTheme_DH_Dawn";
+                case themeIdDhNight:
+                    return "felixkmh_DuplicateHider_Night_Theme";
                 default:
                     return null;
             }
@@ -245,6 +256,10 @@ namespace ThemesDetailsViewToGridViewConverter
                     return settings.Settings.ConvertMythic;
                 case themeIdHarmony:
                     return settings.Settings.ConvertHarmony;
+                case themeIdDhDawn:
+                    return settings.Settings.ConvertDhDawn;
+                case themeIdDhNight:
+                    return settings.Settings.ConvertDhNight;
                 default:
                     return false;
             }
@@ -262,6 +277,10 @@ namespace ThemesDetailsViewToGridViewConverter
                     return Version.Parse("1.24");
                 case themeIdHarmony:
                     return Version.Parse("2.33");
+                case themeIdDhDawn:
+                    return Version.Parse("1.0");
+                case themeIdDhNight:
+                    return Version.Parse("3.0");
                 default:
                     return Version.Parse("9999");
             }

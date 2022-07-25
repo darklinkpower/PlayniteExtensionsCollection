@@ -18,6 +18,10 @@ namespace ThemesDetailsViewToGridViewConverter
         public bool ConvertMythic { get => convertMythic; set => SetValue(ref convertMythic, value); }
         private bool convertHarmony = false;
         public bool ConvertHarmony { get => convertHarmony; set => SetValue(ref convertHarmony, value); }
+        private bool convertDhDawn = false;
+        public bool ConvertDhDawn { get => convertDhDawn; set => SetValue(ref convertDhDawn, value); }
+        private bool convertDhNight = false;
+        public bool ConvertDhNight { get => convertDhNight; set => SetValue(ref convertDhNight, value); }
     }
 
     public class ThemesDetailsViewToGridViewConverterSettingsViewModel : ObservableObject, ISettings
