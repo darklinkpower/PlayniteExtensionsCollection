@@ -21,7 +21,7 @@ namespace SteamSearch
             Description = ResourceProvider.GetString("LOCSteam_Search_SearcherDescriptionLabel");
             Label = ResourceProvider.GetString("LOCSteam_Search_SteamStoreLabel");
             Hint = ResourceProvider.GetString("LOCSteam_Search_SearcherHint");
-            Delay = 600;
+            Delay = 580;
             this.settings = settings;
         }
 
@@ -54,7 +54,7 @@ namespace SteamSearch
                 () => { ProcessStarter.StartUrl(searchResult.StoreUrl); }))
             {
                 Description = GetSearchItemDescription(searchResult),
-                Icon = searchResult.BannerImageUrl,
+                Icon = searchResult.BannerImageUrl
             };
 
             searchItem.SecondaryAction = new SearchItemAction(
