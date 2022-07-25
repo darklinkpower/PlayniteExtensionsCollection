@@ -1,0 +1,12 @@
+﻿Id: ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3
+Name: darklinkpower's Grid View Converter
+Author: darklinkpower
+Version: 1.0
+Module: ThemesDetailsViewToGridViewConverter.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
