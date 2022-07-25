@@ -21,6 +21,12 @@
                 <CheckBox Content="Harmony"
                           Margin="0,10,0,0"
                           IsChecked="{Binding Settings.ConvertHarmony}"/>
+                <CheckBox Content="DH Dawn"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertDhDawn}"/>
+                <CheckBox Content="DH Night"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertDhNight}"/>
             </StackPanel>
             
         </StackPanel>
