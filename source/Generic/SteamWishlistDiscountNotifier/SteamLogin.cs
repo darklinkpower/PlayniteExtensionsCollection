@@ -14,7 +14,7 @@ namespace SteamWishlistDiscountNotifier
     {
         public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)
         {
-            webView.NavigateAndWait(@"https://steamcommunity.com/my/recommended/");
+            webView.NavigateAndWait(@"https://steamcommunity.com/login/home/?goto=https://steamcommunity.com/my/recommended/");
             var address = webView.GetCurrentAddress();
             if (address.IsNullOrEmpty())
             {
