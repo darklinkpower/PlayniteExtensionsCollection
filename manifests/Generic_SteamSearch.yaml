@@ -1,2 +1,8 @@
 AddonId: SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.3.0
+    ReleaseDate: 2022-07-25
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.25_f660514e/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_0.pext
+    Changelog:
+    - 'Initial release'
