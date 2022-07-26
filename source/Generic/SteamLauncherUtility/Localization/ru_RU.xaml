@@ -6,17 +6,17 @@
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Убрать функцию фильтрации режимов в выбранные игры</sys:String>
 
     <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSetting">Режим утилиты запуска Steam:</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeGlobalMode">Global Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSelectiveMode">Selective Mode</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeGlobalMode">Глобальный режим</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSelectiveMode">Выборочный режим</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeTooltip" xml:space="preserve">Глобальный режим: действия выполняются во всех играх Steam, кроме заблокированных игр.
 Выборочный режим: действия выполняются только в разрешенных играх.
 
 Используйте функции плагина из подменю дополнений, чтобы добавить функции фильтрации.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Disable Steam web browser when starting a game</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Launch Steam in Big Picture Mode when starting a game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Отключить веб-браузер Steam при запуске игры</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Запускать Steam в режиме Big Picture при запуске игры</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Перезапустить Steam, если он некорректно работает с конфигурацией запуска для запущенной игры</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam уже запущен с конфигурацией запуска &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Additional arguments:</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Настольный режим</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Полноэкранный Режим</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Дополнительные аргументы:</sys:String>
 </ResourceDictionary>
