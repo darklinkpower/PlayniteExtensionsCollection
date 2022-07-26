@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">L'utente è autenticato</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Richiede autenticazione</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Nessuna connessione</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Enable wishlist discount notifications</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Abilita le notifiche di sconto nella lista dei desideri</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervallo in minuti per controllare gli aggiornamenti nella lista dei desideri:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Apri le pagine del negozio nel browser web invece che nel client Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Notificatore della lista dei desideri di Steam
