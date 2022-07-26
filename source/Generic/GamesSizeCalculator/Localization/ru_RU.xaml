@@ -4,11 +4,11 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Автоматически рассчитывать размер игры после того, как она была изменена при обновлении библиотеки</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Обновляет размер файла игры, если обнаружено, что каталог игры или Rom файл был обновлен с момента предыдущего автоматического обнаружения</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Автоматически рассчитывать размер игры после добавления при обновлении библиотеки</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Apply this data also for games that are not from the Steam library</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Include all DLC in size calculation</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel">Для неустановленных игр получить примерный размер установки в Steam</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Применить эти данные и к играм, которых нет в библиотеке Steam</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Включить в расчет все DLC</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Включить в расчет необязательный контент</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Необязательный контент включает в себя такие вещи, как издания Deluxe, которые недоступны в виде DLC</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Вычислить размеры для выбранных игр</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Вычислить размеры для выбранных игр (Принудительная перезапись)</sys:String>
 
