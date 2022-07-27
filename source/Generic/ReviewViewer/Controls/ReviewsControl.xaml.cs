@@ -169,6 +169,7 @@ namespace ReviewViewer.Controls
             {
                 selectedReviewText = value;
                 OnPropertyChanged();
+                ReviewsScrollViewer.ScrollToTop();
             }
         }
 

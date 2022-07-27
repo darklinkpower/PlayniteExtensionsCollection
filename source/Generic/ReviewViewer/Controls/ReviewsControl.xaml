@@ -103,7 +103,7 @@
                 <Button Name="ButtonNextReview" Background="Transparent" BorderThickness="0" Content="&#xEACA;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
                             Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
             </StackPanel>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
+            <ScrollViewer x:Name="ReviewsScrollViewer" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" Height="{Binding SettingsModel.Settings.DescriptionHeight}">
                 <controls:HtmlTextView HtmlText="{Binding SelectedReviewText}" HorizontalAlignment="left"
                     HtmlFontFamily="{DynamicResource FontFamily}"
                     HtmlForeground="{DynamicResource TextColor}"
