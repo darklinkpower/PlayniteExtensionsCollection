@@ -13,10 +13,10 @@
 
 使用扩展子菜单中的插件功能来添加过滤特性。</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">启动游戏时，禁用 Steam 网页浏览器</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Launch Steam in Big Picture Mode when starting a game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">启动游戏时，以大屏幕模式启动 Steam</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">若 Steam 以（对于所启动游戏）错误的启动配置运行，则将其重新启动</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam 已经以启动配置“{0}”运行。</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Additional arguments:</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">桌面模式</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">全屏模式</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">额外参数：</sys:String>
 </ResourceDictionary>
