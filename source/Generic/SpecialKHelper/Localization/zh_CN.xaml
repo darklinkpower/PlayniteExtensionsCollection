@@ -17,8 +17,8 @@
 
     <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSelectSteamGameOption">选择要用于 Steam 配置的游戏，或取消以使用通用选项</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound">未找到 Special K 的注册键值</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">Special K executable not found in {0}</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">Special K directory not found in {0}</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound">在 {0} 中找不到 Special K 可执行文件</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkDirectoryNotFound">在 {0} 中找不到 Special K 目录</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkFileNotFound">在 {0} 中找不到 Special K 文件</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_NotifcationErrorMessageSkErrorOnStart">无法启动 Special K 的 {0} 服务</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K 配置档编辑器</sys:String>
@@ -81,8 +81,8 @@
 指示是否允许扩展在开始游戏时启动 Special K 服务。
 若禁用此设置，无论设置或配置如何，服务都不会启动。</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">显示用于切换扩展状态的扩展侧边栏项目</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Special K location:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use if you want to use Special K in a specific location or if you are using a portable installation</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Browse…</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Remove</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Special K 位置：</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">在您想要使用位于特定位置的 Special K 或您使用了便携式安装时使用</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">浏览…</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">移除</sys:String>
 </ResourceDictionary>
