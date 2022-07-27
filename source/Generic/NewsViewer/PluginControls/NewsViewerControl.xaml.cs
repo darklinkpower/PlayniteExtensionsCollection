@@ -96,6 +96,7 @@ namespace NewsViewer.PluginControls
             {
                 newsText = value;
                 OnPropertyChanged();
+                NewsScrollViewer.ScrollToTop();
             }
         }
 
