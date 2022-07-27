@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Minimum discount required to display notifications:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Display notification for items of type:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">User is authenticated</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">帮助</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">显示通知所需的最低折扣：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">要显示通知的项目类型：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">身份验证</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">正在检查身份验证状态…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">用户已通过身份验证</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">需要身份验证</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">无连接</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">启用愿望单折扣通知</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Interval in minutes to check updates in wishlist:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Open store pages in web browser instead of the Steam client</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">检查愿望单中更新的间隔时间（分钟）：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">在网络浏览器中打开商店页面而不是 Steam 客户端</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam 愿望单通知器
 
-Failed to check Steam wishlist. Authentication is required.</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; is on sale on Steam!</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Discount: {0}%</sys:String>
+无法检查 Steam 愿望单。需要身份验证。</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; 正在 Steam 上促销！</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">折扣：{0}%</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">游戏</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">可下载内容（DLC）</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">音乐</sys:String>
