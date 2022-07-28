@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Themes to convert Details View to Grid View:</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Details View layout of theme &quot;{0}&quot; has been applied to Grid View.
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Temas para convertir la vista de detalles a vista de cuadrícula:</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Diseño de la vista de detalles del tema &quot;{0}&quot; se ha aplicado a la vista de cuadrícula.
 
-Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Grid View details layout for theme &quot;{0}&quot; has been restored.
+Por favor, reinicia para aplicar los cambios.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Se ha restaurado el diseño de detalles de la vista en cuadrícula para el tema &quot;{0}&quot;.
 
-Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Version {0} of theme &quot;{1}&quot; is not supported.</sys:String>
+Por favor, reinicia para aplicar los cambios.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">La versión {0} del tema &quot;{1}&quot; no es compatible.</sys:String>
 </ResourceDictionary>
