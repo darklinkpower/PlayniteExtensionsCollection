@@ -118,3 +118,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.28_1dac80c6/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_18.pext
     Changelog:
     - 'News will be scrolled to the top when it changes'
+  - Version: 1.19
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-29
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.29_fa08474e/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_19.pext
+    Changelog:
+    - 'Fix failing to correctly display some news in the compact view'
+    - 'Fix failing to display the news date on first game selection'
