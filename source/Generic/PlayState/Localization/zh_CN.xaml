@@ -7,8 +7,8 @@
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">移除强制性地仅挂起游玩时间的配置</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">将所选游戏配置为强制性地挂起进程</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">移除强制性地挂起进程的配置</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">挂起 {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">恢复 {0}</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">已配置的热键 {0} 注册失败
 
 您可以尝试使用不同的热键组合以解决该问题</sys:String>
@@ -31,7 +31,7 @@
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">显示一个通知，展示当前游戏的暂停状态和其他信息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">更改热键</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">请按热键</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">启用通知消息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">备注：
 
 已配置的热键不能被用于其他应用程序。

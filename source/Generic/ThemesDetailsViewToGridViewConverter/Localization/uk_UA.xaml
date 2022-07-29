@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Теми для перетворення режиму перегляду &quot;Деталі&quot; на &quot;Сітку&quot;:</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Макет режиму &quot;Деталі&quot; теми &quot;{0}&quot; застосовано до режиму &quot;Сітка&quot;.
+
+Будь ласка, перезапустіть програму, щоб побачити зміни.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Макет режиму &quot;Сітка&quot; для теми &quot;{0}&quot; відновлено.
+
+Будь ласка, перезапустіть програму, щоб побачити зміни.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Версія {0} теми &quot;{1}&quot; не підтримується.</sys:String>
+</ResourceDictionary>
