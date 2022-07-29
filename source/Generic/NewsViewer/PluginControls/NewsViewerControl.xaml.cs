@@ -121,7 +121,7 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private string CleanSteamNewsText(string html)
+        private static string CleanSteamNewsText(string html)
         {
             return Regex.Replace(html, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", "");
         }
@@ -222,61 +222,79 @@ namespace NewsViewer.PluginControls
 
         void OpenSelectedNews()
         {
-            if (CurrentNewsNode != null)
+            if (CurrentNewsNode == null)
             {
-                if (SettingsModel.Settings.UseCompactWebNewsViewer)
-                {
-                    var descriptionChild = CurrentNewsNode.SelectSingleNode(@"description");
-                    if (descriptionChild == null)
-                    {
-                        return;
-                    }
-                    var html = @"
-                    <head>
-                        <title>News Viewer</title>
-                        <meta charset=""UTF-8"">
-                        <style type=""text/css"">
-                            html,body
-                            {
-                                color: rgb(207, 210, 211);
-                                margin: 0;
-                                padding: 10;
-                                font-family: ""Arial"";
-                                font-size: 14px;
-                                background-color: rgb(51, 54, 60);
-                            }
-                            a {
-                                color: rgb(147, 179, 200);
-                                text-decoration: none;
-                            }
-                            img {
-                                max-width: 100%;
-                            }
-                        </style>
-                    </head>
-                    <body>";
-                    html += Regex.Replace(CurrentNewsNode.SelectSingleNode(@"pubDate")?.InnerText ?? "", @" \+\d+$", "") + "<br>";
-                    html += "<h1>" + (CurrentNewsNode.SelectSingleNode(@"title")?.InnerText ?? "") + "</h1>" + "<br>";
-                    html += descriptionChild.InnerText;
-                    html += @"</body>";
+                return;
+            }
 
-                    var webView = PlayniteApi.WebViews.CreateView(650, 700);
-                    webView.Navigate("data:text/html," + html);
+            if (SettingsModel.Settings.UseCompactWebNewsViewer)
+            {
+                OpenNewsOnCompactView();
+            }
+            else
+            {
+                var linkChild = CurrentNewsNode.SelectSingleNode(@"link");
+                if (linkChild != null)
+                {
+                    var webView = PlayniteApi.WebViews.CreateView(1024, 700);
+                    webView.Navigate(linkChild.InnerText);
                     webView.OpenDialog();
                     webView.Dispose();
                 }
-                else
-                {
-                    var linkChild = CurrentNewsNode.SelectSingleNode(@"link");
-                    if (linkChild != null)
-                    {
-                        var webView = PlayniteApi.WebViews.CreateView(1024, 700);
-                        webView.Navigate(linkChild.InnerText);
-                        webView.OpenDialog();
-                        webView.Dispose();
-                    }
-                }
             }
+        }
+
+        private void OpenNewsOnCompactView()
+        {
+            var descriptionChild = CurrentNewsNode.SelectSingleNode(@"description");
+            if (descriptionChild == null)
+            {
+                return;
+            }
+
+            var baseHtml = @"
+<head>
+    <title>News Viewer</title>
+    <meta charset=""UTF-8"">
+    <style type=""text/css"">
+        html,body
+        {{
+            color: rgb(207, 210, 211);
+            margin: 0;
+            padding: 10;
+            font-family: ""Arial"";
+            font-size: 14px;
+            background-color: rgb(51, 54, 60);
+        }}
+        a {{
+            color: rgb(147, 179, 200);
+            text-decoration: none;
+        }}
+        img {{
+            max-width: 100%;
+        }}
+    </style>
+</head>
+<body>
+    {0}
+    <br>
+    <h1>{1}</h1>
+    <br>
+    {2}
+</body>";
+            var html = string.Format(baseHtml,
+                Regex.Replace(CurrentNewsNode.SelectSingleNode(@"pubDate")?.InnerText ?? "", @" \+\d+$", ""),
+                CurrentNewsNode.SelectSingleNode(@"title")?.InnerText ?? "",
+                descriptionChild.InnerText);
+
+            var webView = PlayniteApi.WebViews.CreateView(650, 700);
+
+            // The webview fails to correctly render if it includes reserved
+            // characters (See https://datatracker.ietf.org/doc/html/rfc3986#section-2.2)
+            // To fix this, we encode to base 64 and load it
+            webView.Navigate("data:text/html;base64," + html.Base64Encode());
+            webView.OpenDialog();
+            webView.Dispose();
         }
 
         public NewsViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, string steamLanguage)
