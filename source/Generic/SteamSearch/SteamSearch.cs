@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using SteamCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,28 @@ namespace SteamSearch
 
             Searches = new List<SearchSupport>
             {
-                new SearchSupport("st", "Search on Steam", new SteamSearcher(settings))
+                new SearchSupport("st",
+                    ResourceProvider.GetString("LOCSteam_Search_SearchNameSearchOnSteam"),
+                    new SteamSearcher(settings))
+            };
+
+            PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
+            {
+                foreach (var removedGame in ItemCollectionChangedArgs.RemovedItems)
+                {
+                    if (Steam.IsGameSteamGame(removedGame))
+                    {
+                        settings.Settings.SteamIdsInLibrary.Remove(removedGame.GameId);
+                    }
+                }
+
+                foreach (var addedGame in ItemCollectionChangedArgs.AddedItems)
+                {
+                    if (Steam.IsGameSteamGame(addedGame))
+                    {
+                        settings.Settings.SteamIdsInLibrary.Add(addedGame.GameId);
+                    }
+                }
             };
         }
 
@@ -41,6 +63,17 @@ namespace SteamSearch
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
             return new SteamSearchSettingsView();
+        }
+
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            foreach (var game in PlayniteApi.Database.Games)
+            {
+                if (Steam.IsGameSteamGame(game))
+                {
+                    settings.Settings.SteamIdsInLibrary.Add(game.GameId);
+                }
+            }
         }
     }
 }

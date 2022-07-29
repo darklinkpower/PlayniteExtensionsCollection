@@ -16,6 +16,10 @@ namespace SteamSearch
         public string SelectedManualCountry { get => selectedManualCountry; set => SetValue(ref selectedManualCountry, value); }
         private bool useCountryStore = false;
         public bool UseCountryStore { get => useCountryStore; set => SetValue(ref useCountryStore, value); }
+        private bool indicateIfGameIsInLibrary = true;
+        public bool IndicateIfGameIsInLibrary { get => indicateIfGameIsInLibrary; set => SetValue(ref indicateIfGameIsInLibrary, value); }
+        [DontSerialize]
+        public HashSet<string> SteamIdsInLibrary = new HashSet<string>();
     }
 
     public class SteamSearchSettingsViewModel : ObservableObject, ISettings

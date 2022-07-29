@@ -47,9 +47,9 @@ namespace SteamSearch
             return searchItems;
         }
 
-        private static SearchItem GetSearchItemFromSearchResult(StoreSearchResult searchResult)
+        private SearchItem GetSearchItemFromSearchResult(StoreSearchResult searchResult)
         {
-            var searchItem = new SearchItem($"{searchResult.Name}",
+            var searchItem = new SearchItem(GetSearchItemName(searchResult),
                 new SearchItemAction(ResourceProvider.GetString("LOCSteam_Search_ItemActionLabelOpenOnWeb"),
                 () => { ProcessStarter.StartUrl(searchResult.StoreUrl); }))
             {
@@ -62,6 +62,18 @@ namespace SteamSearch
                 () => { ProcessStarter.StartUrl(string.Format(steamUriOpenUrlMask, searchResult.StoreUrl));});
 
             return searchItem;
+        }
+
+        private string GetSearchItemName(StoreSearchResult searchResult)
+        {
+            if (settings.Settings.IndicateIfGameIsInLibrary && settings.Settings.SteamIdsInLibrary.Contains(searchResult.GameId))
+            {
+                return $"{searchResult.Name} - {ResourceProvider.GetString("LOCSteam_Search_ItemActionIndicateGameInLibrary")}";
+            }
+            else
+            {
+                return searchResult.Name;
+            }
         }
 
         private static string GetSearchItemDescription(StoreSearchResult searchResult)
