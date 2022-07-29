@@ -50,8 +50,8 @@ namespace NewsViewer.PluginControls
             set
             {
                 currentNewsNode = value;
-                UpdateBindings();
                 OnPropertyChanged();
+                UpdateBindings();
             }
         }
 
@@ -96,7 +96,6 @@ namespace NewsViewer.PluginControls
             {
                 newsText = value;
                 OnPropertyChanged();
-                NewsScrollViewer.ScrollToTop();
             }
         }
 
@@ -117,6 +116,7 @@ namespace NewsViewer.PluginControls
             {
                 NewsTitle = HtmlToPlainText(titleChild.InnerText);
                 NewsText = CleanSteamNewsText(descriptionChild.InnerText);
+                Dispatcher.Invoke(() => NewsScrollViewer.ScrollToTop());
                 NewsDate = Regex.Replace(HtmlToPlainText(dateChild.InnerText), @" \+\d+$", "");
             }
         }
