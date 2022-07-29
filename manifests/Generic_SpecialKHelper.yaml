@@ -130,3 +130,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added support to set a custom Special K executable to use. Can be used for portable Special K installations'
+  - Version: 1.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.28_1dac80c6/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_20.pext
+    Changelog:
+    - 'Updated localizations'

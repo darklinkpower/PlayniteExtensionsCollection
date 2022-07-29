@@ -159,3 +159,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added support to add custom additional arguments to be used when launching Steam in extension settings'
+  - Version: 2.25
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.28_1dac80c6/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_25.pext
+    Changelog:
+    - 'Updated localizations'

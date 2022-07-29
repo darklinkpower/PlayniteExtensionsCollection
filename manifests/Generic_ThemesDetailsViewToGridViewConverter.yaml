@@ -3,6 +3,6 @@ Packages:
   - Version: 1.0
     RequiredApiVersion: 6.3.0
     ReleaseDate: 2022-07-25
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.25_f660514e/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_0.pext
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.28_1dac80c6/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_0.pext
     Changelog:
     - 'Initial release'

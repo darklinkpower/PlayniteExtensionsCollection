@@ -55,3 +55,10 @@ Packages:
     - 'Updated localizations'
     - 'Added support to sort wishlist by date added in Wishlist Viewer'
     - 'Fix failing to obtain wishlist data if user had Tools wishlisted'
+  - Version: 1.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.28_1dac80c6/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_7.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Potential fix for account login out after some time'
