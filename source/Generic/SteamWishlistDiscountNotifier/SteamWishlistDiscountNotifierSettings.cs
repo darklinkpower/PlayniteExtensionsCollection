@@ -149,7 +149,7 @@ namespace SteamWishlistDiscountNotifier
                             status = AuthStatus.NoConnection;
                             view.Close();
                         }
-                        else if (address.Contains(@"steamcommunity.com"))
+                        else if (address.Contains(@"steampowered.com"))
                         {
                             var source = await view.GetPageSourceAsync();
                             if (source == @"<html><head></head><body></body></html>")
@@ -158,22 +158,10 @@ namespace SteamWishlistDiscountNotifier
                                 view.Close();
                             }
 
-                            var idMatch = Regex.Match(source, @"g_steamID = ""(\d+)""");
+                            var idMatch = Regex.Match(source, @"<div class=""youraccount_steamid"">[^\d]+(\d+)");
                             if (idMatch.Success)
                             {
                                 status = AuthStatus.Ok;
-                            }
-                            else
-                            {
-                                idMatch = Regex.Match(source, @"steamid"":""(\d+)""");
-                                if (idMatch.Success)
-                                {
-                                    status = AuthStatus.Ok;
-                                }
-                            }
-
-                            if (idMatch.Success)
-                            {
                                 view.Close();
                             }
                         }
@@ -181,7 +169,8 @@ namespace SteamWishlistDiscountNotifier
 
                     view.DeleteDomainCookies(".steamcommunity.com");
                     view.DeleteDomainCookies("steamcommunity.com");
-                    view.Navigate(@"https://steamcommunity.com/login/home/?goto=");
+                    view.DeleteDomainCookies("store.steampowered.com");
+                    view.Navigate(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
                     view.OpenDialog();
                 }
 

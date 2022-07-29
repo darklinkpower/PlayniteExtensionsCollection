@@ -14,7 +14,7 @@ namespace SteamWishlistDiscountNotifier
     {
         public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)
         {
-            webView.NavigateAndWait(@"https://steamcommunity.com/login/home/?goto=https://steamcommunity.com/my/recommended/");
+            webView.NavigateAndWait(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
             var address = webView.GetCurrentAddress();
             if (address.IsNullOrEmpty())
             {
@@ -22,26 +22,15 @@ namespace SteamWishlistDiscountNotifier
                 steamId = null;
                 return;
             }
-            else if (address.StartsWith(@"https://steamcommunity.com/id/") ||
-                address.StartsWith(@"https://steamcommunity.com/profiles/"))
+            else if (address.StartsWith(@"https://store.steampowered.com/account/"))
             {
                 var source = webView.GetPageSource();
-                var idMatch = Regex.Match(source, @"g_steamID = ""(\d+)""");
+                var idMatch = Regex.Match(source, @"<div class=""youraccount_steamid"">[^\d]+(\d+)");
                 if (idMatch.Success)
                 {
                     status = AuthStatus.Ok;
                     steamId = idMatch.Groups[1].Value;
                     return;
-                }
-                else
-                {
-                    idMatch = Regex.Match(source, @"steamid"":""(\d+)""");
-                    if (idMatch.Success)
-                    {
-                        status = AuthStatus.Ok;
-                        steamId = idMatch.Groups[1].Value;
-                        return;
-                    }
                 }
             }
 
