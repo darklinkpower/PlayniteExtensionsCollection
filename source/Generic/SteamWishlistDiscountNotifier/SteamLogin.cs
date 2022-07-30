@@ -14,7 +14,7 @@ namespace SteamWishlistDiscountNotifier
     {
         public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)
         {
-            webView.NavigateAndWait(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
+            webView.NavigateAndWait(@"https://store.steampowered.com/account/");
             var address = webView.GetCurrentAddress();
             if (address.IsNullOrEmpty())
             {
