@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Search_SettingsHelpLabel">Aiuto</sys:String>
     <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Usa un paese specifico per le ricerche nel negozio di Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">Indicate if a game is in the library in search results</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">Indica se un gioco è nella libreria nei risultati di ricerca</sys:String>
     <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Negozio di Steam</sys:String>
     <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">Inserisci il termine di ricerca</sys:String>
     <sys:String x:Key="LOCSteam_Search_SearcherHint">Cerca giochi nel negozio di Steam</sys:String>
@@ -11,8 +11,8 @@
     <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">{0}% di sconto</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Prezzo attuale: {0} {1:N2}</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Prezzo originale: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SearchNameSearchOnSteam">Search on Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionIndicateGameInLibrary">In library</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearchNameSearchOnSteam">Cerca su Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionIndicateGameInLibrary">Nella libreria</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Gratis</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Non rilasciato</sys:String>
 </ResourceDictionary>
