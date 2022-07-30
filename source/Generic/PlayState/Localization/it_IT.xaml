@@ -36,7 +36,7 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
 
 I tasti di scelta rapida configurati non potranno essere utilizzati in altre applicazioni.
 La modifica di questa impostazione richiede il riavvio.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Se si dispone di Focus Assist abilitato quando si gioca una partita e modalità a schermo intero, è necessario aggiungere Playnite alla lista delle priorità per ricevere le notifiche di Windows e configurarle per consentire la visualizzazione.
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Se la modalità Non disturbare è abilitata quando si gioca a un gioco e in modalità a schermo intero, è necessario aggiungere Playnite alla lista delle priorità per ricevere le notifiche di Windows e configurarle per consentire la visualizzazione.
 
 Questa funzione è supportata solo su Windows 10 e Windows 11</sys:String>
     <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState ha aggiunto il supporto per visualizzare le notifiche come notifiche native Windows. Questo è abilitato per impostazione predefinita e può essere modificato dalle impostazioni di estensione.
