@@ -22,9 +22,9 @@ namespace CooperativeModesImporter
     public class CooperativeModesImporter : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly string databaseZipPath;
         private readonly string databasePath;
-        private readonly int currentDatabaseVersion = 5;
+        private readonly int currentDatabaseVersion = 6;
+        private static readonly char arraySplitter = ';';
         private readonly Dictionary<string, string> specIdToSystemDictionary;
         private Dictionary<string, GameFeature> featuresDictionary;
 
@@ -40,8 +40,7 @@ namespace CooperativeModesImporter
                 HasSettings = true
             };
 
-            databaseZipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "database.zip");
-            databasePath = Path.Combine(GetPluginUserDataPath(), "database.json");
+            databasePath = Path.Combine(GetPluginUserDataPath(), "database.sqlite");
             specIdToSystemDictionary = new Dictionary<string, string>
             {
                 //{ "3do", string.Empty },
@@ -121,8 +120,15 @@ namespace CooperativeModesImporter
             {
                 PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
                 {
+                    // Deprecated database with json format
+                    if (settings.Settings.DatabaseVersion <= 5)
+                    {
+                        FileSystem.DeleteFile(Path.Combine(GetPluginUserDataPath(), "database.json"));
+                    }
+                    
                     logger.Info("Decompressing database zip file...");
                     FileSystem.DeleteFile(databasePath);
+                    var databaseZipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "database.zip");
                     ZipFile.ExtractToDirectory(databaseZipPath, GetPluginUserDataPath());
                     logger.Info("Decompressed database zip file");
                 }, new GlobalProgressOptions(ResourceProvider.GetString("LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase")));
@@ -155,7 +161,7 @@ namespace CooperativeModesImporter
                     Description = ResourceProvider.GetString("LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames"),
                     MenuSection = "@Cooperative Modes Importer",
                     Action = a => {
-                        AddMpFeaturesToGamesProgress(PlayniteApi.Database.Games.ToList());
+                        AddMpFeaturesToGamesProgress(PlayniteApi.Database.Games, true);
                     }
                 },
                 new MainMenuItem
@@ -163,7 +169,7 @@ namespace CooperativeModesImporter
                     Description = ResourceProvider.GetString("LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames"),
                     MenuSection = "@Cooperative Modes Importer",
                     Action = a => {
-                        AddMpFeaturesToGamesProgress(PlayniteApi.MainView.SelectedGames.ToList());
+                        AddMpFeaturesToGamesProgress(PlayniteApi.MainView.SelectedGames, true);
                     }
                 },
                 new MainMenuItem
@@ -171,91 +177,43 @@ namespace CooperativeModesImporter
                     Description = ResourceProvider.GetString("LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGamesManual"),
                     MenuSection = "@Cooperative Modes Importer",
                     Action = a => {
-                        AddModesManual();
+                        var updatedGames = AddMpFeaturesToGames(PlayniteApi.MainView.SelectedGames, false);
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCooperativeModesImporter_UpdateFeaturesResult"), updatedGames));
                     }
                 }
             };
         }
 
-        private void AddMpFeaturesToGamesProgress(List<Game> games)
+        private void AddMpFeaturesToGamesProgress(IEnumerable<Game> games, bool isBackgroundProcessing)
         {
             var updatedGames = 0;
             PlayniteApi.Dialogs.ActivateGlobalProgress(progArgs =>
             {
-                updatedGames = AddMpFeaturesToGames(games);
+                updatedGames = AddMpFeaturesToGames(games, isBackgroundProcessing);
             }, new GlobalProgressOptions(ResourceProvider.GetString("LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress")));
 
             PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCooperativeModesImporter_UpdateFeaturesResult"), updatedGames));
         }
 
-        private int AddMpFeaturesToGames(List<Game> games)
+        private int AddMpFeaturesToGames(IEnumerable<Game> games, bool isBackgroundProcessing)
         {
-            var database = Serialization.FromJson<CooperativeDatabase>(File.ReadAllText(databasePath));
-            foreach (var databaseItem in database.Games)
-            {
-                databaseItem.Name = SatinizeGameName(databaseItem.Name);
-            }
-
             featuresDictionary = new Dictionary<string, GameFeature>();
             var updatedGames = 0;
 
-            using (PlayniteApi.Database.BufferedUpdate())
-            foreach (var game in games)
+            using (var db = SQLite.OpenDatabase(databasePath, SqliteOpenFlags.ReadOnly))
             {
-                if (game.Platforms == null || game.Platforms.Count < 0
-                    || string.IsNullOrEmpty(game.Platforms[0].SpecificationId))
+                using (PlayniteApi.Database.BufferedUpdate())
                 {
-                    continue;
-                }
-                
-                if (specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
-                {
-                    var satinizedName = SatinizeGameName(game.Name);
-                    var dbGame = database.Games.FirstOrDefault(x => x.Name == satinizedName && x.System == systemId);
-                    if (dbGame == null)
+                    foreach (var game in games)
                     {
-                        continue;
-                    }
-
-                    if (ApplyCooptimusData(game, dbGame))
-                    {
-                        updatedGames++;
-                    }
-                }
-            }
-
-            return updatedGames;
-        }
-
-        private void AddModesManual()
-        {
-            var database = Serialization.FromJson<CooperativeDatabase>(File.ReadAllText(databasePath));
-            featuresDictionary = new Dictionary<string, GameFeature>();
-            var updatedGames = 0;
-
-            using (PlayniteApi.Database.BufferedUpdate())
-            foreach (var game in PlayniteApi.MainView.SelectedGames)
-            {
-                if (game.Platforms == null || game.Platforms.Count < 0
-                    || string.IsNullOrEmpty(game.Platforms[0].SpecificationId))
-                {
-                    continue;
-                }
-
-                if (specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
-                {
-                    var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(
-                        new List<GenericItemOption>(),
-                        (a) => GetCooptimusItemOptions(a, systemId, database),
-                        game.Name,
-                        ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
-                    
-                    if (selectedItem != null)
-                    {
-                        var selectedDb = database.Games.FirstOrDefault(x => x.Id.ToString() == selectedItem.Description);
-                        if (selectedDb != null)
+                        if (!game.Platforms.HasItems() || game.Platforms[0].SpecificationId.IsNullOrEmpty())
                         {
-                            if (ApplyCooptimusData(game, selectedDb))
+                            continue;
+                        }
+
+                        if (specIdToSystemDictionary.TryGetValue(game.Platforms[0].SpecificationId, out var systemId))
+                        {
+                            if (ProcessGameWithDatabase(game, systemId, isBackgroundProcessing, db))
                             {
                                 updatedGames++;
                             }
@@ -264,10 +222,61 @@ namespace CooperativeModesImporter
                 }
             }
 
-            PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCCooperativeModesImporter_UpdateFeaturesResult"), updatedGames));
+            return updatedGames;
         }
 
-        private bool ApplyCooptimusData(Game game, CooperativeGame dbGame)
+        private bool ProcessGameWithDatabase(Game game, string systemId, bool isBackgroundProcessing, ISQLite db)
+        {
+            if (isBackgroundProcessing)
+            {
+                var satinizedName = SatinizeGameName(game.Name);
+                var queryGames = db.Query<DatabaseQueryItem>($"SELECT * FROM games WHERE matchingName='{satinizedName}' AND system='{systemId}';", null);
+                if (!queryGames.HasItems())
+                {
+                    return false;
+                }
+                var dbGame = queryGames.First();
+
+                var queryExtra = db.Query<DatabaseQueryExtraModes>($"SELECT * FROM modesDetailed WHERE id='{dbGame.Id}';", null);
+                if (!queryExtra.HasItems())
+                {
+                    return false;
+                }
+                var dbExtraModes = queryExtra.First();
+                return ApplyCooptimusData(game, dbGame, dbExtraModes);
+            }
+            else
+            {
+                var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(
+                    new List<GenericItemOption>(),
+                    (a) => GetCooptimusItemOptions(a, systemId, db),
+                    game.Name,
+                    ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
+
+                if (selectedItem == null)
+                {
+                    return false;
+                }
+
+                var queryGames = db.Query<DatabaseQueryItem>($"SELECT * FROM games WHERE id='{selectedItem.Description}';", null);
+                if (!queryGames.HasItems())
+                {
+                    return false;
+                }
+
+                var dbGame = queryGames.First();
+                var queryExtra = db.Query<DatabaseQueryExtraModes>($"SELECT * FROM modesDetailed WHERE id='{selectedItem.Description}';", null);
+                if (!queryExtra.HasItems())
+                {
+                    return false;
+                }
+
+                var dbExtraModes = queryExtra.First();
+                return ApplyCooptimusData(game, dbGame, dbExtraModes);
+            }
+        }
+
+        private bool ApplyCooptimusData(Game game, DatabaseQueryItem dbGame, DatabaseQueryExtraModes dbExtraModes)
         {
             var gameUpdated = false;
             if (game.FeatureIds == null)
@@ -277,7 +286,7 @@ namespace CooperativeModesImporter
             }
 
             var modesBasic = GetBasicModes(dbGame);
-            var modesDetailed = GetDetailedModes(dbGame);
+            var modesDetailed = GetDetailedModes(dbExtraModes);
             foreach (var coopName in modesBasic.Concat(modesDetailed))
             {
                 // Should make it faster than trying to create the same
@@ -319,16 +328,12 @@ namespace CooperativeModesImporter
             return gameUpdated;
         }
 
-        private List<GenericItemOption> GetCooptimusItemOptions(string gameName, string systemId, CooperativeDatabase database)
+        private List<GenericItemOption> GetCooptimusItemOptions(string gameName, string systemId, ISQLite db)
         {
-            var selectOptions = new List<Tuple<int, CooperativeGame>>();
-            foreach (var dbGame in database.Games)
+            var selectOptions = new List<Tuple<int, DatabaseQueryItem>>();
+            var queryResults = db.Query<DatabaseQueryItem>($"SELECT name, id, system FROM games WHERE system='{systemId}';", null);
+            foreach (var dbGame in queryResults)
             {
-                if (dbGame.System != systemId)
-                {
-                    continue;
-                }
-
                 var distance = gameName.GetLevenshteinDistance(dbGame.Name);
                 if (distance <= 5)
                 {
@@ -341,11 +346,12 @@ namespace CooperativeModesImporter
                 return new List<GenericItemOption>();
             }
 
+            // We sort the results by distance, to provide the more relevant results on top
             selectOptions.Sort((x, y) => x.Item1.CompareTo(y.Item1));
             return selectOptions.Select(x => new GenericItemOption($"{x.Item2.Name} ({x.Item2.System})", x.Item2.Id.ToString())).Take(10).ToList();
         }
 
-        private List<string> GetBasicModes(CooperativeGame dbGame)
+        private List<string> GetBasicModes(DatabaseQueryItem dbGame)
         {
             var modesBasic = new List<string>();
             if (!settings.Settings.ImportBasicModes)
@@ -353,7 +359,7 @@ namespace CooperativeModesImporter
                 return modesBasic;
             }
 
-            foreach (var mode in dbGame.Modes)
+            foreach (var mode in dbGame.Modes.Split(arraySplitter))
             {
                 if (settings.Settings.AddPrefix)
                 {
@@ -368,7 +374,7 @@ namespace CooperativeModesImporter
             return modesBasic;
         }
 
-        private List<string> GetDetailedModes(CooperativeGame dbGame)
+        private List<string> GetDetailedModes(DatabaseQueryExtraModes dbExtras)
         {
             var modesDetailed = new List<string>();
             if (!settings.Settings.ImportDetailedModes)
@@ -376,33 +382,34 @@ namespace CooperativeModesImporter
                 return modesDetailed;
             }
             
-            if (settings.Settings.ImportDetailedModeLocal && dbGame.ModesDetailed.LocalCoop != "Not Supported")
+            if (settings.Settings.ImportDetailedModeLocal && dbExtras.LocalCoop != "Not Supported")
             {
-                var modeName = GetDetailedModeFormatedStr($"Local Co-Op: {dbGame.ModesDetailed.LocalCoop}");
+                var modeName = GetDetailedModeFormatedStr($"Local Co-Op: {dbExtras.LocalCoop}");
                 modesDetailed.Add(modeName);
             }
 
-            if (settings.Settings.ImportDetailedModeOnline && dbGame.ModesDetailed.OnlineCoop != "Not Supported")
+            if (settings.Settings.ImportDetailedModeOnline && dbExtras.OnlineCoop != "Not Supported")
             {
-                var modeName = GetDetailedModeFormatedStr($"Online Co-Op: {dbGame.ModesDetailed.OnlineCoop}");
+                var modeName = GetDetailedModeFormatedStr($"Online Co-Op: {dbExtras.OnlineCoop}");
                 modesDetailed.Add(modeName);
             }
 
-            if (settings.Settings.ImportDetailedModeCombo && dbGame.ModesDetailed.ComboCoop != "Not Supported")
+            if (settings.Settings.ImportDetailedModeCombo && dbExtras.ComboCoop != "Not Supported")
             {
-                var modeName = GetDetailedModeFormatedStr($"Combo Co-Op: {dbGame.ModesDetailed.ComboCoop}");
+                var modeName = GetDetailedModeFormatedStr($"Combo Co-Op: {dbExtras.ComboCoop}");
                 modesDetailed.Add(modeName);
             }
 
-            if (settings.Settings.ImportDetailedModeLan && dbGame.ModesDetailed.LanPlay != "Not Supported")
+            if (settings.Settings.ImportDetailedModeLan && dbExtras.LanPlay != "Not Supported")
             {
-                var modeName = GetDetailedModeFormatedStr($"LAN Play: {dbGame.ModesDetailed.LanPlay}");
+                var modeName = GetDetailedModeFormatedStr($"LAN Play: {dbExtras.LanPlay}");
                 modesDetailed.Add(modeName);
             }
 
-            if (settings.Settings.ImportDetailedModeExtras && dbGame.ModesDetailed.Extras?.Count < 0)
+            var extras = dbExtras.Extras.Split(arraySplitter);
+            if (settings.Settings.ImportDetailedModeExtras && extras.HasItems())
             {
-                foreach (var extraInfo in dbGame.ModesDetailed.Extras)
+                foreach (var extraInfo in extras)
                 {
                     var modeName = GetDetailedModeFormatedStr($"Co-Op Extras: {extraInfo}");
                     modesDetailed.Add(modeName);

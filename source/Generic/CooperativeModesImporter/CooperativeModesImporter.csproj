@@ -98,12 +98,13 @@
     <Compile Include="..\..\Common\PluginsCommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="Models\CooperativeDatabase.cs" />
     <Compile Include="CooperativeModesImporter.cs" />
     <Compile Include="CooperativeModesImporterSettings.cs" />
     <Compile Include="CooperativeModesImporterSettingsView.xaml.cs">
       <DependentUpon>CooperativeModesImporterSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatabaseQueryExtraModes.cs" />
+    <Compile Include="Models\DatabaseQueryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
