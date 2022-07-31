@@ -425,6 +425,7 @@ namespace SteamWishlistDiscountNotifier
                 }
 
                 currentPage++;
+                Thread.Sleep(1000);
             }
 
             logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");

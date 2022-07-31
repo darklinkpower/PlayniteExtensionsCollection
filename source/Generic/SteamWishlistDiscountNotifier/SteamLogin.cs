@@ -12,6 +12,8 @@ namespace SteamWishlistDiscountNotifier
     // TODO Refactor and move everything data-obtain related here
     public class SteamLogin
     {
+        private static readonly ILogger logger = LogManager.GetLogger();
+
         public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)
         {
             webView.NavigateAndWait(@"https://store.steampowered.com/account/");
@@ -33,6 +35,8 @@ namespace SteamWishlistDiscountNotifier
                     return;
                 }
             }
+
+            logger.Debug($"Steam GetLoggedInSteamId64 not logged. Addres: {address}, Source:\n{webView.GetPageSource()}");
 
             status = AuthStatus.AuthRequired;
             steamId = null;
