@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,7 +22,6 @@ namespace CooperativeModesImporter
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string databasePath;
-        private readonly int currentDatabaseVersion = 6;
         private static readonly char arraySplitter = ';';
         private readonly Dictionary<string, string> specIdToSystemDictionary;
         private Dictionary<string, GameFeature> featuresDictionary;
@@ -40,7 +38,7 @@ namespace CooperativeModesImporter
                 HasSettings = true
             };
 
-            databasePath = Path.Combine(GetPluginUserDataPath(), "database.sqlite");
+            databasePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "database.sqlite");
             specIdToSystemDictionary = new Dictionary<string, string>
             {
                 //{ "3do", string.Empty },
@@ -116,30 +114,8 @@ namespace CooperativeModesImporter
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            if (settings.Settings.DatabaseVersion < currentDatabaseVersion || !FileSystem.FileExists(databasePath))
-            {
-                PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
-                {
-                    // Deprecated database with json format
-                    if (settings.Settings.DatabaseVersion <= 5)
-                    {
-                        FileSystem.DeleteFile(Path.Combine(GetPluginUserDataPath(), "database.json"));
-                    }
-                    
-                    logger.Info("Decompressing database zip file...");
-                    FileSystem.DeleteFile(databasePath);
-                    var databaseZipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "database.zip");
-                    ZipFile.ExtractToDirectory(databaseZipPath, GetPluginUserDataPath());
-                    logger.Info("Decompressed database zip file");
-                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase")));
-
-                if (settings.Settings.DatabaseVersion != currentDatabaseVersion)
-                {
-                    logger.Info($"Database updated from {settings.Settings.DatabaseVersion} to {currentDatabaseVersion}");
-                    settings.Settings.DatabaseVersion = currentDatabaseVersion;
-                    SavePluginSettings(settings.Settings);
-                }
-            }
+            // Deprecated database with json format
+            FileSystem.DeleteFile(Path.Combine(GetPluginUserDataPath(), "database.json"));
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
