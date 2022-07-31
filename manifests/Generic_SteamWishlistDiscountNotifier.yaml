@@ -62,3 +62,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Potential fix for account login out after some time'
+  - Version: 1.8
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.31_22d694cc/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_8.pext
+    Changelog:
+    - 'Updated localizations'

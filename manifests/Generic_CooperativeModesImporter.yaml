@@ -100,3 +100,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_14.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.31_22d694cc/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_15.pext
+    Changelog:
+    - 'Update Co-Optimus database used by the extension'
+    - 'Reduce memory used when games are processing'
