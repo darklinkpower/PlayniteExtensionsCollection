@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Themes to convert Details View to Grid View:</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Details View layout of theme &quot;{0}&quot; has been applied to Grid View.
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Themes zum Konvertieren der Detailansicht in Rasteransicht:</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Detailansicht Layout des Themes &quot;{0}&quot; wurde auf die Rasteransicht angewendet.
 
-Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Grid View details layout for theme &quot;{0}&quot; has been restored.
+Bitte neu starten, um die Änderungen zu übernehmen.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Das Layout der Details der Rasteransicht für das Theme &quot;{0}&quot; wurde wiederhergestellt.
 
-Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Version {0} of theme &quot;{1}&quot; is not supported.</sys:String>
+Bitte neu starten, um die Änderungen zu übernehmen.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Version {0} des Themes &quot;{1}&quot; wird nicht unterstützt.</sys:String>
 </ResourceDictionary>
