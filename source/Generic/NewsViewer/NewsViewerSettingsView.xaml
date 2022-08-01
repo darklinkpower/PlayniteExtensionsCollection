@@ -17,7 +17,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
             <Label Content="{DynamicResource LOC_NewsViewer_Settings_DescriptionMaxHeightLabel}" Margin="0,0,0,0" VerticalAlignment="Center" />
             <Slider Value="{Binding Settings.DescriptionMaxHeight, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="150" Maximum="400" VerticalAlignment="Center"
-                        TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                    TickFrequency="5" Margin="10,0,0,0" IsSnapToTickEnabled="True"/>
             <TextBlock Text="{Binding Settings.DescriptionMaxHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
         </StackPanel>
         <CheckBox x:Name="NewsEnable" IsChecked="{Binding Settings.EnableNewsControl}" Margin="0,10,0,0"
