@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">L'utilisateur est authentifié</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Authentification requise</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Aucune connexion</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Enable wishlist discount notifications</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Activer les notifications de réduction de la liste de souhaits</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervalle en minutes pour vérifier les mises à jour dans la liste de souhaits :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Ouvrir les pages du magasin dans le navigateur web au lieu du client Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
@@ -30,13 +30,13 @@ Echec de vérification de la liste d'envies Steam. L'authentification est requis
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Réduction</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Prix</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Date de parution</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date Added</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date d’ajout</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Croissant</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Décroissant</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Rechercher :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted">Seulement les articles à prix réduit</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Réduction minimale:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Minimum price:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Prix minimum :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Prix maximal :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Nombre total d'éléments :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Evaluations :</sys:String>

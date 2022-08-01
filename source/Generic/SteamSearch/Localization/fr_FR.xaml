@@ -2,14 +2,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Search_SettingsHelpLabel">Aide</sys:String>
     <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Utiliser un pays spécifique pour les recherches dans le magasin Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">Indiquer si un jeu est dans la bibliothèque dans les résultats de recherche</sys:String>
     <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Magasin Steam</sys:String>
     <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">Saisir le terme de recherche</sys:String>
     <sys:String x:Key="LOCSteam_Search_SearcherHint">Cherchez des jeux dans le magasin Steam</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Ouvrir sur le web</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Ouvrir dans Steam</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">{0}% de réduction</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Current Price: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Original Price: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Free</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Not released</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Prix Actuel : {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Prix Initial : {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearchNameSearchOnSteam">Rechercher sur Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionIndicateGameInLibrary">Dans la bibliothèque</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Gratuit</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Non publié</sys:String>
 </ResourceDictionary>

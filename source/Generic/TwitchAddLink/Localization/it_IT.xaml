@@ -5,5 +5,5 @@
     <sys:String x:Key="LOCTwitch_Add_Link_GenericGameInformationDownloadFailMessage">Errore nel download delle informazioni di gioco di &quot;{0}&quot;.</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">Url non valido.</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">Vuoi continuare l'esecuzione dell'estensione per i giochi rimanenti?</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">Link Twitch aggiunto a {0} partita(e).</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">Link Twitch aggiunto a {0} gioco/i.</sys:String>
 </ResourceDictionary>

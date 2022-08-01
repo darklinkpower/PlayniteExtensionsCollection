@@ -21,5 +21,4 @@
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">导入 Co-Op 额外数据</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">在导入游戏时向其添加 Co-Optimus 游戏链接</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">正在更新合作模式导入器数据库…</sys:String>
 </ResourceDictionary>
