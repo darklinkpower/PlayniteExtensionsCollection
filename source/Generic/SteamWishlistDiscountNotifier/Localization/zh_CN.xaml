@@ -44,4 +44,5 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">标签：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">在网络打开</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">在 Steam 打开</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Check Steam wishlist for discounts</sys:String>
 </ResourceDictionary>
