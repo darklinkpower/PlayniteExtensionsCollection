@@ -44,4 +44,5 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Теги:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Відкрити в Інтернеті</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Відкрити у Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Check Steam wishlist for discounts</sys:String>
 </ResourceDictionary>
