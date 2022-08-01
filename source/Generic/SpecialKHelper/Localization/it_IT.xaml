@@ -78,7 +78,7 @@ Percorso del profilo: {1}</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Selettore di stato Special K Helper
 
-Indica se l'estensione è autorizzata ad avviare i servizi Special K quando si avvia una partita.
+Indica se l'estensione è autorizzata ad avviare i servizi Special K quando si avvia un gioco.
 Se questo set è disabilitato, i servizi non saranno avviati a prescindere dalle impostazioni o dalla configurazione.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingEnableShowSidebarItemSwitcher">Mostra l'elemento barra laterale delle estensioni per cambiare lo stato dell'estensione</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationLabel">Posizione Special K:</sys:String>

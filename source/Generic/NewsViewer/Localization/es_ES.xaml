@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOC_NewsViewer_SettingsHelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Noticias de Steam</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_SettingsEnableNewsControlLabel">Habilitar el control de noticias de Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Altura máxima de las notas de la noticia</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Usar visor compacto de noticias al abrir noticias en el navegador</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">Si está activado, se utilizará un visor de noticias compacto en lugar de la versión completa de la página de noticias</sys:String>
@@ -9,4 +10,9 @@
     <sys:String x:Key="LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip">Requiere que los juegos tengan un enlace a la tienda de Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Abrir noticias</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Noticias</sys:String>
+
+    <sys:String x:Key="LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel">Habilitar control para mostrar jugadores en el juego</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">Jugando</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_OnlineNowCountLabel">En línea ahora</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">También mostrar datos para juegos que no son de Steam</sys:String>
 </ResourceDictionary>

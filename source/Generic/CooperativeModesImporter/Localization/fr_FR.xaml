@@ -21,5 +21,4 @@ Ajout de fonctionnalités &quot;modes coopératifs&quot; à {0} jeux.</sys:Strin
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importer des données Co-Op Extras</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Ajouter un lien de jeu Co-Optimus aux jeux lors de l'importation</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Mise à jour de la base de données d'importation des modes coopératifs…</sys:String>
 </ResourceDictionary>

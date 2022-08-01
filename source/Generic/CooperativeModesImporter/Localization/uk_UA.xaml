@@ -21,5 +21,4 @@
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Імпорт даних Co-op Extras</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Додати ігрове посилання на ігри Co-Optimus під час імпорту</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Оновлення бази даних імпортера Кооперативних Режимів…</sys:String>
 </ResourceDictionary>

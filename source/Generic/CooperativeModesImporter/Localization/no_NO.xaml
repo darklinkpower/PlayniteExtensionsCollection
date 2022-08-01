@@ -21,5 +21,4 @@ Lagt til co-op-modusfunksjoner for {0} spill.</sys:String>
     <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Importer data om co-op extras</sys:String>
 
     <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Legg til Co-Optimus-spilllenke til spill under import</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_DialogProgressMessageUpdatingDatabase">Oppdaterer databasen til Cooperative Modes Importer…</sys:String>
 </ResourceDictionary>

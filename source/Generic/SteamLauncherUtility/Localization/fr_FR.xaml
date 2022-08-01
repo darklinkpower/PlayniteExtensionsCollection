@@ -6,17 +6,17 @@
     <sys:String x:Key="LOCSteam_Launcher_UtilityMenuItemRemoveModeFilterFeatureDescription">Retirer le mode de filtre des jeux sélectionnés</sys:String>
 
     <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSetting">Mode Steam Launch Utility :</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeGlobalMode">Global Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSelectiveMode">Selective Mode</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeGlobalMode">Mode Global</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeSelectiveMode">Mode Sélectif</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityUtilityModeTooltip" xml:space="preserve">Mode global : Les actions sont effectuées sur tous les jeux Steam sauf les jeux bloqués.
 Mode sélectif : Les actions sont effectuées uniquement sur les jeux autorisés.
 
 Utilisez les fonctions du plugin à partir du sous-menu des extensions pour ajouter les fonctionnalités de filtrage.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Disable Steam web browser when starting a game</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Launch Steam in Big Picture Mode when starting a game</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Désactiver le navigateur Web Steam lorsque vous démarrez un jeu</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Lancez Steam en mode Big Picture lorsque vous démarrez un jeu</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Redémarrez Steam s'il fonctionne avec une configuration de lancement incorrecte pour le jeu lancé</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam est déjà en cours d'exécution avec la configuration de lancement «{0}»</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Additional arguments:</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Mode Bureau</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Mode Plein Écran</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Paramètres supplémentaires :</sys:String>
 </ResourceDictionary>
