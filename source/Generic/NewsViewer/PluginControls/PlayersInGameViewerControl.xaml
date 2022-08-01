@@ -6,15 +6,7 @@
              xmlns:local="clr-namespace:NewsViewer.PluginControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Visibility="{Binding ControlVisibility}">
-        <Button Background="Transparent" Padding="0" Margin="0"
-                Cursor="Hand"
-                VerticalAlignment="Center"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Left"
-                Command="{Binding OpenSteamDbGraphsCommand}"
-                Content="{Binding InGamePlayersCount}"
-                Foreground="{Binding RelativeSource={RelativeSource AncestorType=ContentControl, AncestorLevel=1}, Path=Foreground}"
-                FontSize="{Binding RelativeSource={RelativeSource AncestorType=ContentControl, AncestorLevel=1}, Path=FontSize}" />
-    </Grid>
+    <Button Visibility="{Binding ControlVisibility}"
+            Command="{Binding OpenSteamDbGraphsCommand}"
+            Content="{Binding InGamePlayersCount}" />
 </PluginUserControl>
