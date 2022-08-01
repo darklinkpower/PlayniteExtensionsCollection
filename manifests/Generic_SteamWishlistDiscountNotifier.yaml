@@ -68,3 +68,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.31_22d694cc/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_8.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.01_72724bfd/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_9.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added menu item to manually start wishlist check for discounts'

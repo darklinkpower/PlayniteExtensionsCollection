@@ -125,3 +125,10 @@ Packages:
     Changelog:
     - 'Fix failing to correctly display some news in the compact view'
     - 'Fix failing to display the news date on first game selection'
+  - Version: 1.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.01_72724bfd/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_20.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added new control to display number of current players playing the game on Steam. Must be implemented in custom themes, instructions are in extension repository'
