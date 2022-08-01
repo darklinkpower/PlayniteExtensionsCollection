@@ -89,7 +89,7 @@ namespace SteamWishlistDiscountNotifier
             if (DateTime.Now >
                  settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins))
             {
-                StartWishlistCheck();
+                StartWishlistCheckTask();
             }
         }
 
@@ -107,6 +107,24 @@ namespace SteamWishlistDiscountNotifier
                 },
                 Opened = () => {
                     return GetSteamWishlistViewerSidebarView();
+                }
+            };
+        }
+
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            return new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription"),
+                    MenuSection = "@Steam Wishlist Discount Notifier",
+                    Action = aca => {
+                        PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                        {
+                            StartWishlistCheck();
+                        }, new GlobalProgressOptions(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_ObtainingWishlistMessage"), true));
+                    }
                 }
             };
         }
@@ -203,35 +221,40 @@ namespace SteamWishlistDiscountNotifier
             return null;
         }
 
-        private void StartWishlistCheck()
+        private void StartWishlistCheckTask()
         {
             Task.Run(() =>
             {
-                wishlistCheckTimer.Stop();
-                using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
-                {
-                    SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
-                    settings.CheckedStatus = status;
-                    logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
-                    if (status == AuthStatus.Ok)
-                    {
-                        PlayniteApi.Notifications.Remove(notLoggedInNotifId);
-                        UpdateAndNotifyWishlistDiscounts(steamId, webView);
-                    }
-                    else if (status == AuthStatus.AuthRequired)
-                    {
-                        PlayniteApi.Notifications.Add(new NotificationMessage(
-                            notLoggedInNotifId,
-                            ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn"),
-                            NotificationType.Info,
-                            () => OpenSettingsView()
-                        ));
-                    }
-                }
-
-                logger.Debug($"Finished checking for wishlist");
-                wishlistCheckTimer.Start();
+                StartWishlistCheck();
             });
+        }
+
+        private void StartWishlistCheck()
+        {
+            wishlistCheckTimer.Stop();
+            using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
+            {
+                SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
+                settings.CheckedStatus = status;
+                logger.Debug($"Started checking for wishlist. Status: {status}, steamId: {steamId}");
+                if (status == AuthStatus.Ok)
+                {
+                    PlayniteApi.Notifications.Remove(notLoggedInNotifId);
+                    UpdateAndNotifyWishlistDiscounts(steamId, webView);
+                }
+                else if (status == AuthStatus.AuthRequired)
+                {
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        notLoggedInNotifId,
+                        ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn"),
+                        NotificationType.Info,
+                        () => OpenSettingsView()
+                    ));
+                }
+            }
+
+            logger.Debug($"Finished checking for wishlist");
+            wishlistCheckTimer.Start();
         }
 
         private int? UpdateAndNotifyWishlistDiscounts(string steamId, IWebView webView)
@@ -620,7 +643,7 @@ namespace SteamWishlistDiscountNotifier
             if (!FileSystem.FileExists(wishlistCachePath) || DateTime.Now >
                 settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins))
             {
-                StartWishlistCheck();
+                StartWishlistCheckTask();
             }
             else
             {
