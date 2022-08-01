@@ -109,6 +109,7 @@
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
     <Compile Include="Controls\HtmlTextView.cs" />
+    <Compile Include="Models\NumberOfPlayersResponse.cs" />
     <Compile Include="NewsViewer.cs" />
     <Compile Include="NewsViewerSettings.cs" />
     <Compile Include="NewsViewerSettingsView.xaml.cs">
@@ -116,6 +117,9 @@
     </Compile>
     <Compile Include="PluginControls\NewsViewerControl.xaml.cs">
       <DependentUpon>NewsViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PluginControls\PlayersInGameViewerControl.xaml.cs">
+      <DependentUpon>PlayersInGameViewerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -142,12 +146,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PluginControls\PlayersInGameViewerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>

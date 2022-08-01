@@ -20,11 +20,25 @@
                         TickFrequency="5" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
             <TextBlock Text="{Binding Settings.DescriptionMaxHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
         </StackPanel>
-        <CheckBox IsChecked="{Binding Settings.UseCompactWebNewsViewer}" Margin="0,10,0,0"
+        <CheckBox x:Name="NewsEnable" IsChecked="{Binding Settings.EnableNewsControl}" Margin="0,10,0,0"
+                  Content="{DynamicResource LOC_NewsViewer_SettingsEnableNewsControlLabel}" />
+        <StackPanel Margin="40,0,0,0"
+                    IsEnabled="{Binding ElementName=NewsEnable, Path=IsChecked}">
+            <CheckBox IsChecked="{Binding Settings.UseCompactWebNewsViewer}" Margin="0,10,0,0"
                   Content="{DynamicResource LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription}"
                   ToolTip="{DynamicResource LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip}" />
-        <CheckBox IsChecked="{Binding Settings.ShowSteamNewsNonSteam}" Margin="0,10,0,0"
+            <CheckBox IsChecked="{Binding Settings.ShowSteamNewsNonSteam}" Margin="0,10,0,0"
                   Content="{DynamicResource LOC_NewsViewer_Settings_ShowSteamNewsNonSteamDescription}"
                   ToolTip="{DynamicResource LOC_NewsViewer_Settings_ShowSteamNewsNonSteamTooltip}" />
+        </StackPanel>
+
+        <CheckBox x:Name="PlayersCountEnable" IsChecked="{Binding Settings.EnablePlayersCountControl}" Margin="0,15,0,0"
+                  Content="{DynamicResource LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel}" />
+        <StackPanel Margin="40,0,0,0"
+                    IsEnabled="{Binding ElementName=PlayersCountEnable, Path=IsChecked}">
+            <CheckBox IsChecked="{Binding Settings.ShowSteamPlayersNonSteam}" Margin="0,10,0,0"
+                  Content="{DynamicResource LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel}" />
+        </StackPanel>
+        
     </StackPanel>
 </UserControl>

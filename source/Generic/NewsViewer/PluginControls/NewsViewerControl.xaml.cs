@@ -345,7 +345,7 @@ namespace NewsViewer.PluginControls
                 tokenSource.Cancel();
             }
 
-            if (currentGame == null)
+            if (currentGame == null || !SettingsModel.Settings.EnableNewsControl)
             {
                 timer.Stop();
             }

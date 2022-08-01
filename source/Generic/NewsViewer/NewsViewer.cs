@@ -33,7 +33,7 @@ namespace NewsViewer
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "NewsViewerControl" },
+                ElementList = new List<string> { "NewsViewerControl", "PlayersInGameViewerControl" },
                 SourceName = "NewsViewer",
             });
 
@@ -71,6 +71,10 @@ namespace NewsViewer
             if (args.Name == "NewsViewerControl")
             {
                 return new NewsViewerControl(PlayniteApi, settings, steamApiLanguage);
+            }
+            else if (args.Name == "PlayersInGameViewerControl")
+            {
+                return new PlayersInGameViewerControl(PlayniteApi, settings);
             }
 
             return null;

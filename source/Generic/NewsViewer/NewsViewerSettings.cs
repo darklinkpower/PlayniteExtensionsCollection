@@ -31,6 +31,22 @@ namespace NewsViewer
                 OnPropertyChanged();
             }
         }
+
+        [DontSerialize]
+        private bool showSteamPlayersNonSteam = false;
+        public bool ShowSteamPlayersNonSteam { get => showSteamPlayersNonSteam; set => SetValue(ref showSteamPlayersNonSteam, value); }
+
+        [DontSerialize]
+        private bool playersCountAvailable = false;
+        [DontSerialize]
+        public bool PlayersCountAvailable { get => playersCountAvailable; set => SetValue(ref playersCountAvailable, value); }
+
+
+        private bool enableNewsControl = true;
+        public bool EnableNewsControl { get => enableNewsControl; set => SetValue(ref enableNewsControl, value); }
+
+        private bool enablePlayersCountControl = true;
+        public bool EnablePlayersCountControl { get => enablePlayersCountControl; set => SetValue(ref enablePlayersCountControl, value); }
     }
 
     public class NewsViewerSettingsViewModel : ObservableObject, ISettings
