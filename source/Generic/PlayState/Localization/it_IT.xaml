@@ -64,6 +64,8 @@ Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamen
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Porta le finestre dei giochi in primo piano quando vengono riprese</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestore stati di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostra l'elemento della barra laterale &quot;Gestore stati di gioco&quot;</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tempo di gioco:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Tempo di gioco totale:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} ore {1} minuti</sys:String>
