@@ -44,5 +44,5 @@ Error al comprobar la lista de deseados de Steam. Se requiere autenticación.</s
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Etiquetas:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Abrir en la web</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Abrir en Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Check Steam wishlist for discounts</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Comprobar la lista de deseados de Steam para ver descuentos</sys:String>
 </ResourceDictionary>
