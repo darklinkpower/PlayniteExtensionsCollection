@@ -210,23 +210,23 @@ namespace GamesSizeCalculator
             var onlyIfNewerThan = onlyIfNewerThanSetting ? settings.Settings.LastRefreshOnLibUpdate : (DateTime?)null;
 
             long size = 0;
-            if (PlayniteUtilities.IsGamePcGame(game))
+            if (game.IsInstalled)
             {
-                if (game.IsInstalled)
+                if (game.Roms.HasItems())
+                {
+                    size = GetGameRomSize(game, onlyIfNewerThan);
+                }
+                else
                 {
                     size = GetGameDirectorySize(game, onlyIfNewerThan);
                 }
-                else if (settings.Settings.GetUninstalledGameSizeFromSteam && steamSizeCalculator != null && steamAppIdUtility != null)
-                {
-                    if (Steam.IsGameSteamGame(game) || settings.Settings.GetSizeFromSteamNonSteamGames)
-                    {
-                        size = GetSteamInstallSizeOnline(game, steamSizeCalculator, steamAppIdUtility);
-                    }
-                }
             }
-            else if (game.IsInstalled && game.Roms.HasItems())
+            else if (settings.Settings.GetUninstalledGameSizeFromSteam && PlayniteUtilities.IsGamePcGame(game) && steamSizeCalculator != null && steamAppIdUtility != null)
             {
-                size = GetGameRomSize(game, onlyIfNewerThan);
+                if (Steam.IsGameSteamGame(game) || settings.Settings.GetSizeFromSteamNonSteamGames)
+                {
+                    size = GetSteamInstallSizeOnline(game, steamSizeCalculator, steamAppIdUtility);
+                }
             }
 
             if (size == 0)
@@ -281,8 +281,11 @@ namespace GamesSizeCalculator
 
         private void ProcessGamesOnLibUpdate(GlobalProgressActionArgs a)
         {
-            var games = PlayniteApi.Database.Games.Where(x => x.IsInstalled);
-            a.ProgressMaxValue = games.Count();
+            ICollection<Game> games = PlayniteApi.Database.Games;
+            if (!settings.Settings.GetUninstalledGameSizeFromSteam)
+                games = PlayniteApi.Database.Games.Where(x => x.IsInstalled).ToList();
+
+            a.ProgressMaxValue = games.Count;
 
             using (PlayniteApi.Database.BufferedUpdate())
             using (var steamClient = new SteamApiClient())
@@ -315,7 +318,7 @@ namespace GamesSizeCalculator
                             continue;
                         }
 
-                        CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, true, true);
+                        CalculateGameSize(game, null, null, true, true); //don't get steam install size online for the entire library
                     }
                 };
             }

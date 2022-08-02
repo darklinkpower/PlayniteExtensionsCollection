@@ -97,6 +97,12 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 
         private string RemoveRegionWords(string str, out string regionalWord)
         {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                regionalWord = string.Empty;
+                return string.Empty;
+            }
+
             var words = str.Split(new[] { ' ', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
             var wordsStack = new Stack<string>(words);
             var lastWord = wordsStack.Pop();
