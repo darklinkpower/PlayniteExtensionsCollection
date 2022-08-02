@@ -1,0 +1,18 @@
+﻿<PluginUserControl x:Class="PlayState.Controls.GameStateSwitchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlayState.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Button Visibility="{Binding ControlVisibility}"
+            Command="{Binding SwitchCurrentGameStatusCommand}">
+        <Grid>
+            <TextBlock Text="&#xEC72;" FontFamily="{DynamicResource FontIcoFont}"
+                       Visibility="{Binding PauseIconVisibility}" />
+            <TextBlock Text="&#xEC74;" FontFamily="{DynamicResource FontIcoFont}"
+                       Visibility="{Binding ResumeIconVisibility}" />
+        </Grid>
+    </Button>
+</PluginUserControl>

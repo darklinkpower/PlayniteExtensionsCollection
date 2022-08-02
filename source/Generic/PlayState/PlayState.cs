@@ -22,6 +22,7 @@ using PlayniteUtilitiesCommon;
 using System.Reflection;
 using System.Windows.Media;
 using StartPage.SDK;
+using PlayState.Controls;
 
 namespace PlayState
 {
@@ -57,9 +58,31 @@ namespace PlayState
                 HasSettings = true
             };
 
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
+                SourceName = "PlayState",
+                SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
+            });
+
+            AddCustomElementSupport(new AddCustomElementSupportArgs
+            {
+                ElementList = new List<string> { "GameStateSwitchControl" },
+                SourceName = "PlayState",
+            });
+
             messagesHandler = new MessagesHandler(PlayniteApi, settings, isWindows10Or11);
             playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings, messagesHandler);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
+        }
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            if (args.Name == "GameStateSwitchControl")
+            {
+                return new GameStateSwitchControl(playStateManager, PlayniteApi, settings);
+            }
+
+            return null;
         }
 
         private bool IsWindows10Or11()

@@ -56,6 +56,14 @@ namespace PlayState
         [DontSerialize]
         private bool enableNotificationMessages = true;
         public bool EnableNotificationMessages { get => enableNotificationMessages; set => SetValue(ref enableNotificationMessages, value); }
+
+        private bool enableGameStateSwitchControl = true;
+        public bool EnableGameStateSwitchControl { get => enableGameStateSwitchControl; set => SetValue(ref enableGameStateSwitchControl, value); }
+
+        [DontSerialize]
+        private bool isControlVisible = false;
+        [DontSerialize]
+        public bool IsControlVisible { get => isControlVisible; set => SetValue(ref isControlVisible, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings

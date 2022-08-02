@@ -1,10 +1,12 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayState.Controls;
 using PlayState.Enums;
 using PlayState.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,8 @@ namespace PlayState.ViewModels
 {
     public class PlayStateManagerViewModel : ObservableObject
     {
+        public event EventHandler GameStatusSwitched;
+
         private readonly IPlayniteAPI playniteApi;
         private readonly MessagesHandler messagesHandler;
         private PlayStateSettingsViewModel settings;
@@ -74,8 +78,6 @@ namespace PlayState.ViewModels
                 automaticStateUpdateTimer.Stop();
             }
         }
-
-
 
         private void UpdateAutomaticStates(object sender, EventArgs e)
         {
@@ -152,7 +154,12 @@ namespace PlayState.ViewModels
         /// </summary>
         internal PlayStateData GetDataOfGame(Game game)
         {
-            return playStateDataCollection.FirstOrDefault(x => x.Game.Id == game.Id);
+            return GetDataOfGameFromId(game.Id);
+        }
+
+        internal PlayStateData GetDataOfGameFromId(Guid id)
+        {
+            return playStateDataCollection.FirstOrDefault(x => x.Game.Id == id);
         }
 
         internal void AddPlayStateData(Game game, SuspendModes suspendMode, List<ProcessItem> gameProcesses, bool setAsCurrentGame = true)
@@ -263,6 +270,14 @@ namespace PlayState.ViewModels
             });
         }
 
+        public RelayCommand<Guid> SwitchGameStateFromIdCommand
+        {
+            get => new RelayCommand<Guid>((a) =>
+            {
+                SwitchGameStateFromId(a);
+            });
+        }
+
         public RelayCommand<PlayStateData> SwitchGameBindingStateCommand
         {
             get => new RelayCommand<PlayStateData>((a) =>
@@ -299,13 +314,18 @@ namespace PlayState.ViewModels
 
         public void SwitchGameState(Game game)
         {
-            var playstateData = GetDataOfGame(game);
+            SwitchGameStateFromId(game.Id);
+        }
+
+        public void SwitchGameStateFromId(Guid id)
+        {
+            var playstateData = GetDataOfGameFromId(id);
             if (playstateData != null)
             {
                 SwitchGameState(playstateData);
             }
         }
-        
+
         public void SwitchGameState(PlayStateData gameData)
         {
             try
@@ -366,6 +386,7 @@ namespace PlayState.ViewModels
                     }
                 }
 
+                GameStatusSwitched(null, null);
                 if (settings.Settings.BringResumedToForeground && !gameData.IsSuspended)
                 {
                     BringGameWindowToFront(gameData);
@@ -431,6 +452,34 @@ namespace PlayState.ViewModels
         internal bool IsGameBeingDetected(Game game)
         {
             return detectionDictionary.ContainsKey(game.Id);
+        }
+
+        internal bool IsGameInDataCollectionFromId(Guid id)
+        {
+            return PlayStateDataCollection.Any(x => x.Game.Id == id);
+        }
+
+        public PlayStateDataStatus GetStatusOfGame(Game game)
+        {
+            return GetStatusOfGameFromId(game.Id);
+        }
+
+        public PlayStateDataStatus GetStatusOfGameFromId(Guid id)
+        {
+            var playstateData = GetDataOfGameFromId(id);
+            if (playstateData != null)
+            {
+                if (playstateData.IsSuspended)
+                {
+                    return PlayStateDataStatus.Paused;
+                }
+                else
+                {
+                    return PlayStateDataStatus.Running;
+                }
+            }
+
+            return PlayStateDataStatus.NotFound;
         }
     }
 }
