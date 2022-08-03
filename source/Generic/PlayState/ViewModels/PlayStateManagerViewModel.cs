@@ -418,10 +418,14 @@ namespace PlayState.ViewModels
                 return;
             }
 
-            var windowHandle = playstateData.GameProcesses
-                .FirstOrDefault(x => x.Process.MainWindowHandle != null && x.Process.MainWindowHandle != IntPtr.Zero)
-                .Process.MainWindowHandle;
+            var processItem = playstateData.GameProcesses
+                .FirstOrDefault(x => x.Process.MainWindowHandle != null && x.Process.MainWindowHandle != IntPtr.Zero);
+            if (processItem == null)
+            {
+                return;
+            }
 
+            var windowHandle = processItem.Process.MainWindowHandle;
             try
             {
                 WindowsHelper.RestoreAndFocusWindow(windowHandle);
