@@ -640,8 +640,9 @@ namespace SteamWishlistDiscountNotifier
                 SavePluginSettings(settings.Settings);
             }
             
-            if (!FileSystem.FileExists(wishlistCachePath) || DateTime.Now >
-                settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins))
+            if (settings.Settings.EnableWishlistNotifications &&
+                (!FileSystem.FileExists(wishlistCachePath) || DateTime.Now >
+                settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins)))
             {
                 StartWishlistCheckTask();
             }

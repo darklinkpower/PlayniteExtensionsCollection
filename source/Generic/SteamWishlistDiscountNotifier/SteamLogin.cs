@@ -36,8 +36,7 @@ namespace SteamWishlistDiscountNotifier
                 }
             }
 
-            logger.Debug($"Steam GetLoggedInSteamId64 not logged. Addres: {address}, Source:\n{webView.GetPageSource()}");
-
+            logger.Debug($"Steam GetLoggedInSteamId64 not logged. Addres: {address}");
             status = AuthStatus.AuthRequired;
             steamId = null;
 
