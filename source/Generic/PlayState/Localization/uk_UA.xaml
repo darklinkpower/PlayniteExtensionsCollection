@@ -64,8 +64,8 @@
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Виводити вікна ігор на передній план після їх відновлення</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Менеджер PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Показувати кнопку менеджера PlayState на бічній панелі</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Показувати кнопку перемикача стану гри PlayState в переглядах</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Дозволяє призупинити та відновити поточну обрану гру, натиснувши на кнопку. Має підтримуватися темою.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Час гри:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Загальний час гри:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} годин {1} хвилин</sys:String>
