@@ -104,6 +104,14 @@
       <DependentUpon>PurchaseDateImporterSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EaLicenseService.cs" />
+    <Compile Include="Services\EpicLicenseService.cs" />
+    <Compile Include="Services\GogLicenseService.cs" />
+    <Compile Include="Services\SteamLicenseService.cs" />
+    <Compile Include="ViewModels\PurchaseDateImporterWindowViewModel.cs" />
+    <Compile Include="Views\PurchaseDateImporterWindowView.xaml.cs">
+      <DependentUpon>PurchaseDateImporterWindowView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -117,6 +125,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PurchaseDateImporterSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PurchaseDateImporterWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
