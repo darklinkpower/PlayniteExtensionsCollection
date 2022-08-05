@@ -245,6 +245,15 @@ namespace ExtraMetadataLoader
             player.Position = TimeSpan.FromSeconds(timelineSlider.Value);
         }
 
+        private void timelineSlider_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!isDragging)
+            {
+                var delta = e.GetPosition(timelineSlider).X / timelineSlider.ActualWidth;
+                player.Position = TimeSpan.FromSeconds(timelineSlider.Maximum * delta - timelineSlider.Minimum);
+            }
+        }
+
         public RelayCommand<object> VideoPlayCommand
         {
             get => new RelayCommand<object>((a) =>
