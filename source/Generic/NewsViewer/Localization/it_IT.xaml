@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOC_NewsViewer_SettingsHelpLabel">Aiuto</sys:String>
     <sys:String x:Key="LOC_NewsViewer_SidebarItemDescription_SteamNews">Notizie di Steam</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_SettingsEnableNewsControlLabel">Enable Steam news control</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_SettingsEnableNewsControlLabel">Abilita il controllo delle notizie di Steam</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_DescriptionMaxHeightLabel">Altezza massima delle note delle notizie</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerDescription">Utilizza il visualizzatore compatto di notizie quando apri le notizie nel browser</sys:String>
     <sys:String x:Key="LOC_NewsViewer_Settings_UseCompactWebNewsViewerTooltip">Se abilitato, verrà utilizzato un visualizzatore compatto delle notizie al posto della versione completa della pagina delle news</sys:String>
@@ -11,8 +11,8 @@
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_OpenNewsLabel">Apri notizie</sys:String>
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Notizie</sys:String>
 
-    <sys:String x:Key="LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel">Enable control to display players in game</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">In-Game</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_OnlineNowCountLabel">Online now</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">Also show data for games that are not from Steam</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel">Abilita il controllo per visualizzare i giocatori in gioco</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">In gioco</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_OnlineNowCountLabel">Online sdesso</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">Mostra anche i dati per i giochi che non provengono da Steam</sys:String>
 </ResourceDictionary>
