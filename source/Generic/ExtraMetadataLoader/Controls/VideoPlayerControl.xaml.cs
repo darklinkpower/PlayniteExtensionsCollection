@@ -104,6 +104,17 @@ namespace ExtraMetadataLoader
             }
         }
 
+        public double VideoPlayerVolumeLinear
+        {
+            get => Math.Sqrt(videoPlayerVolume);
+            set
+            {
+                videoPlayerVolume = value * value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(VideoPlayerVolume));
+            }
+        }
+
         private double videoPlayerVolume;
         public double VideoPlayerVolume
         {
@@ -112,6 +123,7 @@ namespace ExtraMetadataLoader
             {
                 videoPlayerVolume = value * value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(VideoPlayerVolumeLinear));
             }
         }
 
@@ -173,7 +185,6 @@ namespace ExtraMetadataLoader
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
 
-            volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(timer_Tick);
@@ -221,11 +232,6 @@ namespace ExtraMetadataLoader
 
             PlaybackTimeProgress = player.Position.ToString(@"mm\:ss") ?? "00:00";
             playbackProgressBar.Value = player.Position.TotalSeconds;
-        }
-
-        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            VideoPlayerVolume = e.NewValue;
         }
 
         private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
