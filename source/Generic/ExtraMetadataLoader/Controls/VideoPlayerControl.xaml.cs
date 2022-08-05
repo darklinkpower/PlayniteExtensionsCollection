@@ -250,7 +250,10 @@ namespace ExtraMetadataLoader
             if (!isDragging)
             {
                 var delta = e.GetPosition(timelineSlider).X / timelineSlider.ActualWidth;
-                player.Position = TimeSpan.FromSeconds(timelineSlider.Maximum * delta - timelineSlider.Minimum);
+                if (player.NaturalDuration.HasTimeSpan)
+                {
+                    player.Position = TimeSpan.FromSeconds(timelineSlider.Maximum * delta - timelineSlider.Minimum);
+                }
             }
         }
 
