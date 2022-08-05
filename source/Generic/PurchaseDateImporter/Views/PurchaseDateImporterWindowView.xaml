@@ -5,7 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PurchaseDateImporter.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="450">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </UserControl.Resources>
     <Grid Margin="20">
         <ScrollViewer>
             <StackPanel>
@@ -16,9 +19,14 @@
                               ItemsSource="{Binding LibrariesSource}" DisplayMemberPath="Value" SelectedValuePath="Key"
                               SelectedValue="{Binding SelectedLibrary}" />
                 </StackPanel>
-
-                <Button Margin="0,10,0,0" HorizontalAlignment="Left" Content="Import purchase dates as added dates"
+                
+                <Button Margin="0,20,0,0" HorizontalAlignment="Left" Content="Login"
+                        Command="{Binding LoginCommand}" />
+                
+                <Button Margin="0,20,0,0" HorizontalAlignment="Left" Content="Import purchase dates as added dates"
                         Command="{Binding ImportPurchaseDatesCommand}" />
+                <Button Margin="0,10,0,0" HorizontalAlignment="Left" Content="Export licenses"
+                        Command="{Binding ExportLicensesCommand}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

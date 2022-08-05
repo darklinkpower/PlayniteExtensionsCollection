@@ -12,11 +12,12 @@ namespace PurchaseDateImporter.Services
     {
         public static Guid PluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
         public const string LibraryName = "Steam";
+        public const string LoginUrl = @"https://store.steampowered.com/login/";
 
         public static Dictionary<string, LicenseData> GetLicensesDict()
         {
             var licensesDictionary = new Dictionary<string, LicenseData>();
-            var licenses = GetSteamLicenses();
+            var licenses = GetLicenses();
             var endStringsToRemove = GetEndStringsToRemove();
             foreach (var license in licenses)
             {
@@ -37,7 +38,7 @@ namespace PurchaseDateImporter.Services
             return licensesDictionary;
         }
 
-        public static List<LicenseData> GetSteamLicenses()
+        public static List<LicenseData> GetLicenses()
         {
             var licensesList = new List<LicenseData>();
             var licensesRegex = @"(?:<td class=""license_date_col"">)(.*?(?=<\/td>))(?:<\/td>\s+<td>)(?:\s+<div class=""free_license_remove_link"">(?:[\s\S]*?(?=<\/div>))<\/div>)?(?:\s+)([^\t]+)";
@@ -118,6 +119,7 @@ namespace PurchaseDateImporter.Services
                 " Post-Launch",
                 " CD key",
                 " Retail",
+                " RETAIL",
                 " Digital",
                 // Free
                 " - Free Giveaway",
@@ -149,6 +151,8 @@ namespace PurchaseDateImporter.Services
                 ": Assassins of Kings Enhanced Edition",
                 " - Beta",
                 " for Beta Testing",
+                " XXL Edition",
+                " Steam Store and Retail Key",
 
                 // Other
                 " (Rebellion Store)",
@@ -171,7 +175,8 @@ namespace PurchaseDateImporter.Services
                 " Free Edition - Français + Italiano + 한국어 [Learn French + Italian + Korean]",
                 ": 20 Year Celebration",
                 ": Complete Story",
-                " Free Access"
+                " Free Access",
+                " (BNET)"
             };
 
             var months = new List<string>

@@ -21,8 +21,6 @@ namespace PurchaseDateImporter
     public class PurchaseDateImporter : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        
-
         private PurchaseDateImporterSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("eb9abc51-93a4-4db6-b2c9-159eb531b0f2");
@@ -69,8 +67,8 @@ namespace PurchaseDateImporter
                 ShowMaximizeButton = true
             });
 
-            window.Height = 500;
-            window.Width = 300;
+            window.Height = 330;
+            window.Width = 450;
             window.Title = "Purchase Date Importer";
 
             window.Content = new PurchaseDateImporterWindowView();

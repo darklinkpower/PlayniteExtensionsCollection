@@ -1,4 +1,6 @@
-﻿using Playnite.SDK;
+﻿using Csv;
+using Playnite.SDK;
+using PluginsCommon;
 using PurchaseDateImporter.Models;
 using PurchaseDateImporter.Services;
 using System;
@@ -11,6 +13,7 @@ namespace PurchaseDateImporter.ViewModels
 {
     public class PurchaseDateImporterWindowViewModel : ObservableObject
     {
+        private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
         private IPlayniteAPI playniteApi;
 
         private string selectedLibrary;
@@ -32,14 +35,6 @@ namespace PurchaseDateImporter.ViewModels
             };
 
             SelectedLibrary = SteamLicenseService.LibraryName;
-        }
-
-        public RelayCommand ImportPurchaseDatesCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                ImportPurchasedDates();
-            });
         }
 
         private void ImportPurchasedDates()
@@ -110,7 +105,6 @@ namespace PurchaseDateImporter.ViewModels
                     playniteApi.Database.Games.Update(game);
                     updated++;
                 }
-
             }
 
             playniteApi.Dialogs.ShowMessage($"Changed {updated}", "Purchase Date Importer");
@@ -146,5 +140,134 @@ namespace PurchaseDateImporter.ViewModels
 
             return false;
         }
+
+        private void ExportLicenses()
+        {
+            switch (selectedLibrary)
+            {
+                case EaLicenseService.LibraryName:
+                    ExportLicenses(EaLicenseService.LibraryName, EaLicenseService.GetLicenses());
+                    break;
+                case EpicLicenseService.LibraryName:
+                    ExportLicensesIdMatch(EpicLicenseService.LibraryName, EpicLicenseService.PluginId, EpicLicenseService.GetLicensesDict());
+                    break;
+                case GogLicenseService.LibraryName:
+                    ExportLicenses(GogLicenseService.LibraryName, GogLicenseService.GetLicenses());
+                    break;
+                case SteamLicenseService.LibraryName:
+                    ExportLicensesIdMatch(SteamLicenseService.LibraryName, SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Login()
+        {
+            switch (selectedLibrary)
+            {
+                case EaLicenseService.LibraryName:
+                    OpenWebViewForLogin(EaLicenseService.LoginUrl);
+                    break;
+                case EpicLicenseService.LibraryName:
+                    OpenWebViewForLogin(EpicLicenseService.LoginUrl);
+                    break;
+                case GogLicenseService.LibraryName:
+                    OpenWebViewForLogin(GogLicenseService.LoginUrl);
+                    break;
+                case SteamLicenseService.LibraryName:
+                    OpenWebViewForLogin(SteamLicenseService.LoginUrl);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OpenWebViewForLogin(string loginUrl)
+        {
+            using (var webView = playniteApi.WebViews.CreateView(
+                new WebViewSettings
+                {
+                    WindowHeight = 600,
+                    WindowWidth = 1024,
+                    UserAgent = webViewUserAgent
+                }))
+            {
+                webView.Navigate(loginUrl);
+                webView.OpenDialog();
+            }
+        }
+
+        private void ExportLicensesIdMatch(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary)
+        {
+            if (!licensesDictionary.HasItems())
+            {
+                return;
+            }
+
+            // For libraries that we don't obtain the license Id, we use the library
+            // in Playnite to match and add it when possible
+            foreach (var game in playniteApi.Database.Games)
+            {
+                if (game.PluginId != pluginId)
+                {
+                    continue;
+                }
+
+                var matchingName = game.Name.GetMatchModifiedName();
+                if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
+                {
+                    licenseData.Id = game.GameId;
+                }
+            }
+
+            ExportLicenses(libraryName, licensesDictionary.Select(x => x.Value).ToList());
+        }
+
+        private void ExportLicenses(string libraryName, List<LicenseData> licenses)
+        {
+            if (!licenses.HasItems())
+            {
+                return;
+            }
+
+            var savePath = playniteApi.Dialogs.SaveFile("CSV|*.csv");
+            if (savePath.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var columnNames = new string[] { "Name", "Date", "Id" };
+            var rows = licenses.Select(x => new string[] { x.Name, x.PurchaseDate.ToString("u"), x.Id ?? string.Empty });
+            var csv = CsvWriter.WriteToText(columnNames, rows, ',');
+
+            FileSystem.WriteStringToFile(savePath, csv, true);
+            playniteApi.Dialogs.ShowMessage("Licenses for LIBRARYNAME exported successfully to SAVEPATH", "Purchase Date Importer");
+        }
+
+        public RelayCommand ImportPurchaseDatesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ImportPurchasedDates();
+            });
+        }
+
+        public RelayCommand ExportLicensesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ExportLicenses();
+            });
+        }
+
+        public RelayCommand LoginCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                Login();
+            });
+        }
+
     }
 }

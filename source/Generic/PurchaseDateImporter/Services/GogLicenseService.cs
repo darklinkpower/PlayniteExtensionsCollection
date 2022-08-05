@@ -13,6 +13,7 @@ namespace PurchaseDateImporter.Services
     {
         public static Guid PluginId = Guid.Parse("aebe8b7c-6dc3-4a66-af31-e7375c6b5e9e");
         public const string LibraryName = "GOG";
+        public const string LoginUrl = @"https://www.gog.com/";
 
         public static Dictionary<string, LicenseData> GetLicensesDict()
         {

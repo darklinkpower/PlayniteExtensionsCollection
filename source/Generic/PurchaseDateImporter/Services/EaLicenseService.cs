@@ -14,6 +14,7 @@ namespace PurchaseDateImporter.Services
     {
         public static Guid PluginId = Guid.Parse("85dd7072-2f20-4e76-a007-41035e390724");
         public const string LibraryName = "Origin";
+        public const string LoginUrl = @"https://www.origin.com/";
 
         public static Dictionary<string, LicenseData> GetLicensesDict()
         {

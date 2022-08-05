@@ -14,6 +14,7 @@ namespace PurchaseDateImporter.Services
     {
         public static Guid PluginId = Guid.Parse("00000002-dbd1-46c6-b5d0-b1ba559d10e4");
         public const string LibraryName = "Epic";
+        public const string LoginUrl = @"https://store.epicgames.com/";
         private const string epicUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
 
         public static Dictionary<string, LicenseData> GetLicensesDict()

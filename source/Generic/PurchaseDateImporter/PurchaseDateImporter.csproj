@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Csv, Version=2.0.84.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Csv.2.0.84\lib\net40\Csv.dll</HintPath>
+    </Reference>
     <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
