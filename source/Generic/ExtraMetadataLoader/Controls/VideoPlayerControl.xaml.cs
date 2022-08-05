@@ -104,6 +104,17 @@ namespace ExtraMetadataLoader
             }
         }
 
+        public double VideoPlayerVolumeLinear
+        {
+            get => Math.Sqrt(videoPlayerVolume);
+            set
+            {
+                videoPlayerVolume = value * value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(VideoPlayerVolume));
+            }
+        }
+
         private double videoPlayerVolume;
         public double VideoPlayerVolume
         {
@@ -112,6 +123,7 @@ namespace ExtraMetadataLoader
             {
                 videoPlayerVolume = value * value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(VideoPlayerVolumeLinear));
             }
         }
 
@@ -173,7 +185,6 @@ namespace ExtraMetadataLoader
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
 
-            volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Tick += new EventHandler(timer_Tick);
@@ -223,11 +234,6 @@ namespace ExtraMetadataLoader
             playbackProgressBar.Value = player.Position.TotalSeconds;
         }
 
-        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            VideoPlayerVolume = e.NewValue;
-        }
-
         private void timelineSlider_DragStarted(object sender, DragStartedEventArgs e)
         {
             isDragging = true;
@@ -237,6 +243,18 @@ namespace ExtraMetadataLoader
         {
             isDragging = false;
             player.Position = TimeSpan.FromSeconds(timelineSlider.Value);
+        }
+
+        private void timelineSlider_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!isDragging)
+            {
+                var delta = e.GetPosition(timelineSlider).X / timelineSlider.ActualWidth;
+                if (player.NaturalDuration.HasTimeSpan)
+                {
+                    player.Position = TimeSpan.FromSeconds(timelineSlider.Maximum * delta - timelineSlider.Minimum);
+                }
+            }
         }
 
         public RelayCommand<object> VideoPlayCommand

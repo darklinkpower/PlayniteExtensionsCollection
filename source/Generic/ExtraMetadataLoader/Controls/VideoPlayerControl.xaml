@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtraMetadataLoader"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=False, Type=local:VideoPlayerControl}">
     <Grid Name="ControlGrid" Visibility="{Binding ControlVisibility}" MinHeight="120">
         <Grid>
             <Grid.Style>
@@ -121,11 +122,12 @@
                     <Grid Name="SliderGrid" Grid.Column="0" Margin="0,0,10,0">
                         <ProgressBar x:Name="playbackProgressBar" Height="20" Padding="0" Width="{Binding ElementName=SliderGrid, Path=Width}"/>
                         <Slider x:Name="timelineSlider" Height="{Binding ElementName=playbackProgressBar, Path=ActualHeight}" IsMoveToPointEnabled="True" Width="{Binding ElementName=SliderGrid, Path=Width}" VerticalAlignment="Center"
-                                Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" />
+                                Thumb.DragStarted="timelineSlider_DragStarted" Thumb.DragCompleted="timelineSlider_DragCompleted" 
+                                PreviewMouseUp="timelineSlider_PreviewMouseUp"/>
                     </Grid>
                     <DockPanel Grid.Column="1" Visibility="{Binding IsSoundEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <TextBlock DockPanel.Dock="Left" Text="&#xEC94;" FontSize="24" FontFamily="{StaticResource FontIcoFont}" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                        <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                        <Slider DockPanel.Dock="Left" Name="volumeSlider" VerticalAlignment="Center" VerticalContentAlignment="Center" Value="{Binding VideoPlayerVolumeLinear}"
                                 Minimum="0" Maximum="1" IsSnapToTickEnabled="True" TickFrequency="0.025"/>
                     </DockPanel>
                 </Grid>
