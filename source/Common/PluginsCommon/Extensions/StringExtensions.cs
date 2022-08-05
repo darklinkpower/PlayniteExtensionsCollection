@@ -203,6 +203,26 @@ namespace System
             return HttpUtility.UrlDecode(str);
         }
 
+        public static string HtmlEncode(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            return HttpUtility.HtmlEncode(str);
+        }
+
+        public static string HtmlDecode(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            return HttpUtility.HtmlDecode(str);
+        }
+
         public static string Base64Encode(this string str)
         {
             if (string.IsNullOrEmpty(str))

@@ -1,0 +1,7 @@
+﻿Id: PurchaseDateImporter_eb9abc51-93a4-4db6-b2c9-159eb531b0f2
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: PurchaseDateImporter.dll
+Type: GenericPlugin
+Icon: icon.png

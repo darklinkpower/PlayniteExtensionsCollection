@@ -251,5 +251,65 @@ namespace PlayniteUtilitiesCommon
 
             return true;
         }
+
+        public static string GetEmbeddedJsonFromWebViewSource(string pageSource)
+        {
+            var prefixEnd = @"pre-wrap;"">";
+            var suffixStart = "</pre></body></html>";
+            var prefixRemoveEndIndex = pageSource.IndexOf(prefixEnd);
+            var suffixRemoveStartIndex = pageSource.LastIndexOf(suffixStart);
+            if (prefixRemoveEndIndex == -1 || suffixRemoveStartIndex == -1)
+            {
+                return null;
+            }
+
+            var startIndex = prefixRemoveEndIndex + prefixEnd.Length;
+            var lenght = suffixRemoveStartIndex - startIndex;
+            if (pageSource[startIndex] != '{' || pageSource[startIndex + lenght -1] != '}')
+            {
+                return null;
+            }
+
+            // We validate if the json is valid by checking if they have equal
+            // number open and close characters
+            var startBracketCount = 0;
+            var endBracketCount = 0;
+            var startObjCount = 0;
+            var endObjCount = 0;
+
+            var lastCharIndex = startIndex + lenght;
+            for (var i = startIndex; i < lastCharIndex; i++)
+            {
+                switch (pageSource[i])
+                {
+                    case '{':
+                        startBracketCount++;
+                        continue;
+                    case '}':
+                        endBracketCount++;
+                        continue;
+                    case '[':
+                        startObjCount++;
+                        continue;
+                    case ']':
+                        endObjCount++;
+                        continue;
+                    default:
+                        continue;
+                }
+            }
+
+            if (startBracketCount != endBracketCount)
+            {
+                return null;
+            }
+            else if (startObjCount != endObjCount)
+            {
+                return null;
+            }
+
+            return pageSource.Substring(startIndex, lenght);
+        }
+
     }
 }
