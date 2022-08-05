@@ -1,0 +1,7 @@
+﻿Id: SteamGameStatusDetector_c010f3aa-481f-490a-9448-52b8fd333a9a
+Name: Generic Plugin
+Author: John Doe
+Version: 1.0
+Module: SteamGameStatusDetector.dll
+Type: GenericPlugin
+Icon: icon.png

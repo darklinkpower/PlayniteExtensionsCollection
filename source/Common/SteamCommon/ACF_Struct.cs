@@ -6,7 +6,7 @@ using System.Text;
 using System.IO;
 using PluginsCommon;
 
-namespace SteamGameTransferUtility
+namespace SteamCommon
 {
     //From https://stackoverflow.com/a/42876399
     class AcfReader

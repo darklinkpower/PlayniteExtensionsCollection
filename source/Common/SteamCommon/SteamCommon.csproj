@@ -78,6 +78,7 @@
     <Compile Include="..\PluginsCommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="ACF_Struct.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Models\SteamAppDetailsResponse.cs" />
