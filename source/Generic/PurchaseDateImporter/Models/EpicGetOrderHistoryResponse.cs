@@ -10,7 +10,7 @@ namespace PurchaseDateImporter.Models
     public class EpicGetOrderHistoryResponse
     {
         [SerializationPropertyName("orders")]
-        public List<Order> Orders { get; set; }
+        public List<EpicOrder> Orders { get; set; }
 
         [SerializationPropertyName("count")]
         public long Count { get; set; }
@@ -22,7 +22,7 @@ namespace PurchaseDateImporter.Models
         public long Total { get; set; }
     }
 
-    public class Order
+    public class EpicOrder
     {
         [SerializationPropertyName("orderStatus")]
         public string OrderStatus { get; set; }
@@ -79,7 +79,7 @@ namespace PurchaseDateImporter.Models
         public string PresentmentTax { get; set; }
     }
 
-    public partial class EpicOrderItem
+    public class EpicOrderItem
     {
         [SerializationPropertyName("description")]
         public string Description { get; set; }

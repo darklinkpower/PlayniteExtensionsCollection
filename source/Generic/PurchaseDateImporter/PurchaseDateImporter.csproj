@@ -95,6 +95,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="Models\EpicGetOrderHistoryResponse.cs" />
+    <Compile Include="Models\GogOrderResponse.cs" />
     <Compile Include="Models\LicenseData.cs" />
     <Compile Include="PurchaseDateImporter.cs" />
     <Compile Include="PurchaseDateImporterSettings.cs" />

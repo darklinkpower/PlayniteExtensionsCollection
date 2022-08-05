@@ -10,11 +10,13 @@ namespace PurchaseDateImporter.Models
     {
         public string Name;
         public DateTime PurchaseDate;
+        public string Id;
 
-        public LicenseData(string name, DateTime purchaseDate)
+        public LicenseData(string name, DateTime purchaseDate, string id = null)
         {
             Name = name;
             PurchaseDate = purchaseDate;
+            Id = id;
         }
     }
 }

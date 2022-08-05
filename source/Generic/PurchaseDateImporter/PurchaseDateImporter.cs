@@ -88,7 +88,7 @@ namespace PurchaseDateImporter
                     Description = "Test",
                     MenuSection = "@Purchase Date Importer",
                     Action = a => {
-                        GetEpicLicenses();
+                        GetGogLicenses();
                     }
                 }
             };
@@ -266,7 +266,7 @@ namespace PurchaseDateImporter
         private List<string> GetEndStringsToRemove()
         {
             // Create prefix strings to remove
-            var regexStringsToRemove = new List<string>
+            var endStringsToRemove = new List<string>
             {
                 // Regions
                 " (Latam)",
@@ -382,11 +382,51 @@ namespace PurchaseDateImporter
                 foreach (var month in months)
                 {
                     var newRegexString = $" Limited Free Promotional Package - {month} {year}";
-                    regexStringsToRemove.Add(newRegexString);
+                    endStringsToRemove.Add(newRegexString);
                 }
             }
 
-            return regexStringsToRemove;
+            return endStringsToRemove;
         }
+
+        // Use Id
+        private List<LicenseData> GetGogLicenses()
+        {
+            var licensesList = new List<LicenseData>();
+            var apiTemplate = "https://www.gog.com/account/settings/orders/data?canceled=0&completed=1&in_progress=1&not_redeemed=1&page={0}&pending=1&redeemed=1";
+
+            using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
+            {
+                for (int i = 0; true; i++)
+                {
+                    var apiUrl = string.Format(apiTemplate, i);
+                    webView.NavigateAndWait(apiUrl);
+                    var pageSource = webView.GetPageSource();
+                    var json = PlayniteUtilities.GetEmbeddedJsonFromWebViewSource(webView.GetPageSource());
+                    if (json.IsNullOrEmpty())
+                    {
+                        break;
+                    }
+
+                    var response = Serialization.FromJson<GogOrderResponse>(json);
+                    if (response.Orders.Count == 0)
+                    {
+                        break;
+                    }
+
+                    foreach (var order in response.Orders)
+                    {
+                        var transactionDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(order.Date);
+                        foreach (var product in order.Products)
+                        {
+                            licensesList.Add(new LicenseData(product.Title, transactionDate, product.Id));
+                        }
+                    }
+                }
+            }
+
+            return licensesList;
+        }
+
     }
 }
