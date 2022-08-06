@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace SteamGameStatusDetector.Enums
 {
     // https://github.com/SteamDatabase/SteamTracking/blob/master/Structs/EAppState.h
+    
+    [Flags]
     public enum AppState
     {
         Invalid = 0,

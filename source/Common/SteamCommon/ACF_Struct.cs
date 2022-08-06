@@ -11,7 +11,7 @@ namespace SteamCommon
     //From https://stackoverflow.com/a/42876399
     class AcfReader
     {
-        public string FileLocation { get; private set; }
+        public string FileLocation { get; set; }
 
         public AcfReader(string FileLocation)
         {
@@ -23,6 +23,11 @@ namespace SteamCommon
             {
                 throw new FileNotFoundException("Error", FileLocation);
             }
+        }
+
+        public AcfReader()
+        {
+
         }
 
         public bool CheckIntegrity()
@@ -37,10 +42,10 @@ namespace SteamCommon
 
         public ACF_Struct ACFFileToStruct()
         {
-            return ACFFileToStruct(File.ReadAllText(FileLocation));
+            return ACFStringToStruct(File.ReadAllText(FileLocation));
         }
 
-        private ACF_Struct ACFFileToStruct(string RegionToReadIn)
+        public ACF_Struct ACFStringToStruct(string RegionToReadIn)
         {
             ACF_Struct ACF = new ACF_Struct();
             int LengthOfRegion = RegionToReadIn.Length;
@@ -68,7 +73,7 @@ namespace SteamCommon
                 else
                 {
                     int SecondItemEndBraceright = RegionToReadIn.NextEndOf('{', '}', SecondItemStartBraceleft + 1);
-                    ACF_Struct ACFS = ACFFileToStruct(RegionToReadIn.Substring(SecondItemStartBraceleft + 1, SecondItemEndBraceright - SecondItemStartBraceleft - 1));
+                    ACF_Struct ACFS = ACFStringToStruct(RegionToReadIn.Substring(SecondItemStartBraceleft + 1, SecondItemEndBraceright - SecondItemStartBraceleft - 1));
                     CurrentPos = SecondItemEndBraceright + 1;
                     ACF.SubACF.Add(FirstItem, ACFS);
                 }
