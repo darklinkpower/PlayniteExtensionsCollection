@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PurchaseDateImporter_MenuItemOpenWindowDesc">Open Purchase Date Importer window</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained" xml:space="preserve">Failed to obtain licenses for {0} library
+    <sys:String x:Key="LOC_PurchaseDateImporter_MenuItemOpenWindowDesc">Abrir ventana de Purchase Date Importer</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained" xml:space="preserve">Error al obtener licencias para la librería {0}
 
-Verify that you are logged in</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage">Changed the added date of {0} of the {1} library</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportMessage">Licenses for {0} library exported successfully to &quot;{1}&quot;</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage">Failed to export library to &quot;{0}&quot;</sys:String>
+Verifica que se ha iniciado sesión</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage">Se cambió la fecha añadida de {0} de la biblioteca {1}</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportMessage">Licencias para la biblioteca {0} exportadas con éxito a &quot;{1}&quot;</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage">Error al exportar la librería a &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnName">Nombre</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate">Fecha</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLibraryLabel">Biblioteca:</sys:String>
