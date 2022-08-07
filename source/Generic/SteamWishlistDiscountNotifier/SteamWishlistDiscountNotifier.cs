@@ -37,6 +37,7 @@ namespace SteamWishlistDiscountNotifier
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
         private const string steamWishlistUrlMask = @"https://store.steampowered.com/wishlist/profiles/{0}/wishlistdata/?p={1}";
         private const string notLoggedInNotifId = @"Steam_Wishlist_Notif_AuthRequired";
+        private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
         private readonly string pluginInstallPath;
         private readonly string wishlistCachePath;
         private readonly string bannerImagesCachePath;
@@ -185,7 +186,7 @@ namespace SteamWishlistDiscountNotifier
 
         private List<WishlistItemCache> GetSteamCompleteWishlist(GlobalProgressActionArgs a)
         {
-            using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
+            using (var webView = PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings{UserAgent = webViewUserAgent}))
             {
                 SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
                 settings.CheckedStatus = status;
@@ -232,7 +233,7 @@ namespace SteamWishlistDiscountNotifier
         private void StartWishlistCheck()
         {
             wishlistCheckTimer.Stop();
-            using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
+            using (var webView = PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
             {
                 SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
                 settings.CheckedStatus = status;
@@ -639,10 +640,10 @@ namespace SteamWishlistDiscountNotifier
                 settings.Settings.DatabaseVersion = currentDatabaseVersion;
                 SavePluginSettings(settings.Settings);
             }
-            
+
             if (settings.Settings.EnableWishlistNotifications &&
-                (!FileSystem.FileExists(wishlistCachePath) || DateTime.Now >
-                settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins)))
+                (!FileSystem.FileExists(wishlistCachePath) ||
+                  DateTime.Now > settings.Settings.LastWishlistUpdate.AddMinutes(settings.Settings.WishlistAutoCheckIntervalMins)))
             {
                 StartWishlistCheckTask();
             }

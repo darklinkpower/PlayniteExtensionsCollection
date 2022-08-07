@@ -43,6 +43,7 @@ namespace SteamWishlistDiscountNotifier
     public class SteamWishlistDiscountNotifierSettingsViewModel : ObservableObject, ISettings
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
         private readonly SteamWishlistDiscountNotifier plugin;
         private SteamWishlistDiscountNotifierSettings editingClone { get; set; }
 
@@ -67,7 +68,7 @@ namespace SteamWishlistDiscountNotifier
                     return CheckedStatus;
                 }
 
-                using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView())
+                using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
                 {
                     SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
                     CheckedStatus = status;
