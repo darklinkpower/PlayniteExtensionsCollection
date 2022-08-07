@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCReview_Viewer_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemReviewViewerDescription">Review Viewer</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_MenuItemUpdateDataDescription">Update review data of selected games</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogOverwriteChoiceMessage">Do you want to download data again for games that already have it?</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Reviews data update in progress...</sys:String>
+
+    <sys:String x:Key="LOC_PurchaseDateImporter_MenuItemOpenWindowDesc">Open Purchase Date Importer window</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained" xml:space="preserve">Failed to obtain licenses for {0} library
+
+Verify that you are logged in</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage">Changed the added date of {0} of the {1} library</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportMessage">Licenses for {0} library exported successfully to "{1}"</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage">Failed to export library to "{0}"</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnName">Name</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate">Date</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLibraryLabel">Library:</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLoginLabel">Login</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowImportDatesButtonLabel">Import purchase dates as added dates</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowExportLicensesButtonLabel">Export licenses</sys:String>
+</ResourceDictionary>

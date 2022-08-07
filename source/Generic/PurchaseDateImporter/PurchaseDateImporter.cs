@@ -50,7 +50,7 @@ namespace PurchaseDateImporter
             {
                 new MainMenuItem
                 {
-                    Description = "Open Purchase Date Importer window",
+                    Description = ResourceProvider.GetString("LOC_PurchaseDateImporter_MenuItemOpenWindowDesc"),
                     MenuSection = "@Purchase Date Importer",
                     Action = a => {
                         OpenDateImporterWindow();

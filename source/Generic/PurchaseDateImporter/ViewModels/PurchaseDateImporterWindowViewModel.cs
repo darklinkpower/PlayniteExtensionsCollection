@@ -14,6 +14,7 @@ namespace PurchaseDateImporter.ViewModels
     public class PurchaseDateImporterWindowViewModel : ObservableObject
     {
         private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
+        private static readonly ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteApi;
 
         private string selectedLibrary;
@@ -42,19 +43,19 @@ namespace PurchaseDateImporter.ViewModels
             switch (selectedLibrary)
             {
                 case EaLicenseService.LibraryName:
-                    ApplyDatesUsingNames(EaLicenseService.LibraryName,
+                    ApplyDatesToLibrary(EaLicenseService.LibraryName,
                         EaLicenseService.PluginId, EaLicenseService.GetLicensesDict(), false);
                     break;
                 case EpicLicenseService.LibraryName:
-                    ApplyDatesUsingNames(EpicLicenseService.LibraryName,
+                    ApplyDatesToLibrary(EpicLicenseService.LibraryName,
                         EpicLicenseService.PluginId, EpicLicenseService.GetLicensesDict(), true);
                     break;
                 case GogLicenseService.LibraryName:
-                    ApplyDatesUsingNames(GogLicenseService.LibraryName,
+                    ApplyDatesToLibrary(GogLicenseService.LibraryName,
                         GogLicenseService.PluginId, GogLicenseService.GetLicensesDict(), false);
                     break;
                 case SteamLicenseService.LibraryName:
-                    ApplyDatesUsingNames(SteamLicenseService.LibraryName,
+                    ApplyDatesToLibrary(SteamLicenseService.LibraryName,
                         SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict(), true, true);
                     break;
                 default:
@@ -62,11 +63,13 @@ namespace PurchaseDateImporter.ViewModels
             }
         }
 
-        private void ApplyDatesUsingNames(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary, bool useNameToCompare, bool compareOnlyDay = false)
+        private void ApplyDatesToLibrary(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary, bool useNameToCompare, bool compareOnlyDay = false)
         {
             if (!licensesDictionary.HasItems())
             {
-                playniteApi.Dialogs.ShowErrorMessage("Not logged in library name, verify", "Purchase Date Importer");
+                playniteApi.Dialogs.ShowErrorMessage(
+                    string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained"), libraryName),
+                    "Purchase Date Importer");
                 return;
             }
 
@@ -107,7 +110,9 @@ namespace PurchaseDateImporter.ViewModels
                 }
             }
 
-            playniteApi.Dialogs.ShowMessage($"Changed {updated}", "Purchase Date Importer");
+            playniteApi.Dialogs.ShowMessage(
+                string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage"), updated, libraryName), 
+                "Purchase Date Importer");
         }
 
         private bool IsDateDifferent(DateTime? dateAdded, DateTime purchaseDate, bool compareOnlyDay)
@@ -137,25 +142,30 @@ namespace PurchaseDateImporter.ViewModels
                 return true;
             }
 
-
             return false;
         }
 
         private void ExportLicenses()
         {
+            var savePath = playniteApi.Dialogs.SaveFile("CSV|*.csv");
+            if (savePath.IsNullOrEmpty())
+            {
+                return;
+            }
+
             switch (selectedLibrary)
             {
                 case EaLicenseService.LibraryName:
-                    ExportLicenses(EaLicenseService.LibraryName, EaLicenseService.GetLicenses());
+                    ExportLicensesIdMatch(EaLicenseService.LibraryName, EaLicenseService.PluginId, EaLicenseService.GetLicensesDict(), savePath, true, true, false);
                     break;
                 case EpicLicenseService.LibraryName:
-                    ExportLicensesIdMatch(EpicLicenseService.LibraryName, EpicLicenseService.PluginId, EpicLicenseService.GetLicensesDict());
+                    ExportLicenses(EpicLicenseService.LibraryName, EpicLicenseService.GetLicenses(), savePath);
                     break;
                 case GogLicenseService.LibraryName:
-                    ExportLicenses(GogLicenseService.LibraryName, GogLicenseService.GetLicenses());
+                    ExportLicenses(GogLicenseService.LibraryName, GogLicenseService.GetLicenses(), savePath);
                     break;
                 case SteamLicenseService.LibraryName:
-                    ExportLicensesIdMatch(SteamLicenseService.LibraryName, SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict());
+                    ExportLicensesIdMatch(SteamLicenseService.LibraryName, SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict(), savePath, false, false, true);
                     break;
                 default:
                     break;
@@ -198,10 +208,13 @@ namespace PurchaseDateImporter.ViewModels
             }
         }
 
-        private void ExportLicensesIdMatch(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary)
+        private void ExportLicensesIdMatch(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary, string savePath, bool matchUsingId, bool changeLicenseName, bool changeId)
         {
             if (!licensesDictionary.HasItems())
             {
+                playniteApi.Dialogs.ShowErrorMessage(
+                    string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained"), libraryName),
+                    "Purchase Date Importer");
                 return;
             }
 
@@ -214,35 +227,76 @@ namespace PurchaseDateImporter.ViewModels
                     continue;
                 }
 
-                var matchingName = game.Name.GetMatchModifiedName();
-                if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
+                
+                if (!matchUsingId)
                 {
-                    licenseData.Id = game.GameId;
+                    var matchingName = game.Name.GetMatchModifiedName();
+                    if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
+                    {
+                        if (changeLicenseName)
+                        {
+                            licenseData.Name = game.Name;
+                        }
+
+                        if (changeId)
+                        {
+                            licenseData.Id = game.GameId;
+                        }
+                    }
+                }
+                else if (licensesDictionary.TryGetValue(game.GameId, out var licenseData))
+                {
+                    if (changeLicenseName)
+                    {
+                        licenseData.Name = game.Name;
+                    }
+
+                    if (changeId)
+                    {
+                        licenseData.Id = game.GameId;
+                    }
                 }
             }
 
-            ExportLicenses(libraryName, licensesDictionary.Select(x => x.Value).ToList());
+            ExportLicenses(libraryName, licensesDictionary.Select(x => x.Value).ToList(), savePath);
         }
 
-        private void ExportLicenses(string libraryName, List<LicenseData> licenses)
+        private void ExportLicenses(string libraryName, List<LicenseData> licenses, string savePath)
         {
             if (!licenses.HasItems())
             {
+                playniteApi.Dialogs.ShowErrorMessage(
+                    string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained"), libraryName),
+                    "Purchase Date Importer");
                 return;
             }
 
-            var savePath = playniteApi.Dialogs.SaveFile("CSV|*.csv");
-            if (savePath.IsNullOrEmpty())
+            licenses.Sort((x, y) => x.PurchaseDate.CompareTo(y.PurchaseDate));
+            var columnNames = new string[]
             {
-                return;
-            }
+                ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnName"),
+                ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate"),
+                "Id"
+            };
 
-            var columnNames = new string[] { "Name", "Date", "Id" };
             var rows = licenses.Select(x => new string[] { x.Name, x.PurchaseDate.ToString("u"), x.Id ?? string.Empty });
             var csv = CsvWriter.WriteToText(columnNames, rows, ',');
 
-            FileSystem.WriteStringToFile(savePath, csv, true);
-            playniteApi.Dialogs.ShowMessage("Licenses for LIBRARYNAME exported successfully to SAVEPATH", "Purchase Date Importer");
+            try
+            {
+                FileSystem.WriteStringToFile(savePath, csv, true);
+                playniteApi.Dialogs.ShowMessage(
+                    string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicenseExportMessage"), libraryName, savePath),
+                    "Purchase Date Importer");
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Failed to export licenses to {savePath}");
+                playniteApi.Dialogs.ShowMessage(
+                    string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage"), savePath),
+                    "Purchase Date Importer");
+            }
+
         }
 
         public RelayCommand ImportPurchaseDatesCommand

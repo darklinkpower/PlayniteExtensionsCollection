@@ -1,7 +1,12 @@
-﻿Id: PurchaseDateImporter_eb9abc51-93a4-4db6-b2c9-159eb531b0f2
-Name: Generic Plugin
-Author: John Doe
-Version: 1.0
+﻿Id: Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e
+Name: Purchase Date Importer
+Author: darklinkpower
+Version: 2.12
 Module: PurchaseDateImporter.dll
 Type: GenericPlugin
-Icon: icon.png
+Icon: icon.jpg
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi

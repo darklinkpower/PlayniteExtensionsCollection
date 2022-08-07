@@ -13,19 +13,19 @@
         <ScrollViewer>
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Library:" VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource LOC_PurchaseDateImporter_ImporterWindowLibraryLabel}" VerticalAlignment="Center" />
                     <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="170"
                               Margin="10,0,0,0"
                               ItemsSource="{Binding LibrariesSource}" DisplayMemberPath="Value" SelectedValuePath="Key"
                               SelectedValue="{Binding SelectedLibrary}" />
                 </StackPanel>
-                
-                <Button Margin="0,20,0,0" HorizontalAlignment="Left" Content="Login"
+
+                <Button Margin="0,20,0,0" HorizontalAlignment="Left" Content="{DynamicResource LOC_PurchaseDateImporter_ImporterWindowLoginLabel}"
                         Command="{Binding LoginCommand}" />
-                
-                <Button Margin="0,20,0,0" HorizontalAlignment="Left" Content="Import purchase dates as added dates"
+
+                <Button Margin="0,20,0,0" HorizontalAlignment="Left" Content="{DynamicResource LOC_PurchaseDateImporter_ImporterWindowImportDatesButtonLabel}"
                         Command="{Binding ImportPurchaseDatesCommand}" />
-                <Button Margin="0,10,0,0" HorizontalAlignment="Left" Content="Export licenses"
+                <Button Margin="0,10,0,0" HorizontalAlignment="Left" Content="{DynamicResource LOC_PurchaseDateImporter_ImporterWindowExportLicensesButtonLabel}"
                         Command="{Binding ExportLicensesCommand}" />
             </StackPanel>
         </ScrollViewer>
