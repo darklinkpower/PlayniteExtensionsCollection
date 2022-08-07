@@ -73,6 +73,7 @@ namespace PurchaseDateImporter
 
             window.Content = new PurchaseDateImporterWindowView();
             window.DataContext = new PurchaseDateImporterWindowViewModel(PlayniteApi);
+            window.SizeToContent = SizeToContent.WidthAndHeight;
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
