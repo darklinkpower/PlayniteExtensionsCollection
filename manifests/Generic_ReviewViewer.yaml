@@ -241,3 +241,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.28_1dac80c6/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_36.pext
     Changelog:
     - 'Review will be scrolled to the top when it changes'
+  - Version: 2.37
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_37.pext
+    Changelog:
+    - 'Updated localizations'

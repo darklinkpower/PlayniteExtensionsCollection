@@ -1,2 +1,9 @@
 AddonId: Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e
 Packages:
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_13.pext
+    Changelog:
+    - 'Extension rewritten as a plugin and renamed extension to "Purchase Date Importer"'
+    - 'Added window that contains actions to import or export licenses'

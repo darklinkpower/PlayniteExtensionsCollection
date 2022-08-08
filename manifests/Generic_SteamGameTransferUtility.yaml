@@ -140,3 +140,9 @@ Packages:
     Changelog:
     - 'Fix failing to copy games due to failing to parse the game Steam installation manifest'
     - 'Fix failing to delete game installation directories that contain file or directories that are read only'
+  - Version: 2.22
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/SteamGameTransferUtility_c2dac2df-44c9-4f47-8555-c8d134c4f400_2_22.pext
+    Changelog:
+    - 'Updated localizations'

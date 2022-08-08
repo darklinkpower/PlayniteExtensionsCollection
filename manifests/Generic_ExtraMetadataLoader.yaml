@@ -407,3 +407,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_57.pext
     Changelog:
     - 'Fix failing to add some notifications after one has been displayed'
+  - Version: 1.58
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_58.pext
+    Changelog:
+    - 'Added support to jump to video position by clicking it in the playback bar (By felixmkmh)'
