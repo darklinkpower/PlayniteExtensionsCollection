@@ -64,6 +64,8 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Trazer as janelas de jogos em primeiro plano quando forem retomadas</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gerenciar PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostrar item na barra lateral do Gerenciador do PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tempo de jogo:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Tempo total de jogo:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hora(s) {1} minuto(s)</sys:String>

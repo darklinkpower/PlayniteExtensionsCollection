@@ -63,6 +63,8 @@
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">恢复游戏时将其窗口带到前景</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState 管理器</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">显示 PlayState 管理器侧边栏项目</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">游玩时间：</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">总游玩时间：</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} 时 {1} 分</sys:String>
