@@ -100,4 +100,5 @@ Si está desactivado, sólo el primer control podrá activar los atajos</sys:Str
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Actualizando el atajo del control en {0} segundos…</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Botones: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Gatillos: {0}</sys:String>
 </ResourceDictionary>
