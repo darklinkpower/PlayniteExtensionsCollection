@@ -31,8 +31,8 @@ body:
       required: false
   - type: textarea
     attributes:
-      label: Extensions log
-      description: "Attach Playnite's Extensions.log file. It is located in Playnite's installation directory in the portable version or in %AppData%\\Playnite (Can be pasted in Explorer) in the installed version"
+      label: Logs
+      description: "Attach Playnite's Playnite.log and Extensions.log file. To locate the folder with these files, open Playnite in Desktop Mode and go to MainMenu > About Playnite > Other and click User data directory"
     validations:
       required: true
   - type: textarea
