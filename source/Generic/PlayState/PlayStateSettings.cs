@@ -53,7 +53,7 @@ namespace PlayState
         private bool gamePadCloseHotkeyEnable = true;
         public bool GamePadCloseHotkeyEnable { get => gamePadCloseHotkeyEnable; set => SetValue(ref gamePadCloseHotkeyEnable, value); }
 
-        private bool gamePadHotkeysEnableAllControllers = true;
+        private bool gamePadHotkeysEnableAllControllers = false;
         public bool GamePadHotkeysEnableAllControllers { get => gamePadHotkeysEnableAllControllers; set => SetValue(ref gamePadHotkeysEnableAllControllers, value); }
 
 
@@ -289,12 +289,12 @@ namespace PlayState
             var pressedDpadButtons = gamePadStateHotkey.DPad.GetPressedButtonsList();
             if (pressedButtons.HasItems())
             {
-                lines.Add($"Buttons: {string.Join(", ", pressedButtons)}");
+                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyButtonsLabel"), string.Join(", ", pressedButtons)));
             }
 
             if (pressedDpadButtons.HasItems())
             {
-                lines.Add($"DPad: {string.Join(", ", pressedDpadButtons)}");
+                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyDpadLabel"), string.Join(", ", pressedDpadButtons)));
             }
 
             return string.Join("\n", lines);
@@ -363,7 +363,7 @@ namespace PlayState
         {
             if (secondsLeft > 0)
             {
-                HotkeySaveCountDownText = $"Updating GamePad hotkey in {secondsLeft} seconds...";
+                HotkeySaveCountDownText = string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyUpdateCountdown"), secondsLeft);
             }
             else
             {

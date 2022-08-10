@@ -46,9 +46,7 @@ namespace PlayState
 
         private PlayStateManagerViewModel playStateManager;
         private readonly string playstateIconImagePath;
-        private readonly Timer controllersStateCheck;
-        private MessagesHandler messagesHandler;
-        private bool isControlCheckActive;
+        private readonly MessagesHandler messagesHandler;
         private readonly bool isWindows10Or11;
         private const string featureBlacklist = "[PlayState] Blacklist";
         private const string featureSuspendPlaytime = "[PlayState] Suspend Playtime only";
@@ -79,25 +77,26 @@ namespace PlayState
             playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings, messagesHandler);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
 
-            controllersStateCheck = new Timer(120) { AutoReset = true, Enabled = true };
-            controllersStateCheck.Elapsed += ControllersStateCheck_Elapsed;
+            Task.Run(() =>
+            {
+                var controllersStateCheck = new Timer(80) { AutoReset = false, Enabled = true };
+                controllersStateCheck.Elapsed += (_, __) =>
+                {
+                    CheckControllers();
+                    controllersStateCheck.Enabled = true;
+                };
+            });
         }
 
-        private void ControllersStateCheck_Elapsed(object sender, ElapsedEventArgs e)
+        private void CheckControllers()
         {
-            if (isControlCheckActive)
-            {
-                return;
-            }
-            
-            isControlCheckActive = true;
-
             var maxCheckIndex = 0;
             if (settings.Settings.GamePadHotkeysEnableAllControllers)
             {
                 maxCheckIndex = 3;
             }
 
+            var anySignalSent = false;
             for (int i = 0; i <= maxCheckIndex; i++)
             {
                 PlayerIndex playerIndex = (PlayerIndex)i;
@@ -106,20 +105,28 @@ namespace PlayState
                 {
                     if (settings.Settings.GamePadCloseHotkeyEnable && settings.Settings.GamePadCloseHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
-                        PlayniteApi.Dialogs.ShowMessage("GamePadCloseHotkey is pressed");
+                        SendCloseSignal();
+                        anySignalSent = true;
                     }
                     else if (settings.Settings.GamePadInformationHotkeyEnable && settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
-                        PlayniteApi.Dialogs.ShowMessage("GamePadInformationHotkey is pressed");
+                        SendInformationSignal();
+                        anySignalSent = true;
                     }
                     else if (settings.Settings.GamePadSuspendHotkeyEnable && settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
-                        PlayniteApi.Dialogs.ShowMessage("GamePadSuspendHotkey is pressed");
+                        SendSuspendSignal();
+                        anySignalSent = true;
                     }
                 }
             }
 
-            isControlCheckActive = false;
+            // To prevent events from firing continously if the
+            // buttons keep being pressed
+            if (anySignalSent)
+            {
+                System.Threading.Thread.Sleep(350);
+            }
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
@@ -249,19 +256,11 @@ namespace PlayState
                         uint vkey = ((uint)lParam >> 16) & 0xFFFF;
                         if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
                         {
-                            var gameData = playStateManager.GetCurrentGameData();
-                            if (gameData != null)
-                            {
-                                playStateManager.SwitchGameState(gameData);
-                            }
+                            SendSuspendSignal();
                         }
                         else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
                         {
-                            var gameData = playStateManager.GetCurrentGameData();
-                            if (gameData != null)
-                            {
-                                messagesHandler.ShowGameStatusNotification(NotificationTypes.Information, gameData);
-                            }
+                            SendInformationSignal();
                         }
                         handled = true;
                         break;
@@ -273,6 +272,21 @@ namespace PlayState
             return IntPtr.Zero;
         }
 
+        private void SendCloseSignal()
+        {
+            playStateManager.CloseCurrentGame();
+        }
+
+        private void SendInformationSignal()
+        {
+            playStateManager.ShowCurrentGameStatusNotification();
+        }
+
+        private void SendSuspendSignal()
+        {
+            playStateManager.SwitchCurrentGameState();
+        }
+
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             if (playStateManager.IsGameBeingDetected(args.Game))
@@ -281,14 +295,6 @@ namespace PlayState
             }
             
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-            var gameData = playStateManager.GetCurrentGameData();
-
-            // Resume current game if manager is not enabled or Playnite is in Fullscreen Mode,
-            // since otherwise it won't be possible to resume it
-            if ((!settings.Settings.ShowManagerSidebarItem || PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen) && gameData != null && gameData.IsSuspended)
-            {
-                playStateManager.SwitchGameState(gameData);
-            }
 
             var game = args.Game;
             if (PlayniteUtilities.GetGameHasFeature(game, featureBlacklist, true))
@@ -302,14 +308,7 @@ namespace PlayState
             if (!suspendProcessesFeature && settings.Settings.GlobalOnlySuspendPlaytime ||
                 suspendPlaytimeOnlyFeature)
             {
-                if (settings.Settings.UseForegroundAutomaticSuspend)
-                {
-                    InvokeGameProcessesDetection(args, SuspendModes.Playtime);
-                }
-                else
-                {
-                    playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
-                }
+                InvokeGameProcessesDetection(args, SuspendModes.Playtime);
 
                 return;
             }
@@ -341,14 +340,14 @@ namespace PlayState
             // Only missing functionality will be automatic suspending when game window is not in foreground
             if (suspendMode == SuspendModes.Playtime)
             {
-                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem> { });
+                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem>());
             }
         }
 
         private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir, SuspendModes suspendMode)
         {
             // Fix for some games that take longer to start, even when already detected as running
-            await Task.Delay(15000);
+            await Task.Delay(20000);
             if (!playStateManager.IsGameBeingDetected(game))
             {
                 logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");

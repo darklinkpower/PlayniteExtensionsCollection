@@ -54,9 +54,11 @@ namespace PlayState
         /// - "information" for showing the actual status<br/>
         /// </param>
         /// </summary>
-        public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData)
+        public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData, bool ignoreEnableNotificationSetting = false)
         {
-            if (!settings.Settings.EnableNotificationMessages)
+            // Used for cases where it makes sense to always show the notification,
+            // like manually calling the information hotkey
+            if (!ignoreEnableNotificationSetting && !settings.Settings.EnableNotificationMessages)
             {
                 return;
             }

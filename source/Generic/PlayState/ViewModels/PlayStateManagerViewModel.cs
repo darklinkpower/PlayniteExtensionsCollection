@@ -326,6 +326,35 @@ namespace PlayState.ViewModels
             }
         }
 
+        public void CloseCurrentGame()
+        {
+            var gameData = GetCurrentGameData();
+            if (gameData == null || !gameData.HasProcesses)
+            {
+                return;
+            }
+
+            ProcessesHandler.CloseProcessItem(gameData.GameProcesses);
+        }
+
+        public void ShowCurrentGameStatusNotification()
+        {
+            var gameData = GetCurrentGameData();
+            if (gameData != null)
+            {
+                messagesHandler.ShowGameStatusNotification(NotificationTypes.Information, gameData, true);
+            }
+        }
+
+        public void SwitchCurrentGameState()
+        {
+            var gameData = GetCurrentGameData();
+            if (gameData != null)
+            {
+                SwitchGameState(gameData);
+            }
+        }
+
         public void SwitchGameState(PlayStateData gameData)
         {
             try

@@ -14,10 +14,19 @@ namespace PlayState
     public static class ProcessesHandler
     {
         private const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
+        private const UInt32 WM_CLOSE = 0x0010;
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtResumeProcess(IntPtr processHandle);
+        public delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         private static readonly List<string> exclusionList = new List<string>
         {
@@ -161,5 +170,54 @@ namespace PlayState
             }
         }
 
+        internal static void CloseProcessItem(List<ProcessItem> gameProcesses)
+        {
+            foreach (var processItem in gameProcesses)
+            {
+                try
+                {
+                    ExitProcessItem(processItem);
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        private static void ExitProcessItem(ProcessItem processItem)
+        {
+            if (processItem.Process == null)
+            {
+                return;
+            }
+            
+            if (processItem.Process.MainWindowHandle == null || processItem.Process.MainWindowHandle ==  IntPtr.Zero)
+            {
+                // Try closing application by sending WM_CLOSE to all child windows in all threads.
+                foreach (ProcessThread pt in processItem.Process.Threads)
+                {
+                    EnumThreadWindows((uint)pt.Id, new EnumThreadDelegate(EnumThreadCallback), IntPtr.Zero);
+                }
+            }
+            else if (processItem.Process.CloseMainWindow()) // Try to close main window
+            {
+                // Free resources used by this Process object.
+                processItem.Process.Close();
+            }
+            else
+            {
+                // Kill as a last resource :(
+                processItem.Process.Kill();
+            }
+        }
+
+        private static bool EnumThreadCallback(IntPtr hWnd, IntPtr lParam)
+        {
+            // Close the enumerated window.
+            PostMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+
+            return true;
+        }
     }
 }
