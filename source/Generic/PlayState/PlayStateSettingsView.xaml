@@ -118,6 +118,7 @@
                                     Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
                                     Command="{Binding SaveGamepadCloseHotkeyCommand}"/>
                             <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                     IsReadOnly="True"
                                      Text="{Binding GamePadCloseHotkeyCloneText}" />
                         </DockPanel>
                     </DockPanel>
@@ -133,6 +134,7 @@
                                     Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
                                     Command="{Binding SaveGamepadInformationHotkeyCommand}"/>
                             <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                     IsReadOnly="True"
                                      Text="{Binding GamePadInformationHotkeyCloneText}" />
                         </DockPanel>
                     </DockPanel>
@@ -148,6 +150,7 @@
                                     Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
                                     Command="{Binding SaveGamepadSuspendHotkeyCommand}"/>
                             <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                     IsReadOnly="True"
                                      Text="{Binding GamePadSuspendHotkeyCloneText}" />
                         </DockPanel>
                     </DockPanel>
