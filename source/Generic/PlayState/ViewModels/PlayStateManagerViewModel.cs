@@ -48,7 +48,7 @@ namespace PlayState.ViewModels
         }
 
         private ObservableCollection<PlayStateData> playStateDataCollection;
-        public ObservableCollection<PlayStateData> PlayStateDataCollection { get => playStateDataCollection; set => SetValue(ref playStateDataCollection, value); }
+        public ObservableCollection<PlayStateData> PlayStateDataCollection { get => playStateDataCollection; private set => SetValue(ref playStateDataCollection, value); }
 
         private readonly DispatcherTimer automaticStateUpdateTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
@@ -334,6 +334,17 @@ namespace PlayState.ViewModels
                 return;
             }
 
+            // To prevent issues when trying to close, we resume the game if its
+            // processes are currently suspended before closing them
+            if (gameData.SuspendMode == SuspendModes.Processes && gameData.IsSuspended)
+            {
+                var handled = SwitchGameState(gameData);
+                if (!handled)
+                {
+                    return;
+                }
+            }
+
             ProcessesHandler.CloseProcessItem(gameData.GameProcesses);
         }
 
@@ -355,8 +366,9 @@ namespace PlayState.ViewModels
             }
         }
 
-        public void SwitchGameState(PlayStateData gameData)
+        public bool SwitchGameState(PlayStateData gameData)
         {
+            var handled = false;
             try
             {
                 var processesSuspended = false;
@@ -366,7 +378,7 @@ namespace PlayState.ViewModels
                     {
                         if (gameProcess == null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
                         {
-                            return;
+                            continue;
                         }
                         if (gameData.IsSuspended)
                         {
@@ -420,6 +432,8 @@ namespace PlayState.ViewModels
                 {
                     BringGameWindowToFront(gameData);
                 }
+
+                handled = true;
             }
             catch (Exception e)
             {
@@ -430,6 +444,7 @@ namespace PlayState.ViewModels
 
             automaticStateUpdateTimer.Stop();
             automaticStateUpdateTimer.Start();
+            return handled;
         }
 
         private void BringGameWindowToFront(PlayStateData playstateData)
