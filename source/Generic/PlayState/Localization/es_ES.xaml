@@ -87,17 +87,17 @@ Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán aut
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Reanudar juego</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspender juego</sys:String>
 
-    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Atajos</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Atajos de teclado</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Atajos de controles</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Permitir a todos los controles activar atajos</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Si está activado, todos los controles podrán activar los atajos..
 
-If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
+Si está desactivado, sólo el primer control podrá activar los atajos</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspender/Reanudar:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Información:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Cerrar juego:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Actualizando el atajo del control en {0} segundos…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Botones: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
 </ResourceDictionary>
