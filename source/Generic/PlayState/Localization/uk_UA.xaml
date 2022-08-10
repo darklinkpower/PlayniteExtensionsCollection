@@ -26,8 +26,6 @@
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Дія:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Текст сповіщень</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Налаштована гаряча клавіша заморозки/поновлення:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Налаштована гаряча клавіша інформації:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показує повідомлення з поточним станом паузи та іншу інформацію про активну гру</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Змінити гарячу клавішу</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Натисніть гарячу клавішу</sys:String>
@@ -88,4 +86,18 @@
     <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Дії</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Поновити гру</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Призупинити гру</sys:String>
+
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+
+If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
 </ResourceDictionary>
