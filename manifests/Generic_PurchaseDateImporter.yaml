@@ -7,3 +7,9 @@ Packages:
     Changelog:
     - 'Extension rewritten as a plugin and renamed extension to "Purchase Date Importer"'
     - 'Added window that contains actions to import or export licenses'
+  - Version: 2.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.10_7d122a68/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_14.pext
+    Changelog:
+    - 'Updated localizations'

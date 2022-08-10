@@ -336,3 +336,10 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added Game Status switcher control to switch game states from view. Needs to be supported in custom theme'
+  - Version: 2.49
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.10_7d122a68/PlayState_2_49.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to configure controller hotkeys to close the active game, suspend/resume or display information. Only Xinput controllers are supported.'
