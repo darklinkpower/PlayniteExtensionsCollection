@@ -343,3 +343,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added support to configure controller hotkeys to close the active game, suspend/resume or display information. Only Xinput controllers are supported.'
+  - Version: 2.50
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.10_8230874f/PlayState_2_50.pext
+    Changelog:
+    - 'Added support to use Triggers in GamePad hotkeys'
