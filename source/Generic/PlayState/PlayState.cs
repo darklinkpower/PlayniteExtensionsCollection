@@ -79,11 +79,25 @@ namespace PlayState
 
             Task.Run(() =>
             {
-                var controllersStateCheck = new Timer(80) { AutoReset = false, Enabled = true };
+                var controllersStateCheck = new Timer(80) { AutoReset = false, Enabled = false };
+
+                var isTherePlayStateData = false;
+                playStateManager.PlayStateDataCollection.CollectionChanged += (_, __) =>
+                {
+                    isTherePlayStateData = playStateManager.PlayStateDataCollection.HasItems();
+                    if (isTherePlayStateData && !controllersStateCheck.Enabled)
+                    {
+                        controllersStateCheck.Enabled = true;
+                    }
+                };
+
                 controllersStateCheck.Elapsed += (_, __) =>
                 {
                     CheckControllers();
-                    controllersStateCheck.Enabled = true;
+                    if (isTherePlayStateData)
+                    {
+                        controllersStateCheck.Enabled = true;
+                    }
                 };
             });
         }
