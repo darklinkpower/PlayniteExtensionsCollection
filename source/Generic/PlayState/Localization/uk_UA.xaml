@@ -100,4 +100,5 @@
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Оновлення гарячої клавіші ґеймпада через {0} секунд…</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Кнопки: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
 </ResourceDictionary>
