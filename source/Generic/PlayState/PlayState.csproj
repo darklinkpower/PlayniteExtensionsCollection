@@ -106,6 +106,7 @@
     <Compile Include="Enums\SuspendModes.cs" />
     <Compile Include="HotkeyHelper.cs" />
     <Compile Include="MessagesHandler.cs" />
+    <Compile Include="Models\GamePadStateHotkey.cs" />
     <Compile Include="Models\PlayStateData.cs" />
     <Compile Include="Models\Hotkey.cs" />
     <Compile Include="Models\ProcessItem.cs" />
@@ -129,6 +130,8 @@
       <DependentUpon>SplashWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowsHelper.cs" />
+    <Compile Include="XInputDotNetPure\GamePad.cs" />
+    <Compile Include="XInputDotNetPure\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

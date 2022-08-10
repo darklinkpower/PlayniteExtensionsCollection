@@ -23,6 +23,9 @@ using System.Reflection;
 using System.Windows.Media;
 using StartPage.SDK;
 using PlayState.Controls;
+using System.Timers;
+using PlayState.XInputDotNetPure;
+using Playnite.SDK.Data;
 
 namespace PlayState
 {
@@ -43,7 +46,9 @@ namespace PlayState
 
         private PlayStateManagerViewModel playStateManager;
         private readonly string playstateIconImagePath;
+        private readonly Timer controllersStateCheck;
         private MessagesHandler messagesHandler;
+        private bool isControlCheckActive;
         private readonly bool isWindows10Or11;
         private const string featureBlacklist = "[PlayState] Blacklist";
         private const string featureSuspendPlaytime = "[PlayState] Suspend Playtime only";
@@ -73,6 +78,48 @@ namespace PlayState
             messagesHandler = new MessagesHandler(PlayniteApi, settings, isWindows10Or11);
             playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings, messagesHandler);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
+
+            controllersStateCheck = new Timer(120) { AutoReset = true, Enabled = true };
+            controllersStateCheck.Elapsed += ControllersStateCheck_Elapsed;
+        }
+
+        private void ControllersStateCheck_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (isControlCheckActive)
+            {
+                return;
+            }
+            
+            isControlCheckActive = true;
+
+            var maxCheckIndex = 0;
+            if (settings.Settings.GamePadHotkeysEnableAllControllers)
+            {
+                maxCheckIndex = 3;
+            }
+
+            for (int i = 0; i <= maxCheckIndex; i++)
+            {
+                PlayerIndex playerIndex = (PlayerIndex)i;
+                GamePadState gamePadState = GamePad.GetState(playerIndex);
+                if (gamePadState.IsConnected && (gamePadState.Buttons.IsAnyPressed() || gamePadState.DPad.IsAnyPressed()))
+                {
+                    if (settings.Settings.GamePadCloseHotkeyEnable && settings.Settings.GamePadCloseHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage("GamePadCloseHotkey is pressed");
+                    }
+                    else if (settings.Settings.GamePadInformationHotkeyEnable && settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage("GamePadInformationHotkey is pressed");
+                    }
+                    else if (settings.Settings.GamePadSuspendHotkeyEnable && settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage("GamePadSuspendHotkey is pressed");
+                    }
+                }
+            }
+
+            isControlCheckActive = false;
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
