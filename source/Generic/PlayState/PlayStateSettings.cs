@@ -148,7 +148,7 @@ namespace PlayState
             }
         }
 
-        private System.Timers.Timer countDownTimer = new System.Timers.Timer(2000) { AutoReset = true, Enabled = false };
+        private System.Timers.Timer countDownTimer = new System.Timers.Timer(1000) { AutoReset = true, Enabled = false };
         private GamePadStateHotkey gamePadInformationHotkeyClone;
         public GamePadStateHotkey GamePadInformationHotkeyClone
         {
@@ -295,6 +295,22 @@ namespace PlayState
             if (pressedDpadButtons.HasItems())
             {
                 lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyDpadLabel"), string.Join(", ", pressedDpadButtons)));
+            }
+
+            var enabledTriggers = new List<string>();
+            if (gamePadStateHotkey.Triggers.Left >= 0.5f)
+            {
+                enabledTriggers.Add("LeftTrigger");
+            }
+
+            if (gamePadStateHotkey.Triggers.Right >= 0.5f)
+            {
+                enabledTriggers.Add("RightTrigger");
+            }
+
+            if (enabledTriggers.HasItems())
+            {
+                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyTriggersLabel"), string.Join(", ", enabledTriggers)));
             }
 
             return string.Join("\n", lines);

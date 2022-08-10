@@ -363,7 +363,7 @@ namespace PlayState.XInputDotNetPure
         float left;
         float right;
 
-        internal GamePadTriggers(float left, float right)
+        public GamePadTriggers(float left, float right)
         {
             this.left = left;
             this.right = right;
