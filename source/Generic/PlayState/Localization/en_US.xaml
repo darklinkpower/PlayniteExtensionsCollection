@@ -90,9 +90,9 @@ Playtime suspend: Games will be suspended and resumed automatically when the gam
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, only the first controller will be allowed to activate the hotkeys.
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
 
-If disabled, all controllers will be allowed to activate the hotkeys</sys:String>
+If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
