@@ -26,8 +26,6 @@ Você pode tentar usar uma combinação diferente de Tecla de Atalho para possiv
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Ação:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Gerais</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notificações de mensagens</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredHotkeyLabel">Tecla de Atalhado Configurado para Suspenser/Retomar:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyLabel">Tecla de Atalhado Configurado para as Informações:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra uma notificação que exibe o estado atual de pausa e outras informações do jogo ativo</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Alterar Tecla de Atalhado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Pressione a Tecla de Atalho agora</sys:String>
@@ -88,4 +86,18 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
     <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Ações</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Continuar jogo</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspender jogo</sys:String>
+
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+
+If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
 </ResourceDictionary>
