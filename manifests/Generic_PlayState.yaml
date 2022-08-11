@@ -349,3 +349,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.10_8230874f/PlayState_2_50.pext
     Changelog:
     - 'Added support to use Triggers in GamePad hotkeys'
+  - Version: 2.51
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.10_c36a7630/PlayState_2_51.pext
+    Changelog:
+    - 'Improvements and fixes to game closing procedure'
+    - 'Fix not being able to use only the Guide button in GamePad hotkeys'
