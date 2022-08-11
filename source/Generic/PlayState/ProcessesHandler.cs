@@ -1,4 +1,5 @@
-﻿using PlayState.Models;
+﻿using Playnite.SDK;
+using PlayState.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,8 +14,6 @@ namespace PlayState
 {
     public static class ProcessesHandler
     {
-        private const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
-        private const UInt32 WM_CLOSE = 0x0010;
         [DllImport("ntdll.dll", PreserveSig = false)]
         public static extern void NtSuspendProcess(IntPtr processHandle);
         [DllImport("ntdll.dll", PreserveSig = false)]
@@ -27,6 +26,10 @@ namespace PlayState
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        private static readonly ILogger logger = LogManager.GetLogger();
+
+        private const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
+        private const uint WM_CLOSE = 0x0010;
 
         private static readonly List<string> exclusionList = new List<string>
         {
@@ -170,45 +173,40 @@ namespace PlayState
             }
         }
 
-        internal static void CloseProcessItem(List<ProcessItem> gameProcesses)
+        internal static void CloseProcessItems(List<ProcessItem> processItems)
         {
-            foreach (var processItem in gameProcesses)
+            foreach (var processItem in processItems)
             {
                 try
                 {
-                    ExitProcessItem(processItem);
-                }
-                catch
-                {
+                    if (processItem.Process == null)
+                    {
+                        continue;
+                    }
 
+                    if (processItem.Process.MainWindowHandle == IntPtr.Zero)
+                    {
+                        // Try closing application by sending WM_CLOSE to all child windows in all threads.
+                        foreach (ProcessThread pt in processItem.Process.Threads)
+                        {
+                            EnumThreadWindows((uint)pt.Id, new EnumThreadDelegate(EnumThreadCallback), IntPtr.Zero);
+                        }
+                    }
+                    else if (processItem.Process.CloseMainWindow()) // Try to close main window
+                    {
+                        // Free resources used by this Process object.
+                        processItem.Process.Close();
+                    }
+                    else
+                    {
+                        // Kill as a last resort :(
+                        processItem.Process.Kill();
+                    }
                 }
-            }
-        }
-
-        private static void ExitProcessItem(ProcessItem processItem)
-        {
-            if (processItem.Process == null)
-            {
-                return;
-            }
-            
-            if (processItem.Process.MainWindowHandle == null || processItem.Process.MainWindowHandle ==  IntPtr.Zero)
-            {
-                // Try closing application by sending WM_CLOSE to all child windows in all threads.
-                foreach (ProcessThread pt in processItem.Process.Threads)
+                catch (Exception e)
                 {
-                    EnumThreadWindows((uint)pt.Id, new EnumThreadDelegate(EnumThreadCallback), IntPtr.Zero);
+                    logger.Error(e, $"Error while closing process with path {processItem.ExecutablePath}");
                 }
-            }
-            else if (processItem.Process.CloseMainWindow()) // Try to close main window
-            {
-                // Free resources used by this Process object.
-                processItem.Process.Close();
-            }
-            else
-            {
-                // Kill as a last resource :(
-                processItem.Process.Kill();
             }
         }
 

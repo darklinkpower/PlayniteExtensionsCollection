@@ -220,6 +220,11 @@ namespace PlayState.ViewModels
             return GetDataOfGame(CurrentGame);
         }
 
+        private PlayStateData GetGameDataByMainWindowHandle(IntPtr handle)
+        {
+            return playStateDataCollection.FirstOrDefault(x => x.GameProcesses.Any(y => y.Process.MainWindowHandle == handle));
+        }
+
         public bool GetIsCurrentGameDifferent(Game game)
         {
             if (CurrentGame == null || CurrentGame.Id != game.Id)
@@ -328,7 +333,15 @@ namespace PlayState.ViewModels
 
         public void CloseCurrentGame()
         {
-            var gameData = GetCurrentGameData();
+            // We first look if the foreground handle is a PlayState added game
+            // to close it. If it isn't, we grab the active PlayState game
+            var foregroundHandle = WindowsHelper.GetForegroundWindowHandle();
+            var gameData = GetGameDataByMainWindowHandle(foregroundHandle);
+            if (gameData == null)
+            {
+                gameData = GetCurrentGameData();
+            }
+
             if (gameData == null || !gameData.HasProcesses)
             {
                 return;
@@ -345,7 +358,15 @@ namespace PlayState.ViewModels
                 }
             }
 
-            ProcessesHandler.CloseProcessItem(gameData.GameProcesses);
+            // To prevent issues, we only try to close the processes once. Some games
+            // also take some time to close upon the sent Close signal
+            // e.g. Spyro Reignited Trilogy, which waits until the intro sequence
+            // has finished before closing.
+            if (!gameData.CloseAttempted)
+            {
+                ProcessesHandler.CloseProcessItems(gameData.GameProcesses);
+                gameData.CloseAttempted = true;
+            }
         }
 
         public void ShowCurrentGameStatusNotification()
