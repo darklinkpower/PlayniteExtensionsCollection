@@ -369,7 +369,7 @@ namespace PlayState
             }
 
             var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
-            if (gameProcesses.Count > 0)
+            if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
                 playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
@@ -401,7 +401,7 @@ namespace PlayState
                 }
 
                 gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir);
-                if (gameProcesses.Count > 0)
+                if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
                     playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
@@ -464,7 +464,7 @@ namespace PlayState
             {
                 logger.Debug($"Custom emulator profile executable is {profile.Executable}");
                 var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
-                if (gameProcesses.Count > 0)
+                if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
                 }
