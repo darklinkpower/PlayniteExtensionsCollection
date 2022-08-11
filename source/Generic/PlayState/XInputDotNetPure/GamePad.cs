@@ -108,6 +108,7 @@ namespace PlayState.XInputDotNetPure
                    rightStick == ButtonState.Pressed ||
                    leftShoulder == ButtonState.Pressed ||
                    rightShoulder == ButtonState.Pressed ||
+                   guide == ButtonState.Pressed ||
                    a == ButtonState.Pressed ||
                    b == ButtonState.Pressed ||
                    x == ButtonState.Pressed ||
