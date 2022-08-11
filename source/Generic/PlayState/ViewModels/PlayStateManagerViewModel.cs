@@ -65,9 +65,11 @@ namespace PlayState.ViewModels
             automaticStateUpdateTimer = new DispatcherTimer();
             automaticStateUpdateTimer.Interval = TimeSpan.FromMilliseconds(4000);
             automaticStateUpdateTimer.Tick += new EventHandler(UpdateAutomaticStates);
+
+            PlayStateDataCollection.CollectionChanged += PlayStateDataCollection_CollectionChanged;
         }
 
-        private void SetAutomaticStateUpdaterTimer()
+        private void PlayStateDataCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (playStateDataCollection.HasItems())
             {
@@ -164,16 +166,21 @@ namespace PlayState.ViewModels
 
         internal void AddPlayStateData(Game game, SuspendModes suspendMode, List<ProcessItem> gameProcesses, bool setAsCurrentGame = true)
         {
+            if (!IsGameBeingDetected(game))
+            {
+                logger.Debug($"Game {game.Name} was no longer being detected when adding PlayState Data");
+                return;
+            }
+            
             if (playStateDataCollection.Any(x => x.Game.Id == game.Id))
             {
                 logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
+                return;
             }
-            else
-            {
-                playStateDataCollection.Add(new PlayStateData(game, gameProcesses, suspendMode));
-                var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
-                logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
-            }
+
+            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, suspendMode));
+            var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
+            logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
 
             RemoveGameFromDetection(game);
             if (setAsCurrentGame)
@@ -181,8 +188,6 @@ namespace PlayState.ViewModels
                 CurrentGame = game;
                 logger.Debug($"Changed current game to {game.Name}");
             }
-
-            SetAutomaticStateUpdaterTimer();
         }
 
         public void RemovePlayStateData(Game game)
@@ -206,8 +211,6 @@ namespace PlayState.ViewModels
                     IsSelectedDataCurrentGame = GetIsCurrentGameSame(SelectedData.Game);
                 }
             }
-
-            SetAutomaticStateUpdaterTimer();
         }
 
         public PlayStateData GetCurrentGameData()

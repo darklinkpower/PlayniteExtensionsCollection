@@ -334,7 +334,7 @@ namespace PlayState
         {
             var game = args.Game;
             playStateManager.AddGameToDetection(game);
-            var sourceActionHandled = ScanGameSourceAction(args.Game, args.SourceAction, suspendMode);
+            var sourceActionHandled = await ScanGameSourceAction(args.Game, args.SourceAction, suspendMode);
             if (sourceActionHandled)
             {
                 return;
@@ -441,7 +441,7 @@ namespace PlayState
             return null;
         }
 
-        private bool ScanGameSourceAction(Game game, GameAction sourceAction, SuspendModes suspendMode)
+        private async Task<bool> ScanGameSourceAction(Game game, GameAction sourceAction, SuspendModes suspendMode)
         {
             if (sourceAction == null || sourceAction.Type != GameActionType.Emulator)
             {
@@ -460,10 +460,25 @@ namespace PlayState
 
             var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
             var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
-            if (profile != null)
+            if (profile == null)
             {
-                logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-                var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
+                logger.Debug($"Failed to get Custom emulator profile");
+                return true;
+            }  
+
+            logger.Debug($"Custom emulator profile executable is {profile.Executable}");
+            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
+            if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
+            {
+                playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
+            }
+            else
+            {
+                logger.Debug($"Failed to get valid Custom emulator profile executables process items. Starting delay...");
+                await Task.Delay(20000);
+                logger.Debug($"Delay finished");
+
+                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);

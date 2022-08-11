@@ -113,6 +113,7 @@ namespace PlayState
 
         public static List<ProcessItem> GetProcessesWmiQuery(bool useExclusionList, string gameInstallDir, string exactPath = null)
         {
+            logger.Debug($"Starting GetProcessesWmiQuery. \"{useExclusionList}\", \"{gameInstallDir}\", \"{exactPath}\"");
             using (var searcher = new ManagementObjectSearcher(wmiQueryString))
             using (var results = searcher.Get())
             {
@@ -135,6 +136,7 @@ namespace PlayState
                     AddGameProcessesThatStartWithPath(useExclusionList, gameInstallDir, query, gameProcesses);
                 }
 
+                logger.Debug($"Returning {gameProcesses.Count} items: {string.Join(", ", gameProcesses.Select(x => $"({x.ExecutablePath}|{x.Process.MainWindowHandle})"))}");
                 return gameProcesses;
             }
         }
