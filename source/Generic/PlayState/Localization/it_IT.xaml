@@ -100,5 +100,5 @@ Se disabilitato, solo il primo controller sarà autorizzato ad attivare i tasti 
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Aggiornamento scorciatoia GamePad in {0} secondi…</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Pulsanti: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Attivatori: {0}</sys:String>
 </ResourceDictionary>
