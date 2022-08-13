@@ -270,6 +270,9 @@ namespace ExtraMetadataLoader
             player.Play();
             timer.Start();
             SettingsModel.Settings.IsVideoPlaying = true;
+
+            OnPropertyChanged(nameof(VideoPlayCommand));
+            OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
         public RelayCommand<object> VideoPauseCommand
@@ -285,6 +288,9 @@ namespace ExtraMetadataLoader
             player.Pause();
             timer.Stop();
             SettingsModel.Settings.IsVideoPlaying = false;
+
+            OnPropertyChanged(nameof(VideoPlayCommand));
+            OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
         public RelayCommand<object> VideoMuteCommand
@@ -347,6 +353,9 @@ namespace ExtraMetadataLoader
                 playbackProgressBar.Maximum = ts.TotalSeconds;
                 PlaybackTimeTotal = ts.ToString(@"mm\:ss");
             }
+
+            OnPropertyChanged(nameof(VideoPlayCommand));
+            OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
         private void player_MediaEnded(object sender, EventArgs e)
@@ -363,6 +372,9 @@ namespace ExtraMetadataLoader
                 timer.Stop();
                 SettingsModel.Settings.IsVideoPlaying = false;
             }
+
+            OnPropertyChanged(nameof(VideoPlayCommand));
+            OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
         public void ResetPlayerValues()
@@ -381,6 +393,9 @@ namespace ExtraMetadataLoader
             microVideoPath = null;
             trailerVideoPath = null;
             multipleSourcesAvailable = false;
+
+            OnPropertyChanged(nameof(VideoPlayCommand));
+            OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -435,6 +450,9 @@ namespace ExtraMetadataLoader
                 SettingsModel.Settings.IsVideoPlaying = false;
             }
             ControlVisibility = Visibility.Visible;
+
+            OnPropertyChanged(nameof(VideoPlayCommand));
+            OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
         public void UpdateGameVideoSources()
