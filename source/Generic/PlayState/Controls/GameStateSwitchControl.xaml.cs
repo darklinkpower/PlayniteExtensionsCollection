@@ -2,6 +2,7 @@
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using PlayState.Enums;
+using PlayState.Events;
 using PlayState.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -104,12 +105,15 @@ namespace PlayState.Controls
             }
 
             playStateManagerViewModel.PlayStateDataCollection.CollectionChanged += PlayStateDataCollection_CollectionChanged;
-            playStateManagerViewModel.GameStatusSwitched += PlayStateManagerViewModel_GameStatusSwitched;
+            playStateManagerViewModel.OnGameStatusSwitched += PlayStateManagerViewModel_GameStatusSwitched;
         }
 
-        private void PlayStateManagerViewModel_GameStatusSwitched(object sender, EventArgs e)
+        private void PlayStateManagerViewModel_GameStatusSwitched(object sender, OnGameStatusSwitchedArgs e)
         {
-            UpdateData();
+            if (e.PlayStateData.Game.Id == currentGameId)
+            {
+                UpdateData();
+            }
         }
 
         private void PlayStateDataCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

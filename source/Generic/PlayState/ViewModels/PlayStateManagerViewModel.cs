@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using PlayState.Controls;
 using PlayState.Enums;
+using PlayState.Events;
 using PlayState.Models;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,12 @@ namespace PlayState.ViewModels
 {
     public class PlayStateManagerViewModel : ObservableObject
     {
-        public event EventHandler GameStatusSwitched;
+        public event EventHandler<OnGameStatusSwitchedArgs> OnGameStatusSwitched;
 
         private readonly IPlayniteAPI playniteApi;
         private readonly MessagesHandler messagesHandler;
         private PlayStateSettingsViewModel settings;
         public PlayStateSettingsViewModel Settings { get => settings; private set => SetValue(ref settings, value); }
-        private Guid CurrentDetectionId = Guid.Empty;
         private Game currentGame;
         public Game CurrentGame { get => currentGame; private set => SetValue(ref currentGame, value); }
         private bool isSelectedDataCurrentGame = false;
@@ -451,7 +451,12 @@ namespace PlayState.ViewModels
                     }
                 }
 
-                GameStatusSwitched(null, null);
+                var statusSwitchedArgs = new OnGameStatusSwitchedArgs
+                {
+                    PlayStateData = gameData
+                };
+
+                OnGameStatusSwitched?.Invoke(this, statusSwitchedArgs);
                 if (settings.Settings.BringResumedToForeground && !gameData.IsSuspended)
                 {
                     BringGameWindowToFront(gameData);

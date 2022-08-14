@@ -104,6 +104,7 @@
     <Compile Include="Enums\GameStateSwitchControlState.cs" />
     <Compile Include="Enums\NotificationTypes.cs" />
     <Compile Include="Enums\SuspendModes.cs" />
+    <Compile Include="Events\OnGameStatusSwitchedArgs.cs" />
     <Compile Include="HotkeyHelper.cs" />
     <Compile Include="MessagesHandler.cs" />
     <Compile Include="Models\GamePadStateHotkey.cs" />
