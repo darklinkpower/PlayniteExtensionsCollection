@@ -24,8 +24,8 @@ Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le pro
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Reprise du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information :</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Action :</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Le jeu a été ajouté à PlayState !</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Vous pouvez commencer à utiliser le jeu avec l'extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Général</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messages de notification</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Affiche une notification qui affiche l'état de pause en cours et les autres informations de la jeu actif</sys:String>
@@ -64,7 +64,7 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Remettre les fenêtres des jeux au premier plan quand ils sont relancés</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestionnaire de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Afficher l'élément de la barre latérale du gestionnaire de PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Afficher le bouton de statut de jeu PlayState dans les vues</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Temps de jeu :</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Temps total de jeu :</sys:String>
@@ -89,15 +89,15 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Reprendre le jeu</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspendre le jeu</sys:String>
 
-    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Raccourcis</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Raccourcis clavier</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Raccourcis GamePad</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Autoriser tous les contrôleurs à activer les raccourcis</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Si activé, tous les contrôleurs seront autorisés à activer les raccourcis.
 
-If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
+Si désactivé, seul le premier contrôleur sera autorisé à activer les raccourcis</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspendre/Reprendre :</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information :</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
