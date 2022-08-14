@@ -46,13 +46,18 @@
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Віднімати час, коли гра була припинена від ігрового часу</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Допомагає вести облік часу у грі точніше, не враховуючи час, поки гра знаходиться в призупиненому стані</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Виконувати лише для ігор, якими не керують плагіни бібліотек</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Стиль сповіщення:</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Глобальний режим призупинення:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Вказує, який режим призупинення повинен застосовуватися до ігор.
 
 Цей режим також можна змінювати окремо для кожної гри за допомогою функцій розширень, доступних у меню розширень.</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Режим призупинення:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Показувати сповіщення Windows замість вікна сповіщень Playnite</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Увімкнувши цю опцію, ігри показуватимуть сповіщення Windows замість вікна сповіщень Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Показувати час гри поточної сесії у сповіщенні</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Показувати загальний час гри у сповіщенні</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Автоматично призупиняти ігри, якщо вони не є активним вікном</sys:String>
@@ -77,8 +82,8 @@
 
     <sys:String x:Key="LOCPlayStateYesLabel">Так</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">Ні</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Процеси</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Тільки час у грі</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Гра</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Змінити стан гри</sys:String>
