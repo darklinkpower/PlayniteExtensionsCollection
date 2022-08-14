@@ -418,4 +418,4 @@ Packages:
     ReleaseDate: 2022-08-14
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.14_c4480f42/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_59.pext
     Changelog:
-    - 'Fix video player buttons being disabled until clicked'
+    - 'Fix video player buttons being disabled until clicked (By felixmkmh)'
