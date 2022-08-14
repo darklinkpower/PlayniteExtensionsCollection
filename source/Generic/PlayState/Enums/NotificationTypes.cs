@@ -7,5 +7,6 @@
         Suspended = 3,
         PlaytimeSuspended = 4,
         Information = 5,
+        DataAdded = 6
     }
 }

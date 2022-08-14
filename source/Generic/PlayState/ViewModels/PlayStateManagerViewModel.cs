@@ -178,11 +178,14 @@ namespace PlayState.ViewModels
                 return;
             }
 
-            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, suspendMode));
+            var playStateData = new PlayStateData(game, gameProcesses, suspendMode);
+            playStateDataCollection.Add(playStateData);
             var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
             logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
 
             RemoveGameFromDetection(game);
+
+            messagesHandler.ShowGameStatusNotification(NotificationTypes.DataAdded, playStateData, true);
             if (setAsCurrentGame)
             {
                 CurrentGame = game;

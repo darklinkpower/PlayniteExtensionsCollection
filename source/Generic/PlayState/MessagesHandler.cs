@@ -64,6 +64,7 @@ namespace PlayState
             }
             
             var sb = new StringBuilder();
+            var canAddCurrentPlaytimeLine = true;
             switch (status)
             {
                 case NotificationTypes.Resumed: // for resuming process and playtime
@@ -107,11 +108,16 @@ namespace PlayState
                         }
                     }
                     break;
+                case NotificationTypes.DataAdded: // When game is added to PlayState data
+                    sb.AppendLine(ResourceProvider.GetString("LOCPlayState_StatusPlayStateDataAddedMessage"));
+                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusExtensionUsageAvailableMessage"));
+                    canAddCurrentPlaytimeLine = false;
+                    break;
                 default:
                     break;
             }
 
-            if (settings.Settings.NotificationShowSessionPlaytime)
+            if (canAddCurrentPlaytimeLine && settings.Settings.NotificationShowSessionPlaytime)
             {
                 sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime(gameData))}");
             }
