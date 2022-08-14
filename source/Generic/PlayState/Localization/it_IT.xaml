@@ -24,6 +24,8 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tempo di gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informazioni:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Azione:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Generale</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messaggi di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra una notifica che mostra lo stato di pausa corrente e altre informazioni del gioco attivo</sys:String>
