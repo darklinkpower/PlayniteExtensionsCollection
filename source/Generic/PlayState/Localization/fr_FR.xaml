@@ -24,6 +24,8 @@ Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le pro
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Reprise du temps de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information :</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Action :</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Général</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messages de notification</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Affiche une notification qui affiche l'état de pause en cours et les autres informations de la jeu actif</sys:String>
