@@ -17,8 +17,7 @@ namespace PlayState.Models
         private Stopwatch stopwatch;
         public Stopwatch Stopwatch { get => stopwatch; set => SetValue(ref stopwatch, value); }
         public List<ProcessItem> GameProcesses { get; set; }
-        private bool hasProcesses = true;
-        public bool HasProcesses { get => hasProcesses; set => SetValue(ref hasProcesses, value); }
+        public bool HasProcesses => GameProcesses?.HasItems() == true;
 
         private bool isSuspended = true;
         public bool IsSuspended { get => isSuspended; set => SetValue(ref isSuspended, value); }
@@ -35,7 +34,6 @@ namespace PlayState.Models
             Stopwatch = new Stopwatch();
             GameProcesses = gameProcesses;
             IsSuspended = false;
-            HasProcesses = gameProcesses.HasItems();
             SuspendMode = suspendMode;
         }
     }
