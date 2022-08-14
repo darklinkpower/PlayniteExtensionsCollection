@@ -356,3 +356,18 @@ Packages:
     Changelog:
     - 'Improvements and fixes to game closing procedure'
     - 'Fix not being able to use only the Guide button in GamePad hotkeys'
+  - Version: 2.52
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.14_c4480f42/PlayState_2_52.pext
+    Changelog:
+    - 'A notification will now be displayed when game is added to PlayState'
+    - 'Added separate options for Playtime Mode and Processes Mode to indicate if they should be automatically suspended'
+    - 'Games that have already been added to PlayState will react to setting changes and change Suspend mode if applicable'
+    - 'General improvements to notification messages descriptions'
+    - 'General improvements to settings UI'
+    - 'Fix error when suspending or resuming games'
+    - 'Fix failing to work with RPCS3 emulator'
+    - 'Fix failing to work with UWP games'
+    - 'Misc fixes and Improvements'
+    - 'Updated localizations'
