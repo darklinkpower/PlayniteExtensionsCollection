@@ -24,6 +24,8 @@
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">游玩时间已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">信息：</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">指令：</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">常规</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">通知消息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">显示一个通知，展示当前游戏的暂停状态和其他信息</sys:String>
@@ -44,12 +46,18 @@
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">当游戏停止时从游玩时间中扣除其挂起的时间。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">通过仅保留游戏未挂起时的时间并计入游戏的游玩时间，来帮助得到更精确的游玩时间值。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">仅对不被库插件管理的游戏执行</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">仅挂起全局（而非游戏进程）的游玩时间记录</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">通过启用此选项，当使用所配置的快捷键时，所有游戏都不会被挂起，且当游戏停止时，只有时间会被记录（以从游玩时间中扣除）。
+    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Notification style:</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
 
-这也可以为每个游戏单独启用。如果您想要在该游戏中启用它，只需要添加一个“[PlayState] Suspend playtime only”的功能特色。如果您想要该游戏中启用禁用它，只需要添加一个叫做“[PlayState] Suspend processes”的功能特色。</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">显示原生的 Windows 通知而不是 Playnite 通知窗口</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">启用此选项，游戏将显示原生 Windows 通知，而不是 Playnite 通知窗口。</sys:String>
+This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">在通知消息中显示会话游玩时间</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">在通知消息中显示总游玩时间</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">如果游戏不是活动窗口，自动挂起游戏</sys:String>
@@ -74,8 +82,8 @@
 
     <sys:String x:Key="LOCPlayStateYesLabel">是</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">否</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">进程</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">仅游玩时间</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">游戏</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">切换游戏状态</sys:String>
