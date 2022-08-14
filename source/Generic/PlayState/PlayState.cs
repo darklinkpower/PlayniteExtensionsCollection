@@ -430,6 +430,10 @@ namespace PlayState
                 if (gameInstallDir.IsNullOrEmpty() || !FileSystem.DirectoryExists(gameInstallDir))
                 {
                     playStateManager.RemoveGameFromDetection(game);
+                    return null;
+                }
+                else
+                {
                     return gameInstallDir;
                 }
             }
@@ -464,7 +468,7 @@ namespace PlayState
             {
                 logger.Debug($"Failed to get Custom emulator profile");
                 return true;
-            }  
+            }
 
             logger.Debug($"Custom emulator profile executable is {profile.Executable}");
             var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
