@@ -24,6 +24,8 @@
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">游玩时间已恢复</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">信息：</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">指令：</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">常规</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">通知消息</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">显示一个通知，展示当前游戏的暂停状态和其他信息</sys:String>
