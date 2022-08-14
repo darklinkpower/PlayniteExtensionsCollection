@@ -24,8 +24,8 @@
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Час у грі відновлено</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Інформація:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Дія:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Гру було додано до PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Ви можете почати використовувати гру з розширенням</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Загальне</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Текст сповіщень</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показує повідомлення з поточним станом паузи та іншу інформацію про активну гру</sys:String>
