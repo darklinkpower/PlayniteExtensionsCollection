@@ -24,6 +24,8 @@ Du kan prøve å bruke en annen hurtigtastkombinasjon for å løse problemet</sy
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Spilletid er gjenopptatt</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informasjon:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Handling:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notification messages</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Viser et varsel som gir deg gjeldende pausestatus og annen informasjon om det aktive spillet</sys:String>
