@@ -52,7 +52,7 @@ namespace PlayState.Models
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(settingsModel.Settings.GlobalOnlySuspendPlaytime))
+            if (e.PropertyName == nameof(settingsModel.Settings.GlobalSuspendMode))
             {
                 SetSuspendMode();
             }
@@ -71,7 +71,7 @@ namespace PlayState.Models
                 return;
             }
 
-            suspendMode = settingsModel.Settings.GlobalOnlySuspendPlaytime ? SuspendModes.Playtime : SuspendModes.Processes;
+            suspendMode = settingsModel.Settings.GlobalSuspendMode;
         }
 
         public void Dispose()

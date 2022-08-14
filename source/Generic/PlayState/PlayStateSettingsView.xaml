@@ -4,8 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:enums="clr-namespace:PlayState.Enums;assembly=PlayState"
+             xmlns:con="clr-namespace:PlayState.Converters"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="SuspendModes" MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:SuspendModes"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <con:SuspendModeToStringConverter x:Key="SuspendModeToStringConverter" />
+    </UserControl.Resources>
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderGeneral}">
             <ScrollViewer>
@@ -26,6 +38,23 @@
                               ToolTip="{DynamicResource LOCPlayState_SettingShowGameStateSwitchControlTooltip}"
                               IsChecked="{Binding Settings.EnableGameStateSwitchControl}"
                               Margin="0,10,0,0"/>
+
+                    <Separator Margin="0,10,0,0" />
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                        <TextBlock Text="{DynamicResource LOCPlayState_Setting_GlobalSuspendModeLabel}"
+                                   ToolTip="{DynamicResource LOCPlayState_Setting_GlobalSuspendModeTooltp}"
+                                   VerticalAlignment="Center" />
+                        <ComboBox SelectedValue="{Binding Settings.GlobalSuspendMode, Mode=TwoWay}"
+                                  MinWidth="140"
+                                  ItemsSource="{Binding Source={StaticResource SuspendModes}}"
+                                  Margin="10,0,0,0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource SuspendModeToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
                     
                     <CheckBox x:Name="CbBringResumedToForeground"
                               Content="{DynamicResource LOCPlayState_SettingBringResumedToForeground}"
@@ -38,7 +67,7 @@
                     <TextBlock Text="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}" TextWrapping="Wrap"
                                Margin="40,10,0,0"
                                IsEnabled="{Binding ElementName=CbUseForegroundAutomaticSuspend, Path=IsChecked}"/>
-
+                    
                     <CheckBox x:Name="CbSubstractOnSuspended" Content="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel}"
                               IsChecked="{Binding Settings.SubstractSuspendedPlaytimeOnStopped}"
                               ToolTip="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip}"
@@ -46,9 +75,6 @@
                     <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="40,0,0,0">
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
                                   IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
-                        <CheckBox Content="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel}"
-                                  ToolTip="{DynamicResource LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip}"
-                                  IsChecked="{Binding Settings.GlobalOnlySuspendPlaytime}" Margin="0,0,0,10"/>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using PlayState.Enums;
 using PlayState.Models;
 using PlayState.XInputDotNetPure;
 using PluginsCommon;
@@ -66,9 +67,7 @@ namespace PlayState
         [DontSerialize]
         private bool substractOnlyNonLibraryGames = true;
         public bool SubstractOnlyNonLibraryGames { get => substractOnlyNonLibraryGames; set => SetValue(ref substractOnlyNonLibraryGames, value); }
-        [DontSerialize]
-        private bool globalOnlySuspendPlaytime = false;
-        public bool GlobalOnlySuspendPlaytime { get => globalOnlySuspendPlaytime; set => SetValue(ref globalOnlySuspendPlaytime, value); }
+
         [DontSerialize]
         private bool globalShowWindowsNotificationsStyle = true;
         public bool GlobalShowWindowsNotificationsStyle { get => globalShowWindowsNotificationsStyle; set => SetValue(ref globalShowWindowsNotificationsStyle, value); }
@@ -100,6 +99,10 @@ namespace PlayState
         private bool isControlVisible = false;
         [DontSerialize]
         public bool IsControlVisible { get => isControlVisible; set => SetValue(ref isControlVisible, value); }
+
+
+        private SuspendModes globalSuspendMode = SuspendModes.Processes;
+        public SuspendModes GlobalSuspendMode { get => globalSuspendMode; set => SetValue(ref globalSuspendMode, value); } 
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
