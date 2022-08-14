@@ -317,24 +317,14 @@ namespace PlayState
                 return;
             }
 
-            var suspendPlaytimeOnlyFeature = PlayniteUtilities.GetGameHasFeature(game, featureSuspendPlaytime, true);
-            var suspendProcessesFeature = PlayniteUtilities.GetGameHasFeature(game, featureSuspendProcesses, true);
-            if (!suspendProcessesFeature && settings.Settings.GlobalOnlySuspendPlaytime ||
-                suspendPlaytimeOnlyFeature)
-            {
-                InvokeGameProcessesDetection(args, SuspendModes.Playtime);
-
-                return;
-            }
-
-            InvokeGameProcessesDetection(args, SuspendModes.Processes);
+            InvokeGameProcessesDetection(args);
         }
 
-        private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args, SuspendModes suspendMode)
+        private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
         {
             var game = args.Game;
             playStateManager.AddGameToDetection(game);
-            var sourceActionHandled = await ScanGameSourceAction(args.Game, args.SourceAction, suspendMode);
+            var sourceActionHandled = await ScanGameSourceAction(args.Game, args.SourceAction);
             if (sourceActionHandled)
             {
                 return;
@@ -343,22 +333,17 @@ namespace PlayState
             var gameInstallDir = GetGameInstallDir(args.Game);
             if (!gameInstallDir.IsNullOrEmpty())
             {
-                var scanHandled = await ScanGameProcessesFromDirectoryAsync(game, gameInstallDir, suspendMode);
+                var scanHandled = await ScanGameProcessesFromDirectoryAsync(game, gameInstallDir);
                 if (scanHandled)
                 {
                     return;
                 }
             }
 
-            // If no processes were found, playtime suspend mode can still be added as fallback.
-            // Only missing functionality will be automatic suspending when game window is not in foreground
-            if (suspendMode == SuspendModes.Playtime)
-            {
-                playStateManager.AddPlayStateData(game, SuspendModes.Playtime, new List<ProcessItem>());
-            }
+            playStateManager.AddPlayStateData(game, new List<ProcessItem>());
         }
 
-        private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir, SuspendModes suspendMode)
+        private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir)
         {
             // Fix for some games that take longer to start, even when already detected as running
             await Task.Delay(20000);
@@ -372,7 +357,7 @@ namespace PlayState
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
-                playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
+                playStateManager.AddPlayStateData(game, gameProcesses);
                 return true;
             }
 
@@ -404,7 +389,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
-                    playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
+                    playStateManager.AddPlayStateData(game, gameProcesses);
                     return true;
                 }
                 else
@@ -445,7 +430,7 @@ namespace PlayState
             return null;
         }
 
-        private async Task<bool> ScanGameSourceAction(Game game, GameAction sourceAction, SuspendModes suspendMode)
+        private async Task<bool> ScanGameSourceAction(Game game, GameAction sourceAction)
         {
             if (sourceAction == null || sourceAction.Type != GameActionType.Emulator)
             {
@@ -474,7 +459,7 @@ namespace PlayState
             var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
-                playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
+                playStateManager.AddPlayStateData(game, gameProcesses);
             }
             else
             {
@@ -485,7 +470,7 @@ namespace PlayState
                 gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
-                    playStateManager.AddPlayStateData(game, suspendMode, gameProcesses);
+                    playStateManager.AddPlayStateData(game, gameProcesses);
                 }
             }
 

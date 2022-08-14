@@ -162,7 +162,7 @@ namespace PlayState.ViewModels
             return playStateDataCollection.FirstOrDefault(x => x.Game.Id == id);
         }
 
-        internal void AddPlayStateData(Game game, SuspendModes suspendMode, List<ProcessItem> gameProcesses, bool setAsCurrentGame = true)
+        internal void AddPlayStateData(Game game, List<ProcessItem> gameProcesses, bool setAsCurrentGame = true)
         {
             if (!IsGameBeingDetected(game))
             {
@@ -176,7 +176,7 @@ namespace PlayState.ViewModels
                 return;
             }
 
-            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, suspendMode));
+            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, settings));
             var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
             logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
 
@@ -199,6 +199,7 @@ namespace PlayState.ViewModels
 
         public void RemovePlayStateData(PlayStateData gameData)
         {
+            gameData.Dispose();
             playStateDataCollection.Remove(gameData);
             logger.Debug($"Data for game {gameData.Game.Name} with id {gameData.Game.Id} was removed");
             if (CurrentGame == gameData.Game)
