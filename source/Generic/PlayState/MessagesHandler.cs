@@ -5,6 +5,7 @@ using PlayState.Enums;
 using PlayState.Models;
 using PlayState.ViewModels;
 using PlayState.Views;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -168,7 +169,7 @@ namespace PlayState
                 if (!gameData.Game.BackgroundImage.IsNullOrEmpty())
                 {
                     var backgroundImage = playniteApi.Database.GetFullFilePath(gameData.Game.BackgroundImage);
-                    if (!backgroundImage.IsNullOrEmpty())
+                    if (!backgroundImage.IsNullOrEmpty() && FileSystem.FileExists(backgroundImage))
                     {
                         toastNotification.AddHeroImage(new Uri(backgroundImage));
                     }
