@@ -46,11 +46,11 @@ Para uma melhor compatibilidade com os jogos, é necessário alguns ajustes na c
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract o tempo que o jogo foi suspenso do tempo de jogo quando ele é parado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Ajuda a manter um valor de tempo de jogo mais preciso apenas mantendo o tempo que o jogo não foi suspenso para o tempo de jogo</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Executa somente para jogos que não são gerenciados por plugins de biblioteca</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Suspender a contagem de tempo de jogo globalmente e não os processos do jogo</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Ativando esta opção, todos os jogos não serão suspensos ao usar a tecla de atalhado configurada e apenas o tempo será contado para substract do tempo de jogo quando ele parar.
-    
-Isso também pode ser aplicado individualmente por jogo, adicionando uma funcionalidade chamada &quot;[PlayState] Suspender apenas o tempo de jogo&quot; a um jogo se quiser ter essa configuração ativada nesse jogo,
-ou uma função nomeada &quot;[PlayState] Suspender processos&quot;, se você quiser que ela esteja desabilitada nesse jogo.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
+
+This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Mostrar notificações nativas do Windows ao invés da janela de notificações do Playnite</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">A Ativar esta opção, os jogos mostrarão notificações nativas do Windows em vez da janela de notificação do Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Exibir tempo de reprodução da sessão na mensagem de notificação</sys:String>
