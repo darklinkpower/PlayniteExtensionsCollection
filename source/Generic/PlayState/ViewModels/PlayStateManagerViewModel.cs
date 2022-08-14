@@ -20,7 +20,6 @@ namespace PlayState.ViewModels
         public event EventHandler<OnGameStatusSwitchedArgs> OnGameStatusSwitched;
 
         private readonly IPlayniteAPI playniteApi;
-        private readonly MessagesHandler messagesHandler;
         private PlayStateSettingsViewModel settings;
         public PlayStateSettingsViewModel Settings { get => settings; private set => SetValue(ref settings, value); }
         private Game currentGame;
@@ -56,10 +55,9 @@ namespace PlayState.ViewModels
         private Dictionary<IntPtr, string> openWindows;
         private bool openWindowsUpdated = false;
 
-        public PlayStateManagerViewModel(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, MessagesHandler messagesHandler)
+        public PlayStateManagerViewModel(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings)
         {
             this.playniteApi = playniteApi;
-            this.messagesHandler = messagesHandler;
             Settings = playStateSettings;
             PlayStateDataCollection = new ObservableCollection<PlayStateData>();
             automaticStateUpdateTimer = new DispatcherTimer();
@@ -178,14 +176,11 @@ namespace PlayState.ViewModels
                 return;
             }
 
-            var playStateData = new PlayStateData(game, gameProcesses, suspendMode);
-            playStateDataCollection.Add(playStateData);
+            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, suspendMode));
             var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
             logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
 
             RemoveGameFromDetection(game);
-
-            messagesHandler.ShowGameStatusNotification(NotificationTypes.DataAdded, playStateData, true);
             if (setAsCurrentGame)
             {
                 CurrentGame = game;
@@ -378,10 +373,18 @@ namespace PlayState.ViewModels
         public void ShowCurrentGameStatusNotification()
         {
             var gameData = GetCurrentGameData();
-            if (gameData != null)
+            if (gameData == null)
             {
-                messagesHandler.ShowGameStatusNotification(NotificationTypes.Information, gameData, true);
+                return;
             }
+
+            var statusSwitchedArgs = new OnGameStatusSwitchedArgs
+            {
+                PlayStateData = gameData,
+                NotificationType = NotificationTypes.Information
+            };
+
+            OnGameStatusSwitched?.Invoke(this, statusSwitchedArgs);
         }
 
         public void SwitchCurrentGameState()
@@ -420,35 +423,20 @@ namespace PlayState.ViewModels
                     processesSuspended = true;
                 }
 
+                var notificationType = NotificationTypes.None;
                 if (processesSuspended || gameData.SuspendMode == SuspendModes.Playtime)
                 {
                     if (gameData.IsSuspended)
                     {
                         gameData.IsSuspended = false;
-                        if (processesSuspended)
-                        {
-                            messagesHandler.ShowGameStatusNotification(NotificationTypes.Resumed, gameData);
-                        }
-                        else
-                        {
-                            messagesHandler.ShowGameStatusNotification(NotificationTypes.PlaytimeResumed, gameData);
-                        }
-
+                        notificationType = processesSuspended ? NotificationTypes.Resumed : NotificationTypes.PlaytimeResumed;
                         gameData.Stopwatch.Stop();
                         logger.Debug($"Game {gameData.Game.Name} resumed in mode {gameData.SuspendMode}");
                     }
                     else
                     {
                         gameData.IsSuspended = true;
-                        if (processesSuspended)
-                        {
-                            messagesHandler.ShowGameStatusNotification(NotificationTypes.Suspended, gameData);
-                        }
-                        else
-                        {
-                            messagesHandler.ShowGameStatusNotification(NotificationTypes.PlaytimeSuspended, gameData);
-                        }
-
+                        notificationType = processesSuspended ? NotificationTypes.Suspended : NotificationTypes.PlaytimeSuspended;
                         gameData.Stopwatch.Start();
                         logger.Debug($"Game {gameData.Game.Name} suspended in mode {gameData.SuspendMode}");
                     }
@@ -456,7 +444,8 @@ namespace PlayState.ViewModels
 
                 var statusSwitchedArgs = new OnGameStatusSwitchedArgs
                 {
-                    PlayStateData = gameData
+                    PlayStateData = gameData,
+                    NotificationType = notificationType
                 };
 
                 OnGameStatusSwitched?.Invoke(this, statusSwitchedArgs);

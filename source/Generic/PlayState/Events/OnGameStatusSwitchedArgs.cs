@@ -1,4 +1,5 @@
-﻿using PlayState.Models;
+﻿using PlayState.Enums;
+using PlayState.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,10 @@ namespace PlayState.Events
         /// Gets PlayState Data initiating the event.
         /// </summary>
         public PlayStateData PlayStateData { get; internal set; }
+
+        /// <summary>
+        /// Gets the Notification Type initiating the event.
+        /// </summary>
+        public NotificationTypes NotificationType { get; internal set; }
     }
 }

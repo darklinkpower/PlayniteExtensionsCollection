@@ -20,15 +20,13 @@ namespace PlayState
         private readonly IPlayniteAPI playniteApi;
         private readonly PlayStateSettingsViewModel settings;
         private Window currentSplashWindow;
-        private readonly bool isWindows10Or11;
         private readonly SplashWindowViewModel splashWindowViewModel;
         private readonly DispatcherTimer timer;
 
-        public MessagesHandler(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, bool isWindows10Or11)
+        public MessagesHandler(IPlayniteAPI playniteApi, PlayStateSettingsViewModel playStateSettings, PlayStateManagerViewModel playStateManagerViewModel)
         {
             this.playniteApi = playniteApi;
             settings = playStateSettings;
-            this.isWindows10Or11 = isWindows10Or11;
             splashWindowViewModel = new SplashWindowViewModel();
 
             timer = new DispatcherTimer();
@@ -42,6 +40,27 @@ namespace PlayState
                     currentSplashWindow.Topmost = false;
                 }
             };
+
+            playStateManagerViewModel.OnGameStatusSwitched += PlayStateManagerViewModel_OnGameStatusSwitched;
+            playStateManagerViewModel.PlayStateDataCollection.CollectionChanged += PlayStateDataCollection_CollectionChanged;
+        }
+
+        private void PlayStateDataCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems == null || e.NewItems.Count == 0)
+            {
+                return;
+            }
+
+            foreach (PlayStateData newData in e.NewItems)
+            {
+                ShowGameStatusNotification(NotificationTypes.DataAdded, newData);
+            }
+        }
+
+        private void PlayStateManagerViewModel_OnGameStatusSwitched(object sender, Events.OnGameStatusSwitchedArgs e)
+        {
+            ShowGameStatusNotification(e.NotificationType, e.PlayStateData);
         }
 
         /// <summary>
@@ -54,10 +73,23 @@ namespace PlayState
         /// - "information" for showing the actual status<br/>
         /// </param>
         /// </summary>
-        public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData, bool ignoreEnableNotificationSetting = false)
+        public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData)
         {
             // Used for cases where it makes sense to always show the notification,
             // like manually calling the information hotkey
+            var ignoreEnableNotificationSetting = false;
+            switch (status)
+            {
+                case NotificationTypes.DataAdded:
+                    ignoreEnableNotificationSetting = true;
+                    break;
+                case NotificationTypes.Information:
+                    ignoreEnableNotificationSetting = true;
+                    break;
+                default:
+                    break;
+            }
+
             if (!ignoreEnableNotificationSetting && !settings.Settings.EnableNotificationMessages)
             {
                 return;
@@ -127,7 +159,7 @@ namespace PlayState
             }
 
             var notificationMessage = sb.ToString();
-            if (settings.Settings.GlobalShowWindowsNotificationsStyle && isWindows10Or11)
+            if (settings.Settings.GlobalShowWindowsNotificationsStyle && settings.IsWindows10Or11)
             {
                 var toastNotification = new ToastContentBuilder()
                     .AddText(gameData.Game.Name) // First AddText field will act as a title

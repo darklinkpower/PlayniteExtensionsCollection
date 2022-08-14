@@ -73,8 +73,8 @@ namespace PlayState
                 SourceName = "PlayState",
             });
 
-            messagesHandler = new MessagesHandler(PlayniteApi, settings, isWindows10Or11);
-            playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings, messagesHandler);
+            playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings);
+            messagesHandler = new MessagesHandler(PlayniteApi, settings, playStateManager);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
 
             Task.Run(() =>
