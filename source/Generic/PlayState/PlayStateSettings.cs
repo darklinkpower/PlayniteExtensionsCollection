@@ -82,6 +82,10 @@ namespace PlayState
         [DontSerialize]
         private bool useForegroundAutomaticSuspend = false;
         public bool UseForegroundAutomaticSuspend { get => useForegroundAutomaticSuspend; set => SetValue(ref useForegroundAutomaticSuspend, value); }
+
+        private bool useForegroundAutomaticSuspendPlaytimeMode = false;
+        public bool UseForegroundAutomaticSuspendPlaytimeMode { get => useForegroundAutomaticSuspendPlaytimeMode; set => SetValue(ref useForegroundAutomaticSuspendPlaytimeMode, value); }
+
         [DontSerialize]
         private bool bringResumedToForeground = false;
         public bool BringResumedToForeground { get => bringResumedToForeground; set => SetValue(ref bringResumedToForeground, value); }

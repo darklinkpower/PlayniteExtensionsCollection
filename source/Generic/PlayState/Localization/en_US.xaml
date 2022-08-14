@@ -81,8 +81,8 @@ Playtime suspend: Games will be suspended and resumed automatically when the gam
 
     <sys:String x:Key="LOCPlayStateYesLabel">Yes</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime Only</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>

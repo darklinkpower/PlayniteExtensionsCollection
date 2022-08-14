@@ -81,7 +81,8 @@ namespace PlayState.ViewModels
 
         private void UpdateAutomaticStates(object sender, EventArgs e)
         {
-            if (!settings.Settings.UseForegroundAutomaticSuspend || !playStateDataCollection.HasItems())
+            if ((!settings.Settings.UseForegroundAutomaticSuspend &&
+                !settings.Settings.UseForegroundAutomaticSuspendPlaytimeMode) || !playStateDataCollection.HasItems())
             {
                 return;
             }
@@ -94,7 +95,25 @@ namespace PlayState.ViewModels
                 {
                     continue;
                 }
-                
+
+                switch (playstateData.SuspendMode)
+                {
+                    case SuspendModes.Playtime:
+                        if (!settings.Settings.UseForegroundAutomaticSuspendPlaytimeMode)
+                        {
+                            continue;
+                        }
+                        break;
+                    case SuspendModes.Processes:
+                        if (!settings.Settings.UseForegroundAutomaticSuspend)
+                        {
+                            continue;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
                 var isForeground = playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle);
                 if (!playstateData.HasBeenInForeground && isForeground)
                 {
