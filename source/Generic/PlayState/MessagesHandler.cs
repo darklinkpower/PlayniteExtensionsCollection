@@ -117,33 +117,38 @@ namespace PlayState
                     sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
                     break;
                 case NotificationTypes.Information:
-                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusInformationMessage")} ");
-                    if (gameData.IsSuspended)
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_Setting_SuspendModeLabel")} ");
+                    if (gameData.SuspendMode == SuspendModes.Processes)
                     {
-                        if (gameData.SuspendMode == SuspendModes.Processes)
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
-                        }
-                        else
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
-                        }
+                        sb.AppendLine(ResourceProvider.GetString("LOCPlayState_SuspendModeProcesses"));
                     }
                     else
                     {
-                        if (gameData.SuspendMode == SuspendModes.Processes)
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
-                        }
-                        else
-                        {
-                            sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
-                        }
+                        sb.AppendLine(ResourceProvider.GetString("LOCPlayState_SuspendModePlaytime"));
+                    }
+
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_Setting_SuspendStatusLabel")} ");
+                    if (gameData.IsSuspended)
+                    {
+                        sb.Append(ResourceProvider.GetString("LOCPlayState_Setting_SuspendStatusSuspendedLabel"));
+                    }
+                    else
+                    {
+                        sb.Append(ResourceProvider.GetString("LOCPlayState_Setting_SuspendStatusNotSuspendedLabel"));
                     }
                     break;
                 case NotificationTypes.DataAdded: // When game is added to PlayState data
                     sb.AppendLine(ResourceProvider.GetString("LOCPlayState_StatusPlayStateDataAddedMessage"));
-                    sb.Append(ResourceProvider.GetString("LOCPlayState_StatusExtensionUsageAvailableMessage"));
+                    sb.Append($"{ResourceProvider.GetString("LOCPlayState_Setting_SuspendModeLabel")} ");
+                    if (gameData.SuspendMode == SuspendModes.Processes)
+                    {
+                        sb.Append(ResourceProvider.GetString("LOCPlayState_SuspendModeProcesses"));
+                    }
+                    else
+                    {
+                        sb.Append(ResourceProvider.GetString("LOCPlayState_SuspendModePlaytime"));
+                    }
+
                     canAddCurrentPlaytimeLine = false;
                     break;
                 default:
@@ -152,7 +157,7 @@ namespace PlayState
 
             if (canAddCurrentPlaytimeLine && settings.Settings.NotificationShowSessionPlaytime)
             {
-                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_Playtime")} {GetHoursString(GetRealPlaytime(gameData))}");
+                sb.Append($"\n{ResourceProvider.GetString("LOCPlayState_SessionPlaytimeLabel")} {GetHoursString(GetRealPlaytime(gameData))}");
             }
             if (settings.Settings.NotificationShowTotalPlaytime)
             {
