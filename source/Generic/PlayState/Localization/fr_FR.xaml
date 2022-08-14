@@ -46,11 +46,11 @@ Pour une meilleure compatibilité avec les jeux, certains ajustements à votre c
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Soustraire la durée de suspension du temps de jeu quand la partie est arrêtée</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aide à conserver un temps de jeu plus précis en comptant seulement le temps de jeu hors pause</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Exécuter uniquement pour les jeux qui ne sont pas gérés par les extensions de clients de jeu</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Suspendre uniquement le temps de jeu globalement et non les processus de jeu</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">En activant cette option, tous les jeux ne seront pas suspendus lorsque vous utilisez le raccourci clavier configuré mais seul le temps sera décompté pour être soustrait du temps de jeu quand il s'arrêtera.
-    
-Cela peut également être appliqué individuellement par jeu en ajoutant une fonctionnalité nommée &quot;[PlayState] Suspendre le temps de jeu seulement&quot; à un jeu, si vous voulez que ce paramètre soit activé pour ce jeu,
-ou une fonctionnalité nommée &quot;[PlayState] Suspendre les processus&quot;, si vous voulez que ce soit désactivé sur ce jeu.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
+
+This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Afficher les notifications Windows natives au lieu de la fenêtre de notification Playnite</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">En activant cette option, les jeux afficheront des notifications Windows natives au lieu de la fenêtre de notification Playnite.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Afficher le temps de lecture de la session dans le message de notification</sys:String>
@@ -65,7 +65,7 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestionnaire de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Afficher l'élément de la barre latérale du gestionnaire de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Afficher le bouton de statut de jeu PlayState dans les vues</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Permet de mettre en pause et de reprendre le jeu actuellement sélectionné en appuyant sur un bouton. Nécessite la prise en charge dans le thème personnalisé.</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Temps de jeu :</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Temps total de jeu :</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} heures {1} minutes</sys:String>
@@ -98,9 +98,9 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
 Si désactivé, seul le premier contrôleur sera autorisé à activer les raccourcis</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspendre/Reprendre :</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information :</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Fermer le jeu :</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Mise à jour du raccourci GamePad dans {0} secondes…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Boutons : {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">Dpad : {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Déclencheurs : {0}</sys:String>
 </ResourceDictionary>
