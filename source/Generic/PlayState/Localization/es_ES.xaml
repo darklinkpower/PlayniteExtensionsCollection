@@ -24,6 +24,8 @@ Puedes intentar usar una combinación diferente de teclas para solucionar el pro
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tiempo de juego reanudado</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Información:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Acción:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Mensajes de notificación</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Muestra una notificación que muestra el estado actual de pausa y otra información del juego activo</sys:String>
