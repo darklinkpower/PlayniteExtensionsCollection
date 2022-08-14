@@ -46,13 +46,18 @@ For bedre kompatibilitet med spill, trengs noen justeringer i Windows-konfiguras
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Trekk fra tiden spillet var på pause fra spilletiden ved avslutning</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hjelper til med å holde en mer nøyaktig spilltidsverdi i spill, ved å bare la tiden spillet ikke var på pause telle inn i spilletiden</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Bare kjør for spill som ikke administreres av bibliotekutvidelser</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Notification style:</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
 
 This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Bruk standard Windows-varsler i stedet for Playnites varslingsvindu</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Ved å aktivere dette alternativet, vil spill bruke standard Windows-varsler i stedet for Playnites varslingsvindu.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Vis spilletid for økt i varsel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Vis total spilletid i varsel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
@@ -77,8 +82,8 @@ Playtime suspend: Games will be suspended and resumed automatically when the gam
 
     <sys:String x:Key="LOCPlayStateYesLabel">Yes</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime Only</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
