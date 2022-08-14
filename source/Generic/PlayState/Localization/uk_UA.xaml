@@ -49,11 +49,11 @@
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Стиль сповіщення:</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
-    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Час сеансу в грі:</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Глобальний режим призупинення:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Статус:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Призупинено</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Не призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Вказує, який режим призупинення повинен застосовуватися до ігор.
 
 Цей режим також можна змінювати окремо для кожної гри за допомогою функцій розширень, доступних у меню розширень.</sys:String>
@@ -82,8 +82,8 @@
 
     <sys:String x:Key="LOCPlayStateYesLabel">Так</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">Ні</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Режим процесів</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Режим часу гри</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Гра</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Змінити стан гри</sys:String>
