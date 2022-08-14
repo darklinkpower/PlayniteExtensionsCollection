@@ -16,7 +16,14 @@
                 <x:Type TypeName="enums:SuspendModes"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="NotificationStyles" MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:NotificationStyles"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <con:SuspendModeToStringConverter x:Key="SuspendModeToStringConverter" />
+        <con:NotificationStyleToStringConverter x:Key="NotificationStyleToStringConverter" />
     </UserControl.Resources>
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderGeneral}">
@@ -191,24 +198,27 @@
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingEnableNotificationMessagesLabel}"
                               IsChecked="{Binding Settings.EnableNotificationMessages}"
                               Margin="0,0,0,0"/>
+
                     <StackPanel IsEnabled="{Binding Settings.EnableNotificationMessages}">
-                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
-                              IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
-                              Margin="0,10,0,0"/>
-                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
-                              IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
-                              Margin="0,10,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCPlayState_NotificationStyleLabel}" VerticalAlignment="Center" />
+                            <ComboBox SelectedValue="{Binding Settings.NotificationStyle, Mode=TwoWay}"
+                                      MinWidth="150"
+                                      ItemsSource="{Binding Source={StaticResource NotificationStyles}}"
+                                      Margin="10,0,0,0">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource NotificationStyleToStringConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
 
-                        <StackPanel Margin="0,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
-                            <CheckBox x:Name="ShowWindowsNotifications" Content="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel}"
-                                  IsChecked="{Binding Settings.GlobalShowWindowsNotificationsStyle}"
-                                  ToolTip="{DynamicResource LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip}"
-                                  Margin="0,0,0,0"/>
+                        <StackPanel Margin="40,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
                             <TextBlock Text="{DynamicResource LOCPlayState_SettingsWinNotificationNote}" TextWrapping="Wrap"
-                                   Margin="40,10,0,0"
-                                   IsEnabled="{Binding ElementName=ShowWindowsNotifications, Path=IsChecked}"/>
-
-                            <TextBlock VerticalAlignment="Center" Margin="40,10,0,0">
+                                   Margin="0,10,0,0" />
+                            
+                            <TextBlock VerticalAlignment="Center" Margin="0,10,0,0">
                             <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration"
                                        Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
                                        CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
@@ -217,6 +227,14 @@
                             </TextBlock>
 
                         </StackPanel>
+                        
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
+                              IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
+                              Margin="0,10,0,0"/>
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
+                              IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
+                              Margin="0,10,0,0"/>
+
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>

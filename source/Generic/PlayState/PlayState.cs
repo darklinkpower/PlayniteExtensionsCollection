@@ -198,9 +198,7 @@ namespace PlayState
                 logger.Error("Could not find main window. Shortcuts could not be registered.");
             }
 
-            if (!settings.Settings.WindowsNotificationStyleFirstSetupDone &&
-                isWindows10Or11 &&
-                settings.Settings.GlobalShowWindowsNotificationsStyle)
+            if (!settings.Settings.WindowsNotificationStyleFirstSetupDone && isWindows10Or11)
             {
                 PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCPlayState_MessageWinStyleNotificationsFirstSetup"), "PlayState");
                 settings.Settings.WindowsNotificationStyleFirstSetupDone = true;

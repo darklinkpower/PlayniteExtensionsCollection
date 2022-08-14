@@ -69,9 +69,6 @@ namespace PlayState
         public bool SubstractOnlyNonLibraryGames { get => substractOnlyNonLibraryGames; set => SetValue(ref substractOnlyNonLibraryGames, value); }
 
         [DontSerialize]
-        private bool globalShowWindowsNotificationsStyle = true;
-        public bool GlobalShowWindowsNotificationsStyle { get => globalShowWindowsNotificationsStyle; set => SetValue(ref globalShowWindowsNotificationsStyle, value); }
-        [DontSerialize]
         private bool notificationShowSessionPlaytime = true;
         public bool NotificationShowSessionPlaytime { get => notificationShowSessionPlaytime; set => SetValue(ref notificationShowSessionPlaytime, value); }
         [DontSerialize]
@@ -102,7 +99,9 @@ namespace PlayState
 
 
         private SuspendModes globalSuspendMode = SuspendModes.Processes;
-        public SuspendModes GlobalSuspendMode { get => globalSuspendMode; set => SetValue(ref globalSuspendMode, value); } 
+        public SuspendModes GlobalSuspendMode { get => globalSuspendMode; set => SetValue(ref globalSuspendMode, value); }
+        private NotificationStyles notificationStyle = NotificationStyles.Toast;
+        public NotificationStyles NotificationStyle { get => notificationStyle; set => SetValue(ref notificationStyle, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings

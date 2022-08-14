@@ -165,7 +165,7 @@ namespace PlayState
             }
 
             var notificationMessage = sb.ToString();
-            if (settings.Settings.GlobalShowWindowsNotificationsStyle && settings.IsWindows10Or11)
+            if (settings.Settings.NotificationStyle == NotificationStyles.Toast && settings.IsWindows10Or11)
             {
                 var toastNotification = new ToastContentBuilder()
                     .AddText(gameData.Game.Name) // First AddText field will act as a title
