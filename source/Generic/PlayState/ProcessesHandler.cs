@@ -177,32 +177,43 @@ namespace PlayState
 
         internal static void CloseProcessItems(List<ProcessItem> processItems)
         {
+            logger.Debug($"CloseProcessItems start. Processes: {string.Join(", ", processItems.Select(x => $"({x.ExecutablePath}|{x.Process.MainWindowHandle})"))}");
+            var i = 0;
             foreach (var processItem in processItems)
             {
+                i++;
                 try
                 {
+                    logger.Debug($"i: {i}, Process: {processItem.ExecutablePath}");
                     if (processItem.Process == null)
                     {
                         continue;
                     }
 
+                    logger.Debug($"MainWindowHandle: {processItem.Process.MainWindowHandle}");
                     if (processItem.Process.MainWindowHandle == IntPtr.Zero)
                     {
                         // Try closing application by sending WM_CLOSE to all child windows in all threads.
+                        logger.Debug($"IntPtr.Zero start");
                         foreach (ProcessThread pt in processItem.Process.Threads)
                         {
                             EnumThreadWindows((uint)pt.Id, new EnumThreadDelegate(EnumThreadCallback), IntPtr.Zero);
                         }
+                        logger.Debug($"IntPtr.Zero end");
                     }
                     else if (processItem.Process.CloseMainWindow()) // Try to close main window
                     {
                         // Free resources used by this Process object.
+                        logger.Debug($"CloseMainWindow() start");
                         processItem.Process.Close();
+                        logger.Debug($"CloseMainWindow() end");
                     }
                     else
                     {
                         // Kill as a last resort :(
+                        logger.Debug($"Kill as start");
                         processItem.Process.Kill();
+                        logger.Debug($"Kill as end");
                     }
                 }
                 catch (Exception e)
