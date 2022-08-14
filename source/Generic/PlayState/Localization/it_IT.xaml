@@ -46,11 +46,11 @@ Per una migliore compatibilità con i giochi, è necessario apportare alcune mod
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Sottrai il tempo in cui il gioco è stato sospeso dal tempo di gioco quando è stato interrotto</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aiuta a mantenere un valore di gioco più preciso nei giochi mantenendo solo il tempo in cui il gioco non è stato sospeso conteggio verso il tempo di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Esegui solo per i giochi che non sono gestiti dai plugin della libreria</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeLabel">Sospendi solo il conteggio del tempo di gioco a livello globale e non i processi di gioco</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingGlobalOnlySuspendPlaytimeTooltip" xml:space="preserve">Abilitando questa opzione, tutti i giochi non saranno sospesi quando si utilizza il tasto di scelta rapida configurato e solo il tempo sarà conteggiato per essere sottratto dal tempo di gioco quando si ferma.
-    
-Questo può anche essere applicato individualmente per ogni gioco aggiungendo una funzione chiamata &quot;[PlayState] Sospendi solo il tempo di gioco&quot; a un gioco, se vuoi che questa impostazione sia abilitata in quel gioco,
-o una funzionalità chiamata &quot;[PlayState] Sospendi i processi&quot;, se vuoi che sia disabilitato in quel gioco.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
+
+This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleLabel">Mostra le notifiche native di Windows invece della finestra di notifica di Playnite</sys:String>
     <sys:String x:Key="LOCPlayState_SettingGlobalShowWindowsNotificationsStyleTooltip">Attivando questa opzione, i giochi mostreranno le notifiche native di Windows invece della finestra di notifica di Playnie.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Visualizza il tempo di gioco della sessione nel messaggio di notifica</sys:String>
