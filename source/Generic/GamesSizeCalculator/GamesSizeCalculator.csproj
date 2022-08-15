@@ -120,6 +120,7 @@
     <Compile Include="GamesSizeCalculatorSettingsView.xaml.cs">
       <DependentUpon>GamesSizeCalculatorSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GOG\GogSizeCalculator.cs" />
     <Compile Include="Models\DepotInfo.cs" />
     <Compile Include="Models\SteamAppList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
