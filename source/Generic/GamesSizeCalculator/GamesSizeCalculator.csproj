@@ -34,6 +34,9 @@
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
@@ -120,7 +123,11 @@
     <Compile Include="GamesSizeCalculatorSettingsView.xaml.cs">
       <DependentUpon>GamesSizeCalculatorSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GOG\GogApiClient.cs" />
     <Compile Include="GOG\GogSizeCalculator.cs" />
+    <Compile Include="GOG\HttpDownloaderWrapper.cs" />
+    <Compile Include="GOG\IHttpDownloader.cs" />
+    <Compile Include="GOG\Models.cs" />
     <Compile Include="Models\DepotInfo.cs" />
     <Compile Include="Models\SteamAppList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

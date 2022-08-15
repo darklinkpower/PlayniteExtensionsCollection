@@ -68,6 +68,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GOG\FakeHttpDownloader.cs" />
+    <Compile Include="GOG\GogSizeCalculatorTests.cs" />
     <Compile Include="Steam\FakeSteamApiClient.cs" />
     <Compile Include="Steam\FakeSteamAppIdUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +112,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Steam\621060.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GOG\1207659235.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="GOG\1676910822.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
