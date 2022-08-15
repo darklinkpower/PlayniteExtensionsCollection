@@ -24,8 +24,8 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
     <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Tempo di gioco ripreso</sys:String>
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Informazioni:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Azione:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Il gioco è stato aggiunto a PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">È possibile iniziare a utilizzare il gioco con l'estensione</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Generale</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messaggi di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra una notifica che mostra lo stato di pausa corrente e altre informazioni del gioco attivo</sys:String>
@@ -46,18 +46,18 @@ Per una migliore compatibilità con i giochi, è necessario apportare alcune mod
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Sottrai il tempo in cui il gioco è stato sospeso dal tempo di gioco quando è stato interrotto</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aiuta a mantenere un valore di gioco più preciso nei giochi mantenendo solo il tempo in cui il gioco non è stato sospeso conteggio verso il tempo di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Esegui solo per i giochi che non sono gestiti dai plugin della libreria</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Notification style:</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
-    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
+    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Stile di notifica:</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Toast di Windows</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Finestra di avvio</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Tempo di gioco sessione:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Modalità sospensione globale:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Stato:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Sospeso</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Non sospeso</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indica quale modalità di sospensione deve essere applicata ai giochi.
 
-This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
+Questa modalità può anche essere modificata singolarmente per ogni gioco utilizzando le funzioni di estensione disponibili nel menu estensioni.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Modalità di sospensione:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Visualizza il tempo di gioco della sessione nel messaggio di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Visualizza il tempo di gioco totale nel messaggio di notifica</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Sospendi automaticamente i giochi se non sono la finestra attiva</sys:String>
@@ -82,8 +82,8 @@ Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamen
 
     <sys:String x:Key="LOCPlayStateYesLabel">Si</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Modalità processi</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Modalità tempo di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Gioco</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">È sospeso</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Cambia stato di gioco</sys:String>
