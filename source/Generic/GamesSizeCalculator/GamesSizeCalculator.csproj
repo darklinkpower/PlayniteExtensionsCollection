@@ -124,6 +124,7 @@
     <Compile Include="Models\SteamAppList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Steam\CachedFileDownloader.cs" />
+    <Compile Include="IOnlineSizeCalculator.cs" />
     <Compile Include="Steam\ISteamApiClient.cs" />
     <Compile Include="Steam\ISteamAppIdUtility.cs" />
     <Compile Include="Steam\SteamSizeCalculator.cs" />

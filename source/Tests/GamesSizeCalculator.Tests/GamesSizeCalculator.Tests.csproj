@@ -38,6 +38,7 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
     </Reference>
@@ -67,9 +68,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeSteamApiClient.cs" />
+    <Compile Include="Steam\FakeSteamApiClient.cs" />
+    <Compile Include="Steam\FakeSteamAppIdUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SteamSizeCalculatorTests.cs" />
+    <Compile Include="Steam\SteamSizeCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Generic\GamesSizeCalculator\GamesSizeCalculator.csproj">
@@ -78,30 +80,30 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\243470.json">
+    <Content Include="Steam\243470.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\976730.json">
+    <Content Include="Steam\976730.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\48190.json">
+    <Content Include="Steam\48190.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\1360440.json">
+    <Content Include="Steam\1360440.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\204360.json">
+    <Content Include="Steam\204360.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\43110.json">
+    <Content Include="Steam\43110.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\535930.json">
+    <Content Include="Steam\535930.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\621060.json">
+    <Content Include="Steam\621060.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

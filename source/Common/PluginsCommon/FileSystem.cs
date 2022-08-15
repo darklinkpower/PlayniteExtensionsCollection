@@ -407,20 +407,20 @@ namespace PluginsCommon
             throw new IOException($"Failed to delete {path}", ioException);
         }
 
-        public static long GetFileSize(string path)
+        public static ulong GetFileSize(string path)
         {
             path = FixPathLength(path);
-            return new FileInfo(path).Length;
+            return (ulong)new FileInfo(path).Length;
         }
 
         
-        public static long GetFileSizeOnDisk(string path)
+        public static ulong GetFileSizeOnDisk(string path)
         {
             return GetFileSizeOnDisk(new FileInfo(FixPathLength(path)));
         }
 
         
-        public static long GetFileSizeOnDisk(FileInfo info)
+        public static ulong GetFileSizeOnDisk(FileInfo info)
         {
             // From https://stackoverflow.com/a/3751135
             uint dummy, sectorsPerCluster, bytesPerSector;
@@ -429,26 +429,26 @@ namespace PluginsCommon
             uint clusterSize = sectorsPerCluster * bytesPerSector;
             uint hosize;
             uint losize = GetCompressedFileSizeW(info.FullName, out hosize);
-            long size;
-            size = (long)hosize << 32 | losize;
+            ulong size;
+            size = (ulong)hosize << 32 | losize;
             return ((size + clusterSize - 1) / clusterSize) * clusterSize;
         }
 
-        public static long GetDirectorySize(string path)
+        public static ulong GetDirectorySize(string path)
         {
             return GetDirectorySize(new DirectoryInfo(FixPathLength(path)));
         }
 
-        private static long GetDirectorySize(DirectoryInfo dir)
+        private static ulong GetDirectorySize(DirectoryInfo dir)
         {
             try
             {
-                long size = 0;
+                ulong size = 0;
                 // Add file sizes.
                 FileInfo[] fis = dir.GetFiles();
                 foreach (FileInfo fi in fis)
                 {
-                    size += fi.Length;
+                    size += (ulong)fi.Length;
                 }
 
                 // Add subdirectory sizes.
@@ -465,14 +465,14 @@ namespace PluginsCommon
             }
         }
 
-        public static long GetDirectorySizeOnDisk(string path)
+        public static ulong GetDirectorySizeOnDisk(string path)
         {
             return GetDirectorySizeOnDisk(new DirectoryInfo(FixPathLength(path)));
         }
 
-        public static long GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
+        public static ulong GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
         {
-            long size = 0;
+            ulong size = 0;
 
             // Add file sizes.
             foreach (FileInfo file in dirInfo.GetFiles())

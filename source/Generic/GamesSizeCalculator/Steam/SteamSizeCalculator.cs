@@ -1,5 +1,6 @@
 ﻿using GamesSizeCalculator.Models;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using SteamKit2;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,38 @@ using System.Threading.Tasks;
 
 namespace GamesSizeCalculator.SteamSizeCalculation
 {
-    public class SteamSizeCalculator
+    public class SteamSizeCalculator : IOnlineSizeCalculator
     {
         private string[] regionalWords = new[] { "eu", "europe", "row", "en", "english", "ww", "asia", "aus", "australia", "nz", "usa", "us", "ru", "russia",
             "germany", "deutschland", "de", "es", "sa", "cn", "china", "chinese", "schinese", "tchinese", "jp", "japanese", "fr", "french" };
 
         private ILogger logger = LogManager.GetLogger();
         public ISteamApiClient SteamApiClient { get; }
+        public ISteamAppIdUtility SteamAppIdUtility { get; }
+        public bool IncludeDLC { get; set; }
+        public bool IncludeOptional { get; set; }
+        public string ServiceName { get; } = "Steam";
 
-        public SteamSizeCalculator(ISteamApiClient steamApiClient)
+        public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, bool includeDLC, bool includeOptional)
         {
             SteamApiClient = steamApiClient;
+            SteamAppIdUtility = steamAppIdUtility;
+            IncludeDLC = includeDLC;
+            IncludeOptional = includeOptional;
         }
 
-        public async Task<long?> GetInstallSizeAsync(uint appId, bool includeDLC = true, bool includeOptional = true)
+        public async Task<ulong?> GetInstallSizeAsync(Game game)
+        {
+            var appIdStr = SteamAppIdUtility.GetSteamGameId(game);
+            if (!uint.TryParse(appIdStr, out uint appId))
+            {
+                return null;
+            }
+
+            return await GetInstallSizeAsync(appId);
+        }
+
+        private async Task<ulong?> GetInstallSizeAsync(uint appId)
         {
             var depotData = await GetRelevantDepots(appId);
             if (depotData == null)
@@ -34,17 +53,23 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 
             IEnumerable<DepotInfo> filteredDepots = depotData;
 
-            if (!includeDLC)
+            if (!IncludeDLC)
             {
                 filteredDepots = filteredDepots.Where(d => !d.IsDLC);
             }
 
-            if (!includeOptional && !depotData.All(d => d.Optional)) //If everything is optional, don't filter out optional depots
+            if (!IncludeOptional && !depotData.All(d => d.Optional)) //If everything is optional, don't filter out optional depots
             {
                 filteredDepots = filteredDepots.Where(d => !d.Optional);
             }
 
-            return filteredDepots.Sum(d => d.FileSize);
+            ulong size = 0UL;
+            foreach (var depot in filteredDepots)
+            {
+                size += depot.FileSize;
+            }
+
+            return size;
         }
 
         private class DepotGroupingInfo
@@ -169,7 +194,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 var name = GetKeyValueNode(depot, "name")?.Value;
 
                 var maxsizeStr = GetValue(depot, "maxsize");
-                if (maxsizeStr == null || !long.TryParse(maxsizeStr, out long maxsize))
+                if (maxsizeStr == null || !ulong.TryParse(maxsizeStr, out ulong maxsize))
                 {
                     continue;
                 }

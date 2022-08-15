@@ -1,22 +1,18 @@
 ﻿using GamesSizeCalculator.SteamSizeCalculation;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace GamesSizeCalculator.Tests
+namespace GamesSizeCalculator.Tests.Steam
 {
     public class SteamSizeCalculatorTests
     {
         [Fact]
         public async Task MasterChiefCollection()
         {
-            long expectedBaseSize = 14715108044L;
+            ulong expectedBaseSize = 14715108044L;
 
-            long expectedDLCsize =
+            ulong expectedDLCsize =
                 9880606811L +
                 5364014009L +
                 31248440761L +
@@ -36,9 +32,12 @@ namespace GamesSizeCalculator.Tests
                 1542698112L +
                 3724939335L;
 
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
-            var completeSize = await calc.GetInstallSizeAsync(976730);
-            var baseSize = await calc.GetInstallSizeAsync(976730, false, false);
+            var calc = Setup(976730);
+            var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
+
+            calc.IncludeDLC = false;
+            calc.IncludeOptional = false;
+            var baseSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
             Assert.Equal(expectedBaseSize, baseSize);
         }
@@ -46,75 +45,79 @@ namespace GamesSizeCalculator.Tests
         [Fact]
         public async Task Watch_Dogs()
         {
-            long expectedBaseSize =
+            ulong expectedBaseSize =
                 1790331721L + //Watch Dogs English
                 102629169L + //Watch_Dogs Binaries ASIA 
                 88449227L + //Watch_Dogs Support ASIA
                 1786744869L + //Watch_Dogs English ASIA
                 12807162011L; //Watch Dogs Common
 
-            long expectedDLCsize =
+            ulong expectedDLCsize =
                 28037350L + //Watch_Dogs - DLC 0 (293055) Depot
                 30841083L + //Watch_Dogs - DLC 1 (293057) Depot
                 1147L + //Watch_Dogs - DLC 2 (293059) Depot
                 3718567700L + //Watch_Dogs - DLC 3 (293061) Depot
                 525L; //Watch_Dogs Season Pass Uplay Activation (293054) Depot
 
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
+            var calc = Setup(243470);
 
-            var completeSize = await calc.GetInstallSizeAsync(243470);
+            var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
 
-            var baseSize = await calc.GetInstallSizeAsync(243470, false, false);
+            calc.IncludeDLC = false;
+            calc.IncludeOptional = false;
+            var baseSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedBaseSize, baseSize);
         }
 
         [Fact]
         public async Task AssassinsCreedBrotherhood()
         {
-            long normal = 9529023303L;
-            long optional = 1954919585L;
-            long worldwide = 7993844118L;
+            ulong normal = 9529023303L;
+            ulong optional = 1954919585L;
+            ulong worldwide = 7993844118L;
 
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
+            var calc = Setup(48190);
 
-            var completeSize = await calc.GetInstallSizeAsync(48190);
+            var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(normal + optional + worldwide, completeSize.Value);
 
-            var minimalSize = await calc.GetInstallSizeAsync(48190, false, false);
+            calc.IncludeDLC = false;
+            calc.IncludeOptional = false;
+            var minimalSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(normal + worldwide, minimalSize.Value);
         }
 
         [Fact]
         public async Task MissingDepotsReturnNull()
         {
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
-
             //The Door (unreleased)
-            Assert.Null(await calc.GetInstallSizeAsync(1360440));
+            Assert.Null(await Setup(1360440).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
 
             //Castle Crashers
-            Assert.Null(await calc.GetInstallSizeAsync(204360));
+            Assert.Null(await Setup(204360).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
 
             //Two Point Hospital
-            Assert.Null(await calc.GetInstallSizeAsync(535930));
+            Assert.Null(await Setup(535930).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
 
             //PC Building Simulator
-            Assert.Null(await calc.GetInstallSizeAsync(621060));
+            Assert.Null(await Setup(621060).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
         }
 
         [Fact]
         public async Task Metro2033()
         {
             //For some reason, every depot for Metro 2033 is marked optional
-            long expectedSize = 5028692647L + 2884284795L;
+            ulong expectedSize = 5028692647L + 2884284795L;
 
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient());
+            var calc = Setup(43110);
 
-            var completeSize = await calc.GetInstallSizeAsync(43110);
+            var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedSize, completeSize);
 
-            var minimalSize = await calc.GetInstallSizeAsync(43110, false, false);
+            calc.IncludeDLC = false;
+            calc.IncludeOptional = false;
+            var minimalSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedSize, minimalSize);
         }
 
@@ -126,11 +129,19 @@ namespace GamesSizeCalculator.Tests
         //[InlineData(621060u)] //PC Building Simulator
         //[InlineData(43110u)] //Metro 2033
         //[InlineData(535930u)] //Two Point Hospital
+        //[InlineData(24980u)] //Mass Effect 2 (2010)
+        //[InlineData(24999u)] //Mass Effect 2 - guide, but only registered as Mass Effect 2 for some reason
         public async Task Serialize(uint appId)
         {
             SteamApiClient client = new SteamApiClient();
             var productInfo = await client.GetProductInfo(appId);
             File.WriteAllText($@"D:\code\{appId}.json", Newtonsoft.Json.JsonConvert.SerializeObject(productInfo));
+        }
+
+        private SteamSizeCalculator Setup(uint appId)
+        {
+            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), true, true);
+            return calc;
         }
     }
 }

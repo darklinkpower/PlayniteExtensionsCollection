@@ -10,11 +10,11 @@ namespace GamesSizeCalculator.Models
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public long FileSize { get; set; }
+        public ulong FileSize { get; set; }
         public bool IsDLC { get; }
         public bool Optional { get; }
 
-        public DepotInfo(string id, string name, long fileSize, bool isDlc, bool optional)
+        public DepotInfo(string id, string name, ulong fileSize, bool isDlc, bool optional)
         {
             Id = id;
             Name = name;

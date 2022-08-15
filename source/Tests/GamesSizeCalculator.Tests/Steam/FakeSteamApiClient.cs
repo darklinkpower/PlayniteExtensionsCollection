@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator.Tests
+namespace GamesSizeCalculator.Tests.Steam
 {
     internal class FakeSteamApiClient : ISteamApiClient
     {
@@ -29,7 +29,7 @@ namespace GamesSizeCalculator.Tests
         public async Task<SteamKit2.KeyValue> GetProductInfo(uint id)
         {
             await Login();
-            string fileContent = File.ReadAllText($"./Data/{id}.json");
+            string fileContent = File.ReadAllText($"./Steam/{id}.json");
             var output = Newtonsoft.Json.JsonConvert.DeserializeObject<SteamKit2.KeyValue>(fileContent);
             return output;
         }
