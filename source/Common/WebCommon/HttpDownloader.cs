@@ -15,8 +15,6 @@ namespace WebCommon
     public class HttpDownloader
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly HttpClient httpClient = new HttpClient();
-        private static readonly HttpClient httpClientJson = new HttpClient();
         private static readonly Downloader downloader = new Downloader();
 
         public static string DownloadString(IEnumerable<string> mirrors)
@@ -79,9 +77,9 @@ namespace WebCommon
             return downloader.DownloadFile(url, path, cancelToken, progressHandler);
         }
 
-        public static string DownloadStringWithHeadersAsync(string url, Dictionary<string, string> headersDictionary)
+        public static string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
         {
-            return downloader.DownloadStringWithHeadersAsync(url, headersDictionary);
+            return downloader.DownloadStringWithHeaders(url, headersDictionary);
         }
 
     }

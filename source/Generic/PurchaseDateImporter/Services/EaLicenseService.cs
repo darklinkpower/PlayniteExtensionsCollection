@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using WebCommon;
 
 namespace PurchaseDateImporter.Services
 {
@@ -80,29 +81,27 @@ namespace PurchaseDateImporter.Services
 
         private static EaEntitlementsResponse GetEaEntitlementsResponse(EaAuthResponse authResponse)
         {
-            using (var webClient = new WebClient { Encoding = Encoding.UTF8 })
+            var headers = new Dictionary<string, string>
             {
-                //webClient.Headers.Add(HttpRequestHeader.Accept, "application/xml");
-                webClient.Headers.Add("Authorization", $"{authResponse.TokenType} {authResponse.AccessToken}");
-                webClient.Headers.Add("accept", "application/vnd.origin.v3+json; x-cache/force-write");
+                ["Authorization"] = $"{authResponse.TokenType} {authResponse.AccessToken}",
+                ["accept"] = "application/vnd.origin.v3+json; x-cache/force-write",
+            };
 
-                var identityResponse = webClient.DownloadString("https://gateway.ea.com/proxy/identity/pids/me");
-                if (identityResponse.IsNullOrEmpty())
-                {
-                    return null;
-                }
-
-                var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse);
-
-                // For some reason somtimes the response is in XML format when the Headers contain the
-                // Authorization header
-                webClient.Headers.Clear();
-                webClient.Headers.Add("accept", "application/vnd.origin.v3+json; x-cache/force-write");
-                webClient.Headers.Add("authtoken", authResponse.AccessToken);
-                var url = string.Format("https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", identity.Pid.PidId);
-                var entitlementsResponseData = webClient.DownloadString(url);
-                return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData);
+            var identityResponse = HttpDownloader.DownloadStringWithHeaders("https://gateway.ea.com/proxy/identity/pids/me", headers);
+            if (identityResponse.IsNullOrEmpty())
+            {
+                return null;
             }
+
+            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse);
+            // For some reason somtimes the response is in XML format when the Headers contain the
+            // Authorization header
+            headers.Clear();
+            headers["accept"] = "application/vnd.origin.v3+json; x-cache/force-write";
+            headers["authtoken"] = authResponse.AccessToken;
+            var url = string.Format("https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", identity.Pid.PidId);
+            var entitlementsResponseData = HttpDownloader.DownloadStringWithHeaders(url, headers);
+            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData);
         }
     }
 }

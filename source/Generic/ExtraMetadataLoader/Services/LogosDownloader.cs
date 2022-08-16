@@ -175,7 +175,7 @@ namespace ExtraMetadataLoader.Services
                     { "Authorization", $"Bearer {settings.SgdbApiKey}" }
                 };
 
-                var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(requestString, headers);
+                var downloadedString = HttpDownloader.DownloadStringWithHeaders(requestString, headers);
                 if (!downloadedString.IsNullOrEmpty())
                 {
                     var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString);
@@ -301,7 +301,7 @@ namespace ExtraMetadataLoader.Services
                 { "Authorization", $"Bearer {settings.SgdbApiKey}" }
             };
 
-            var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(searchUrl, headers);
+            var downloadedString = HttpDownloader.DownloadStringWithHeaders(searchUrl, headers);
             if (!string.IsNullOrEmpty(downloadedString))
             {
                 var response = JsonConvert.DeserializeObject<SteamGridDbGameSearchResponse>(downloadedString);

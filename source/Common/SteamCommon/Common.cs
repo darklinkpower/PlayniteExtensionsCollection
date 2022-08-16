@@ -44,9 +44,7 @@ namespace SteamCommon
                 var linkMatch = steamLinkRegex.Match(gameLink.Url);
                 if (linkMatch.Success)
                 {
-                    var id = linkMatch.Groups[1].Value;
-                    logger.Debug($"Steam id {id} for {game.Name} found via link.");
-                    return id;
+                    return linkMatch.Groups[1].Value;
                 }
             }
 

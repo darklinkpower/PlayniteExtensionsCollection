@@ -26,7 +26,7 @@ namespace WebCommon
 
         string DownloadString(string url, List<Cookie> cookies, Encoding encoding);
 
-        string DownloadStringWithHeadersAsync(string url, Dictionary<string, string> headersDictionary);
+        string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary);
 
         void DownloadString(string url, string path);
 
@@ -52,6 +52,7 @@ namespace WebCommon
         {
             var serviceProvider = new ServiceCollection().AddHttpClient().BuildServiceProvider();
             _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
+            logger.Debug("Created service provider with IHttpClient factory");
         }
 
         protected HttpClient GetClient(string url)
@@ -114,7 +115,7 @@ namespace WebCommon
                     using (var httpResponseMessage = await GetClient(httpRequest.RequestUri).SendAsync(httpRequest, cancelToken))
                     {
                         httpResponseMessage.EnsureSuccessStatusCode();
-                        var bytes = httpResponseMessage.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                        var bytes = await httpResponseMessage.Content.ReadAsByteArrayAsync();
                         return encoding.GetString(bytes);
                     }
                 }).GetAwaiter().GetResult();
@@ -160,20 +161,6 @@ namespace WebCommon
             }
         }
 
-        public string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
-        {
-            logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
-            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
-            {
-                foreach (var pair in headersDictionary)
-                {
-                    request.Headers.Add(pair.Key, pair.Value);
-                }
-
-                return GetHttpRequestString(request);
-            }
-        }
-
         public void DownloadString(string url, string path)
         {
             DownloadString(url, path, Encoding.UTF8);
@@ -185,18 +172,21 @@ namespace WebCommon
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 var data = GetHttpRequestString(request, encoding);
-                File.WriteAllText(path, data);
+                File.WriteAllText(path, data, encoding);
             }
         }
 
-        public string DownloadStringWithHeadersAsync(string url, Dictionary<string, string> headersDictionary)
+        public string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
         {
             logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 foreach (var pair in headersDictionary)
                 {
-                    request.Headers.Add(pair.Key, pair.Value);
+                    if (!request.Headers.TryAddWithoutValidation(pair.Key, pair.Value))
+                    {
+                        logger.Warn($"Could not add header \"{pair.Key}\",\"{pair.Value}\"");
+                    }
                 }
 
                 return GetHttpRequestString(request);
@@ -215,7 +205,7 @@ namespace WebCommon
                         using (var httpResponseMessage = await GetClient(request.RequestUri).SendAsync(request))
                         {
                             httpResponseMessage.EnsureSuccessStatusCode();
-                            return httpResponseMessage.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                            return await httpResponseMessage.Content.ReadAsByteArrayAsync();
                         }
                     }
                 }).GetAwaiter().GetResult();
@@ -336,14 +326,13 @@ namespace WebCommon
             logger.Debug($"Downloading data from multiple mirrors.");
             foreach (var mirror in mirrors)
             {
-                try
+                if (DownloadFile(mirror, path))
                 {
-                    DownloadFile(mirror, path);
                     return;
                 }
-                catch (Exception e)
+                else
                 {
-                    logger.Error(e, $"Failed to download {mirror} file.");
+                    logger.Debug($"Failed to download {mirror} file.");
                 }
             }
 
