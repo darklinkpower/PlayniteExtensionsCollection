@@ -17,7 +17,8 @@
                              Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                              VerticalAlignment="Center"/>
 
-                <TextBlock Text="{DynamicResource LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel}" VerticalAlignment="Center"/>
+                <TextBlock Margin="10,0,0,0" VerticalAlignment="Center"
+                           Text="{DynamicResource LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel}" />
                 <TextBox Margin="10,0,0,0" MinWidth="220"
                              Text="{Binding StoreSearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                              VerticalAlignment="Center"/>
