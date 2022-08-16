@@ -165,9 +165,8 @@ namespace NewsViewer.PluginControls
                     return;
                 }
 
-                try
+                if (Serialization.TryFromJson<NumberOfPlayersResponse>(response, out var data))
                 {
-                    var data = Serialization.FromJson<NumberOfPlayersResponse>(response);
                     if (data.Response.Result != 1)
                     {
                         return;
@@ -176,10 +175,6 @@ namespace NewsViewer.PluginControls
                     InGamePlayersCount = data.Response.PlayerCount;
                     ControlVisibility = Visibility.Visible;
                     SettingsModel.Settings.PlayersCountAvailable = true;
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error while deserializing string {response}");
                 }
             });
         }

@@ -42,7 +42,7 @@ namespace NewsViewer.PluginControls
 
         private XmlDocument xmlDoc;
         private readonly WebClient client;
-        private readonly DispatcherTimer timer;
+        private readonly DispatcherTimer updateContextTimer;
         private XmlNode currentNewsNode;
         public XmlNode CurrentNewsNode
         {
@@ -156,8 +156,6 @@ namespace NewsViewer.PluginControls
         private int selectedNewsIndex;
         private bool multipleNewsAvailable;
         private Game currentGame;
-        private CancellationTokenSource tokenSource;
-        private CancellationToken ct;
 
         public int SelectedNewsIndex
         {
@@ -314,9 +312,9 @@ namespace NewsViewer.PluginControls
 
             DataContext = this;
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(700);
-            timer.Tick += new EventHandler(UpdateNewsContext);
+            updateContextTimer = new DispatcherTimer();
+            updateContextTimer.Interval = TimeSpan.FromMilliseconds(700);
+            updateContextTimer.Tick += new EventHandler(UpdateContextTimer_Tick);
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -328,7 +326,8 @@ namespace NewsViewer.PluginControls
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
                 ActiveViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
             {
-                timer.Stop();
+                updateContextTimer.Stop();
+                currentGame = null;
                 return;
             }
 
@@ -340,55 +339,47 @@ namespace NewsViewer.PluginControls
             SwitchNewsVisibility = Visibility.Collapsed;
             SettingsModel.Settings.ReviewsAvailable = false;
 
-            if (tokenSource != null)
-            {
-                tokenSource.Cancel();
-            }
-
             if (currentGame == null || !SettingsModel.Settings.EnableNewsControl)
             {
-                timer.Stop();
+                updateContextTimer.Stop();
             }
             else
             {
-                timer.Stop();
-                timer.Start();
+                updateContextTimer.Stop();
+                updateContextTimer.Start();
             }
         }
 
-        private void UpdateNewsContext(object sender, EventArgs e)
+        private void UpdateContextTimer_Tick(object sender, EventArgs e)
         {
-            timer.Stop();
+            updateContextTimer.Stop();
+            UpdateNewsContext();
+        }
+
+        private void UpdateNewsContext()
+        {
             if (currentGame == null)
             {
                 return;
             }
 
+            var contextId = currentGame.Id;
             var steamId = Steam.GetGameSteamId(currentGame, SettingsModel.Settings.ShowSteamNewsNonSteam);
             if (steamId.IsNullOrEmpty())
             {
                 return;
             }
 
-            if (tokenSource != null)
-            {
-                tokenSource.Dispose();
-                tokenSource = null;
-            }
-
-            tokenSource = new CancellationTokenSource();
-            ct = tokenSource.Token;
-
             Task.Run(() =>
             {
-                var rssSource = client.DownloadString(string.Format(steamRssTemplate, steamId, steamLanguage));
-                if (ct.IsCancellationRequested)
-                {
-                    return;
-                }
-
                 try
                 {
+                    var rssSource = client.DownloadString(string.Format(steamRssTemplate, steamId, steamLanguage));
+                    if (currentGame == null || currentGame.Id != contextId)
+                    {
+                        return;
+                    }
+
                     xmlDoc.LoadXml(rssSource);
                     XmlNodeList nodes = xmlDoc.SelectNodes("/rss/channel/item");
                     if (nodes != null && nodes.Count > 0)
@@ -408,11 +399,11 @@ namespace NewsViewer.PluginControls
                         SelectedNewsIndex = 0;
                     }
                 }
-                catch (Exception)
+                catch
                 {
                     
                 }
-            }, tokenSource.Token);
+            });
         }
 
         static string HtmlToPlainText(string html)
