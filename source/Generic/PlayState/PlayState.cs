@@ -40,7 +40,7 @@ namespace PlayState
         private HwndSource source = null;
         private bool globalHotkeyRegistered = false;
 
-        private PlayStateSettingsViewModel settings { get; set; }
+        public PlayStateSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
 
@@ -55,7 +55,7 @@ namespace PlayState
         public PlayState(IPlayniteAPI api) : base(api)
         {
             isWindows10Or11 = IsWindows10Or11();
-            settings = new PlayStateSettingsViewModel(this, isWindows10Or11);
+            Settings = new PlayStateSettingsViewModel(this, isWindows10Or11);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -64,7 +64,7 @@ namespace PlayState
             AddSettingsSupport(new AddSettingsSupportArgs
             {
                 SourceName = "PlayState",
-                SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
+                SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
@@ -73,8 +73,8 @@ namespace PlayState
                 SourceName = "PlayState",
             });
 
-            playStateManager = new PlayStateManagerViewModel(PlayniteApi, settings);
-            messagesHandler = new MessagesHandler(PlayniteApi, settings, playStateManager);
+            playStateManager = new PlayStateManagerViewModel(PlayniteApi, Settings);
+            messagesHandler = new MessagesHandler(PlayniteApi, Settings, playStateManager);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
 
             Task.Run(() =>
@@ -105,7 +105,7 @@ namespace PlayState
         private void CheckControllers()
         {
             var maxCheckIndex = 0;
-            if (settings.Settings.GamePadHotkeysEnableAllControllers)
+            if (Settings.Settings.GamePadHotkeysEnableAllControllers)
             {
                 maxCheckIndex = 3;
             }
@@ -117,17 +117,17 @@ namespace PlayState
                 GamePadState gamePadState = GamePad.GetState(playerIndex);
                 if (gamePadState.IsConnected && (gamePadState.Buttons.IsAnyPressed() || gamePadState.DPad.IsAnyPressed()))
                 {
-                    if (settings.Settings.GamePadCloseHotkeyEnable && settings.Settings.GamePadCloseHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    if (Settings.Settings.GamePadCloseHotkeyEnable && Settings.Settings.GamePadCloseHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
                         SendCloseSignal();
                         anySignalSent = true;
                     }
-                    else if (settings.Settings.GamePadInformationHotkeyEnable && settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    else if (Settings.Settings.GamePadInformationHotkeyEnable && Settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
                         SendInformationSignal();
                         anySignalSent = true;
                     }
-                    else if (settings.Settings.GamePadSuspendHotkeyEnable && settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    else if (Settings.Settings.GamePadSuspendHotkeyEnable && Settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
                         SendSuspendSignal();
                         anySignalSent = true;
@@ -147,7 +147,7 @@ namespace PlayState
         {
             if (args.Name == "GameStateSwitchControl")
             {
-                return new GameStateSwitchControl(playStateManager, PlayniteApi, settings);
+                return new GameStateSwitchControl(playStateManager, PlayniteApi, Settings);
             }
 
             return null;
@@ -164,7 +164,7 @@ namespace PlayState
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
         {
-            if (settings.Settings.ShowManagerSidebarItem)
+            if (Settings.Settings.ShowManagerSidebarItem)
             {
                 yield return new SidebarItem
                 {
@@ -198,11 +198,11 @@ namespace PlayState
                 logger.Error("Could not find main window. Shortcuts could not be registered.");
             }
 
-            if (!settings.Settings.WindowsNotificationStyleFirstSetupDone && isWindows10Or11)
+            if (!Settings.Settings.WindowsNotificationStyleFirstSetupDone && isWindows10Or11)
             {
                 PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCPlayState_MessageWinStyleNotificationsFirstSetup"), "PlayState");
-                settings.Settings.WindowsNotificationStyleFirstSetupDone = true;
-                SavePluginSettings(settings.Settings);
+                Settings.Settings.WindowsNotificationStyleFirstSetupDone = true;
+                SavePluginSettings(Settings.Settings);
 
                 // A notification is shown so Playnite is added to the list
                 // to add Playnite to the priority list
@@ -221,33 +221,33 @@ namespace PlayState
                 globalHotkeyRegistered = true;
 
                 // Pause/Resume Hotkey
-                var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key));
+                var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, Settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedHotkeyGesture.Key));
 
                 if (registered)
                 {
-                    logger.Debug($"Pause/resume Hotkey registered with hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Debug($"Pause/resume Hotkey registered with hotkey {Settings.Settings.SavedHotkeyGesture}.");
                 }
                 else
                 {
                     PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
-                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedHotkeyGesture),
+                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), Settings.Settings.SavedHotkeyGesture),
                         NotificationType.Error));
-                    logger.Error($"Failed to register configured pause/resume Hotkey {settings.Settings.SavedHotkeyGesture}.");
+                    logger.Error($"Failed to register configured pause/resume Hotkey {Settings.Settings.SavedHotkeyGesture}.");
                 }
 
                 // Information Hotkey
-                var registered2 = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, settings.Settings.SavedInformationHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key));
+                var registered2 = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, Settings.Settings.SavedInformationHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedInformationHotkeyGesture.Key));
                 
                 if (registered2)
                 {
-                    logger.Debug($"Information Hotkey registered with hotkey {settings.Settings.SavedInformationHotkeyGesture}.");
+                    logger.Debug($"Information Hotkey registered with hotkey {Settings.Settings.SavedInformationHotkeyGesture}.");
                 }
                 else
                 {
                     PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
-                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), settings.Settings.SavedInformationHotkeyGesture),
+                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), Settings.Settings.SavedInformationHotkeyGesture),
                         NotificationType.Error));
-                    logger.Error($"Failed to register configured information Hotkey {settings.Settings.SavedInformationHotkeyGesture}.");
+                    logger.Error($"Failed to register configured information Hotkey {Settings.Settings.SavedInformationHotkeyGesture}.");
                 }
 
                 return registered && registered2;
@@ -266,11 +266,11 @@ namespace PlayState
                 {
                     case HOTKEY_ID:
                         uint vkey = ((uint)lParam >> 16) & 0xFFFF;
-                        if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedHotkeyGesture.Key))
+                        if (vkey == (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedHotkeyGesture.Key))
                         {
                             SendSuspendSignal();
                         }
-                        else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(settings.Settings.SavedInformationHotkeyGesture.Key))
+                        else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedInformationHotkeyGesture.Key))
                         {
                             SendInformationSignal();
                         }
@@ -489,7 +489,7 @@ namespace PlayState
             }
 
             gameData.GameProcesses = null;
-            if (settings.Settings.SubstractSuspendedPlaytimeOnStopped)
+            if (Settings.Settings.SubstractSuspendedPlaytimeOnStopped)
             {
                 SubstractPlaytimeFromPlayStateData(game, gameData);
             }
@@ -499,7 +499,7 @@ namespace PlayState
 
         private void SubstractPlaytimeFromPlayStateData(Game game, PlayStateData gameData)
         {
-            if (game.PluginId != Guid.Empty && settings.Settings.SubstractOnlyNonLibraryGames)
+            if (game.PluginId != Guid.Empty && Settings.Settings.SubstractOnlyNonLibraryGames)
             {
                 return;
             }
@@ -646,7 +646,7 @@ namespace PlayState
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
