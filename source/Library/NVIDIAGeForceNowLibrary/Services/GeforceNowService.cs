@@ -58,12 +58,12 @@ namespace NVIDIAGeForceNowEnabler.Services
                     .UrlEncode();
                 var uri = graphQlEndpoint + queryString;
                 var downloadedString = HttpDownloader.DownloadString(uri);
-                if (downloadedString.IsNullOrEmpty())
+                if (!downloadedString.Success)
                 {
                     break;
                 }
 
-                var response = Serialization.FromJson<GfnGraphQlResponse>(downloadedString);
+                var response = Serialization.FromJson<GfnGraphQlResponse>(downloadedString.Result);
                 foreach (var geforceNowItem in response.Data.Apps.Items)
                 {
                     geforceNowItems.Add(geforceNowItem);

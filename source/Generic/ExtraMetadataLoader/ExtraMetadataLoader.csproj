@@ -171,6 +171,9 @@
     <Compile Include="..\..\Common\WebCommon\HttpDownloader.cs">
       <Link>Shared\WebCommon\HttpDownloader.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\WebCommon\Models\DownloadStringResult.cs">
+      <Link>Shared\WebCommon\Models\DownloadStringResult.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\YouTubeCommon\Models\YoutubeEmbeddedResponse.cs">
       <Link>Shared\YouTubeCommon\Models\YoutubeEmbeddedResponse.cs</Link>
     </Compile>

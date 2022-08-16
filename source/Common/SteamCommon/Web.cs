@@ -45,10 +45,10 @@ namespace SteamCommon
         {
             var results = new List<StoreSearchResult>();
             var searchPageSrc = HttpDownloader.DownloadString(GetStoreSearchUrl(searchTerm, steamApiCountry));
-            if (!string.IsNullOrEmpty(searchPageSrc))
+            if (searchPageSrc.Success)
             {
                 var parser = new HtmlParser();
-                var searchPage = parser.Parse(searchPageSrc);
+                var searchPage = parser.Parse(searchPageSrc.Result);
                 foreach (var gameElem in searchPage.QuerySelectorAll(".search_result_row"))
                 {
                     if (gameElem.HasAttribute("data-ds-packageid"))
@@ -176,9 +176,9 @@ namespace SteamCommon
         {
             var url = string.Format(steamAppDetailsMask, steamId);
             var downloadedString = HttpDownloader.DownloadString(url);
-            if (!string.IsNullOrEmpty(downloadedString))
+            if (downloadedString.Success)
             {
-                var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString);
+                var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString.Result);
                 if (parsedData.Keys?.Any() == true)
                 {
                     var response = parsedData[parsedData.Keys.First()];

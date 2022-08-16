@@ -29,9 +29,9 @@ namespace YouTubeCommon
             }
 
             var downloadedString = HttpDownloader.DownloadString(uri);
-            if (!string.IsNullOrEmpty(downloadedString))
+            if (downloadedString.Success)
             {
-                var embeddedJsonMatch = Regex.Match(downloadedString, youtubeResponseRegexStr);
+                var embeddedJsonMatch = Regex.Match(downloadedString.Result, youtubeResponseRegexStr);
                 if (embeddedJsonMatch.Success)
                 {
                     var response = JsonConvert.DeserializeObject<YoutubeEmbeddedResponse>(embeddedJsonMatch.Groups[1].Value);

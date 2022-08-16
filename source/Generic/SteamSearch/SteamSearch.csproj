@@ -156,6 +156,9 @@
     <Compile Include="..\..\common\webcommon\HttpDownloader.cs">
       <Link>Shared\WebCommon\HttpDownloader.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\WebCommon\Models\DownloadStringResult.cs">
+      <Link>Shared\WebCommon\Models\DownloadStringResult.cs</Link>
+    </Compile>
     <Compile Include="SteamSearch.cs" />
     <Compile Include="SteamSearcher.cs" />
     <Compile Include="SteamSearchSettings.cs" />

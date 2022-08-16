@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Downloader.cs" />
     <Compile Include="HttpDownloader.cs" />
+    <Compile Include="Models\DownloadStringResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

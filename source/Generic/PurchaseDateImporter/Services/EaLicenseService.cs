@@ -88,12 +88,12 @@ namespace PurchaseDateImporter.Services
             };
 
             var identityResponse = HttpDownloader.DownloadStringWithHeaders("https://gateway.ea.com/proxy/identity/pids/me", headers);
-            if (identityResponse.IsNullOrEmpty())
+            if (!identityResponse.Success)
             {
                 return null;
             }
 
-            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse);
+            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse.Result);
             // For some reason somtimes the response is in XML format when the Headers contain the
             // Authorization header
             headers.Clear();
@@ -101,7 +101,7 @@ namespace PurchaseDateImporter.Services
             headers["authtoken"] = authResponse.AccessToken;
             var url = string.Format("https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", identity.Pid.PidId);
             var entitlementsResponseData = HttpDownloader.DownloadStringWithHeaders(url, headers);
-            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData);
+            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData.Result);
         }
     }
 }

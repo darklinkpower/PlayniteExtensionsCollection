@@ -22,27 +22,27 @@ namespace WebCommon
             return downloader.DownloadString(mirrors);
         }
 
-        public static string DownloadString(string url)
+        public static DownloadStringResult DownloadString(string url)
         {
             return downloader.DownloadString(url);
         }
 
-        public static string DownloadString(string url, CancellationToken cancelToken)
+        public static DownloadStringResult DownloadString(string url, CancellationToken cancelToken)
         {
             return downloader.DownloadString(url, cancelToken);
         }
 
-        public static string DownloadString(string url, Encoding encoding)
+        public static DownloadStringResult DownloadString(string url, Encoding encoding)
         {
             return downloader.DownloadString(url, encoding);
         }
 
-        public static string DownloadString(string url, List<Cookie> cookies)
+        public static DownloadStringResult DownloadString(string url, List<Cookie> cookies)
         {
             return downloader.DownloadString(url, cookies);
         }
 
-        public static string DownloadString(string url, List<Cookie> cookies, Encoding encoding)
+        public static DownloadStringResult DownloadString(string url, List<Cookie> cookies, Encoding encoding)
         {
             return downloader.DownloadString(url, cookies, encoding);
         }
@@ -77,7 +77,7 @@ namespace WebCommon
             return downloader.DownloadFile(url, path, cancelToken, progressHandler);
         }
 
-        public static string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
+        public static DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
         {
             return downloader.DownloadStringWithHeaders(url, headersDictionary);
         }

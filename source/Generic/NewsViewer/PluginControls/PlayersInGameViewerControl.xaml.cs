@@ -142,16 +142,13 @@ namespace NewsViewer.PluginControls
             currentGameId = processingId;
             Task.Run(() =>
             {
-                string response;
                 var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
-                try
-                {
-                    response = HttpDownloader.DownloadString(url);
-                }
-                catch
+                var downloadStringResult = HttpDownloader.DownloadString(url);
+                if (!downloadStringResult.Success)
                 {
                     return;
                 }
+
 
                 // To detect if game changed while downloading data
                 if (processingId != currentGameId)
@@ -160,12 +157,12 @@ namespace NewsViewer.PluginControls
                 }
 
                 // Invalid responses
-                if (response == @"{""response"":{""result"":42}}")
+                if (downloadStringResult.Result == @"{""response"":{""result"":42}}")
                 {
                     return;
                 }
 
-                if (Serialization.TryFromJson<NumberOfPlayersResponse>(response, out var data))
+                if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Result, out var data))
                 {
                     if (data.Response.Result != 1)
                     {

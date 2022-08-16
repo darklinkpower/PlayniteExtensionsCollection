@@ -66,13 +66,13 @@ namespace GamePassCatalogBrowser.Services
             var gamePassGames = new List<GamePassCatalogProduct>();
             try
             {
-                var downloadedString = HttpDownloader.DownloadString(catalogUrl);
-                if (downloadedString.IsNullOrEmpty())
+                var downloadResult = HttpDownloader.DownloadString(catalogUrl);
+                if (!downloadResult.Success)
                 {
                     return null;
                 }
                 
-                var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(downloadedString);
+                var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(downloadResult.Result);
                 foreach (var gamePassProduct in gamePassCatalog)
                 {
                     if (gamePassProduct.Id == null)
@@ -237,10 +237,10 @@ namespace GamePassCatalogBrowser.Services
             var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
             try
             {
-                var response = HttpDownloader.DownloadString(catalogDataApiUrl);
-                if (!response.IsNullOrEmpty())
+                var downloadResult = HttpDownloader.DownloadString(catalogDataApiUrl);
+                if (downloadResult.Success)
                 {
-                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(response), false, gameProductType, true, product.ProductId);
+                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Result), false, gameProductType, true, product.ProductId);
                 }
                 else
                 {
@@ -470,10 +470,10 @@ namespace GamePassCatalogBrowser.Services
             var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
             try
             {
-                var response = HttpDownloader.DownloadString(catalogDataApiUrl);
-                if (!response.IsNullOrEmpty())
+                var downloadResult = HttpDownloader.DownloadString(catalogDataApiUrl);
+                if (downloadResult.Success)
                 {
-                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(response), true, gameProductType, false, string.Empty);
+                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Result), true, gameProductType, false, string.Empty);
                     File.WriteAllText(gameDataCachePath, JsonConvert.SerializeObject(gamePassGamesList));
                 }
                 else

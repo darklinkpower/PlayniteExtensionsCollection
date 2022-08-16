@@ -34,12 +34,12 @@ namespace JastUsaLibrary
             }
 
             var downloadedString = HttpDownloader.DownloadString(jastBaseAppUrl + apiUrl);
-            if (downloadedString.IsNullOrEmpty())
+            if (!downloadedString.Success)
             {
                 return new GameMetadata();
             }
 
-            var productResponse = Serialization.FromJson<ProductResponse>(downloadedString);
+            var productResponse = Serialization.FromJson<ProductResponse>(downloadedString.Result);
             var metadata = new GameMetadata()
             {
                 Description = productResponse.Description,

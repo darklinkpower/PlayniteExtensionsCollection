@@ -176,9 +176,9 @@ namespace ExtraMetadataLoader.Services
                 };
 
                 var downloadedString = HttpDownloader.DownloadStringWithHeaders(requestString, headers);
-                if (!downloadedString.IsNullOrEmpty())
+                if (downloadedString.Success)
                 {
-                    var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString);
+                    var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString.Result);
                     if (response.Success && response.Data.Count > 0)
                     {
                         var success = false;
@@ -301,17 +301,17 @@ namespace ExtraMetadataLoader.Services
                 { "Authorization", $"Bearer {settings.SgdbApiKey}" }
             };
 
-            var downloadedString = HttpDownloader.DownloadStringWithHeaders(searchUrl, headers);
-            if (!string.IsNullOrEmpty(downloadedString))
+            var downloadResult = HttpDownloader.DownloadStringWithHeaders(searchUrl, headers);
+            if (downloadResult.Success)
             {
-                var response = JsonConvert.DeserializeObject<SteamGridDbGameSearchResponse>(downloadedString);
+                var response = JsonConvert.DeserializeObject<SteamGridDbGameSearchResponse>(downloadResult.Result);
                 if (response.Success)
                 {
                     return response.Data;
                 }
                 else
                 {
-                    logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
+                    logger.Debug($"SteamGridDB request failed. Response string: {downloadResult.Result}");
                 }
             }
 

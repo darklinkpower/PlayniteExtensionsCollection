@@ -18,15 +18,15 @@ namespace WebCommon
     {
         string DownloadString(IEnumerable<string> mirrors);
 
-        string DownloadString(string url);
+        DownloadStringResult DownloadString(string url);
 
-        string DownloadString(string url, Encoding encoding);
+        DownloadStringResult DownloadString(string url, Encoding encoding);
 
-        string DownloadString(string url, List<Cookie> cookies);
+        DownloadStringResult DownloadString(string url, List<Cookie> cookies);
 
-        string DownloadString(string url, List<Cookie> cookies, Encoding encoding);
+        DownloadStringResult DownloadString(string url, List<Cookie> cookies, Encoding encoding);
 
-        string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary);
+        DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary);
 
         void DownloadString(string url, string path);
 
@@ -46,7 +46,7 @@ namespace WebCommon
     public class Downloader : IDownloader
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        protected readonly IHttpClientFactory _httpClientFactory;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public Downloader()
         {
@@ -55,12 +55,12 @@ namespace WebCommon
             logger.Debug("Created service provider with IHttpClient factory");
         }
 
-        protected HttpClient GetClient(string url)
+        private HttpClient GetClient(string url)
         {
             return GetClient(new Uri(url));
         }
 
-        protected HttpClient GetClient(Uri uri)
+        private HttpClient GetClient(Uri uri)
         {
             var sp = ServicePointManager.FindServicePoint(uri);
             sp.ConnectionLeaseTimeout = 60 * 1000;
@@ -73,61 +73,74 @@ namespace WebCommon
             logger.Debug($"Downloading string content from multiple mirrors.");
             foreach (var mirror in mirrors)
             {
-                try
+                var downloadResult = DownloadString(mirror);
+                if (downloadResult.Success)
                 {
-                    return DownloadString(mirror);
+                    return downloadResult.Result;
                 }
-                catch (Exception e)
+                else
                 {
-                    logger.Error(e, $"Failed to download {mirror} string.");
+                    logger.Debug($"Failed to download {mirror} string.");
                 }
             }
 
             throw new Exception("Failed to download string from all mirrors.");
         }
 
-        public string DownloadString(string url)
+        public DownloadStringResult DownloadString(string url)
         {
             return DownloadString(url, Encoding.UTF8);
         }
 
-        private string GetHttpRequestString(HttpRequestMessage httpRequest)
+        private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest)
         {
             return GetHttpRequestString(httpRequest, Encoding.UTF8);
         }
 
-        private string GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding)
+        private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding)
         {
             return GetHttpRequestString(httpRequest, encoding, new CancellationToken());
         }
 
-        private string GetHttpRequestString(HttpRequestMessage httpRequest, CancellationToken cancelToken)
+        private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest, CancellationToken cancelToken)
         {
             return GetHttpRequestString(httpRequest, Encoding.UTF8, cancelToken);
         }
 
-        private string GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding, CancellationToken cancelToken)
+        private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding, CancellationToken cancelToken)
         {
-            try
+            return Task.Run(async () =>
             {
-                return Task.Run(async () =>
+                string result = null;
+                bool success = false;
+                HttpRequestException httpRequestException = new HttpRequestException();
+                HttpStatusCode httpStatusCode = HttpStatusCode.Ambiguous;
+
+                using (var httpResponseMessage = await GetClient(httpRequest.RequestUri).SendAsync(httpRequest, cancelToken))
                 {
-                    using (var httpResponseMessage = await GetClient(httpRequest.RequestUri).SendAsync(httpRequest, cancelToken))
+                    try
                     {
                         httpResponseMessage.EnsureSuccessStatusCode();
                         var bytes = await httpResponseMessage.Content.ReadAsByteArrayAsync();
-                        return encoding.GetString(bytes);
+                        result = encoding.GetString(bytes);
+                        success = true;
                     }
-                }).GetAwaiter().GetResult();
-            }
-            catch (HttpRequestException e)
-            {
-                logger.Warn(e, $"ExecuteHttpRequest not completed for url {httpRequest.RequestUri.AbsoluteUri}");
-                return null;
-            }
+                    catch (HttpRequestException e)
+                    {
+                        logger.Error(e, $"GetHttpRequestString not completed for url {httpRequest.RequestUri.AbsoluteUri}");
+                        httpRequestException = e;
+                    }
+                    finally
+                    {
+                        httpStatusCode = httpResponseMessage.StatusCode;
+                    }
+
+                    return new DownloadStringResult(result, success, httpStatusCode, httpRequestException);
+                };
+            }).GetAwaiter().GetResult();
         }
 
-        public string DownloadString(string url, CancellationToken cancelToken)
+        public DownloadStringResult DownloadString(string url, CancellationToken cancelToken)
         {
             logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
@@ -136,7 +149,7 @@ namespace WebCommon
             }
         }
 
-        public string DownloadString(string url, Encoding encoding)
+        public DownloadStringResult DownloadString(string url, Encoding encoding)
         {
             logger.Debug($"Downloading string content from {url} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
@@ -145,12 +158,12 @@ namespace WebCommon
             }
         }
 
-        public string DownloadString(string url, List<Cookie> cookies)
+        public DownloadStringResult DownloadString(string url, List<Cookie> cookies)
         {
             return DownloadString(url, cookies, Encoding.UTF8);
         }
 
-        public string DownloadString(string url, List<Cookie> cookies, Encoding encoding)
+        public DownloadStringResult DownloadString(string url, List<Cookie> cookies, Encoding encoding)
         {
             logger.Debug($"Downloading string content from {url} using cookies and {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
@@ -171,12 +184,15 @@ namespace WebCommon
             logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                var data = GetHttpRequestString(request, encoding);
-                File.WriteAllText(path, data, encoding);
+                var downloadStringResult = GetHttpRequestString(request, encoding);
+                if (downloadStringResult.Success)
+                {
+                    File.WriteAllText(path, downloadStringResult.Result, encoding);
+                }
             }
         }
 
-        public string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
+        public DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
         {
             logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
