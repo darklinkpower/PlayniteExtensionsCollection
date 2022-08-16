@@ -1,4 +1,6 @@
-﻿using Playnite.SDK;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Playnite.SDK;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PluginsCommon.Web
+namespace WebCommon
 {
     // Based on https://github.com/JosefNemec/Playnite
     public interface IDownloader
@@ -42,6 +44,26 @@ namespace PluginsCommon.Web
     public class Downloader : IDownloader
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        protected readonly IHttpClientFactory _httpClientFactory;
+
+        public Downloader()
+        {
+            var serviceProvider = new ServiceCollection().AddHttpClient().BuildServiceProvider();
+            _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
+        }
+
+        protected HttpClient GetClient(string url)
+        {
+            return GetClient(new Uri(url));
+        }
+
+        protected HttpClient GetClient(Uri uri)
+        {
+            var sp = ServicePointManager.FindServicePoint(uri);
+            sp.ConnectionLeaseTimeout = 60 * 1000;
+
+            return _httpClientFactory.CreateClient();
+        }
 
         public string DownloadString(IEnumerable<string> mirrors)
         {
@@ -66,31 +88,57 @@ namespace PluginsCommon.Web
             return DownloadString(url, Encoding.UTF8);
         }
 
+        private string ExecuteHttpRequest(HttpRequestMessage httpRequest)
+        {
+            return ExecuteHttpRequest(httpRequest, Encoding.UTF8);
+        }
+
+        private string ExecuteHttpRequest(HttpRequestMessage httpRequest, Encoding encoding)
+        {
+            return ExecuteHttpRequest(httpRequest, encoding, new CancellationToken());
+        }
+
+        private string ExecuteHttpRequest(HttpRequestMessage httpRequest, CancellationToken cancelToken)
+        {
+            return ExecuteHttpRequest(httpRequest, Encoding.UTF8, cancelToken);
+        }
+
+        private string ExecuteHttpRequest(HttpRequestMessage httpRequest, Encoding encoding, CancellationToken cancelToken)
+        {
+            try
+            {
+                return Task.Run(async () =>
+                {
+                    using (var httpResponseMessage = await GetClient(httpRequest.RequestUri).SendAsync(httpRequest, cancelToken))
+                    {
+                        httpResponseMessage.EnsureSuccessStatusCode();
+                        var bytes = httpResponseMessage.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                        return encoding.GetString(bytes);
+                    }
+                }).GetAwaiter().GetResult();
+            }
+            catch (HttpRequestException e)
+            {
+                logger.Warn(e, $"ExecuteHttpRequest not completed for url {httpRequest.RequestUri.AbsoluteUri}");
+                return null;
+            }
+        }
+
         public string DownloadString(string url, CancellationToken cancelToken)
         {
             logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                using (var webClient = new WebClient { Encoding = Encoding.UTF8 })
-                using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
-                {
-                    return Task.Run(async () => await webClient.DownloadStringTaskAsync(url)).GetAwaiter().GetResult();
-                }
-            }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
-            {
-                logger.Warn("Download canceled.");
-                return null;
+                return ExecuteHttpRequest(request, Encoding.UTF8, cancelToken);
             }
         }
 
         public string DownloadString(string url, Encoding encoding)
         {
             logger.Debug($"Downloading string content from {url} using {encoding} encoding.");
-            using (var webClient = new WebClient { Encoding = encoding })
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                return webClient.DownloadString(url);
+                return ExecuteHttpRequest(request, encoding);
             }
         }
 
@@ -102,15 +150,11 @@ namespace PluginsCommon.Web
         public string DownloadString(string url, List<Cookie> cookies, Encoding encoding)
         {
             logger.Debug($"Downloading string content from {url} using cookies and {encoding} encoding.");
-            using (var webClient = new WebClient { Encoding = encoding })
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                if (cookies?.Any() == true)
-                {
-                    var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
-                    webClient.Headers.Add(HttpRequestHeader.Cookie, cookieString);
-                }
-
-                return webClient.DownloadString(url);
+                var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
+                request.Headers.Add("Cookie", cookieString);
+                return ExecuteHttpRequest(request, encoding);
             }
         }
 
@@ -122,9 +166,9 @@ namespace PluginsCommon.Web
         public void DownloadString(string url, string path, Encoding encoding)
         {
             logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
-            using (var webClient = new WebClient { Encoding = encoding })
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                var data = webClient.DownloadString(url);
+                var data = ExecuteHttpRequest(request, encoding);
                 File.WriteAllText(path, data);
             }
         }
@@ -132,38 +176,57 @@ namespace PluginsCommon.Web
         public byte[] DownloadData(string url)
         {
             logger.Debug($"Downloading data from {url}.");
-            using (var webClient = new WebClient())
+            try
             {
-                return webClient.DownloadData(url);
+                return Task.Run(async () =>
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Get, url))
+                    {
+                        using (var httpResponseMessage = await GetClient(request.RequestUri).SendAsync(request))
+                        {
+                            httpResponseMessage.EnsureSuccessStatusCode();
+                            return httpResponseMessage.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                        }
+                    }
+                }).GetAwaiter().GetResult();
+            }
+            catch (HttpRequestException e)
+            {
+                logger.Warn(e, $"DownloadData not completed for url {url}");
+                return null;
             }
         }
 
         public void DownloadFile(string url, string path)
         {
-            logger.Debug($"Downloading data from {url} to {path}.");
-            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-            using (var webClient = new WebClient())
-            {
-                webClient.DownloadFile(url, path);
-            }
+            DownloadFile(url, path, new CancellationToken());
         }
 
         public void DownloadFile(string url, string path, CancellationToken cancelToken)
         {
             logger.Debug($"Downloading data from {url} to {path}.");
-            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-
             try
             {
-                using (var webClient = new WebClient())
-                using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
+                Task.Run(async () =>
                 {
-                    webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
-                }
+                    using (var response = await GetClient(url).GetAsync(url, cancelToken))
+                    {
+                        response.EnsureSuccessStatusCode();
+                        using (var stream = await response.Content.ReadAsStreamAsync())
+                        {
+                            FileSystem.PrepareSaveFile(path);
+                            var fileInfo = new FileInfo(path);
+                            using (var fs = File.Create(fileInfo.FullName))
+                            {
+                                await stream.CopyToAsync(fs);
+                            }
+                        }
+                    }
+                }).GetAwaiter().GetResult();
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+            catch (HttpRequestException e)
             {
-                logger.Warn("Download canceled.");
+                logger.Warn(e, $"Download not completed for url {url}");
             }
         }
 
@@ -194,11 +257,10 @@ namespace PluginsCommon.Web
                         webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
                     }
                 }
-
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+            catch (WebException e)
             {
-                logger.Warn("Download canceled.");
+                logger.Warn(e, $"Download not completed for url {url}");
             }
 
             return downloadCompleted;
