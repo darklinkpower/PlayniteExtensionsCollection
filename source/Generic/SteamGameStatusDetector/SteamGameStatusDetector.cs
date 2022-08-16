@@ -26,7 +26,7 @@ namespace SteamGameStatusDetector
         private bool valuesAreDefault = true;
         private Game currentGame = null;
 
-        public SteamGameStatusDetectorSettingsViewModel settings { get; set; }
+        public SteamGameStatusDetectorSettingsViewModel Settings { get; set; }
 
         private readonly AcfReader acfReader;
         private readonly DispatcherTimer watcherManifestUpdateTimer;
@@ -36,7 +36,7 @@ namespace SteamGameStatusDetector
 
         public SteamGameStatusDetector(IPlayniteAPI api) : base(api)
         {
-            settings = new SteamGameStatusDetectorSettingsViewModel(this);
+            Settings = new SteamGameStatusDetectorSettingsViewModel(this);
             acfReader = new AcfReader();
             Properties = new GenericPluginProperties
             {
@@ -46,7 +46,7 @@ namespace SteamGameStatusDetector
             AddSettingsSupport(new AddSettingsSupportArgs
             {
                 SourceName = "SteamGameStatusDetector",
-                SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
+                SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
 
             watcher = new FileSystemWatcher(@"G:\Games\PC\Steam\steamapps")
@@ -116,11 +116,11 @@ namespace SteamGameStatusDetector
             lastManifestCheck = null;
             manifestLastUpdatedValue = null;
 
-            settings.Settings.AppState = string.Empty;
-            settings.Settings.BytesDownloaded = 0;
-            settings.Settings.BytesToDownload = 1;
-            settings.Settings.DownloadProgress = string.Empty;
-            settings.Settings.HasData = false;
+            Settings.Settings.AppState = string.Empty;
+            Settings.Settings.BytesDownloaded = 0;
+            Settings.Settings.BytesToDownload = 1;
+            Settings.Settings.DownloadProgress = string.Empty;
+            Settings.Settings.HasData = false;
         }
 
         public override void OnGameSelected(OnGameSelectedEventArgs args)
@@ -210,11 +210,11 @@ namespace SteamGameStatusDetector
             }
 
             // Fully Downloaded games or starting have same values
-            settings.Settings.BytesDownloaded = long.Parse(acfStruct.SubACF["AppState"].SubItems["BytesDownloaded"]);
-            settings.Settings.BytesToDownload = long.Parse(acfStruct.SubACF["AppState"].SubItems["BytesToDownload"]);
-            if (settings.Settings.BytesDownloaded == settings.Settings.BytesToDownload)
+            Settings.Settings.BytesDownloaded = long.Parse(acfStruct.SubACF["AppState"].SubItems["BytesDownloaded"]);
+            Settings.Settings.BytesToDownload = long.Parse(acfStruct.SubACF["AppState"].SubItems["BytesToDownload"]);
+            if (Settings.Settings.BytesDownloaded == Settings.Settings.BytesToDownload)
             {
-                settings.Settings.HasData = false;
+                Settings.Settings.HasData = false;
                 return;
             }
 
@@ -225,14 +225,14 @@ namespace SteamGameStatusDetector
             {
                 if (appStateFlag != 0 && appState.HasFlag(appStateFlag))
                 {
-                    settings.Settings.AppState = appStateFlag.ToString();
+                    Settings.Settings.AppState = appStateFlag.ToString();
                 }
             }
 
-            var bytesDownloadedReadable = GetBytesReadable(settings.Settings.BytesDownloaded);
-            var bytesToDownloadReadable = GetBytesReadable(settings.Settings.BytesToDownload);
-            settings.Settings.DownloadProgress = $"{bytesDownloadedReadable} of {bytesToDownloadReadable}";
-            settings.Settings.HasData = true;
+            var bytesDownloadedReadable = GetBytesReadable(Settings.Settings.BytesDownloaded);
+            var bytesToDownloadReadable = GetBytesReadable(Settings.Settings.BytesToDownload);
+            Settings.Settings.DownloadProgress = $"{bytesDownloadedReadable} of {bytesToDownloadReadable}";
+            Settings.Settings.HasData = true;
         }
 
         // Returns the human-readable file size for an arbitrary, 64-bit file size 
@@ -277,7 +277,7 @@ namespace SteamGameStatusDetector
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
