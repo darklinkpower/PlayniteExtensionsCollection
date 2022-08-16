@@ -51,7 +51,7 @@ namespace ImporterforAnilist
 
             LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             anilistLibraryCachePath = Path.Combine(GetPluginUserDataPath(), "libraryCache.json");
-            accountApi = new AnilistAccountClient(PlayniteApi, settings);
+            accountApi = new AnilistAccountClient(settings);
         }
 
         public GameMetadata EntryToGameMetadata(Entry entry)

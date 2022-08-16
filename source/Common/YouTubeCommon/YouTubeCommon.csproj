@@ -48,14 +48,8 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\pluginscommon\Downloader.cs">
-      <Link>Shared\PluginsCommon\Downloader.cs</Link>
-    </Compile>
     <Compile Include="..\pluginscommon\FileSystem.cs">
       <Link>Shared\PluginsCommon\FileSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\pluginscommon\HttpDownloader.cs">
-      <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
     </Compile>
     <Compile Include="..\PluginsCommon\Paths.cs">
       <Link>Shared\PluginsCommon\Paths.cs</Link>

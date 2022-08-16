@@ -3,7 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using PluginsCommon.Web;
+using WebCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;

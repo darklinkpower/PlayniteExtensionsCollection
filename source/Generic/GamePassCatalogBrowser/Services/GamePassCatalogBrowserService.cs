@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GamePassCatalogBrowser.Models;
 using System.Text.RegularExpressions;
-using PluginsCommon.Web;
+using WebCommon;
 using PluginsCommon;
 
 namespace GamePassCatalogBrowser.Services

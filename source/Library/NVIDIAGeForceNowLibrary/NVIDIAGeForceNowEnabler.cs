@@ -14,7 +14,6 @@ using System.Net;
 using Playnite.SDK.Data;
 using System.Diagnostics;
 using PluginsCommon;
-using PluginsCommon.Web;
 using PlayniteUtilitiesCommon;
 using NVIDIAGeForceNowEnabler.Services;
 using NVIDIAGeForceNowEnabler.Models;

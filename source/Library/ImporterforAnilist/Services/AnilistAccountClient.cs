@@ -13,12 +13,10 @@ namespace ImporterforAnilist.Services
     class AnilistAccountClient
     {
         private ILogger logger = LogManager.GetLogger();
-        private IPlayniteAPI api;
         private readonly string apiListQueryString = @"";
         public string anilistUsername = string.Empty;
         public const string GraphQLEndpoint = @"https://graphql.AniList.co";
         private HttpClient client = new HttpClient();
-        private IPlayniteAPI playniteApi;
         private ImporterForAnilistSettingsViewModel settings;
         private const string getUsernameQueryString = @"
 query {
@@ -55,9 +53,8 @@ mutation ($ids: [Int], $status: MediaListStatus) {
             }
         }
 
-        public AnilistAccountClient(IPlayniteAPI playniteApi, ImporterForAnilistSettingsViewModel settings)
+        public AnilistAccountClient(ImporterForAnilistSettingsViewModel settings)
         {
-            this.playniteApi = playniteApi;
             this.settings = settings;
             this.apiListQueryString = @"
                 query GetListByUsername($userName: String!, $type: MediaType!) {

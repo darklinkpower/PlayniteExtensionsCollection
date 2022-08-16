@@ -4,7 +4,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
-using PluginsCommon.Web;
+using WebCommon;
 using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
 using SteamWishlistDiscountNotifier.ViewModels;

@@ -56,9 +56,6 @@
     <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
       <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\PluginsCommon\Downloader.cs">
-      <Link>Shared\PluginsCommon\Downloader.cs</Link>
-    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Encryption.cs">
       <Link>Shared\PluginsCommon\Encryption.cs</Link>
     </Compile>
@@ -73,9 +70,6 @@
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\GlobalCommands.cs">
       <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\PluginsCommon\HttpDownloader.cs">
-      <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Native\Kernel32.cs">
       <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>

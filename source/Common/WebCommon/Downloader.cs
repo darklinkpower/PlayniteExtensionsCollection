@@ -26,13 +26,15 @@ namespace WebCommon
 
         string DownloadString(string url, List<Cookie> cookies, Encoding encoding);
 
+        string DownloadStringWithHeadersAsync(string url, Dictionary<string, string> headersDictionary);
+
         void DownloadString(string url, string path);
 
         void DownloadString(string url, string path, Encoding encoding);
 
         byte[] DownloadData(string url);
 
-        void DownloadFile(string url, string path);
+        bool DownloadFile(string url, string path);
 
         void DownloadFile(IEnumerable<string> mirrors, string path);
 
@@ -88,22 +90,22 @@ namespace WebCommon
             return DownloadString(url, Encoding.UTF8);
         }
 
-        private string ExecuteHttpRequest(HttpRequestMessage httpRequest)
+        private string GetHttpRequestString(HttpRequestMessage httpRequest)
         {
-            return ExecuteHttpRequest(httpRequest, Encoding.UTF8);
+            return GetHttpRequestString(httpRequest, Encoding.UTF8);
         }
 
-        private string ExecuteHttpRequest(HttpRequestMessage httpRequest, Encoding encoding)
+        private string GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding)
         {
-            return ExecuteHttpRequest(httpRequest, encoding, new CancellationToken());
+            return GetHttpRequestString(httpRequest, encoding, new CancellationToken());
         }
 
-        private string ExecuteHttpRequest(HttpRequestMessage httpRequest, CancellationToken cancelToken)
+        private string GetHttpRequestString(HttpRequestMessage httpRequest, CancellationToken cancelToken)
         {
-            return ExecuteHttpRequest(httpRequest, Encoding.UTF8, cancelToken);
+            return GetHttpRequestString(httpRequest, Encoding.UTF8, cancelToken);
         }
 
-        private string ExecuteHttpRequest(HttpRequestMessage httpRequest, Encoding encoding, CancellationToken cancelToken)
+        private string GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding, CancellationToken cancelToken)
         {
             try
             {
@@ -129,7 +131,7 @@ namespace WebCommon
             logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                return ExecuteHttpRequest(request, Encoding.UTF8, cancelToken);
+                return GetHttpRequestString(request, Encoding.UTF8, cancelToken);
             }
         }
 
@@ -138,7 +140,7 @@ namespace WebCommon
             logger.Debug($"Downloading string content from {url} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                return ExecuteHttpRequest(request, encoding);
+                return GetHttpRequestString(request, encoding);
             }
         }
 
@@ -154,7 +156,21 @@ namespace WebCommon
             {
                 var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
                 request.Headers.Add("Cookie", cookieString);
-                return ExecuteHttpRequest(request, encoding);
+                return GetHttpRequestString(request, encoding);
+            }
+        }
+
+        public string DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
+        {
+            logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
+            {
+                foreach (var pair in headersDictionary)
+                {
+                    request.Headers.Add(pair.Key, pair.Value);
+                }
+
+                return GetHttpRequestString(request);
             }
         }
 
@@ -168,8 +184,22 @@ namespace WebCommon
             logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                var data = ExecuteHttpRequest(request, encoding);
+                var data = GetHttpRequestString(request, encoding);
                 File.WriteAllText(path, data);
+            }
+        }
+
+        public string DownloadStringWithHeadersAsync(string url, Dictionary<string, string> headersDictionary)
+        {
+            logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
+            using (var request = new HttpRequestMessage(HttpMethod.Get, url))
+            {
+                foreach (var pair in headersDictionary)
+                {
+                    request.Headers.Add(pair.Key, pair.Value);
+                }
+
+                return GetHttpRequestString(request);
             }
         }
 
@@ -197,14 +227,15 @@ namespace WebCommon
             }
         }
 
-        public void DownloadFile(string url, string path)
+        public bool DownloadFile(string url, string path)
         {
-            DownloadFile(url, path, new CancellationToken());
+            return DownloadFile(url, path, new CancellationToken());
         }
 
-        public void DownloadFile(string url, string path, CancellationToken cancelToken)
+        public bool DownloadFile(string url, string path, CancellationToken cancelToken)
         {
             logger.Debug($"Downloading data from {url} to {path}.");
+            var success = false;
             try
             {
                 Task.Run(async () =>
@@ -219,6 +250,7 @@ namespace WebCommon
                             using (var fs = File.Create(fileInfo.FullName))
                             {
                                 await stream.CopyToAsync(fs);
+                                success = true;
                             }
                         }
                     }
@@ -228,6 +260,8 @@ namespace WebCommon
             {
                 logger.Warn(e, $"Download not completed for url {url}");
             }
+
+            return success;
         }
 
         public bool DownloadFile(string url, string path, CancellationToken cancelToken, Action<DownloadProgressChangedEventArgs> progressHandler)

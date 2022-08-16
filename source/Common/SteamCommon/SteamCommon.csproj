@@ -51,14 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PluginsCommon\Downloader.cs">
-      <Link>Shared\PluginsCommon\Downloader.cs</Link>
-    </Compile>
     <Compile Include="..\PluginsCommon\FileSystem.cs">
       <Link>Shared\PluginsCommon\FileSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\PluginsCommon\HttpDownloader.cs">
-      <Link>Shared\PluginsCommon\HttpDownloader.cs</Link>
     </Compile>
     <Compile Include="..\PluginsCommon\Native\Kernel32.cs">
       <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>

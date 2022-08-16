@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PluginsCommon.Web;
+using WebCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace YouTubeCommon
                 uri = string.Format(youtubeSearchTemplate, Uri.EscapeDataString(searchTerm));
             }
 
-            var downloadedString = HttpDownloader.DownloadStringAsync(uri).GetAwaiter().GetResult();
+            var downloadedString = HttpDownloader.DownloadString(uri);
             if (!string.IsNullOrEmpty(downloadedString))
             {
                 var embeddedJsonMatch = Regex.Match(downloadedString, youtubeResponseRegexStr);

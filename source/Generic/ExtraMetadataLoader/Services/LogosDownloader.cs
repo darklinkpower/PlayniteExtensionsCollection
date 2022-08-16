@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Helpers;
 using System.Text;
-using PluginsCommon.Web;
+using WebCommon;
 using ImageMagick;
 using PluginsCommon;
 using Playnite.SDK.Data;
@@ -69,7 +69,7 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamUri = string.Format(steamLogoUriTemplate, steamId);
-            var success = HttpDownloader.DownloadFileAsync(steamUri, logoPath).GetAwaiter().GetResult();
+            var success = HttpDownloader.DownloadFile(steamUri, logoPath);
             if (success && settings.ProcessLogosOnDownload)
             {
                 ProcessLogoImage(logoPath);
@@ -143,7 +143,7 @@ namespace ExtraMetadataLoader.Services
                 return true;
             }
 
-            var success = HttpDownloader.DownloadFileAsync(imageUrl, logoPath).GetAwaiter().GetResult();
+            var success = HttpDownloader.DownloadFile(imageUrl, logoPath);
             if (success && settings.ProcessLogosOnDownload)
             {
                 ProcessLogoImage(logoPath);
@@ -175,7 +175,7 @@ namespace ExtraMetadataLoader.Services
                     { "Authorization", $"Bearer {settings.SgdbApiKey}" }
                 };
 
-                var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(requestString, headers).GetAwaiter().GetResult();
+                var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(requestString, headers);
                 if (!downloadedString.IsNullOrEmpty())
                 {
                     var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString);
@@ -184,7 +184,7 @@ namespace ExtraMetadataLoader.Services
                         var success = false;
                         if (isBackgroundDownload || response.Data.Count == 1)
                         {
-                            success = HttpDownloader.DownloadFileAsync(response.Data[0].Url, logoPath).GetAwaiter().GetResult();
+                            success = HttpDownloader.DownloadFile(response.Data[0].Url, logoPath);
                         }
                         else
                         {
@@ -204,7 +204,7 @@ namespace ExtraMetadataLoader.Services
                                 {
                                     // Since the ImageFileOption dialog used the thumb url, the full resolution
                                     // image url needs to be retrieved
-                                    success = HttpDownloader.DownloadFileAsync(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath).GetAwaiter().GetResult();
+                                    success = HttpDownloader.DownloadFile(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath);
                                 }
                             }
                         }
@@ -295,11 +295,13 @@ namespace ExtraMetadataLoader.Services
         private List<SgdbData> GetSteamGridDbSearchResults(string gameName)
         {
             var searchUrl = string.Format(sgdbGameSearchUriTemplate, Uri.EscapeDataString(gameName));
-            var headers = new Dictionary<string, string> {
-                    { "Accept", "application/json" },
-                    { "Authorization", $"Bearer {settings.SgdbApiKey}" }
-                };
-            var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(searchUrl, headers).GetAwaiter().GetResult();
+            var headers = new Dictionary<string, string>
+            {
+                { "Accept", "application/json" },
+                { "Authorization", $"Bearer {settings.SgdbApiKey}" }
+            };
+
+            var downloadedString = HttpDownloader.DownloadStringWithHeadersAsync(searchUrl, headers);
             if (!string.IsNullOrEmpty(downloadedString))
             {
                 var response = JsonConvert.DeserializeObject<SteamGridDbGameSearchResponse>(downloadedString);

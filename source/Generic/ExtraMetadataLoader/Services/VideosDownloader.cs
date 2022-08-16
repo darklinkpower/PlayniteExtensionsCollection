@@ -5,7 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using PluginsCommon.Web;
+using WebCommon;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -87,7 +87,7 @@ namespace ExtraMetadataLoader.Services
                     videoUrl = steamAppDetails.data.Movies[0].Mp4.Max;
                 }
 
-                var success = HttpDownloader.DownloadFileAsync(videoUrl.ToString(), tempDownloadPath).GetAwaiter().GetResult();
+                var success = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath);
                 if (success)
                 {
                     GetVideoInformation(tempDownloadPath);
@@ -97,7 +97,7 @@ namespace ExtraMetadataLoader.Services
             if (downloadVideoMicro)
             {
                 var videoUrl = string.Format(steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
-                var success = HttpDownloader.DownloadFileAsync(videoUrl.ToString(), tempDownloadPath).GetAwaiter().GetResult();
+                var success = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath);
                 if (success)
                 {
                     ProcessVideo(tempDownloadPath, videoMicroPath, false, true);

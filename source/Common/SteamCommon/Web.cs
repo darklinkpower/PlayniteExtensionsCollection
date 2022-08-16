@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Parser.Html;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using PluginsCommon.Web;
+using WebCommon;
 using SteamCommon.Models;
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ namespace SteamCommon
         public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null)
         {
             var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpDownloader.DownloadStringAsync(GetStoreSearchUrl(searchTerm, steamApiCountry)).GetAwaiter().GetResult();
+            var searchPageSrc = HttpDownloader.DownloadString(GetStoreSearchUrl(searchTerm, steamApiCountry));
             if (!string.IsNullOrEmpty(searchPageSrc))
             {
                 var parser = new HtmlParser();
@@ -175,7 +175,7 @@ namespace SteamCommon
         public static SteamAppDetails GetSteamAppDetails(string steamId)
         {
             var url = string.Format(steamAppDetailsMask, steamId);
-            var downloadedString = HttpDownloader.DownloadStringAsync(url).GetAwaiter().GetResult();
+            var downloadedString = HttpDownloader.DownloadString(url);
             if (!string.IsNullOrEmpty(downloadedString))
             {
                 var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString);

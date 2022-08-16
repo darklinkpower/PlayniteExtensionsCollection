@@ -1,7 +1,7 @@
 ﻿using NVIDIAGeForceNowEnabler.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using PluginsCommon.Web;
+using WebCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;

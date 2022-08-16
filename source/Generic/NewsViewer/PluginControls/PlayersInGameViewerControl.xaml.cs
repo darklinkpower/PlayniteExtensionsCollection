@@ -4,7 +4,7 @@ using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using PluginsCommon.Web;
+using WebCommon;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
