@@ -20,7 +20,7 @@ namespace JastUsaLibrary.ViewModels
     public class GameDownloadsViewModel : ObservableObject
     {
 
-        private JastUsaAccountClient accountClient;
+        private readonly JastUsaAccountClient accountClient;
 
         private int selectedTabItemIndex = 0;
         public int SelectedTabItemIndex
