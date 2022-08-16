@@ -20,18 +20,25 @@ namespace GamesSizeCalculator.SteamSizeCalculation
         public ISteamAppIdUtility SteamAppIdUtility { get; }
         public bool IncludeDLC { get; set; }
         public bool IncludeOptional { get; set; }
+        public bool HandleNonSteamGames { get; set; }
         public string ServiceName { get; } = "Steam";
 
-        public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, bool includeDLC, bool includeOptional)
+        public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, bool includeDLC, bool includeOptional, bool handleNonSteamGames)
         {
             SteamApiClient = steamApiClient;
             SteamAppIdUtility = steamAppIdUtility;
             IncludeDLC = includeDLC;
             IncludeOptional = includeOptional;
+            HandleNonSteamGames = handleNonSteamGames;
         }
 
         public async Task<ulong?> GetInstallSizeAsync(Game game)
         {
+            if(!SteamCommon.Steam.IsGameSteamGame(game) && !HandleNonSteamGames)
+            {
+                return null;
+            }
+
             var appIdStr = SteamAppIdUtility.GetSteamGameId(game);
             if (!uint.TryParse(appIdStr, out uint appId))
             {

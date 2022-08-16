@@ -80,8 +80,7 @@ namespace GamesSizeCalculator
                 using (PlayniteApi.Database.BufferedUpdate())
                 using (var steamClient = new SteamApiClient())
                 {
-                    var steamAppIdUtility = GetDefaultSteamAppUtility();
-                    var steamSizeCalculator = new SteamSizeCalculator(steamClient, steamAppIdUtility, settings.Settings.IncludeDlcInSteamCalculation, settings.Settings.IncludeOptionalInSteamCalculation);
+                    var onlineSizeCalculators = GetOnlineSizeCalculators(steamClient);
                     foreach (var game in games)
                     {
                         if (a.CancelToken.IsCancellationRequested)
@@ -91,7 +90,7 @@ namespace GamesSizeCalculator
 
                         a.CurrentProgressValue++;
                         a.Text = $"{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                        CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, forceNonEmpty);
+                        CalculateGameSize(game, onlineSizeCalculators, forceNonEmpty);
                     }
                 }
             }, progressOptions);
@@ -180,7 +179,7 @@ namespace GamesSizeCalculator
             }
         }
 
-        private ulong GetSteamInstallSizeOnline(Game game, SteamSizeCalculator sizeCalculator)
+        private ulong GetInstallSizeOnline(Game game, IOnlineSizeCalculator sizeCalculator)
         {
             var sizeTask = sizeCalculator.GetInstallSizeAsync(game);
             if (sizeTask.Wait(7000))
@@ -189,12 +188,12 @@ namespace GamesSizeCalculator
             }
             else
             {
-                logger.Warn($"Timed out while getting online Steam install size for {game.Name}");
+                logger.Warn($"Timed out while getting online {sizeCalculator.ServiceName} install size for {game.Name}");
                 return 0L;
             }
         }
 
-        private void CalculateGameSize(Game game, SteamSizeCalculator steamSizeCalculator, ISteamAppIdUtility steamAppIdUtility, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
+        private void CalculateGameSize(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
         {
             if (!forceNonEmpty && !game.Version.IsNullOrEmpty())
             {
@@ -215,11 +214,15 @@ namespace GamesSizeCalculator
                     size = GetGameDirectorySize(game, onlyIfNewerThan);
                 }
             }
-            else if (settings.Settings.GetUninstalledGameSizeFromSteam && PlayniteUtilities.IsGamePcGame(game) && steamSizeCalculator != null && steamAppIdUtility != null)
+            else if (onlineSizeCalculators?.Count > 0 && PlayniteUtilities.IsGamePcGame(game))
             {
-                if (Steam.IsGameSteamGame(game) || settings.Settings.GetSizeFromSteamNonSteamGames)
+                foreach (var sizeCalculator in onlineSizeCalculators)
                 {
-                    size = GetSteamInstallSizeOnline(game, steamSizeCalculator);
+                    size = GetInstallSizeOnline(game, sizeCalculator);
+                    if (size != 0)
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -273,6 +276,23 @@ namespace GamesSizeCalculator
             SavePluginSettings(settings.Settings);
         }
 
+        private ICollection<IOnlineSizeCalculator> GetOnlineSizeCalculators(SteamApiClient steamClient)
+        {
+            var onlineSizeCalculators = new List<IOnlineSizeCalculator>();
+            if (settings.Settings.GetUninstalledGameSizeFromSteam)
+            {
+                onlineSizeCalculators.Add(new SteamSizeCalculator(steamClient, GetDefaultSteamAppUtility()
+                    , settings.Settings.IncludeDlcInSteamCalculation
+                    , settings.Settings.IncludeOptionalInSteamCalculation
+                    , settings.Settings.GetUninstalledGameSizeFromSteam));
+            }
+            if (settings.Settings.GetUninstalledGameSizeFromGog)
+            {
+                onlineSizeCalculators.Add(new GOG.GogSizeCalculator(new GOG.HttpDownloaderWrapper(), settings.Settings.GetSizeFromGogNonGogGames));
+            }
+            return onlineSizeCalculators;
+        }
+
         private void ProcessGamesOnLibUpdate(GlobalProgressActionArgs a)
         {
             ICollection<Game> games = PlayniteApi.Database.Games;
@@ -284,8 +304,8 @@ namespace GamesSizeCalculator
             using (PlayniteApi.Database.BufferedUpdate())
             using (var steamClient = new SteamApiClient())
             {
-                var steamAppIdUtility = GetDefaultSteamAppUtility();
-                var steamSizeCalculator = new SteamSizeCalculator(steamClient, steamAppIdUtility, settings.Settings.IncludeDlcInSteamCalculation, settings.Settings.IncludeOptionalInSteamCalculation);
+                var onlineSizeCalculators = GetOnlineSizeCalculators(steamClient);
+
                 foreach (var game in games)
                 {
                     a.CurrentProgressValue++;
@@ -301,7 +321,7 @@ namespace GamesSizeCalculator
                             continue;
                         }
 
-                        CalculateGameSize(game, steamSizeCalculator, steamAppIdUtility, false);
+                        CalculateGameSize(game, onlineSizeCalculators, false);
                     }
                     else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
                     {
@@ -312,7 +332,7 @@ namespace GamesSizeCalculator
                             continue;
                         }
 
-                        CalculateGameSize(game, null, null, true, true); //don't get steam install size online for the entire library
+                        CalculateGameSize(game, null, true, true); //don't get steam install size online for the entire library
                     }
                 };
             }

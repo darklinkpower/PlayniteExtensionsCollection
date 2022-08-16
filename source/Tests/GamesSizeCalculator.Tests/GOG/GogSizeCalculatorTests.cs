@@ -19,7 +19,7 @@ namespace GamesSizeCalculator.Tests.GOG
                 urlFiles.Add($"https://api.gog.com/products/{id}?expand=description", $"./GOG/{id}.json");
             }
             var downloader = new FakeHttpDownloader(urlFiles);
-            var calc = new GogSizeCalculator(downloader);
+            var calc = new GogSizeCalculator(downloader, true);
             return calc;
         }
 
@@ -40,13 +40,15 @@ namespace GamesSizeCalculator.Tests.GOG
             return game;
         }
 
+        private ulong MB = 1024UL * 1024UL;
+
         [Fact]
         public async Task Project_Eden_Slug_Returns_391MB()
         {
             var calc = SetupGogSizeCalculator("project_eden");
             var game = SetupGame("project_eden", null);
             var size = await calc.GetInstallSizeAsync(game);
-            Assert.Equal((ulong)(391 * 1024), size);
+            Assert.Equal(391 * MB, size);
         }
 
         [Fact]
@@ -55,7 +57,7 @@ namespace GamesSizeCalculator.Tests.GOG
             var calc = SetupGogSizeCalculator("project_eden", "1207659235");
             var game = SetupGame(null, "1207659235");
             var size = await calc.GetInstallSizeAsync(game);
-            Assert.Equal((ulong)(391 * 1024), size);
+            Assert.Equal(391 * MB, size);
         }
 
         [Fact]

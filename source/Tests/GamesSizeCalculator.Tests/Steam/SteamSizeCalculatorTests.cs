@@ -140,7 +140,7 @@ namespace GamesSizeCalculator.Tests.Steam
 
         private SteamSizeCalculator Setup(uint appId)
         {
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), true, true);
+            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), true, true, true);
             return calc;
         }
     }

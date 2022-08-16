@@ -25,6 +25,12 @@ namespace GamesSizeCalculator
         public bool IncludeDlcInSteamCalculation { get => includeDlcInSteamCalculation; set => SetValue(ref includeDlcInSteamCalculation, value); }
         private bool includeOptionalInSteamCalculation = false;
         public bool IncludeOptionalInSteamCalculation { get => includeOptionalInSteamCalculation; set => SetValue(ref includeOptionalInSteamCalculation, value); }
+
+        private bool getUninstalledGameSizeFromGog = true;
+        public bool GetUninstalledGameSizeFromGog { get => getUninstalledGameSizeFromGog; set => SetValue(ref getUninstalledGameSizeFromGog, value); }
+
+        private bool getSizeFromGogNonGogGames;
+        public bool GetSizeFromGogNonGogGames { get => getSizeFromGogNonGogGames; set => SetValue(ref getSizeFromGogNonGogGames, value); }
     }
 
     public class GamesSizeCalculatorSettingsViewModel : ObservableObject, ISettings
