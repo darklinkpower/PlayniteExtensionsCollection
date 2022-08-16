@@ -216,12 +216,31 @@ namespace GamesSizeCalculator
             }
             else if (onlineSizeCalculators?.Count > 0 && PlayniteUtilities.IsGamePcGame(game))
             {
+                //check the preferred online size calculators first (Steam for Steam games, GOG for GOG games, etc)
                 foreach (var sizeCalculator in onlineSizeCalculators)
                 {
+                    if(!sizeCalculator.IsPreferredInstallSizeCalculator(game))
+                    {
+                        continue;
+                    }
+
                     size = GetInstallSizeOnline(game, sizeCalculator);
                     if (size != 0)
                     {
                         break;
+                    }
+                }
+
+                //go through every online size calculator as a fallback
+                if (size == 0)
+                {
+                    foreach (var sizeCalculator in onlineSizeCalculators)
+                    {
+                        size = GetInstallSizeOnline(game, sizeCalculator);
+                        if (size != 0)
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -284,7 +303,9 @@ namespace GamesSizeCalculator
                 onlineSizeCalculators.Add(new SteamSizeCalculator(steamClient, GetDefaultSteamAppUtility()
                     , settings.Settings.IncludeDlcInSteamCalculation
                     , settings.Settings.IncludeOptionalInSteamCalculation
-                    , settings.Settings.GetUninstalledGameSizeFromSteam));
+                    , settings.Settings.GetSizeFromSteamNonSteamGames
+                    , settings.Settings.DepotRegionWords.ToArray()
+                    , settings.Settings.DepotRegionWordsBlacklist.ToArray()));
             }
             if (settings.Settings.GetUninstalledGameSizeFromGog)
             {

@@ -1,5 +1,6 @@
 ﻿using GamesSizeCalculator.SteamSizeCalculation;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -47,9 +48,6 @@ namespace GamesSizeCalculator.Tests.Steam
         {
             ulong expectedBaseSize =
                 1790331721L + //Watch Dogs English
-                102629169L + //Watch_Dogs Binaries ASIA 
-                88449227L + //Watch_Dogs Support ASIA
-                1786744869L + //Watch_Dogs English ASIA
                 12807162011L; //Watch Dogs Common
 
             ulong expectedDLCsize =
@@ -140,7 +138,8 @@ namespace GamesSizeCalculator.Tests.Steam
 
         private SteamSizeCalculator Setup(uint appId)
         {
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), true, true, true);
+            var settings = new GamesSizeCalculatorSettings();
+            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), true, true, true, settings.DepotRegionWords.ToArray(), settings.DepotRegionWordsBlacklist.ToArray());
             return calc;
         }
     }

@@ -7,5 +7,6 @@ namespace GamesSizeCalculator
     {
         string ServiceName { get; }
         Task<ulong?> GetInstallSizeAsync(Game game);
+        bool IsPreferredInstallSizeCalculator(Game game);
     }
 }

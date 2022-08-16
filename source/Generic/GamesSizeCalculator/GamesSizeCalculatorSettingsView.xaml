@@ -6,37 +6,84 @@
              xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <TextBlock VerticalAlignment="Center" Margin="0,0,0,0">
-                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Games-Size-Calculator"
-                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
-                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                    <Run Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsHelpLabel}" />
-                </Hyperlink>
-        </TextBlock>
-        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel}"
-                  Margin="0,10,0,0"
-                  IsChecked="{Binding Settings.CalculateNewGamesOnLibraryUpdate}"/>
-        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel}"
-                  Margin="0,10,0,0"
-                  ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip}"
-                  IsChecked="{Binding Settings.CalculateModifiedGamesOnLibraryUpdate}"/>
-        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel}"
-                  Margin="0,10,0,0"
-                  IsChecked="{Binding Settings.GetUninstalledGameSizeFromSteam}"/>
-        <StackPanel Margin="40,0,0,0"
-                    IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}">
-            <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel}"
-                      Margin="0,10,0,0"
-                      IsChecked="{Binding Settings.GetSizeFromSteamNonSteamGames}"/>
-            <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel}"
-                      Margin="0,10,0,0"
-                      IsChecked="{Binding Settings.IncludeDlcInSteamCalculation}"/>
-            <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel}"
-                      Margin="0,10,0,0"
-                      ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip}"
-                      IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
-        </StackPanel>
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <TabItem Header="Settings">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="20">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,0,0">
+                        <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Games-Size-Calculator"
+                                   Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                   CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                            <Run Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsHelpLabel}" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel}"
+                              Margin="0,10,0,0"
+                              IsChecked="{Binding Settings.CalculateNewGamesOnLibraryUpdate}"/>
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel}"
+                              Margin="0,10,0,0"
+                              ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip}"
+                              IsChecked="{Binding Settings.CalculateModifiedGamesOnLibraryUpdate}"/>
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel}"
+                              Margin="0,10,0,0"
+                              IsChecked="{Binding Settings.GetUninstalledGameSizeFromSteam}"/>
+                    <StackPanel Margin="40,0,0,0"
+                                IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}">
+                        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel}"
+                                  Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.GetSizeFromSteamNonSteamGames}"/>
+                        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel}"
+                                  Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.IncludeDlcInSteamCalculation}"/>
+                        <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel}"
+                                  Margin="0,10,0,0"
+                                  ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip}"
+                                  IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
+                    </StackPanel>
+                    <CheckBox Content="For uninstalled PC games, obtain an estimated install size from GOG.com"
+                              Margin="0,10,0,0"
+                              IsChecked="{Binding Settings.GetUninstalledGameSizeFromGog}"/>
+                    <StackPanel Margin="40,0,0,0"
+                                IsEnabled="{Binding Settings.GetUninstalledGameSizeFromGog}">
+                        <CheckBox Content="Apply this data also for games that are not from the GOG library"
+                                  ToolTip="Games must have a link to the GOG store page"
+                                  Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.GetSizeFromGogNonGogGames}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Steam region-word filtering">
+            <DockPanel Margin="20">
+                <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" DockPanel.Dock="Top">
+                    Region-words are things that denote regions for otherwise identically named Steam depots. For example, "Content EU" and "Content Asia" would have the last words stripped and only one would remain if EU and Asia were both in the Region-words textbox here. If you're sure you'll never need a region, enter it into the Excluded region-words textbox and depots ending in that word wil always be exlcuded from size calculation.
+                    Put each word on its own line.
+                </TextBlock>
 
-    </StackPanel>
+                <Grid VerticalAlignment="Stretch" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="Left" Width="*"/>
+                        <ColumnDefinition x:Name="Middle" Width="50"/>
+                        <ColumnDefinition x:Name="Right" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="Header" MaxHeight="20"/>
+                        <RowDefinition x:Name="Body"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">Region-words</TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0">Excluded region-words</TextBlock>
+                    <TextBox DockPanel.Dock="Top" Name="Whitelist"
+                             MinHeight="220"
+                             VerticalAlignment="Stretch"
+                             Text="{Binding RegionWordsString}"
+                             Grid.Column="0" Grid.Row="1"/>
+                    <TextBox DockPanel.Dock="Top" Name="Blacklist"
+                             MinHeight="220"
+                             VerticalAlignment="Stretch"
+                             Text="{Binding RegionWordsBlacklistString}"
+                             Grid.Column="2" Grid.Row="1"/>
+                </Grid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>

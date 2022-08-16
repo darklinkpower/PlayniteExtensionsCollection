@@ -20,8 +20,7 @@ namespace GamesSizeCalculator.GOG
         public bool HandleNonGogGames { get; set; }
 
         public static Guid GogLibraryId = new Guid("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E");
-        private static string GameUrlBase = "https://www.gog.com/game/";
-        private static Regex GameUrlRegex = new Regex(@"^https?://(www\.)?gog.com/([a-z]{2,4}/)game/", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+        private static Regex GameUrlRegex = new Regex(@"^https?://(www\.)?gog.com/([a-z]{2,3}/)?game/", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
         public async Task<ulong?> GetInstallSizeAsync(Game game)
         {
@@ -42,7 +41,7 @@ namespace GamesSizeCalculator.GOG
 
         private string GetGogGameUrl(Game game)
         {
-            if (!HandleNonGogGames && game.PluginId != GogLibraryId)
+            if (!HandleNonGogGames && !IsPreferredInstallSizeCalculator(game))
             {
                 return null;
             }
@@ -56,12 +55,14 @@ namespace GamesSizeCalculator.GOG
             if (game.PluginId == GogLibraryId)
             {
                 var details = ApiClient.GetGameDetails(game.GameId);
-                if (!string.IsNullOrWhiteSpace(details?.slug))
-                {
-                    return GameUrlBase + details.slug;
-                }
+                return details?.links?.product_card;
             }
             return null;
+        }
+
+        public bool IsPreferredInstallSizeCalculator(Game game)
+        {
+            return game.PluginId == GogLibraryId;
         }
     }
 }

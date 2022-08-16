@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,10 @@ namespace GamesSizeCalculator
     public class GamesSizeCalculatorSettings : ObservableObject
     {
         public DateTime LastRefreshOnLibUpdate = DateTime.Now;
-        
+
         private bool calculateNewGamesOnLibraryUpdate = true;
         public bool CalculateNewGamesOnLibraryUpdate { get => calculateNewGamesOnLibraryUpdate; set => SetValue(ref calculateNewGamesOnLibraryUpdate, value); }
-        
+
         private bool calculateModifiedGamesOnLibraryUpdate = true;
         public bool CalculateModifiedGamesOnLibraryUpdate { get => calculateModifiedGamesOnLibraryUpdate; set => SetValue(ref calculateModifiedGamesOnLibraryUpdate, value); }
         private bool getUninstalledGameSizeFromSteam = true;
@@ -29,8 +30,38 @@ namespace GamesSizeCalculator
         private bool getUninstalledGameSizeFromGog = true;
         public bool GetUninstalledGameSizeFromGog { get => getUninstalledGameSizeFromGog; set => SetValue(ref getUninstalledGameSizeFromGog, value); }
 
-        private bool getSizeFromGogNonGogGames;
+        private bool getSizeFromGogNonGogGames = true;
         public bool GetSizeFromGogNonGogGames { get => getSizeFromGogNonGogGames; set => SetValue(ref getSizeFromGogNonGogGames, value); }
+
+        private ObservableCollection<string> depotRegionWords = new ObservableCollection<string> { "eu", "europe", "row", "en", "english", "ww" };
+        public ObservableCollection<string> DepotRegionWords { get => depotRegionWords; set => SetValue(ref depotRegionWords, value); }
+
+        private ObservableCollection<string> depotRegionWordsBlacklist = new ObservableCollection<string>
+        {
+            "asia",
+            "aus",
+            "australia",
+            "nz",
+            "usa",
+            "us",
+            "ru",
+            "russia",
+            "germany",
+            "deutschland",
+            "de",
+            "es",
+            "sa",
+            "cn",
+            "china",
+            "chinese",
+            "schinese",
+            "tchinese",
+            "jp",
+            "japanese",
+            "fr",
+            "french"
+        };
+        public ObservableCollection<string> DepotRegionWordsBlacklist { get => depotRegionWordsBlacklist; set => SetValue(ref depotRegionWordsBlacklist, value); }
     }
 
     public class GamesSizeCalculatorSettingsViewModel : ObservableObject, ISettings
@@ -47,6 +78,17 @@ namespace GamesSizeCalculator
                 settings = value;
                 OnPropertyChanged();
             }
+        }
+
+        public string RegionWordsString
+        {
+            get => string.Join(Environment.NewLine, settings.DepotRegionWords);
+            set => settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+        }
+        public string RegionWordsBlacklistString
+        {
+            get => string.Join(Environment.NewLine, settings.DepotRegionWordsBlacklist);
+            set => settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
         }
 
         public GamesSizeCalculatorSettingsViewModel(GamesSizeCalculator plugin)

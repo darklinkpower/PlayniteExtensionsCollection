@@ -13,7 +13,7 @@ namespace GamesSizeCalculator.Tests.GOG
     {
         private GogSizeCalculator SetupGogSizeCalculator(string slug, string id = null)
         {
-            var urlFiles = new Dictionary<string, string> { { $"https://www.gog.com/game/{slug}", $"./GOG/{slug}.html" } };
+            var urlFiles = new Dictionary<string, string> { { $"https://www.gog.com/en/game/{slug}", $"./GOG/{slug}.html" } };
             if (id != null)
             {
                 urlFiles.Add($"https://api.gog.com/products/{id}?expand=description", $"./GOG/{id}.json");
@@ -28,7 +28,7 @@ namespace GamesSizeCalculator.Tests.GOG
             var game = new Game();
             if (slug != null)
             {
-                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link> { new Link("GOG", $"https://www.gog.com/game/{slug}") };
+                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link> { new Link("GOG", $"https://www.gog.com/en/game/{slug}") };
             }
 
             if (id != null)
