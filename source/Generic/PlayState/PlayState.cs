@@ -44,7 +44,7 @@ namespace PlayState
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
 
-        private PlayStateManagerViewModel playStateManager;
+        private readonly PlayStateManagerViewModel playStateManager;
         private readonly string playstateIconImagePath;
         private readonly MessagesHandler messagesHandler;
         private readonly bool isWindows10Or11;

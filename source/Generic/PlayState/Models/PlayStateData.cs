@@ -79,5 +79,13 @@ namespace PlayState.Models
             Game.PropertyChanged -= Game_PropertyChanged;
             settingsModel.Settings.PropertyChanged -= Settings_PropertyChanged;
         }
+
+        internal void RemoveProcesses()
+        {
+            if (HasProcesses)
+            {
+                GameProcesses = null;
+            }
+        }
     }
 }

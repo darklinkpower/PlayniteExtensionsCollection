@@ -26,7 +26,7 @@ namespace PlayState.ViewModels
         public Game CurrentGame { get => currentGame; private set => SetValue(ref currentGame, value); }
         private bool isSelectedDataCurrentGame = false;
         public bool IsSelectedDataCurrentGame { get => isSelectedDataCurrentGame; set => SetValue(ref isSelectedDataCurrentGame, value); }
-        public PlayStateData selectedData { get; set; }
+        private PlayStateData selectedData;
         public PlayStateData SelectedData
         {
             get => selectedData;
@@ -51,7 +51,7 @@ namespace PlayState.ViewModels
 
         private readonly DispatcherTimer automaticStateUpdateTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
-        private Dictionary<Guid, string> detectionDictionary = new Dictionary<Guid, string>();
+        private readonly Dictionary<Guid, string> detectionDictionary = new Dictionary<Guid, string>();
         private Dictionary<IntPtr, string> openWindows;
         private bool openWindowsUpdated = false;
 
@@ -91,7 +91,7 @@ namespace PlayState.ViewModels
             var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
             foreach (var playstateData in PlayStateDataCollection)
             {
-                if (!playstateData.HasProcesses)
+                if (!playstateData.HasProcesses || playstateData.CloseAttempted)
                 {
                     continue;
                 }
@@ -114,7 +114,7 @@ namespace PlayState.ViewModels
                         break;
                 }
 
-                var isForeground = playstateData.GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle);
+                var isForeground = playstateData.GameProcesses.Any(x => x.Process?.MainWindowHandle == foregroundWindowHandle);
                 if (!playstateData.HasBeenInForeground && isForeground)
                 {
                     playstateData.HasBeenInForeground = true;
@@ -387,6 +387,7 @@ namespace PlayState.ViewModels
             {
                 ProcessesHandler.CloseProcessItems(gameData.GameProcesses);
                 gameData.CloseAttempted = true;
+                gameData.RemoveProcesses();
             }
         }
 
@@ -421,8 +422,13 @@ namespace PlayState.ViewModels
             var handled = false;
             try
             {
+                if (gameData.CloseAttempted)
+                {
+                    return true;
+                }
+                
                 var processesSuspended = false;
-                if (gameData.SuspendMode == SuspendModes.Processes && gameData.GameProcesses.HasItems())
+                if (gameData.SuspendMode == SuspendModes.Processes && gameData.HasProcesses)
                 {
                     foreach (var gameProcess in gameData.GameProcesses)
                     {
