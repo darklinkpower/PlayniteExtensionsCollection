@@ -252,6 +252,17 @@ namespace ReviewViewer.Controls
             }
         }
 
+        private string currentSteamId = null;
+        public string CurrentSteamId
+        {
+            get => currentSteamId;
+            set
+            {
+                currentSteamId = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void SetReviewInfo()
         {
             var time = TimeSpan.FromMinutes(SelectedReview.Author.PlaytimeAtReview);
@@ -566,14 +577,14 @@ namespace ReviewViewer.Controls
 
         private void DownloadReviewData(string gameDataPath, string reviewSearchType)
         {
-            var currentSteamId = Steam.GetGameSteamId(currentGame, true);
-            if (currentSteamId == null)
+            CurrentSteamId = Steam.GetGameSteamId(currentGame, true);
+            if (CurrentSteamId == null)
             {
                 MainPanelVisibility = Visibility.Collapsed;
                 return;
             }
 
-            var uri = string.Format(reviewsApiMask, currentSteamId, steamApiLanguage, reviewSearchType);
+            var uri = string.Format(reviewsApiMask, CurrentSteamId, steamApiLanguage, reviewSearchType);
             HttpDownloader.DownloadFile(uri, gameDataPath);
         }
 
