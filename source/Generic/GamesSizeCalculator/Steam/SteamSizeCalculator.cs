@@ -80,14 +80,6 @@ namespace GamesSizeCalculator.SteamSizeCalculation
             return size;
         }
 
-        private class DepotGroupingInfo
-        {
-            public string BaseName { get; set; }
-            public string RegionWord { get; set; }
-            public int Rank { get; set; }
-            public DepotInfo Depot { get; set; }
-        }
-
         private void RemoveRegionalDepots(ref List<DepotInfo> allDepots)
         {
             var parsedDepots = allDepots.Select(ParseDepotName).ToList();
