@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using Newtonsoft.Json;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,9 @@ namespace GamesSizeCalculator
         public bool GetSizeFromGogNonGogGames { get => getSizeFromGogNonGogGames; set => SetValue(ref getSizeFromGogNonGogGames, value); }
 
         private ObservableCollection<string> depotRegionWords = new ObservableCollection<string> { "eu", "europe", "row", "en", "english", "ww" };
-        public ObservableCollection<string> DepotRegionWords { get => depotRegionWords; set => SetValue(ref depotRegionWords, value); }
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public ObservableCollection<string> DepotRegionWords { get => depotRegionWords; set => SetValue(ref depotRegionWords, DeduplicateStrings(value)); }
 
         private ObservableCollection<string> depotRegionWordsBlacklist = new ObservableCollection<string>
         {
@@ -61,7 +64,18 @@ namespace GamesSizeCalculator
             "fr",
             "french"
         };
-        public ObservableCollection<string> DepotRegionWordsBlacklist { get => depotRegionWordsBlacklist; set => SetValue(ref depotRegionWordsBlacklist, value); }
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public ObservableCollection<string> DepotRegionWordsBlacklist { get => depotRegionWordsBlacklist; set => SetValue(ref depotRegionWordsBlacklist, DeduplicateStrings(value)); }
+
+        private static ObservableCollection<string> DeduplicateStrings(IEnumerable<string> strings)
+        {
+            var output = new ObservableCollection<string>(
+                strings.Select(s => s.Trim().ToLowerInvariant())
+                .Where(s => !string.IsNullOrWhiteSpace(s))
+                .Distinct());
+            return output;
+        }
     }
 
     public class GamesSizeCalculatorSettingsViewModel : ObservableObject, ISettings
@@ -83,12 +97,12 @@ namespace GamesSizeCalculator
         public string RegionWordsString
         {
             get => string.Join(Environment.NewLine, settings.DepotRegionWords);
-            set => settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim().ToLowerInvariant()).Distinct());
+            set => settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
         }
         public string RegionWordsBlacklistString
         {
             get => string.Join(Environment.NewLine, settings.DepotRegionWordsBlacklist);
-            set => settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim().ToLowerInvariant()).Distinct());
+            set => settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
         }
 
         public GamesSizeCalculatorSettingsViewModel(GamesSizeCalculator plugin)
