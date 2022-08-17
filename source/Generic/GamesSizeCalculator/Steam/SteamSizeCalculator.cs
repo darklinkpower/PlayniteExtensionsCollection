@@ -101,7 +101,8 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                     continue;
                 }
 
-                string logString = $"Depot group {key}, {orderedDepots.Count} depots:";
+                StringBuilder logStringBuilder = new StringBuilder($"Depot group {key}, {orderedDepots.Count} depots: ");
+                logStringBuilder.AppendLine();
 
                 for (int i = 0; i < orderedDepots.Count; i++)
                 {
@@ -110,15 +111,15 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 
                     if (i == 0)
                     {
-                        logString += "Keeping depot: " + depotLogString;
+                        logStringBuilder.AppendLine("Keeping depot: " + depotLogString);
                     }
                     else
                     {
-                        logString += "Removing depot: " + depotLogString;
+                        logStringBuilder.AppendLine("Removing depot: " + depotLogString);
                         allDepots.Remove(depotData.Depot);
                     }
                 }
-                logger.Debug(logString);
+                logger.Debug(logStringBuilder.ToString());
             }
         }
 
