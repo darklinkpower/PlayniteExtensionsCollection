@@ -83,12 +83,12 @@ namespace GamesSizeCalculator
         public string RegionWordsString
         {
             get => string.Join(Environment.NewLine, settings.DepotRegionWords);
-            set => settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+            set => settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Distinct());
         }
         public string RegionWordsBlacklistString
         {
             get => string.Join(Environment.NewLine, settings.DepotRegionWordsBlacklist);
-            set => settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+            set => settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Distinct());
         }
 
         public GamesSizeCalculatorSettingsViewModel(GamesSizeCalculator plugin)
