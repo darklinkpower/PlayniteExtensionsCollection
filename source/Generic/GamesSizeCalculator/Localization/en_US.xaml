@@ -1,15 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCGame_Sizes_Calculator_Settings_Tab_Settings">Settings</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_Settings_Tab_Steam_Region_Words">Steam region-word filtering</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Help</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Automatically calculate the size of a game after if it has been modified on library update</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Updates the game file size if it is detected that the game directory or rom file has been updated since the previous automatic detection</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Automatically calculate the size of a game after it is added on library update</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateModifiedGamesOnLibraryUpdateLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
+    
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseSteamLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Apply this data also for games that are not from the Steam library</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Include all DLC in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
+
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">For uninstalled PC games, obtain an estimated install size from GOG.com</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">Apply this data also for games that are not from the GOG library</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">Games must have a link to the GOG store page</sys:String>
+
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">Region-words are things that denote regions for otherwise identically named Steam depots. For example, "Content EU" and "Content Asia" would have the last word stripped and only one would remain if EU and Asia were both in the Region-words textbox here. If you're sure you'll never need a region, enter it into the Excluded region-words textbox and depots ending in that word wil always be exlcuded from size calculation. Put each word on its own line.</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Region-words</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Excluded region-words</sys:String>
+
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calculate sizes of selected games</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calculate sizes of selected games (Force overwrite)</sys:String>
 
