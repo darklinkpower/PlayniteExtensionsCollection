@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using System;
 using System.Collections.Generic;
 
 namespace GamesSizeCalculator.GOG
@@ -67,7 +68,7 @@ namespace GamesSizeCalculator.GOG
 
         public ProductApiDetail GetGameDetails(string id)
         {
-            var baseUrl = @"https://api.gog.com/products/{0}?expand=description";
+            const string baseUrl = @"https://api.gog.com/products/{0}?expand=description";
 
             try
             {
@@ -83,8 +84,8 @@ namespace GamesSizeCalculator.GOG
 
         public List<StoreGamesFilteredListResponse.Product> GetStoreSearch(string searchTerm)
         {
-            var baseUrl = @"https://www.gog.com/games/ajax/filtered?limit=20&search={0}";
-            var url = string.Format(baseUrl, System.Net.WebUtility.UrlEncode(searchTerm));
+            const string baseUrl = @"https://www.gog.com/games/ajax/filtered?limit=20&search={0}";
+            var url = string.Format(baseUrl, searchTerm.UrlEncode());
 
             try
             {
