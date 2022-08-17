@@ -216,6 +216,7 @@ namespace GamesSizeCalculator
             }
             else if (onlineSizeCalculators?.Count > 0 && PlayniteUtilities.IsGamePcGame(game))
             {
+                var alreadyRan = new List<IOnlineSizeCalculator>();
                 //check the preferred online size calculators first (Steam for Steam games, GOG for GOG games, etc)
                 foreach (var sizeCalculator in onlineSizeCalculators)
                 {
@@ -225,6 +226,7 @@ namespace GamesSizeCalculator
                     }
 
                     size = GetInstallSizeOnline(game, sizeCalculator);
+                    alreadyRan.Add(sizeCalculator);
                     if (size != 0)
                     {
                         break;
@@ -236,6 +238,11 @@ namespace GamesSizeCalculator
                 {
                     foreach (var sizeCalculator in onlineSizeCalculators)
                     {
+                        if (alreadyRan.Contains(sizeCalculator))
+                        {
+                            continue;
+                        }
+
                         size = GetInstallSizeOnline(game, sizeCalculator);
                         if (size != 0)
                         {
@@ -318,7 +325,9 @@ namespace GamesSizeCalculator
         {
             ICollection<Game> games = PlayniteApi.Database.Games;
             if (!settings.Settings.GetUninstalledGameSizeFromSteam)
+            {
                 games = PlayniteApi.Database.Games.Where(x => x.IsInstalled).ToList();
+            }
 
             a.ProgressMaxValue = games.Count;
 
