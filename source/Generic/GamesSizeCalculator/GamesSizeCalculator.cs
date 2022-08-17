@@ -123,7 +123,7 @@ namespace GamesSizeCalculator
 
             try
             {
-                return FileSystem.GetDirectorySizeOnDisk(game.InstallDirectory);
+                return (ulong)FileSystem.GetDirectorySizeOnDisk(game.InstallDirectory);
             }
             catch (Exception e)
             {
@@ -164,7 +164,7 @@ namespace GamesSizeCalculator
 
             try
             {
-                return FileSystem.GetFileSizeOnDisk(romPath);
+                return (ulong)FileSystem.GetFileSizeOnDisk(romPath);
             }
             catch (Exception e)
             {
@@ -353,7 +353,7 @@ namespace GamesSizeCalculator
                             continue;
                         }
 
-                        CalculateGameSize(game, null, true, true); //don't get steam install size online for the entire library
+                        CalculateGameSize(game, null, true, true); //don't get install size online for locally installed games
                     }
                 };
             }

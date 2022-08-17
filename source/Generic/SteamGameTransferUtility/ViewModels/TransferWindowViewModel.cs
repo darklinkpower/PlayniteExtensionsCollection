@@ -356,12 +356,12 @@ namespace SteamGameTransferUtility.ViewModels
             }
         }
 
-        private static string FormatBytes(ulong bytes)
+        private static string FormatBytes(long bytes)
         {
             string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
             int i;
             double dblSByte = bytes;
-            for (i = 0; i < Suffix.Length && bytes >= 1024UL; i++, bytes /= 1024UL)
+            for (i = 0; i < Suffix.Length && bytes >= 1024L; i++, bytes /= 1024L)
             {
                 dblSByte = bytes / 1024D;
             }
