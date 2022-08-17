@@ -69,13 +69,13 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamUri = string.Format(steamLogoUriTemplate, steamId);
-            var success = HttpDownloader.DownloadFile(steamUri, logoPath);
-            if (success && settings.ProcessLogosOnDownload)
+            var downloadFileResult = HttpDownloader.DownloadFile(steamUri, logoPath);
+            if (downloadFileResult.Success && settings.ProcessLogosOnDownload)
             {
                 ProcessLogoImage(logoPath);
             }
 
-            return success;
+            return downloadFileResult.Success;
         }
 
         public bool ProcessLogoImage(string logoPath)
@@ -143,13 +143,13 @@ namespace ExtraMetadataLoader.Services
                 return true;
             }
 
-            var success = HttpDownloader.DownloadFile(imageUrl, logoPath);
-            if (success && settings.ProcessLogosOnDownload)
+            var downloadFileResult = HttpDownloader.DownloadFile(imageUrl, logoPath);
+            if (downloadFileResult.Success && settings.ProcessLogosOnDownload)
             {
                 ProcessLogoImage(logoPath);
             }
 
-            return success;
+            return downloadFileResult.Success;
         }
 
         public bool DownloadSgdbLogo(Game game, bool overwrite, bool isBackgroundDownload)
@@ -184,7 +184,7 @@ namespace ExtraMetadataLoader.Services
                         var success = false;
                         if (isBackgroundDownload || response.Data.Count == 1)
                         {
-                            success = HttpDownloader.DownloadFile(response.Data[0].Url, logoPath);
+                            success = HttpDownloader.DownloadFile(response.Data[0].Url, logoPath).Success;
                         }
                         else
                         {
@@ -204,7 +204,7 @@ namespace ExtraMetadataLoader.Services
                                 {
                                     // Since the ImageFileOption dialog used the thumb url, the full resolution
                                     // image url needs to be retrieved
-                                    success = HttpDownloader.DownloadFile(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath);
+                                    success = HttpDownloader.DownloadFile(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath).Success;
                                 }
                             }
                         }

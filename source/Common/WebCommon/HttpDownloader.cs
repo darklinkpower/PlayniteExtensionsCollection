@@ -62,12 +62,12 @@ namespace WebCommon
             return downloader.DownloadData(url);
         }
 
-        public static bool DownloadFile(string url, string path)
+        public static DownloadFileResult DownloadFile(string url, string path)
         {
             return downloader.DownloadFile(url, path);
         }
 
-        public static bool DownloadFile(string url, string path, CancellationToken cancelToken)
+        public static DownloadFileResult DownloadFile(string url, string path, CancellationToken cancelToken)
         {
             return downloader.DownloadFile(url, path, cancelToken);
         }
@@ -80,6 +80,11 @@ namespace WebCommon
         public static DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
         {
             return downloader.DownloadStringWithHeaders(url, headersDictionary);
+        }
+
+        public static HttpClient GetHttpClientInstance()
+        {
+            return downloader.GetHttpClientInstance();
         }
 
     }

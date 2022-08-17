@@ -19,7 +19,7 @@ namespace WebCommon
         public string Result { get; }
 
         /// <summary>
-        /// Gets the HttpRequestException exception of the request if it was unsuccessful.
+        /// Gets boolean value indicating if the request was successful.
         /// </summary>
         public bool Success { get; }
 
@@ -29,7 +29,7 @@ namespace WebCommon
         public HttpStatusCode HttpStatusCode { get; }
 
         /// <summary>
-        /// Gets the HttpRequestException of the request.
+        /// Gets the HttpRequestException exception of the request if it was unsuccessful.
         /// </summary>
         public HttpRequestException HttpRequestException { get; }
 
@@ -46,6 +46,50 @@ namespace WebCommon
             Success = success;
             HttpStatusCode = httpStatusCode;
             HttpRequestException = httpRequestException;
+        }
+    }
+
+    public class DownloadFileResult
+    {
+        /// <summary>
+        /// Gets the string value of the download request.
+        /// </summary>
+        public string Path { get; }
+
+        /// <summary>
+        /// Gets boolean value indicating if the request was successful.
+        /// </summary>
+        public bool Success { get; }
+
+        /// <summary>
+        /// Gets the long value that indicates the size of the downloaded file in bytes. -1 indicates that no file was downloaded.
+        /// </summary>
+        public long FileSize { get; }
+
+        /// <summary>
+        /// Gets the HttpStatusCode value of the request.
+        /// </summary>
+        public HttpStatusCode? HttpStatusCode { get; } = null;
+
+        /// <summary>
+        /// Gets the exception of the request if it was unsuccessful.
+        /// </summary>
+        public Exception Exception { get; }
+
+        /// <summary>
+        /// Creates new instance of <see cref="DownloadStringResult"/>.
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="success"></param>
+        /// <param name="httpStatusCode"></param>
+        /// <param name="httpRequestException"></param>
+        public DownloadFileResult(string path, bool success, long fileSize, HttpStatusCode httpStatusCode, Exception exception)
+        {
+            Path = path;
+            Success = success;
+            HttpStatusCode = httpStatusCode;
+            Exception = exception;
+            FileSize = fileSize;
         }
     }
 }

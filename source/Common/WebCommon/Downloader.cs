@@ -34,7 +34,9 @@ namespace WebCommon
 
         byte[] DownloadData(string url);
 
-        bool DownloadFile(string url, string path);
+        DownloadFileResult DownloadFile(string url, string path);
+
+        DownloadFileResult DownloadFile(string url, string path, CancellationToken cancellationToken);
 
         void DownloadFile(IEnumerable<string> mirrors, string path);
 
@@ -62,8 +64,9 @@ namespace WebCommon
 
         private HttpClient GetClient(Uri uri)
         {
-            var sp = ServicePointManager.FindServicePoint(uri);
-            sp.ConnectionLeaseTimeout = 60 * 1000;
+            // Needs testing
+            //var sp = ServicePointManager.FindServicePoint(uri);
+            //sp.ConnectionLeaseTimeout = 60 * 1000;
 
             return _httpClientFactory.CreateClient();
         }
@@ -121,9 +124,20 @@ namespace WebCommon
                     try
                     {
                         httpResponseMessage.EnsureSuccessStatusCode();
-                        var bytes = await httpResponseMessage.Content.ReadAsByteArrayAsync();
-                        result = encoding.GetString(bytes);
-                        success = true;
+                        var charset = httpResponseMessage.Content.Headers?.ContentType?.CharSet ?? null;
+                        if (!charset.IsNullOrEmpty())
+                        {
+                            encoding = Encoding.GetEncoding(charset);
+                        }
+
+                        using (var responseStream = await httpResponseMessage.Content.ReadAsStreamAsync())
+                        {
+                            using (var streamReader = new StreamReader(responseStream, encoding))
+                            {
+                                result = await streamReader.ReadToEndAsync();
+                                success = true;
+                            }
+                        }
                     }
                     catch (HttpRequestException e)
                     {
@@ -233,21 +247,27 @@ namespace WebCommon
             }
         }
 
-        public bool DownloadFile(string url, string path)
+        public DownloadFileResult DownloadFile(string url, string path)
         {
             return DownloadFile(url, path, new CancellationToken());
         }
 
-        public bool DownloadFile(string url, string path, CancellationToken cancelToken)
+        public DownloadFileResult DownloadFile(string url, string path, CancellationToken cancelToken)
         {
-            logger.Debug($"Downloading data from {url} to {path}.");
-            var success = false;
-            try
+            logger.Debug($"Downloading file from {url} to {path}.");
+            return Task.Run(async () =>
             {
-                Task.Run(async () =>
+                var success = false;
+                Exception exception = null;
+                var fileLocation = path;
+                var httpStatusCode = HttpStatusCode.Ambiguous;
+                long fileSize = -1;
+
+                try
                 {
                     using (var response = await GetClient(url).GetAsync(url, cancelToken))
                     {
+                        httpStatusCode = response.StatusCode;
                         response.EnsureSuccessStatusCode();
                         using (var stream = await response.Content.ReadAsStreamAsync())
                         {
@@ -257,17 +277,18 @@ namespace WebCommon
                             {
                                 await stream.CopyToAsync(fs);
                                 success = true;
+                                fileSize = stream.Position;
                             }
                         }
                     }
-                }).GetAwaiter().GetResult();
-            }
-            catch (HttpRequestException e)
-            {
-                logger.Warn(e, $"Download not completed for url {url}");
-            }
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+                }
 
-            return success;
+                return new DownloadFileResult(fileLocation, success, fileSize, httpStatusCode, exception);
+            }).GetAwaiter().GetResult();
         }
 
         public bool DownloadFile(string url, string path, CancellationToken cancelToken, Action<DownloadProgressChangedEventArgs> progressHandler)
@@ -342,7 +363,7 @@ namespace WebCommon
             logger.Debug($"Downloading data from multiple mirrors.");
             foreach (var mirror in mirrors)
             {
-                if (DownloadFile(mirror, path))
+                if (DownloadFile(mirror, path).Success)
                 {
                     return;
                 }
@@ -354,5 +375,11 @@ namespace WebCommon
 
             throw new Exception("Failed to download file from all mirrors.");
         }
+
+        public HttpClient GetHttpClientInstance()
+        {
+            return _httpClientFactory.CreateClient();
+        }
+
     }
 }

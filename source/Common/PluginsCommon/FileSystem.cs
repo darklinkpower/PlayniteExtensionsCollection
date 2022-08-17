@@ -64,10 +64,7 @@ namespace PluginsCommon
         {
             path = FixPathLength(path);
             CreateDirectory(Path.GetDirectoryName(path));
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
+            DeleteFile(path, true);
         }
 
         public static bool IsDirectoryEmpty(string path)
@@ -83,13 +80,24 @@ namespace PluginsCommon
             }
         }
 
-        public static void DeleteFile(string path)
+        public static void DeleteFile(string path, bool includeReadonly = false)
         {
             path = FixPathLength(path);
-            if (File.Exists(path))
+            if (!File.Exists(path))
             {
-                File.Delete(path);
+                return;
             }
+
+            if (includeReadonly)
+            {
+                var attr = File.GetAttributes(path);
+                if ((attr & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                {
+                    File.SetAttributes(path, attr ^ FileAttributes.ReadOnly);
+                }
+            }
+
+            File.Delete(path);
         }
 
         public static void CreateFile(string path)
@@ -196,13 +204,7 @@ namespace PluginsCommon
 
                 foreach (var f in Directory.GetFiles(path))
                 {
-                    var attr = File.GetAttributes(f);
-                    if ((attr & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
-                    {
-                        File.SetAttributes(f, attr ^ FileAttributes.ReadOnly);
-                    }
-
-                    File.Delete(f);
+                    DeleteFile(f, true);
                 }
 
                 var dirAttr = File.GetAttributes(path);
