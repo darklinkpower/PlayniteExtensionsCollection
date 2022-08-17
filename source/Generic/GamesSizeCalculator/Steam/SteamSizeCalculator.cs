@@ -15,27 +15,19 @@ namespace GamesSizeCalculator.SteamSizeCalculation
         private ILogger logger = LogManager.GetLogger();
         public ISteamApiClient SteamApiClient { get; }
         public ISteamAppIdUtility SteamAppIdUtility { get; }
-        public bool IncludeDLC { get; set; }
-        public bool IncludeOptional { get; set; }
-        public bool HandleNonSteamGames { get; set; }
-        public string[] RegionalWords { get; set; }
-        public string[] RegionalWordsBlacklist { get; set; }
+        public GamesSizeCalculatorSettings Settings { get; }
         public string ServiceName { get; } = "Steam";
 
-        public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, bool includeDLC, bool includeOptional, bool handleNonSteamGames, string[] regionalWords, string[] regionalWordsBlacklist)
+        public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings)
         {
             SteamApiClient = steamApiClient;
             SteamAppIdUtility = steamAppIdUtility;
-            IncludeDLC = includeDLC;
-            IncludeOptional = includeOptional;
-            HandleNonSteamGames = handleNonSteamGames;
-            RegionalWords = regionalWords;
-            RegionalWordsBlacklist = regionalWordsBlacklist;
+            Settings = settings;
         }
 
         public async Task<ulong?> GetInstallSizeAsync(Game game)
         {
-            if (!SteamCommon.Steam.IsGameSteamGame(game) && !HandleNonSteamGames)
+            if (!SteamCommon.Steam.IsGameSteamGame(game) && !Settings.GetSizeFromSteamNonSteamGames)
             {
                 return null;
             }
@@ -61,12 +53,12 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 
             IEnumerable<DepotInfo> filteredDepots = depotData;
 
-            if (!IncludeDLC)
+            if (!Settings.IncludeDlcInSteamCalculation)
             {
                 filteredDepots = filteredDepots.Where(d => !d.IsDLC);
             }
 
-            if (!IncludeOptional && !depotData.All(d => d.Optional)) //If everything is optional, don't filter out optional depots
+            if (!Settings.IncludeOptionalInSteamCalculation && !depotData.All(d => d.Optional)) //If everything is optional, don't filter out optional depots
             {
                 filteredDepots = filteredDepots.Where(d => !d.Optional);
             }
@@ -83,7 +75,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
         private void RemoveRegionalDepots(ref List<DepotInfo> allDepots)
         {
             var parsedDepots = allDepots.Select(ParseDepotName).ToList();
-            var blacklistedDepots = parsedDepots.Where(d => RegionalWordsBlacklist.Contains(d.RegionWord, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            var blacklistedDepots = parsedDepots.Where(d => Settings.DepotRegionWordsBlacklist.Contains(d.RegionWord, StringComparer.InvariantCultureIgnoreCase)).ToList();
             foreach (var d in blacklistedDepots)
             {
                 logger.Trace($"Removing depot {d.BaseName} due to blacklisted region word: {d.RegionWord}");
@@ -95,7 +87,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
             foreach (var group in grouped)
             {
                 var key = group.Key;
-                var orderedDepots = group.OrderBy(d => d.Depot.Optional).ThenBy(d => d.RegionWord == null ? -2 : Array.IndexOf(RegionalWords, d.RegionWord)).ToList();
+                var orderedDepots = group.OrderBy(d => d.Depot.Optional).ThenBy(d => d.RegionWord == null ? -2 : Settings.DepotRegionWords.IndexOf(d.RegionWord)).ToList();
                 if (orderedDepots.Count == 1)
                 {
                     continue;
@@ -126,7 +118,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
         private DepotGroupingInfo ParseDepotName(DepotInfo depot)
         {
             var baseName = RemoveRegionWords(depot.Name, out string regionWord);
-            int rank = string.IsNullOrWhiteSpace(regionWord) ? -2 : Array.IndexOf(RegionalWords, regionWord);
+            int rank = string.IsNullOrWhiteSpace(regionWord) ? -2 : Settings.DepotRegionWords.IndexOf(regionWord);
             return new DepotGroupingInfo { BaseName = baseName, RegionWord = regionWord, Depot = depot, Rank = rank };
         }
 
@@ -146,7 +138,8 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 lastWord = wordsStack.Pop();
             }
 
-            if (RegionalWords.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase) || RegionalWordsBlacklist.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase))
+            if (Settings.DepotRegionWords.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase)
+                || Settings.DepotRegionWordsBlacklist.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase))
             {
                 regionalWord = lastWord.ToLowerInvariant();
                 var baseStringWords = new string[wordsStack.Count];

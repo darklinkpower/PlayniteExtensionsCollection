@@ -307,12 +307,7 @@ namespace GamesSizeCalculator
             var onlineSizeCalculators = new List<IOnlineSizeCalculator>();
             if (settings.Settings.GetUninstalledGameSizeFromSteam)
             {
-                onlineSizeCalculators.Add(new SteamSizeCalculator(steamClient, GetDefaultSteamAppUtility()
-                    , settings.Settings.IncludeDlcInSteamCalculation
-                    , settings.Settings.IncludeOptionalInSteamCalculation
-                    , settings.Settings.GetSizeFromSteamNonSteamGames
-                    , settings.Settings.DepotRegionWords.ToArray()
-                    , settings.Settings.DepotRegionWordsBlacklist.ToArray()));
+                onlineSizeCalculators.Add(new SteamSizeCalculator(steamClient, GetDefaultSteamAppUtility(), settings.Settings));
             }
             if (settings.Settings.GetUninstalledGameSizeFromGog)
             {

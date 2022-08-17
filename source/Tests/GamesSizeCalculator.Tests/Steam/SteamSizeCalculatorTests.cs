@@ -33,11 +33,11 @@ namespace GamesSizeCalculator.Tests.Steam
                 1542698112L +
                 3724939335L;
 
-            var calc = Setup(976730);
+            var calc = Setup(976730, out var settings);
             var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
 
-            calc.IncludeDLC = false;
-            calc.IncludeOptional = false;
+            settings.IncludeDlcInSteamCalculation = false;
+            settings.IncludeOptionalInSteamCalculation = false;
             var baseSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
             Assert.Equal(expectedBaseSize, baseSize);
@@ -57,13 +57,13 @@ namespace GamesSizeCalculator.Tests.Steam
                 3718567700L + //Watch_Dogs - DLC 3 (293061) Depot
                 525L; //Watch_Dogs Season Pass Uplay Activation (293054) Depot
 
-            var calc = Setup(243470);
+            var calc = Setup(243470, out var settings);
 
             var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedBaseSize + expectedDLCsize, completeSize);
 
-            calc.IncludeDLC = false;
-            calc.IncludeOptional = false;
+            settings.IncludeDlcInSteamCalculation = false;
+            settings.IncludeOptionalInSteamCalculation = false;
             var baseSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedBaseSize, baseSize);
         }
@@ -75,13 +75,13 @@ namespace GamesSizeCalculator.Tests.Steam
             ulong optional = 1954919585L;
             ulong worldwide = 7993844118L;
 
-            var calc = Setup(48190);
+            var calc = Setup(48190, out var settings);
 
             var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(normal + optional + worldwide, completeSize.Value);
 
-            calc.IncludeDLC = false;
-            calc.IncludeOptional = false;
+            settings.IncludeDlcInSteamCalculation = false;
+            settings.IncludeOptionalInSteamCalculation = false;
             var minimalSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(normal + worldwide, minimalSize.Value);
         }
@@ -90,16 +90,16 @@ namespace GamesSizeCalculator.Tests.Steam
         public async Task MissingDepotsReturnNull()
         {
             //The Door (unreleased)
-            Assert.Null(await Setup(1360440).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
+            Assert.Null(await Setup(1360440, out _).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
 
             //Castle Crashers
-            Assert.Null(await Setup(204360).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
+            Assert.Null(await Setup(204360, out _).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
 
             //Two Point Hospital
-            Assert.Null(await Setup(535930).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
+            Assert.Null(await Setup(535930, out _).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
 
             //PC Building Simulator
-            Assert.Null(await Setup(621060).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
+            Assert.Null(await Setup(621060, out _).GetInstallSizeAsync(new Playnite.SDK.Models.Game()));
         }
 
         [Fact]
@@ -108,13 +108,13 @@ namespace GamesSizeCalculator.Tests.Steam
             //For some reason, every depot for Metro 2033 is marked optional
             ulong expectedSize = 5028692647L + 2884284795L;
 
-            var calc = Setup(43110);
+            var calc = Setup(43110, out var settings);
 
             var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedSize, completeSize);
 
-            calc.IncludeDLC = false;
-            calc.IncludeOptional = false;
+            settings.IncludeDlcInSteamCalculation = false;
+            settings.IncludeOptionalInSteamCalculation = false;
             var minimalSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
             Assert.Equal(expectedSize, minimalSize);
         }
@@ -136,10 +136,16 @@ namespace GamesSizeCalculator.Tests.Steam
             File.WriteAllText($@"D:\code\{appId}.json", Newtonsoft.Json.JsonConvert.SerializeObject(productInfo));
         }
 
-        private SteamSizeCalculator Setup(uint appId)
+        private SteamSizeCalculator Setup(uint appId, out GamesSizeCalculatorSettings settings)
         {
-            var settings = new GamesSizeCalculatorSettings();
-            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), true, true, true, settings.DepotRegionWords.ToArray(), settings.DepotRegionWordsBlacklist.ToArray());
+            settings = new GamesSizeCalculatorSettings()
+            {
+                GetUninstalledGameSizeFromSteam = true,
+                GetSizeFromSteamNonSteamGames = true,
+                IncludeDlcInSteamCalculation = true,
+                IncludeOptionalInSteamCalculation = true,
+            };
+            var calc = new SteamSizeCalculator(new FakeSteamApiClient(), new FakeSteamAppIdUtility(appId), settings);
             return calc;
         }
     }
