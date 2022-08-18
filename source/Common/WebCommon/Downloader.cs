@@ -24,9 +24,9 @@ namespace WebCommon
 
         DownloadStringResult DownloadString(string url, List<Cookie> cookies);
 
-        DownloadStringResult DownloadString(string url, List<Cookie> cookies, Encoding encoding);
-
         DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary);
+
+        DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary, List<Cookie> cookies);
 
         void DownloadString(string url, string path);
 
@@ -52,9 +52,35 @@ namespace WebCommon
 
         public Downloader()
         {
-            var serviceProvider = new ServiceCollection().AddHttpClient().BuildServiceProvider();
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddHttpClient();
+
+            //By default, the HttpClients created via HttpClientfactory use
+            //a handlers with UseCookies set as true. To support adding
+            //cookies via headers, we need to disable this in the requests handlers
+            serviceCollection.AddHttpClient("HandlerNoUseCookies").ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                return new HttpClientHandler()
+                {
+                    UseCookies = false,
+                };
+            });
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
             _httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
             logger.Debug("Created service provider with IHttpClient factory");
+        }
+
+        private HttpClient GetClientForRequest(HttpRequestMessage httpRequestMessage)
+        {
+            if (httpRequestMessage.Headers.Contains("Cookie"))
+            {
+                return GetClientForCookies(httpRequestMessage.RequestUri);
+            }
+            else
+            {
+                return GetClient(httpRequestMessage.RequestUri);
+            }
         }
 
         private HttpClient GetClient(string url)
@@ -69,6 +95,20 @@ namespace WebCommon
             //sp.ConnectionLeaseTimeout = 60 * 1000;
 
             return _httpClientFactory.CreateClient();
+        }
+
+        private HttpClient GetClientForCookies(string url)
+        {
+            return GetClientForCookies(new Uri(url));
+        }
+
+        private HttpClient GetClientForCookies(Uri uri)
+        {
+            // Needs testing
+            //var sp = ServicePointManager.FindServicePoint(uri);
+            //sp.ConnectionLeaseTimeout = 60 * 1000;
+
+            return _httpClientFactory.CreateClient("HandlerNoUseCookies");
         }
 
         public string DownloadString(IEnumerable<string> mirrors)
@@ -119,7 +159,7 @@ namespace WebCommon
                 HttpRequestException httpRequestException = new HttpRequestException();
                 HttpStatusCode httpStatusCode = HttpStatusCode.Ambiguous;
 
-                using (var httpResponseMessage = await GetClient(httpRequest.RequestUri).SendAsync(httpRequest, cancelToken))
+                using (var httpResponseMessage = await GetClientForRequest(httpRequest).SendAsync(httpRequest, cancelToken))
                 {
                     try
                     {
@@ -174,17 +214,12 @@ namespace WebCommon
 
         public DownloadStringResult DownloadString(string url, List<Cookie> cookies)
         {
-            return DownloadString(url, cookies, Encoding.UTF8);
-        }
-
-        public DownloadStringResult DownloadString(string url, List<Cookie> cookies, Encoding encoding)
-        {
-            logger.Debug($"Downloading string content from {url} using cookies and {encoding} encoding.");
+            logger.Debug($"Downloading string content from {url} using cookies");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
                 request.Headers.Add("Cookie", cookieString);
-                return GetHttpRequestString(request, encoding);
+                return GetHttpRequestString(request);
             }
         }
 
@@ -208,6 +243,11 @@ namespace WebCommon
 
         public DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary)
         {
+            return DownloadStringWithHeaders(url, headersDictionary, null);
+        }
+
+        public DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary, List<Cookie> cookies)
+        {
             logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
@@ -215,8 +255,14 @@ namespace WebCommon
                 {
                     if (!request.Headers.TryAddWithoutValidation(pair.Key, pair.Value))
                     {
-                        logger.Warn($"Could not add header \"{pair.Key}\",\"{pair.Value}\"");
+                        logger.Warn($"Could not add header \"{pair.Key}\", \"SECRET\"");
                     }
+                }
+
+                if (cookies != null)
+                {
+                    var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
+                    request.Headers.Add("Cookie", cookieString);
                 }
 
                 return GetHttpRequestString(request);
@@ -381,5 +427,9 @@ namespace WebCommon
             return _httpClientFactory.CreateClient();
         }
 
+        public HttpClient GetHttpClientInstanceHandlerNoUseCookies()
+        {
+            return _httpClientFactory.CreateClient("HandlerNoUseCookies");
+        }
     }
 }

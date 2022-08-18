@@ -412,26 +412,60 @@ namespace SteamWishlistDiscountNotifier
 
         private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems, GlobalProgressActionArgs a = null)
         {
-            var currentPage = 0;
             var wishlistItems = new List<WishlistItemCache>();
+            var baseWishlistUrl = string.Format(@"https://store.steampowered.com/wishlist/profiles/{0}/", steamId);
+            var headers = new Dictionary<string, string>
+            {
+                ["Accept"] = "application/json, text/javascript, */*; q=0.01",
+                ["Accept-Encoding"] = "gzip, deflate, br",
+                ["Accept-Language"] = "en-US,en;q=0.5",
+                ["Connection"] = "keep-alive",
+                ["DNT"] = "1",
+                ["Host"] = "store.steampowered.com",
+                ["Referer"] = baseWishlistUrl,
+                ["Sec-Fetch-Dest"] = "empty",
+                ["Sec-Fetch-Mode"] = "cors",
+                ["Sec-Fetch-Site"] = "same-origin",
+                ["Sec-GPC"] = "1",
+                ["User-Agent"] = webViewUserAgent,
+                ["X-Requested-With"] = "XMLHttpRequest"
+            };
+
+            webView.NavigateAndWait(baseWishlistUrl);
+            var loginCookie = webView.GetCookies()?.FirstOrDefault(x => x.Domain == "store.steampowered.com" && x.Name == "steamLoginSecure");
+            if (loginCookie == null)
+            {
+                logger.Debug($"Could not find steamLoginSecure cookie");
+                return null;
+            }
+
+            var cookies = new List<System.Net.Cookie>
+            {
+                new System.Net.Cookie(loginCookie.Name, loginCookie.Value)
+            };
+
+            var currentPage = 0;
             while (true)
             {
                 if (a?.CancelToken.IsCancellationRequested == true)
                 {
                     return null;
                 }
-                
-                var pageSource = GetWishlistPageSource(webView, steamId, currentPage);
-                if (pageSource == null)
+
+                var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
+                var downloadResult = HttpDownloader.DownloadStringWithHeaders(url, headers, cookies);
+                if (!downloadResult.Success)
                 {
                     return null;
                 }
-                else if (pageSource == string.Empty)
+
+                // Page yielded no items
+                if (downloadResult.Result == "[]")
                 {
                     break;
                 }
 
-                var response = Serialization.FromJson<Dictionary<string, SteamWishlistItem>>(pageSource);
+                var response = Serialization.FromJson<Dictionary<string, SteamWishlistItem>>(downloadResult.Result);
                 foreach (var wishlistItem in response.Values)
                 {
                     wishlistItem.ReleaseString = HttpUtility.HtmlDecode(wishlistItem.ReleaseString);
@@ -449,7 +483,6 @@ namespace SteamWishlistDiscountNotifier
                 }
 
                 currentPage++;
-                Thread.Sleep(1000);
             }
 
             logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");
@@ -470,38 +503,6 @@ namespace SteamWishlistDiscountNotifier
                 WishlistItem = wishlistItem,
                 IsDiscounted = false
             });
-        }
-
-        private static string GetWishlistPageSource(IWebView webView, string steamId, int currentPage)
-        {
-            var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
-            webView.NavigateAndWait(url);
-            var pageSource = webView.GetPageSource();
-            pageSource = HttpUtility.HtmlDecode(pageSource);
-            var startIndex = pageSource.IndexOf('{');
-            var endIndex = pageSource.LastIndexOf('}'); ;
-            if (startIndex == -1 || endIndex == -1)
-            {
-                logger.Debug($"Wishlist check finished in {url}");
-                return string.Empty;
-            }
-
-            pageSource = pageSource.Substring(startIndex, endIndex - startIndex + 1);
-            if (pageSource.IsNullOrEmpty() || pageSource == "[]")
-            {
-                return string.Empty;
-            }
-
-            // Success 2 means that the logged account doesn't have permissions to check the
-            // wishlist. Check in case logged account has changed in the period between obtaining
-            // the steamId and getting the wishlist
-            if (pageSource == @"{""success"":2}")
-            {
-                logger.Warn($"Page {url}, Success 2");
-                return null;
-            }
-
-            return pageSource;
         }
 
         private void AddWishlistItemToList(List<WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub, bool getNonDiscountedItems)

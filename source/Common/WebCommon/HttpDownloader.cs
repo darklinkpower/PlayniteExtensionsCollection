@@ -42,11 +42,6 @@ namespace WebCommon
             return downloader.DownloadString(url, cookies);
         }
 
-        public static DownloadStringResult DownloadString(string url, List<Cookie> cookies, Encoding encoding)
-        {
-            return downloader.DownloadString(url, cookies, encoding);
-        }
-
         public static void DownloadString(string url, string path)
         {
             downloader.DownloadString(url, path);
@@ -82,9 +77,19 @@ namespace WebCommon
             return downloader.DownloadStringWithHeaders(url, headersDictionary);
         }
 
+        public static DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary, List<Cookie> cookies)
+        {
+            return downloader.DownloadStringWithHeaders(url, headersDictionary, cookies);
+        }
+
         public static HttpClient GetHttpClientInstance()
         {
             return downloader.GetHttpClientInstance();
+        }
+
+        public static HttpClient GetHttpClientInstanceHandlerNoUseCookies()
+        {
+            return downloader.GetHttpClientInstanceHandlerNoUseCookies();
         }
 
     }
