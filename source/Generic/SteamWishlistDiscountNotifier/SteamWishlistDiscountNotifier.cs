@@ -431,19 +431,26 @@ namespace SteamWishlistDiscountNotifier
                 ["X-Requested-With"] = "XMLHttpRequest"
             };
 
+            var cookiesToAdd = new string[]
+            {
+                "_ga",
+                "browserid",
+                "sessionid",
+                "steamCountry",
+                "steamLoginSecure",
+                "steamRememberLogin",
+                "timezoneOffset"
+            };
+
             webView.NavigateAndWait(baseWishlistUrl);
-            var loginCookie = webView.GetCookies()?.FirstOrDefault(x => x.Domain == "store.steampowered.com" && x.Name == "steamLoginSecure");
-            if (loginCookie == null)
+            var webCookies = webView.GetCookies()?.Where(x => x.Domain == "store.steampowered.com" && (cookiesToAdd.Contains(x.Name) || x.Name.StartsWith("steamMachineAuth")));
+            if (!webCookies.HasItems() || !webCookies.Any(x => x.Name == "steamLoginSecure"))
             {
                 logger.Debug($"Could not find steamLoginSecure cookie");
                 return null;
             }
 
-            var cookies = new List<System.Net.Cookie>
-            {
-                new System.Net.Cookie(loginCookie.Name, loginCookie.Value)
-            };
-
+            var cookies = webCookies.Select(x => new System.Net.Cookie(x.Name, x.Value)).ToList();
             var currentPage = 0;
             while (true)
             {
