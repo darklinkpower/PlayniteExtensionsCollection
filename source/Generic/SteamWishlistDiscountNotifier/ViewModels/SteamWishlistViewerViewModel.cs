@@ -22,6 +22,18 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         private static readonly char[] textMatchSplitter = new char[] { ' ' };
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/app/{0}/";
         private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
+        
+        private SteamAccountInfo accountInfo;
+        public SteamAccountInfo AccountInfo
+        {
+            get { return accountInfo; }
+            set
+            {
+                accountInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Dictionary<WishlistViewSorting, string> WishlistSortingTypes { get; }
         public Dictionary<ListSortDirection, string> WishlistSortingOrders { get; }
         private WishlistViewSorting selectedSortingType = WishlistViewSorting.Rank;
@@ -215,9 +227,10 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, List<WishlistItemCache> wishlistItems, string pluginInstallPath)
+        public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, SteamAccountInfo accountInfo, List<WishlistItemCache> wishlistItems, string pluginInstallPath)
         {
             this.playniteApi = playniteApi;
+            AccountInfo = accountInfo;
             WishlistItemsCollection = wishlistItems;
             wishlistCollectionView = CollectionViewSource.GetDefaultView(WishlistItemsCollection);
             wishlistCollectionView.Filter = FilterWishlistCollection;

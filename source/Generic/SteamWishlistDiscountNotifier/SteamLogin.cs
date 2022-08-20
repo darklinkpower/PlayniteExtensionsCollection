@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using SteamWishlistDiscountNotifier.Enums;
+using SteamWishlistDiscountNotifier.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,33 +15,52 @@ namespace SteamWishlistDiscountNotifier
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        public static void GetLoggedInSteamId64(IWebView webView, out AuthStatus status, out string steamId)
+        public static SteamAccountInfo GetLoggedInSteamId64(IWebView webView)
         {
-            webView.NavigateAndWait(@"https://store.steampowered.com/account/");
+            webView.NavigateAndWait(@"https://store.steampowered.com/account/?l=english");
+            string username = null;
+            string steamId = null;
+            AuthStatus authStatus;
+            string walletString = null;
+
             var address = webView.GetCurrentAddress();
             if (address.IsNullOrEmpty())
             {
-                status = AuthStatus.NoConnection;
-                steamId = null;
-                return;
+                authStatus = AuthStatus.NoConnection;
             }
             else if (address.StartsWith(@"https://store.steampowered.com/account/"))
             {
                 var source = webView.GetPageSource();
-                var idMatch = Regex.Match(source, @"<div class=""youraccount_steamid"">[^\d]+(\d+)");
-                if (idMatch.Success)
+                authStatus = AuthStatus.Ok;
+
+                // Username
+                var regeMatch = Regex.Match(source, @"<span class=""persona online"">(.+)<\/span>");
+                if (regeMatch.Success)
                 {
-                    status = AuthStatus.Ok;
-                    steamId = idMatch.Groups[1].Value;
-                    return;
+                    username = regeMatch.Groups[1].Value;
+                }
+
+                // SteamId
+                regeMatch = Regex.Match(source, @"<div class=""youraccount_steamid"">[^\d]+(\d+)");
+                if (regeMatch.Success)
+                {
+                    steamId = regeMatch.Groups[1].Value;
+                }
+
+                // Wallet
+                regeMatch = Regex.Match(source, @"<a href=""https:\/\/store\.steampowered\.com\/account\/history\/"">(.+)<\/a>");
+                if (regeMatch.Success)
+                {
+                    walletString = regeMatch.Groups[1].Value;
                 }
             }
+            else
+            {
+                logger.Debug($"Steam GetLoggedInSteamId64 not logged. Address: {address}");
+                authStatus = AuthStatus.AuthRequired;
+            }
 
-            logger.Debug($"Steam GetLoggedInSteamId64 not logged. Addres: {address}");
-            status = AuthStatus.AuthRequired;
-            steamId = null;
-
-            return;
+            return new SteamAccountInfo(username, steamId, authStatus, walletString); ;
         }
     }
 }

@@ -70,9 +70,9 @@ namespace SteamWishlistDiscountNotifier
 
                 using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
                 {
-                    SteamLogin.GetLoggedInSteamId64(webView, out var status, out var steamId);
-                    CheckedStatus = status;
-                    return status;
+                    var accountInfo = SteamLogin.GetLoggedInSteamId64(webView);
+                    CheckedStatus = accountInfo.AuthStatus;
+                    return accountInfo.AuthStatus;
                 }
             }
         }
