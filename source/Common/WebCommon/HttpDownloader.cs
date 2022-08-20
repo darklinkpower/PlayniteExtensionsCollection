@@ -32,11 +32,6 @@ namespace WebCommon
             return downloader.DownloadString(url, cancelToken);
         }
 
-        public static DownloadStringResult DownloadString(string url, Encoding encoding)
-        {
-            return downloader.DownloadString(url, encoding);
-        }
-
         public static DownloadStringResult DownloadString(string url, List<Cookie> cookies)
         {
             return downloader.DownloadString(url, cookies);

@@ -24,6 +24,11 @@ namespace WebCommon
         public bool Success { get; }
 
         /// <summary>
+        /// Gets boolean value indicating if the request was canceled.
+        /// </summary>
+        public bool WasCancelled { get; }
+
+        /// <summary>
         /// Gets the HttpStatusCode value of the request.
         /// </summary>
         public HttpStatusCode HttpStatusCode { get; }
@@ -40,10 +45,11 @@ namespace WebCommon
         /// <param name="success"></param>
         /// <param name="httpStatusCode"></param>
         /// <param name="httpRequestException"></param>
-        public DownloadStringResult(string result, bool success, HttpStatusCode httpStatusCode, HttpRequestException httpRequestException)
+        public DownloadStringResult(string result, bool success, bool wasCancelled, HttpStatusCode httpStatusCode, HttpRequestException httpRequestException)
         {
             Result = result;
             Success = success;
+            WasCancelled = wasCancelled;
             HttpStatusCode = httpStatusCode;
             HttpRequestException = httpRequestException;
         }
@@ -60,6 +66,11 @@ namespace WebCommon
         /// Gets boolean value indicating if the request was successful.
         /// </summary>
         public bool Success { get; }
+
+        /// <summary>
+        /// Gets boolean value indicating if the request was canceled.
+        /// </summary>
+        public bool WasCancelled { get; }
 
         /// <summary>
         /// Gets the long value that indicates the size of the downloaded file in bytes. -1 indicates that no file was downloaded.
@@ -83,10 +94,11 @@ namespace WebCommon
         /// <param name="success"></param>
         /// <param name="httpStatusCode"></param>
         /// <param name="httpRequestException"></param>
-        public DownloadFileResult(string path, bool success, long fileSize, HttpStatusCode httpStatusCode, Exception exception)
+        public DownloadFileResult(string path, bool success, bool wasCancelled, long fileSize, HttpStatusCode httpStatusCode, Exception exception)
         {
             Path = path;
             Success = success;
+            WasCancelled = wasCancelled;
             HttpStatusCode = httpStatusCode;
             Exception = exception;
             FileSize = fileSize;

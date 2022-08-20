@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,8 +20,6 @@ namespace WebCommon
         string DownloadString(IEnumerable<string> mirrors);
 
         DownloadStringResult DownloadString(string url);
-
-        DownloadStringResult DownloadString(string url, Encoding encoding);
 
         DownloadStringResult DownloadString(string url, List<Cookie> cookies);
 
@@ -49,6 +48,7 @@ namespace WebCommon
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IHttpClientFactory _httpClientFactory;
+        private static CancellationToken dummyCancelToken = new CancellationToken();
 
         public Downloader()
         {
@@ -130,68 +130,74 @@ namespace WebCommon
             throw new Exception("Failed to download string from all mirrors.");
         }
 
-        public DownloadStringResult DownloadString(string url)
-        {
-            return DownloadString(url, Encoding.UTF8);
-        }
-
         private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest)
         {
-            return GetHttpRequestString(httpRequest, Encoding.UTF8);
-        }
-
-        private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding)
-        {
-            return GetHttpRequestString(httpRequest, encoding, new CancellationToken());
+            return GetHttpRequestString(httpRequest, dummyCancelToken);
         }
 
         private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest, CancellationToken cancelToken)
-        {
-            return GetHttpRequestString(httpRequest, Encoding.UTF8, cancelToken);
-        }
-
-        private DownloadStringResult GetHttpRequestString(HttpRequestMessage httpRequest, Encoding encoding, CancellationToken cancelToken)
         {
             return Task.Run(async () =>
             {
                 string result = null;
                 bool success = false;
+                bool wasCancelled = false;
                 HttpRequestException httpRequestException = new HttpRequestException();
                 HttpStatusCode httpStatusCode = HttpStatusCode.Ambiguous;
 
-                using (var httpResponseMessage = await GetClientForRequest(httpRequest).SendAsync(httpRequest, cancelToken))
+                try
                 {
-                    try
+                    using (var httpResponseMessage = await GetClientForRequest(httpRequest).SendAsync(httpRequest, cancelToken))
                     {
-                        httpResponseMessage.EnsureSuccessStatusCode();
-                        var charset = httpResponseMessage.Content.Headers?.ContentType?.CharSet ?? null;
-                        if (!charset.IsNullOrEmpty())
+                        try
                         {
-                            encoding = Encoding.GetEncoding(charset);
-                        }
-
-                        using (var responseStream = await httpResponseMessage.Content.ReadAsStreamAsync())
-                        {
-                            using (var streamReader = new StreamReader(responseStream, encoding))
+                            httpResponseMessage.EnsureSuccessStatusCode();
+                            var encoding = GetEncodingFromResponse(httpResponseMessage.Content.Headers);
+                            using (var responseStream = await httpResponseMessage.Content.ReadAsStreamAsync())
                             {
-                                result = await streamReader.ReadToEndAsync();
-                                success = true;
+                                using (var streamReader = new StreamReader(responseStream, encoding))
+                                {
+                                    result = await streamReader.ReadToEndAsync();
+                                    success = true;
+                                }
                             }
                         }
-                    }
-                    catch (HttpRequestException e)
-                    {
-                        logger.Error(e, $"GetHttpRequestString not completed for url {httpRequest.RequestUri.AbsoluteUri}");
-                        httpRequestException = e;
-                    }
-                    finally
-                    {
-                        httpStatusCode = httpResponseMessage.StatusCode;
-                    }
+                        catch (HttpRequestException e)
+                        {
+                            logger.Error(e, $"GetHttpRequestString not completed for url {httpRequest.RequestUri.AbsoluteUri}");
+                            httpRequestException = e;
+                        }
+                        finally
+                        {
+                            httpStatusCode = httpResponseMessage.StatusCode;
+                        }
+                    };
+                }
+                catch (TaskCanceledException)
+                {
+                    wasCancelled = true;
+                }
 
-                    return new DownloadStringResult(result, success, httpStatusCode, httpRequestException);
-                };
+                return new DownloadStringResult(result, success, wasCancelled, httpStatusCode, httpRequestException);
             }).GetAwaiter().GetResult();
+        }
+
+        private Encoding GetEncodingFromResponse(HttpContentHeaders headers)
+        {
+            var charset = headers?.ContentType?.CharSet ?? null;
+            if (charset.IsNullOrEmpty())
+            {
+                return Encoding.UTF8;
+            }
+
+            try
+            {
+                return Encoding.GetEncoding(charset);
+            }
+            catch
+            {
+                return Encoding.UTF8;
+            }
         }
 
         public DownloadStringResult DownloadString(string url, CancellationToken cancelToken)
@@ -199,16 +205,15 @@ namespace WebCommon
             logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                return GetHttpRequestString(request, Encoding.UTF8, cancelToken);
+                return GetHttpRequestString(request, cancelToken);
             }
         }
 
-        public DownloadStringResult DownloadString(string url, Encoding encoding)
+        public DownloadStringResult DownloadString(string url)
         {
-            logger.Debug($"Downloading string content from {url} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                return GetHttpRequestString(request, encoding);
+                return GetHttpRequestString(request);
             }
         }
 
@@ -233,7 +238,7 @@ namespace WebCommon
             logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
-                var downloadStringResult = GetHttpRequestString(request, encoding);
+                var downloadStringResult = GetHttpRequestString(request);
                 if (downloadStringResult.Success)
                 {
                     File.WriteAllText(path, downloadStringResult.Result, encoding);
@@ -295,7 +300,7 @@ namespace WebCommon
 
         public DownloadFileResult DownloadFile(string url, string path)
         {
-            return DownloadFile(url, path, new CancellationToken());
+            return DownloadFile(url, path, dummyCancelToken);
         }
 
         public DownloadFileResult DownloadFile(string url, string path, CancellationToken cancelToken)
@@ -304,6 +309,7 @@ namespace WebCommon
             return Task.Run(async () =>
             {
                 var success = false;
+                var wasCancelled = false;
                 Exception exception = null;
                 var fileLocation = path;
                 var httpStatusCode = HttpStatusCode.Ambiguous;
@@ -311,29 +317,36 @@ namespace WebCommon
 
                 try
                 {
-                    using (var response = await GetClient(url).GetAsync(url, cancelToken))
+                    try
                     {
-                        httpStatusCode = response.StatusCode;
-                        response.EnsureSuccessStatusCode();
-                        using (var stream = await response.Content.ReadAsStreamAsync())
+                        using (var response = await GetClient(url).GetAsync(url, cancelToken))
                         {
-                            FileSystem.PrepareSaveFile(path);
-                            var fileInfo = new FileInfo(path);
-                            using (var fs = File.Create(fileInfo.FullName))
+                            httpStatusCode = response.StatusCode;
+                            response.EnsureSuccessStatusCode();
+                            using (var stream = await response.Content.ReadAsStreamAsync())
                             {
-                                await stream.CopyToAsync(fs);
-                                success = true;
-                                fileSize = stream.Position;
+                                FileSystem.PrepareSaveFile(path);
+                                var fileInfo = new FileInfo(path);
+                                using (var fs = File.Create(fileInfo.FullName))
+                                {
+                                    await stream.CopyToAsync(fs);
+                                    success = true;
+                                    fileSize = stream.Position;
+                                }
                             }
                         }
                     }
+                    catch (Exception e)
+                    {
+                        exception = e;
+                    }
                 }
-                catch (Exception e)
+                catch (TaskCanceledException)
                 {
-                    exception = e;
+                    wasCancelled = true;
                 }
 
-                return new DownloadFileResult(fileLocation, success, fileSize, httpStatusCode, exception);
+                return new DownloadFileResult(fileLocation, success, wasCancelled, fileSize, httpStatusCode, exception);
             }).GetAwaiter().GetResult();
         }
 
