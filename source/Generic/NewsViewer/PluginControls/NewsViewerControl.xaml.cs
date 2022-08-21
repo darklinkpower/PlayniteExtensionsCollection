@@ -23,6 +23,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
+using WebCommon;
 
 namespace NewsViewer.PluginControls
 {
@@ -39,9 +40,9 @@ namespace NewsViewer.PluginControls
         IPlayniteAPI PlayniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
+        private readonly Dictionary<string, string>  headers = new Dictionary<string, string> {["Accept"] = "text/xml", ["Accept-Encoding"] = "utf-8"};
 
-        private XmlDocument xmlDoc;
-        private readonly WebClient client;
+        private readonly XmlDocument xmlDoc;
         private readonly DispatcherTimer updateContextTimer;
         private XmlNode currentNewsNode;
         public XmlNode CurrentNewsNode
@@ -301,9 +302,7 @@ namespace NewsViewer.PluginControls
             this.PlayniteApi = PlayniteApi;
             SettingsModel = settings;
             xmlDoc = new XmlDocument();
-            client = new WebClient();
-            client.Headers.Add(HttpRequestHeader.Accept, "text/xml");
-            client.Encoding = Encoding.UTF8;
+
             this.steamLanguage = steamLanguage;
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
@@ -372,15 +371,15 @@ namespace NewsViewer.PluginControls
 
             Task.Run(() =>
             {
+                var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(string.Format(steamRssTemplate, steamId, steamLanguage), headers);
+                if (!downloadStringResult.Success || currentGame == null || currentGame.Id != contextId)
+                {
+                    return;
+                }
+
                 try
                 {
-                    var rssSource = client.DownloadString(string.Format(steamRssTemplate, steamId, steamLanguage));
-                    if (currentGame == null || currentGame.Id != contextId)
-                    {
-                        return;
-                    }
-
-                    xmlDoc.LoadXml(rssSource);
+                    xmlDoc.LoadXml(downloadStringResult.Result);
                     XmlNodeList nodes = xmlDoc.SelectNodes("/rss/channel/item");
                     if (nodes != null && nodes.Count > 0)
                     {
@@ -401,7 +400,7 @@ namespace NewsViewer.PluginControls
                 }
                 catch
                 {
-                    
+
                 }
             });
         }
