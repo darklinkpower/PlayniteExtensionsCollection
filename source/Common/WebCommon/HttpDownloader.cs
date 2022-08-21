@@ -37,6 +37,16 @@ namespace WebCommon
             return downloader.DownloadString(url, cookies);
         }
 
+        public static DownloadStringResult DownloadStringFromPostContent(string url, string jsonStringContent)
+        {
+            return downloader.DownloadStringFromPostContent(url, jsonStringContent);
+        }
+
+        public static DownloadStringResult DownloadStringFromPostContent(string url, string jsonStringContent, Dictionary<string, string> headersDictionary)
+        {
+            return downloader.DownloadStringFromPostContent(url, jsonStringContent, headersDictionary);
+        }
+
         public static void DownloadString(string url, string path)
         {
             downloader.DownloadString(url, path);

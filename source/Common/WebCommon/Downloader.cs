@@ -274,6 +274,29 @@ namespace WebCommon
             }
         }
 
+        public DownloadStringResult DownloadStringFromPostContent(string url, string jsonStringContent, Dictionary<string, string> headersDictionary = null)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Post, url))
+            {
+                if (headersDictionary != null)
+                {
+                    foreach (var pair in headersDictionary)
+                    {
+                        if (!request.Headers.TryAddWithoutValidation(pair.Key, pair.Value))
+                        {
+                            logger.Warn($"Could not add header \"{pair.Key}\", \"SECRET\"");
+                        }
+                    }
+                }
+                
+                using (var stringContent = new StringContent(jsonStringContent, Encoding.UTF8, "application/json"))
+                {
+                    request.Content = stringContent;
+                    return GetHttpRequestString(request);
+                }
+            }
+        }
+
         public byte[] DownloadData(string url)
         {
             logger.Debug($"Downloading data from {url}.");

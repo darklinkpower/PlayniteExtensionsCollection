@@ -12,6 +12,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Net.Http;
 
 namespace JastUsaLibrary.Services
 {
@@ -19,7 +20,6 @@ namespace JastUsaLibrary.Services
     {
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteApi;
-        private readonly WebClient client;
         private readonly string authenticationPath;
         private const string loginUrl = @"https://jastusa.com/my-account";
         private const string jastDomain = @"jastusa.com";
@@ -32,7 +32,6 @@ namespace JastUsaLibrary.Services
         public JastUsaAccountClient(IPlayniteAPI api, string authenticationPath)
         {
             playniteApi = api;
-            client = new WebClient {Encoding = Encoding.UTF8};
             this.authenticationPath = authenticationPath;
         }
 
@@ -112,39 +111,32 @@ namespace JastUsaLibrary.Services
 
         public AuthenticationToken GetAuthenticationToken(AuthenticationTokenRequest authentication, bool showErrors = false)
         {
-            try
+            var headers = new Dictionary<string, string>
             {
-                client.Headers.Clear();
-                client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                var requestParams = Serialization.ToJson(authentication);
-                var response = client.UploadString(new Uri(authenticationTokenUrl), "POST", requestParams);
-                return Serialization.FromJson<AuthenticationToken>(response);
+                ["Accept"] = "application/json",
+                ["Accept-Encoding"] = "utf-8"
+            };
+
+            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(authenticationTokenUrl, Serialization.ToJson(authentication), headers);
+            if (downloadStringResult.Success)
+            {
+                return Serialization.FromJson<AuthenticationToken>(downloadStringResult.Result);
             }
-            catch (WebException e)
+            else
             {
                 if (showErrors)
                 {
-                    if (e.Status == WebExceptionStatus.ProtocolError)
+                    if (downloadStringResult.HttpStatusCode == HttpStatusCode.Unauthorized)
                     {
                         playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials"), "JAST USA Library");
                     }
                     else
                     {
-                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), e.Message), "JAST USA Library");
+                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), downloadStringResult.HttpRequestException.Message), "JAST USA Library");
                     }
                 }
 
-                logger.Error(e, $"Failed during GetAuthenticationToken. WebException status: {e.Status}");
-                return null;
-            }
-            catch (Exception e)
-            {
-                if (showErrors)
-                {
-                    playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), e.Message), "JAST USA Library");
-                }
-
-                logger.Error(e, $"Failed during GetAuthenticationToken");
+                logger.Error(downloadStringResult.HttpRequestException, $"Failed during GetAuthenticationToken. Status: {downloadStringResult.HttpStatusCode}");
                 return null;
             }
         }
@@ -156,16 +148,20 @@ namespace JastUsaLibrary.Services
                 return null;
             }
 
-            client.Headers.Clear();
-            client.Headers.Add(@"Authorization", "Bearer " + authenticationToken.Token.UrlDecode());
+            var headers = new Dictionary<string, string>
+            {
+                ["Authorization"] = "Bearer " + authenticationToken.Token.UrlDecode(),
+                ["Accept-Encoding"] = "utf-8"
+            };
+            
             var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
-            var responseString = client.DownloadString(translationsUrl);
-            if (responseString.IsNullOrEmpty())
+            var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(translationsUrl, headers);
+            if (!downloadStringResult.Success)
             {
                 return null;
             }
 
-            var response = Serialization.FromJson<GameTranslationsResponse>(responseString);
+            var response = Serialization.FromJson<GameTranslationsResponse>(downloadStringResult.Result);
 
             // We remove all the assets that are not for Windows because Playnite only supports windows after all
             foreach (var gameLinkItem in response.GamePathLinks.HydraMember.ToList())
@@ -203,38 +199,36 @@ namespace JastUsaLibrary.Services
                 return products;
             }
 
-            client.Headers.Clear();
-            client.Headers.Add(@"Authorization", "Bearer " + authenticationToken.Token.UrlDecode());
+            var headers = new Dictionary<string, string>
+            {
+                ["Authorization"] = "Bearer " + authenticationToken.Token.UrlDecode(),
+                ["Accept-Encoding"] = "utf-8"
+            };
+
             var currentPage = 0;
             while (true)
             {
                 currentPage++;
-                try
+                var url = string.Format(getGamesUrlTemplate, currentPage);
+                var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(url, headers);
+                if (!downloadStringResult.Success)
                 {
-                    var url = string.Format(getGamesUrlTemplate, currentPage);
-                    var responseString = client.DownloadString(url);
-
-                    var response = Serialization.FromJson<UserGamesResponse>(responseString);
-
-                    foreach (var product in response.Products.JastProducts)
-                    {
-                        products.Add(product);
-                    }
-
-                    logger.Debug($"GetGames current page: {currentPage}, total pages: {response.Pages}");
-                    if (response.Pages == currentPage)
-                    {
-                        break;
-                    }
+                    return null;
                 }
-                catch (WebException e)
+
+                var response = Serialization.FromJson<UserGamesResponse>(downloadStringResult.Result);
+                foreach (var product in response.Products.JastProducts)
                 {
-                    logger.Error(e, $"Error during GetGames. WebException status: {e.Status}");
-                    throw;
+                    products.Add(product);
+                }
+
+                logger.Debug($"GetGames current page: {currentPage}, total pages: {response.Pages}");
+                if (response.Pages == currentPage)
+                {
+                    break;
                 }
             }
 
-            client.Headers.Clear();
             return products;
         }
 
@@ -247,21 +241,23 @@ namespace JastUsaLibrary.Services
                 return null;
             }
 
-            client.Headers.Clear();
-            client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-            client.Headers.Add(@"Authorization", "Bearer " + tokens.Token.UrlDecode());
-
-            var requestParams = Serialization.ToJson(new GenerateLinkRequest { downloaded = true, gameId = gameId, gameLinkId = gameLinkId });
-
-            try
+            var headers = new Dictionary<string, string>
             {
-                var response = client.UploadString(new Uri(generateLinkUrl), "POST", requestParams);
-                return Serialization.FromJson<GenerateLinkResponse>(response).Url;
+                ["Accept"] = "application/json",
+                ["Accept-Encoding"] = "utf-8",
+                ["Authorization"] = "Bearer " + tokens.Token.UrlDecode()
+            };
+
+            var jsonPostContent = Serialization.ToJson(new GenerateLinkRequest { downloaded = true, gameId = gameId, gameLinkId = gameLinkId });
+            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(generateLinkUrl, jsonPostContent, headers);
+            if (downloadStringResult.Success)
+            {
+                return Serialization.FromJson<GenerateLinkResponse>(downloadStringResult.Result).Url;
             }
-            catch (WebException e)
+            else
             {
-                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), e.Message), "JAST USA Library");
-                logger.Error(e, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}. WebException status: {e.Status}");
+                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), downloadStringResult.HttpRequestException.Message), "JAST USA Library");
+                logger.Warn(downloadStringResult.HttpRequestException, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}");
                 return null;
             }
         }

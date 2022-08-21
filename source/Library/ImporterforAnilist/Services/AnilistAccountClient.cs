@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Playnite.SDK.Data;
+using WebCommon;
 
 namespace ImporterforAnilist.Services
 {
@@ -16,7 +17,6 @@ namespace ImporterforAnilist.Services
         private readonly string apiListQueryString = @"";
         public string anilistUsername = string.Empty;
         public const string GraphQLEndpoint = @"https://graphql.AniList.co";
-        private HttpClient client = new HttpClient();
         private ImporterForAnilistSettingsViewModel settings;
         private const string getUsernameQueryString = @"
 query {
@@ -121,23 +121,21 @@ mutation ($ids: [Int], $status: MediaListStatus) {
 
         public string GetApiPostResponse(Dictionary<string, string> postParams)
         {
-            try
+            var headers = new Dictionary<string, string>
             {
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {settings.Settings.AccountAccessCode}");
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-                var postParamsString = Serialization.ToJson(postParams);
-                client.DefaultRequestHeaders.Add("Body", postParamsString);
-                using (var encodedParams = new FormUrlEncodedContent(postParams))
-                {
-                    var response = client.PostAsync(GraphQLEndpoint, encodedParams);
-                    var contents = response.Result.Content.ReadAsStringAsync();
-                    return contents.Result;
-                }
+                ["Accept"] = "application/json",
+                ["Authorization"] = $"Bearer {settings.Settings.AccountAccessCode}"
+            };
+
+            var jsonPostContent = Serialization.ToJson(postParams);
+            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(GraphQLEndpoint, jsonPostContent, headers);
+            if (downloadStringResult.Success)
+            {
+                return downloadStringResult.Result;
             }
-            catch (Exception e)
+            else
             {
-                logger.Error(e, "Failed to process post request.");
+                logger.Error(downloadStringResult.HttpRequestException, "Failed to process post request.");
                 return string.Empty;
             }
         }
