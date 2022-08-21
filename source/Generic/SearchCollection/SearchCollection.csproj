@@ -218,7 +218,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -227,4 +228,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
+  </PropertyGroup>
 </Project>
