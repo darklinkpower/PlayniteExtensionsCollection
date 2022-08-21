@@ -142,7 +142,7 @@ namespace SteamWishlistDiscountNotifier
                 var status = AuthStatus.AuthRequired;
                 using (var view = plugin.PlayniteApi.WebViews.CreateView(675, 440))
                 {
-                    view.LoadingChanged += async (s, e) =>
+                    view.LoadingChanged += async (_, __) =>
                     {
                         var address = view.GetCurrentAddress();
                         if (address.IsNullOrEmpty())
@@ -168,9 +168,21 @@ namespace SteamWishlistDiscountNotifier
                         }
                     };
 
+                    var machineAuthCookies = view.GetCookies().Where(x => x.Domain == "store.steampowered.com" && x.Name.StartsWith("steamMachineAuth"));
                     view.DeleteDomainCookies(".steamcommunity.com");
                     view.DeleteDomainCookies("steamcommunity.com");
                     view.DeleteDomainCookies("store.steampowered.com");
+                    view.DeleteDomainCookies("help.steampowered.com");
+
+                    // The checkbox to remember login only shows if a "machineAuthCookie..." is set. For that reason,
+                    // we make a backup and restore it after deleting all the other cookies
+                    foreach (var cookie in machineAuthCookies)
+                    {
+                        // Cefsharp adds a dot at the start of the cookie domain if it's not empty when adding it
+                        cookie.Domain = string.Empty;
+                        view.SetCookies("https://store.steampowered.com/", cookie);
+                    }
+
                     view.Navigate(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
                     view.OpenDialog();
                 }
