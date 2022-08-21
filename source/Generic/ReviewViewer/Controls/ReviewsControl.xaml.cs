@@ -128,17 +128,6 @@ namespace ReviewViewer.Controls
             }
         }
 
-        private string currenSteamId = null;
-        public string CurrenSteamId
-        {
-            get => currenSteamId;
-            set
-            {
-                currenSteamId = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string calculatedScore;
         public string CalculatedScore
         {
@@ -363,10 +352,6 @@ namespace ReviewViewer.Controls
         void SwitchAllReviews()
         {
             selectedReviewSearch = ReviewSearchType.All;
-            if (mainPanelVisibility == Visibility.Visible)
-            {
-                SummaryGrid.Visibility = Visibility.Visible;
-            }
             UpdateReviewsContext();
         }
 
@@ -382,9 +367,9 @@ namespace ReviewViewer.Controls
         {
             get => new RelayCommand<object>((a) =>
             {
-                if (selectedReview != null && !currenSteamId.IsNullOrEmpty())
+                if (selectedReview != null && !CurrentSteamId.IsNullOrEmpty())
                 {
-                    var reviewUrl = string.Format(reviewUrlFormat, selectedReview.Author.Steamid, currenSteamId);
+                    var reviewUrl = string.Format(reviewUrlFormat, selectedReview.Author.Steamid, currentSteamId);
                     ProcessStarter.StartUrl(reviewUrl);
                 }
             });
@@ -393,7 +378,7 @@ namespace ReviewViewer.Controls
         void SwitchPositiveReviews()
         {
             selectedReviewSearch = ReviewSearchType.Positive;
-            SummaryGrid.Visibility = Visibility.Collapsed;
+            MainPanelVisibility = Visibility.Collapsed;
             UpdateReviewsContext();
         }
 
@@ -408,7 +393,7 @@ namespace ReviewViewer.Controls
         void SwitchNegativeReviews()
         {
             selectedReviewSearch = ReviewSearchType.Negative;
-            SummaryGrid.Visibility = Visibility.Collapsed;
+            MainPanelVisibility = Visibility.Collapsed;
             UpdateReviewsContext();
         }
 
@@ -452,6 +437,7 @@ namespace ReviewViewer.Controls
             ReviewHelpfulnessFunny = string.Empty;
             SettingsModel.Settings.IsControlVisible = false;
             CalculatedScore = "-";
+            CurrentSteamId = null;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -482,7 +468,7 @@ namespace ReviewViewer.Controls
         public void UpdateReviewsContext()
         {
             ResetBindingValues();
-            CurrenSteamId = Steam.GetGameSteamId(currentGame, true);
+            CurrentSteamId = Steam.GetGameSteamId(currentGame, true);
             ControlVisibility = Visibility.Visible;
             SettingsModel.Settings.IsControlVisible = true;
             switch (selectedReviewSearch)
