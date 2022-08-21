@@ -317,33 +317,30 @@ namespace WebCommon
 
                 try
                 {
-                    try
+                    using (var response = await GetClient(url).GetAsync(url, cancelToken))
                     {
-                        using (var response = await GetClient(url).GetAsync(url, cancelToken))
+                        httpStatusCode = response.StatusCode;
+                        response.EnsureSuccessStatusCode();
+                        using (var stream = await response.Content.ReadAsStreamAsync())
                         {
-                            httpStatusCode = response.StatusCode;
-                            response.EnsureSuccessStatusCode();
-                            using (var stream = await response.Content.ReadAsStreamAsync())
+                            FileSystem.PrepareSaveFile(path);
+                            var fileInfo = new FileInfo(path);
+                            using (var fs = File.Create(fileInfo.FullName))
                             {
-                                FileSystem.PrepareSaveFile(path);
-                                var fileInfo = new FileInfo(path);
-                                using (var fs = File.Create(fileInfo.FullName))
-                                {
-                                    await stream.CopyToAsync(fs);
-                                    success = true;
-                                    fileSize = stream.Position;
-                                }
+                                await stream.CopyToAsync(fs);
+                                success = true;
+                                fileSize = stream.Position;
                             }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        exception = e;
                     }
                 }
                 catch (TaskCanceledException)
                 {
                     wasCancelled = true;
+                }
+                catch (Exception e)
+                {
+                    exception = e;
                 }
 
                 return new DownloadFileResult(fileLocation, success, wasCancelled, fileSize, httpStatusCode, exception);

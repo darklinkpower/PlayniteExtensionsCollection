@@ -15,6 +15,7 @@ using ImageMagick;
 using PluginsCommon;
 using Playnite.SDK.Data;
 using PlayniteUtilitiesCommon;
+using System.Threading;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -36,7 +37,7 @@ namespace ExtraMetadataLoader.Services
             this.extraMetadataHelper = extraMetadataHelper;
         }
 
-        public bool DownloadSteamLogo(Game game, bool overwrite, bool isBackgroundDownload)
+        public bool DownloadSteamLogo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken)
         {
             logger.Debug($"DownloadSteamLogo starting for game {game.Name}");
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
@@ -69,7 +70,7 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamUri = string.Format(steamLogoUriTemplate, steamId);
-            var downloadFileResult = HttpDownloader.DownloadFile(steamUri, logoPath);
+            var downloadFileResult = HttpDownloader.DownloadFile(steamUri, logoPath, cancelToken);
             if (downloadFileResult.Success && settings.ProcessLogosOnDownload)
             {
                 ProcessLogoImage(logoPath);
@@ -152,7 +153,7 @@ namespace ExtraMetadataLoader.Services
             return downloadFileResult.Success;
         }
 
-        public bool DownloadSgdbLogo(Game game, bool overwrite, bool isBackgroundDownload)
+        public bool DownloadSgdbLogo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken)
         {
             var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
             if (FileSystem.FileExists(logoPath) && !overwrite)
@@ -184,7 +185,7 @@ namespace ExtraMetadataLoader.Services
                         var success = false;
                         if (isBackgroundDownload || response.Data.Count == 1)
                         {
-                            success = HttpDownloader.DownloadFile(response.Data[0].Url, logoPath).Success;
+                            success = HttpDownloader.DownloadFile(response.Data[0].Url, logoPath, cancelToken).Success;
                         }
                         else
                         {
@@ -204,7 +205,7 @@ namespace ExtraMetadataLoader.Services
                                 {
                                     // Since the ImageFileOption dialog used the thumb url, the full resolution
                                     // image url needs to be retrieved
-                                    success = HttpDownloader.DownloadFile(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath).Success;
+                                    success = HttpDownloader.DownloadFile(response.Data.First(x => x.Thumb == selectedOption.Path).Url, logoPath, cancelToken).Success;
                                 }
                             }
                         }

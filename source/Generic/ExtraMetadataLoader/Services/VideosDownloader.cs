@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ExtraMetadataLoader.Services
 {
@@ -33,7 +34,7 @@ namespace ExtraMetadataLoader.Services
             this.extraMetadataHelper = extraMetadataHelper;
         }
 
-        public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, bool downloadVideo = false, bool downloadVideoMicro = false)
+        public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, bool downloadVideo = false, bool downloadVideoMicro = false)
         {
             logger.Debug($"DownloadSteamVideo starting for game {game.Name}");
             var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
@@ -87,7 +88,7 @@ namespace ExtraMetadataLoader.Services
                     videoUrl = steamAppDetails.data.Movies[0].Mp4.Max;
                 }
 
-                var downloadFileResult = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath);
+                var downloadFileResult = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath, cancelToken);
                 if (downloadFileResult.Success)
                 {
                     GetVideoInformation(tempDownloadPath);
@@ -97,7 +98,7 @@ namespace ExtraMetadataLoader.Services
             if (downloadVideoMicro)
             {
                 var videoUrl = string.Format(steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
-                var downloadFileResult = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath);
+                var downloadFileResult = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath, cancelToken);
                 if (downloadFileResult.Success)
                 {
                     ProcessVideo(tempDownloadPath, videoMicroPath, false, true);
