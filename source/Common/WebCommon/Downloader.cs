@@ -145,6 +145,7 @@ namespace WebCommon
                 HttpRequestException httpRequestException = new HttpRequestException();
                 HttpStatusCode httpStatusCode = HttpStatusCode.Ambiguous;
 
+                logger.Debug($"Downloading string from {httpRequest.RequestUri} with method {httpRequest.Method}");
                 try
                 {
                     using (var httpResponseMessage = await GetClientForRequest(httpRequest).SendAsync(httpRequest, cancelToken))
@@ -164,18 +165,19 @@ namespace WebCommon
                         }
                         catch (HttpRequestException e)
                         {
-                            logger.Error(e, $"GetHttpRequestString not completed for url {httpRequest.RequestUri.AbsoluteUri}");
+                            logger.Error(e, $"Request was not completed for url");
                             httpRequestException = e;
                         }
                         finally
                         {
                             httpStatusCode = httpResponseMessage.StatusCode;
                         }
-                    };
+                    }
                 }
                 catch (TaskCanceledException)
                 {
                     wasCancelled = true;
+                    logger.Debug("Request was cancelled");
                 }
 
                 return new DownloadStringResult(result, success, wasCancelled, httpStatusCode, httpRequestException);
@@ -202,7 +204,6 @@ namespace WebCommon
 
         public DownloadStringResult DownloadString(string url, CancellationToken cancelToken)
         {
-            logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 return GetHttpRequestString(request, cancelToken);
@@ -219,7 +220,6 @@ namespace WebCommon
 
         public DownloadStringResult DownloadString(string url, List<Cookie> cookies)
         {
-            logger.Debug($"Downloading string content from {url} using cookies");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
@@ -235,12 +235,12 @@ namespace WebCommon
 
         public void DownloadString(string url, string path, Encoding encoding)
         {
-            logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 var downloadStringResult = GetHttpRequestString(request);
                 if (downloadStringResult.Success)
                 {
+                    logger.Debug($"Decoding string content from {url} to {path} using {encoding} encoding.");
                     File.WriteAllText(path, downloadStringResult.Result, encoding);
                 }
             }
@@ -253,7 +253,6 @@ namespace WebCommon
 
         public DownloadStringResult DownloadStringWithHeaders(string url, Dictionary<string, string> headersDictionary, List<Cookie> cookies)
         {
-            logger.Debug($"DownloadStringWithHeadersAsync method with url {url}");
             using (var request = new HttpRequestMessage(HttpMethod.Get, url))
             {
                 foreach (var pair in headersDictionary)
@@ -360,10 +359,12 @@ namespace WebCommon
                 catch (TaskCanceledException)
                 {
                     wasCancelled = true;
+                    logger.Debug("Request was cancelled");
                 }
                 catch (Exception e)
                 {
                     exception = e;
+                    logger.Error(e, "Error while downloading file");
                 }
 
                 return new DownloadFileResult(fileLocation, success, wasCancelled, fileSize, httpStatusCode, exception);
