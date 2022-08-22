@@ -13,3 +13,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.10_7d122a68/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_14.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_15.pext
+    Changelog:
+    - 'Improved stability of internet downloads'

@@ -81,3 +81,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_10.pext
     Changelog:
     - 'Fix checking for wishlist on startup when notifications are disabled'
+  - Version: 1.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_11.pext
+    Changelog:
+    - 'Improved stability of internet downloads'
+    - 'Add support to display username and wallet in view'
+    - 'Added support to remember login after being logged out once'

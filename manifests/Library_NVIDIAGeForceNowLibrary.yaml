@@ -248,3 +248,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/NVIDIA_GeForce_Now_Enabler_2_38.pext
     Changelog:
     - 'Fix failing to add some notifications after one has been displayed'
+  - Version: 2.39
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/NVIDIA_GeForce_Now_Enabler_2_39.pext
+    Changelog:
+    - 'Improved stability of internet downloads'

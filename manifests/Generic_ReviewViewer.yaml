@@ -247,3 +247,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_37.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.38
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_38.pext
+    Changelog:
+    - 'Improved stability of internet downloads'
+    - 'Fix not displaying button to open review in browser in certain scenarios'

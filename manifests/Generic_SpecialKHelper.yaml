@@ -148,3 +148,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.07_57c08120/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_22.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.23
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_23.pext
+    Changelog:
+    - 'Improved stability of internet downloads'

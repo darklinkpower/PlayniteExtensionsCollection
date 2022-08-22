@@ -210,3 +210,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.09_ddb1ff18/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_32.pext
     Changelog:
     - 'Added LibraryIcon to plugin'
+  - Version: 2.33
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_33.pext
+    Changelog:
+    - 'Improved stability of internet downloads'

@@ -419,3 +419,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.14_c4480f42/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_59.pext
     Changelog:
     - 'Fix video player buttons being disabled until clicked (By felixmkmh)'
+  - Version: 1.60
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_60.pext
+    Changelog:
+    - 'Improved stability of internet downloads'
+    - 'Added support to stop downloads immediately after pressing the cancel button'

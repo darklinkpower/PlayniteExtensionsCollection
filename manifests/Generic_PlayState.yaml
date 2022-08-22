@@ -371,3 +371,10 @@ Packages:
     - 'Fix failing to work with UWP games'
     - 'Misc fixes and Improvements'
     - 'Updated localizations'
+  - Version: 2.53
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/PlayState_2_53.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix crash when switching game status of game that has been closed'
