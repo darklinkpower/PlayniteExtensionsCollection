@@ -254,9 +254,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/NVIDIA_GeForce_Now_Enabler_2_39.pext
     Changelog:
     - 'Improved stability of internet downloads'
-  - Version: 2.40
+  - Version: 2.41
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-08-23
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.23_75b3c6af/NVIDIA_GeForce_Now_Enabler_2_40.pext
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.23_f83311f7/NVIDIA_GeForce_Now_Enabler_2_41.pext
     Changelog:
     - 'Fix failing to match Epic and Origin games in Playnite library with GeForce NOW database'
