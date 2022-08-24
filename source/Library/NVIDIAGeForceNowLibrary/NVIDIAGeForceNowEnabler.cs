@@ -427,7 +427,7 @@ namespace NVIDIAGeForceNowEnabler
                 return null;
             }
 
-            if (detectionDictionary.HasItems())
+            if (!detectionDictionary.HasItems())
             {
                 logger.Debug("Supported list was not set");
                 return null;
