@@ -30,9 +30,9 @@ namespace NVIDIAGeForceNowEnabler
         private readonly string geforceNowWorkingPath;
         public readonly string geforceNowExecutablePath;
         private readonly string gfnDatabasePath;
-        private List<GeforceNowItem> supportedList;
         private Dictionary<Guid, AppStore> pluginIdToAppStore;
         private bool databaseUpdatedOnGetGames = false;
+        private Dictionary<Tuple<AppStore, string>, GeforceNowItemVariant> detectionDictionary = new Dictionary<Tuple<AppStore, string>, GeforceNowItemVariant>();
 
         private NVIDIAGeForceNowEnablerSettingsViewModel settings { get; set; }
         public override LibraryClient Client { get; } = new NVIDIAGeForceNowClient();
@@ -83,13 +83,12 @@ namespace NVIDIAGeForceNowEnabler
             if (!FileSystem.FileExists(gfnDatabasePath))
             {
                 logger.Debug($"Database in {gfnDatabasePath} not found on startup");
-                supportedList = new List<GeforceNowItem>();
                 return;
             }
 
-            supportedList = Serialization.FromJsonFile<List<GeforceNowItem>>(gfnDatabasePath);
-            SatinizeSupportedListTitles();
+            var supportedList = Serialization.FromJsonFile<List<GeforceNowItem>>(gfnDatabasePath);
             logger.Debug($"Deserialized database in {gfnDatabasePath} with {supportedList.Count} entries on startup");
+            SetDetectionDictionary(supportedList);
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -123,11 +122,10 @@ namespace NVIDIAGeForceNowEnabler
             }
 
             databaseUpdatedOnGetGames = DownloadAndRefreshGameList(false);
-            if (supportedList.Count == 0)
+            if (!detectionDictionary.HasItems())
             {
                 return games;
             }
-
 
             foreach (var game in PlayniteApi.Database.Games)
             {
@@ -199,15 +197,11 @@ namespace NVIDIAGeForceNowEnabler
             window.Title = ResourceProvider.GetString("LOCNgfn_Enabler_DatabaseBrowserWindowTitle");
 
             window.Content = new GfnDatabaseBrowserView();
-            window.DataContext = new GfnDatabaseBrowserViewModel(PlayniteApi, supportedList);
+            window.DataContext = new GfnDatabaseBrowserViewModel(PlayniteApi, detectionDictionary.Select(x => x.Value).ToList());
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             window.ShowDialog();
-
-            // Satinize supported titles after closing window, so they can be used for matching
-            // when launching games
-            SatinizeSupportedListTitles();
         }
 
         public bool DownloadAndRefreshGameList(bool showDialogs)
@@ -220,8 +214,8 @@ namespace NVIDIAGeForceNowEnabler
                     var downloadedDatabase = GeforceNowService.GetGeforceNowDatabase();
                     if (downloadedDatabase.Count > 0)
                     {
-                        supportedList = downloadedDatabase;
-                        FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(supportedList));
+                        FileSystem.WriteStringToFile(gfnDatabasePath, Serialization.ToJson(downloadedDatabase));
+                        SetDetectionDictionary(downloadedDatabase);
                         databaseUpdated = true;
                     }
                 }
@@ -238,13 +232,33 @@ namespace NVIDIAGeForceNowEnabler
             return databaseUpdated;
         }
 
-        private void SatinizeSupportedListTitles()
+        private void SetDetectionDictionary(List<GeforceNowItem> geforceList)
         {
-            foreach (var geforceNowItem in supportedList)
+            detectionDictionary = new Dictionary<Tuple<AppStore, string>, GeforceNowItemVariant>();
+            foreach (var geforceNowItem in geforceList)
             {
-                foreach (var variant in geforceNowItem.Variants)
+                if (geforceNowItem.Type != AppType.Game)
                 {
-                    variant.Title = SatinizeGameName(variant.Title);
+                    continue;
+                }
+
+                foreach (var itemVariant in geforceNowItem.Variants)
+                {
+                    if (itemVariant.OsType != OsType.Windows)
+                    {
+                        continue;
+                    }
+
+                    if (itemVariant.AppStore == AppStore.Epic || itemVariant.AppStore == AppStore.Origin)
+                    {
+                        var key = Tuple.Create(itemVariant.AppStore, SatinizeGameName(itemVariant.Title));
+                        detectionDictionary[key] = itemVariant;
+                    }
+                    else
+                    {
+                        var key = Tuple.Create(itemVariant.AppStore, itemVariant.StoreId);
+                        detectionDictionary[key] = itemVariant;
+                    }
                 }
             }
         }
@@ -270,7 +284,7 @@ namespace NVIDIAGeForceNowEnabler
             {
                 DownloadAndRefreshGameList(showDialogs);
             }
-            if (supportedList.Count == 0)
+            if (!detectionDictionary.HasItems())
             {
                 // In case download failed.
                 // Also sometimes there are issues with the api and it doesn't return any games in the response
@@ -278,7 +292,6 @@ namespace NVIDIAGeForceNowEnabler
                 return;
             }
 
-            SatinizeSupportedListTitles();
             int enabledGamesCount = 0;
             int featureAddedCount = 0;
             int featureRemovedCount = 0;
@@ -350,39 +363,20 @@ namespace NVIDIAGeForceNowEnabler
 
                 // For Epic they don't share any similarity and remains to be investigated. Examples:
                 // Epic: Pillars of Eternity - Definitive Edition, GameId: bcc75c246fe04e45b0c1f1c3fd52503a, StoreId: bc31288122a7443b818f4e77eed5ce25
-                var useNameMatching = false;
-                var matchingName = string.Empty;
                 if (appStore == AppStore.Epic || appStore == AppStore.Origin)
                 {
-                    matchingName = SatinizeGameName(game.Name);
-                    useNameMatching = true;
-                }
-
-                foreach (var geforceNowItem in supportedList)
-                {
-                    if (geforceNowItem.Type != AppType.Game)
+                    var key = Tuple.Create(appStore, SatinizeGameName(game.Name));
+                    if (detectionDictionary.TryGetValue(key, out var itemVariant))
                     {
-                        continue;
+                        return itemVariant;
                     }
-                        
-                    foreach (var itemVariant in geforceNowItem.Variants)
+                }
+                else
+                {
+                    var key = Tuple.Create(appStore, game.GameId);
+                    if (detectionDictionary.TryGetValue(key, out var itemVariant))
                     {
-                        if (itemVariant.OsType != OsType.Windows)
-                        {
-                            continue;
-                        }
-                        
-                        if (useNameMatching)
-                        {
-                            if (itemVariant.AppStore == appStore && itemVariant.Title == matchingName)
-                            {
-                                return itemVariant;
-                            }
-                        }
-                        else if (itemVariant.AppStore == appStore && itemVariant.StoreId == game.GameId)
-                        {
-                            return itemVariant;
-                        }
+                        return itemVariant;
                     }
                 }
             }
@@ -433,7 +427,7 @@ namespace NVIDIAGeForceNowEnabler
                 return null;
             }
 
-            if (supportedList.Count == 0)
+            if (detectionDictionary.HasItems())
             {
                 logger.Debug("Supported list was not set");
                 return null;

@@ -81,37 +81,13 @@ namespace NVIDIAGeForceNowEnabler.ViewModels
             get => variantsCollection;
         }
 
-        public GfnDatabaseBrowserViewModel(IPlayniteAPI playniteApi, List<GeforceNowItem> supportedList)
+        public GfnDatabaseBrowserViewModel(IPlayniteAPI playniteApi, List<GeforceNowItemVariant> supportedList)
         {
             this.playniteApi = playniteApi;
-            VariantsList = SetVariants(supportedList);
+            supportedList.Sort((x, y) => x.Title.CompareTo(y.Title));
+            VariantsList = supportedList;
             variantsCollection = CollectionViewSource.GetDefaultView(VariantsList);
             variantsCollection.Filter = FilterVariantsCollection;
-        }
-
-        private List<GeforceNowItemVariant> SetVariants(List<GeforceNowItem> supportedList)
-        {
-            var variants = new List<GeforceNowItemVariant>();
-            foreach (var supportedGame in supportedList)
-            {
-                if (supportedGame.Type != AppType.Game)
-                {
-                    continue;
-                }
-                
-                foreach (var variant in supportedGame.Variants)
-                {
-                    if (variant.OsType != OsType.Windows)
-                    {
-                        continue;
-                    }
-                    
-                    variants.Add(variant);
-                }
-            }
-
-            variants.Sort((x, y) => x.Title.CompareTo(y.Title));
-            return variants;
         }
 
         private bool FilterVariantsCollection(object item)
