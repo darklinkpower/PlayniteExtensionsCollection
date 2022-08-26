@@ -32,10 +32,9 @@ Você pode tentar usar uma combinação diferente de Tecla de Atalho para possiv
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Alterar Tecla de Atalhado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Pressione a Tecla de Atalho agora</sys:String>
     <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Nota:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-As teclas de atalho configuradas não poderão ser usadas em outras aplicações.
-Alterar esta configuração requer reinicialização.</sys:String>
+The configured hotkeys won't be able to be used in other applications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Se você tiver o Focus Assistist ativado ao jogar um jogo em modo tela cheia, você precisa adicionar o Playnite à lista de prioridades para receber notificações do Windows e configurá-las para permitir que elas sejam exibidas.
 
 Este recurso só é suportado no Windows 10 e no Windows 11</sys:String>
@@ -96,7 +95,7 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
 
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
 
@@ -108,4 +107,19 @@ If disabled, only the first controller will be allowed to activate the hotkeys</
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remove controller hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Keyboard input:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Keyboard Input</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Set keyboard Input</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Game running</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Game not running</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Always</sys:String>
 </ResourceDictionary>
