@@ -32,10 +32,9 @@ Sie können versuchen, eine andere HotKey Kombination zu verwenden, um das Probl
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
     <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Benachrichtigungen aktivieren</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Anmerkungen:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
-Die konfigurierten Hotkeys können in anderen Anwendungen nicht verwendet werden.
-Die Änderung dieser Einstellung erfordert einen Neustart.</sys:String>
+The configured hotkeys won't be able to be used in other applications.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Wenn du den Fokus Assistenten beim Spielen eines Spiels und im Vollbildmodus aktiviert hast, musst du Playnite zur Prioritätsliste hinzufügen, um Windows-Benachrichtigungen zu erhalten und sie so zu konfigurieren, dass sie angezeigt werden.
 
 Diese Funktion wird nur von Windows 10 und Windows 11 unterstützt</sys:String>
@@ -96,7 +95,7 @@ Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufge
 
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">GamePad hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
 
@@ -108,4 +107,19 @@ If disabled, only the first controller will be allowed to activate the hotkeys</
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remove controller hotkey</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Keyboard input:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Keyboard Input</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Set keyboard Input</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Game running</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Game not running</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Always</sys:String>
 </ResourceDictionary>
