@@ -551,7 +551,7 @@ namespace SteamWishlistDiscountNotifier
                 return null;
             }
 
-            GetPriceValues(regexMatch.Groups[1].Value, out var currencyCode, out var priceFinal);
+            PriceStringParser.GetPriceValues(regexMatch.Groups[1].Value, out var currencyCode, out var priceFinal);
             if (currencyCode.IsNullOrEmpty() || priceFinal == null)
             {
                 return null;
@@ -580,8 +580,8 @@ namespace SteamWishlistDiscountNotifier
                 return null;
             }
 
-            GetPriceValues(regexMatch.Groups[1].Value, out var _, out var priceOriginal);
-            GetPriceValues(regexMatch.Groups[2].Value, out var currencyCode, out var priceFinal);
+            PriceStringParser.GetPriceValues(regexMatch.Groups[1].Value, out var _, out var priceOriginal);
+            PriceStringParser.GetPriceValues(regexMatch.Groups[2].Value, out var currencyCode, out var priceFinal);
             if (currencyCode.IsNullOrEmpty() || priceOriginal == null || priceFinal == null)
             {
                 return null;
@@ -599,42 +599,6 @@ namespace SteamWishlistDiscountNotifier
                 WishlistItem = wishlistItem,
                 IsDiscounted = true
             };
-        }
-
-        private void GetPriceValues(string parsedBlock, out string currencyCode, out double? currencyValue)
-        {
-            parsedBlock = parsedBlock.Trim();
-            var firstNumberIndex = parsedBlock.IndexOfAny(numberChars);
-            var lastNumberIndex = parsedBlock.LastIndexOfAny(numberChars);
-
-            if (firstNumberIndex == -1 || lastNumberIndex == -1)
-            {
-                logger.Error($"Failed to parsed money parsed block \"{parsedBlock}\", firstNumberIndex {firstNumberIndex}, lastNumberIndex {lastNumberIndex}");
-                currencyCode = null;
-                currencyValue = null;
-                return;
-            }
-
-            var currencyValueStr = parsedBlock.Substring(firstNumberIndex, lastNumberIndex - firstNumberIndex + 1);
-            currencyValue = GetParsedPrice(currencyValueStr);
-            currencyCode = parsedBlock.Remove(firstNumberIndex, lastNumberIndex - firstNumberIndex + 1).Trim();
-        }
-
-        private double GetParsedPrice(string str)
-        {
-            var pointIndex = str.LastIndexOf('.');
-            var commaIndex = str.LastIndexOf(',');
-            
-            if (commaIndex < pointIndex)
-            {
-                // Point is decimal separator
-                return double.Parse(str, CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                // Comma is decimal separator
-                return double.Parse(str, CultureInfo.GetCultureInfo("es-ES"));
-            }
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)

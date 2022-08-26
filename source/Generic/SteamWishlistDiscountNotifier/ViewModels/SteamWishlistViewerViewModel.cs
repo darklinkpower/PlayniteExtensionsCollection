@@ -131,8 +131,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        private int filterMinimumPrice = 0;
-        public int FilterMinimumPrice
+        private double filterMinimumPrice = 0;
+        public double FilterMinimumPrice
         {
             get { return filterMinimumPrice; }
             set
@@ -143,8 +143,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        private int filterMaximumPrice = 999999;
-        public int FilterMaximumPrice
+        private double filterMaximumPrice = 999999;
+        public double FilterMaximumPrice
         {
             get { return filterMaximumPrice; }
             set
@@ -432,6 +432,17 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 if (FilterMaximumPrice != 999999)
                 {
                     FilterMaximumPrice = 999999;
+                }
+            });
+        }
+
+        public RelayCommand SetMaximumPriceToWalletCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (AccountInfo.WalletAmount != 0 && FilterMaximumPrice != AccountInfo.WalletAmount)
+                {
+                    FilterMaximumPrice = AccountInfo.WalletAmount;
                 }
             });
         }

@@ -185,6 +185,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -201,9 +202,9 @@
                                          UpdateSourceTrigger="PropertyChanged" 
                                          ValidatesOnDataErrors="True"
                                          NotifyOnValidationError="True"
-                                         Converter="{conv:NullableIntToStringConverter}">
+                                         Converter="{conv:DoubleToStringConverter}">
                                     <Binding.ValidationRules>
-                                        <conv:NullableIntFieldValidation MinValue="0" MaxValue="999999" />
+                                        <conv:DoubleFieldValidation MinValue="0" MaxValue="999999" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -227,9 +228,9 @@
                                          UpdateSourceTrigger="PropertyChanged" 
                                          ValidatesOnDataErrors="True"
                                          NotifyOnValidationError="True"
-                                         Converter="{conv:NullableIntToStringConverter}">
+                                         Converter="{conv:DoubleToStringConverter}">
                                     <Binding.ValidationRules>
-                                        <conv:NullableIntFieldValidation MinValue="0" MaxValue="999999" />
+                                        <conv:DoubleFieldValidation MinValue="0" MaxValue="999999" />
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -241,6 +242,14 @@
                                 HorizontalContentAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding ResetFilterMaximumPriceCommand}"
+                                Margin="5,0,0,0" />
+                        <Button Grid.Row="2" Grid.Column="3"
+                                FontFamily="{StaticResource FontIcoFont}"
+                                Content="&#xE93E;"
+                                HorizontalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                ToolTip="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel}"
+                                Command="{Binding SetMaximumPriceToWalletCommand}"
                                 Margin="5,0,0,0" />
                     </Grid>
                     

@@ -189,7 +189,7 @@ namespace PluginsCommon.Converters
 
     public class DoubleFieldValidation : ValidationRule
     {
-        private string invalidInput => $"Not an ulong value in {MinValue} to {MaxValue} range!";
+        private string invalidInput => $"Not a double value in {MinValue} to {MaxValue} range!";
 
         public double MinValue { get; set; } = 0;
         public double MaxValue { get; set; } = double.MaxValue;
