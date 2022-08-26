@@ -25,6 +25,7 @@ Echec de vérification de la liste d'envies Steam. L'authentification est requis
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Afficher la liste de souhaits Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Obtention des données de la liste de souhaits Steam…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Nom</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Classement</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Réduction</sys:String>
