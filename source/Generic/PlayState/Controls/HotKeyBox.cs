@@ -47,7 +47,7 @@ namespace PlayState.Controls
                 this,
                 nameof(Hotkey),
                 System.Windows.Data.BindingMode.OneWay,
-                targetNullValue: "None");
+                targetNullValue: ResourceProvider.GetString("LOCPlayState_NoneLabel"));
         }
 
         private void HotKeyBox_PreviewKeyDown(object sender, KeyEventArgs e)

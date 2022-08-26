@@ -18,13 +18,13 @@ namespace PlayState.Converters
             switch (source)
             {
                 case GamePadToKeyboardHotkeyModes.Disabled:
-                    return "Disabled";
+                    return ResourceProvider.GetString("LOCPlayState_ControllerHotkeyModeDisabledLabel");
                 case GamePadToKeyboardHotkeyModes.OnGameRunning:
-                    return "Game running";
+                    return ResourceProvider.GetString("LOCPlayState_ControllerHotkeyModeGameRunningLabel");
                 case GamePadToKeyboardHotkeyModes.OnGameNotRunning:
-                    return "Game not running";
+                    return ResourceProvider.GetString("LOCPlayState_ControllerHotkeyModeGameNotRunningLabel");
                 case GamePadToKeyboardHotkeyModes.Always:
-                    return "Always";
+                    return ResourceProvider.GetString("LOCPlayState_ControllerHotkeyModeAlwaysLabel");
                 default:
                     return string.Empty;
             }

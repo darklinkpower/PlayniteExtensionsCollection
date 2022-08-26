@@ -335,7 +335,7 @@ namespace PlayState
                     Serialization.ToJson(gamePadInformationHotkeyClone) == newComboSer ||
                     Settings.GamePadToHotkeyCollection.Any(x => SelectedGpdToKbHotkeyMode != x.Mode && Serialization.ToJson(x.GamePadHotKey) == newComboSer))
                 {
-                    plugin.PlayniteApi.Dialogs.ShowErrorMessage("A controller hotkey with the same combination already exists!", "PlayState");
+                    plugin.PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCPlayState_SettingsDuplicateGamepadHotkeyMessage"), "PlayState");
                     return;
                 }
 
@@ -347,9 +347,9 @@ namespace PlayState
 
         public static ObservableCollection<GamePadHotkeyCombo> OrderCollection(ObservableCollection<GamePadHotkeyCombo> collectionToSort)
         {
-            var temp = new ObservableCollection<GamePadHotkeyCombo>(collectionToSort.OrderBy(p => p.KeyboardHotkey.ToString()));
+            var tempCollection = new ObservableCollection<GamePadHotkeyCombo>(collectionToSort.OrderBy(p => p.KeyboardHotkey.ToString()));
             collectionToSort.Clear();
-            foreach (var gamepadHotkey in temp)
+            foreach (var gamepadHotkey in tempCollection)
             {
                 collectionToSort.Add(gamepadHotkey);
             }

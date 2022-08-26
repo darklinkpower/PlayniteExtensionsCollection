@@ -72,7 +72,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </StackPanel>
-                    
+
                     <CheckBox x:Name="CbBringResumedToForeground"
                               Content="{DynamicResource LOCPlayState_SettingBringResumedToForeground}"
                               IsChecked="{Binding Settings.BringResumedToForeground}"
@@ -88,7 +88,7 @@
                                   Margin="0,10,0,0"
                                   Content="{DynamicResource LOCPlayState_SuspendModePlaytime}" />
                     </StackPanel>
-                    
+
                     <CheckBox x:Name="CbSubstractOnSuspended" Content="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel}"
                               IsChecked="{Binding Settings.SubstractSuspendedPlaytimeOnStopped}"
                               ToolTip="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip}"
@@ -129,10 +129,14 @@
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
-        
+
         <TabItem Header="{DynamicResource LOCPlayState_SettingsGamePadHotkeysLabel}">
             <Grid>
-                <ScrollViewer>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="39*"/>
+                    <ColumnDefinition Width="146*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.ColumnSpan="2" Margin="0,0,0.4,0">
                     <StackPanel Margin="0,20,0,0">
                         <CheckBox IsChecked="{Binding Settings.GamePadHotkeysEnableAllControllers}"
                                   Content="{DynamicResource LOCPlayState_SettingsEnableAllControllersLabel}"
@@ -169,16 +173,16 @@
                                          Text="{Binding GamePadSuspendHotkeyClone, Converter={StaticResource GamePadStateHotkeyToStringConverter}}" />
                             </DockPanel>
                         </DockPanel>
-                        
+
                         <Separator Margin="0,5,0,5"/>
-                        <TextBlock Margin="0,10,0,0" Text="Custom hotkeys:"/>
+                        <TextBlock Margin="0,10,0,0" Text="{DynamicResource LOCPlayState_SettingsCustomHotkeysLabel}"/>
 
                         <ListView SelectionMode="Single" Height="200" Margin="0,10,0,0"
                                   SelectedItem="{Binding SelectedComboHotkey}"
                                   ItemsSource="{Binding Settings.GamePadToHotkeyCollection}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="Auto" Header="Mode">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCPlayState_SettingsModeLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <ComboBox SelectedValue="{Binding Mode, Mode=TwoWay}"
@@ -193,7 +197,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="Auto" Header="GamePadHotkey">
+                                    <GridViewColumn Width="Auto" Header="{DynamicResource LOCPlayState_SettingsControllerHotkeyLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBox Text="{Binding GamePadHotKey, Converter={StaticResource GamePadStateHotkeyToStringConverter}}"
@@ -203,7 +207,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <GridViewColumn Width="250"  Header="Keyboard hotkey">
+                                    <GridViewColumn Width="250"  Header="{DynamicResource LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBox Text="{Binding KeyboardHotkey, Converter={StaticResource HotKeyToStringConverter}}"
@@ -219,16 +223,16 @@
                         <Button VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 Margin="0,10,0,0"
-                                Content="Remove combo hotkey"
+                                Content="{DynamicResource LOCPlayState_SettingsRemoveControllerHotkeyLabel}"
                                 Command="{Binding RemoveSelectedComboHotkeyCommand}"/>
 
                         <DockPanel Margin="0,10,0,0">
-                            <TextBlock Text="Keyboard hotkey"
+                            <TextBlock Text="{DynamicResource LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel}"
                                        DockPanel.Dock="Left"
                                        VerticalAlignment="Center"/>
                             <Button DockPanel.Dock="Right" VerticalAlignment="Center"
                                     Margin="10,0,0,0"
-                                    Content="Set hotkey"
+                                    Content="{DynamicResource LOCPlayState_SettingsSetKeyboardInputLabel}"
                                     Command="{Binding SetSelectedDefaultHotkeyCommand}"/>
                             <ComboBox DockPanel.Dock="Right" Margin="10,0,0,0"
                                       MinWidth="100"
@@ -241,7 +245,7 @@
                                                 Hotkey="{Binding ComboHotkeyKeyboard}" />
                         </DockPanel>
                         <DockPanel LastChildFill="True" Margin="0,10,0,0">
-                            <TextBlock Text="GamePad hotkey"
+                            <TextBlock Text="{DynamicResource LOCPlayState_SettingsControllerHotkeyEnterLabel}"
                                        DockPanel.Dock="Left"
                                        VerticalAlignment="Center"/>
                             <Button DockPanel.Dock="Right" VerticalAlignment="Center"
@@ -254,7 +258,7 @@
                                      Text="{Binding ComboHotkeyGamePad, Converter={StaticResource GamePadStateHotkeyToStringConverter}}" />
                         </DockPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <TextBlock Text="Mode:" VerticalAlignment="Center" />
+                            <TextBlock Text="{DynamicResource LOCPlayState_SettingsModeEnterLabel}" VerticalAlignment="Center" />
                             <ComboBox SelectedValue="{Binding SelectedGpdToKbHotkeyMode, Mode=TwoWay}"
                                       MinWidth="150"
                                       ItemsSource="{Binding Source={StaticResource GamePadToKeyboardHotkeyModes}}"
@@ -270,12 +274,12 @@
                         <Button VerticalAlignment="Center"
                                 HorizontalAlignment="Left"
                                 Margin="0,10,0,0"
-                                Content="Add combo hotkey"
+                                Content="{DynamicResource LOCPlayState_SettingsAddControllerHotkeyLabel}"
                                 Command="{Binding AddComboHotkeyCommand}"/>
                     </StackPanel>
                 </ScrollViewer>
                 <Border Background="#D9000000"
-                        Visibility="{Binding IsCountDownRunning, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        Visibility="{Binding IsCountDownRunning, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.ColumnSpan="2" Margin="0,0,0.4,0">
                     <TextBlock Text="{Binding HotkeySaveCountDownText}"
                                IsHitTestVisible="False"
                                HorizontalAlignment="Center"
@@ -309,7 +313,7 @@
                         <StackPanel Margin="40,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
                             <TextBlock Text="{DynamicResource LOCPlayState_SettingsWinNotificationNote}" TextWrapping="Wrap"
                                    Margin="0,10,0,0" />
-                            
+
                             <TextBlock VerticalAlignment="Center" Margin="0,10,0,0">
                             <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration"
                                        Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
@@ -319,7 +323,7 @@
                             </TextBlock>
 
                         </StackPanel>
-                        
+
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
                               IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
                               Margin="0,10,0,0"/>

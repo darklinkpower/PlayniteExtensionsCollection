@@ -1,4 +1,5 @@
-﻿using PlayState.Models;
+﻿using Playnite.SDK;
+using PlayState.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace PlayState.Converters
                 return gamePadHotkey.ToString();
             }
 
-            return "None";
+            return ResourceProvider.GetString("LOCPlayState_NoneLabel");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
