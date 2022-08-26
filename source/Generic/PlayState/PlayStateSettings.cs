@@ -171,7 +171,37 @@ namespace PlayState
             IsWindows10Or11 = isWindows10Or11;
             countDownTimer.Elapsed += CountDownTimer_Elapsed;
             countDownSeconds = 3;
+
+            DefaultComboKeyboardHotkeys = new ObservableCollection<HotKey>
+            {
+                new HotKey(Key.F4, ModifierKeys.Alt),
+                new HotKey(Key.Escape, ModifierKeys.Alt),
+                new HotKey(Key.Tab, ModifierKeys.Alt),
+                new HotKey(Key.Tab, ModifierKeys.Alt | ModifierKeys.Shift),
+                new HotKey(Key.Tab, ModifierKeys.Control | ModifierKeys.Alt),
+                new HotKey(Key.Tab, ModifierKeys.Windows),
+                new HotKey(Key.D, ModifierKeys.Windows),
+                new HotKey(Key.M, ModifierKeys.Windows),
+                new HotKey(Key.MediaPlayPause, ModifierKeys.None),
+                new HotKey(Key.MediaPreviousTrack, ModifierKeys.None),
+                new HotKey(Key.MediaNextTrack, ModifierKeys.None),
+                new HotKey(Key.VolumeUp, ModifierKeys.None),
+                new HotKey(Key.VolumeDown, ModifierKeys.None),
+                new HotKey(Key.VolumeMute, ModifierKeys.None)
+            };
+
+            SelectedDefaultComboKeyboardHotkey = DefaultComboKeyboardHotkeys.FirstOrDefault();
         }
+
+        private ObservableCollection<HotKey> defaultComboKeyboardHotkeys;
+        public ObservableCollection<HotKey> DefaultComboKeyboardHotkeys { get => defaultComboKeyboardHotkeys; set => SetValue(ref defaultComboKeyboardHotkeys, value); }
+
+        private HotKey selectedDefaultComboKeyboardHotkey;
+        public HotKey SelectedDefaultComboKeyboardHotkey { get => selectedDefaultComboKeyboardHotkey; set => SetValue(ref selectedDefaultComboKeyboardHotkey, value); }
+
+        private GamePadToKeyboardHotkeyModes selectedGpdToKbHotkeyMode = GamePadToKeyboardHotkeyModes.Always;
+        public GamePadToKeyboardHotkeyModes SelectedGpdToKbHotkeyMode { get => selectedGpdToKbHotkeyMode; set => SetValue(ref selectedGpdToKbHotkeyMode, value); }
+
 
         private void CountDownTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -299,9 +329,44 @@ namespace PlayState
                     return;
                 }
 
-                var newCombo = new GamePadHotkeyCombo(ComboHotkeyKeyboard, ComboHotkeyGamePad);
+                var newComboSer = Serialization.ToJson(ComboHotkeyGamePad);
+                if (Serialization.ToJson(gamePadSuspendHotkeyClone) == newComboSer ||
+                    Serialization.ToJson(gamePadInformationHotkeyClone) == newComboSer ||
+                    Settings.GamePadToHotkeyCollection.Any(x => SelectedGpdToKbHotkeyMode != x.Mode && Serialization.ToJson(x.GamePadHotKey) == newComboSer))
+                {
+                    plugin.PlayniteApi.Dialogs.ShowErrorMessage("A controller hotkey with the same combination already exists!", "PlayState");
+                    return;
+                }
+
+                var newCombo = new GamePadHotkeyCombo(ComboHotkeyKeyboard, ComboHotkeyGamePad, SelectedGpdToKbHotkeyMode);
                 Settings.GamePadToHotkeyCollection.Add(newCombo);
+                Settings.GamePadToHotkeyCollection = OrderCollection(Settings.GamePadToHotkeyCollection);
             }, () => !isCountDownRunning);
+        }
+
+        public static ObservableCollection<GamePadHotkeyCombo> OrderCollection(ObservableCollection<GamePadHotkeyCombo> collectionToSort)
+        {
+            var temp = new ObservableCollection<GamePadHotkeyCombo>(collectionToSort.OrderBy(p => p.KeyboardHotkey.ToString()));
+            collectionToSort.Clear();
+            foreach (var gamepadHotkey in temp)
+            {
+                collectionToSort.Add(gamepadHotkey);
+            }
+
+            return collectionToSort;
+        }
+
+        public RelayCommand SetSelectedDefaultHotkeyCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (SelectedDefaultComboKeyboardHotkey == null)
+                {
+                    return;
+                }
+
+                ComboHotkeyKeyboard = SelectedDefaultComboKeyboardHotkey;
+            });
         }
 
         public RelayCommand RemoveSelectedComboHotkeyCommand

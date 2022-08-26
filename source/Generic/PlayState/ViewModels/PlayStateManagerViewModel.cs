@@ -4,6 +4,7 @@ using PlayState.Controls;
 using PlayState.Enums;
 using PlayState.Events;
 using PlayState.Models;
+using PlayState.Native;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -394,11 +395,11 @@ namespace PlayState.ViewModels
                         }
                         if (gameData.IsSuspended)
                         {
-                            ProcessesHandler.NtResumeProcess(gameProcess.Process.Handle);
+                            Ntdll.NtResumeProcess(gameProcess.Process.Handle);
                         }
                         else
                         {
-                            ProcessesHandler.NtSuspendProcess(gameProcess.Process.Handle);
+                            Ntdll.NtSuspendProcess(gameProcess.Process.Handle);
                         }
                     }
 

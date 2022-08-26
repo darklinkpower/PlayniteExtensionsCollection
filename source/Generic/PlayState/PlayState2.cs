@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
+using PlayState.Enums;
 using PlayState.Models;
 using PlayState.Native;
 using PlayState.XInputDotNetPure;
@@ -20,12 +21,7 @@ namespace PlayState
 
         private void CheckControllers()
         {
-            var maxCheckIndex = 0;
-            if (Settings.Settings.GamePadHotkeysEnableAllControllers)
-            {
-                maxCheckIndex = 3;
-            }
-
+            var maxCheckIndex = Settings.Settings.GamePadHotkeysEnableAllControllers ? 3 : 0;
             var anySignalSent = false;
             for (int i = 0; i <= maxCheckIndex; i++)
             {
@@ -33,20 +29,47 @@ namespace PlayState
                 GamePadState gamePadState = GamePad.GetState(playerIndex);
                 if (gamePadState.IsConnected && (gamePadState.Buttons.IsAnyPressed() || gamePadState.DPad.IsAnyPressed()))
                 {
-                    if (Settings.Settings.GamePadInformationHotkeyEnable && Settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    if (isAnyGameRunning)
                     {
-                        SendInformationSignal();
-                        anySignalSent = true;
-                    }
-                    else if (Settings.Settings.GamePadSuspendHotkeyEnable && Settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
-                    {
-                        SendSuspendSignal();
-                        anySignalSent = true;
+                        if (Settings.Settings.GamePadInformationHotkeyEnable && Settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                        {
+                            SendInformationSignal();
+                            anySignalSent = true;
+                        }
+                        else if (Settings.Settings.GamePadSuspendHotkeyEnable && Settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                        {
+                            SendSuspendSignal();
+                            anySignalSent = true;
+                        }
+                        else
+                        {
+                            foreach (var comboHotkey in Settings.Settings.GamePadToHotkeyCollection)
+                            {
+                                if (comboHotkey.Mode != GamePadToKeyboardHotkeyModes.Always &&
+                                    comboHotkey.Mode != GamePadToKeyboardHotkeyModes.OnGameRunning)
+                                {
+                                    continue;
+                                }
+
+                                if (comboHotkey.GamePadHotKey.IsGamePadStateEqual(gamePadState))
+                                {
+                                    Input.InputSender.SendHotkeyInput(comboHotkey.KeyboardHotkey);
+                                    anySignalSent = true;
+                                    break;
+                                }
+                            }
+                        }
                     }
                     else
                     {
                         foreach (var comboHotkey in Settings.Settings.GamePadToHotkeyCollection)
                         {
+                            if (comboHotkey.Mode != GamePadToKeyboardHotkeyModes.Always &&
+                                comboHotkey.Mode != GamePadToKeyboardHotkeyModes.OnGameNotRunning)
+                            {
+                                continue;
+                            }
+
                             if (comboHotkey.GamePadHotKey.IsGamePadStateEqual(gamePadState))
                             {
                                 Input.InputSender.SendHotkeyInput(comboHotkey.KeyboardHotkey);

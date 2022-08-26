@@ -20,5 +20,17 @@ namespace PlayState.Native
 
         [DllImport(dllName)]
         public static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
+
+        [DllImport(dllName, SetLastError = false)]
+        public static extern IntPtr GetMessageExtraInfo();
+
+        [DllImport(dllName)]
+        static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
+
+        [DllImport(dllName, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        public delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
     }
 }

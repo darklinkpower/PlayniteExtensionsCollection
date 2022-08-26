@@ -100,8 +100,10 @@
     <Compile Include="Converters\BoolToYesNoConverter.cs" />
     <Compile Include="Converters\GamePadStateHotkeyToStringConverter.cs" />
     <Compile Include="Converters\HotKeyToStringConverter.cs" />
+    <Compile Include="Converters\GamePadToKeyboardHotkeyModesToStringConverter.cs" />
     <Compile Include="Converters\NotificationStyleToStringConverter.cs" />
     <Compile Include="Converters\SuspendModeToStringConverter.cs" />
+    <Compile Include="Enums\GamePadToKeyboardHotkeyModes.cs" />
     <Compile Include="Enums\GameStateSwitchControlState.cs" />
     <Compile Include="Enums\NotificationStyles.cs" />
     <Compile Include="Enums\NotificationTypes.cs" />

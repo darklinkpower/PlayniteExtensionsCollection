@@ -14,6 +14,8 @@ namespace PlayState.Controls
 {
     public class HotKeyBox : TextBox
     {
+        public bool ClearWithDeleteKeys { get; set; } = true;
+
         public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
             nameof(Hotkey),
             typeof(HotKey),
@@ -26,8 +28,6 @@ namespace PlayState.Controls
             set => SetValue(HotkeyProperty, value);
         }
 
-        public bool ClearWithDeleteKeys { get; set; } = true;
-
         static HotKeyBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HotKeyBox), new FrameworkPropertyMetadata(typeof(HotKeyBox)));
@@ -36,6 +36,7 @@ namespace PlayState.Controls
         public HotKeyBox() : base()
         {
             PreviewKeyDown += HotKeyBox_PreviewKeyDown;
+
             IsReadOnly = true;
             IsReadOnlyCaretVisible = false;
             IsUndoEnabled = false;

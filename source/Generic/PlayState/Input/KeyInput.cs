@@ -1,4 +1,5 @@
-﻿using PlayState.Models;
+﻿using Playnite.SDK;
+using PlayState.Models;
 using PlayState.Native;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace PlayState.Input
 {
     public static class InputSender
     {
+        private static readonly ILogger logger = LogManager.GetLogger();
         internal static INPUT BuildINPUT(Key k, KEYEVENTF flags)
         {
             return new INPUT
@@ -26,7 +28,7 @@ namespace PlayState.Input
                         wScan = 0,
                         dwFlags = flags,
                         time = 0,
-                        dwExtraInfo = UIntPtr.Zero
+                        dwExtraInfo = (UIntPtr)(long)User32.GetMessageExtraInfo()
                     }
                 }
             };
@@ -67,7 +69,11 @@ namespace PlayState.Input
                 inputs[totalInputs - 1 - i] = BuildINPUT(keys[i], KEYEVENTF.KEYUP);
             }
 
-            User32.SendInput((uint)totalInputs, inputs, INPUT.Size);
+            var successfulInputs = User32.SendInput((uint)totalInputs, inputs, INPUT.Size);
+            if (totalInputs != successfulInputs)
+            {
+                logger.Warn($"Sent inputs and result was different: {totalInputs}, {successfulInputs}");
+            }
         }
     }
     

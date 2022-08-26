@@ -14,22 +14,9 @@ namespace PlayState
 {
     public static class ProcessesHandler
     {
-        [DllImport("ntdll.dll", PreserveSig = false)]
-        public static extern void NtSuspendProcess(IntPtr processHandle);
-        [DllImport("ntdll.dll", PreserveSig = false)]
-        public static extern void NtResumeProcess(IntPtr processHandle);
-        public delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
-
-        [DllImport("user32.dll")]
-        static extern bool EnumThreadWindows(uint dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
         private static readonly ILogger logger = LogManager.GetLogger();
 
         private const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
-        private const uint WM_CLOSE = 0x0010;
 
         private static readonly List<string> exclusionList = new List<string>
         {

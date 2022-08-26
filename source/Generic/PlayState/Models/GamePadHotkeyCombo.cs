@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayState.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,14 @@ namespace PlayState.Models
         private HotKey keyboardHotkey;
         public HotKey KeyboardHotkey { get => keyboardHotkey; set => SetValue(ref keyboardHotkey, value); }
 
-        public GamePadHotkeyCombo(HotKey hotkey, GamePadStateHotkey gamePadStateHotkey)
+        private GamePadToKeyboardHotkeyModes mode;
+        public GamePadToKeyboardHotkeyModes Mode { get => mode; set => SetValue(ref mode, value); }
+
+        public GamePadHotkeyCombo(HotKey hotkey, GamePadStateHotkey gamePadStateHotkey, GamePadToKeyboardHotkeyModes runningMode)
         {
             KeyboardHotkey = hotkey;
             GamePadHotKey = gamePadStateHotkey;
+            Mode = runningMode;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace PlayState
 
         private IntPtr mainWindowHandle;
         private bool globalHotkeyRegistered = false;
-
+        private bool isAnyGameRunning = false;
         public PlayStateSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
@@ -71,25 +71,11 @@ namespace PlayState
 
             Task.Run(() =>
             {
-                var controllersStateCheck = new Timer(80) { AutoReset = false, Enabled = false };
-
-                var isTherePlayStateData = false;
-                playStateManager.PlayStateDataCollection.CollectionChanged += (_, __) =>
-                {
-                    isTherePlayStateData = playStateManager.PlayStateDataCollection.HasItems();
-                    if (isTherePlayStateData && !controllersStateCheck.Enabled)
-                    {
-                        controllersStateCheck.Enabled = true;
-                    }
-                };
-
+                var controllersStateCheck = new Timer(80) { AutoReset = false, Enabled = true };
                 controllersStateCheck.Elapsed += (_, __) =>
                 {
                     CheckControllers();
-                    if (isTherePlayStateData)
-                    {
-                        controllersStateCheck.Enabled = true;
-                    }
+                    controllersStateCheck.Enabled = true;
                 };
             });
         }
@@ -162,9 +148,9 @@ namespace PlayState
             Settings.Settings.PropertyChanged += Settings_PropertyChanged;
         }
 
-
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
+            isAnyGameRunning = true;
             if (playStateManager.IsGameBeingDetected(args.Game))
             {
                 return;
@@ -184,6 +170,7 @@ namespace PlayState
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
+            isAnyGameRunning = PlayniteApi.Database.Games.Any(x => x.IsRunning);
             var game = args.Game;
             messagesHandler.HideWindow();
 
