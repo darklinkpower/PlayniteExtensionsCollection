@@ -91,7 +91,7 @@ namespace PlayState.ViewModels
             var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
             foreach (var playstateData in PlayStateDataCollection)
             {
-                if (!playstateData.HasProcesses || playstateData.CloseAttempted)
+                if (!playstateData.HasProcesses)
                 {
                     continue;
                 }
@@ -352,45 +352,6 @@ namespace PlayState.ViewModels
             }
         }
 
-        public void CloseCurrentGame()
-        {
-            // We first look if the foreground handle is a PlayState added game
-            // to close it. If it isn't, we grab the active PlayState game
-            var foregroundHandle = WindowsHelper.GetForegroundWindowHandle();
-            var gameData = GetGameDataByMainWindowHandle(foregroundHandle);
-            if (gameData == null)
-            {
-                gameData = GetCurrentGameData();
-            }
-
-            if (gameData == null || !gameData.HasProcesses)
-            {
-                return;
-            }
-
-            // To prevent issues when trying to close, we resume the game if its
-            // processes are currently suspended before closing them
-            if (gameData.SuspendMode == SuspendModes.Processes && gameData.IsSuspended)
-            {
-                var handled = SwitchGameState(gameData);
-                if (!handled)
-                {
-                    return;
-                }
-            }
-
-            // To prevent issues, we only try to close the processes once. Some games
-            // also take some time to close upon the sent Close signal
-            // e.g. Spyro Reignited Trilogy, which waits until the intro sequence
-            // has finished before closing.
-            if (!gameData.CloseAttempted)
-            {
-                ProcessesHandler.CloseProcessItems(gameData.GameProcesses);
-                gameData.CloseAttempted = true;
-                gameData.RemoveProcesses();
-            }
-        }
-
         public void ShowCurrentGameStatusNotification()
         {
             var gameData = GetCurrentGameData();
@@ -422,11 +383,6 @@ namespace PlayState.ViewModels
             var handled = false;
             try
             {
-                if (gameData.CloseAttempted)
-                {
-                    return true;
-                }
-                
                 var processesSuspended = false;
                 if (gameData.SuspendMode == SuspendModes.Processes && gameData.HasProcesses)
                 {

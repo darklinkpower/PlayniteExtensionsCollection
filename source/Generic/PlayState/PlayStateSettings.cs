@@ -6,6 +6,7 @@ using PlayState.XInputDotNetPure;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,10 @@ namespace PlayState
 {
     public class PlayStateSettings : ObservableObject
     {
+        // GamePad to Keyboard hotkey
+        private ObservableCollection<GamePadHotkeyCombo> gamePadToHotkeyCollection = new ObservableCollection<GamePadHotkeyCombo>();
+        public ObservableCollection<GamePadHotkeyCombo> GamePadToHotkeyCollection { get => gamePadToHotkeyCollection; set => SetValue(ref gamePadToHotkeyCollection, value); }
+
         // Keyboard Hotkeys
         private HotKey suspendHotKey = new HotKey(Key.A, ModifierKeys.Shift | ModifierKeys.Alt);
         public HotKey SuspendHotKey { get => suspendHotKey; set => SetValue(ref suspendHotKey, value); }
@@ -37,13 +42,6 @@ namespace PlayState
 
         private bool gamePadInformationHotkeyEnable = true;
         public bool GamePadInformationHotkeyEnable { get => gamePadInformationHotkeyEnable; set => SetValue(ref gamePadInformationHotkeyEnable, value); }
-
-        [DontSerialize]
-        private GamePadStateHotkey gamePadCloseHotkey;
-        public GamePadStateHotkey GamePadCloseHotkey { get => gamePadCloseHotkey; set => SetValue(ref gamePadCloseHotkey, value); }
-
-        private bool gamePadCloseHotkeyEnable = true;
-        public bool GamePadCloseHotkeyEnable { get => gamePadCloseHotkeyEnable; set => SetValue(ref gamePadCloseHotkeyEnable, value); }
 
         private bool gamePadHotkeysEnableAllControllers = false;
         public bool GamePadHotkeysEnableAllControllers { get => gamePadHotkeysEnableAllControllers; set => SetValue(ref gamePadHotkeysEnableAllControllers, value); }
@@ -102,17 +100,19 @@ namespace PlayState
         private int countDownSeconds = 3;
         private bool isCountDownRunning = false;
 
-        private string gamePadSuspendHotkeyCloneText = string.Empty;
-        public string GamePadSuspendHotkeyCloneText { get => gamePadSuspendHotkeyCloneText; set => SetValue(ref gamePadSuspendHotkeyCloneText, value); }
-
-        private string gamePadInformationHotkeyCloneText = string.Empty;
-        public string GamePadInformationHotkeyCloneText { get => gamePadInformationHotkeyCloneText; set => SetValue(ref gamePadInformationHotkeyCloneText, value); }
-
-        private string gamePadCloseHotkeyCloneText = string.Empty;
-        public string GamePadCloseHotkeyCloneText { get => gamePadCloseHotkeyCloneText; set => SetValue(ref gamePadCloseHotkeyCloneText, value); }
+        private int gamepadHotKeyToUpdate = -1;
+        private System.Timers.Timer countDownTimer = new System.Timers.Timer(1000) { AutoReset = true, Enabled = false };
 
         private string hotkeySaveCountDownText = string.Empty;
         public string HotkeySaveCountDownText { get => hotkeySaveCountDownText; set => SetValue(ref hotkeySaveCountDownText, value); }
+
+        private HotKey comboHotkeyKeyboard;
+        public HotKey ComboHotkeyKeyboard { get => comboHotkeyKeyboard; set => SetValue(ref comboHotkeyKeyboard, value); }
+        private GamePadHotkeyCombo selectedComboHotkey;
+        public GamePadHotkeyCombo SelectedComboHotkey { get => selectedComboHotkey; set => SetValue(ref selectedComboHotkey, value); }
+
+        private GamePadStateHotkey comboHotkeyGamePad;
+        public GamePadStateHotkey ComboHotkeyGamePad { get => comboHotkeyGamePad; set => SetValue(ref comboHotkeyGamePad, value); }
 
         private PlayStateSettings settings;
         public PlayStateSettings Settings
@@ -135,12 +135,10 @@ namespace PlayState
             set
             {
                 gamePadSuspendHotkeyClone = value;
-                GamePadSuspendHotkeyCloneText = GetGamepadHotkeyText(gamePadSuspendHotkeyClone);
                 OnPropertyChanged();
             }
         }
-
-        private System.Timers.Timer countDownTimer = new System.Timers.Timer(1000) { AutoReset = true, Enabled = false };
+        
         private GamePadStateHotkey gamePadInformationHotkeyClone;
         public GamePadStateHotkey GamePadInformationHotkeyClone
         {
@@ -148,25 +146,9 @@ namespace PlayState
             set
             {
                 gamePadInformationHotkeyClone = value;
-                GamePadInformationHotkeyCloneText = GetGamepadHotkeyText(gamePadInformationHotkeyClone);
                 OnPropertyChanged();
             }
         }
-
-        private GamePadStateHotkey gamePadCloseHotkeyClone;
-        private int gamepadHotKeyToUpdate = -1;
-
-        public GamePadStateHotkey GamePadCloseHotkeyClone
-        {
-            get => gamePadCloseHotkeyClone;
-            set
-            {
-                gamePadCloseHotkeyClone = value;
-                GamePadCloseHotkeyCloneText = GetGamepadHotkeyText(gamePadCloseHotkeyClone);
-                OnPropertyChanged();
-            }
-        }
-
 
         public PlayStateSettingsViewModel(PlayState plugin, bool isWindows10Or11)
         {
@@ -205,7 +187,7 @@ namespace PlayState
                     switch (gamepadHotKeyToUpdate)
                     {
                         case 0:
-                            GamePadCloseHotkeyClone = new GamePadStateHotkey(gamePadState);
+                            ComboHotkeyGamePad = new GamePadStateHotkey(gamePadState);
                             break;
                         case 1:
                             GamePadInformationHotkeyClone = new GamePadStateHotkey(gamePadState);
@@ -219,6 +201,7 @@ namespace PlayState
                 }
 
                 isCountDownRunning = false;
+                OnPropertyChanged(nameof(isCountDownRunning));
             }
         }
 
@@ -227,7 +210,6 @@ namespace PlayState
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
 
-            GamePadCloseHotkeyClone = Settings.GamePadCloseHotkey;
             GamePadInformationHotkeyClone = Settings.GamePadInformationHotkey;
             GamePadSuspendHotkeyClone = Settings.GamePadSuspendHotkey;
             HotkeySaveCountDownText = string.Empty;
@@ -244,7 +226,6 @@ namespace PlayState
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
-            Settings.GamePadCloseHotkey = GamePadCloseHotkeyClone;
             Settings.GamePadInformationHotkey = GamePadInformationHotkeyClone;
             Settings.GamePadSuspendHotkey = GamePadSuspendHotkeyClone;
             plugin.SavePluginSettings(Settings);
@@ -259,45 +240,6 @@ namespace PlayState
             return true;
         }
 
-        private string GetGamepadHotkeyText(GamePadStateHotkey gamePadStateHotkey)
-        {
-            if (gamePadStateHotkey == null)
-            {
-                return string.Empty;
-            }
-
-            var lines = new List<string>();
-            var pressedButtons = gamePadStateHotkey.Buttons.GetPressedButtonsList();
-            var pressedDpadButtons = gamePadStateHotkey.DPad.GetPressedButtonsList();
-            if (pressedButtons.HasItems())
-            {
-                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyButtonsLabel"), string.Join(", ", pressedButtons)));
-            }
-
-            if (pressedDpadButtons.HasItems())
-            {
-                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyDpadLabel"), string.Join(", ", pressedDpadButtons)));
-            }
-
-            var enabledTriggers = new List<string>();
-            if (gamePadStateHotkey.Triggers.Left >= 0.5f)
-            {
-                enabledTriggers.Add("LeftTrigger");
-            }
-
-            if (gamePadStateHotkey.Triggers.Right >= 0.5f)
-            {
-                enabledTriggers.Add("RightTrigger");
-            }
-
-            if (enabledTriggers.HasItems())
-            {
-                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyTriggersLabel"), string.Join(", ", enabledTriggers)));
-            }
-
-            return string.Join("\n", lines);
-        }
-
         public RelayCommand<string> OpenLinkCommand
         {
             get => new RelayCommand<string>((a) =>
@@ -306,7 +248,7 @@ namespace PlayState
             });
         }
 
-        public RelayCommand SaveGamepadCloseHotkeyCommand
+        public RelayCommand SaveGamepadToKeyboardHotkeyCommand
         {
             get => new RelayCommand(() =>
             {
@@ -346,6 +288,33 @@ namespace PlayState
                 gamepadHotKeyToUpdate = 2;
                 StartCountdownTimer();
             }, () => !isCountDownRunning);
+        }
+
+        public RelayCommand AddComboHotkeyCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (comboHotkeyKeyboard == null || ComboHotkeyGamePad == null)
+                {
+                    return;
+                }
+
+                var newCombo = new GamePadHotkeyCombo(ComboHotkeyKeyboard, ComboHotkeyGamePad);
+                Settings.GamePadToHotkeyCollection.Add(newCombo);
+            }, () => !isCountDownRunning);
+        }
+
+        public RelayCommand RemoveSelectedComboHotkeyCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (SelectedComboHotkey == null)
+                {
+                    return;
+                }
+
+                Settings.GamePadToHotkeyCollection.Remove(SelectedComboHotkey);
+            });
         }
 
         private void StartCountdownTimer()

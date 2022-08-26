@@ -33,12 +33,7 @@ namespace PlayState
                 GamePadState gamePadState = GamePad.GetState(playerIndex);
                 if (gamePadState.IsConnected && (gamePadState.Buttons.IsAnyPressed() || gamePadState.DPad.IsAnyPressed()))
                 {
-                    if (Settings.Settings.GamePadCloseHotkeyEnable && Settings.Settings.GamePadCloseHotkey?.IsGamePadStateEqual(gamePadState) == true)
-                    {
-                        SendCloseSignal();
-                        anySignalSent = true;
-                    }
-                    else if (Settings.Settings.GamePadInformationHotkeyEnable && Settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
+                    if (Settings.Settings.GamePadInformationHotkeyEnable && Settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
                     {
                         SendInformationSignal();
                         anySignalSent = true;
@@ -47,6 +42,18 @@ namespace PlayState
                     {
                         SendSuspendSignal();
                         anySignalSent = true;
+                    }
+                    else
+                    {
+                        foreach (var comboHotkey in Settings.Settings.GamePadToHotkeyCollection)
+                        {
+                            if (comboHotkey.GamePadHotKey.IsGamePadStateEqual(gamePadState))
+                            {
+                                Input.InputSender.SendHotkeyInput(comboHotkey.KeyboardHotkey);
+                                anySignalSent = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -160,7 +167,6 @@ namespace PlayState
 
         private void SendCloseSignal()
         {
-            //playStateManager.CloseCurrentGame();
             HotKey testHotkey = new HotKey(Key.F4, ModifierKeys.Alt);
             Input.InputSender.SendHotkeyInput(testHotkey);
         }

@@ -1,4 +1,5 @@
-﻿using PlayState.XInputDotNetPure;
+﻿using Playnite.SDK;
+using PlayState.XInputDotNetPure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,40 @@ namespace PlayState.Models
             }
 
             return true;
+        }
+
+        public override string ToString()
+        {
+            var lines = new List<string>();
+            var pressedButtons = Buttons.GetPressedButtonsList();
+            var pressedDpadButtons = DPad.GetPressedButtonsList();
+            if (pressedButtons.HasItems())
+            {
+                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyButtonsLabel"), string.Join(", ", pressedButtons)));
+            }
+
+            if (pressedDpadButtons.HasItems())
+            {
+                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyDpadLabel"), string.Join(", ", pressedDpadButtons)));
+            }
+
+            var enabledTriggers = new List<string>();
+            if (Triggers.Left >= 0.5f)
+            {
+                enabledTriggers.Add("LeftTrigger");
+            }
+
+            if (Triggers.Right >= 0.5f)
+            {
+                enabledTriggers.Add("RightTrigger");
+            }
+
+            if (enabledTriggers.HasItems())
+            {
+                lines.Add(string.Format(ResourceProvider.GetString("LOCPlayState_SettingsGamePadHotkeyTriggersLabel"), string.Join(", ", enabledTriggers)));
+            }
+
+            return string.Join("\n", lines);
         }
     }
 }

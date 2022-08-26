@@ -6,9 +6,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:enums="clr-namespace:PlayState.Enums;assembly=PlayState"
-             xmlns:con="clr-namespace:PlayState.Converters" xmlns:controls="clr-namespace:PlayState.Controls"
+             xmlns:con="clr-namespace:PlayState.Converters"
+             xmlns:controls="clr-namespace:PlayState.Controls"
              mc:Ignorable="d"
-             d:DesignHeight="550" d:DesignWidth="600">
+             d:DesignHeight="700" d:DesignWidth="600">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="SuspendModes" MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}">
@@ -24,6 +25,8 @@
         </ObjectDataProvider>
         <con:SuspendModeToStringConverter x:Key="SuspendModeToStringConverter" />
         <con:NotificationStyleToStringConverter x:Key="NotificationStyleToStringConverter" />
+        <con:HotKeyToStringConverter x:Key="HotKeyToStringConverter" />
+        <con:GamePadStateHotkeyToStringConverter x:Key="GamePadStateHotkeyToStringConverter" />
     </UserControl.Resources>
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderGeneral}">
@@ -123,27 +126,11 @@
 
                     <TextBlock Text="{DynamicResource LOCPlayState_SettingsGamePadHotkeysLabel}" Margin="0,20,0,0" />
                     <Separator Margin="0,5,0,10"/>
-                    
-                    
+
+
                     <CheckBox IsChecked="{Binding Settings.GamePadHotkeysEnableAllControllers}"
                               Content="{DynamicResource LOCPlayState_SettingsEnableAllControllersLabel}"
                               ToolTip="{DynamicResource LOCPlayState_SettingsEnableAllControllersTooltip}" />
-                    
-                    <DockPanel Margin="0,10,0,0">
-                        <CheckBox x:Name="GamePadCloseCb" VerticalAlignment="Center"
-                                  IsChecked="{Binding Settings.GamePadCloseHotkeyEnable}"
-                                  Content="{DynamicResource LOCPlayState_SettingsCloseGameHotkeyLabel}"/>
-                        <DockPanel IsEnabled="{Binding ElementName=GamePadCloseCb, Path=IsChecked}"
-                                   LastChildFill="True" Margin="10,0,0,0">
-                            <Button DockPanel.Dock="Right" VerticalAlignment="Center"
-                                    Margin="10,0,0,0"
-                                    Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
-                                    Command="{Binding SaveGamepadCloseHotkeyCommand}"/>
-                            <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
-                                     IsReadOnly="True"
-                                     Text="{Binding GamePadCloseHotkeyCloneText}" />
-                        </DockPanel>
-                    </DockPanel>
 
                     <DockPanel Margin="0,10,0,0">
                         <CheckBox x:Name="GamePadInformationCb" VerticalAlignment="Center"
@@ -157,7 +144,7 @@
                                     Command="{Binding SaveGamepadInformationHotkeyCommand}"/>
                             <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
                                      IsReadOnly="True"
-                                     Text="{Binding GamePadInformationHotkeyCloneText}" />
+                                     Text="{Binding GamePadInformationHotkeyClone, Converter={StaticResource GamePadStateHotkeyToStringConverter}}" />
                         </DockPanel>
                     </DockPanel>
                     
@@ -173,11 +160,74 @@
                                     Command="{Binding SaveGamepadSuspendHotkeyCommand}"/>
                             <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
                                      IsReadOnly="True"
-                                     Text="{Binding GamePadSuspendHotkeyCloneText}" />
+                                     Text="{Binding GamePadSuspendHotkeyClone, Converter={StaticResource GamePadStateHotkeyToStringConverter}}" />
                         </DockPanel>
                     </DockPanel>
-
+                    
                     <TextBlock Margin="0,10,0,0" Text="{Binding HotkeySaveCountDownText}" HorizontalAlignment="Center" FontWeight="Bold" />
+                    
+                    <ListView SelectionMode="Single" Height="200" Margin="0,10,0,0"
+                              SelectedItem="{Binding SelectedComboHotkey}"
+                              ItemsSource="{Binding Settings.GamePadToHotkeyCollection}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="Auto" Header="GamePadHotkey">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding GamePadHotKey, Converter={StaticResource GamePadStateHotkeyToStringConverter}}"
+                                                     IsReadOnly="True"
+                                                     VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn Width="250"  Header="Keyboard hotkey">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding KeyboardHotkey, Converter={StaticResource HotKeyToStringConverter}}"
+                                                     IsReadOnly="True"
+                                                     VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Margin="0,10,0,0"
+                            Content="Remove combo hotkey"
+                            Command="{Binding RemoveSelectedComboHotkeyCommand}"/>
+                    
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock Text="Keyboard hotkey"
+                                   DockPanel.Dock="Left"
+                                   VerticalAlignment="Center"/>
+                        <controls:HotKeyBox VerticalAlignment="Center"
+                                            Margin="10,0,0,0" DockPanel.Dock="Left"
+                                            Style="{Binding ElementName=TextBoxStyleProxy, Path=Style}"
+                                            Hotkey="{Binding ComboHotkeyKeyboard}" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True" Margin="0,10,0,0">
+                        <TextBlock Text="GamePad hotkey"
+                                   DockPanel.Dock="Left"
+                                   VerticalAlignment="Center"/>
+                        <Button DockPanel.Dock="Right" VerticalAlignment="Center"
+                                    Margin="10,0,0,0"
+                                    Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
+                                    Command="{Binding SaveGamepadToKeyboardHotkeyCommand}"/>
+                        <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                 Margin="10,0,0,0"
+                                 IsReadOnly="True"
+                                 Text="{Binding ComboHotkeyGamePad, Converter={StaticResource GamePadStateHotkeyToStringConverter}}" />
+                    </DockPanel>
+                    
+                    <Button VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Margin="0,10,0,0"
+                            Content="Add combo hotkey"
+                            Command="{Binding AddComboHotkeyCommand}"/>
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

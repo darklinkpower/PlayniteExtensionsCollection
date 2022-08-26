@@ -98,6 +98,8 @@
     </Compile>
     <Compile Include="Controls\HotKeyBox.cs" />
     <Compile Include="Converters\BoolToYesNoConverter.cs" />
+    <Compile Include="Converters\GamePadStateHotkeyToStringConverter.cs" />
+    <Compile Include="Converters\HotKeyToStringConverter.cs" />
     <Compile Include="Converters\NotificationStyleToStringConverter.cs" />
     <Compile Include="Converters\SuspendModeToStringConverter.cs" />
     <Compile Include="Enums\GameStateSwitchControlState.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Events\OnGameStatusSwitchedArgs.cs" />
     <Compile Include="Input\KeyInput.cs" />
     <Compile Include="MessagesHandler.cs" />
+    <Compile Include="Models\GamePadHotkeyCombo.cs" />
     <Compile Include="Models\GamePadStateHotkey.cs" />
     <Compile Include="Models\PlayStateData.cs" />
     <Compile Include="Models\HotKey.cs" />
