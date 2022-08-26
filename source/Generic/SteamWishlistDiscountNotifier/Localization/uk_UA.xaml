@@ -25,6 +25,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Модифікації</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Переглянути список бажань Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Отримання даних списку бажаного Steam…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Назва</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Ранг</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Знижка</sys:String>
