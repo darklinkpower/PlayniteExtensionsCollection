@@ -17,21 +17,12 @@ namespace PlayState
 {
     public class PlayStateSettings : ObservableObject
     {
-        [DontSerialize]
-        private string hotkeyText = string.Empty;
-        [DontSerialize]
-        public string HotkeyText { get => hotkeyText; set => SetValue(ref hotkeyText, value); }
-
-        [DontSerialize]
-        private string informationHotkeyText = string.Empty;
-        [DontSerialize]
-        public string InformationHotkeyText { get => informationHotkeyText; set => SetValue(ref informationHotkeyText, value); }
-
         // Keyboard Hotkeys
-        public Hotkey SavedHotkeyGesture { get; set; } = new Hotkey(Key.A, (ModifierKeys)5);
-        public Hotkey SavedInformationHotkeyGesture { get; set; } = new Hotkey(Key.I, (ModifierKeys)5);
+        private HotKey suspendHotKey = new HotKey(Key.A, ModifierKeys.Shift | ModifierKeys.Alt);
+        public HotKey SuspendHotKey { get => suspendHotKey; set => SetValue(ref suspendHotKey, value); }
 
-
+        private HotKey informationHotkey = new HotKey(Key.I, ModifierKeys.Shift | ModifierKeys.Alt);
+        public HotKey InformationHotkey { get => informationHotkey; set => SetValue(ref informationHotkey, value); }
 
         // GamePad Hotkeys
         [DontSerialize]
@@ -56,11 +47,6 @@ namespace PlayState
 
         private bool gamePadHotkeysEnableAllControllers = false;
         public bool GamePadHotkeysEnableAllControllers { get => gamePadHotkeysEnableAllControllers; set => SetValue(ref gamePadHotkeysEnableAllControllers, value); }
-
-
-
-
-
         [DontSerialize]
         private bool substractSuspendedPlaytimeOnStopped = false;
         public bool SubstractSuspendedPlaytimeOnStopped { get => substractSuspendedPlaytimeOnStopped; set => SetValue(ref substractSuspendedPlaytimeOnStopped, value); }
@@ -194,14 +180,6 @@ namespace PlayState
             if (savedSettings != null)
             {
                 Settings = savedSettings;
-                if (Settings.SavedHotkeyGesture.Modifiers == ModifierKeys.None)
-                {
-                    // Due to a bug in previous version that allowed 
-                    // to save gestures without modifiers, this
-                    // should be done to restore the default ModifierKeys
-                    Settings.SavedHotkeyGesture.Modifiers = (ModifierKeys)5;
-                    plugin.SavePluginSettings(Settings);
-                }
             }
             else
             {
@@ -248,8 +226,6 @@ namespace PlayState
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
-            Settings.HotkeyText = $"{Settings.SavedHotkeyGesture.Modifiers} + {Settings.SavedHotkeyGesture.Key}";
-            Settings.InformationHotkeyText = $"{Settings.SavedInformationHotkeyGesture.Modifiers} + {Settings.SavedInformationHotkeyGesture.Key}";
 
             GamePadCloseHotkeyClone = Settings.GamePadCloseHotkey;
             GamePadInformationHotkeyClone = Settings.GamePadInformationHotkey;

@@ -2,7 +2,6 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using PlayState.Enums;
 using PlayState.Models;
 using PlayState.ViewModels;
 using PlayState.Views;
@@ -14,9 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Interop;
-using Microsoft.Win32;
 using PluginsCommon;
 using PlayniteUtilitiesCommon;
 using System.Reflection;
@@ -24,20 +21,15 @@ using System.Windows.Media;
 using StartPage.SDK;
 using PlayState.Controls;
 using System.Timers;
-using PlayState.XInputDotNetPure;
-using Playnite.SDK.Data;
 
 namespace PlayState
 {
-    public class PlayState : GenericPlugin, IStartPageExtension
+    public partial class PlayState : GenericPlugin, IStartPageExtension
     {
 
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private Window mainWindow;
-        private WindowInteropHelper windowInterop;
         private IntPtr mainWindowHandle;
-        private HwndSource source = null;
         private bool globalHotkeyRegistered = false;
 
         public PlayStateSettingsViewModel Settings { get; set; }
@@ -102,44 +94,12 @@ namespace PlayState
             });
         }
 
-        private void CheckControllers()
+        private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            var maxCheckIndex = 0;
-            if (Settings.Settings.GamePadHotkeysEnableAllControllers)
+            if (e.PropertyName == nameof(PlayStateSettings.InformationHotkey) ||
+                e.PropertyName == nameof(PlayStateSettings.SuspendHotKey))
             {
-                maxCheckIndex = 3;
-            }
-
-            var anySignalSent = false;
-            for (int i = 0; i <= maxCheckIndex; i++)
-            {
-                PlayerIndex playerIndex = (PlayerIndex)i;
-                GamePadState gamePadState = GamePad.GetState(playerIndex);
-                if (gamePadState.IsConnected && (gamePadState.Buttons.IsAnyPressed() || gamePadState.DPad.IsAnyPressed()))
-                {
-                    if (Settings.Settings.GamePadCloseHotkeyEnable && Settings.Settings.GamePadCloseHotkey?.IsGamePadStateEqual(gamePadState) == true)
-                    {
-                        SendCloseSignal();
-                        anySignalSent = true;
-                    }
-                    else if (Settings.Settings.GamePadInformationHotkeyEnable && Settings.Settings.GamePadInformationHotkey?.IsGamePadStateEqual(gamePadState) == true)
-                    {
-                        SendInformationSignal();
-                        anySignalSent = true;
-                    }
-                    else if (Settings.Settings.GamePadSuspendHotkeyEnable && Settings.Settings.GamePadSuspendHotkey?.IsGamePadStateEqual(gamePadState) == true)
-                    {
-                        SendSuspendSignal();
-                        anySignalSent = true;
-                    }
-                }
-            }
-
-            // To prevent events from firing continously if the
-            // buttons keep being pressed
-            if (anySignalSent)
-            {
-                System.Threading.Thread.Sleep(350);
+                RegisterHotkey();
             }
         }
 
@@ -151,15 +111,6 @@ namespace PlayState
             }
 
             return null;
-        }
-
-        private bool IsWindows10Or11()
-        {
-            using (var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
-            {
-                var productName = key?.GetValue("ProductName")?.ToString() ?? string.Empty;
-                return productName.Contains("Windows 10") || productName.Contains("Windows 11");
-            }
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -182,22 +133,8 @@ namespace PlayState
             }
         }
 
-        // Hotkey implementation based on https://github.com/felixkmh/QuickSearch-for-Playnite
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            mainWindow = Application.Current.MainWindow;
-            if (mainWindow != null)
-            {
-                windowInterop = new WindowInteropHelper(mainWindow);
-                mainWindowHandle = windowInterop.Handle;
-                source = HwndSource.FromHwnd(mainWindowHandle);
-                RegisterGlobalHotkey();
-            }
-            else
-            {
-                logger.Error("Could not find main window. Shortcuts could not be registered.");
-            }
-
             if (!Settings.Settings.WindowsNotificationStyleFirstSetupDone && isWindows10Or11)
             {
                 PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCPlayState_MessageWinStyleNotificationsFirstSetup"), "PlayState");
@@ -209,95 +146,22 @@ namespace PlayState
                 messagesHandler.ShowGenericNotification("PlayState");
                 ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
             }
-        }
 
-        internal bool RegisterGlobalHotkey()
-        {
-            if (!globalHotkeyRegistered)
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null)
             {
-                var window = mainWindow;
-                var handle = mainWindowHandle;
-                source.AddHook(GlobalHotkeyCallback);
-                globalHotkeyRegistered = true;
-
-                // Pause/Resume Hotkey
-                var registered = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, Settings.Settings.SavedHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedHotkeyGesture.Key));
-
-                if (registered)
-                {
-                    logger.Debug($"Pause/resume Hotkey registered with hotkey {Settings.Settings.SavedHotkeyGesture}.");
-                }
-                else
-                {
-                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
-                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), Settings.Settings.SavedHotkeyGesture),
-                        NotificationType.Error));
-                    logger.Error($"Failed to register configured pause/resume Hotkey {Settings.Settings.SavedHotkeyGesture}.");
-                }
-
-                // Information Hotkey
-                var registered2 = HotkeyHelper.RegisterHotKey(handle, HOTKEY_ID, Settings.Settings.SavedInformationHotkeyGesture.Modifiers.ToVK(), (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedInformationHotkeyGesture.Key));
-                
-                if (registered2)
-                {
-                    logger.Debug($"Information Hotkey registered with hotkey {Settings.Settings.SavedInformationHotkeyGesture}.");
-                }
-                else
-                {
-                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
-                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), Settings.Settings.SavedInformationHotkeyGesture),
-                        NotificationType.Error));
-                    logger.Error($"Failed to register configured information Hotkey {Settings.Settings.SavedInformationHotkeyGesture}.");
-                }
-
-                return registered && registered2;
+                logger.Error("Could not find main window. Shortcuts could not be registered.");
+                return;
             }
 
-            return true;
+            var windowInterop = new WindowInteropHelper(mainWindow);
+            mainWindowHandle = windowInterop.Handle;
+            var hwndSource = HwndSource.FromHwnd(mainWindowHandle);
+            hwndSource.AddHook(HwndHook);
+            RegisterHotkey();
+            Settings.Settings.PropertyChanged += Settings_PropertyChanged;
         }
 
-        private const int HOTKEY_ID = 3754;
-        private const int WM_HOTKEY = 0x0312;
-        private IntPtr GlobalHotkeyCallback(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == WM_HOTKEY)
-            {
-                switch (wParam.ToInt32())
-                {
-                    case HOTKEY_ID:
-                        uint vkey = ((uint)lParam >> 16) & 0xFFFF;
-                        if (vkey == (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedHotkeyGesture.Key))
-                        {
-                            SendSuspendSignal();
-                        }
-                        else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.SavedInformationHotkeyGesture.Key))
-                        {
-                            SendInformationSignal();
-                        }
-                        handled = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return IntPtr.Zero;
-        }
-
-        private void SendCloseSignal()
-        {
-            playStateManager.CloseCurrentGame();
-        }
-
-        private void SendInformationSignal()
-        {
-            playStateManager.ShowCurrentGameStatusNotification();
-        }
-
-        private void SendSuspendSignal()
-        {
-            playStateManager.SwitchCurrentGameState();
-        }
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
@@ -316,163 +180,6 @@ namespace PlayState
             }
 
             InvokeGameProcessesDetection(args);
-        }
-
-        private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
-        {
-            var game = args.Game;
-            playStateManager.AddGameToDetection(game);
-            var sourceActionHandled = await ScanGameSourceAction(args.Game, args.SourceAction);
-            if (sourceActionHandled)
-            {
-                return;
-            }
-
-            var gameInstallDir = GetGameInstallDir(args.Game);
-            if (!gameInstallDir.IsNullOrEmpty())
-            {
-                var scanHandled = await ScanGameProcessesFromDirectoryAsync(game, gameInstallDir);
-                if (scanHandled)
-                {
-                    return;
-                }
-            }
-
-            playStateManager.AddPlayStateData(game, new List<ProcessItem>());
-        }
-
-        private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir)
-        {
-            // Fix for some games that take longer to start, even when already detected as running
-            await Task.Delay(20000);
-            if (!playStateManager.IsGameBeingDetected(game))
-            {
-                logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
-                return true;
-            }
-
-            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
-            if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
-            {
-                logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
-                playStateManager.AddPlayStateData(game, gameProcesses);
-                return true;
-            }
-
-            // Waiting is useful for games that use a startup launcher, since
-            // it can take some time before the user launches the game from it
-            await Task.Delay(40000);
-            var filterPaths = true;
-            for (int i = 0; i < 7; i++)
-            {
-                // This is done to stop execution in case a new game was launched
-                // or the launched game was closed
-                if (!playStateManager.IsGameBeingDetected(game))
-                {
-                    logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
-                    return true;
-                }
-
-                // Try a few times with filters.
-                // If nothing is found, try without filters. This helps in cases
-                // where the active process is being filtered out by filters
-                logger.Debug($"Starting WMI loop number {i}");
-                if (i == 4)
-                {
-                    logger.Debug("FilterPaths set to false for WMI Query");
-                    filterPaths = false;
-                }
-
-                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir);
-                if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
-                {
-                    logger.Debug($"Found {gameProcesses.Count} game processes");
-                    playStateManager.AddPlayStateData(game, gameProcesses);
-                    return true;
-                }
-                else
-                {
-                    await Task.Delay(15000);
-                }
-            }
-
-            logger.Debug("Couldn't find any game process");
-            return false;
-        }
-
-        private string GetGameInstallDir(Game game)
-        {
-            // Games from Xbox library are UWP apps. UWP apps run from the primary drive, e.g. "C:\".
-            // If the game install location is not in the primary drive, Windows creates a symlink from the real files
-            // to the primary drive and starts running the game from there. For this reason, we need to obtain the location
-            // from where the game is running for Xbox game by detecting installed UWP apps as the Xbox plugin
-            // reports the real installation directory in the games and not the fake one in C:\
-            if (game.PluginId == Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287"))
-            {
-                var gameInstallDir = Programs.GetUwpWorkdirFromGameId(game.GameId);
-                if (gameInstallDir.IsNullOrEmpty() || !FileSystem.DirectoryExists(gameInstallDir))
-                {
-                    playStateManager.RemoveGameFromDetection(game);
-                    return null;
-                }
-                else
-                {
-                    return gameInstallDir;
-                }
-            }
-            else if (!game.InstallDirectory.IsNullOrEmpty())
-            {
-                return game.InstallDirectory;
-            }
-
-            return null;
-        }
-
-        private async Task<bool> ScanGameSourceAction(Game game, GameAction sourceAction)
-        {
-            if (sourceAction == null || sourceAction.Type != GameActionType.Emulator)
-            {
-                return false;
-            }
-
-            logger.Debug("Source action is emulator.");
-            var emulatorProfileId = sourceAction.EmulatorProfileId;
-            if (emulatorProfileId.StartsWith("#builtin_"))
-            {
-                //Currently it isn't possible to obtain the emulator path
-                //for emulators using Builtin profiles
-                logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
-                return true;
-            }
-
-            var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
-            var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
-            if (profile == null)
-            {
-                logger.Debug($"Failed to get Custom emulator profile");
-                return true;
-            }
-
-            logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
-            if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
-            {
-                playStateManager.AddPlayStateData(game, gameProcesses);
-            }
-            else
-            {
-                logger.Debug($"Failed to get valid Custom emulator profile executables process items. Starting delay...");
-                await Task.Delay(20000);
-                logger.Debug($"Delay finished");
-
-                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
-                if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
-                {
-                    playStateManager.AddPlayStateData(game, gameProcesses);
-                }
-            }
-
-            return true;
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
