@@ -116,6 +116,7 @@
     <Compile Include="Models\PlayStateData.cs" />
     <Compile Include="Models\HotKey.cs" />
     <Compile Include="Models\ProcessItem.cs" />
+    <Compile Include="Native\Ntdll.cs" />
     <Compile Include="Native\User32.cs" />
     <Compile Include="Native\WinUser.cs" />
     <Compile Include="PlayState.cs" />

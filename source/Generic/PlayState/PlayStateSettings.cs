@@ -99,6 +99,7 @@ namespace PlayState
 
         private int countDownSeconds = 3;
         private bool isCountDownRunning = false;
+        public bool IsCountDownRunning { get => isCountDownRunning; set => SetValue(ref isCountDownRunning, value); }
 
         private int gamepadHotKeyToUpdate = -1;
         private System.Timers.Timer countDownTimer = new System.Timers.Timer(1000) { AutoReset = true, Enabled = false };
@@ -230,8 +231,8 @@ namespace PlayState
                     }
                 }
 
-                isCountDownRunning = false;
-                OnPropertyChanged(nameof(isCountDownRunning));
+                IsCountDownRunning = false;
+                OnPropertyChanged(nameof(IsCountDownRunning));
             }
         }
 
@@ -384,7 +385,7 @@ namespace PlayState
 
         private void StartCountdownTimer()
         {
-            isCountDownRunning = true;
+            IsCountDownRunning = true;
             countDownSeconds = 3;
             UpdateCountdownText(countDownSeconds);
             countDownTimer.Stop();
