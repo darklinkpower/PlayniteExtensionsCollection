@@ -25,6 +25,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">模组</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">查看 Steam 愿望单</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">正在获取 Steam 愿望单数据…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">名称</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">排名</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">折扣</sys:String>
