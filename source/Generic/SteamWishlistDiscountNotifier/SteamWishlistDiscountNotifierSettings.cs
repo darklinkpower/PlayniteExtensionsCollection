@@ -140,7 +140,7 @@ namespace SteamWishlistDiscountNotifier
             try
             {
                 var status = AuthStatus.AuthRequired;
-                using (var view = plugin.PlayniteApi.WebViews.CreateView(675, 440))
+                using (var view = plugin.PlayniteApi.WebViews.CreateView(675, 640))
                 {
                     view.LoadingChanged += async (_, __) =>
                     {
