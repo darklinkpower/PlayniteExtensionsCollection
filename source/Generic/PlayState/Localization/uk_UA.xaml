@@ -34,8 +34,7 @@
     <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Увімкнути текст сповіщень</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Примітки:
 
-Налаштовані гарячі клавіші не можна буде використовувати в інших додатках.
-Зміна цього налаштування вимагає перезапуску.</sys:String>
+Налаштовані гарячі клавіші не можна буде використати в інших програмах.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Якщо під час гри в повноекранному режимі у вас працює Focus Assist, вам потрібно додати Playnite до списку пріоритетів, щоб отримувати сповіщення Windows і налаштувати їх, щоб дозволити їх показ.
 
 Ця функція підтримується лише для Windows 10 і Windows 11</sys:String>
@@ -96,7 +95,7 @@
 
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Гарячі клавіші</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Гарячі клавіші клавіатури</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Гарячі клавіші ґеймпаду</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Гарячі клавіші контролера</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Дозволити всім контролерам активувати гарячі клавіші</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Якщо увімкнено, всім контролерам буде дозволено активувати гарячі клавіші.
 
@@ -108,4 +107,19 @@
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Кнопки: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Тригери: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Гаряча клавіша контролера з тією ж комбінацією вже існує!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Гаряча клавіша контролера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Гаряча клавіша контролера:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Режим</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Режим:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Додати гарячу клавішу контролера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Вилучити гарячу клавішу контролера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Введення з клавіатури:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Введення з клавіатури</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Встановити введення з клавіатури</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">Немає</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Вимкнено</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Гра запущена</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Гра не запущена</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Завжди</sys:String>
 </ResourceDictionary>
