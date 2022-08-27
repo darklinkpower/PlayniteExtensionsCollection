@@ -381,7 +381,7 @@ Packages:
   - Version: 2.55
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-08-26
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.26_718ee79f/PlayState_2_55.pext
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.26_808ba2a7/PlayState_2_55.pext
     Changelog:
     - 'Updated localizations'
     - 'Added support to set custom controller hotkeys to input custom keyboard presses and shortcuts'
