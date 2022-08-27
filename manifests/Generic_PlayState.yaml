@@ -378,3 +378,12 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix crash when switching game status of game that has been closed'
+  - Version: 2.54
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.26_084f9bb0/PlayState_2_54.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to set custom controller hotkeys to input custom keyboard presses and shortcuts'
+    - 'Removed support to close games with controller hotkey'
+    - 'Note: Previously configured keyboard shortcuts will be reset with this update'
