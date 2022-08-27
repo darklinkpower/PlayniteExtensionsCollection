@@ -25,7 +25,7 @@ Error al comprobar la lista de deseados de Steam. Se requiere autenticación.</s
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Ver lista de deseos de Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Obteniendo datos de lista de deseos de Steam…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Cartera de Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Nombre</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Posición</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Descuento</sys:String>
