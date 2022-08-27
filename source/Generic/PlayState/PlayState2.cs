@@ -45,7 +45,7 @@ namespace PlayState
                         {
                             foreach (var comboHotkey in Settings.Settings.GamePadToHotkeyCollection)
                             {
-                                if (comboHotkey.Mode != GamePadToKeyboardHotkeyModes.Disabled ||
+                                if (comboHotkey.Mode == GamePadToKeyboardHotkeyModes.Disabled ||
                                    (comboHotkey.Mode != GamePadToKeyboardHotkeyModes.Always &&
                                     comboHotkey.Mode != GamePadToKeyboardHotkeyModes.OnGameRunning))
                                 {
@@ -65,7 +65,7 @@ namespace PlayState
                     {
                         foreach (var comboHotkey in Settings.Settings.GamePadToHotkeyCollection)
                         {
-                            if (comboHotkey.Mode != GamePadToKeyboardHotkeyModes.Disabled ||
+                            if (comboHotkey.Mode == GamePadToKeyboardHotkeyModes.Disabled ||
                                (comboHotkey.Mode != GamePadToKeyboardHotkeyModes.Always &&
                                 comboHotkey.Mode != GamePadToKeyboardHotkeyModes.OnGameNotRunning))
                             {
