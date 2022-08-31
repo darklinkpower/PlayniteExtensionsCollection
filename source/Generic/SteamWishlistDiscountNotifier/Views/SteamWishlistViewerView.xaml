@@ -319,8 +319,9 @@
                                 Command="{Binding SetMaximumPriceToWalletCommand}"
                                 Margin="5,0,0,0" />
                     </Grid>
-                    
-                    <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterItemTypeGame}"
+                    <TextBlock Margin="0,15,0,0" Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelItemType}" />
+
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeGame}"
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeGame}"/>
                     <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeDlc}"
@@ -385,6 +386,15 @@
                                         VerticalAlignment="Center"
                                         Template="{StaticResource FilterSelector}" />
                     </Grid>
+
+                    <TextBlock Margin="0,15,0,0" Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus}" />
+
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterIncludeReleased}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased}"/>
+                    <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterIncludeNotReleased}"
+                              VerticalAlignment="Center"
+                              Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased}"/>
                 </StackPanel>
             </ScrollViewer>
             <Border Background="{StaticResource ItemsPanelBackgroundBrush}"

@@ -228,6 +228,30 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
+        private bool filterIncludeReleased { get; set; } = true;
+        public bool FilterIncludeReleased
+        {
+            get => filterIncludeReleased;
+            set
+            {
+                filterIncludeReleased = value;
+                OnPropertyChanged();
+                wishlistCollectionView.Refresh();
+            }
+        }
+
+        private bool filterIncludeNotReleased { get; set; } = true;
+        public bool FilterIncludeNotReleased
+        {
+            get => filterIncludeNotReleased;
+            set
+            {
+                filterIncludeNotReleased = value;
+                OnPropertyChanged();
+                wishlistCollectionView.Refresh();
+            }
+        }
+
         private FilterGroup tagFilters;
         public FilterGroup TagFilters
         {
@@ -301,6 +325,18 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 {
                     return false;
                 }
+            }
+
+            if (wishlistItem.PriceFinal.HasValue)
+            {
+                if (!filterIncludeReleased)
+                {
+                    return false;
+                }
+            }
+            else if (!filterIncludeNotReleased)
+            {
+                return false;
             }
 
             if (FilterMinimumPrice != 0)
