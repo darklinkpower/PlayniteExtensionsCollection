@@ -6,7 +6,7 @@
              xmlns:conv="clr-namespace:PluginsCommon.Converters"
              xmlns:local="clr-namespace:SteamWishlistDiscountNotifier.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="900" d:DesignWidth="800">
     <Grid>
         <Grid.Resources>
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
@@ -49,7 +49,7 @@
                             </PriorityBinding>
                         </Image.Source>
                     </Image>
-                    
+
                     <StackPanel Grid.Column="2" VerticalAlignment="Center"
                                 Margin="5,0,0,0">
                         <TextBlock Text="{Binding Name}" Margin="0,3,0,0"
@@ -143,6 +143,73 @@
 
                 </Grid>
             </DataTemplate>
+            
+            <ControlTemplate TargetType="ContentControl" x:Key="FilterSelector">
+                <ToggleButton Name="Toggle" HorizontalContentAlignment="Stretch"
+                              Focusable="False" Padding="0"
+                              Foreground="{DynamicResource TextBrush}">
+                    <ToggleButton.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding SelectionText}" TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center" Margin="4,0,2,0"/>
+                            <Button Grid.Column="1"
+                                    Content="&#xef00;" FontFamily="{DynamicResource FontIcoFont}"
+                                    Margin="4,0,2,0" HorizontalAlignment="Right"
+                                    Padding="2" VerticalAlignment="Center"
+                                    Command="{Binding DataContext.ClearEnabledCommand, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+                            <Viewbox Grid.Column="2" Width="20">
+                                <TextBlock Text="6" FontFamily="Marlett" Foreground="{DynamicResource GlyphBrush}"
+                                           VerticalAlignment="Center"/>
+                            </Viewbox>
+                            <Popup Placement="Bottom" Focusable="False" AllowsTransparency="True" Name="Popup"
+                                   IsOpen="{Binding IsChecked, ElementName=Toggle, Mode=TwoWay, Delay=100}" StaysOpen="False"
+                                   MaxHeight="300">
+                                <Border Background="{DynamicResource PopupBackgroundBrush}"
+                                        BorderThickness="{DynamicResource PopupBorderThickness}"
+                                        BorderBrush="{DynamicResource PopupBorderBrush}">
+                                    <ItemsControl ItemsSource="{Binding Sources}"
+                                                  ScrollViewer.CanContentScroll="True"
+                                                  KeyboardNavigation.DirectionalNavigation="Contained"
+                                                  VirtualizingPanel.IsVirtualizing="True"
+                                                  VirtualizingPanel.VirtualizationMode="Recycling">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <DockPanel>
+                                                    <CheckBox IsChecked="{Binding Enabled}" DockPanel.Dock="Left"
+                                                              Content="{Binding Name}"
+                                                              Margin="3,2,3,2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.Template>
+                                            <ControlTemplate>
+                                                <ScrollViewer Focusable="False" VerticalScrollBarVisibility="Auto">
+                                                    <ItemsPresenter />
+                                                </ScrollViewer>
+                                            </ControlTemplate>
+                                        </ItemsControl.Template>
+                                    </ItemsControl>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ToggleButton.Content>
+                </ToggleButton>
+            </ControlTemplate>
+            
         </Grid.Resources>
         <DockPanel DockPanel.Dock="Top">
             <ScrollViewer Padding="5,30,5,5">
@@ -282,6 +349,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Text="Sort By:"
                                    VerticalAlignment="Center"
@@ -303,10 +372,19 @@
                                   SelectedValuePath="Key"
                                   DisplayMemberPath="Value"
                                   SelectedValue="{Binding SelectedSortingDirection}" />
-                    </Grid>
-                    <DockPanel>
 
-                    </DockPanel>
+                        <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="4" />
+                        
+                        <ContentControl DataContext="{Binding TagFilters}"
+                                        Grid.Column="1" Grid.Row="4"
+                                        Width="200"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Template="{StaticResource FilterSelector}" />
+                    </Grid>
                 </StackPanel>
             </ScrollViewer>
             <Border Background="{StaticResource ItemsPanelBackgroundBrush}"

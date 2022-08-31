@@ -148,6 +148,8 @@
     </Compile>
     <Compile Include="Enums\AuthStatus.cs" />
     <Compile Include="Enums\WishlistViewSorting.cs" />
+    <Compile Include="Models\FilterGroup.cs" />
+    <Compile Include="Models\FilterItem.cs" />
     <Compile Include="Models\SteamAccountInfo.cs" />
     <Compile Include="Models\WishlistItemCache.cs" />
     <Compile Include="Models\SteamWishlistItem.cs" />

@@ -43,6 +43,7 @@ namespace SteamWishlistDiscountNotifier
         private readonly string bannerImagesCachePath;
         public readonly DispatcherTimer wishlistCheckTimer;
         private int authRequiredTicks = 0;
+        private SteamWishlistViewerViewModel wishlistViewDataContext = null;
 
         private SteamWishlistDiscountNotifierSettingsViewModel settings { get; set; }
 
@@ -108,7 +109,11 @@ namespace SteamWishlistDiscountNotifier
                 },
                 Opened = () => {
                     return GetSteamWishlistViewerSidebarView();
-                }
+                },
+                Closed = () => {
+                    wishlistViewDataContext?.Dispose();
+                    wishlistViewDataContext = null;
+                },
             };
         }
 
@@ -132,6 +137,9 @@ namespace SteamWishlistDiscountNotifier
 
         private SteamWishlistViewerView GetSteamWishlistViewerSidebarView()
         {
+            wishlistViewDataContext?.Dispose();
+            wishlistViewDataContext = null;
+
             var wishlistItems = new List<WishlistItemCache>();
             var tokenWasCancelled = false;
             SteamAccountInfo accountInfo = null;
@@ -152,7 +160,8 @@ namespace SteamWishlistDiscountNotifier
             }
             else
             {
-                return new SteamWishlistViewerView { DataContext = new SteamWishlistViewerViewModel(PlayniteApi, accountInfo, wishlistItems, pluginInstallPath) };
+                wishlistViewDataContext = new SteamWishlistViewerViewModel(PlayniteApi, accountInfo, wishlistItems, pluginInstallPath);
+                return new SteamWishlistViewerView { DataContext = wishlistViewDataContext };
             }
         }
 

@@ -4,6 +4,7 @@ using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
@@ -15,7 +16,7 @@ using System.Windows.Media.Imaging;
 
 namespace SteamWishlistDiscountNotifier.ViewModels
 {
-    class SteamWishlistViewerViewModel : ObservableObject
+    class SteamWishlistViewerViewModel : ObservableObject, IDisposable
     {
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
@@ -227,11 +228,43 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
+        private FilterGroup tagFilters;
+        public FilterGroup TagFilters
+        {
+            get => tagFilters;
+            set
+            {
+                tagFilters = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, SteamAccountInfo accountInfo, List<WishlistItemCache> wishlistItems, string pluginInstallPath)
         {
             this.playniteApi = playniteApi;
             AccountInfo = accountInfo;
             WishlistItemsCollection = wishlistItems;
+            DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
+
+            var tags = new HashSet<string>();
+            var tagsFiltersSource = new ObservableCollection<FilterItem>();
+            foreach (var item in wishlistItems)
+            {
+                foreach (var tag in item.WishlistItem.Tags)
+                {
+                    if (tags.Contains(tag))
+                    {
+                        continue;
+                    }
+
+                    tagsFiltersSource.Add(new FilterItem(false, tag));
+                    tags.Add(tag);
+                }
+            }
+
+            TagFilters = new FilterGroup(tagsFiltersSource);
+            TagFilters.SettingsChanged += TagFilters_SettingsChanged;
+
             wishlistCollectionView = CollectionViewSource.GetDefaultView(WishlistItemsCollection);
             wishlistCollectionView.Filter = FilterWishlistCollection;
             WishlistSortingTypes = new Dictionary<WishlistViewSorting, string>
@@ -251,7 +284,11 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             };
 
             wishlistCollectionView.SortDescriptions.Add(new SortDescription(GetSortingDescription(), selectedSortingDirection));
-            DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
+        }
+
+        private void TagFilters_SettingsChanged(object sender, EventArgs e)
+        {
+            wishlistCollectionView.Refresh();
         }
 
         bool FilterWishlistCollection(object item)
@@ -288,6 +325,11 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
 
             if (!IsItemCacheTypeFilterEnabled(wishlistItem))
+            {
+                return false;
+            }
+
+            if (TagFilters.EnabledFiltersNames.Any(x => !wishlistItem.WishlistItem.Tags.Contains(x)))
             {
                 return false;
             }
@@ -470,6 +512,12 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         {
             var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
             ProcessStarter.StartUrl(subIdSteamUrl);
+        }
+
+        public void Dispose()
+        {
+            TagFilters.SettingsChanged -= TagFilters_SettingsChanged;
+            TagFilters?.Dispose();
         }
     }
 }
