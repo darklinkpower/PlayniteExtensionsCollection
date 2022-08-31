@@ -387,3 +387,9 @@ Packages:
     - 'Added support to set custom controller hotkeys to input custom keyboard presses and shortcuts'
     - 'Removed support to close games with controller hotkey'
     - 'Note: Previously configured keyboard shortcuts will be reset with this update'
+  - Version: 2.56
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.31_1935a6a1/PlayState_2_56.pext
+    Changelog:
+    - 'Updated localizations'

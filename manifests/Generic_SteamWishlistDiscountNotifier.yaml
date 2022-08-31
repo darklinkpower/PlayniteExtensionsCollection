@@ -96,3 +96,12 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added button to wishlist view to set the maximum price filter to the Steam wallet amount'
+  - Version: 1.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.31_1935a6a1/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_13.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to filter by tags in Wishlist view'
+    - 'Add support to filter by price availability in Wishlist view'
+    - 'Changes to Wishlist view layout'
