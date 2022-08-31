@@ -46,8 +46,8 @@
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Допомагає вести облік часу у грі точніше, не враховуючи час, поки гра знаходиться в призупиненому стані</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Виконувати лише для ігор, якими не керують плагіни бібліотек</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Стиль сповіщення:</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Сповіщення Windows</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Спливаюче вікно</sys:String>
     <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Час сеансу в грі:</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Глобальний режим призупинення:</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Статус:</sys:String>
