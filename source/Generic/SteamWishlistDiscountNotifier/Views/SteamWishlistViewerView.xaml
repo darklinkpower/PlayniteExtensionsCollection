@@ -233,6 +233,57 @@
                                  Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=200}"
                                  VerticalAlignment="Center"/>
                     </DockPanel>
+
+                    <Separator Margin="0,5,0,0" />
+
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Sort By:"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="0" />
+                        <TextBlock Text="Order:"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="2" />
+                        <ComboBox ItemsSource="{Binding WishlistSortingTypes}"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  Grid.Column="1" Grid.Row="0"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding SelectedSortingType}" />
+                        <ComboBox ItemsSource="{Binding WishlistSortingOrders}"
+                                  Grid.Column="1" Grid.Row="2"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding SelectedSortingDirection}" />
+
+                        <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="0" Grid.Row="4" />
+
+                        <ContentControl DataContext="{Binding TagFilters}"
+                                        Grid.Column="1" Grid.Row="4"
+                                        Width="200"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Template="{StaticResource FilterSelector}" />
+                    </Grid>
+
+                    <Separator Margin="0,5,0,0" />
+
                     <CheckBox Margin="0,15,0,0" IsChecked="{Binding FilterOnlyDiscounted}"
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted}"/>
@@ -319,6 +370,9 @@
                                 Command="{Binding SetMaximumPriceToWalletCommand}"
                                 Margin="5,0,0,0" />
                     </Grid>
+
+                    <Separator Margin="0,5,0,0" />
+                    
                     <TextBlock Margin="0,15,0,0" Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelItemType}" />
 
                     <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterItemTypeGame}"
@@ -340,52 +394,7 @@
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_ItemTypeHardware}"/>
 
-                    <TextBlock Text="Sorting:" Margin="0,15,0,0" />
-                    <Grid Margin="0,5,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="5" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="5" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Sort By:"
-                                   VerticalAlignment="Center"
-                                   Grid.Column="0" Grid.Row="0" />
-                        <TextBlock Text="Order:"
-                                   VerticalAlignment="Center"
-                                   Grid.Column="0" Grid.Row="2" />
-                        <ComboBox ItemsSource="{Binding WishlistSortingTypes}"
-                                  Margin="5,0,0,0"
-                                  VerticalAlignment="Center"
-                                  Grid.Column="1" Grid.Row="0"
-                                  SelectedValuePath="Key"
-                                  DisplayMemberPath="Value"
-                                  SelectedValue="{Binding SelectedSortingType}" />
-                        <ComboBox ItemsSource="{Binding WishlistSortingOrders}"
-                                  Grid.Column="1" Grid.Row="2"
-                                  Margin="5,0,0,0"
-                                  VerticalAlignment="Center"
-                                  SelectedValuePath="Key"
-                                  DisplayMemberPath="Value"
-                                  SelectedValue="{Binding SelectedSortingDirection}" />
-
-                        <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
-                                   VerticalAlignment="Center"
-                                   Grid.Column="0" Grid.Row="4" />
-                        
-                        <ContentControl DataContext="{Binding TagFilters}"
-                                        Grid.Column="1" Grid.Row="4"
-                                        Width="200"
-                                        Margin="5,0,0,0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Template="{StaticResource FilterSelector}" />
-                    </Grid>
+                    <Separator Margin="0,5,0,0"/>
 
                     <TextBlock Margin="0,15,0,0" Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus}" />
 
