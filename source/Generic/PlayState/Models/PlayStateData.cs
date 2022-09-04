@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace PlayState.Models
 {
@@ -20,6 +21,8 @@ namespace PlayState.Models
         public DateTime StartDate { get; } = DateTime.Now;
         private Stopwatch stopwatch = new Stopwatch();
         public Stopwatch Stopwatch { get => stopwatch; set => SetValue(ref stopwatch, value); }
+        private DispatcherTimer reminderTimer = new DispatcherTimer();
+        public DispatcherTimer ReminderTimer { get => reminderTimer; set => SetValue(ref reminderTimer, value); }
         public List<ProcessItem> GameProcesses { get; set; }
         public bool HasProcesses => GameProcesses?.HasItems() == true;
 

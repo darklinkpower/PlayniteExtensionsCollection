@@ -370,6 +370,14 @@ namespace PlayState.ViewModels
             OnGameStatusSwitched?.Invoke(this, statusSwitchedArgs);
         }
 
+        public void ShowNotificationReminderIfCurrentGameIsSuspended(PlayStateData gameData)
+        {
+            if (GetIsCurrentGameSame(gameData.Game))
+            {
+                ShowCurrentGameStatusNotification();
+            }
+        }
+
         public void SwitchCurrentGameState()
         {
             var gameData = GetCurrentGameData();
@@ -407,6 +415,7 @@ namespace PlayState.ViewModels
                 }
 
                 var notificationType = NotificationTypes.None;
+                var reminder = true;
                 if (processesSuspended || gameData.SuspendMode == SuspendModes.Playtime)
                 {
                     if (gameData.IsSuspended)
@@ -415,12 +424,23 @@ namespace PlayState.ViewModels
                         notificationType = processesSuspended ? NotificationTypes.Resumed : NotificationTypes.PlaytimeResumed;
                         gameData.Stopwatch.Stop();
                         logger.Debug($"Game {gameData.Game.Name} resumed in mode {gameData.SuspendMode}");
+                        if (reminder)
+                        {
+                            gameData.ReminderTimer.Stop();
+                        }
                     }
                     else
                     {
                         gameData.IsSuspended = true;
                         notificationType = processesSuspended ? NotificationTypes.Suspended : NotificationTypes.PlaytimeSuspended;
                         gameData.Stopwatch.Start();
+                        if (reminder)
+                        {
+                            gameData.ReminderTimer = new DispatcherTimer();
+                            gameData.ReminderTimer.Interval = TimeSpan.FromMinutes(1);
+                            gameData.ReminderTimer.Tick += (sender, e) => ShowNotificationReminderIfCurrentGameIsSuspended(gameData);       
+                            gameData.ReminderTimer.Start();
+                        }
                         logger.Debug($"Game {gameData.Game.Name} suspended in mode {gameData.SuspendMode}");
                     }
                 }
