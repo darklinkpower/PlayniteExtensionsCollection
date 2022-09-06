@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">مساعدة</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">فتح إدارة الفيديو</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">تعطيل الإضافة للألعاب المختارة</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">أعد تفعيل الإضافة للألعاب المختارة</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Add image splash screen skip feature to selected games</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Remove image splash screen skip feature from selected games</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">إضافة خاصية تخطي شاشة عرض الصور إلى الألعاب المحددة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">إزالة خاصية تخطي شاشة عرض الصور من الألعاب المحددة</sys:String>
 
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">تم إضافة فيديو مقدمة</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">تم حذف فيديو المقدمة</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">تم اضافة &quot;{0}&quot; ميزة استبعاد &quot;{1}&quot; لعبة</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">تم إزالة &quot;{0}&quot; ميزة استبعاد &quot;{1}&quot; لعبة</sys:String>
     
-    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Execute extension in Desktop Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">View splashscreen images in Desktop Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">تفعيل الإضافة في وضع سطح المكتب</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">عرض صور شاشة العرض في وضع سطح المكتب</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">عرض فيديو المقدمة في وضع Desktop</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Execute extension in Fullscreen Mode</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">View splashscreen images in Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">تفعيل الإضافة في وضع ملء الشاشة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">عرض صور شاشة العرض في وضع ملء الشاشة</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">عرض فيديو المقدمة في وضع Fullscreen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Add game logo in splashscreen image if available</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Use game icon from Metadata as logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">استخدام أيقونة اللعبة من بيانات التعريف كشعار</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">استخدام الشاشة السوداء بدلاً من صورة شاشة البداية</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">الموقع الأفقي للشعار:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">الموقع العمودي للشعار:</sys:String>
@@ -31,8 +31,8 @@
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">الأعلى</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">الوسط</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">الأسفل</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">استخدام تلاشي الرسوم المتحركة لصورة الشاشة</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">استخدام تلاشي الرسوم المتحركة لشعار الشاشة</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_SettingUseGlobalSplashImage">استخدام صورة بداية عامة لجميع الألعاب</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingUseLogoGlobalSplashImage">استخدم شعار اللعبة في صورة البداية العالمية إذا كان متاحًا</sys:String>
