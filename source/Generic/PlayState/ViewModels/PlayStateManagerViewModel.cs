@@ -426,7 +426,7 @@ namespace PlayState.ViewModels
                         logger.Debug($"Game {gameData.Game.Name} resumed in mode {gameData.SuspendMode}");
                         if (reminder)
                         {
-                            gameData.ReminderTimer.Stop();
+                            gameData.SetReminderTimer();
                         }
                     }
                     else
@@ -436,10 +436,8 @@ namespace PlayState.ViewModels
                         gameData.Stopwatch.Start();
                         if (reminder)
                         {
-                            gameData.ReminderTimer = new DispatcherTimer();
-                            gameData.ReminderTimer.Interval = TimeSpan.FromMinutes(1);
-                            gameData.ReminderTimer.Tick += (sender, e) => ShowNotificationReminderIfCurrentGameIsSuspended(gameData);       
-                            gameData.ReminderTimer.Start();
+                            gameData.SetReminderTimer();
+                            gameData.ReminderTimer.Tick += (sender, e) => ShowNotificationReminderIfCurrentGameIsSuspended(gameData);
                         }
                         logger.Debug($"Game {gameData.Game.Name} suspended in mode {gameData.SuspendMode}");
                     }

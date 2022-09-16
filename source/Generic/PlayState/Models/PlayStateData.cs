@@ -89,5 +89,19 @@ namespace PlayState.Models
                 GameProcesses = null;
             }
         }
+
+        public void SetReminderTimer()
+        {
+            if (ReminderTimer.IsEnabled)
+            {
+                ReminderTimer.Stop();
+            }
+            else
+            {
+                ReminderTimer = new DispatcherTimer();
+                ReminderTimer.Interval = TimeSpan.FromMinutes(1);
+                ReminderTimer.Start();
+            }
+        }
     }
 }
