@@ -415,7 +415,6 @@ namespace PlayState.ViewModels
                 }
 
                 var notificationType = NotificationTypes.None;
-                var reminder = true;
                 if (processesSuspended || gameData.SuspendMode == SuspendModes.Playtime)
                 {
                     if (gameData.IsSuspended)
@@ -424,7 +423,7 @@ namespace PlayState.ViewModels
                         notificationType = processesSuspended ? NotificationTypes.Resumed : NotificationTypes.PlaytimeResumed;
                         gameData.Stopwatch.Stop();
                         logger.Debug($"Game {gameData.Game.Name} resumed in mode {gameData.SuspendMode}");
-                        if (reminder)
+                        if (settings.Settings.NotificationShowSuspendedReminder)
                         {
                             gameData.SetReminderTimer();
                         }
@@ -434,7 +433,7 @@ namespace PlayState.ViewModels
                         gameData.IsSuspended = true;
                         notificationType = processesSuspended ? NotificationTypes.Suspended : NotificationTypes.PlaytimeSuspended;
                         gameData.Stopwatch.Start();
-                        if (reminder)
+                        if (settings.Settings.NotificationShowSuspendedReminder)
                         {
                             gameData.SetReminderTimer();
                             gameData.ReminderTimer.Tick += (sender, e) => ShowNotificationReminderIfCurrentGameIsSuspended(gameData);

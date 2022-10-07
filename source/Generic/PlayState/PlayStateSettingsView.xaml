@@ -330,6 +330,9 @@
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
                               IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
                               Margin="0,10,0,0"/>
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSuspendedReminders}"
+                              IsChecked="{Binding Settings.NotificationShowSuspendedReminder}"
+                              Margin="0,10,0,0"/>
 
                     </StackPanel>
                 </StackPanel>
