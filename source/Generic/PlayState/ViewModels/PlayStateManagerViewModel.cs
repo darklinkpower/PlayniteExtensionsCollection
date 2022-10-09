@@ -189,16 +189,28 @@ namespace PlayState.ViewModels
                 logger.Debug($"Game {game.Name} was no longer being detected when adding PlayState Data");
                 return;
             }
-            
-            if (playStateDataCollection.Any(x => x.Game.Id == game.Id))
-            {
-                logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
-                return;
-            }
 
-            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, settings));
             var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
-            logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
+
+            var data = GetDataOfGame(game);
+            if (data != null)
+            {
+                if (!data.HasProcesses && gameProcesses?.HasItems() == true)
+                {
+                    data.GameProcesses = gameProcesses;
+                    logger.Debug($"Processes for game {game.Name} with id {game.Id} were added. Executables: {procsExecutablePaths}");
+                }
+                else
+                {
+                    logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
+                    return;
+                }
+            }
+            else
+            {
+                playStateDataCollection.Add(new PlayStateData(game, gameProcesses, settings));
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
+            }
 
             RemoveGameFromDetection(game);
             if (setAsCurrentGame)
