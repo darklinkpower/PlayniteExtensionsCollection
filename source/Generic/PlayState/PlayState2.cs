@@ -1,7 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
-using PlayniteUtilitiesCommon;
 using PlayState.Enums;
 using PlayState.Models;
 using PlayState.Native;
@@ -232,8 +231,6 @@ namespace PlayState
 
         private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir)
         {
-            var suspendPlaytimeOnly = Settings.Settings.GlobalSuspendMode == SuspendModes.Playtime && !PlayniteUtilities.GetGameHasFeature(game, featureSuspendProcesses, true) || PlayniteUtilities.GetGameHasFeature(game, featureSuspendPlaytime, true);
-
             // Fix for some games that take longer to start, even when already detected as running
             await Task.Delay(20000);
             if (!playStateManager.IsGameBeingDetected(game))
@@ -248,13 +245,6 @@ namespace PlayState
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
                 playStateManager.AddPlayStateData(game, gameProcesses);
                 return true;
-            }
-
-            // No need to wait for the loop if we don't want to suspend processes
-            if (suspendPlaytimeOnly)
-            {
-                playStateManager.AddPlayStateData(game, new List<ProcessItem>());
-                playStateManager.AddGameToDetection(game);
             }
 
             // Waiting is useful for games that use a startup launcher, since
@@ -285,14 +275,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
-                    if (suspendPlaytimeOnly)
-                    {
-                        playStateManager.AddGameProcessesToPlayStateData(game, gameProcesses);
-                    }
-                    else
-                    {
-                        playStateManager.AddPlayStateData(game, gameProcesses);
-                    }
+                    playStateManager.AddPlayStateData(game, gameProcesses);
                     return true;
                 }
                 else
@@ -302,10 +285,6 @@ namespace PlayState
             }
 
             logger.Debug("Couldn't find any game process");
-            if (suspendPlaytimeOnly)
-            {
-                return true;
-            }
             return false;
         }
 

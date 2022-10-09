@@ -217,16 +217,6 @@ namespace PlayState.ViewModels
             }
         }
 
-        public void AddGameProcessesToPlayStateData(Game game, List<ProcessItem> gameProcesses)
-        {
-            var data = GetDataOfGame(game);
-            if (data != null)
-            {
-                data.GameProcesses = gameProcesses;
-                var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
-            }
-        }
-
         public void RemovePlayStateData(PlayStateData gameData)
         {
             gameData.Dispose();
