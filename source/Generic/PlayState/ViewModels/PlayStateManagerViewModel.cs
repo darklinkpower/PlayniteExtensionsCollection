@@ -195,10 +195,13 @@ namespace PlayState.ViewModels
             var data = GetDataOfGame(game);
             if (data != null)
             {
+                // Add processes to the game if the data for this game already exists but doesn't have any processes
+                // This is for games that are added without game processes before going to the WMI loop, but after the loop some processes are detected
                 if (!data.HasProcesses && gameProcesses?.HasItems() == true)
                 {
-                    data.GameProcesses = gameProcesses;
-                    logger.Debug($"Processes for game {game.Name} with id {game.Id} were added. Executables: {procsExecutablePaths}");
+                    data.SetProcesses(gameProcesses);
+                    logger.Debug($"Data for game {game.Name} with id {game.Id} already exists without processes");
+                    logger.Debug($"Found processes for game {game.Name} with id {game.Id} after WMI loop. Executables: {procsExecutablePaths}");
                 }
                 else
                 {
