@@ -102,3 +102,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/Search_Collection_2_15.pext
     Changelog:
     - 'Improved stability of internet downloads'
+  - Version: 2.16
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.14_4601f7af/Search_Collection_2_16.pext
+    Changelog:
+    - 'Fix searches using incorrect games if started from Search bar'
