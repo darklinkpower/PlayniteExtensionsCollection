@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="LibraryExporter.Views.LibraryExporterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LibraryExporter.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </UserControl.Resources>
+    <DockPanel Margin="20">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,15,0,0">
+            <Button Content="{DynamicResource LibraryExporterAdvanced_ExportAllGamesLabel}" Command="{Binding ExportAllGamesCommand}" />
+            <Button Margin="10,0,0,0" Content="{DynamicResource LibraryExporterAdvanced_ExportSelectedGamesLabel}" Command="{Binding ExportSelectedGamesCommand}" />
+        </StackPanel>
+        <TextBlock Text="{DynamicResource LibraryExporterAdvanced_FieldsToExportLabel}" DockPanel.Dock="Top"/>
+        <ScrollViewer DockPanel.Dock="Bottom" Margin="0,10,0,0">
+            <StackPanel>
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.AgeRatings}"
+                      Content="{DynamicResource LOCAgeRatingLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Categories}"
+                      Content="{DynamicResource LOCCategoriesLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Description}"
+                      Content="{DynamicResource LOCGameDescriptionTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Developers}"
+                      Content="{DynamicResource LOCDevelopersLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Publishers}"
+                      Content="{DynamicResource LOCPublishersLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Favorite}"
+                      Content="{DynamicResource LOCGameFavoriteTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Hidden}"
+                      Content="{DynamicResource LOCGameHiddenTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Features}"
+                      Content="{DynamicResource LOCFeaturesLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.GameId}"
+                      Content="{DynamicResource LOCGameId}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Genres}"
+                      Content="{DynamicResource LOCGenresLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.InstallDirectory}"
+                      Content="{DynamicResource LOCGameInstallDirTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.InstallSize}"
+                      Content="{DynamicResource LOCInstallSizeMenuLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.IsInstalled}"
+                      Content="{DynamicResource LOCGameIsGameInstalledTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.ReleaseDate}"
+                      Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Added}"
+                      Content="{DynamicResource LOCAddedLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.LastActivity}"
+                      Content="{DynamicResource LOCGameLastActivityTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Modified}"
+                      Content="{DynamicResource LOCDateModifiedLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.RecentActivity}"
+                      Content="{DynamicResource LOCRecentActivityLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Links}"
+                      Content="{DynamicResource LOCLinksLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Manual}"
+                      Content="{DynamicResource LOCGameManualTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Notes}"
+                      Content="{DynamicResource LOCNotesLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Platforms}"
+                      Content="{DynamicResource LOCPlatformsTitle}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.PlayCount}"
+                      Content="{DynamicResource LOCPlayCountLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Playtime}"
+                      Content="{DynamicResource LOCTimePlayed}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.PluginId}"
+                      Content="PluginId" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Source}"
+                      Content="{DynamicResource LOCSourcesLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Regions}"
+                      Content="{DynamicResource LOCRegionsLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Series}"
+                      Content="{DynamicResource LOCSeriesLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Tags}"
+                      Content="{DynamicResource LOCTagsLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.CommunityScore}"
+                      Content="{DynamicResource LOCCommunityScore}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.CriticScore}"
+                      Content="{DynamicResource LOCCriticScore}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.UserScore}"
+                      Content="{DynamicResource LOCUserScore}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Version}"
+                      Content="{DynamicResource LOCVersionLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Id}"
+                      Content="Id" Margin="0,0,0,5" />
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

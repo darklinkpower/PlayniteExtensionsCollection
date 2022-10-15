@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamGameStatusDetector", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCommon", "Common\WebCommon\WebCommon.csproj", "{871CD6E7-1343-4FFB-9D28-CC09E5639E38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryExporter", "Generic\LibraryExporter\LibraryExporter.csproj", "{A84836B3-7800-48BC-837D-13F237E2C508}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,10 @@ Global
 		{871CD6E7-1343-4FFB-9D28-CC09E5639E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{871CD6E7-1343-4FFB-9D28-CC09E5639E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{871CD6E7-1343-4FFB-9D28-CC09E5639E38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A84836B3-7800-48BC-837D-13F237E2C508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A84836B3-7800-48BC-837D-13F237E2C508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A84836B3-7800-48BC-837D-13F237E2C508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A84836B3-7800-48BC-837D-13F237E2C508}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -216,6 +222,7 @@ Global
 		{ABAF89BF-6B65-4091-B4BF-73FA058FEA7A} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{BD635425-A77A-452D-84A2-94965FFB6229} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{871CD6E7-1343-4FFB-9D28-CC09E5639E38} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
+		{A84836B3-7800-48BC-837D-13F237E2C508} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}
