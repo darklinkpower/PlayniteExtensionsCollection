@@ -314,6 +314,19 @@ namespace NewsViewer.PluginControls
             updateContextTimer = new DispatcherTimer();
             updateContextTimer.Interval = TimeSpan.FromMilliseconds(700);
             updateContextTimer.Tick += new EventHandler(UpdateContextTimer_Tick);
+            SetControlTextBlockStyle();
+        }
+
+        private void SetControlTextBlockStyle()
+        {
+            // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
+            var baseStyleName = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "BaseTextBlockStyle" : "TextBlockBaseStyle";
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle &&
+                baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
