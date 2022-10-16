@@ -414,6 +414,19 @@ namespace ReviewViewer.Controls
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(220);
             timer.Tick += new EventHandler(TimerUpdateContext);
+            SetControlTextBlockStyle();
+        }
+
+        private void SetControlTextBlockStyle()
+        {
+            // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
+            var baseStyleName = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "BaseTextBlockStyle" : "TextBlockBaseStyle";
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle &&
+                baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
         }
 
         private void TimerUpdateContext(object sender, EventArgs e)

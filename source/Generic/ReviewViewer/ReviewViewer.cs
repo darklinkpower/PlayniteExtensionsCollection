@@ -104,7 +104,7 @@ namespace ReviewViewer
             progressOptions.IsIndeterminate = false;
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                a.ProgressMaxValue = games.Count();
+                a.ProgressMaxValue = games.Count() + 1;
                 foreach (Game game in games)
                 {
                     if (a.CancelToken.IsCancellationRequested)
