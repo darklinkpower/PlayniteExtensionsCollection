@@ -2,7 +2,7 @@
 Name: OpenCritic Metadata
 Author: darklinkpower
 Version: 1.0
-Module: OpenCritic.dll
+Module: OpenCriticMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
 Links:

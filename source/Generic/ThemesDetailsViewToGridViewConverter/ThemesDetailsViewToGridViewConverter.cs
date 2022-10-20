@@ -151,14 +151,20 @@ namespace ThemesDetailsViewToGridViewConverter
             {
                 if (Serialization.TryFromYamlFile<ThemeReplacementsDefinition>(replacementsDefinitionPath, out var replacements))
                 {
-                    foreach (var removal in replacements.Removals)
+                    if (replacements.Removals.HasItems())
                     {
-                        gridViewNewContent.Replace(removal, string.Empty);
+                        foreach (var removal in replacements.Removals)
+                        {
+                            gridViewNewContent = gridViewNewContent.Replace(removal, string.Empty);
+                        }
                     }
 
-                    foreach (var replacement in replacements.Replacements)
+                    if (replacements.Replacements.HasItems())
                     {
-                        gridViewNewContent.Replace(replacement.OriginalBlock, replacement.ReplacementBlock);
+                        foreach (var replacement in replacements.Replacements)
+                        {
+                            gridViewNewContent = gridViewNewContent.Replace(replacement.OriginalBlock, replacement.ReplacementBlock);
+                        }
                     }
                 }
             }
