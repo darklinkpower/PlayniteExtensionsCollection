@@ -146,7 +146,7 @@ namespace ThemesDetailsViewToGridViewConverter
             var gridViewContent = FileSystem.ReadStringFromFile(gridViewPath);
             var gridViewNewContent = detailsViewContent.Replace(@"TargetType=""{x:Type DetailsViewGameOverview}""", @"TargetType=""{x:Type GridViewGameOverview}""");
 
-            var replacementsDefinitionPath = Path.Combine(activeThemeDirectory, "themeGridConverterReplacements.yaml");
+            var replacementsDefinitionPath = Path.Combine(activeThemeDirectory, "themeGridConverter.yaml");
             if (FileSystem.FileExists(replacementsDefinitionPath))
             {
                 if (Serialization.TryFromYamlFile<ThemeReplacementsDefinition>(replacementsDefinitionPath, out var replacements))
