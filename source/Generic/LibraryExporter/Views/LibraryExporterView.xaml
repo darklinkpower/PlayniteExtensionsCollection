@@ -53,6 +53,8 @@
                       Content="{DynamicResource LOCDateModifiedLabel}" Margin="0,0,0,5" />
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.RecentActivity}"
                       Content="{DynamicResource LOCRecentActivityLabel}" Margin="0,0,0,5" />
+                <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Roms}"
+                      Content="Roms" Margin="0,0,0,5" />
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Links}"
                       Content="{DynamicResource LOCLinksLabel}" Margin="0,0,0,5" />
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Manual}"

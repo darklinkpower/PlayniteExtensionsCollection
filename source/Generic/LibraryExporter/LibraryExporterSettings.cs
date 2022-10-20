@@ -91,6 +91,9 @@ namespace LibraryExporter
         // RecentActivity
         private bool recentActivity = false;
         public bool RecentActivity { get => recentActivity; set => SetValue(ref recentActivity, value); }
+        // Roms
+        private bool roms = false;
+        public bool Roms { get => roms; set => SetValue(ref roms, value); }
         // Regions
         private bool regions = false;
         public bool Regions { get => regions; set => SetValue(ref regions, value); }

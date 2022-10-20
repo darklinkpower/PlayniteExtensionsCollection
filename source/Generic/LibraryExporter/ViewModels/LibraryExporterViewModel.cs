@@ -98,6 +98,7 @@ namespace LibraryExporter.ViewModels
             if (Settings.Settings.ExportSettings.LastActivity) { columnNames.Add(GetLocalizationString("LOCGameLastActivityTitle")); }
             if (Settings.Settings.ExportSettings.Modified) { columnNames.Add(GetLocalizationString("LOCDateModifiedLabel")); }
             if (Settings.Settings.ExportSettings.RecentActivity) { columnNames.Add(GetLocalizationString("LOCRecentActivityLabel")); }
+            if (Settings.Settings.ExportSettings.Roms) { columnNames.Add("Roms"); }
             if (Settings.Settings.ExportSettings.Links) { columnNames.Add(GetLocalizationString("LOCLinksLabel")); }
             if (Settings.Settings.ExportSettings.Manual) { columnNames.Add(GetLocalizationString("LOCGameManualTitle")); }
             if (Settings.Settings.ExportSettings.Notes) { columnNames.Add(GetLocalizationString("LOCNotesLabel")); }
@@ -237,9 +238,15 @@ namespace LibraryExporter.ViewModels
                 currentInsertColumn++;
             }
 
+            if (Settings.Settings.ExportSettings.Roms)
+            {
+                properties[currentInsertColumn] = game.Roms?.HasItems() == true ? string.Join(Settings.Settings.ListsSeparator, game.Roms.Select(x => $"{x.Name}:{x.Path}")) : string.Empty;
+                currentInsertColumn++;
+            }
+
             if (Settings.Settings.ExportSettings.Links)
             {
-                properties[currentInsertColumn] = game.Links.HasItems() ? string.Join(Settings.Settings.ListsSeparator, game.Links.Select(x => $"{x.Name}:{x.Url}")) : string.Empty;
+                properties[currentInsertColumn] = game.Links?.HasItems() == true ? string.Join(Settings.Settings.ListsSeparator, game.Links.Select(x => $"{x.Name}:{x.Url}")) : string.Empty;
                 currentInsertColumn++;
             }
 
