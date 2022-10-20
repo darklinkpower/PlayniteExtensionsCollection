@@ -188,7 +188,8 @@ namespace PlayState
                 new HotKey(Key.MediaNextTrack, ModifierKeys.None),
                 new HotKey(Key.VolumeUp, ModifierKeys.None),
                 new HotKey(Key.VolumeDown, ModifierKeys.None),
-                new HotKey(Key.VolumeMute, ModifierKeys.None)
+                new HotKey(Key.VolumeMute, ModifierKeys.None),
+                new HotKey(Key.PrintScreen, ModifierKeys.Windows | ModifierKeys.Alt)
             };
 
             SelectedDefaultComboKeyboardHotkey = DefaultComboKeyboardHotkeys.FirstOrDefault();
