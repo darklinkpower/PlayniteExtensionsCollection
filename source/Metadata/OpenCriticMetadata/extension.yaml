@@ -1,0 +1,12 @@
+﻿Id: OpenCriticMetadata_c29e6c13-089b-43d5-a916-514d85e10486
+Name: OpenCritic Metadata
+Author: darklinkpower
+Version: 1.0
+Module: OpenCritic.dll
+Type: MetadataProvider
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
