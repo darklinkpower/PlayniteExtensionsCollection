@@ -26,7 +26,7 @@ namespace ThemesDetailsViewToGridViewConverter
         private const string themeIdHarmony = @"Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047";
         private const string themeIdDhDawn = @"felixkmh_DesktopTheme_DH_Dawn";
         private const string themeIdDhNight = @"felixkmh_DuplicateHider_Night_Theme";
-        private const string messagesCaption = "darklinkpower's Grid View Converter";
+        private const string messagesCaption = "Details to Grid View Converter";
 
         private readonly string baseThemesDirectory;
 
@@ -145,6 +145,24 @@ namespace ThemesDetailsViewToGridViewConverter
             var detailsViewContent = FileSystem.ReadStringFromFile(detailsViewPath);
             var gridViewContent = FileSystem.ReadStringFromFile(gridViewPath);
             var gridViewNewContent = detailsViewContent.Replace(@"TargetType=""{x:Type DetailsViewGameOverview}""", @"TargetType=""{x:Type GridViewGameOverview}""");
+
+            var replacementsDefinitionPath = Path.Combine(activeThemeDirectory, "themeGridConverterReplacements.yaml");
+            if (FileSystem.FileExists(replacementsDefinitionPath))
+            {
+                if (Serialization.TryFromYamlFile<ThemeReplacementsDefinition>(replacementsDefinitionPath, out var replacements))
+                {
+                    foreach (var removal in replacements.Removals)
+                    {
+                        gridViewNewContent.Replace(removal, string.Empty);
+                    }
+
+                    foreach (var replacement in replacements.Replacements)
+                    {
+                        gridViewNewContent.Replace(replacement.OriginalBlock, replacement.ReplacementBlock);
+                    }
+                }
+            }
+
             if (gridViewContent == gridViewNewContent)
             {
                 logger.Debug("gridViewContent and gridViewNewContent were equal");
@@ -284,16 +302,6 @@ namespace ThemesDetailsViewToGridViewConverter
                 default:
                     return Version.Parse("9999");
             }
-        }
-
-        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
-        {
-            // Add code to be executed when Playnite is shutting down.
-        }
-
-        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
-        {
-            // Add code to be executed when library is updated.
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

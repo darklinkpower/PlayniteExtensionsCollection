@@ -89,6 +89,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="Models\ExtensionManifest.cs" />
+    <Compile Include="Models\ThemeReplacementsDefinition.cs" />
     <Compile Include="ThemesDetailsViewToGridViewConverter.cs" />
     <Compile Include="ThemesDetailsViewToGridViewConverterSettings.cs" />
     <Compile Include="ThemesDetailsViewToGridViewConverterSettingsView.xaml.cs">
