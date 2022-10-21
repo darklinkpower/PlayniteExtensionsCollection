@@ -6,3 +6,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.20_fc05e8cf/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_1.pext
+    Changelog:
+    - 'Added support custom themes to define additional changes to be done when converting layout to Grid View'
+    - 'Updated localizations'

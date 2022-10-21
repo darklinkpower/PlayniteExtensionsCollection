@@ -393,3 +393,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.31_1935a6a1/PlayState_2_56.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.57
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.20_fc05e8cf/PlayState_2_57.pext
+    Changelog:
+    - 'Added Win+Alt+PrntScr hotkey preset'
+    - 'Updated localizations'

@@ -6,3 +6,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.14_4601f7af/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-10-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.20_fc05e8cf/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_1.pext
+    Changelog:
+    - 'Add support to export Roms property'
+    - 'Updated localizations'

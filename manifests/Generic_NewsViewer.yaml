@@ -150,3 +150,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.15_95a9fda8/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_23.pext
     Changelog:
     - 'Fix News control not working on Fullscreen Mode'
+  - Version: 1.24
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.20_fc05e8cf/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_24.pext
+    Changelog:
+    - 'Updated localizations'

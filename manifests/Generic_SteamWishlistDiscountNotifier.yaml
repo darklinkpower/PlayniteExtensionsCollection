@@ -105,3 +105,9 @@ Packages:
     - 'Added support to filter by tags in Wishlist view'
     - 'Add support to filter by price availability in Wishlist view'
     - 'Changes to Wishlist view layout'
+  - Version: 1.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.10.20_fc05e8cf/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_14.pext
+    Changelog:
+    - 'Updated localizations'
