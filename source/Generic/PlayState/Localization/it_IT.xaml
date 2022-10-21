@@ -32,9 +32,9 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambia scorciatoia</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Premi il tasto di scelta rapida ora</sys:String>
     <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Abilita messaggi di notifica</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Note:
 
-The configured hotkeys won't be able to be used in other applications.</sys:String>
+I tasti di scelta rapida configurati non potranno essere utilizzati in altre applicazioni.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Se la modalità Non disturbare è abilitata quando si gioca a un gioco e in modalità a schermo intero, è necessario aggiungere Playnite alla lista delle priorità per ricevere le notifiche di Windows e configurarle per consentire la visualizzazione.
 
 Questa funzione è supportata solo su Windows 10 e Windows 11</sys:String>
@@ -95,7 +95,7 @@ Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamen
 
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Scorciatoie</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Scorciatoie da tastiera</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Scorciatoie del controllore</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Consenti a tutti i controller di attivare i tasti di scelta rapida</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Se abilitato, tutti i controller saranno autorizzati ad attivare i tasti di scelta rapida.
 
@@ -107,19 +107,19 @@ Se disabilitato, solo il primo controller sarà autorizzato ad attivare i tasti 
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Pulsanti: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Attivatori: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remove controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Keyboard input:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Set keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Game running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Game not running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Always</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Esiste già un tasto di scelta rapida del controllore con la stessa combinazione!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Scorciatoia del controllore</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Scorciatoia del controllore:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modalità</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modalità:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Aggiungi tasto di scelta rapida del controllore</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Rimuovi tasto di scelta rapida del controllore</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Inserimento da tastiera:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Inserimento da tastiera</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Imposta inserimento da tastiera</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">Nessuno</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disattivato</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Gioco in esecuzione</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Gioco non in esecuzione</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Sempre</sys:String>
 </ResourceDictionary>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Abrir ventana de exportación</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Campos a exportar:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Exportar todos los juegos</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Exportar juegos seleccionados</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Biblioteca exportada con éxito a {0}</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Error al exportar la biblioteca a {0}</sys:String>
+</ResourceDictionary>

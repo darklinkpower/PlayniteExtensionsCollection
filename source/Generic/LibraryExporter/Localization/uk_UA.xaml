@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Відкрити вікно експорту</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Поля для експорту:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Експортувати усі ігри</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Експортувати вибрані ігри</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Бібліотеку успішно експортовано до {0}</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Не вдалося експортувати бібліотеку до {0}</sys:String>
+</ResourceDictionary>
