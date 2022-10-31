@@ -25,7 +25,7 @@ Echec de vérification de la liste d'envies Steam. L'authentification est requis
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Afficher la liste de souhaits Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Obtention des données de la liste de souhaits Steam…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Portemonnaie Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Nom</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Classement</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Réduction</sys:String>
@@ -36,13 +36,13 @@ Echec de vérification de la liste d'envies Steam. L'authentification est requis
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Décroissant</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Rechercher :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted">Seulement les articles à prix réduit</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Réduction minimale:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Réduction minimale :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Prix minimum :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Prix maximal :</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Item type:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Price:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Available</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Not Available</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Type :</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Prix :</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Disponible</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Non disponible</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Nombre total d'éléments :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Evaluations :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Date de parution :</sys:String>
