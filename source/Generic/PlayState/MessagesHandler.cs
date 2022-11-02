@@ -18,6 +18,7 @@ namespace PlayState
 {
     public class MessagesHandler
     {
+        private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlayniteAPI playniteApi;
         private readonly PlayStateSettingsViewModel settings;
         private Window currentSplashWindow;
@@ -180,7 +181,16 @@ namespace PlayState
                     }
                 }
 
-                toastNotification.Show();
+                try
+                {
+                    toastNotification.Show();
+                }
+                catch (Exception e)
+                {
+                    // There was a report of someones PC failing to display the notification
+                    // for an unknown reason. Possibly caused by borked system.
+                    logger.Error(e, "Failed to display toast notification");
+                }
             }
             else
             {
