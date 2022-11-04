@@ -67,9 +67,16 @@ This mode can also be changed individually per game by using the extensions func
 游戏时间挂起：游戏将被挂起，并在游戏窗口改变活动状态时自动恢复。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">恢复游戏时将其窗口带到前景</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState 管理器</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">显示 PlayState 管理器侧边栏项目</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Switch to Playnite Fullscreen Mode if a controller is connected</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Switch to Playnite Desktop Mode if there isn't any controller connected</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Only switch Playnite Modes if games are not currently running</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">游玩时间：</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">总游玩时间：</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} 时 {1} 分</sys:String>
@@ -83,6 +90,7 @@ This mode can also be changed individually per game by using the extensions func
     <sys:String x:Key="LOCPlayStateNoLabel">否</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">游戏</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">已挂起</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">切换游戏状态</sys:String>
