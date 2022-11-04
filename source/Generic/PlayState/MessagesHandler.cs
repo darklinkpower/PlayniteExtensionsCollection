@@ -200,9 +200,17 @@ namespace PlayState
 
         public void ShowGenericNotification(string message)
         {
-            new ToastContentBuilder()
-            .AddText(message)
-            .Show();
+            if (!settings.Settings.EnableNotificationMessages)
+            {
+                return;
+            }
+
+            if (settings.Settings.NotificationStyle == NotificationStyles.Toast && settings.IsWindows10Or11)
+            {
+                new ToastContentBuilder()
+                    .AddText(message)
+                    .Show();
+            }
         }
 
         public void HideWindow()

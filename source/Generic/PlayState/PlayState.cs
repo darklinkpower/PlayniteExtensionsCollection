@@ -21,6 +21,7 @@ using System.Windows.Media;
 using StartPage.SDK;
 using PlayState.Controls;
 using System.Timers;
+using PlayState.Enums;
 
 namespace PlayState
 {
@@ -32,6 +33,7 @@ namespace PlayState
         private IntPtr mainWindowHandle;
         private bool globalHotkeyRegistered = false;
         private bool isAnyGameRunning = false;
+        private bool switchPlayniteModeStarted = false;
         public PlayStateSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
@@ -86,6 +88,66 @@ namespace PlayState
                 e.PropertyName == nameof(PlayStateSettings.SuspendHotKey))
             {
                 RegisterHotkey();
+            }
+        }
+
+        public void SetSwitchModesOnControlCheck()
+        {
+            Task.Run(() =>
+            {                
+                
+                var switchModeControllerTimer = new Timer(2000)
+                {
+                    AutoReset = true,
+                    Enabled = true
+                };
+
+                Task.Delay(TimeSpan.FromSeconds(Settings.Settings.SwitchModeIgnoreCtrlStateOnStartupSeconds))
+                    .GetAwaiter().GetResult();
+                switchModeControllerTimer.Elapsed += (_, __) =>
+                {
+                    SwitchModeOnControllerStatus();
+                };
+            });
+        }
+
+        private void SwitchModeOnControllerStatus()
+        {
+            if ((isAnyGameRunning && Settings.Settings.SwitchModesOnlyIfNoRunningGames)
+                || switchPlayniteModeStarted)
+            {
+                return;
+            }
+
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                if (!Settings.Settings.SwitchToFullscreenModeOnControllerStatus || !IsAnyControllerConnected())
+                {
+                    return;
+                }
+
+                var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, "Playnite.FullscreenApp.exe");
+                if (FileSystem.FileExists(playniteExecutable))
+                {
+                    messagesHandler.ShowGenericNotification(ResourceProvider.GetString("LOCPlayState_SwitchingToFullscreenModeMessage"));
+                    ProcessStarter.StartProcess(playniteExecutable);
+                    switchPlayniteModeStarted = true;
+                }
+            }
+            else
+            {
+                if (!Settings.Settings.SwitchToDesktopModeOnControllerStatus || IsAnyControllerConnected())
+                {
+                    return;
+                }
+
+                var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, "Playnite.DesktopApp.exe");
+                if (FileSystem.FileExists(playniteExecutable))
+                {
+                    messagesHandler.ShowGenericNotification(ResourceProvider.GetString("LOCPlayState_SwitchingToDesktopModeMessage"));
+                    ProcessStarter.StartProcess(playniteExecutable);
+                    switchPlayniteModeStarted = true;
+                }
             }
         }
 
@@ -146,11 +208,17 @@ namespace PlayState
             hwndSource.AddHook(HwndHook);
             RegisterHotkey();
             Settings.Settings.PropertyChanged += Settings_PropertyChanged;
+            SetSwitchModesOnControlCheck();
         }
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             isAnyGameRunning = true;
+            if (Settings.Settings.GlobalSuspendMode == SuspendModes.Disabled)
+            {
+                return;
+            }
+
             if (playStateManager.IsGameBeingDetected(args.Game))
             {
                 return;

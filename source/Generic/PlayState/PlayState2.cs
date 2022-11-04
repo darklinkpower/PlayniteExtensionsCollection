@@ -19,6 +19,22 @@ namespace PlayState
     {
         private const int HOTKEY_ID = 3754;
 
+        
+        private bool IsAnyControllerConnected()
+        {
+            for (int i = 0; i <= 3; i++)
+            {
+                PlayerIndex playerIndex = (PlayerIndex)i;
+                GamePadState gamePadState = GamePad.GetState(playerIndex);
+                if (gamePadState.IsConnected)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         private void CheckControllers()
         {
             var maxCheckIndex = Settings.Settings.GamePadHotkeysEnableAllControllers ? 3 : 0;

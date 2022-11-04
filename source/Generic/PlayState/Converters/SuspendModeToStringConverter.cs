@@ -21,6 +21,8 @@ namespace PlayState.Converters
                     return ResourceProvider.GetString("LOCPlayState_SuspendModeProcesses");
                 case SuspendModes.Playtime:
                     return ResourceProvider.GetString("LOCPlayState_SuspendModePlaytime");
+                case SuspendModes.Disabled:
+                    return ResourceProvider.GetString("LOCPlayState_SuspendModeDisabled");
                 default:
                     return string.Empty;
             }

@@ -97,6 +97,29 @@
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
                                   IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
                     </StackPanel>
+
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingsOtherSectionLabel}" />
+                    <Separator Margin="0,0,0,5" />
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingDesktopModeSwitchOnControlConnect}"
+                                  IsChecked="{Binding Settings.SwitchToDesktopModeOnControllerStatus}" Margin="0,0,0,10"/>
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingFsModeSwitchOnControlConnect}"
+                                  IsChecked="{Binding Settings.SwitchToFullscreenModeOnControllerStatus}" Margin="0,0,0,10"/>
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning}"
+                                  IsChecked="{Binding Settings.SwitchModesOnlyIfNoRunningGames}" Margin="40,0,0,10"/>
+                    <StackPanel Margin="40,0,0,10">
+                        <TextBlock Text="{DynamicResource LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds}" Margin="0,0,0,10" />
+                        <DockPanel>
+                            <Slider Value="{Binding Settings.SwitchModeIgnoreCtrlStateOnStartupSeconds}"
+                                    DockPanel.Dock="Left"
+                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Minimum="0" Maximum="120" Width="300"/>
+                            <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                                       Margin="10,0,0,0"
+                                       Text="{Binding Settings.SwitchModeIgnoreCtrlStateOnStartupSeconds}" />
+                        </DockPanel>
+
+                    </StackPanel>
+
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

@@ -90,6 +90,22 @@ namespace PlayState
         public SuspendModes GlobalSuspendMode { get => globalSuspendMode; set => SetValue(ref globalSuspendMode, value); }
         private NotificationStyles notificationStyle = NotificationStyles.Toast;
         public NotificationStyles NotificationStyle { get => notificationStyle; set => SetValue(ref notificationStyle, value); }
+
+        [DontSerialize]
+        private bool switchToDesktopModeOnControllerStatus = false;
+        public bool SwitchToDesktopModeOnControllerStatus { get => switchToDesktopModeOnControllerStatus; set => SetValue(ref switchToDesktopModeOnControllerStatus, value); }
+
+        [DontSerialize]
+        private bool switchToFullscreenModeOnControllerStatus = false;
+        public bool SwitchToFullscreenModeOnControllerStatus { get => switchToFullscreenModeOnControllerStatus; set => SetValue(ref switchToFullscreenModeOnControllerStatus, value); }
+
+        [DontSerialize]
+        private bool switchModesOnlyIfNoRunningGames = true;
+        public bool SwitchModesOnlyIfNoRunningGames { get => switchModesOnlyIfNoRunningGames; set => SetValue(ref switchModesOnlyIfNoRunningGames, value); }
+
+        [DontSerialize]
+        private int switchModeIgnoreCtrlStateOnStartupSeconds = 20;
+        public int SwitchModeIgnoreCtrlStateOnStartupSeconds { get => switchModeIgnoreCtrlStateOnStartupSeconds; set => SetValue(ref switchModeIgnoreCtrlStateOnStartupSeconds, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
