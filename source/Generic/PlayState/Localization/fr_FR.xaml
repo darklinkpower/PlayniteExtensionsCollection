@@ -67,9 +67,16 @@ Suspension du jeu : Les jeux seront automatiquement suspendus lorsqu'ils ne sont
 Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiquement lorsque la fenêtre de jeu change l'état actif.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Remettre les fenêtres des jeux au premier plan quand ils sont relancés</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestionnaire de PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Afficher l'élément de la barre latérale du gestionnaire de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Afficher le bouton de statut de jeu PlayState dans les vues</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Permet de mettre en pause et de reprendre le jeu actuellement sélectionné en appuyant sur un bouton. Nécessite la prise en charge dans le thème personnalisé.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Switch to Playnite Fullscreen Mode if a controller is connected</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Switch to Playnite Desktop Mode if there isn't any controller connected</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Only switch Playnite Modes if games are not currently running</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Temps de jeu :</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Temps total de jeu :</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} heures {1} minutes</sys:String>
@@ -83,6 +90,7 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
     <sys:String x:Key="LOCPlayStateNoLabel">Non</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Mode processus</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Mode Playnite</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Jeu</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Suspendu</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Changer l'état du jeu</sys:String>
