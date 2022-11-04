@@ -545,7 +545,7 @@ namespace PluginsCommon
                 return path;
             }
 
-            if (path.Length >= 260 && !path.StartsWith(longPathPrefix))
+            if (path.Length >= 258 && !path.StartsWith(longPathPrefix))
             {
                 if (path.StartsWith(@"\\"))
                 {
