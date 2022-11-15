@@ -189,16 +189,31 @@ namespace PlayState.ViewModels
                 logger.Debug($"Game {game.Name} was no longer being detected when adding PlayState Data");
                 return;
             }
-            
-            if (playStateDataCollection.Any(x => x.Game.Id == game.Id))
-            {
-                logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
-                return;
-            }
 
-            playStateDataCollection.Add(new PlayStateData(game, gameProcesses, settings));
             var procsExecutablePaths = string.Join(", ", gameProcesses.Select(x => x.ExecutablePath));
-            logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
+
+            var data = GetDataOfGame(game);
+            if (data != null)
+            {
+                // Add processes to the game if the data for this game already exists but doesn't have any processes
+                // This is for games that are added without game processes before going to the WMI loop, but after the loop some processes are detected
+                if (!data.HasProcesses && gameProcesses?.HasItems() == true)
+                {
+                    data.SetProcesses(gameProcesses);
+                    logger.Debug($"Data for game {game.Name} with id {game.Id} already exists without processes");
+                    logger.Debug($"Found processes for game {game.Name} with id {game.Id} after WMI loop. Executables: {procsExecutablePaths}");
+                }
+                else
+                {
+                    logger.Debug($"Data for game {game.Name} with id {game.Id} already exists");
+                    return;
+                }
+            }
+            else
+            {
+                playStateDataCollection.Add(new PlayStateData(game, gameProcesses, settings));
+                logger.Debug($"Data for game {game.Name} with id {game.Id} was created. Executables: {procsExecutablePaths}");
+            }
 
             RemoveGameFromDetection(game);
             if (setAsCurrentGame)
