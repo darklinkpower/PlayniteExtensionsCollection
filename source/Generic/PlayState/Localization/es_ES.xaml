@@ -67,16 +67,16 @@ Suspensión del juego: Los juegos se suspenderán automáticamente cuando no sea
 Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán automáticamente cuando la ventana del juego cambie de estado activo.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Llevar las ventanas de juegos al primer plano cuando se reanudan</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Administrador de PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Otro</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostrar la barra lateral del administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Mostrar botón PlayState para el estado de juego en vistas</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Permite pausar y reanudar el juego seleccionado pulsando un botón. Requiere soporte en tema personalizado.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Switch to Playnite Fullscreen Mode if a controller is connected</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Switch to Playnite Desktop Mode if there isn't any controller connected</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Only switch Playnite Modes if games are not currently running</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Cambiar al modo pantalla completa de Playnite si un control está conectado</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Cambia al modo de escritorio de Playnite si no hay ningún control conectado</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Sólo cambiar los modos de Playnite si no hay juegos en ejecución</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignorar el estado de los controles para el cambio de modo durante segundos al iniciar:</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Pasando al modo de escritorio de Playnite…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Cambiando a modo pantalla completa de Playnite…</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tiempo de juego:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Tiempo total de juego:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} horas {1} minutos</sys:String>
@@ -90,7 +90,7 @@ Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán aut
     <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Modo de procesos</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Modo de tiempo de juego</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Deshabilitado</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Juego</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Está suspendido</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Cambiar estado del juego</sys:String>
