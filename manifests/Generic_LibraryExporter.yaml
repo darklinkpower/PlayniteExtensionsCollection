@@ -13,3 +13,9 @@ Packages:
     Changelog:
     - 'Add support to export Roms property'
     - 'Updated localizations'
+  - Version: 1.2
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2022-11-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.14_873c946b/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_2.pext
+    Changelog:
+    - 'Updated localizations'

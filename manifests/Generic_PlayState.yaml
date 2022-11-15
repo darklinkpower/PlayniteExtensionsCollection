@@ -400,3 +400,13 @@ Packages:
     Changelog:
     - 'Added Win+Alt+PrntScr hotkey preset'
     - 'Updated localizations'
+  - Version: 2.58
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2022-11-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.14_873c946b/PlayState_2_58.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix crash when showing toast notification on some systems'
+    - 'Support to switch Playnite modes based on controller status (Disabled by default)'
+    - 'Add support for games using default Emulator profiles'
+    - 'Start monitoring faster games when they will be only suspended by playtime (By BanCrash)'

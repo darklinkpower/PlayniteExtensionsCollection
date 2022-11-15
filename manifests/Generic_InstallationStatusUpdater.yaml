@@ -231,3 +231,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.15_13b6fe2b/Installation_Status_Updater_2_34.pext
     Changelog:
     - 'Fix failing to add some notifications after one has been displayed'
+  - Version: 2.35
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-11-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.14_873c946b/Installation_Status_Updater_2_35.pext
+    Changelog:
+    - 'Fix scan not working if game paths use variables'
