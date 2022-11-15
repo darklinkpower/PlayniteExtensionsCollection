@@ -61,11 +61,11 @@ function OnApplicationStarted
             if ($keyMatch.count -eq 1)
             {
                 $extraMetadataOriginalValue = $keyMatch[0].Value
-                $extraMetadataNewValue = "<sys:String x:Key=`"ExtraMetadataPath`">{0}</sys:String>" -f $PlayniteApi.Paths.ConfigurationPath
+                $extraMetadataNewValue = "<sys:String x:Key=`"ExtraMetadataPath`">{0}</sys:String>" -f [System.Security.SecurityElement]::Escape($PlayniteApi.Paths.ConfigurationPath)
                 if ($extraMetadataOriginalValue -ne $extraMetadataNewValue)
                 {
                     $constantsContent = $constantsContent -replace [Regex]::Escape($extraMetadataOriginalValue), $extraMetadataNewValue
-                    $__logger.Info("Extra Metadata Tools - Changed path from `"$extraMetadataOriginalValue`" to `"$extraMetadataNewValue`"")
+                    $__logger.Info("Changed path from `"$extraMetadataOriginalValue`" to `"$extraMetadataNewValue`"")
                     $configChanged = $true
                 }
             }
@@ -80,13 +80,21 @@ function OnApplicationStarted
                 if ($extraMetadataOriginalValue -ne $extraMetadataNewValue)
                 {
                     $constantsContent = $constantsContent -replace [Regex]::Escape($extraMetadataOriginalValue), $extraMetadataNewValue
-                    $__logger.Info("Extra Metadata Tools - Changed bool string from `"$extraMetadataOriginalValue`" to `"$extraMetadataNewValue`"")
+                    $__logger.Info("Changed bool string from `"$extraMetadataOriginalValue`" to `"$extraMetadataNewValue`"")
                     $configChanged = $true
                 }
             }
 
             if ($configChanged -eq $true)
             {
+                try {
+                    [xml]$constantsContent
+                }
+                catch {
+                    $__logger.Info("Modified XML could not be validated")
+                    return
+                }
+                
                 [System.IO.File]::WriteAllLines($constantsPath, $constantsContent)
                 if (Test-Path $manifestPath)
                 {
