@@ -67,9 +67,16 @@
 Час у грі призупинено: гру буде призупинено та відновлено автоматично, коли вікно гри змінює активний стан.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Виводити вікна ігор на передній план після їх відновлення</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Менеджер PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Інше</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Показувати кнопку менеджера PlayState на бічній панелі</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Показувати кнопку перемикача стану гри PlayState в переглядах</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Дозволяє призупинити та відновити поточну обрану гру, натиснувши на кнопку. Має підтримуватися темою.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Перейти в повноекранний режим Playnite, якщо під'єднано контролер</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Перейти в режим робочого столу Playnite, якщо немає під’єднаних контролерів</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Перемикати режими Playnite тільки якщо немає запущених ігор</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ігнорувати стан контролерів для зміни режиму на секунди при запуску:</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Перемикання в режим робочого столу Playnite…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Перемикання в повноекранний режим Playnite…</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Час гри:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Загальний час гри:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} годин {1} хвилин</sys:String>
@@ -83,6 +90,7 @@
     <sys:String x:Key="LOCPlayStateNoLabel">Ні</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Режим процесів</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Режим часу гри</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Вимкнено</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Гра</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Призупинено</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Змінити стан гри</sys:String>
