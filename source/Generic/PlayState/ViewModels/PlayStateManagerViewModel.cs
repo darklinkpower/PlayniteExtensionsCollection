@@ -122,8 +122,8 @@ namespace PlayState.ViewModels
                 }
 
                 if (playstateData.IsGameStatusOverrided && 
-                    (isForeground && playstateData.GameStatusOverride == PlayStateDataStatus.Running ||
-                    !isForeground && playstateData.GameStatusOverride == PlayStateDataStatus.Paused))
+                    (isForeground && playstateData.GameStatusOverride == PlayStateGameState.Resumed ||
+                    !isForeground && playstateData.GameStatusOverride == PlayStateGameState.Paused))
                 {
                     playstateData.IsGameStatusOverrided = false;
                 }
@@ -433,7 +433,7 @@ namespace PlayState.ViewModels
                         if (isGameStatusOverrided)
                         {
                             gameData.IsGameStatusOverrided = true;
-                            gameData.GameStatusOverride = PlayStateDataStatus.Running;
+                            gameData.GameStatusOverride = PlayStateGameState.Resumed;
                         }
                     }
                     else
@@ -445,7 +445,7 @@ namespace PlayState.ViewModels
                         if (isGameStatusOverrided)
                         {
                             gameData.IsGameStatusOverrided = true;
-                            gameData.GameStatusOverride = PlayStateDataStatus.Paused;
+                            gameData.GameStatusOverride = PlayStateGameState.Paused;
                         }
                     }
                 }
