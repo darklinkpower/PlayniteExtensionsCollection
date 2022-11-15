@@ -242,30 +242,40 @@ namespace SteamWishlistDiscountNotifier
 
         private void StartWishlistCheck()
         {
-            wishlistCheckTimer.Stop();
-            using (var webView = PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
+            try
             {
-                var accountInfo = SteamLogin.GetLoggedInSteamId64(webView);
-                settings.CheckedStatus = accountInfo.AuthStatus;
-                logger.Debug($"Started checking for wishlist. Status: {accountInfo.AuthStatus}, steamId: {accountInfo.SteamId}");
-                if (accountInfo.AuthStatus == AuthStatus.Ok)
+                wishlistCheckTimer.Stop();
+                using (var webView = PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
                 {
-                    PlayniteApi.Notifications.Remove(notLoggedInNotifId);
-                    UpdateAndNotifyWishlistDiscounts(accountInfo.SteamId, webView);
+                    var accountInfo = SteamLogin.GetLoggedInSteamId64(webView);
+                    settings.CheckedStatus = accountInfo.AuthStatus;
+                    logger.Debug($"Started checking for wishlist. Status: {accountInfo.AuthStatus}, steamId: {accountInfo.SteamId}");
+                    if (accountInfo.AuthStatus == AuthStatus.Ok)
+                    {
+                        PlayniteApi.Notifications.Remove(notLoggedInNotifId);
+                        UpdateAndNotifyWishlistDiscounts(accountInfo.SteamId, webView);
+                    }
+                    else if (accountInfo.AuthStatus == AuthStatus.AuthRequired)
+                    {
+                        PlayniteApi.Notifications.Add(new NotificationMessage(
+                            notLoggedInNotifId,
+                            ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn"),
+                            NotificationType.Info,
+                            () => OpenSettingsView()
+                        ));
+                    }
                 }
-                else if (accountInfo.AuthStatus == AuthStatus.AuthRequired)
-                {
-                    PlayniteApi.Notifications.Add(new NotificationMessage(
-                        notLoggedInNotifId,
-                        ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn"),
-                        NotificationType.Info,
-                        () => OpenSettingsView()
-                    ));
-                }
-            }
 
-            logger.Debug($"Finished checking for wishlist");
-            wishlistCheckTimer.Start();
+                logger.Debug($"Finished checking for wishlist");
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Error while checking for wishlist");
+            }
+            finally
+            {
+                wishlistCheckTimer.Start();
+            }
         }
 
         private int? UpdateAndNotifyWishlistDiscounts(string steamId, IWebView webView)
