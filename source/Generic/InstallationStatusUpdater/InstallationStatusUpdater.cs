@@ -4,6 +4,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,9 +23,9 @@ namespace InstallationStatusUpdater
     public class InstallationStatusUpdater : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly Regex driveRegex = new Regex(@"^\w:\\", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-        private static readonly Regex installDirVarRegex = new Regex(@"{InstallDir}", RegexOptions.Compiled);
+        private static readonly Regex driveRegex = new Regex(@"^\w+:\\", RegexOptions.Compiled | RegexOptions.CultureInvariant);
         private const string driveTagPrefix = "[Install Drive]";
+        private const string scanSkipFeatureName = "[Status Updater] Ignore";
         private const char backslash = '\\';
         private const char fordwslash = '/';
         private const char doubleDot = ':';
@@ -276,50 +277,80 @@ namespace InstallationStatusUpdater
             yield return new StatusUpdaterInstallController(args.Game, IsGameInstalled(args.Game));
         }
 
-        public static bool DetectIsRomInstalled(GameRom rom, string installDirectory)
+        public bool DetectIsRomInstalled(Game game, GameRom rom, string installDirectory)
         {
-            if (string.IsNullOrEmpty(rom.Path))
+            if (rom.Path.IsNullOrEmpty())
             {
                 return false;
             }
 
             var romPath = RemoveInvalidPathChars(rom.Path);
+            // ExpandGameVariables method doesn't expand EmulatorDir variable
+            // manually expanding this variable is needed before the Api method as
+            // it removes the variable without expanding it
+            if (romPath.Contains("{EmulatorDir}"))
+            {
+                var emulator = GetGameEmulator(game);
+                if (emulator != null)
+                {
+                    romPath = romPath.Replace("{EmulatorDir}", emulator.InstallDir);
+                }
+            }
+
+            if (romPath.Contains("{"))
+            {
+                romPath = PlayniteApi.ExpandGameVariables(game, romPath);
+            }
+
             if (driveRegex.IsMatch(romPath))
             {
-                return File.Exists(romPath);
+                return FileSystem.FileExists(romPath);
             }
 
-            string romFullPath = romPath;
             if (!installDirectory.IsNullOrEmpty())
             {
-                if (installDirVarRegex.IsMatch(romPath))
-                {
-                    romFullPath = romPath.Replace("{InstallDir}", installDirectory);
-                }
-                else
-                {
-                    romFullPath = Path.Combine(installDirectory, romPath);
-                }
+                romPath = Path.Combine(installDirectory, romPath);
             }
 
-            return File.Exists(romFullPath);
+            return FileSystem.FileExists(romPath);
         }
 
-        public bool DetectIsRomInstalled(Game game, string installDirectory)
+        private Emulator GetGameEmulator(Game game)
         {
-            if (game.Roms == null)
+            if (!game.GameActions.HasItems())
+            {
+                return null;
+            }
+
+            foreach (var gameAction in game.GameActions)
+            {
+                if (gameAction.Type != GameActionType.Emulator)
+                {
+                    continue;
+                }
+
+                var emulator = PlayniteApi.Database.Emulators[gameAction.EmulatorId];
+                if (emulator != null)
+                {
+                    return emulator;
+                }
+            }
+
+            return null;
+        }
+
+        public bool IsRomInstalled(Game game, string installDirectory)
+        {
+            if (!game.Roms.HasItems())
             {
                 return false;
             }
-            if (game.Roms.Count == 0)
-            {
-                return false;
-            }
+
             if (game.Roms.Count > 1 && settings.Settings.UseOnlyFirstRomDetection == false)
             {
                 foreach (GameRom rom in game.Roms)
                 {
-                    if (DetectIsRomInstalled(rom, installDirectory))
+                    if (DetectIsRomInstalled(game, rom, installDirectory))
                     {
                         return true;
                     }
@@ -327,13 +358,13 @@ namespace InstallationStatusUpdater
             }
             else
             {
-                return DetectIsRomInstalled(game.Roms[0], installDirectory);
+                return DetectIsRomInstalled(game, game.Roms[0], installDirectory);
             }
 
             return false;
         }
 
-        public static bool DetectIsFileActionInstalled(GameAction gameAction, string installDirectory)
+        public bool DetectIsFileActionInstalled(Game game, GameAction gameAction, string installDirectory)
         {
             if (gameAction.Path.IsNullOrEmpty())
             {
@@ -344,9 +375,9 @@ namespace InstallationStatusUpdater
             if (gameAction.Path.Equals("explorer.exe", StringComparison.OrdinalIgnoreCase))
             {
                 //If directory has been set, it can be used to detect if game is installed or not
-                if (!string.IsNullOrEmpty(installDirectory))
+                if (!installDirectory.IsNullOrEmpty())
                 {
-                    return Directory.Exists(installDirectory);
+                    return FileSystem.DirectoryExists(installDirectory);
                 }
                 else
                 {
@@ -354,28 +385,26 @@ namespace InstallationStatusUpdater
                 }
             }
 
-            var fullfilePath = RemoveInvalidPathChars(gameAction.Path);
-            if (driveRegex.IsMatch(fullfilePath))
+            var actionPath = gameAction.Path;
+            if (gameAction.Path.Contains("{"))
             {
-                return File.Exists(fullfilePath);
+                actionPath = PlayniteApi.ExpandGameVariables(game, actionPath);
+            }
+
+            if (driveRegex.IsMatch(actionPath))
+            {
+                return FileSystem.FileExists(actionPath);
             }
 
             if (!installDirectory.IsNullOrEmpty())
             {
-                if (installDirVarRegex.IsMatch(fullfilePath))
-                {
-                    fullfilePath = fullfilePath.Replace("{InstallDir}", installDirectory);
-                }
-                else
-                {
-                    fullfilePath = Path.Combine(installDirectory, fullfilePath);
-                }
+                actionPath = Path.Combine(installDirectory, actionPath);
             }
 
-            return File.Exists(fullfilePath);
+            return FileSystem.FileExists(actionPath);
         }
 
-        public bool DetectIsAnyActionInstalled(Game game, string installDirectory)
+        public bool IsAnyActionInstalled(Game game, string installDirectory)
         {
             foreach (GameAction gameAction in game.GameActions)
             {
@@ -400,7 +429,7 @@ namespace InstallationStatusUpdater
                 }
                 else if (gameAction.Type == GameActionType.File)
                 {
-                    return DetectIsFileActionInstalled(gameAction, installDirectory);
+                    return DetectIsFileActionInstalled(game, gameAction, installDirectory);
                 }
             }
 
@@ -409,8 +438,8 @@ namespace InstallationStatusUpdater
 
         public void DetectInstallationStatus(bool showResultsDialog)
         {
-            int markedInstalled = 0;
-            int markedUninstalled = 0;
+            var markedInstalled = 0;
+            var markedUninstalled = 0;
             using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in PlayniteApi.Database.Games)
             {
@@ -420,7 +449,6 @@ namespace InstallationStatusUpdater
                 }
 
                 var isInstalled = IsGameInstalled(game);
-
                 if (game.IsInstalled == true && isInstalled == false)
                 {
                     game.IsInstalled = false;
@@ -466,7 +494,7 @@ namespace InstallationStatusUpdater
                 return true;
             }
 
-            if (game.Features != null && game.Features.Any(x => x.Name == "[Status Updater] Ignore"))
+            if (game.Features != null && game.Features.Any(x => x.Name == scanSkipFeatureName))
             {
                 return true;
             }
@@ -486,29 +514,37 @@ namespace InstallationStatusUpdater
 
         public bool IsGameInstalled(Game game)
         {
-            var isInstalled = false;
-            var installDirectory = string.Empty;
-            if (!game.InstallDirectory.IsNullOrEmpty())
+            var installDirectory = GetInstallDirForDetection(game);
+            if (game.GameActions.HasItems() && IsAnyActionInstalled(game, installDirectory))
             {
-                installDirectory = RemoveInvalidPathChars(game.InstallDirectory.ToLower());
+                return true;
             }
 
-            if (game.GameActions != null && game.GameActions.Count > 0)
+            return IsRomInstalled(game, installDirectory);
+        }
+
+        public string GetInstallDirForDetection(Game game)
+        {
+            if (game.InstallDirectory.IsNullOrEmpty())
             {
-                isInstalled = DetectIsAnyActionInstalled(game, installDirectory);
+                return string.Empty;
             }
 
-            if (isInstalled == false)
+            if (game.InstallDirectory.IndexOf('{') != 0)
             {
-                isInstalled = DetectIsRomInstalled(game, installDirectory);
+                return RemoveInvalidPathChars(PlayniteApi.ExpandGameVariables(game, game.InstallDirectory))
+                    .ToLower();
             }
-
-            return isInstalled;
+            else
+            {
+                return RemoveInvalidPathChars(game.InstallDirectory)
+                    .ToLower();
+            }
         }
 
         public void AddIgnoreFeature()
         {
-            var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore"); ;
+            var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), scanSkipFeatureName); ;
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage"),
                 featureAddedCount.ToString()), "Installation Status Updater"
@@ -517,7 +553,7 @@ namespace InstallationStatusUpdater
 
         public void RemoveIgnoreFeature()
         {
-            var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), "[Status Updater] Ignore");
+            var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), scanSkipFeatureName);
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage"), 
                 featureRemovedCount.ToString()), "Installation Status Updater"
