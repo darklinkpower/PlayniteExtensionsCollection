@@ -355,15 +355,37 @@ namespace PlayState
 
             logger.Debug("Source action is emulator.");
             var emulatorProfileId = sourceAction.EmulatorProfileId;
+            var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
             if (emulatorProfileId.StartsWith("#builtin_"))
             {
-                //Currently it isn't possible to obtain the emulator path
-                //for emulators using Builtin profiles
-                logger.Debug("Source action was builtin emulator, which is not compatible. Execution stopped.");
-                return true;
+                if (emulator.InstallDir.IsNullOrEmpty())
+                {
+                    return true;
+                }
+
+                await Task.Delay(15000);
+                if (!playStateManager.IsGameBeingDetected(game))
+                {
+                    logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
+                    return true;
+                }
+
+                // Executable names for builtin profiles are not accesible so the only way is to scan
+                // the directory for running executables
+                var emuProcesses = ProcessesHandler.GetProcessesWmiQuery(false, emulator.InstallDir);
+                if (emuProcesses.HasItems() && emuProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
+                {
+                    logger.Debug($"Found {emuProcesses.Count} processes for BuiltIn emulator {emulator.Name}");
+                    playStateManager.AddPlayStateData(game, emuProcesses);
+                    return true;
+                }
+                else
+                {
+                    logger.Debug($"Failed to get processes for BuiltIn emulator {emulator.Name}");
+                    return true;
+                }
             }
 
-            var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
             var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
             if (profile == null)
             {
