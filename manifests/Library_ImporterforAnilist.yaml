@@ -216,9 +216,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_33.pext
     Changelog:
     - 'Improved stability of internet downloads'
-  - Version: 2.34
+  - Version: 2.35
     RequiredApiVersion: 6.2.2
-    ReleaseDate: 2022-11-17
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.17_c45bb372/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_34.pext
+    ReleaseDate: 2022-11-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.18_9f1a1f35/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_35.pext
     Changelog:
     - 'Fix error on library update when AniList list contains duplicate entries'
