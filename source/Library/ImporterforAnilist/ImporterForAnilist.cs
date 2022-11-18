@@ -213,6 +213,7 @@ namespace ImporterforAnilist
                 if (libraryCache.ContainsKey(mediaId))
                 {
                     logger.Warn($"Library cache already contained mediaId with key {mediaId}. Current entryId {libraryCache[mediaId]} |  New {entry.Id}");
+                    continue;
                 }
 
                 libraryCache.Add(mediaId, entry.Id);
