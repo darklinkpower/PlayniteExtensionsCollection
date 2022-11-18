@@ -189,43 +189,43 @@ namespace ImporterforAnilist
             {
                 var animeEntries = accountApi.GetEntries("ANIME");
                 logger.Debug($"Found {animeEntries.Count} Anime items");
-                foreach (var entry in animeEntries)
-                {
-                    libraryCache.Add(entry.Media.Id.ToString(), entry.Id);
-                    var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
-                    if (existingEntry != null)
-                    {
-                        UpdateExistingEntry(entry, existingEntry);
-                    }
-                    else
-                    {
-                        importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
-                    }
-                }
+                ProcessEntriesResponse(importedGames, libraryCache, animeEntries);
             }
 
             if (settings.Settings.ImportMangaLibrary)
             {
                 var mangaEntries = accountApi.GetEntries("MANGA");
                 logger.Debug($"Found {mangaEntries.Count} Manga items");
-                foreach (var entry in mangaEntries)
-                {
-                    libraryCache.Add(entry.Media.Id.ToString(), entry.Id);
-                    var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == entry.Media.Id.ToString());
-                    if (existingEntry != null)
-                    {
-                        UpdateExistingEntry(entry, existingEntry);
-                    }
-                    else
-                    {
-                        importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
-                    }
-                }
+                ProcessEntriesResponse(importedGames, libraryCache, mangaEntries);
             }
 
             FileSystem.WriteStringToFile(anilistLibraryCachePath, Serialization.ToJson(libraryCache));
             idsCache = libraryCache;
             return importedGames;
+        }
+
+        private void ProcessEntriesResponse(List<Game> importedGames, Dictionary<string, int> libraryCache, List<Entry> anilistUserEntry)
+        {
+            foreach (var entry in anilistUserEntry)
+            {
+                var mediaId = entry.Media.Id.ToString();
+                // For some reason there was a report of repeated mediaId
+                if (libraryCache.ContainsKey(mediaId))
+                {
+                    logger.Warn($"Library cache already contained mediaId with key {mediaId}. Current entryId {libraryCache[mediaId]} |  New {entry.Id}");
+                }
+
+                libraryCache.Add(mediaId, entry.Id);
+                var existingEntry = PlayniteApi.Database.Games.FirstOrDefault(a => a.PluginId == Id && a.GameId == mediaId);
+                if (existingEntry != null)
+                {
+                    UpdateExistingEntry(entry, existingEntry);
+                }
+                else
+                {
+                    importedGames.Add(PlayniteApi.Database.ImportGame(EntryToGameMetadata(entry), this));
+                }
+            }
         }
 
         private void UpdateExistingEntry(Entry entry, Game existingEntry)
