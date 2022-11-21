@@ -118,3 +118,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Possible fix for crash when checking wishlist with no internet'
+  - Version: 1.16
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-11-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.21_19e0b1f0/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_16.pext
+    Changelog:
+    - 'Fix error when trying to check wishlist if user is not logged on Steam'
