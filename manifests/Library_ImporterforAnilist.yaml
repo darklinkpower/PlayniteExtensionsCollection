@@ -222,3 +222,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.18_9f1a1f35/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_35.pext
     Changelog:
     - 'Fix error on library update when AniList list contains duplicate entries'
+  - Version: 2.36
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-11-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.20_b8586969/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_36.pext
+    Changelog:
+    - 'Fix crash when starting a library game that has a Link with empty Url'
