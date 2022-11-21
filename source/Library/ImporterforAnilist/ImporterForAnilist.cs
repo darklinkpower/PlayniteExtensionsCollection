@@ -528,6 +528,11 @@ namespace ImporterforAnilist
                     continue;
                 }
 
+                if (link.Url.IsNullOrEmpty())
+                {
+                    continue;
+                }
+
                 var match = mangadexIdRegex.Match(link.Url);
                 if (match.Success)
                 {
