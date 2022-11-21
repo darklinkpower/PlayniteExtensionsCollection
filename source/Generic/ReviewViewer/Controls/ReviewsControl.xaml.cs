@@ -567,7 +567,7 @@ namespace ReviewViewer.Controls
                 return;
             }
 
-            var fi = new FileInfo(gameDataPath);
+            var fi = new FileInfo(FileSystem.FixPathLength(gameDataPath));
             if (fi.LastWriteTime < DateTime.Now.AddDays(-SettingsModel.Settings.DownloadIfOlderThanValue))
             {
                 DownloadReviewData(gameDataPath, reviewSearchType);
