@@ -41,6 +41,11 @@ namespace SteamCommon
 
             foreach (var gameLink in game.Links)
             {
+                if (string.IsNullOrEmpty(gameLink.Url))
+                {
+                    continue;
+                }
+
                 var linkMatch = steamLinkRegex.Match(gameLink.Url);
                 if (linkMatch.Success)
                 {
