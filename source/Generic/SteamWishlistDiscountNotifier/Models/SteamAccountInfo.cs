@@ -31,10 +31,14 @@ namespace SteamWishlistDiscountNotifier.Models
             SteamId = steamId;
             AuthStatus = authStatus;
             WalletString = walletString;
-            PriceStringParser.GetPriceValues(walletString, out var _, out var parsedAmount);
-            if (parsedAmount.HasValue)
+
+            if (!walletString.IsNullOrEmpty())
             {
-                WalletAmount = (double)parsedAmount;
+                PriceStringParser.GetPriceValues(walletString, out var _, out var parsedAmount);
+                if (parsedAmount.HasValue)
+                {
+                    WalletAmount = (double)parsedAmount;
+                }
             }
         }
     }
