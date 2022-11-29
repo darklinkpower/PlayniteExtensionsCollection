@@ -29,6 +29,9 @@ namespace PlayState.Models
         private SuspendModes suspendMode;
         public SuspendModes SuspendMode { get => suspendMode; set => SetValue(ref suspendMode, value); }
         public bool HasBeenInForeground = false;
+        public bool IsGameStatusOverrided = false;
+        private PlayStateAutomaticStateSwitchStatus gameStatusOverride;
+        public PlayStateAutomaticStateSwitchStatus GameStatusOverride { get => gameStatusOverride; set => SetValue(ref gameStatusOverride, value); }
 
         public PlayStateData(Game game, List<ProcessItem> gameProcesses, PlayStateSettingsViewModel settings)
         {
