@@ -34,4 +34,14 @@ Os jogos anteriormente desinstalados foram definidos como instalados: {1}</sys:S
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marcou {0} jogos como instalado(s) e {1} como desinstalado(s)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Detectar o status de instalação dos jogos quando usar o botão Instalar</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Detectar o status de instalação com a extensão &quot;Instalation Status Updater&quot;</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowTitle">Installation status scan results</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesInstalledLabel">Games set as installed:</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel">Games set as uninstalled:</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel">Set as installed</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel">Set as uninstalled</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel">Name</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel">Source</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel">Platforms</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogViewResultsLabel">View results</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogCloseLabel">Close</sys:String>
 </ResourceDictionary>
