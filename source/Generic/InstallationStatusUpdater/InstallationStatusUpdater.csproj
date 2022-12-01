@@ -57,6 +57,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StatusUpdateResultsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
@@ -104,8 +108,14 @@
     <Compile Include="InstallationStatusUpdaterSettingsView.xaml.cs">
       <DependentUpon>InstallationStatusUpdaterSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\StatusUpdateResults.cs" />
+    <Compile Include="Models\UpdatedEntryData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\SelectableDirectoryPath.cs" />
+    <Compile Include="ViewModels\StatusUpdateResultsWindowViewModel.cs" />
+    <Compile Include="Views\StatusUpdateResultsWindow.xaml.cs">
+      <DependentUpon>StatusUpdateResultsWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

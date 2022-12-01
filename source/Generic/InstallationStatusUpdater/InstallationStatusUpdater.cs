@@ -1,4 +1,6 @@
 ﻿using InstallationStatusUpdater.Models;
+using InstallationStatusUpdater.ViewModels;
+using InstallationStatusUpdater.Views;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -440,6 +442,7 @@ namespace InstallationStatusUpdater
         {
             var markedInstalled = 0;
             var markedUninstalled = 0;
+            var updateResults = new StatusUpdateResults();
             using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in PlayniteApi.Database.Games)
             {
@@ -455,6 +458,7 @@ namespace InstallationStatusUpdater
                     PlayniteApi.Database.Games.Update(game);
                     markedUninstalled++;
                     logger.Info(string.Format("Game: {0} marked as uninstalled", game.Name));
+                    updateResults.AddSetAsUninstalledGame(game);
                 }
                 else if (game.IsInstalled == false && isInstalled == true)
                 {
@@ -462,20 +466,50 @@ namespace InstallationStatusUpdater
                     PlayniteApi.Database.Games.Update(game);
                     markedInstalled++;
                     logger.Info(string.Format("Game: {0} marked as installed", game.Name));
+                    updateResults.AddSetAsInstalledGame(game);
                 }
             }
 
+            var anyGameUpdated = markedInstalled > 0 || markedUninstalled > 0;
             if (showResultsDialog)
             {
-                PlayniteApi.Dialogs.ShowMessage(
-                    string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterResultsMessage"), 
-                    markedUninstalled.ToString(), 
-                    markedInstalled.ToString()), "Installation Status Updater"
-                );
+                if (anyGameUpdated)
+                {
+                    var options = new List<MessageBoxOption>
+                    {
+                        new MessageBoxOption(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdateResultsDialogViewResultsLabel")),
+                        new MessageBoxOption(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdateResultsDialogCloseLabel"), true, true)
+                    };
+
+                    var selected = PlayniteApi.Dialogs.ShowMessage(
+                        string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterResultsMessage"),
+                            markedUninstalled.ToString(),
+                            markedInstalled.ToString()),
+                        "Installation Status Updater",
+                        MessageBoxImage.None,
+                        options);
+                    if (selected.IsCancel)
+                    {
+                        return;
+                    }
+
+                    if (selected == options[0])
+                    {
+                        OpenResultsWindow(updateResults);
+                    }
+                }
+                else
+                {
+                    PlayniteApi.Dialogs.ShowMessage(
+                        string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterResultsMessage"),
+                        markedUninstalled.ToString(),
+                        markedInstalled.ToString()), "Installation Status Updater"
+                    );
+                }
             }
-            else if (markedInstalled > 0 || markedUninstalled > 0)
+            else if (anyGameUpdated)
             {
-                if (File.Exists(Path.Combine(GetPluginUserDataPath(), "DisableNotifications")))
+                if (FileSystem.FileExists(Path.Combine(GetPluginUserDataPath(), "DisableNotifications")))
                 {
                     logger.Info("Super secret \"DisableNotifications\" file detected. Notification not added.");
                     return;
@@ -483,8 +517,29 @@ namespace InstallationStatusUpdater
                 
                 PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults"), markedInstalled, markedUninstalled),
-                    NotificationType.Info));
+                    NotificationType.Info,
+                    () => OpenResultsWindow(updateResults)));
             }
+        }
+
+        private void OpenResultsWindow(StatusUpdateResults updateResults)
+        {
+            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = true
+            });
+
+            window.Height = 500;
+            window.Width = 650;
+            window.Title = ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdateResultsWindowTitle");
+
+            window.Content = new StatusUpdateResultsWindow();
+            window.DataContext = new StatusUpdateResultsWindowViewModel(updateResults);
+            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
         }
 
         public bool SkipGame(Game game)

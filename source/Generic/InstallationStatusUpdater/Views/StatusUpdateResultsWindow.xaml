@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="InstallationStatusUpdater.Views.StatusUpdateResultsWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InstallationStatusUpdater.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesInstalledLabel}"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding TotalGamesSetAsInstalled}"
+                               VerticalAlignment="Center"
+                               Margin="5,0,0,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel}"
+                               VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding TotalGamesSetAsUninstalled}"
+                               VerticalAlignment="Center"
+                               Margin="5,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+            
+            <TabControl DockPanel.Dock="Top" Margin="0,10,0,0">
+                <TabItem Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel}">
+                    <DataGrid SelectionMode="Single" ItemsSource="{Binding UpdateResults.SetAsInstalled}"
+                              CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="True" CanUserSortColumns="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel}" Binding="{Binding Name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel}" Binding="{Binding Source}" IsReadOnly="False" />
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel}" Binding="{Binding Platforms, Converter={StaticResource ListToStringConverter}}" IsReadOnly="False" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+
+                <TabItem Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel}">
+                    <DataGrid SelectionMode="Single" ItemsSource="{Binding UpdateResults.SetAsUninstalled}"
+                              CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="True" CanUserSortColumns="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel}" Binding="{Binding Name}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel}" Binding="{Binding Source}" IsReadOnly="False" />
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel}" Binding="{Binding Platforms, Converter={StaticResource ListToStringConverter}}" IsReadOnly="False" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</UserControl>
