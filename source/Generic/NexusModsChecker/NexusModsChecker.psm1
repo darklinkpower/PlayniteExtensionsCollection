@@ -75,99 +75,113 @@ function Add-NexusFeatureLinks
     $featureName = "Nexus Mods"
     $feature = $PlayniteApi.Database.Features.Add($featureName)
     
-    $webContent = Get-DownloadString "https://www.nexusmods.com/games"
+    $webContent = Get-DownloadString "https://data.nexusmods.com/file/nexus-data/games.json"
     if ($null -eq $webContent)
     {
         return
     }
-    $webContent -match 'var json = ((.*?(?=}]))}])'
-    if ($matches)
-    {
-        $nexusGames = $matches[1] | ConvertFrom-Json
-        foreach ($nexusGame in $nexusGames) {
-            $nexusGame.name = $nexusGame.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
-        }
-    }
-    else
+
+    
+    $nexusData = $webContent | ConvertFrom-Json
+    if ($nexusData.count -eq 0)
     {
         $PlayniteApi.Dialogs.ShowErrorMessage([Playnite.SDK.ResourceProvider]::GetString("LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage"), $ExtensionName)
-        exit
+        return
+    }
+
+    $nexusModsGames = @{}
+    foreach ($nexusGame in $nexusData) {
+        $gameName = $nexusGame.name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
+        if ($nexusModsGames.ContainsKey($gameName) -eq $false)
+        {
+            $nexusModsGames.Add($gameName, $nexusGame.nexusmods_url)
+        }
     }
 
     $modsAvailable = 0
     $CounterFeatureAdded = 0
     $nexusLinkAdded = 0
-    foreach ($game in $gameDatabase) {
-        if ($null -eq $game.Platforms)
-        {
-            continue
-        }
-        else
-        {
+
+    $PlayniteApi.Database.BeginBufferUpdate()
+    try
+    {
+        foreach ($game in $gameDatabase) {
+            if ($null -eq $game.Platforms)
+            {
+                continue
+            }
+    
             $isTargetSpecification = $false
             foreach ($platform in $game.Platforms) {
                 if ($null -eq $platform.SpecificationId)
                 {
                     continue
                 }
+    
                 if ($platform.SpecificationId -eq "pc_windows")
                 {
                     $isTargetSpecification = $true
                     break
                 }
             }
+    
             if ($isTargetSpecification -eq $false)
             {
                 continue
             }
-        }
-        
-        $gameNameMatching = $game.Name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
-        foreach ($nexusGame in $nexusGames) {
-            if ($nexusGame.name -eq $gameNameMatching)
+            
+            $gameNameMatching = $game.Name.ToLower() -replace '[^\p{L}\p{Nd}]', ''
+            if ($nexusModsGames.ContainsKey($gameNameMatching) -eq $false)
             {
-                $modsAvailable++
-                
-                if ($game.FeatureIds -notcontains $feature.Id)
+                continue;
+            }
+    
+            $gameUpdated = $false
+            $modsAvailable++
+            if ($game.FeatureIds -notcontains $feature.Id)
+            {
+                # Add feature Id to game
+                if ($game.FeatureIds)
                 {
-                    # Add feature Id to game
-                    if ($Game.FeatureIds)
-                    {
-                        $Game.FeatureIds += $feature.Id
-                    }
-                    else
-                    {
-                        # Fix in case game has null FeatureIds
-                        $Game.FeatureIds = $feature.Id
-                    }
-                    $PlayniteApi.Database.Games.Update($game)
-                    $__logger.Info("$ExtensionName - Feature added to `"$($game.name)`"")
-                    $CounterFeatureAdded++
-                }
-
-                if ($game.Links)
-                {
-                    if ($game.Links.Name -notcontains "Nexus Mods")
-                    {
-                        $link = [Playnite.SDK.Models.Link]::New("Nexus Mods", $nexusGame.nexusmods_url)
-                        $game.Links.Add($link)
-                        $PlayniteApi.Database.Games.Update($game)
-                        $__logger.Info("$ExtensionName - Link added to `"$($game.name)`"")
-                        $nexusLinkAdded++
-                    }
+                    $game.FeatureIds += $feature.Id
                 }
                 else
                 {
-                    $link = [Playnite.SDK.Models.Link]::New("Nexus Mods", $nexusGame.nexusmods_url)
-                    $game.Links = $link
-                    $PlayniteApi.Database.Games.Update($game)
-                    $__logger.Info("$ExtensionName - Link added to `"$($game.name)`"")
-                    $nexusLinkAdded++
+                    # Fix in case game has null FeatureIds
+                    $game.FeatureIds = $feature.Id
                 }
-
-                break
+    
+                $PlayniteApi.Database.Games.Update($game)
+                $__logger.Info("$ExtensionName - Feature added to `"$($game.name)`"")
+                $gameUpdated = $true
+                $CounterFeatureAdded++
+            }
+    
+            $link = [Playnite.SDK.Models.Link]::New("Nexus Mods", $nexusModsGames[$gameNameMatching])
+            if ($null -eq $game.Links)
+            {
+                $game.Links = $link
+                $__logger.Info("$ExtensionName - Link added to `"$($game.name)`"")
+                $nexusLinkAdded++
+                $gameUpdated = $true
+            }
+            elseif ($game.Links.Name -notcontains "Nexus Mods")
+            {
+                $game.Links.Add($link)
+                $__logger.Info("$ExtensionName - Link added to `"$($game.name)`"")
+                $nexusLinkAdded++
+                $gameUpdated = $true
+            }
+    
+            if ($gameUpdated -eq $true)
+            {
+                $PlayniteApi.Database.Games.Update($game)
             }
         }
+    }
+    finally
+    {
+        $PlayniteApi.Database.EndBufferUpdate()
     }
 
     # Show finish dialogue with results
