@@ -103,7 +103,7 @@ Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamen
 
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Scorciatoie</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Scorciatoie da tastiera</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Scorciatoie del controllore</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Scorciatoie del controller</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Consenti a tutti i controller di attivare i tasti di scelta rapida</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Se abilitato, tutti i controller saranno autorizzati ad attivare i tasti di scelta rapida.
 
@@ -115,13 +115,13 @@ Se disabilitato, solo il primo controller sarà autorizzato ad attivare i tasti 
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Pulsanti: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Attivatori: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Esiste già un tasto di scelta rapida del controllore con la stessa combinazione!</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Scorciatoia del controllore</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Scorciatoia del controllore:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Esiste già un tasto di scelta rapida del controller con la stessa combinazione!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Scorciatoia del controller</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Scorciatoia del controller:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modalità</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modalità:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Aggiungi tasto di scelta rapida del controllore</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Rimuovi tasto di scelta rapida del controllore</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Aggiungi tasto di scelta rapida del controller</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Rimuovi tasto di scelta rapida del controller</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Inserimento da tastiera:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Inserimento da tastiera</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Imposta inserimento da tastiera</sys:String>
