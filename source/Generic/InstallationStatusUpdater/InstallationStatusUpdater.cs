@@ -457,7 +457,6 @@ namespace InstallationStatusUpdater
                     game.IsInstalled = false;
                     PlayniteApi.Database.Games.Update(game);
                     markedUninstalled++;
-                    logger.Info(string.Format("Game: {0} marked as uninstalled", game.Name));
                     updateResults.AddSetAsUninstalledGame(game);
                 }
                 else if (game.IsInstalled == false && isInstalled == true)
@@ -465,7 +464,6 @@ namespace InstallationStatusUpdater
                     game.IsInstalled = true;
                     PlayniteApi.Database.Games.Update(game);
                     markedInstalled++;
-                    logger.Info(string.Format("Game: {0} marked as installed", game.Name));
                     updateResults.AddSetAsInstalledGame(game);
                 }
             }
@@ -520,6 +518,8 @@ namespace InstallationStatusUpdater
                     NotificationType.Info,
                     () => OpenResultsWindow(updateResults)));
             }
+
+            logger.Info(string.Format("Marked as installed: {0}, as uinstalled: {1} ", markedInstalled, markedUninstalled));
         }
 
         private void OpenResultsWindow(StatusUpdateResults updateResults)
