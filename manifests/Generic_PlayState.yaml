@@ -410,3 +410,10 @@ Packages:
     - 'Support to switch Playnite modes based on controller status (Disabled by default)'
     - 'Add support for games using default Emulator profiles'
     - 'Start monitoring faster games when they will be only suspended by playtime (By BanCrash)'
+  - Version: 2.59
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2022-12-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.12.11_3fe9a125/PlayState_2_59.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Prevent game status from being automatically switched based on foreground status if game state was changed manually (By BanCrash)'

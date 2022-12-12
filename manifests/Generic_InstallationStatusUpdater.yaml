@@ -237,3 +237,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.14_873c946b/Installation_Status_Updater_2_35.pext
     Changelog:
     - 'Fix scan not working if game paths use variables'
+  - Version: 2.36
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-12-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.12.11_3fe9a125/Installation_Status_Updater_2_36.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Support to open window that displays installation status changes after status scan'
