@@ -114,7 +114,8 @@ namespace NVIDIAGeForceNowEnabler.Models
         Unknown = 12,
         Uplay = 13,
         Wargaming = 14,
-        Stove = 15
+        Stove = 15,
+        EA_APP = 16
     };
 
     public enum Status {
