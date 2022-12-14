@@ -162,5 +162,14 @@ namespace ExtraMetadataLoader.Helpers
             }
         }
 
+        public string ExpandVariables(string inputString)
+        {
+            return playniteApi.ExpandGameVariables(new Game(), inputString);
+        }
+
+        public string ExpandVariables(Game game, string inputString)
+        {
+            return playniteApi.ExpandGameVariables(game, inputString);
+        }
     }
 }
