@@ -14,6 +14,9 @@ using GamePassCatalogBrowser.Models;
 using GamePassCatalogBrowser.Services;
 using GamePassCatalogBrowser.ViewModels;
 using GamePassCatalogBrowser.Views;
+using System.Reflection;
+using System.IO;
+using System.Windows.Media;
 
 namespace GamePassCatalogBrowser
 {
@@ -42,6 +45,31 @@ namespace GamePassCatalogBrowser
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
             return new GamePassCatalogBrowserSettingsView();
+        }
+
+        public override IEnumerable<SidebarItem> GetSidebarItems()
+        {
+            yield return new SidebarItem
+            {
+                Title = ResourceProvider.GetString("LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription"),
+                Type = SiderbarItemType.View,
+                Icon = new TextBlock
+                {
+                    Text = "\u0041",
+                    FontFamily = new FontFamily(new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "XboxLogoFont.ttf")), "./#XboxLogoFont")
+                },
+                Opened = () => {
+                    var gamePassGamesList = UpdateGamePassCatalog(false);
+                    if (!gamePassGamesList.HasItems())
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGamePass_Catalog_Browser_CatalogGetFailErrorMessage"),
+                            "Game Pass Catalog Browser");
+                        return null;
+                    }
+
+                    return new CatalogBrowserView { DataContext = new CatalogBrowserViewModel(gamePassGamesList, PlayniteApi) };
+                }
+            };
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
