@@ -149,3 +149,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_22.pext
     Changelog:
     - 'Improved stability of internet downloads'
+  - Version: 2.23
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-12-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.12.18_90324fb4/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_23.pext
+    Changelog:
+    - 'Added sidebar icon to open Catalog Browser view'
