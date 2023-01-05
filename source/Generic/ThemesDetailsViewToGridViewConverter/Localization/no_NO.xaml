@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Themes to convert Details View to Grid View:</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Details View layout of theme &quot;{0}&quot; has been applied to Grid View.
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Temaer der detaljvisning skal konverteres i rutenettvisning:</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Detaljvisning i temaet &quot;{0}&quot; er tilført i rutenettvisningen.
 
-Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Grid View details layout for theme &quot;{0}&quot; has been restored.
+Start på nytt for å ta i bruk endringene.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Normalt detaljinnhold i rutenettvisning for temaet &quot;{0}&quot; er gjenopprettet.
 
-Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Version {0} of theme &quot;{1}&quot; is not supported.</sys:String>
+Vennligst start på nytt for å aktivere endringene.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Versjon {0} av temaet &quot;{1} er ikke støttet.</sys:String>
 </ResourceDictionary>
