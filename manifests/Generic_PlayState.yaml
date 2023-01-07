@@ -417,3 +417,10 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Prevent game status from being automatically switched based on foreground status if game state was changed manually (By BanCrash)'
+  - Version: 2.60
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/PlayState_2_60.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fixed issue related to themes not being properly notified when extension suspend button was visible'

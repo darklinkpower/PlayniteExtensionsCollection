@@ -426,3 +426,9 @@ Packages:
     Changelog:
     - 'Improved stability of internet downloads'
     - 'Added support to stop downloads immediately after pressing the cancel button'
+  - Version: 1.61
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_61.pext
+    Changelog:
+    - 'Updated localizations'

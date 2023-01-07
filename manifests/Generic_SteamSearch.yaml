@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_1.pext
+    Changelog:
+    - 'Updated localizations'

@@ -19,3 +19,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.14_873c946b/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_2.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.3
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_3.pext
+    Changelog:
+    - 'Updated localizations'

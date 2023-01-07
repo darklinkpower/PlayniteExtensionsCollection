@@ -97,3 +97,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_14.pext
     Changelog:
     - 'Improved stability of internet downloads'
+  - Version: 2.15
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_15.pext
+    Changelog:
+    - 'Updated localizations'

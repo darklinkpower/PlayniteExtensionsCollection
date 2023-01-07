@@ -228,3 +228,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.20_b8586969/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_36.pext
     Changelog:
     - 'Fix crash when starting a library game that has a Link with empty Url'
+  - Version: 2.37
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_37.pext
+    Changelog:
+    - 'Updated localizations'

@@ -266,3 +266,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.12.13_124a6522/NVIDIA_GeForce_Now_Enabler_2_42.pext
     Changelog:
     - 'Fix error when processing NVIDIA GeForce Now database (By Sennevds)'
+  - Version: 2.43
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/NVIDIA_GeForce_Now_Enabler_2_43.pext
+    Changelog:
+    - 'Updated localizations'

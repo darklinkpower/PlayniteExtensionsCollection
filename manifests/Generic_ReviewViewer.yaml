@@ -266,3 +266,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.20_b8586969/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_40.pext
     Changelog:
     - 'Fix crash when selecting a non-Steam game that has a Link with empty Url'
+  - Version: 2.41
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_41.pext
+    Changelog:
+    - 'Updated localizations'

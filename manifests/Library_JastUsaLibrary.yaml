@@ -42,3 +42,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.08.21_54d33423/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_6.pext
     Changelog:
     - 'Improved stability of internet downloads'
+  - Version: 1.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_7.pext
+    Changelog:
+    - 'Updated localizations'

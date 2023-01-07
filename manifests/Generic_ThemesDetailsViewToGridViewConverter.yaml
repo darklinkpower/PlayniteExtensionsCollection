@@ -13,3 +13,9 @@ Packages:
     Changelog:
     - 'Added support custom themes to define additional changes to be done when converting layout to Grid View'
     - 'Updated localizations'
+  - Version: 1.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_2.pext
+    Changelog:
+    - 'Updated localizations'
