@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Minimum discount required to display notifications:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Display notification for items of type:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">User is authenticated</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requires authentication</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">No connection</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Enable wishlist discount notifications</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Interval in minutes to check updates in wishlist:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Open store pages in web browser instead of the Steam client</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Hjelp</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Minimum rabatt som kreves for å vise varsler:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Vis varsel for varer av type:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Autentisér</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Kontrollerer autentiseringsstatus …</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Brukeren er autentisert</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Krever autentisering</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Ingen forbindelse</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Aktiver varsler for rabatter på spill i ønskeliste</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervall i minutter for å sjekking av oppdateringer i ønskeliste:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Åpne butikksider i nettleseren i stedet for i Steam-klienten</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
 
-Failed to check Steam wishlist. Authentication is required.</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; is on sale on Steam!</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Discount: {0}%</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Games</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Downloadable content</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Music</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">Software</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Videos</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Hardware</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">View Steam Wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Obtaining Steam Wishlist data…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Name</sys:String>
+Kunne ikke sjekke Steam-ønskelisten. Godkjenning er påkrevd.</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; er på salg i Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Rabatt: {0}%</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Spill</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Nedlastbart innhold</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Musikk</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">Programvare</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Videoer</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Maskinvare</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Modifikasjoner (Mods)</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Vis Steam-ønskeliste</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Henter data fra Steam-ønskeliste …</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam-lommebok</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Navn</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Rangering</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">Rabatt</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Pris</sys:String>
@@ -39,15 +39,15 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">Minste rabatt:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">Minstepris:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Makspris:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Item type:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Price:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Available</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Not Available</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Varetype:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Pris:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Tilgjengelig</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Ikke tilgjengelig</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Totalt antall elementer:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Overall Reviews:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Release Date:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Tags:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Open on web</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Open on Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Samlet vurdering:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Utgivelsesdato:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Stikkord:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Åpne i nettleser</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Åpne i Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Se etter tilbud på spill på Steam-ønskelisten</sys:String>
 </ResourceDictionary>
