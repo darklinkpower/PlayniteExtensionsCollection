@@ -1,4 +1,4 @@
-ÿþId: GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
+Id: GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93
 Name: Game Pass Catalog Browser
 Author: darklinkpower
 Version: 2.23
@@ -8,8 +8,6 @@ Icon: icon.png
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
-    - Name: Playnite Forums thread
-      Url: https://playnite.link/forum/thread-716.html
     - Name: Wiki
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Game-Pass-Catalog-Browser
     - Name: Translate
