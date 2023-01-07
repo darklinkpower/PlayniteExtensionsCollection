@@ -33,24 +33,24 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} timer og {1:00} minutter</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat">{0:0#} minutter {1:00} sekunder</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat">{0} sekunder</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Utpakkede filer for filen &quot;{0}&quot; oppdaget i &quot;{1}&quot;.
 
-Download the file anyway?</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractingZip">Extracting zip file &quot;{0}&quot; to &quot;{1}&quot;…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipError" xml:space="preserve">Error during &quot;{0}&quot; zip file extraction.
+Last ned filen likevel?</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractingZip">Pakker ut zip-filen &quot;{0}&quot; til &quot;{1}&quot; …</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipError" xml:space="preserve">Feil under utpakking av zip-filen &quot;{0}&quot;.
     
-Error: {1}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipOnDownload">Extract zips after downloading</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDeleteZipsOnExtract">Delete zips after extraction</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Authentication credentials are incorrect</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Error occurred during Login.
+Feil: {1}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipOnDownload">Pakk ut zip-filer etter nedlasting</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDeleteZipsOnExtract">Slett zip-filer etter utpakking</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Godkjenningsinformasjon er feil</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">En feil oppstod under innlogging.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Error occurred when obtaining download link.
+Feil: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">En feil oppstod under henting av nedlastingslenke.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Could not obtain authentication tokens</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">Previously selected executable for the game has been unlinked.
+Feil: {0}</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Kunne ikke hente autentiserings-token</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">Tidligere valgt kjørbar fil for spillet er koblet fra.
         
-Due to technical limitations, it's not possible for the plugin to uninstall or remove the game files by itself, so please do that manually.</sys:String>
+På grunn av tekniske begrensninger, er det ikke mulig for utvidelsen å avinstallere eller fjerne spillfilene på egen hånd, så dette må gjøres manuelt.</sys:String>
 </ResourceDictionary>
