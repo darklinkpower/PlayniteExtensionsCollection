@@ -170,11 +170,14 @@ namespace PlayState.Controls
         public void UpdateData()
         {
             updateDataTimer.Stop();
+            if (!GetShouldContinueExecution())
+            {
+                return;
+            }
+
             ControlVisibility = Visibility.Collapsed;
             settings.Settings.IsControlVisible = false;
-            if (!settings.Settings.EnableGameStateSwitchControl ||
-                !GetShouldContinueExecution() ||
-                currentGameId == Guid.Empty)
+            if (!settings.Settings.EnableGameStateSwitchControl || currentGameId == Guid.Empty)
             {
                 return;
             }
