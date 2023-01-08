@@ -59,6 +59,18 @@ namespace PlayState
         private bool notificationShowTotalPlaytime = true;
         public bool NotificationShowTotalPlaytime { get => notificationShowTotalPlaytime; set => SetValue(ref notificationShowTotalPlaytime, value); }
         public bool WindowsNotificationStyleFirstSetupDone = false;
+        [DontSerialize]
+        private bool notificationShowPlayingReminder = false;
+        public bool NotificationShowPlayingReminder { get => notificationShowPlayingReminder; set => SetValue(ref notificationShowPlayingReminder, value); }
+        [DontSerialize]
+        private bool notificationShowSuspensionReminder = false;
+        public bool NotificationShowSuspensionReminder { get => notificationShowSuspensionReminder; set => SetValue(ref notificationShowSuspensionReminder, value); }
+        [DontSerialize]
+        private int notificationPlayingReminderMinutes = 30;
+        public int NotificationPlayingReminderMinutes { get => notificationPlayingReminderMinutes; set => SetValue(ref notificationPlayingReminderMinutes, value); }
+        [DontSerialize]
+        private int notificationSuspensionReminderMinutes = 5;
+        public int NotificationSuspensionReminderMinutes { get => notificationSuspensionReminderMinutes; set => SetValue(ref notificationSuspensionReminderMinutes, value); }
 
         [DontSerialize]
         private bool showManagerSidebarItem = true;

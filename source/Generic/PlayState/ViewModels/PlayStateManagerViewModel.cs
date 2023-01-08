@@ -409,6 +409,22 @@ namespace PlayState.ViewModels
             }
         }
 
+        public void ShowPlayingReminderNotificationIfGameIsCurrentGame(PlayStateData gameData)
+        {
+            if (GetIsCurrentGameSame(gameData.Game) && settings.Settings.NotificationShowPlayingReminder)
+            {
+                ShowCurrentGameStatusNotification();
+            }
+        }
+
+        public void ShowSuspensionReminderNotificationIfGameIsCurrentGame(PlayStateData gameData)
+        {
+            if (GetIsCurrentGameSame(gameData.Game) && settings.Settings.NotificationShowSuspensionReminder)
+            {
+                ShowCurrentGameStatusNotification();
+            }
+        }
+
         public bool SwitchGameState(PlayStateData gameData, bool isGameStatusOverrided = true)
         {
             var handled = false;
@@ -444,6 +460,9 @@ namespace PlayState.ViewModels
                         gameData.IsSuspended = false;
                         notificationType = processesSuspended ? NotificationTypes.Resumed : NotificationTypes.PlaytimeResumed;
                         gameData.Stopwatch.Stop();
+                        gameData.StartPlayingReminderTimer();
+                        gameData.PlayingReminderTimer.Tick += (sender, e) => ShowPlayingReminderNotificationIfGameIsCurrentGame(gameData);
+                        gameData.StopSuspensionReminderTimer();
                         logger.Debug($"Game {gameData.Game.Name} resumed in mode {gameData.SuspendMode}");
                         if (isGameStatusOverrided)
                         {
@@ -456,6 +475,9 @@ namespace PlayState.ViewModels
                         gameData.IsSuspended = true;
                         notificationType = processesSuspended ? NotificationTypes.Suspended : NotificationTypes.PlaytimeSuspended;
                         gameData.Stopwatch.Start();
+                        gameData.StopPlayingReminderTimer();
+                        gameData.StartSuspensionReminderTimer();
+                        gameData.SuspensionReminderTimer.Tick += (sender, e) => ShowSuspensionReminderNotificationIfGameIsCurrentGame(gameData);
                         logger.Debug($"Game {gameData.Game.Name} suspended in mode {gameData.SuspendMode}");
                         if (isGameStatusOverrided)
                         {

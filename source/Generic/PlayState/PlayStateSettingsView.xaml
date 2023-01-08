@@ -353,6 +353,28 @@
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
                               IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
                               Margin="0,10,0,0"/>
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowPlayingReminders}"
+                              IsChecked="{Binding Settings.NotificationShowPlayingReminder}"
+                              Margin="0,10,0,0"/>
+                        <DockPanel Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCPlayState_SettingNotificationPlayingReminderMinutes}"
+                                       DockPanel.Dock="Left"
+                                       VerticalAlignment="Center"/>
+                            <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                     Margin="10,0,0,0"
+                                     Text="{Binding Settings.NotificationPlayingReminderMinutes}" />
+                        </DockPanel>
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSuspensionReminders}"
+                              IsChecked="{Binding Settings.NotificationShowSuspensionReminder}"
+                              Margin="0,10,0,0"/>
+                        <DockPanel Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOCPlayState_SettingNotificationSuspensionReminderMinutes}"
+                                       DockPanel.Dock="Left"
+                                       VerticalAlignment="Center"/>
+                            <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                     Margin="10,0,0,0"
+                                     Text="{Binding Settings.NotificationSuspensionReminderMinutes}" />
+                        </DockPanel>
 
                     </StackPanel>
                 </StackPanel>

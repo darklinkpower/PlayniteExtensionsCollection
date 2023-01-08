@@ -58,6 +58,10 @@ This mode can also be changed individually per game by using the extensions func
     <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowPlayingReminders">Display a notification when the current game has been played for more than x minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSuspensionReminders">Display a notification if the current game has been suspended for more than x minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationPlayingReminderMinutes">Minutes for showing the playing reminder</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationSuspensionReminderMinutes">Minutes for showing the suspension reminder</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
 

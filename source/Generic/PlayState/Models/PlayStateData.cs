@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace PlayState.Models
 {
@@ -20,6 +21,10 @@ namespace PlayState.Models
         public DateTime StartDate { get; } = DateTime.Now;
         private Stopwatch stopwatch = new Stopwatch();
         public Stopwatch Stopwatch { get => stopwatch; set => SetValue(ref stopwatch, value); }
+        private DispatcherTimer suspensionReminderTimer = new DispatcherTimer();
+        public DispatcherTimer SuspensionReminderTimer { get => suspensionReminderTimer; set => SetValue(ref suspensionReminderTimer, value); }
+        private DispatcherTimer playingReminderTimer = new DispatcherTimer();
+        public DispatcherTimer PlayingReminderTimer { get => playingReminderTimer; set => SetValue(ref playingReminderTimer, value); }
         public List<ProcessItem> GameProcesses { get; set; }
         public bool HasProcesses => GameProcesses?.HasItems() == true;
 
@@ -58,6 +63,14 @@ namespace PlayState.Models
             {
                 SetSuspendMode();
             }
+            if (e.PropertyName == nameof(settingsModel.Settings.NotificationPlayingReminderMinutes))
+            {
+                PlayingReminderTimer.Interval = TimeSpan.FromMinutes(settingsModel.Settings.NotificationPlayingReminderMinutes);
+            }
+            if (e.PropertyName == nameof(settingsModel.Settings.NotificationSuspensionReminderMinutes))
+            {
+                SuspensionReminderTimer.Interval = TimeSpan.FromMinutes(settingsModel.Settings.NotificationSuspensionReminderMinutes);
+            }
         }
 
         private void SetSuspendMode()
@@ -80,6 +93,8 @@ namespace PlayState.Models
         {
             Game.PropertyChanged -= Game_PropertyChanged;
             settingsModel.Settings.PropertyChanged -= Settings_PropertyChanged;
+            PlayingReminderTimer.Stop();
+            SuspensionReminderTimer.Stop();
         }
 
         public void SetProcesses(List<ProcessItem> gameProcesses)
@@ -93,6 +108,29 @@ namespace PlayState.Models
             {
                 GameProcesses = null;
             }
+        }
+
+        public void StartPlayingReminderTimer()
+        {
+            PlayingReminderTimer = new DispatcherTimer();
+            PlayingReminderTimer.Interval = TimeSpan.FromMinutes(settingsModel.Settings.NotificationPlayingReminderMinutes);
+            PlayingReminderTimer.Start();
+        }
+
+        public void StopPlayingReminderTimer()
+        {
+            PlayingReminderTimer.Stop();
+        }
+        public void StartSuspensionReminderTimer()
+        {
+            SuspensionReminderTimer = new DispatcherTimer();
+            SuspensionReminderTimer.Interval = TimeSpan.FromMinutes(settingsModel.Settings.NotificationSuspensionReminderMinutes);
+            SuspensionReminderTimer.Start();
+        }
+
+        public void StopSuspensionReminderTimer()
+        {
+            SuspensionReminderTimer.Stop();
         }
     }
 }
