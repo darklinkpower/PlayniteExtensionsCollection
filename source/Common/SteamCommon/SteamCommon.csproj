@@ -82,5 +82,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebCommon\WebCommon.csproj">
+      <Project>{871cd6e7-1343-4ffb-9d28-cc09e5639e38}</Project>
+      <Name>WebCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
