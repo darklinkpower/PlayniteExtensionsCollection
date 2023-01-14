@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PluginsCommon\Extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\PluginsCommon\FileSystem.cs">
       <Link>Shared\PluginsCommon\FileSystem.cs</Link>
     </Compile>
