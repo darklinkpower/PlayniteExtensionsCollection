@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PluginsCommon\Extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\PluginsCommon\FileSystem.cs">
       <Link>Shared\PluginsCommon\FileSystem.cs</Link>
     </Compile>
@@ -81,6 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebCommon\WebCommon.csproj">
+      <Project>{871cd6e7-1343-4ffb-9d28-cc09e5639e38}</Project>
+      <Name>WebCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
