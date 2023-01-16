@@ -63,7 +63,7 @@
                                     </Hyperlink>
                             </TextBlock>
 
-                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeCookiesPath}" IsReadOnly="True"
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeCookiesPath}"
                                      ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip}" />
                         </DockPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
