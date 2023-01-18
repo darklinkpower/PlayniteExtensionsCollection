@@ -35,17 +35,17 @@
                         <DockPanel Margin="0,0,0,10">
                             <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingFfmpegPathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
                             <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectFfmpegCommand}" />
-                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.FfmpegPath}" IsReadOnly="True" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.FfmpegPath}" />
                         </DockPanel>
                         <DockPanel Margin="0,0,0,10">
                             <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingFfprobePathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
                             <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectFfprobeCommand}" />
-                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.FfprobePath}" IsReadOnly="True" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.FfprobePath}" />
                         </DockPanel>
                         <DockPanel Margin="0,0,0,10">
                             <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel}" DockPanel.Dock="Left" VerticalAlignment="Center"/>
                             <Button Margin="10,0,0,0" DockPanel.Dock="Right" Content="{DynamicResource LOCExtra_Metadata_Loader_SettingBrowseLabel}" Command="{Binding BrowseSelectYoutubeDlCommand}" />
-                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeDlPath}" IsReadOnly="True" />
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeDlPath}" />
                         </DockPanel>
                         <DockPanel Margin="0,0,0,10">
                             <TextBlock Text="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel}"
@@ -63,7 +63,7 @@
                                     </Hyperlink>
                             </TextBlock>
 
-                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeCookiesPath}" IsReadOnly="True"
+                            <TextBox Margin="10,0,0,0" Text="{Binding Settings.YoutubeCookiesPath}"
                                      ToolTip="{DynamicResource LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip}" />
                         </DockPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">

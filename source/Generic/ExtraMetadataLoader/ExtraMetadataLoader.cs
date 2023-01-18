@@ -896,33 +896,37 @@ namespace ExtraMetadataLoader
 
         private bool ValidateExecutablesSettings(bool validateFfmpeg, bool validateYtdl)
         {
+            var youtubeDlPath = extraMetadataHelper.ExpandVariables(settings.Settings.YoutubeDlPath);
+            var ffmpegPath = extraMetadataHelper.ExpandVariables(settings.Settings.FfmpegPath);
+            var ffprobePath = extraMetadataHelper.ExpandVariables(settings.Settings.FfprobePath);
+
             var success = true;
             if (validateFfmpeg)
             {
                 // ffmpeg
-                if (settings.Settings.FfmpegPath.IsNullOrEmpty())
+                if (ffmpegPath.IsNullOrEmpty())
                 {
                     logger.Debug($"ffmpeg has not been configured");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
-                else if (!FileSystem.FileExists(settings.Settings.FfmpegPath))
+                else if (!FileSystem.FileExists(ffmpegPath))
                 {
-                    logger.Debug($"ffmpeg executable not found in {settings.Settings.FfmpegPath}");
+                    logger.Debug($"ffmpeg executable not found in {ffmpegPath}");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
 
                 // ffprobe
-                if (settings.Settings.FfprobePath.IsNullOrEmpty())
+                if (ffprobePath.IsNullOrEmpty())
                 {
                     logger.Debug($"ffprobe has not been configured");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
-                else if (!FileSystem.FileExists(settings.Settings.FfprobePath))
+                else if (!FileSystem.FileExists(ffprobePath))
                 {
-                    logger.Debug($"ffprobe executable not found in {settings.Settings.FfprobePath}");
+                    logger.Debug($"ffprobe executable not found in {ffprobePath}");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
@@ -931,15 +935,15 @@ namespace ExtraMetadataLoader
             if (validateYtdl)
             {
                 // youtube-dl
-                if (settings.Settings.YoutubeDlPath.IsNullOrEmpty())
+                if (youtubeDlPath.IsNullOrEmpty())
                 {
                     logger.Debug($"youtube-dl has not been configured");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
-                else if (!FileSystem.FileExists(settings.Settings.YoutubeDlPath))
+                else if (!FileSystem.FileExists(youtubeDlPath))
                 {
-                    logger.Debug($"youtube-dl executable not found in {settings.Settings.YoutubeDlPath}");
+                    logger.Debug($"youtube-dl executable not found in {youtubeDlPath}");
                     PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound"), NotificationType.Error, () => OpenSettingsView()));
                     success = false;
                 }
