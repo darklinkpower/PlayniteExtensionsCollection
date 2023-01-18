@@ -107,3 +107,9 @@ Packages:
     Changelog:
     - 'Update Co-Optimus database used by the extension'
     - 'Reduce memory used when games are processing'
+  - Version: 1.16
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.17_5f334e8c/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_16.pext
+    Changelog:
+    - 'Update Co-Optimus database'
