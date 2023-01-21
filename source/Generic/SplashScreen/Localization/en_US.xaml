@@ -14,10 +14,12 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Execute extension in Desktop Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">View splashscreen images in Desktop Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">View intro videos in Desktop Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailerDesktopMode">Use MicroTrailers in Desktop Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Execute extension in Fullscreen Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">View splashscreen images in Fullscreen Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoFullscreenMode">View intro videos in Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailerFullscreenMode">Use MicroTrailers in Fullscreen Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode">Automatically close splashscreen in Fullscreen Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBshowLogoInSplashscreen">Add game logo in splashscreen image if available</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBuseIconAsLogo">Use game icon from Metadata as logo</sys:String>

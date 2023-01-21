@@ -17,10 +17,12 @@ namespace SplashScreen
         public bool ViewImageSplashscreenDesktopMode { get; set; } = true;
         public bool ViewVideoDesktopMode { get; set; } = true;
         public bool CloseSplashScreenDesktopMode { get; set; } = true;
+        public bool UseMicroTrailersInDesktopMode { get; set; } = false;
         public bool ExecuteInFullscreenMode { get; set; } = true;
         public bool ViewImageSplashscreenFullscreenMode { get; set; } = true;
         public bool ViewVideoFullscreenMode { get; set; } = true;
         public bool CloseSplashScreenFullscreenMode { get; set; } = true;
+        public bool UseMicroTrailersInFullscreenMode { get; set; } = false;
         public bool ShowLogoInSplashscreen { get; set; } = true;
         public bool UseIconAsLogo { get; set; } = false;
         public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Left;

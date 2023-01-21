@@ -331,48 +331,59 @@ namespace SplashScreen
 
         private string GetSplashVideoPath(Game game)
         {
-            var videoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}", "VideoIntro.mp4");
+            const string videoIntroName = "VideoIntro.mp4";
+            const string microVideoName = "VideoMicrotrailer.mp4";
 
-            var splashVideo = string.Format(videoPathTemplate, "games", game.Id.ToString());
+            var baseVideoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}");
+            
+            var baseSplashVideo = string.Format(baseVideoPathTemplate, "games", game.Id.ToString());
+            var splashVideo = Path.Combine(baseSplashVideo, videoIntroName);
             if (FileSystem.FileExists(splashVideo))
             {
                 logger.Info(string.Format("Specific game video found in {0}", splashVideo));
-                return splashVideo;
+                return LogAcquiredVideo("Game-specific", splashVideo);
             }
+
+            var isDesktop = PlayniteApi.ApplicationInfo.Mode is ApplicationMode.Desktop;
+            if (ShouldUseMicroTrailer(isDesktop))
+            {
+                splashVideo = Path.Combine(baseSplashVideo, microVideoName);
+                if (FileSystem.FileExists(splashVideo))
+                {
+                    return LogAcquiredVideo("Micro trailer", splashVideo);
+                }
+            }
+
+            var videoPathTemplate = Path.Combine(baseVideoPathTemplate, videoIntroName);
 
             if (game.Source != null)
             {
                 splashVideo = string.Format(videoPathTemplate, "sources", game.Source.Id.ToString());
                 if (FileSystem.FileExists(splashVideo))
                 {
-                    logger.Info(string.Format("Source video found in {0}", splashVideo));
-                    return splashVideo;
+                    return LogAcquiredVideo($"Source '{game.Source.Name}'", splashVideo);
                 }
             }
 
-            if (game.Platforms.HasItems())
+            var platform = game.Platforms?.FirstOrDefault();
+            if (platform != null)
             {
-                splashVideo = string.Format(videoPathTemplate, "platforms", game.Platforms[0].Id.ToString());
+                splashVideo = string.Format(videoPathTemplate, "platforms", platform.Id.ToString());
                 if (FileSystem.FileExists(splashVideo))
                 {
-                    logger.Info(string.Format("Platform video found in {0}", splashVideo));
-                    return splashVideo;
+                    return LogAcquiredVideo($"Platform '{platform.Name}'", splashVideo);
                 }
             }
 
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-            {
-                splashVideo = string.Format(videoPathTemplate, "playnite", "Desktop");
-            }
-            else
-            {
-                splashVideo = string.Format(videoPathTemplate, "playnite", "Fullscreen");
-            }
+            var mode = isDesktop
+                ? "Desktop"
+                : "Fullscreen";
+            
+            splashVideo = string.Format(videoPathTemplate, "playnite", mode);
 
             if (FileSystem.FileExists(splashVideo))
             {
-                logger.Info(string.Format("Playnite mode video for {0} mode found in {1}", PlayniteApi.ApplicationInfo.Mode, splashVideo));
-                return splashVideo;
+                return LogAcquiredVideo(mode, splashVideo);
             }
             else
             {
@@ -380,6 +391,17 @@ namespace SplashScreen
                 return string.Empty;
             }
         }
+
+        private static string LogAcquiredVideo(string source, string videoPath)
+        {
+            logger.Info($"{source} video found in {videoPath}");
+            return videoPath;
+        }
+
+        private bool ShouldUseMicroTrailer(bool isDekstop) 
+            => isDekstop
+                ? settings.Settings.UseMicroTrailersInDesktopMode
+                : settings.Settings.UseMicroTrailersInFullscreenMode;
 
         private string GetSplashLogoPath(Game game)
         {
