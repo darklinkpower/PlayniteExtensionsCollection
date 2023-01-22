@@ -32,6 +32,8 @@ namespace SplashScreen
         private readonly DispatcherTimer timerWindowRemoveTopMost;
         private const string featureNameSplashScreenDisable = "[Splash Screen] Disable";
         private const string featureNameSkipSplashImage = "[Splash Screen] Skip splash image";
+        private const string videoIntroName = "VideoIntro.mp4";
+        private const string microVideoName = "VideoMicrotrailer.mp4";
 
         private SplashScreenSettingsViewModel settings { get; set; }
 
@@ -331,9 +333,6 @@ namespace SplashScreen
 
         private string GetSplashVideoPath(Game game)
         {
-            const string videoIntroName = "VideoIntro.mp4";
-            const string microVideoName = "VideoMicrotrailer.mp4";
-
             var baseVideoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}");
             
             var baseSplashVideo = string.Format(baseVideoPathTemplate, "games", game.Id.ToString());
@@ -375,9 +374,7 @@ namespace SplashScreen
                 }
             }
 
-            var mode = isDesktop
-                ? "Desktop"
-                : "Fullscreen";
+            var mode = isDesktop ? "Desktop" : "Fullscreen";
             
             splashVideo = string.Format(videoPathTemplate, "playnite", mode);
 
@@ -398,8 +395,8 @@ namespace SplashScreen
             return videoPath;
         }
 
-        private bool ShouldUseMicroTrailer(bool isDekstop) 
-            => isDekstop
+        private bool ShouldUseMicroTrailer(bool isDesktop) 
+            => isDesktop
                 ? settings.Settings.UseMicroTrailersInDesktopMode
                 : settings.Settings.UseMicroTrailersInFullscreenMode;
 
