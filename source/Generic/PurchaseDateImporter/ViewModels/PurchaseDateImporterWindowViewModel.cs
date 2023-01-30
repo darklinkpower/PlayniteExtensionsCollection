@@ -65,8 +65,10 @@ namespace PurchaseDateImporter.ViewModels
 
         private void ApplyDatesToLibrary(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary, bool useNameToCompare, bool compareOnlyDay = false)
         {
+            logger.Debug($"ApplyDatesToLibrary start. Library: \"{libraryName}\", {pluginId}");
             if (!licensesDictionary.HasItems())
             {
+                logger.Debug($"licensesDictionary did not have items");
                 playniteApi.Dialogs.ShowErrorMessage(
                     string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained"), libraryName),
                     "Purchase Date Importer");
@@ -96,20 +98,32 @@ namespace PurchaseDateImporter.ViewModels
                         playniteApi.Database.Games.Update(game);
                         updated++;
                     }
-                }
-                else if (licensesDictionary.TryGetValue(game.GameId.ToString(), out var licenseData))
-                {
-                    if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
+                    else
                     {
-                        continue;
+                        logger.Debug($"Matching by name for {game.Name}, matching name: \"{matchingName}\" not found");
                     }
+                }
+                else
+                {
+                    if (licensesDictionary.TryGetValue(game.GameId.ToString(), out var licenseData))
+                    {
+                        if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
+                        {
+                            continue;
+                        }
 
-                    game.Added = licenseData.PurchaseDate;
-                    playniteApi.Database.Games.Update(game);
-                    updated++;
+                        game.Added = licenseData.PurchaseDate;
+                        playniteApi.Database.Games.Update(game);
+                        updated++;
+                    }
+                    else
+                    {
+                        logger.Debug($"Matching by GameId for {game.Name} Id: \"{game.GameId}\" not found");
+                    }
                 }
             }
 
+            logger.Debug($"ApplyDatesToLibrary finish. {updated} games updated.");
             playniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage"), updated, libraryName), 
                 "Purchase Date Importer");
