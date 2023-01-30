@@ -88,6 +88,20 @@
                         <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xECA5;" FontSize="24" />
                     </Button.Content>
                 </Button>
+                <Button DockPanel.Dock="Left" Name="AutoPlayEnabledButton" Command="{Binding SwitchAutoPlayStatusCommand}"
+                        ToolTip="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel}"
+                        Margin="0,0,10,0" Padding="5" Visibility="{Binding SettingsModel.Settings.AutoPlayVideos, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xF012;" FontSize="24" />
+                    </Button.Content>
+                </Button>
+                <Button DockPanel.Dock="Left" Name="AutoPlayDisabledButton" Command="{Binding SwitchAutoPlayStatusCommand}"
+                        ToolTip="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel}"
+                        Margin="0,0,10,0" Padding="5" Visibility="{Binding SettingsModel.Settings.AutoPlayVideos, Converter={StaticResource InvertedBooleanToVisibilityConverter}}">
+                    <Button.Content>
+                        <TextBlock FontFamily="{StaticResource FontIcoFont}" Text="&#xF011;" FontSize="24" />
+                    </Button.Content>
+                </Button>
                 <DockPanel DockPanel.Dock="Left" Visibility="{Binding IsSoundEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Button  Name="MuteButton" Command="{Binding VideoMuteCommand}"
                             Visibility="{Binding IsPlayerMuted, Converter={StaticResource BooleanToVisibilityConverter}}"

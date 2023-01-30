@@ -275,12 +275,20 @@ namespace ExtraMetadataLoader
             OnPropertyChanged(nameof(VideoPauseCommand));
         }
 
-        public RelayCommand<object> VideoPauseCommand
+        public RelayCommand VideoPauseCommand
         {
-            get => new RelayCommand<object>((a) =>
+            get => new RelayCommand(() =>
             {
                 MediaPause();
-            }, (a) => SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
+            }, () => SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
+        }
+
+        public RelayCommand SwitchAutoPlayStatusCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                SettingsModel.Settings.AutoPlayVideos = !SettingsModel.Settings.AutoPlayVideos;
+            });
         }
 
         public void MediaPause()
