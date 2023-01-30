@@ -151,6 +151,7 @@ namespace ThemesDetailsViewToGridViewConverter
             {
                 if (Serialization.TryFromYamlFile<ThemeReplacementsDefinition>(replacementsDefinitionPath, out var replacements))
                 {
+                    logger.Debug($"Deserialized theme replacement definition in {replacementsDefinitionPath} successfully");
                     if (replacements.Removals.HasItems())
                     {
                         foreach (var removal in replacements.Removals)
@@ -166,6 +167,10 @@ namespace ThemesDetailsViewToGridViewConverter
                             gridViewNewContent = gridViewNewContent.Replace(replacement.OriginalBlock, replacement.ReplacementBlock);
                         }
                     }
+                }
+                else
+                {
+                    logger.Debug($"Failed to deserialize theme replacement definition in {replacementsDefinitionPath}");
                 }
             }
 
@@ -186,6 +191,7 @@ namespace ThemesDetailsViewToGridViewConverter
             try
             {
                 FileSystem.WriteStringToFile(gridViewPath, gridViewNewContent);
+                logger.Debug($"Wrote modified GridView file in {gridViewPath} for {manifest.Name} theme");
             }
             catch (Exception e)
             {
@@ -216,6 +222,7 @@ namespace ThemesDetailsViewToGridViewConverter
             }
             catch
             {
+                logger.Warn($"Failed to parse new XML file");
                 return false;
             }
 
