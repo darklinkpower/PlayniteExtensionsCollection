@@ -113,7 +113,7 @@ namespace SplashScreen.ViewModels
                 removeCustomBackground = true;
                 saveCustomBackground = false;
                 CustomBackgroundPath = null;
-            });
+            }, () => CustomBackgroundPath != null);
         }
 
         public RelayCommand SaveGameSettingsCommand
