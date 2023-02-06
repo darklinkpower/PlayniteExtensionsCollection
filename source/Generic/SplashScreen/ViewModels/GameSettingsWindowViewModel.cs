@@ -103,7 +103,7 @@ namespace SplashScreen.ViewModels
             }
 
             FileSystem.WriteStringToFile(gameSettingsPath, Serialization.ToJson(Settings));
-            playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_GameSettingsWindowSettingsSavedLabel"));
+            playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_GameSettingsWindowSettingsSavedLabel"), "Splash Screen");
         }
 
         public RelayCommand RemoveCustomBackgroundCommand

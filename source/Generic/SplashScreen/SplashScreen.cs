@@ -574,6 +574,8 @@ namespace SplashScreen
                     FileSystem.DeleteFileSafe(gameSettingsPath);
                 }
             }
+
+            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSplashScreen_GameSettingsWindowSettingsSavedLabel"), "Splash Screen");
         }
 
         private void OpenVideoManager()
