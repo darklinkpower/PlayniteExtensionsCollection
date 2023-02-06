@@ -15,6 +15,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">在桌面模式下执行扩展</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">在桌面模式下查看序幕屏图像</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">在桌面模式下查看导览视频</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">桌面模式下自动关闭序幕屏（禁用则会在游戏结束时隐藏桌面，但可能导致问题）</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">在全屏模式下执行扩展</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">在全屏模式下查看序幕屏图像</sys:String>
