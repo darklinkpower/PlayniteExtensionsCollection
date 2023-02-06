@@ -6,9 +6,11 @@ Module: SplashScreen.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
+    - Name: Help
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Splash-Screen
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
-    - Name: Playnite Forums thread
-      Url: https://playnite.link/forum/thread-681.html
     - Name: Translate
       Url: https://crowdin.com/project/darklinkpower-playnite-extensi
+    - Name: Ko-fi (Tips and Donations)
+      Url: https://ko-fi.com/darklinkpower

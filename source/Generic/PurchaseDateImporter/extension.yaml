@@ -6,7 +6,11 @@ Module: PurchaseDateImporter.dll
 Type: GenericPlugin
 Icon: icon.jpg
 Links:
+    - Name: Help
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Purchase-Date-Importer
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Translate
       Url: https://crowdin.com/project/darklinkpower-playnite-extensi
+    - Name: Ko-fi (Tips and Donations)
+      Url: https://ko-fi.com/darklinkpower
