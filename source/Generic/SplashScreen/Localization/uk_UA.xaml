@@ -6,8 +6,8 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Повторно увімкнути розширення для вибраних ігор</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Додати особливість для пропуску екрана-заставки до вибраних ігор</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Прибрати особливіть для пропуску екрана-заставки з вибраних ігор</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Open &quot;{0}&quot; settings window</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Delete Splash Screen configuration</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Відкрити вікно налаштувань &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Видалити конфігурацію Splash Screen</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Вступне відео додано</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Вступне відео прибрано</sys:String>
@@ -52,8 +52,8 @@
     <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Відео недоступне</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Додати відео</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Прибрати відео</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowUseCustomBackgroundLabel">Use custom background image</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowEnableGameSpecificSettingsLabel">Enable game specific settings</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowUseCustomBackgroundLabel">Використовувати нетипове фонове зображення</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowEnableGameSpecificSettingsLabel">Увімкнути налаштування для окремої гри</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Зберегти налаштування</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Налаштування збережено</sys:String>
 </ResourceDictionary>
