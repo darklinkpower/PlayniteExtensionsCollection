@@ -15,6 +15,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Erweiterung im Desktop-Modus ausführen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Splashscreen-Bilder im Desktop-Modus anzeigen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Intro-Videos im Desktop-Modus anzeigen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Schließe Splashscreen automatisch im Desktop-Modus (Deaktivieren versteckt Desktop, wenn das Spiel geschlossen wird, kann aber Probleme verursachen)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Erweiterung im Vollbild-Modus ausführen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Splashscreen-Bilder im Vollbild-Modus anzeigen</sys:String>
