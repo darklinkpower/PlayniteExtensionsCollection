@@ -216,3 +216,13 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_32.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.33
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-06
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.06_002184fc/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_33.pext
+    Changelog:
+    - 'Added support to use MicroTrailer video from ExtraMetadataLoader extension for the intro video (By cnapolit)'
+    - 'Support to configure extension settings for individual games from right click menu (Thanks to WilliamLeGod for patronizing the feature)'
+    - 'Support to configure specific custom background image for games, different from the game background (Thanks to WilliamLeGod for patronizing the feature)'
+    - 'Note: Common extension settings will be reset after this update. Apologies for the inconvenience'
+    - 'Updated localizations'

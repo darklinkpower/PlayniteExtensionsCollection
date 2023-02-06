@@ -438,3 +438,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.17_5f334e8c/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_62.pext
     Changelog:
     - 'Support to use Playnite variables in settings paths (By maforget)'
+  - Version: 1.63
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-06
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.06_002184fc/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_63.pext
+    Changelog:
+    - 'Added button to video player switch autoplay setting'
