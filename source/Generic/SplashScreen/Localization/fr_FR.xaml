@@ -15,6 +15,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Exécuter l'extension en mode bureau</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Afficher les images de démarrage en mode bureau</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Voir les vidéos de démarrage en mode bureau</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Fermer automatiquement l'image de démarrage en mode bureau (désactiver ceci masque le bureau lorsque le jeu s’arrête mais peut causer des problèmes)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Exécuter l'extension en mode plein écran</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Afficher les images de démarrage en mode plein écran</sys:String>
