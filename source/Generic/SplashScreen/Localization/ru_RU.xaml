@@ -15,6 +15,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Включить расширение для обычного режима</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Показывать изображения заставки в обычном режиме</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Показывать вступительное видео в обычном режиме</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Автоматически закрывать заставку в обычном режиме (отключение скрывает рабочий стол при закрытии игры, но может вызвать проблемы)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Включить расширение для полноэкранного режима</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Показывать изображения заставки в полноэкранном режиме</sys:String>
