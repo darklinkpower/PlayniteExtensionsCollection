@@ -99,8 +99,12 @@
       <DependentUpon>SplashScreenSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\GameSettingsWindowViewModel.cs" />
     <Compile Include="ViewModels\SplashScreenImageViewModel.cs" />
     <Compile Include="ViewModels\VideoManagerViewModel.cs" />
+    <Compile Include="Views\GameSettingsWindow.xaml.cs">
+      <DependentUpon>GameSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SplashScreenImage.xaml.cs">
       <DependentUpon>SplashScreenImage.xaml</DependentUpon>
     </Compile>
@@ -123,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SplashScreenSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

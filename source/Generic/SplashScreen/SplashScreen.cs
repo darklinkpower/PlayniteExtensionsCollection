@@ -140,14 +140,14 @@ namespace SplashScreen
             if (showSplashImage)
             {
                 var usingGlobalImage = false;
-                if (settings.Settings.UseGlobalSplashImage && !settings.Settings.GlobalSplashFile.IsNullOrEmpty())
+                if (generalSplashSettings.EnableCustomBackgroundImage && !generalSplashSettings.CustomBackgroundImage.IsNullOrEmpty())
                 {
-                    var globalSplashImagePath = Path.Combine(GetPluginUserDataPath(), settings.Settings.GlobalSplashFile);
+                    var globalSplashImagePath = Path.Combine(GetPluginUserDataPath(), "CustomBackgrounds", generalSplashSettings.CustomBackgroundImage);
                     if (FileSystem.FileExists(globalSplashImagePath))
                     {
                         splashImagePath = globalSplashImagePath;
                         usingGlobalImage = true;
-                        if (settings.Settings.UseLogoInGlobalSplashImage)
+                        if (generalSplashSettings.EnableLogoDisplayOnCustomBackground)
                         {
                             logoPath = GetSplashLogoPath(game, generalSplashSettings);
                         }
@@ -507,6 +507,73 @@ namespace SplashScreen
                     }
                 }
             };
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            return new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = string.Format(ResourceProvider.GetString("LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow"), args.Games.Last().Name),
+                    MenuSection = $"Splash Screen",
+                    Action = a =>
+                    {
+                        OpenSplashScreenGameConfigWindow(args.Games.Last());
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCSplashScreen_MenuItemDeleteGamesSettings"),
+                    MenuSection = $"Splash Screen",
+                    Action = a =>
+                    {
+                        DeleteGamesSettings(args.Games);
+                    }
+                }
+            };
+        }
+
+        private void OpenSplashScreenGameConfigWindow(Game game)
+        {
+            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = true
+            });
+
+            window.Height = 700;
+            window.Width = 900;
+            window.Title = "Splash Screen";
+
+            window.Content = new GameSettingsWindow();
+            window.DataContext = new GameSettingsWindowViewModel(PlayniteApi, GetPluginUserDataPath(), game);
+            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.ShowDialog();
+        }
+
+        private void DeleteGamesSettings(List<Game> games)
+        {
+            foreach (var game in games)
+            {
+                var gameSettingsPath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
+                if (FileSystem.FileExists(gameSettingsPath))
+                {
+                    var gameSplashSettings = Serialization.FromJsonFile<GameSplashSettings>(gameSettingsPath);
+                    if (!gameSplashSettings.GeneralSplashSettings.CustomBackgroundImage.IsNullOrEmpty())
+                    {
+                        var customImage = Path.Combine(GetPluginUserDataPath(), "CustomBackgrounds", gameSplashSettings.GeneralSplashSettings.CustomBackgroundImage);
+                        if (FileSystem.FileExists(customImage))
+                        {
+                            FileSystem.DeleteFileSafe(customImage);
+                        }
+                    }
+
+                    FileSystem.DeleteFileSafe(gameSettingsPath);
+                }
+            }
         }
 
         private void OpenVideoManager()

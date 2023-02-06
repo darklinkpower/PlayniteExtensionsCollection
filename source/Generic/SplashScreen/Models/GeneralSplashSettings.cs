@@ -35,6 +35,21 @@ namespace SplashScreen.Models
         bool LogoUseIconAsLogo { get; set; }
 
         /// <summary>
+        /// Gets or sets if custom background image should be used for SplashScreen.
+        /// </summary>
+        bool EnableCustomBackgroundImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets if logo should be displayed when using custom background image.
+        /// </summary>
+        bool EnableLogoDisplayOnCustomBackground { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom background image file.
+        /// </summary>
+        string CustomBackgroundImage { get; set; }
+
+        /// <summary>
         /// Gets or sets logo display horizontal alignment.
         /// </summary>
         HorizontalAlignment LogoHorizontalAlignment { get; set; }
@@ -62,6 +77,9 @@ namespace SplashScreen.Models
         public bool EnableLogoDisplay { get; set; } = true;
         public bool EnableLogoFadeInAnimation { get; set; } = true;
         public bool LogoUseIconAsLogo { get; set; } = true;
+        public bool EnableCustomBackgroundImage { get; set; } = false;
+        public bool EnableLogoDisplayOnCustomBackground { get; set; } = false;
+        public string CustomBackgroundImage { get; set; } = null;
         public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Left;
         public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
         public ModeSplashSettings DesktopModeSettings { get; set; } = new ModeSplashSettings();

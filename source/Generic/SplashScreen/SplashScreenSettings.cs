@@ -14,9 +14,6 @@ namespace SplashScreen
 {
     public class SplashScreenSettings : ObservableObject
     {
-        public bool UseGlobalSplashImage { get; set; } = false;
-        public string GlobalSplashFile { get; set; } = string.Empty;
-        public bool UseLogoInGlobalSplashImage { get; set; } = false;
         [DontSerialize]
         private string globalSplashImagePath { get; set; }
         [DontSerialize]
@@ -94,13 +91,13 @@ namespace SplashScreen
 
         private void SetGlobalSplashImagePath()
         {
-            if (string.IsNullOrEmpty(Settings.GlobalSplashFile))
+            if (Settings.GeneralSplashSettings.CustomBackgroundImage.IsNullOrEmpty())
             {
                 Settings.GlobalSplashImagePath = null;
                 return;
             }
 
-            var globalSplashImagePath = Path.Combine(pluginUserDataPath, Settings.GlobalSplashFile);
+            var globalSplashImagePath = Path.Combine(pluginUserDataPath, "CustomBackgrounds", Settings.GeneralSplashSettings.CustomBackgroundImage);
             if (FileSystem.FileExists(globalSplashImagePath))
             {
                 Settings.GlobalSplashImagePath = globalSplashImagePath;
@@ -145,14 +142,14 @@ namespace SplashScreen
             get => new RelayCommand(() =>
             {
                 var filePath = playniteApi.Dialogs.SelectImagefile();
-                if (!string.IsNullOrEmpty(filePath) && RemoveGlobalImage())
+                if (!filePath.IsNullOrEmpty() && RemoveGlobalImage())
                 {
-                    var fileName = Path.GetFileName(filePath);
-                    var globalSplashImagePath = Path.Combine(pluginUserDataPath, fileName);
+                    var fileName = Guid.NewGuid() + Path.GetExtension(filePath);
+                    var globalSplashImagePath = Path.Combine(pluginUserDataPath, "CustomBackgrounds", fileName);
                     try
                     {
                         FileSystem.CopyFile(filePath, globalSplashImagePath);
-                        Settings.GlobalSplashFile = Path.GetFileName(filePath);
+                        Settings.GeneralSplashSettings.CustomBackgroundImage = Path.GetFileName(filePath);
                         SetGlobalSplashImagePath();
                     }
                     catch (Exception e)
@@ -173,15 +170,15 @@ namespace SplashScreen
 
         private bool RemoveGlobalImage()
         {
-            if (Settings.GlobalSplashFile.IsNullOrEmpty())
+            if (Settings.GeneralSplashSettings.CustomBackgroundImage.IsNullOrEmpty())
             {
                 return true;
             }
 
-            var globalSplashImagePath = Path.Combine(pluginUserDataPath, Settings.GlobalSplashFile);
+            var globalSplashImagePath = Path.Combine(pluginUserDataPath, "CustomBackgrounds", Settings.GeneralSplashSettings.CustomBackgroundImage);
             FileSystem.DeleteFileSafe(globalSplashImagePath);
 
-            Settings.GlobalSplashFile = null;
+            Settings.GeneralSplashSettings.CustomBackgroundImage = null;
             SetGlobalSplashImagePath();
             return true;
         }
