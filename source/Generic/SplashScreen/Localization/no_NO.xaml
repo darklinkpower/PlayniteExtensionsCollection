@@ -15,6 +15,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Kjør utvidelsen i skrivebordsmodus</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Vis splashscreen-bilder i skrivebordsmodus</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Vis intro-videoer i skrivebordsmodus</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Lukk splashscreen automatisk i skrivebordsmodus (deaktivering skjuler skrivebordet når spillet lukkes, men kan forårsake problemer)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Kjør utvidelse i fullskjermmodus</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Vis splashscreen-bilder i fullskjermmodus</sys:String>
