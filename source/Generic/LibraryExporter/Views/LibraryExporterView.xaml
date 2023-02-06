@@ -14,8 +14,17 @@
             <Button Content="{DynamicResource LibraryExporterAdvanced_ExportAllGamesLabel}" Command="{Binding ExportAllGamesCommand}" />
             <Button Margin="10,0,0,0" Content="{DynamicResource LibraryExporterAdvanced_ExportSelectedGamesLabel}" Command="{Binding ExportSelectedGamesCommand}" />
         </StackPanel>
-        <TextBlock Text="{DynamicResource LibraryExporterAdvanced_FieldsToExportLabel}" DockPanel.Dock="Top"/>
-        <ScrollViewer DockPanel.Dock="Bottom" Margin="0,10,0,0">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0">
+            <TextBlock Text="{DynamicResource LibraryExporterAdvanced_ListsSeparatorLabel}"
+                       VerticalAlignment="Center"
+                       ToolTip="{DynamicResource LibraryExporterAdvanced_ListsSeparatorTooltip}" />
+            <TextBox Text="{Binding Settings.Settings.ListsSeparator}" Margin="5,0,0,0"
+                     VerticalAlignment="Center"
+                     MinWidth="60"
+                     ToolTip="{DynamicResource LibraryExporterAdvanced_ListsSeparatorTooltip}" />
+        </StackPanel>
+        <TextBlock Text="{DynamicResource LibraryExporterAdvanced_FieldsToExportLabel}" Margin="0,10,0,0" DockPanel.Dock="Top"/>
+        <ScrollViewer DockPanel.Dock="Top" Margin="0,10,0,0">
             <StackPanel>
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.AgeRatings}"
                       Content="{DynamicResource LOCAgeRatingLabel}" Margin="0,0,0,5" />
