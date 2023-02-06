@@ -22,14 +22,16 @@
                 <CheckBox Name="ExecuteDesktopMode" IsChecked="{Binding Settings.ExecuteInDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBexecuteInDesktopMode}" Margin="0,10,0,0" />
                 <StackPanel Margin="40,0,0,0" IsEnabled="{Binding ElementName=ExecuteDesktopMode, Path=IsChecked}">
                     <CheckBox IsChecked="{Binding Settings.ViewImageSplashscreenDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode}" Margin="0,10,0,0" />
-                    <CheckBox IsChecked="{Binding Settings.ViewVideoDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewVideoDesktopMode}" Margin="0,10,0,0" />
+                    <CheckBox Name="ViewVideoDesktopMode" IsChecked="{Binding Settings.ViewVideoDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewVideoDesktopMode}" Margin="0,10,0,0" />
+                    <CheckBox IsChecked="{Binding Settings.UseMicroTrailersInDesktopMode}" IsEnabled="{Binding ElementName=ViewVideoDesktopMode, Path=IsChecked}" Content="{DynamicResource LOCSplashScreen_SettingCBuseMicroTrailer}" Margin="20,10,0,0" />
                     <CheckBox IsChecked="{Binding Settings.CloseSplashScreenDesktopMode}" Content="{DynamicResource LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode}" Margin="0,10,0,0" />
                 </StackPanel>
 
                 <CheckBox Name="ExecuteFullscreenMode" IsChecked="{Binding Settings.ExecuteInFullscreenMode}" Content="{DynamicResource LOCSplashScreen_SettingCBexecuteInFullscreenMode}" Margin="0,20,0,0"/>
                 <StackPanel Margin="40,0,0,0" IsEnabled="{Binding ElementName=ExecuteFullscreenMode, Path=IsChecked}">
                     <CheckBox IsChecked="{Binding Settings.ViewImageSplashscreenFullscreenMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode}" Margin="0,10,0,0" />
-                    <CheckBox IsChecked="{Binding Settings.ViewVideoFullscreenMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewVideoFullscreenMode}" Margin="0,10,0,0" />
+                    <CheckBox Name="ViewVideoFullscreenMode" IsChecked="{Binding Settings.ViewVideoFullscreenMode}" Content="{DynamicResource LOCSplashScreen_SettingCBviewVideoFullscreenMode}" Margin="0,10,0,0" />
+                    <CheckBox IsChecked="{Binding Settings.UseMicroTrailersInFullscreenMode}" IsEnabled="{Binding ElementName=ViewVideoFullscreenMode, Path=IsChecked}" Content="{DynamicResource LOCSplashScreen_SettingCBuseMicroTrailer}" Margin="20,10,0,0" />
                     <CheckBox IsChecked="{Binding Settings.CloseSplashScreenFullscreenMode}" Content="{DynamicResource LOCSplashScreen_SettingCBcloseSplashScreenFullscreenMode}" Margin="0,10,0,0" />
                 </StackPanel>
                 <CheckBox Content="{DynamicResource LOCSplashScreen_SettingCBuseBlackSplashscreen}"
