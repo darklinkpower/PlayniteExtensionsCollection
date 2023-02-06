@@ -15,7 +15,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Запускати розширення в режимі робочого столу</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Показувати зображення екрана-заставки в режимі робочого столу</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Показувати вступне відео в режимі робочого столу</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Використовувати мікротрейлери</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Автоматично закривати екран-заставку в режимі робочого столу (вимкнення приховає робочий стіл, коли гра закриється, але це може викликати проблеми)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Запускати розширення в повноекранному режимі</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Показувати зображення екрана-заставки в повноекранному режимі</sys:String>
