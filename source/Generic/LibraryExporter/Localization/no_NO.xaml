@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Åpne eksport-vindu</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorLabel">Lists separator:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorTooltip">Used to separate items in fields when there are multiple items</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Felt som skal eksporteres:</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Eksporter alle spill</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Eksporter valgte spill</sys:String>
