@@ -6,7 +6,9 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Erweiterung für die ausgewählten Spiele wieder aktivieren</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Füge Bild-Splashscreen-Überspringen-Funktion ausgewählten Spielen hinzu</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Entferne Bild-Splashscreen-Überspringen-Funktion von ausgewählten Spielen</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Open &quot;{0}&quot; settings window</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Delete Splash Screen configuration</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro-Video wurde hinzugefügt</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro-Video wurde entfernt</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">&quot;{0}&quot;-Ausschluss-Funktion zu {1} Spiel(en) hinzugefügt</sys:String>
@@ -15,6 +17,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Erweiterung im Desktop-Modus ausführen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Splashscreen-Bilder im Desktop-Modus anzeigen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Intro-Videos im Desktop-Modus anzeigen</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Schließe Splashscreen automatisch im Desktop-Modus (Deaktivieren versteckt Desktop, wenn das Spiel geschlossen wird, kann aber Probleme verursachen)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Erweiterung im Vollbild-Modus ausführen</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Splashscreen-Bilder im Vollbild-Modus anzeigen</sys:String>
@@ -49,5 +52,8 @@
     <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Video nicht verfügbar</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Video hinzufügen</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Video entfernen</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowUseCustomBackgroundLabel">Use custom background image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowEnableGameSpecificSettingsLabel">Enable game specific settings</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
 </ResourceDictionary>

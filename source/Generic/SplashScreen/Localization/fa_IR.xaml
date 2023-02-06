@@ -6,7 +6,9 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Re-Enable extension for the selected games</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Add image splash screen skip feature to selected games</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Remove image splash screen skip feature from selected games</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Open &quot;{0}&quot; settings window</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Delete Splash Screen configuration</sys:String>
+    
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro video has been added</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro video has been removed</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Added &quot;{0}&quot; exclude feature to {1} game(s)</sys:String>
@@ -15,6 +17,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Execute extension in Desktop Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">View splashscreen images in Desktop Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">View intro videos in Desktop Mode</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Automatically close splashscreen in Desktop Mode (Disabling hides desktop when game closes but can cause issues)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Execute extension in Fullscreen Mode</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">View splashscreen images in Fullscreen Mode</sys:String>
@@ -49,5 +52,8 @@
     <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Video not available</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Add video</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Remove video</sys:String>
-
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowUseCustomBackgroundLabel">Use custom background image</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowEnableGameSpecificSettingsLabel">Enable game specific settings</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
 </ResourceDictionary>

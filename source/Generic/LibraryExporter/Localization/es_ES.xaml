@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Abrir ventana de exportación</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorLabel">Separador de listas:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorTooltip">Utilizado para separar los elementos en campos cuando hay varios elementos</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Campos a exportar:</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Exportar todos los juegos</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Exportar juegos seleccionados</sys:String>
