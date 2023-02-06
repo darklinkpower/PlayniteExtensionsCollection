@@ -1,9 +1,11 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
+using SplashScreen.Models;
 using SplashScreen.ViewModels;
 using SplashScreen.Views;
 using System;
@@ -106,16 +108,13 @@ namespace SplashScreen
 
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
-            // TODO Refactor!
-
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && !settings.Settings.ExecuteInDesktopMode)
+            var game = args.Game;
+            var generalSplashSettings = GetGeneralSplashScreenSettings(game);
+            var modeSplashSettings = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop
+                                ? generalSplashSettings.DesktopModeSettings : generalSplashSettings.FullscreenModeSettings;
+            if (!modeSplashSettings.IsEnabled)
             {
-                logger.Info("Execution disabled for Desktop mode in settings");
-                return;
-            }
-            else if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && !settings.Settings.ExecuteInFullscreenMode)
-            {
-                logger.Info("Execution disabled for Fullscreen mode in settings");
+                logger.Info($"Execution disabled for {PlayniteApi.ApplicationInfo.Mode} mode in settings");
                 return;
             }
 
@@ -126,9 +125,8 @@ namespace SplashScreen
                 currentSplashWindow = null;
                 RestoreBackgroundMusic();
             }
-            currentSplashWindow = null;
 
-            var game = args.Game;
+            currentSplashWindow = null;
             if (PlayniteUtilities.GetGameHasFeature(game, featureNameSplashScreenDisable, true))
             {
                 logger.Info($"{game.Name} has splashscreen disable feature");
@@ -138,8 +136,7 @@ namespace SplashScreen
             var splashImagePath = string.Empty;
             var logoPath = string.Empty;
 
-            var showSplashImage = GetShowSplashImage(game);
-
+            var showSplashImage = GetShowSplashImage(game, modeSplashSettings);
             if (showSplashImage)
             {
                 var usingGlobalImage = false;
@@ -152,14 +149,14 @@ namespace SplashScreen
                         usingGlobalImage = true;
                         if (settings.Settings.UseLogoInGlobalSplashImage)
                         {
-                            logoPath = GetSplashLogoPath(game);
+                            logoPath = GetSplashLogoPath(game, generalSplashSettings);
                         }
                     }
                 }
 
                 if (!usingGlobalImage)
                 {
-                    if (settings.Settings.UseBlackSplashscreen)
+                    if (generalSplashSettings.UseBlackSplashscreen)
                     {
                         splashImagePath = Path.Combine(pluginInstallPath, "Images", "SplashScreenBlack.png");
                     }
@@ -168,48 +165,55 @@ namespace SplashScreen
                         splashImagePath = GetSplashImagePath(game);
                     }
 
-                    if (settings.Settings.ShowLogoInSplashscreen)
+                    if (generalSplashSettings.EnableLogoDisplay)
                     {
-                        logoPath = GetSplashLogoPath(game);
+                        logoPath = GetSplashLogoPath(game, generalSplashSettings);
                     }
                 }
             }
 
-            if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.ViewVideoDesktopMode) ||
-                (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.ViewVideoFullscreenMode))
+            if (modeSplashSettings.EnableVideos)
             {
-                var videoPath = GetSplashVideoPath(game);
+                var videoPath = GetSplashVideoPath(game, modeSplashSettings);
                 if (!videoPath.IsNullOrEmpty())
                 {
-                    CreateSplashVideoWindow(showSplashImage, videoPath, splashImagePath, logoPath);
+                    CreateSplashVideoWindow(showSplashImage, videoPath, splashImagePath, logoPath, generalSplashSettings, modeSplashSettings);
                     return;
                 }
             }
             
             if (showSplashImage)
             {
-                CreateSplashImageWindow(splashImagePath, logoPath);
+                CreateSplashImageWindow(splashImagePath, logoPath, generalSplashSettings, modeSplashSettings);
             }
         }
 
-        private bool GetShowSplashImage(Game game)
+        private GeneralSplashSettings GetGeneralSplashScreenSettings(Game game)
+        {
+            var gameSettingsPath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
+            if (FileSystem.FileExists(gameSettingsPath))
+            {
+                var gameSplashSettings = Serialization.FromJsonFile<GameSplashSettings>(gameSettingsPath);
+                if (gameSplashSettings.EnableGameSpecificSettings)
+                {
+                    return gameSplashSettings.GeneralSplashSettings;
+                }
+            }
+
+            return settings.Settings.GeneralSplashSettings;
+        }
+
+        private bool GetShowSplashImage(Game game, ModeSplashSettings modeSplashSettings)
         {
             if (PlayniteUtilities.GetGameHasFeature(game, featureNameSkipSplashImage, true))
             {
                 return false;
             }
 
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-            {
-                return settings.Settings.ViewImageSplashscreenDesktopMode;
-            }
-            else
-            {
-                return settings.Settings.ViewImageSplashscreenFullscreenMode;
-            }
+            return modeSplashSettings.EnableBackgroundImage;
         }
 
-        private void CreateSplashVideoWindow(bool showSplashImage, string videoPath, string splashImagePath, string logoPath)
+        private void CreateSplashVideoWindow(bool showSplashImage, string videoPath, string splashImagePath, string logoPath, GeneralSplashSettings generalSplashSettings, ModeSplashSettings modeSplashSettings)
         {
             // Mutes Playnite Background music to make sure its not playing when video or splash screen image
             // is active and prevents music not stopping when game is already running
@@ -250,14 +254,13 @@ namespace SplashScreen
 
             if (showSplashImage)
             {
-                currentSplashWindow.Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(settings.Settings, splashImagePath, logoPath) };
+                currentSplashWindow.Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(generalSplashSettings, splashImagePath, logoPath) };
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     Thread.Sleep(3000);
                 }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false });
 
-                if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
-                    (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
+                if (modeSplashSettings.CloseSplashscreenAutomatic)
                 {
                     timerCloseWindow.Stop();
                     timerCloseWindow.Start();
@@ -282,7 +285,7 @@ namespace SplashScreen
             videoWaitHandle.Set();
         }
 
-        private void CreateSplashImageWindow(string splashImagePath, string logoPath)
+        private void CreateSplashImageWindow(string splashImagePath, string logoPath, GeneralSplashSettings generalSplashSettings, ModeSplashSettings modeSplashSettings)
         {
             // Mutes Playnite Background music to make sure its not playing when video or splash screen image
             // is active and prevents music not stopping when game is already running
@@ -297,7 +300,7 @@ namespace SplashScreen
                 WindowState = WindowState.Maximized,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 Focusable = false,
-                Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(settings.Settings, splashImagePath, logoPath) },
+                Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(generalSplashSettings, splashImagePath, logoPath) },
                 // Window is set to topmost to make sure another window won't show over it
                 Topmost = true
             };
@@ -309,8 +312,7 @@ namespace SplashScreen
                 Thread.Sleep(3000);
             }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false});
 
-            if ((PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && settings.Settings.CloseSplashScreenDesktopMode) ||
-                (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen && settings.Settings.CloseSplashScreenFullscreenMode))
+            if (modeSplashSettings.CloseSplashscreenAutomatic)
             {
                 timerCloseWindow.Stop();
                 timerCloseWindow.Start();
@@ -331,7 +333,7 @@ namespace SplashScreen
             currentSplashWindow = null;
         }
 
-        private string GetSplashVideoPath(Game game)
+        private string GetSplashVideoPath(Game game, ModeSplashSettings modeSplashSettings)
         {
             var baseVideoPathTemplate = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "{0}", "{1}");
             
@@ -343,8 +345,7 @@ namespace SplashScreen
                 return LogAcquiredVideo("Game-specific", splashVideo);
             }
 
-            var isDesktop = PlayniteApi.ApplicationInfo.Mode is ApplicationMode.Desktop;
-            if (ShouldUseMicroTrailer(isDesktop))
+            if (modeSplashSettings.EnableMicroTrailerVideos)
             {
                 splashVideo = Path.Combine(baseSplashVideo, microVideoName);
                 if (FileSystem.FileExists(splashVideo))
@@ -354,7 +355,6 @@ namespace SplashScreen
             }
 
             var videoPathTemplate = Path.Combine(baseVideoPathTemplate, videoIntroName);
-
             if (game.Source != null)
             {
                 splashVideo = string.Format(videoPathTemplate, "sources", game.Source.Id.ToString());
@@ -374,8 +374,7 @@ namespace SplashScreen
                 }
             }
 
-            var mode = isDesktop ? "Desktop" : "Fullscreen";
-            
+            var mode = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "Desktop" : "Fullscreen";
             splashVideo = string.Format(videoPathTemplate, "playnite", mode);
 
             if (FileSystem.FileExists(splashVideo))
@@ -395,14 +394,9 @@ namespace SplashScreen
             return videoPath;
         }
 
-        private bool ShouldUseMicroTrailer(bool isDesktop) 
-            => isDesktop
-                ? settings.Settings.UseMicroTrailersInDesktopMode
-                : settings.Settings.UseMicroTrailersInFullscreenMode;
-
-        private string GetSplashLogoPath(Game game)
+        private string GetSplashLogoPath(Game game, GeneralSplashSettings generalSplashSettings)
         {
-            if (settings.Settings.UseIconAsLogo && game.Icon != null && !game.Icon.StartsWith("http"))
+            if (generalSplashSettings.LogoUseIconAsLogo && game.Icon != null && !game.Icon.StartsWith("http"))
             {
                 logger.Info("Found game icon");
                 return PlayniteApi.Database.GetFullFilePath(game.Icon);
@@ -440,9 +434,11 @@ namespace SplashScreen
                 logger.Info("Using generic Desktop mode background image");
                 return Path.Combine(pluginInstallPath, "Images", "SplashScreenDesktopMode.png");
             }
-
-            logger.Info("Using generic Fullscreen mode background image");
-            return Path.Combine(pluginInstallPath, "Images", "SplashScreenFullscreenMode.png");
+            else
+            {
+                logger.Info("Using generic Fullscreen mode background image");
+                return Path.Combine(pluginInstallPath, "Images", "SplashScreenFullscreenMode.png");
+            }
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)

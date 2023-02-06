@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PluginsCommon;
+using SplashScreen.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,8 +34,8 @@ namespace SplashScreen.ViewModels
             }
         }
 
-        private SplashScreenSettings settings;
-        public SplashScreenSettings Settings
+        private GeneralSplashSettings settings;
+        public GeneralSplashSettings Settings
         {
             get => settings;
             set
@@ -43,16 +45,15 @@ namespace SplashScreen.ViewModels
             }
         }
 
-        public SplashScreenImageViewModel(SplashScreenSettings settings, string splashImagePath, string logoPath)
+        public SplashScreenImageViewModel(GeneralSplashSettings settings, string splashImagePath, string logoPath)
         {
             Settings = settings;
-            
-            if (!splashImagePath.IsNullOrEmpty() && File.Exists(splashImagePath))
+            if (!splashImagePath.IsNullOrEmpty() && FileSystem.FileExists(splashImagePath))
             {
                 SplashImagePath = splashImagePath;
             }
 
-            if (!logoPath.IsNullOrEmpty() && File.Exists(logoPath))
+            if (!logoPath.IsNullOrEmpty() && FileSystem.FileExists(logoPath))
             {
                 LogoPath = logoPath;
             }

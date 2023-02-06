@@ -54,7 +54,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
-                                <Condition Binding="{Binding Settings.SplashLogoUseFadeInAnimation}" Value="True" />
+                                <Condition Binding="{Binding Settings.EnableLogoFadeInAnimation}" Value="True" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Source, Converter={StaticResource NullToBoolConverter}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
@@ -79,7 +79,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
-                                <Condition Binding="{Binding Settings.SplashImageUseFadeInAnimation}" Value="True" />
+                                <Condition Binding="{Binding Settings.EnableImageFadeInAnimation}" Value="True" />
                                 <Condition Binding="{Binding ElementName=LogoImage, Path=Tag}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>
@@ -94,7 +94,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsVisible}" Value="True" />
-                                <Condition Binding="{Binding Settings.SplashImageUseFadeInAnimation}" Value="True" />
+                                <Condition Binding="{Binding Settings.EnableImageFadeInAnimation}" Value="True" />
                                 <Condition Binding="{Binding ElementName=LogoImage, Path=Tag}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.EnterActions>

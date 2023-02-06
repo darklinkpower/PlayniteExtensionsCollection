@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using PluginsCommon;
+using SplashScreen.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,21 +14,6 @@ namespace SplashScreen
 {
     public class SplashScreenSettings : ObservableObject
     {
-        public bool ExecuteInDesktopMode { get; set; } = true;
-        public bool ViewImageSplashscreenDesktopMode { get; set; } = true;
-        public bool ViewVideoDesktopMode { get; set; } = true;
-        public bool CloseSplashScreenDesktopMode { get; set; } = true;
-        public bool UseMicroTrailersInDesktopMode { get; set; } = false;
-        public bool ExecuteInFullscreenMode { get; set; } = true;
-        public bool ViewImageSplashscreenFullscreenMode { get; set; } = true;
-        public bool ViewVideoFullscreenMode { get; set; } = true;
-        public bool CloseSplashScreenFullscreenMode { get; set; } = true;
-        public bool UseMicroTrailersInFullscreenMode { get; set; } = false;
-        public bool ShowLogoInSplashscreen { get; set; } = true;
-        public bool UseIconAsLogo { get; set; } = false;
-        public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Left;
-        public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
-        public bool UseBlackSplashscreen { get; set; } = false;
         public bool UseGlobalSplashImage { get; set; } = false;
         public string GlobalSplashFile { get; set; } = string.Empty;
         public bool UseLogoInGlobalSplashImage { get; set; } = false;
@@ -40,28 +26,6 @@ namespace SplashScreen
             set
             {
                 globalSplashImagePath = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool splashImageUseFadeInAnimation { get; set; } = true;
-        public bool SplashImageUseFadeInAnimation
-        {
-            get => splashImageUseFadeInAnimation;
-            set
-            {
-                splashImageUseFadeInAnimation = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool splashLogoUseFadeInAnimation { get; set; } = false;
-        public bool SplashLogoUseFadeInAnimation
-        {
-            get => splashLogoUseFadeInAnimation;
-            set
-            {
-                splashLogoUseFadeInAnimation = value;
                 OnPropertyChanged();
             }
         }
@@ -82,6 +46,7 @@ namespace SplashScreen
             { VerticalAlignment.Bottom, ResourceProvider.GetString("LOCSplashScreen_SettingVerticalAlignmentBottomLabel") },
         };
 
+        public GeneralSplashSettings GeneralSplashSettings { get; set; } = new GeneralSplashSettings();
     }
 
     public class SplashScreenSettingsViewModel : ObservableObject, ISettings
