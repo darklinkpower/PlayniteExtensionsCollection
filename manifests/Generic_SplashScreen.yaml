@@ -226,3 +226,9 @@ Packages:
     - 'Support to configure specific custom background image for games, different from the game background (Thanks to WilliamLeGod for patronizing the feature)'
     - 'Note: Common extension settings will be reset after this update. Apologies for the inconvenience'
     - 'Updated localizations'
+  - Version: 2.34
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.07_456762c1/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_34.pext
+    Changelog:
+    - 'Changed some default settings'
