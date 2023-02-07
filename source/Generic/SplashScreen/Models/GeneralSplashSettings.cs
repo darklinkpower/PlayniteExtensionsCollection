@@ -72,13 +72,13 @@ namespace SplashScreen.Models
 
     public class GeneralSplashSettings : IGeneralSplashSettings
     {
-        public bool UseBlackSplashscreen { get; set; } = true;
+        public bool UseBlackSplashscreen { get; set; } = false;
         public bool EnableImageFadeInAnimation { get; set; } = true;
         public bool EnableLogoDisplay { get; set; } = true;
         public bool EnableLogoFadeInAnimation { get; set; } = true;
-        public bool LogoUseIconAsLogo { get; set; } = true;
+        public bool LogoUseIconAsLogo { get; set; } = false;
         public bool EnableCustomBackgroundImage { get; set; } = false;
-        public bool EnableLogoDisplayOnCustomBackground { get; set; } = false;
+        public bool EnableLogoDisplayOnCustomBackground { get; set; } = true;
         public string CustomBackgroundImage { get; set; } = null;
         public HorizontalAlignment LogoHorizontalAlignment { get; set; } = HorizontalAlignment.Left;
         public VerticalAlignment LogoVerticalAlignment { get; set; } = VerticalAlignment.Bottom;
