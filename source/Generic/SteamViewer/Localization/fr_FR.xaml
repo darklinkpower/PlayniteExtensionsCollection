@@ -13,6 +13,7 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">Actualités</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Succès</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameWorkshopDescription">Workshop</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Boutique des points</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Voir dans la bibliothèque Steam</sys:String>
 </ResourceDictionary>
