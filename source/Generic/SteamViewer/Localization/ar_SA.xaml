@@ -13,6 +13,7 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">الإرشادات</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">الأخبار</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">الإنجازات</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameWorkshopDescription">Workshop</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">متجر النقاط</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">عرض في مكتبة Steam</sys:String>
 </ResourceDictionary>
