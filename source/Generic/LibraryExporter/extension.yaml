@@ -6,10 +6,12 @@ Module: LibraryExporter.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
-    - Name: Help
-      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Library-Exporter-Advanced
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Help and Troubleshooting
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Library-Exporter-Advanced
+    - Name: Issues Tracker
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/issues?q=is%3Aopen+is%3Aissue+label%3A%22Library+Exporter+Advanced%22
     - Name: Translate
       Url: https://crowdin.com/project/darklinkpower-playnite-extensi
     - Name: Ko-fi (Tips and Donations)

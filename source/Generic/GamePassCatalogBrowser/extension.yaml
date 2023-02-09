@@ -8,7 +8,11 @@ Icon: icon.png
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
-    - Name: Wiki
+    - Name: Help and Troubleshooting
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Game-Pass-Catalog-Browser
+    - Name: Issues Tracker
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/issues?q=is%3Aopen+is%3Aissue+label%3AGamePassCatalogBrowser
     - Name: Translate
       Url: https://crowdin.com/project/darklinkpower-playnite-extensi
+    - Name: Ko-fi (Tips and Donations)
+      Url: https://ko-fi.com/darklinkpower
