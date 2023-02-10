@@ -6,8 +6,8 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Riattiva l'estensione per i giochi selezionati</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-ImageSkipFeature">Aggiungi la funzionalità della schermata di avvio dell'immagine ai giochi selezionati</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-ImageSkipFeature">Rimuovi la funzionalità della schermata di avvio dell'immagine dai giochi selezionati</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Open &quot;{0}&quot; settings window</sys:String>
-    <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Delete Splash Screen configuration</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Apri la finestra delle impostazioni &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Elimina configurazione schermata di avvio</sys:String>
     
     <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Il video introduttivo è stato aggiunto</sys:String>
     <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Il video introduttivo è stato rimosso</sys:String>
