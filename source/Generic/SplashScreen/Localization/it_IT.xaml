@@ -17,7 +17,7 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInDesktopMode">Esegui l'estensione in modalità desktop</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenDesktopMode">Visualizza le immagini della schermata iniziale in modalità desktop</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewVideoDesktopMode">Visualizza video introduttivi in modalità desktop</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Use MicroTrailers</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingCBuseMicroTrailer">Usa MicroTrailers</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBcloseSplashScreenDesktopMode">Chiudi automaticamente la schermata iniziale in modalità desktop (Disabilita nasconde il desktop quando il gioco si chiude ma può causare problemi)</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBexecuteInFullscreenMode">Esegui estensione in modalità schermo intero</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingCBviewImageSplashscreenFullscreenMode">Visualizza le immagini della schermata iniziale in modalità schermo intero</sys:String>
@@ -52,8 +52,8 @@
     <sys:String x:Key="LOCSplashScreen_VideoManagerVideoNotAvailableLabel">Video non disponibile</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonAddVideoLabel">Aggiungi video</sys:String>
     <sys:String x:Key="LOCSplashScreen_VideoManagerButtonRemoveVideoLabel">Rimuovi video</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowUseCustomBackgroundLabel">Use custom background image</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowEnableGameSpecificSettingsLabel">Enable game specific settings</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Save settings</sys:String>
-    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Settings saved</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowUseCustomBackgroundLabel">Usa un'immagine di sfondo personalizzata</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowEnableGameSpecificSettingsLabel">Abilita impostazioni specifiche per il gioco</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSaveSettingsLabel">Salva impostazioni</sys:String>
+    <sys:String x:Key="LOCSplashScreen_GameSettingsWindowSettingsSavedLabel">Impostazioni salvate</sys:String>
 </ResourceDictionary>
