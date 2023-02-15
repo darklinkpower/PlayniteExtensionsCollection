@@ -24,6 +24,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Collections.Concurrent;
 
 namespace NewsViewer.PluginControls
 {
@@ -37,8 +38,10 @@ namespace NewsViewer.PluginControls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
         IPlayniteAPI PlayniteApi;
-        private readonly DispatcherTimer timer;
+        private readonly DispatcherTimer updateControlDataDelayTimer;
+        private readonly DispatcherTimer cacheCleanupTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
         private static string steamApiGetCurrentPlayersMask = @"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid={0}";
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
@@ -58,6 +61,7 @@ namespace NewsViewer.PluginControls
         }
 
         private long inGamePlayersCount = 0;
+        private ConcurrentDictionary<Guid, GamePlayersCountCache> gamesPlayersCountCache = new ConcurrentDictionary<Guid, GamePlayersCountCache>();
         private string steamId = null;
 
         public long InGamePlayersCount
@@ -82,9 +86,32 @@ namespace NewsViewer.PluginControls
 
             DataContext = this;
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(700);
-            timer.Tick += new EventHandler(UpdateInGameCount);
+            updateControlDataDelayTimer = new DispatcherTimer();
+            updateControlDataDelayTimer.Interval = TimeSpan.FromMilliseconds(700);
+            updateControlDataDelayTimer.Tick += new EventHandler(UpdateInGameCount);
+
+            cacheCleanupTimer = new DispatcherTimer();
+            cacheCleanupTimer.Interval = TimeSpan.FromSeconds(20);
+            cacheCleanupTimer.Tick += new EventHandler(CleanCache);
+        }
+
+        private void CleanCache(object sender, EventArgs e)
+        {
+            foreach (var cacheItem in gamesPlayersCountCache)
+            {
+                if (DateTime.Now.Subtract(cacheItem.Value.CreationDate) >= TimeSpan.FromSeconds(60))
+                {
+                    if (!gamesPlayersCountCache.TryRemove(cacheItem.Key, out _))
+                    {
+                        logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
+                    }
+                }
+            }
+
+            if (!gamesPlayersCountCache.HasItems())
+            {
+                cacheCleanupTimer.Stop();
+            }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -96,7 +123,7 @@ namespace NewsViewer.PluginControls
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
                 ActiveViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
             {
-                timer.Stop();
+                updateControlDataDelayTimer.Stop();
                 return;
             }
 
@@ -109,19 +136,27 @@ namespace NewsViewer.PluginControls
             if (currentGame == null || !SettingsModel.Settings.EnablePlayersCountControl)
             {
                 currentGameId = Guid.Empty;
-                timer.Stop();
+                updateControlDataDelayTimer.Stop();
             }
             else
             {
                 currentGameId = currentGame.Id;
-                timer.Stop();
-                timer.Start();
+                updateControlDataDelayTimer.Stop();
+
+                if (gamesPlayersCountCache.TryGetValue(currentGame.Id, out var cache))
+                {
+                    UpdatePlayersCount(cache);
+                }
+                else
+                {
+                    updateControlDataDelayTimer.Start();
+                }
             }
         }
 
         private void UpdateInGameCount(object sender, EventArgs e)
         {
-            timer.Stop();
+            updateControlDataDelayTimer.Stop();
             UpdateControl();
         }
 
@@ -169,11 +204,19 @@ namespace NewsViewer.PluginControls
                         return;
                     }
 
-                    InGamePlayersCount = data.Response.PlayerCount;
-                    ControlVisibility = Visibility.Visible;
-                    SettingsModel.Settings.PlayersCountAvailable = true;
+                    var playersCountCache = new GamePlayersCountCache(DateTime.Now, data.Response.PlayerCount);
+                    gamesPlayersCountCache[processingId] = playersCountCache;
+                    UpdatePlayersCount(playersCountCache);
+                    cacheCleanupTimer.Start();
                 }
             });
+        }
+
+        private void UpdatePlayersCount(GamePlayersCountCache playersCountCache)
+        {
+            InGamePlayersCount = playersCountCache.PlayerCount;
+            ControlVisibility = Visibility.Visible;
+            SettingsModel.Settings.PlayersCountAvailable = true;
         }
 
         public RelayCommand OpenSteamDbGraphsCommand
