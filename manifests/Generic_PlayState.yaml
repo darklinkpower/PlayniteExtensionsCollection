@@ -424,3 +424,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fixed issue related to themes not being properly notified when extension suspend button was visible'
+  - Version: 2.61
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/PlayState_2_61.pext
+    Changelog:
+    - 'Updated links'

@@ -272,3 +272,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.07_6064640d/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_41.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.42
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_42.pext
+    Changelog:
+    - 'Updated links'

@@ -113,3 +113,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.01.17_5f334e8c/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_16.pext
     Changelog:
     - 'Update Co-Optimus database'
+  - Version: 1.17
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_17.pext
+    Changelog:
+    - 'Updated links'

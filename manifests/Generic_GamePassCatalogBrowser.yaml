@@ -155,3 +155,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.12.18_90324fb4/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_23.pext
     Changelog:
     - 'Added sidebar icon to open Catalog Browser view'
+  - Version: 2.24
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_24.pext
+    Changelog:
+    - 'Updated links'

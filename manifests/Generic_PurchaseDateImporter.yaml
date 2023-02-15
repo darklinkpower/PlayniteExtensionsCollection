@@ -37,3 +37,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.06_002184fc/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_18.pext
     Changelog:
     - 'Added additional logging'
+  - Version: 2.19
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_19.pext
+    Changelog:
+    - 'Updated links'

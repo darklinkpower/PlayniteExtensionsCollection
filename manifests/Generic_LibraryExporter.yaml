@@ -32,3 +32,10 @@ Packages:
     Changelog:
     - 'Support to configure separator to use in fields with multiple items'
     - 'Updated localizations'
+  - Version: 1.5
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_5.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Updated links'
