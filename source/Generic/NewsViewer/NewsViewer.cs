@@ -17,6 +17,8 @@ namespace NewsViewer
     public class NewsViewer : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly NewsCacheManager newsCacheManager = new NewsCacheManager();
+        private readonly PlayersCountCacheManager playersCountCacheManager = new PlayersCountCacheManager();
         private readonly string steamApiLanguage;
 
         public NewsViewerSettingsViewModel settings { get; set; }
@@ -70,11 +72,11 @@ namespace NewsViewer
         {
             if (args.Name == "NewsViewerControl")
             {
-                return new NewsViewerControl(PlayniteApi, settings, steamApiLanguage);
+                return new NewsViewerControl(PlayniteApi, settings, steamApiLanguage, newsCacheManager);
             }
             else if (args.Name == "PlayersInGameViewerControl")
             {
-                return new PlayersInGameViewerControl(PlayniteApi, settings);
+                return new PlayersInGameViewerControl(PlayniteApi, settings, playersCountCacheManager);
             }
 
             return null;

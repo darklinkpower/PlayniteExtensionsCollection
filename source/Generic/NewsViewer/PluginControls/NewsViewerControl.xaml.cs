@@ -39,15 +39,23 @@ namespace NewsViewer.PluginControls
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
         IPlayniteAPI PlayniteApi;
+        private readonly NewsCacheManager newsCacheManager;
         private static readonly ILogger logger = LogManager.GetLogger();
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
-        private ConcurrentDictionary<Guid, NewsRequestCache> gamesNewsCache = new ConcurrentDictionary<Guid, NewsRequestCache>();
         private readonly Dictionary<string, string>  headers = new Dictionary<string, string> {["Accept"] = "text/xml", ["Accept-Encoding"] = "utf-8"};
 
         private readonly XmlDocument xmlDoc;
         private readonly DispatcherTimer updateContextTimer;
-        private readonly DispatcherTimer cacheCleanupTimer;
+        const string steamRssTemplate = @"https://store.steampowered.com/feeds/news/app/{0}/l={1}";
+        private readonly string steamLanguage;
+        private readonly DesktopView ActiveViewAtCreation;
+        private XmlNodeList newsNodes;
+        private int selectedNewsIndex;
+        private bool multipleNewsAvailable;
+        private Game currentGame;
+
         private XmlNode currentNewsNode;
         public XmlNode CurrentNewsNode
         {
@@ -104,36 +112,6 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private void UpdateBindings()
-        {
-            if (currentNewsNode == null)
-            {
-                NewsTitle = string.Empty;
-                NewsText = string.Empty;
-                NewsDate = string.Empty;
-                return;
-            }
-
-            var titleChild = CurrentNewsNode.SelectSingleNode(@"title");
-            var descriptionChild = CurrentNewsNode.SelectSingleNode(@"description");
-            var dateChild = CurrentNewsNode.SelectSingleNode(@"pubDate");
-            if (titleChild != null  && descriptionChild != null)
-            {
-                NewsTitle = HtmlToPlainText(titleChild.InnerText);
-                NewsText = CleanSteamNewsText(descriptionChild.InnerText);
-                Dispatcher.Invoke(() => NewsScrollViewer.ScrollToTop());
-                NewsDate = Regex.Replace(HtmlToPlainText(dateChild.InnerText), @" \+\d+$", "");
-            }
-        }
-
-        private static string CleanSteamNewsText(string html)
-        {
-            return Regex.Replace(html, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", "");
-        }
-
-        const string steamRssTemplate = @"https://store.steampowered.com/feeds/news/app/{0}/l={1}";
-        private readonly string steamLanguage;
-        private readonly DesktopView ActiveViewAtCreation;
         private Visibility controlVisibility = Visibility.Collapsed;
         public Visibility ControlVisibility
         {
@@ -156,12 +134,6 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private XmlNodeList newsNodes;
-
-        private int selectedNewsIndex;
-        private bool multipleNewsAvailable;
-        private Game currentGame;
-
         public int SelectedNewsIndex
         {
             get => selectedNewsIndex;
@@ -173,12 +145,53 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        public RelayCommand<object> NextNewsCommand
+        public NewsViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, string steamLanguage, NewsCacheManager newsCacheManager)
         {
-            get => new RelayCommand<object>((a) =>
+            InitializeComponent();
+            this.PlayniteApi = PlayniteApi;
+            this.newsCacheManager = newsCacheManager;
+            SettingsModel = settings;
+            xmlDoc = new XmlDocument();
+
+            this.steamLanguage = steamLanguage;
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                NextNews();
-            }, (a) => multipleNewsAvailable);
+                ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
+            }
+
+            DataContext = this;
+
+            updateContextTimer = new DispatcherTimer();
+            updateContextTimer.Interval = TimeSpan.FromMilliseconds(700);
+            updateContextTimer.Tick += new EventHandler(UpdateContextTimer_Tick);
+            SetControlTextBlockStyle();
+        }
+
+        private void UpdateBindings()
+        {
+            if (currentNewsNode == null)
+            {
+                NewsTitle = string.Empty;
+                NewsText = string.Empty;
+                NewsDate = string.Empty;
+                return;
+            }
+
+            var titleChild = CurrentNewsNode.SelectSingleNode(@"title");
+            var descriptionChild = CurrentNewsNode.SelectSingleNode(@"description");
+            var dateChild = CurrentNewsNode.SelectSingleNode(@"pubDate");
+            if (titleChild != null && descriptionChild != null)
+            {
+                NewsTitle = HtmlToPlainText(titleChild.InnerText);
+                NewsText = CleanSteamNewsText(descriptionChild.InnerText);
+                Dispatcher.Invoke(() => NewsScrollViewer.ScrollToTop());
+                NewsDate = Regex.Replace(HtmlToPlainText(dateChild.InnerText), @" \+\d+$", "");
+            }
+        }
+
+        private static string CleanSteamNewsText(string html)
+        {
+            return Regex.Replace(html, @"(<div onclick=""javascript:ReplaceWithYouTubeEmbed.*?(?=<\/div>)<\/div>)", string.Empty);
         }
 
         void NextNews()
@@ -190,16 +203,8 @@ namespace NewsViewer.PluginControls
             }
             else
             {
-                SelectedNewsIndex = SelectedNewsIndex + 1;
+                SelectedNewsIndex += 1;
             }
-        }
-
-        public RelayCommand<object> PreviousNewsCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                PreviousNews();
-            }, (a) => multipleNewsAvailable);
         }
 
         void PreviousNews()
@@ -211,16 +216,8 @@ namespace NewsViewer.PluginControls
             }
             else
             {
-                SelectedNewsIndex = SelectedNewsIndex - 1;
+                SelectedNewsIndex -= 1;
             }
-        }
-
-        public RelayCommand<object> OpenSelectedNewsCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                OpenSelectedNews();
-            }, (a) => SettingsModel.Settings.ReviewsAvailable);
         }
 
         void OpenSelectedNews()
@@ -300,51 +297,6 @@ namespace NewsViewer.PluginControls
             webView.Dispose();
         }
 
-        public NewsViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, string steamLanguage)
-        {
-            InitializeComponent();
-            this.PlayniteApi = PlayniteApi;
-            SettingsModel = settings;
-            xmlDoc = new XmlDocument();
-
-            this.steamLanguage = steamLanguage;
-            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-            {
-                ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
-            }
-
-            DataContext = this;
-
-            updateContextTimer = new DispatcherTimer();
-            updateContextTimer.Interval = TimeSpan.FromMilliseconds(700);
-            updateContextTimer.Tick += new EventHandler(UpdateContextTimer_Tick);
-
-            cacheCleanupTimer = new DispatcherTimer();
-            cacheCleanupTimer.Interval = TimeSpan.FromSeconds(30);
-            cacheCleanupTimer.Tick += new EventHandler(CleanCache);
-
-            SetControlTextBlockStyle();
-        }
-
-        private void CleanCache(object sender, EventArgs e)
-        {
-            foreach (var cacheItem in gamesNewsCache)
-            {
-                if (DateTime.Now.Subtract(cacheItem.Value.CreationDate) >= TimeSpan.FromSeconds(90))
-                {
-                    if (!gamesNewsCache.TryRemove(cacheItem.Key, out _))
-                    {
-                        logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
-                    }
-                }
-            }
-
-            if (!gamesNewsCache.HasItems())
-            {
-                cacheCleanupTimer.Stop();
-            }
-        }
-
         private void SetControlTextBlockStyle()
         {
             // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
@@ -393,7 +345,8 @@ namespace NewsViewer.PluginControls
         private void UpdateContextTimer_Tick(object sender, EventArgs e)
         {
             updateContextTimer.Stop();
-            if (gamesNewsCache.TryGetValue(currentGame.Id, out var cache))
+            var cache = newsCacheManager.GetCache(currentGame.Id);
+            if (cache != null)
             {
                 UpdateControlData(cache);
                 return;
@@ -435,14 +388,11 @@ namespace NewsViewer.PluginControls
                         return;
                     }
 
-                    var newsCache = new NewsRequestCache(DateTime.Now, nodes);
-                    gamesNewsCache[contextId] = newsCache;
+                    var savedCache = newsCacheManager.SaveCache(contextId, nodes);
                     if (currentGame != null && currentGame.Id == contextId)
                     {
-                        UpdateControlData(newsCache);
+                        UpdateControlData(savedCache);
                     }
-
-                    cacheCleanupTimer.Start();
                 }
                 catch
                 {
@@ -499,5 +449,28 @@ namespace NewsViewer.PluginControls
             return buf;
         }
 
+        public RelayCommand OpenSelectedNewsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenSelectedNews();
+            }, () => SettingsModel.Settings.ReviewsAvailable);
+        }
+
+        public RelayCommand NextNewsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                NextNews();
+            }, () => multipleNewsAvailable);
+        }
+
+        public RelayCommand PreviousNewsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                PreviousNews();
+            }, () => multipleNewsAvailable);
+        }
     }
 }
