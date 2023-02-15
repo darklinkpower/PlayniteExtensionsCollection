@@ -162,6 +162,7 @@
     </Compile>
     <Compile Include="Controls\HtmlTextView.cs" />
     <Compile Include="Models\GamePlayersCountCache.cs" />
+    <Compile Include="Models\NewsRequestCache.cs" />
     <Compile Include="Models\NumberOfPlayersResponse.cs" />
     <Compile Include="NewsViewer.cs" />
     <Compile Include="NewsViewerSettings.cs" />

@@ -48,6 +48,8 @@ namespace NewsViewer.PluginControls
         public DesktopView ActiveViewAtCreation { get; }
         private Game currentGame;
         private Guid currentGameId = Guid.Empty;
+        private ConcurrentDictionary<Guid, GamePlayersCountCache> gamesPlayersCountCache = new ConcurrentDictionary<Guid, GamePlayersCountCache>();
+
 
         private Visibility controlVisibility = Visibility.Collapsed;
         public Visibility ControlVisibility
@@ -59,10 +61,9 @@ namespace NewsViewer.PluginControls
                 OnPropertyChanged();
             }
         }
-
-        private long inGamePlayersCount = 0;
-        private ConcurrentDictionary<Guid, GamePlayersCountCache> gamesPlayersCountCache = new ConcurrentDictionary<Guid, GamePlayersCountCache>();
+        
         private string steamId = null;
+        private long inGamePlayersCount = 0;
 
         public long InGamePlayersCount
         {

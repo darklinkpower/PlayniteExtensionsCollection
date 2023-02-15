@@ -1,8 +1,10 @@
-﻿using Playnite.SDK;
+﻿using NewsViewer.Models;
+using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using SteamCommon;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -40,10 +42,12 @@ namespace NewsViewer.PluginControls
         IPlayniteAPI PlayniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
+        private ConcurrentDictionary<Guid, NewsRequestCache> gamesNewsCache = new ConcurrentDictionary<Guid, NewsRequestCache>();
         private readonly Dictionary<string, string>  headers = new Dictionary<string, string> {["Accept"] = "text/xml", ["Accept-Encoding"] = "utf-8"};
 
         private readonly XmlDocument xmlDoc;
         private readonly DispatcherTimer updateContextTimer;
+        private readonly DispatcherTimer cacheCleanupTimer;
         private XmlNode currentNewsNode;
         public XmlNode CurrentNewsNode
         {
@@ -314,7 +318,31 @@ namespace NewsViewer.PluginControls
             updateContextTimer = new DispatcherTimer();
             updateContextTimer.Interval = TimeSpan.FromMilliseconds(700);
             updateContextTimer.Tick += new EventHandler(UpdateContextTimer_Tick);
+
+            cacheCleanupTimer = new DispatcherTimer();
+            cacheCleanupTimer.Interval = TimeSpan.FromSeconds(30);
+            cacheCleanupTimer.Tick += new EventHandler(CleanCache);
+
             SetControlTextBlockStyle();
+        }
+
+        private void CleanCache(object sender, EventArgs e)
+        {
+            foreach (var cacheItem in gamesNewsCache)
+            {
+                if (DateTime.Now.Subtract(cacheItem.Value.CreationDate) >= TimeSpan.FromSeconds(90))
+                {
+                    if (!gamesNewsCache.TryRemove(cacheItem.Key, out _))
+                    {
+                        logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
+                    }
+                }
+            }
+
+            if (!gamesNewsCache.HasItems())
+            {
+                cacheCleanupTimer.Stop();
+            }
         }
 
         private void SetControlTextBlockStyle()
@@ -365,7 +393,15 @@ namespace NewsViewer.PluginControls
         private void UpdateContextTimer_Tick(object sender, EventArgs e)
         {
             updateContextTimer.Stop();
-            UpdateNewsContext();
+            if (gamesNewsCache.TryGetValue(currentGame.Id, out var cache))
+            {
+                UpdateControlData(cache);
+                return;
+            }
+            else
+            {
+                UpdateNewsContext();
+            }
         }
 
         private void UpdateNewsContext()
@@ -385,7 +421,7 @@ namespace NewsViewer.PluginControls
             Task.Run(() =>
             {
                 var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(string.Format(steamRssTemplate, steamId, steamLanguage), headers);
-                if (!downloadStringResult.Success || currentGame == null || currentGame.Id != contextId)
+                if (!downloadStringResult.Success)
                 {
                     return;
                 }
@@ -394,28 +430,43 @@ namespace NewsViewer.PluginControls
                 {
                     xmlDoc.LoadXml(downloadStringResult.Result);
                     XmlNodeList nodes = xmlDoc.SelectNodes("/rss/channel/item");
-                    if (nodes != null && nodes.Count > 0)
+                    if (nodes == null || nodes.Count == 0)
                     {
-                        if (nodes.Count == 1)
-                        {
-                            multipleNewsAvailable = false;
-                        }
-                        else
-                        {
-                            multipleNewsAvailable = true;
-                            SwitchNewsVisibility = Visibility.Visible;
-                        }
-                        SettingsModel.Settings.ReviewsAvailable = true;
-                        ControlVisibility = Visibility.Visible;
-                        newsNodes = nodes;
-                        SelectedNewsIndex = 0;
+                        return;
                     }
+
+                    var newsCache = new NewsRequestCache(DateTime.Now, nodes);
+                    gamesNewsCache[contextId] = newsCache;
+                    if (currentGame != null && currentGame.Id == contextId)
+                    {
+                        UpdateControlData(newsCache);
+                    }
+
+                    cacheCleanupTimer.Start();
                 }
                 catch
                 {
 
                 }
             });
+        }
+
+        private void UpdateControlData(NewsRequestCache newsCache)
+        {
+            if (newsCache.NewsNodes.Count == 1)
+            {
+                multipleNewsAvailable = false;
+            }
+            else
+            {
+                multipleNewsAvailable = true;
+                SwitchNewsVisibility = Visibility.Visible;
+            }
+
+            SettingsModel.Settings.ReviewsAvailable = true;
+            ControlVisibility = Visibility.Visible;
+            newsNodes = newsCache.NewsNodes;
+            SelectedNewsIndex = 0;
         }
 
         static string HtmlToPlainText(string html)
