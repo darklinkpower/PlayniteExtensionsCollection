@@ -87,10 +87,10 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 |Name|Description|Database|Screenshot|
 | ------------ | ------------ | ------------ | ------------ |
-| [Harmony](https://github.com/darklinkpower/Harmony "Harmony") | Clean theme with modern design for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Harmony/master/screenshots/screenshot_01.jpg) |
-| [Helium](https://github.com/darklinkpower/Helium "Helium") | Theme inspired by Steam for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Helium/master/screenshots/screenshot_01.jpg) |
-| [Mythic](https://github.com/darklinkpower/Mythic "Mythic") | Theme inspired by Epic Games Launcher for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8 "Database") |![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_01.jpg) |
-| [Stardust](https://github.com/darklinkpower/Stardust "Stardust") | Theme inspired by GOG Galaxy 2.0 for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Stardust%202.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Stardust/master/Screenshots/screenshot_01.jpg) |
+| [Harmony](https://github.com/darklinkpower/Harmony "Harmony") | Clean theme with modern design for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Harmony/master/screenshots/screenshot_01.webp) |
+| [Helium](https://github.com/darklinkpower/Helium "Helium") | Theme inspired by Steam for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Helium/master/screenshots/screenshot_01.webp) |
+| [Mythic](https://github.com/darklinkpower/Mythic "Mythic") | Theme inspired by Epic Games Launcher for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8 "Database") |![Screenshot](https://raw.githubusercontent.com/darklinkpower/Mythic/master/screenshots/screenshot_01.webp) |
+| [Stardust](https://github.com/darklinkpower/Stardust "Stardust") | Theme inspired by GOG Galaxy 2.0 for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Stardust%202.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Stardust/master/Screenshots/screenshot_01.webp) |
 
 ## Contributing
 
