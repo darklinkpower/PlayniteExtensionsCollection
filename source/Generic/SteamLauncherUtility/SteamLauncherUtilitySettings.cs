@@ -11,9 +11,7 @@ namespace SteamLauncherUtility
     public class SteamLauncherUtilitySettings
     {
         public int LaunchMode { get; set; } = 0;
-        public bool DisableSteamWebBrowserOnDesktopMode { get; set; } = true;
         public bool LaunchSteamBpmOnDesktopMode { get; set; } = false;
-        public bool DisableSteamWebBrowserOnFullscreenMode { get; set; } = true;
         public bool LaunchSteamBpmOnFullscreenMode { get; set; } = false;
         public bool RestartIfRunningIncorrectArgs { get; set; } = true;
         public string DesktopModeAdditionalArgs { get; set; } = string.Empty;

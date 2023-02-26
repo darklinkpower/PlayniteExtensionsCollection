@@ -183,11 +183,6 @@ namespace SteamLauncherUtility
             var argumentsList = new List<string>();
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                if (settings.Settings.DisableSteamWebBrowserOnDesktopMode)
-                {
-                    argumentsList.Add("-no-browser");
-                }
-
                 if (settings.Settings.LaunchSteamBpmOnDesktopMode)
                 {
                     argumentsList.Add("-bigpicture");
@@ -195,11 +190,6 @@ namespace SteamLauncherUtility
             }
             else if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
             {
-                if (settings.Settings.DisableSteamWebBrowserOnFullscreenMode)
-                {
-                    argumentsList.Add("-no-browser");
-                }
-
                 if (settings.Settings.LaunchSteamBpmOnFullscreenMode)
                 {
                     argumentsList.Add("-bigpicture");
