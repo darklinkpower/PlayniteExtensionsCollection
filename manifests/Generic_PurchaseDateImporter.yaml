@@ -43,3 +43,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_19.pext
     Changelog:
     - 'Updated links'
+  - Version: 2.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.03.02_2c8b4ab9/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_20.pext
+    Changelog:
+    - 'Fix crash when importing EA license data'
