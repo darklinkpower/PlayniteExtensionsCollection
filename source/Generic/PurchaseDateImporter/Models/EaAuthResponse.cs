@@ -46,7 +46,7 @@ namespace PurchaseDateImporter.Models
         public string Strength { get; set; }
 
         [SerializationPropertyName("dob")]
-        public DateTimeOffset Dob { get; set; }
+        public string Dob { get; set; }
 
         [SerializationPropertyName("country")]
         public string Country { get; set; }
