@@ -12,7 +12,6 @@
 Выборочный режим: действия выполняются только в разрешенных играх.
 
 Используйте функции плагина из подменю дополнений, чтобы добавить функции фильтрации.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Отключить веб-браузер Steam при запуске игры</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Запускать Steam в режиме Big Picture при запуске игры</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Перезапустить Steam, если он некорректно работает с конфигурацией запуска для запущенной игры</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam уже запущен с конфигурацией запуска &quot;{0}&quot;</sys:String>
