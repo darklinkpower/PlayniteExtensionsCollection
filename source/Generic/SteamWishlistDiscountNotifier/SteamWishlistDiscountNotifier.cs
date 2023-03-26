@@ -29,7 +29,7 @@ namespace SteamWishlistDiscountNotifier
     public class SteamWishlistDiscountNotifier : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly int currentDatabaseVersion = 1;
+        private static readonly int currentDatabaseVersion = 2;
         private static readonly Regex discBlockParseRegex = new Regex(@"discount_original_price"">([^<]+).+(?=discount_final_price)discount_final_price"">([^<]+)", RegexOptions.Compiled);
         private static readonly Regex discBlockNoDiscountParseRegex = new Regex(@"discount_final_price"">([^<]+)", RegexOptions.Compiled);
         private static char[] numberChars = {'0','1', '2', '3', '4', '5', '6', '7', '8', '9'};
@@ -40,6 +40,7 @@ namespace SteamWishlistDiscountNotifier
         private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
         private readonly string pluginInstallPath;
         private readonly string wishlistCachePath;
+        private readonly string wishlistUnreleasedCachePath;
         private readonly string bannerImagesCachePath;
         public readonly DispatcherTimer wishlistCheckTimer;
         private int authRequiredTicks = 0;
@@ -59,6 +60,7 @@ namespace SteamWishlistDiscountNotifier
 
             pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             wishlistCachePath = Path.Combine(GetPluginUserDataPath(), "WishlistCache.json");
+            wishlistUnreleasedCachePath = Path.Combine(GetPluginUserDataPath(), "WishlistUnreleasedCache.json");
             bannerImagesCachePath = Path.Combine(GetPluginUserDataPath(), "BannerImages");
             wishlistCheckTimer = new DispatcherTimer
             {
@@ -208,7 +210,7 @@ namespace SteamWishlistDiscountNotifier
             else if (accountInfo.AuthStatus == AuthStatus.Ok)
             {
                 PlayniteApi.Notifications.Remove(notLoggedInNotifId);
-                var wishlistItems = GetWishlistDiscounts(accountInfo.SteamId, webView, true, a);
+                var wishlistItems = GetWishlistDiscounts(accountInfo.SteamId, webView, a);
                 if (wishlistItems == null)
                 {
                     return null;
@@ -279,69 +281,151 @@ namespace SteamWishlistDiscountNotifier
 
         private int? UpdateAndNotifyWishlistDiscounts(string steamId, IWebView webView)
         {
-            var wishlistItems = GetWishlistDiscounts(steamId, webView, false);
+            var wishlistItems = GetWishlistDiscounts(steamId, webView);
             if (wishlistItems == null)
             {
                 return null;
             }
 
             var wishlistCache = GetWishlistCache();
-            var cacheRemovals = 0;
-            var cacheAdditions = 0;
+            var wishlistCacheDict = wishlistCache.ToDictionary(x => (double)x.SubId, x => x);
+            var wishlistUnreleasedCache = GetWishlistUnreleasedCache();
+            var wishlistUnreleasedCacheDict = wishlistUnreleasedCache.ToDictionary(x => x.StoreId, x => x);
 
-            // Check for changes in existing cache
-            var wishlistDiscounts = new Dictionary<double, WishlistItemCache>();
-            foreach (var wishlistItem in wishlistItems)
+            var cacheUpdated = false;
+            var cacheUnreleasedUpdated = false;
+            foreach (var newWishlistItem in wishlistItems)
             {
-                wishlistDiscounts[(double)wishlistItem.SubId] = wishlistItem;
-            }
-
-            foreach (var cachedDiscount in wishlistCache.ToList())
-            {
-                if (wishlistDiscounts.TryGetValue((double)cachedDiscount.SubId, out var newDiscount))
+                if (newWishlistItem.SubId == null)
                 {
-                    if (HasDiscountDataChanged(cachedDiscount, newDiscount))
+                    if (!wishlistUnreleasedCacheDict.ContainsKey(newWishlistItem.StoreId))
                     {
-                        wishlistCache.Remove(cachedDiscount);
-                        cacheRemovals++;
-                        wishlistCache.Add(newDiscount);
-                        cacheAdditions++;
+                        wishlistUnreleasedCacheDict[newWishlistItem.StoreId] = newWishlistItem;
+                        cacheUnreleasedUpdated = true;
+                    }
 
-                        AddNotifyDiscount(newDiscount);
+                    continue;
+                }
+
+                if (wishlistUnreleasedCacheDict.ContainsKey(newWishlistItem.StoreId))
+                {
+                    if (newWishlistItem.PriceFinal != null)
+                    {
+                        // Game is a new release
+                        wishlistUnreleasedCacheDict.Remove(newWishlistItem.StoreId);
+                        cacheUnreleasedUpdated = true;
+                        wishlistCacheDict[(double)newWishlistItem.SubId] = newWishlistItem;
+                        cacheUpdated = true;
+
+                        if (settings.Settings.EnableNewReleasesNotifications && GetShouldDisplayNotification(newWishlistItem))
+                        {
+                            var notificationLines = new List<string>
+                            {
+                                string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameNewAvailableLabel"), newWishlistItem.Name) + "\n"
+                            };
+
+                            if (newWishlistItem.IsDiscounted)
+                            {
+                                notificationLines.Add(string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), newWishlistItem.DiscountPercent));
+                                notificationLines.Add(string.Format("{0} {1} -> {0} {2}", newWishlistItem.Currency, ((double)newWishlistItem.PriceOriginal).ToString("0.00"), ((double)newWishlistItem.PriceFinal).ToString("0.00")));
+                            }
+                            else
+                            {
+                                notificationLines.Add(string.Format("{0} {1}", newWishlistItem.Currency, ((double)newWishlistItem.PriceOriginal).ToString("0.00")));
+                            }
+
+                            PlayniteApi.Notifications.Add(new NotificationMessage(
+                                Guid.NewGuid().ToString(),
+                                string.Join("\n", notificationLines),
+                                NotificationType.Info,
+                                () => OpenDiscountedItemUrl(newWishlistItem.StoreId)
+                            ));
+                        }
+                    }
+
+                    continue;
+                }
+
+                if (wishlistCacheDict.TryGetValue((double)newWishlistItem.SubId, out var cachedItem))
+                {
+                    if (cachedItem.PriceFinal != newWishlistItem.PriceFinal)
+                    {
+                        if (newWishlistItem.IsDiscounted)
+                        {
+                            // Price change is result of discount
+                            AddNotifyDiscount(newWishlistItem);
+                        }
+                        else if (cachedItem.IsDiscounted == newWishlistItem.IsDiscounted &&
+                                settings.Settings.EnablePriceChangesNotifications && GetShouldDisplayNotification(newWishlistItem))
+                        {
+                            // Price change is result of base price change
+                            var notificationMessage = string.Join("\n", new string[2]
+                            {
+                                string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GamePriceChangedLabel"), cachedItem.Name) + "\n",
+                                string.Format("{0} {1} -> {0} {2}", cachedItem.Currency, ((double)cachedItem.PriceOriginal).ToString("0.00"), ((double)newWishlistItem.PriceFinal).ToString("0.00"))
+                            });
+
+                            PlayniteApi.Notifications.Add(new NotificationMessage(
+                                Guid.NewGuid().ToString(),
+                                notificationMessage,
+                                NotificationType.Info,
+                                () => OpenDiscountedItemUrl(newWishlistItem.StoreId)
+                            ));
+                        }
+
+                        wishlistCacheDict[(double)newWishlistItem.SubId] = newWishlistItem;
+                        cacheUpdated = true;
+                    }
+                    else if (!cachedItem.Equals(newWishlistItem))
+                    {
+                        // Game is discounted
+                        wishlistCacheDict[(double)newWishlistItem.SubId] = newWishlistItem;
+                        cacheUpdated = true;
                     }
                 }
                 else
                 {
-                    cacheRemovals++;
-                    wishlistCache.Remove(cachedDiscount);
+                    if (newWishlistItem.IsDiscounted)
+                    {
+                        AddNotifyDiscount(newWishlistItem);
+                    }
+
+                    wishlistCacheDict[(double)newWishlistItem.SubId] = newWishlistItem;
+                    cacheUpdated = true;
                 }
             }
 
-            // Check new items in discount
-            foreach (var wishlistDiscount in wishlistDiscounts)
+            if (cacheUpdated)
             {
-                if (!wishlistCache.Any(x => x.SubId == wishlistDiscount.Key))
+                foreach (var item in wishlistCacheDict)
                 {
-                    wishlistCache.Add(wishlistDiscount.Value);
-                    cacheAdditions++;
-                    AddNotifyDiscount(wishlistDiscount.Value);
+                    item.Value.WishlistItem = null; // Done to make saved cache file smaller
                 }
+                
+                FileSystem.WriteStringToFile(wishlistCachePath, Serialization.ToJson(wishlistCacheDict.Values.ToList()));
+                logger.Debug("Saved wishlist cache");
             }
 
-            if (cacheRemovals > 0 || cacheAdditions > 0)
+            if (cacheUnreleasedUpdated)
             {
-                FileSystem.WriteStringToFile(wishlistCachePath, Serialization.ToJson(wishlistCache));
+                foreach (var item in wishlistUnreleasedCacheDict)
+                {
+                    item.Value.WishlistItem = null; // Done to make saved cache file smaller
+                }
+
+                FileSystem.WriteStringToFile(wishlistUnreleasedCachePath, Serialization.ToJson(wishlistUnreleasedCacheDict.Values.ToList()));
+                logger.Debug("Saved unreleased wishlist cache");
             }
 
             settings.Settings.LastWishlistUpdate = DateTime.Now;
             SavePluginSettings(settings.Settings);
 
-            return cacheRemovals + cacheAdditions;
+            return cacheUpdated || cacheUnreleasedUpdated ? 1 : 0;
         }
 
         private void AddNotifyDiscount(WishlistItemCache newDiscount)
         {
-            if (!GetShouldDisplayNotification(newDiscount))
+            if (newDiscount.DiscountPercent < settings.Settings.NotificationMinDiscount || !GetShouldDisplayNotification(newDiscount))
             {
                 return;
             }
@@ -356,11 +440,6 @@ namespace SteamWishlistDiscountNotifier
 
         private bool GetShouldDisplayNotification(WishlistItemCache newDiscount)
         {
-            if (settings.Settings.NotificationMinDiscount > newDiscount.DiscountPercent)
-            {
-                return false;
-            }
-
             switch (newDiscount.WishlistItem.Type)
             {
                 case StoreItemType.Game:
@@ -429,7 +508,17 @@ namespace SteamWishlistDiscountNotifier
             return new List<WishlistItemCache>();
         }
 
-        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, bool getNonDiscountedItems, GlobalProgressActionArgs a = null)
+        private List<WishlistItemCache> GetWishlistUnreleasedCache()
+        {
+            if (FileSystem.FileExists(wishlistUnreleasedCachePath))
+            {
+                return Serialization.FromJsonFile<List<WishlistItemCache>>(wishlistUnreleasedCachePath);
+            }
+
+            return new List<WishlistItemCache>();
+        }
+
+        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, GlobalProgressActionArgs a = null)
         {
             var wishlistItems = new List<WishlistItemCache>();
             var baseWishlistUrl = string.Format(@"https://store.steampowered.com/wishlist/profiles/{0}/", steamId);
@@ -499,10 +588,10 @@ namespace SteamWishlistDiscountNotifier
                     {
                         foreach (var sub in wishlistItem.Subs)
                         {
-                            AddWishlistItemToList(wishlistItems, wishlistItem, sub, getNonDiscountedItems);
+                            AddWishlistItemToList(wishlistItems, wishlistItem, sub);
                         }
                     }
-                    else if (getNonDiscountedItems)
+                    else
                     {
                         AddWishlistItemNoSubsToList(wishlistItems, wishlistItem);
                     }
@@ -511,7 +600,7 @@ namespace SteamWishlistDiscountNotifier
                 currentPage++;
             }
 
-            logger.Debug($"Wishlist check obtained {wishlistItems.Count} items, {getNonDiscountedItems}");
+            logger.Debug($"Wishlist check obtained {wishlistItems.Count} items");
             return wishlistItems;
         }
 
@@ -531,15 +620,10 @@ namespace SteamWishlistDiscountNotifier
             });
         }
 
-        private void AddWishlistItemToList(List<WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub, bool getNonDiscountedItems)
+        private void AddWishlistItemToList(List<WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub)
         {
             if (sub.DiscountPct == 0)
             {
-                if (!getNonDiscountedItems)
-                {
-                    return;
-                }
-
                 var nonDiscountedItem = GetNonDiscountedItemFromSub(wishlistItem, sub);
                 if (nonDiscountedItem == null)
                 {

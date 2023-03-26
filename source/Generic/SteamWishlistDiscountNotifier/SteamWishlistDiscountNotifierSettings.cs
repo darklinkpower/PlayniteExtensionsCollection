@@ -16,6 +16,10 @@ namespace SteamWishlistDiscountNotifier
         public DateTime LastWishlistUpdate { get => lastWishlistUpdate; set => SetValue(ref lastWishlistUpdate, value); }
         private bool enableWishlistNotifications = true;
         public bool EnableWishlistNotifications { get => enableWishlistNotifications; set => SetValue(ref enableWishlistNotifications, value); }
+        private bool enablePriceChangesNotifications = true;
+        public bool EnablePriceChangesNotifications { get => enablePriceChangesNotifications; set => SetValue(ref enablePriceChangesNotifications, value); }
+        private bool enableNewReleasesNotifications = true;
+        public bool EnableNewReleasesNotifications { get => enableNewReleasesNotifications; set => SetValue(ref enableNewReleasesNotifications, value); }
         private bool openUrlsInBrowser = false;
         public bool OpenUrlsInBrowser { get => openUrlsInBrowser; set => SetValue(ref openUrlsInBrowser, value); }
         private int databaseVersion = 0;

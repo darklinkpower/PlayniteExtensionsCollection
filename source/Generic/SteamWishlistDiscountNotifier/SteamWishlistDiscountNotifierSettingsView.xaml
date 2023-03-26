@@ -40,6 +40,14 @@
                 </TextBlock>
             </StackPanel>
 
+            <CheckBox x:Name="CbEnablePriceChangesNotifications"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel}"
+                      IsChecked="{Binding Settings.EnablePriceChangesNotifications}" />
+            <CheckBox x:Name="CbEnableNewReleasesNotifications"
+                      Margin="0,10,0,0"
+                      Content="{DynamicResource LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel}"
+                      IsChecked="{Binding Settings.EnableNewReleasesNotifications}" />
             <CheckBox x:Name="CbEnableNotifications"
                       Margin="0,10,0,0"
                       Content="{DynamicResource LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel}"
