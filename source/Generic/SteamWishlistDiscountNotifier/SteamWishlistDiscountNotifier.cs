@@ -246,7 +246,7 @@ namespace SteamWishlistDiscountNotifier
             try
             {
                 wishlistCheckTimer.Stop();
-                using (var webView = PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
+                using (var webView = PlayniteApi.WebViews.CreateOffscreenView())
                 {
                     var accountInfo = SteamLogin.GetLoggedInSteamId64(webView);
                     settings.CheckedStatus = accountInfo.AuthStatus;
