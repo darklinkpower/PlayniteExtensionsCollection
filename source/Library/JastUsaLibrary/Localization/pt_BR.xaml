@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Ajuda</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">Email:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Password:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">User is authenticated</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Requires authentication</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Senha:</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Autenticar</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">Usuário autenticado</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Requer autenticação</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Downloads directory:</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Browse…</sys:String>
@@ -21,7 +21,7 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Name</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Download</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Game downloads</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patches</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Correções</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extras</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Downloading…</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Downloaded {0} of {1}</sys:String>
