@@ -68,7 +68,7 @@ namespace NVIDIAGeForceNowEnabler
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.None,
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Nvidia,
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Nv_Bundle,
-                [Guid.Parse("85dd7072-2f20-4e76-a007-41035e390724")] = AppStore.Origin,
+                [Guid.Parse("85dd7072-2f20-4e76-a007-41035e390724")] = AppStore.EA_APP,
                 [Guid.Parse("88409022-088a-4de8-805a-fdbac291f00a")] = AppStore.Rockstar,
                 [Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab")] = AppStore.Steam,
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Stove,
@@ -363,7 +363,7 @@ namespace NVIDIAGeForceNowEnabler
 
                 // For Epic they don't share any similarity and remains to be investigated. Examples:
                 // Epic: Pillars of Eternity - Definitive Edition, GameId: bcc75c246fe04e45b0c1f1c3fd52503a, StoreId: bc31288122a7443b818f4e77eed5ce25
-                if (appStore == AppStore.Epic || appStore == AppStore.Origin)
+                if (appStore == AppStore.Epic || appStore == AppStore.EA_APP)
                 {
                     var key = Tuple.Create(appStore, SatinizeGameName(game.Name));
                     if (detectionDictionary.TryGetValue(key, out var itemVariant))
