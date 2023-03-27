@@ -12,7 +12,6 @@
 Selektiv modus: handlinger utføres bare på spill som har blitt tillatt.
 
 Bruk utvidelsesfunksjonene i undermenyen for å legge til filtreringsfunksjonene.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Deaktiver Steam-nettleser når du starter et spill</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Start Steam i Big Picture Mode når du starter et spill</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Start Steam på nytt hvis programmet kjører med feil startkonfigurasjon for det startede spillet</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam kjører allerede med oppstartskonfigurasjonen &quot;{0}</sys:String>

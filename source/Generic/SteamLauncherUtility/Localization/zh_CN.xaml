@@ -12,7 +12,6 @@
 选择模式：仅对已允许的游戏完成指令。
 
 使用扩展子菜单中的插件功能来添加过滤特性。</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">启动游戏时，禁用 Steam 网页浏览器</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">启动游戏时，以大屏幕模式启动 Steam</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">若 Steam 以（对于所启动游戏）错误的启动配置运行，则将其重新启动</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam 已经以启动配置“{0}”运行。</sys:String>

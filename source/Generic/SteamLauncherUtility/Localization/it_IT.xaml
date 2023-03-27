@@ -12,7 +12,6 @@
 Modalità selettiva: Le azioni sono fatte solo sui giochi consentiti.
 
 Utilizzare le funzioni plugin dal sottomenu estensioni per aggiungere le funzioni di filtraggio.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Disabilita il browser di Steam quando si avvia un gioco</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Avvia Steam in modalità Big Picture quando si avvia un gioco</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Riavvia Steam se è in esecuzione con la configurazione di lancio errata per il gioco lanciato</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam è già in esecuzione con la configurazione di lancio &quot;{0}&quot;</sys:String>

@@ -9,12 +9,16 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Krever autentisering</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Ingen forbindelse</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Aktiver varsler for rabatter på spill i ønskeliste</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notify when the price of an item has changed</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervall i minutter for å sjekking av oppdateringer i ønskeliste:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Åpne butikksider i nettleseren i stedet for i Steam-klienten</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
 
 Kunne ikke sjekke Steam-ønskelisten. Godkjenning er påkrevd.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; er på salg i Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; is now available on Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">&quot;{0}&quot; price has changed.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Rabatt: {0}%</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Spill</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Nedlastbart innhold</sys:String>

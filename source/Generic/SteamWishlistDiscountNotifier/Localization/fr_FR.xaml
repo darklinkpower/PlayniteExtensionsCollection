@@ -9,12 +9,16 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Authentification requise</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Aucune connexion</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Activer les notifications de réduction de la liste de souhaits</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notify when the price of an item has changed</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervalle en minutes pour vérifier les mises à jour dans la liste de souhaits :</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Ouvrir les pages du magasin dans le navigateur web au lieu du client Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
 
 Echec de vérification de la liste d'envies Steam. L'authentification est requise.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; est en promotion sur Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; is now available on Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">&quot;{0}&quot; price has changed.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Réduction : {0}%</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Jeux</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Contenu téléchargeable</sys:String>

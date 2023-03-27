@@ -9,12 +9,16 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">需要身份验证</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">无连接</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">启用愿望单折扣通知</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notify when the price of an item has changed</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">检查愿望单中更新的间隔时间（分钟）：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">在网络浏览器中打开商店页面而不是 Steam 客户端</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam 愿望单通知器
 
 无法检查 Steam 愿望单。需要身份验证。</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; 正在 Steam 上促销！</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; is now available on Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">&quot;{0}&quot; price has changed.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">折扣：{0}%</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">游戏</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">可下载内容（DLC）</sys:String>

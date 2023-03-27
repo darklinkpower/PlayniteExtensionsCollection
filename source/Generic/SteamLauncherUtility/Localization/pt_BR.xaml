@@ -12,7 +12,6 @@
 Modo Seletivo: As ações são feitas apenas em jogos que foram permitidos.
 
 Use as funções de plug-in do submenu de extensões para adicionar os recursos de filtragem.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Disable Steam web browser when starting a game</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Launch Steam in Big Picture Mode when starting a game</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Reinicie o Steam se estiver executando com a configuração de inicialização incorreta para o jogo iniciado</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">O Steam já está rodando com a configuração de lançamento &quot;{0}&quot;</sys:String>

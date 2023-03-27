@@ -12,7 +12,6 @@
 Selektiver Modus: Aktionen werden nur bei Spielen durchgeführt, die erlaubt sind.
 
 Benutze die Plugin-Funktionen im Erweiterungs-Untermenü, um die Filterfunktionen hinzuzufügen.</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityDisableSteamWebBrowserSetting">Steam Web Browser deaktivieren, wenn ein Spiel gestartet wird</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityLaunchSteamBpmSetting">Steam beim Starten eines Spiels im Großbildmodus starten</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityRestartIfRunningIncorrectArgsSetting">Starten Sie Steam neu, wenn es mit der falschen Startkonfiguration für das gestartete Spiel ausgeführt wird</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam läuft bereits mit der Startkonfiguration &quot;{0}&quot;</sys:String>

@@ -9,12 +9,16 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Richiede autenticazione</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Nessuna connessione</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Abilita le notifiche di sconto nella lista dei desideri</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notifica quando il prezzo di un articolo è cambiato</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notifica quando un elemento è disponibile su Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervallo in minuti per controllare gli aggiornamenti nella lista dei desideri:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Apri le pagine del negozio nel browser web invece che nel client Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Notificatore della lista dei desideri di Steam
 
 Impossibile controllare la lista dei desideri di Steam. È richiesta l'autenticazione.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; è in vendita su Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; è ora disponibile su Steam!</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">Il prezzo di &quot;{0}&quot; è cambiato.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Sconto: {0}%</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Giochi</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Contenuto scaricabile</sys:String>
