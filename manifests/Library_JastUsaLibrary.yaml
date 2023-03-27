@@ -54,3 +54,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_8.pext
     Changelog:
     - 'Updated links'
+  - Version: 1.9
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.03.26_e5534fd9/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_9.pext
+    Changelog:
+    - 'Updated localizations'

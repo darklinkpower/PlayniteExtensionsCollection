@@ -169,3 +169,9 @@ Packages:
     Changelog:
     - 'Optimizations to reduce the number of request being made to obtain News and Online Players data over peiods of time'
     - 'Updated links'
+  - Version: 1.27
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.03.26_e5534fd9/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_27.pext
+    Changelog:
+    - 'Updated localizations'
