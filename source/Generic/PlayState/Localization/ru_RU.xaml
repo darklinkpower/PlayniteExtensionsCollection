@@ -17,7 +17,7 @@
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Настроено {0} игр(ы) для приостановки только времени игры при использовании назначенной горячей клавиши.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Удалена настройка из {0} игр(ы) на приостановку только время игры при использовании горячей клавиши.</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Настроено {0} игр(ы) для принудительного приостановления игрового времени и процессов при использовании горячей клавиши.</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Удалена конфигурация из {0} игр(ы), позволяющая приостановить игру и процессы только при использовании горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Удалена настройка из {0} игр(ы) на приостановку время игры и процеса при использовании горячей клавиши.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Игра приостановлена</sys:String>
     <sys:String x:Key="LOCPlayState_StatusResumedMessage">Игра возобновлена</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Время игры приостановлено</sys:String>
@@ -25,7 +25,7 @@
     <sys:String x:Key="LOCPlayState_StatusInformationMessage">Информация:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Действие:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Игра была добавлена в PlayState!</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Вы можете начать использовать игру с расширением</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Вы можете начать использовать игру с PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Основное</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Уведомления</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показывает уведомление, отображающее текущее состояние паузы и другую информацию об активной игре</sys:String>
@@ -55,7 +55,7 @@
     <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Не приостановлено</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Указывает, какой режим приостановки должен применяться к играм.
 
-Этот режим также может быть изменен по отдельности в каждой игре, используя функции расширений, доступные в меню расширений.</sys:String>
+Этот режим также может быть изменен по отдельности в каждой игре, используя функции расширения, доступные в меню расширений.</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Режим приостановки:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Показывать время игровой сессии в уведомлении</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Показывать общее время игровой сессии в уведомлении</sys:String>
