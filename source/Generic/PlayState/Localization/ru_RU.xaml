@@ -3,19 +3,19 @@
     <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Справка</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Добавить выбранные игры в список исключений</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Убрать выбранные игры из списка исключений</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Настроить выбранные игры для принудительной остановки только игрового времени</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Удалить конфигурацию для принудительного приостановки времени игры</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Настроить выбранные игры для принудительного приостановления процесса</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Удалить конфигурацию для принудительного приостановки процессов</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">В выбранных играх принудительная остановка только игрового времени</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Удалить настройку для принудительного приостановки времени игры</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">В выбранных играх принудительная приостановка процесса</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Удалить настройку для принудительной приостановки процессов</sys:String>
     <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Приостановить {0}</sys:String>
     <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Возобновить {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Не удалось зарегистрировать сконфигурированный Hotkey {0}
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Не удалось зарегистрировать этот Hotkey {0}
 
 Вы можете попробовать использовать другую горячую клавишу для исправления проблемы</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Добавлено {0} игр(ы) в чёрный список PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Удалено {0} игр(ы) из чёрного списка PlayState.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Настроено {0} игр(ы) для приостановки времени игры только при использовании назначенной горячей клавиши.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Удалена конфигурация из {0} игр(ы), позволяющая приостановить время игры только при использовании горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Добавлено {0} игр(ы) в исключения PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Удалено {0} игр(ы) из исключений PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Настроено {0} игр(ы) для приостановки только времени игры при использовании назначенной горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Удалена настройка из {0} игр(ы) на приостановку только время игры при использовании горячей клавиши.</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Настроено {0} игр(ы) для принудительного приостановления игрового времени и процессов при использовании горячей клавиши.</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Удалена конфигурация из {0} игр(ы), позволяющая приостановить игру и процессы только при использовании горячей клавиши.</sys:String>
     <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Игра приостановлена</sys:String>
