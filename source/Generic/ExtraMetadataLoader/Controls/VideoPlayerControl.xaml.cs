@@ -586,6 +586,11 @@ namespace ExtraMetadataLoader
 
                 foreach (Link gameLink in game.Links)
                 {
+                    if (gameLink.Url.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
+                    
                     var linkMatch = steamLinkRegex.Match(gameLink.Url);
                     if (linkMatch.Success)
                     {
