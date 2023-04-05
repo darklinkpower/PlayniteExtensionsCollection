@@ -1,133 +1,133 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Справка</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Добавить выбранные игры в Черный список PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Убрать выбранные игры из Черного списка PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Добавить выбранные игры в список исключений</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Убрать выбранные игры из списка исключений</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">В выбранных играх принудительная остановка только игрового времени</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Удалить настройку для принудительного приостановки времени игры</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">В выбранных играх принудительная приостановка процесса</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Удалить настройку для принудительной приостановки процессов</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Приостановить {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Возобновить {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Не удалось зарегистрировать этот Hotkey {0}
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Added {0} game(s) to the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Removed {0} game(s) from the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Configured {0} game(s) to force to suspend playtime and processes when using the configured hotkey.</sys:String>
-    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notification messages</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+Вы можете попробовать использовать другую горячую клавишу для исправления проблемы</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Добавлено {0} игр(ы) в исключения PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Удалено {0} игр(ы) из исключений PlayState.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Настроено {0} игр(ы) для приостановки только времени игры при использовании назначенной горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Удалена настройка из {0} игр(ы) на приостановку только время игры при использовании горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Настроено {0} игр(ы) для принудительного приостановления игрового времени и процессов при использовании горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Удалена настройка из {0} игр(ы) на приостановку время игры и процеса при использовании горячей клавиши.</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Игра приостановлена</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Игра возобновлена</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Время игры приостановлено</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Время игры возобновлено</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Информация:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Действие:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Игра была добавлена в PlayState!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Вы можете начать использовать игру с PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Основное</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Уведомления</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показывает уведомление, отображающее текущее состояние паузы и другую информацию об активной игре</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Изменить горячую клавишу</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Нажмите горячую клавишу</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Включить уведомления</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Примечания:
 
-The configured hotkeys won't be able to be used in other applications.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
+Настроенные горячие клавиши не смогут использоваться в других приложениях.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Если у вас включен Focus Assist при воспроизведении игры и полноэкранном режиме, вы должны добавить Playnite в список приоритетов, чтобы получать уведомления Windows и настроить их на отображение.
 
-This feature is only supported on Windows 10 and Windows 11</sys:String>
-    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
+Эта функция поддерживается только в Windows 10 и Windows 11</sys:String>
+    <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">В PlayState добавлено отображение уведомлений как нативных окон Windows. Это включено по умолчанию и может быть изменено в настройках расширения.
 
-For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Notification style:</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
-    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
+Для лучшей совместимости с играми необходимо внести некоторые изменения в конфигурацию Windows. Ссылка, содержащая инструкции для этого, будет открыта после закрытия этого диалогового окна.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Справка</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Вычесть время, на которое игра была приостановлена, из общего времени игры</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Вычисляет более точное значение игрового времени в играх, сохраняя только время, в которое игра не была приостановлена</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Работает только для игр, которые не управляются плагинами библиотеки</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Стиль уведомлений:</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Всплывающие уведомления Windows</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Всплывающее окно</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Время игровой сессии:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Глобальный режим приостановки:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Статус:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Приостановлено</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Не приостановлено</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Указывает, какой режим приостановки должен применяться к играм.
 
-This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
+Этот режим также может быть изменен по отдельности в каждой игре, используя функции расширения, доступные в меню расширений.</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Режим приостановки:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Показывать время игровой сессии в уведомлении</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Показывать общее время игровой сессии в уведомлении</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Автоматически приостанавливать игры, если они теряют фокус и не являются активным окном</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">Эта функция будет работать по-разному в зависимости от режима приостановки игры.
 
-Game suspend: Games will be suspended automatically when they are not the active window but they need to be manually resumed to get back into the game.
+Приостановка игры: Игры будут приостановлены автоматически, когда они не являются активным окном, но их нужно вручную возобновить, чтобы вернуться в игру.
 
-Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState manager</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Show PlayState manager sidebar item</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Switch to Playnite Fullscreen Mode if a controller is connected</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Switch to Playnite Desktop Mode if there isn't any controller connected</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Only switch Playnite Modes if games are not currently running</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+Приостановка игрового времени: Игры будут приостановлены и возобновлены автоматически при изменении текущего состояния.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Выводить окно игры на передний план после её возобновления</sys:String>
+    <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Управление PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Прочие</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Показывать боковую панель менеджера PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Показывать кнопку переключателя состояния игры PlayState в видах</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Позволяет приостановить и продолжить выбранную игру нажатием кнопки. Должно поддерживаться в пользовательской теме.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Переключиться в полноэкранный режим Playnite при подключении контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Переключиться в стандартный режим Playnite, если не подключено ни одного контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Сменять режим Playnite только если игры в данный момент не запущены</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Игнорировать состояние контроллеров для переключения режима при запуске в течение секунд:</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Переключение в стандартный режим Playnite…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Переключение в полноэкранный режим Playnite…</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Время в игре:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Общее время игры:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} часов {1} минут</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} часов {1} минут</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} часов {1} минут</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} часов {1} минут</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} секунд</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} секунд</sys:String>
 
-    <sys:String x:Key="LOCPlayStateYesLabel">Yes</sys:String>
-    <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Set as active game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Suspend Mode</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
+    <sys:String x:Key="LOCPlayStateYesLabel">Да</sys:String>
+    <sys:String x:Key="LOCPlayStateNoLabel">Нет</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Режим процессов</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Режим игрового времени</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Отключено</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameLabel">Игра</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">приостановлена</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Изменить состояние игры</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Сделать активной игрой</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Режим приостановки</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Активная игра:</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Действия</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Возобновить игру</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Приостановить игру</sys:String>
 
-    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Горячие клавиши</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Горячие клавиши клавиатуры</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Горячие клавиши контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Разрешить всем контроллерам активировать горячие клавиши</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Если включено, всем контроллерам будет разрешено активировать горячие клавиши.
 
-If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remove controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Keyboard input:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Set keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Game running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Game not running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Always</sys:String>
+Если отключено, только первый контроллер будет разрешен для активации горячих клавиш</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Приостановка/Возобновление:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Информация:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Закрыть игру:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Обновление горячей клавиши GamePad через {0} секунд…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Кнопки: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">Крестовина: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Триггеры: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Горячая клавиша контроллера с такой же комбинацией уже существует!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Горячие клавиши контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Горячие клавиши контроллера:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Режим</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Режим:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Добавить горячую клавишу контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Удалить горячую клавишу контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Ввод с клавиатуры:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Ввод с клавиатуры</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Установить ввод с клавиатуры</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">Нет</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Отключено</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Игра запущена</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Игра не запущена</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Всегда</sys:String>
 </ResourceDictionary>

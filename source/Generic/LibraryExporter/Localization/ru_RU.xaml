@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Open export window</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorLabel">Lists separator:</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorTooltip">Used to separate items in fields when there are multiple items</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Fields to export:</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Export all games</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Export selected games</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Library exported successfully to {0}</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Failed to export library to {0}</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Открыть окно экспорта</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorLabel">Разделитель списков:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorTooltip">Используется для разделения элементов в полях, когда есть несколько элементов</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Поля для экспорта:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Экспорт всех игр</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Экспорт выделенных игр</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Библиотека успешно экспортирована в {0}</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Не удалось экспортировать библиотеку в {0}</sys:String>
 </ResourceDictionary>
