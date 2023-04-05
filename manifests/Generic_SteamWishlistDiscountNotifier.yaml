@@ -150,3 +150,9 @@ Packages:
     - 'Updated localizations'
     - 'Fix crash when checking wishlist in background when there is no internet connection'
     - 'Added options to notify when an item on wishlist has been released or price has changed'
+  - Version: 1.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-04-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.04.04_79c83647/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_21.pext
+    Changelog:
+    - 'Updated localizations'
