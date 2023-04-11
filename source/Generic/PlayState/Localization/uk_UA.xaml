@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Увімкнути текст сповіщень</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Примітки:
 
-Налаштовані гарячі клавіші не можна буде використати в інших програмах.</sys:String>
+Налаштовані гарячі клавіші не можна буде використати в інших застосунках.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Якщо під час гри в повноекранному режимі у вас працює Focus Assist, вам потрібно додати Playnite до списку пріоритетів, щоб отримувати сповіщення Windows і налаштувати їх, щоб дозволити їх показ.
 
 Ця функція підтримується лише для Windows 10 і Windows 11</sys:String>
