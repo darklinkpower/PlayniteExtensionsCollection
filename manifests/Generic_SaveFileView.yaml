@@ -109,3 +109,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_16.pext
     Changelog:
     - 'Updated links'
+  - Version: 2.17
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-04-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.04.11_03a5475a/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_17.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix error when game does not have data on PcGamingWiki'
