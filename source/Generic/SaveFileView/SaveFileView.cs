@@ -164,10 +164,10 @@ namespace SaveFileView
                 }
 
                 var pathsStorePath = Path.Combine(GetPluginUserDataPath(), $"{game.Id}.json");
-                if (!File.Exists(pathsStorePath))
+                if (!FileSystem.FileExists(pathsStorePath))
                 {
                     GetGameDirectories(game, pathsStorePath, true);
-                    if (!File.Exists(pathsStorePath))
+                    if (!FileSystem.FileExists(pathsStorePath))
                     {
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCSaveFileView_CouldntGetGameDirectoriesMessage"), game.Name));
                         continue;
@@ -335,7 +335,7 @@ namespace SaveFileView
                 if (downloadStringResult.Success)
                 {
                     var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult.Result);
-                    return query.CargoQuery.First().Title.PageId;
+                    return query.CargoQuery.FirstOrDefault()?.Title.PageId;
                 }
             }
 
