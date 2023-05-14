@@ -114,7 +114,7 @@ Wenn deaktiviert, ist nur der erste Controller berechtigt, die Tastenkürzel zu 
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Aktualisiere GamePad Tastenkürzel in {0} Sekunden…</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Tasten: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Auslöser: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Ein Controller Tastaturkürzel mit der gleichen Kombination existiert bereits!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller Tastaturkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller Tastaturkürzel:</sys:String>
