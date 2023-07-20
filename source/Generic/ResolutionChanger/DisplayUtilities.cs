@@ -67,6 +67,10 @@ namespace ResolutionChanger
             public const int DISP_CHANGE_SUCCESSFUL = 0;
             public const int DISP_CHANGE_RESTART = 1;
             public const int DISP_CHANGE_FAILED = -1;
+            public const int DISP_CHANGE_BADMODE = -2;
+            public const int DISP_CHANGE_NOTUPDATED = -3;
+            public const int DISP_CHANGE_BADFLAGS = -4;
+            public const int DISP_CHANGE_BADPARAM = -5;
         }
 
         public static class DisplayHelper
@@ -90,20 +94,21 @@ namespace ResolutionChanger
                 }
 
                 logger.Debug($"Setting configuration of device \"{dm.dmDeviceName}\" to {width}x{height} and refresh rate {refreshRate}...");
-                if (User_32.EnumDisplaySettings(null, User_32.ENUM_CURRENT_SETTINGS, ref dm))
+                DEVMODE vDevMode = GetDevMode();
+                if (User_32.EnumDisplaySettings(Screen.PrimaryScreen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref vDevMode))
                 {
                     if (width != 0 && height != 0)
                     {
-                        dm.dmPelsWidth = width;
-                        dm.dmPelsHeight = height;
+                        vDevMode.dmPelsWidth = width;
+                        vDevMode.dmPelsHeight = height;
                     }
 
                     if (refreshRate != 0)
                     {
-                        dm.dmDisplayFrequency = refreshRate;
+                        vDevMode.dmDisplayFrequency = refreshRate;
                     }
 
-                    int iRet = User_32.ChangeDisplaySettings(ref dm, User_32.CDS_TEST);
+                    int iRet = User_32.ChangeDisplaySettings(ref vDevMode, User_32.CDS_TEST);
                     if (iRet == User_32.DISP_CHANGE_FAILED)
                     {
                         logger.Info($"Failed to set resolution DISP_CHANGE_FAILED");
@@ -111,7 +116,7 @@ namespace ResolutionChanger
                     }
                     else
                     {
-                        iRet = User_32.ChangeDisplaySettings(ref dm, User_32.CDS_UPDATEREGISTRY);
+                        iRet = User_32.ChangeDisplaySettings(ref vDevMode, User_32.CDS_UPDATEREGISTRY);
                         switch (iRet)
                         {
                             case User_32.DISP_CHANGE_SUCCESSFUL:
@@ -121,8 +126,8 @@ namespace ResolutionChanger
                                 logger.Info($"Failed to set resolution DISP_CHANGE_RESTART");
                                 return 1;
                             default:
-                                logger.Info($"Failed to set resolution (default)");
-                                return -1;
+                                logger.Info($"Failed to set resolution {iRet}");
+                                return iRet;
                         }
                     }
                 }

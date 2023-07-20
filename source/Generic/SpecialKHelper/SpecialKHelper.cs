@@ -705,8 +705,8 @@ namespace SpecialKHelper
                 UseShellExecute = true,
                 Arguments = "Stop",
             };
-            Process.Start(info);
 
+            Process.Start(info);
             return true;
         }
 
