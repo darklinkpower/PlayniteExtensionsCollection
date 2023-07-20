@@ -280,7 +280,7 @@ namespace ExtraMetadataLoader
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
-                            a.ProgressMaxValue = games.Count();
+                            a.ProgressMaxValue = games.Count() + 1;
                             foreach (var game in games)
                             {
                                 if (a.CancelToken.IsCancellationRequested)
@@ -310,7 +310,7 @@ namespace ExtraMetadataLoader
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
-                            a.ProgressMaxValue = games.Count();
+                            a.ProgressMaxValue = games.Count() + 1;
                             foreach (var game in games)
                             {
                                 if (a.CancelToken.IsCancellationRequested)
@@ -384,7 +384,7 @@ namespace ExtraMetadataLoader
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
-                            a.ProgressMaxValue = games.Count();
+                            a.ProgressMaxValue = games.Count() + 1;
                             foreach (var game in games)
                             {
                                 if (a.CancelToken.IsCancellationRequested)
@@ -451,7 +451,7 @@ namespace ExtraMetadataLoader
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
-                            a.ProgressMaxValue = games.Count();
+                            a.ProgressMaxValue = games.Count() + 1;
                             foreach (var game in games)
                             {
                                 if (a.CancelToken.IsCancellationRequested)
@@ -499,7 +499,7 @@ namespace ExtraMetadataLoader
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
-                            a.ProgressMaxValue = games.Count();
+                            a.ProgressMaxValue = games.Count() + 1;
                             foreach (var game in games)
                             {
                                 if (a.CancelToken.IsCancellationRequested)
@@ -654,7 +654,7 @@ namespace ExtraMetadataLoader
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 var games = PlayniteApi.MainView.SelectedGames.Distinct();
-                a.ProgressMaxValue = games.Count();
+                a.ProgressMaxValue = games.Count() + 1;
                 foreach (var game in games)
                 {
                     if (a.CancelToken.IsCancellationRequested)
@@ -782,7 +782,7 @@ namespace ExtraMetadataLoader
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var games = PlayniteApi.Database.Games.Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
-                    a.ProgressMaxValue = games.Count();
+                    a.ProgressMaxValue = games.Count() + 1;
                     foreach (var game in games)
                     {
                         a.CurrentProgressValue++;
@@ -807,7 +807,7 @@ namespace ExtraMetadataLoader
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var games = PlayniteApi.Database.Games.Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
-                    a.ProgressMaxValue = games.Count();
+                    a.ProgressMaxValue = games.Count() + 1;
                     foreach (var game in games)
                     {
                         if (a.CancelToken.IsCancellationRequested)
