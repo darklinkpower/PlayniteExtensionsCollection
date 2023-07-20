@@ -62,12 +62,25 @@ namespace SteamCommon
                     var gameId = gameElem.GetAttribute("data-ds-appid");
 
                     // Prices Data
-                    var priceData = gameElem.QuerySelector(".search_price_discount_combined");
-                    var discountPercentage = GetSteamSearchDiscount(priceData);
-                    var priceFinal = GetSteamSearchFinalPrice(priceData);
-                    var priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
-                    var isDiscounted = priceFinal != priceOriginal && priceOriginal != 0;
-                    GetCurrencyFromSearchPriceDiv(gameElem.QuerySelector(".search_price"), out var currency, out var isReleased, out var isFree);
+                    var discountPercentage = 0;
+                    double priceFinal = 0;
+                    double priceOriginal = 0;
+                    var isDiscounted = false;
+                    string currency = null;
+                    var isReleased = false;
+                    var isFree = false;
+
+                    var priceData = gameElem.QuerySelector(".search_discount_and_price");
+                    if (!priceData.InnerHtml.IsNullOrWhiteSpace())
+                    {
+                        // Game has pricing data
+                        var discountBlock = priceData.QuerySelector(".discount_block");
+                        discountPercentage = int.Parse(discountBlock.GetAttribute("data-discount"));
+                        priceFinal = int.Parse(discountBlock.GetAttribute("data-price-final")) * 0.01;
+                        priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
+                        isDiscounted = priceFinal != priceOriginal && priceOriginal != 0;
+                        GetCurrencyFromSearchPriceDiv(priceData, out currency, out isReleased, out isFree);
+                    }
 
                     //Urls
                     var storeUrl = gameElem.GetAttribute("href");
@@ -95,30 +108,30 @@ namespace SteamCommon
             return results;
         }
 
-        private static void GetCurrencyFromSearchPriceDiv(AngleSharp.Dom.IElement element, out string currency, out bool isReleased, out bool isFree)
+        private static void GetCurrencyFromSearchPriceDiv(AngleSharp.Dom.IElement priceBlock, out string currency, out bool isReleased, out bool isFree)
         {
-            if (element.ChildElementCount == 2)
-            {
-                // Discounted Item
-                isReleased = true;
-                currency = GetCurrencyFromPriceString(element.Children[0].Children[0].InnerHtml);
-                isFree = currency == null;
-            }
-            else if (!element.InnerHtml.IsNullOrWhiteSpace())
+            currency = GetCurrencyFromPriceString(priceBlock.QuerySelector(".discount_final_price").InnerHtml);
+            var noDiscount = priceBlock.QuerySelector(".search_discount_block no_discount");
+            if (noDiscount != null)
             {
                 // Non discounted item
                 isReleased = true;
-                currency = GetCurrencyFromPriceString(element.InnerHtml);
                 isFree = currency == null;
-            }
-            else
-            {
-                // Unreleased
-                isReleased = false;
-                currency = null;
-                isFree = false;
+                return;
             }
 
+            var discountDiv = priceBlock.QuerySelector(".search_discount_block");
+            if (discountDiv != null)
+            {
+                // Non discounted item
+                isReleased = true;
+                isFree = currency == null;
+                return;
+            }
+
+            isReleased = false;
+            currency = null;
+            isFree = false;
             return;
         }
 
@@ -152,23 +165,6 @@ namespace SteamCommon
             }
 
             return (100 * priceFinal) / (100 - discountPercentage);
-        }
-
-        private static int GetSteamSearchDiscount(AngleSharp.Dom.IElement priceData)
-        {
-            var searchDiscountQuery = priceData.QuerySelector(".search_discount");
-            if (searchDiscountQuery.ChildElementCount == 1)
-            {
-                //TODO Improve parsing
-                return int.Parse(searchDiscountQuery.Children[0].TextContent.Replace("-", "").Replace("%", "").Trim());
-            }
-
-            return 0;
-        }
-
-        private static double GetSteamSearchFinalPrice(AngleSharp.Dom.IElement priceData)
-        {
-            return int.Parse(priceData.GetAttribute("data-price-final")) * 0.01;
         }
 
         private const string steamAppDetailsMask = @"https://store.steampowered.com/api/appdetails?appids={0}";
