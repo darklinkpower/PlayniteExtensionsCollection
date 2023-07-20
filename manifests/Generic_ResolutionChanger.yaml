@@ -128,3 +128,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_19.pext
     Changelog:
     - 'Updated links'
+  - Version: 1.20
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-07-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.07.19_7051579c/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_20.pext
+    Changelog:
+    - 'Updated localizations'

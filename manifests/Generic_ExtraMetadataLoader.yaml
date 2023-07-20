@@ -462,3 +462,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.04.04_79c83647/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_66.pext
     Changelog:
     - 'Fix crash in video control when selected game has link with empty url'
+  - Version: 1.67
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-07-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.07.19_7051579c/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_67.pext
+    Changelog:
+    - 'Fix Steam game searches failing after Steam web changes'

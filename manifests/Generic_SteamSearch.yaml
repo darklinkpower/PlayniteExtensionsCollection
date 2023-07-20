@@ -18,3 +18,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_2.pext
     Changelog:
     - 'Updated links'
+  - Version: 1.3
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-07-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.07.19_7051579c/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_3.pext
+    Changelog:
+    - 'Fix Steam game searches failing after Steam web changes'

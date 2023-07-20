@@ -49,3 +49,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.03.02_2c8b4ab9/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_20.pext
     Changelog:
     - 'Fix crash when importing EA license data'
+  - Version: 2.21
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-07-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.07.19_7051579c/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_21.pext
+    Changelog:
+    - 'Fix failing to obtain Epic library licenses'
