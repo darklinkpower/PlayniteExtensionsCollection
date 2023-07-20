@@ -72,14 +72,14 @@ namespace SteamWishlistDiscountNotifier.Models
 
     public partial class Sub
     {
-        [SerializationPropertyName("id")]
-        public double Id { get; set; }
+        [SerializationPropertyName("packageid")]
+        public double? PackageId { get; set; }
 
         [SerializationPropertyName("discount_block")]
         public string DiscountBlock { get; set; }
 
         [SerializationPropertyName("discount_pct")]
-        public double DiscountPct { get; set; }
+        public double? DiscountPct { get; set; }
 
         [SerializationPropertyName("price")]
         public double Price { get; set; }

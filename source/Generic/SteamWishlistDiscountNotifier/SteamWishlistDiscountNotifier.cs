@@ -622,7 +622,7 @@ namespace SteamWishlistDiscountNotifier
 
         private void AddWishlistItemToList(List<WishlistItemCache> wishlistItems, SteamWishlistItem wishlistItem, Sub sub)
         {
-            if (sub.DiscountPct == 0)
+            if (sub.DiscountPct == null || sub.DiscountPct == 0)
             {
                 var nonDiscountedItem = GetNonDiscountedItemFromSub(wishlistItem, sub);
                 if (nonDiscountedItem == null)
@@ -663,11 +663,11 @@ namespace SteamWishlistDiscountNotifier
             {
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
                 StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
-                SubId = sub.Id,
+                SubId = sub.PackageId,
                 PriceOriginal = priceFinal,
                 PriceFinal = priceFinal,
                 Currency = currencyCode,
-                DiscountPercent = sub.DiscountPct,
+                DiscountPercent = sub.DiscountPct.GetValueOrDefault(),
                 WishlistItem = wishlistItem,
                 IsDiscounted = false
             };
@@ -693,11 +693,11 @@ namespace SteamWishlistDiscountNotifier
             {
                 Name = HttpUtility.HtmlDecode(wishlistItem.Name),
                 StoreId = Regex.Match(wishlistItem.Capsule.ToString(), @"apps\/(\d+)\/header").Groups[1].Value,
-                SubId = sub.Id,
+                SubId = sub.PackageId,
                 PriceOriginal = priceOriginal,
                 PriceFinal = priceFinal,
                 Currency = currencyCode,
-                DiscountPercent = sub.DiscountPct,
+                DiscountPercent = sub.DiscountPct.GetValueOrDefault(),
                 WishlistItem = wishlistItem,
                 IsDiscounted = true
             };
