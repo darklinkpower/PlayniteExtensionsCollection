@@ -32,24 +32,28 @@ namespace PurchaseDateImporter.Services
         public static List<LicenseData> GetLicenses()
         {
             var licensesList = new List<LicenseData>();
-            var apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?page={0}&lastCreatedAt={1}";
+            var apiTemplate = "https://www.epicgames.com/account/v2/payment/ajaxGetOrderHistory?sortDir=DESC&sortBy=DATE&locale=en-US&nextPageToken={0}";
 
-            var createdAtValue = DateTime.Now.ToString("u").Replace(" ", "T");
+            var nextPageToken = DateTime.Now.ToString("u").Replace(" ", "T");
             using (var webView = Playnite.SDK.API.Instance.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = epicUserAgent }))
             {
-                for (int i = 0; true; i++)
+                while (true)
                 {
-                    var apiUrl = string.Format(apiTemplate, i, createdAtValue);
+                    var apiUrl = string.Format(apiTemplate, nextPageToken);
                     webView.NavigateAndWait(apiUrl);
                     var pageSource = webView.GetPageSource();
-                    var json = PlayniteUtilities.GetEmbeddedJsonFromWebViewSource(webView.GetPageSource());
+                    var json = webView.GetPageText();
                     if (json.IsNullOrEmpty())
                     {
                         break;
                     }
 
-                    var response = Serialization.FromJson<EpicGetOrderHistoryResponse>(json);
-                    if (response.Orders.Count == 0)
+                    if (!Serialization.TryFromJson<EpicGetOrderHistoryResponse>(json, out var response))
+                    {
+                        break;
+                    }
+
+                    if (!response.Orders.HasItems())
                     {
                         break;
                     }
@@ -59,13 +63,19 @@ namespace PurchaseDateImporter.Services
                         var orderCreation = order.CreatedAtMillis.ToString();
                         var secondsToAdd = long.Parse(orderCreation.Remove(orderCreation.Length - 3));
                         var transactionDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(secondsToAdd);
-                        createdAtValue = transactionDate.ToString("u").Replace(" ", "T");
 
                         foreach (var item in order.Items)
                         {
                             licensesList.Add(new LicenseData(item.Description.HtmlDecode(), transactionDate.ToLocalTime()));
                         }
                     }
+
+                    if (response.NextPageToken.IsNullOrEmpty())
+                    {
+                        break;
+                    }
+
+                    nextPageToken = response.NextPageToken;
                 }
             }
 

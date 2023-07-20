@@ -12,14 +12,8 @@ namespace PurchaseDateImporter.Models
         [SerializationPropertyName("orders")]
         public List<EpicOrder> Orders { get; set; }
 
-        [SerializationPropertyName("count")]
-        public long Count { get; set; }
-
-        [SerializationPropertyName("start")]
-        public long Start { get; set; }
-
-        [SerializationPropertyName("total")]
-        public long Total { get; set; }
+        [SerializationPropertyName("nextPageToken")]
+        public string NextPageToken { get; set; }
     }
 
     public class EpicOrder
