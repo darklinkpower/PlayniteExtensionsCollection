@@ -94,6 +94,9 @@ namespace LibraryExporter
         // Roms
         private bool roms = false;
         public bool Roms { get => roms; set => SetValue(ref roms, value); }
+        // CompletionStatus
+        private bool completionStatus = false;
+        public bool CompletionStatus { get => completionStatus; set => SetValue(ref completionStatus, value); }
         // Regions
         private bool regions = false;
         public bool Regions { get => regions; set => SetValue(ref regions, value); }

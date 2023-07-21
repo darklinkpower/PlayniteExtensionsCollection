@@ -70,7 +70,7 @@ namespace LibraryExporter.ViewModels
                 logger.Error(e, $"Failed to export library to {selectedPath}");
                 playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LibraryExporterAdvanced_ExportFailedMessage").Format(selectedPath) + "\n\n" + e.Message);
             }
-            
+
         }
 
         private List<string> GetColumnsList()
@@ -99,6 +99,7 @@ namespace LibraryExporter.ViewModels
             if (Settings.Settings.ExportSettings.Modified) { columnNames.Add(GetLocalizationString("LOCDateModifiedLabel")); }
             if (Settings.Settings.ExportSettings.RecentActivity) { columnNames.Add(GetLocalizationString("LOCRecentActivityLabel")); }
             if (Settings.Settings.ExportSettings.Roms) { columnNames.Add("Roms"); }
+            if (Settings.Settings.ExportSettings.CompletionStatus) { columnNames.Add("CompletionStatus"); }
             if (Settings.Settings.ExportSettings.Links) { columnNames.Add(GetLocalizationString("LOCLinksLabel")); }
             if (Settings.Settings.ExportSettings.Manual) { columnNames.Add(GetLocalizationString("LOCGameManualTitle")); }
             if (Settings.Settings.ExportSettings.Notes) { columnNames.Add(GetLocalizationString("LOCNotesLabel")); }
@@ -244,6 +245,12 @@ namespace LibraryExporter.ViewModels
                 currentInsertColumn++;
             }
 
+            if (Settings.Settings.ExportSettings.CompletionStatus)
+            {
+                properties[currentInsertColumn] = !string.IsNullOrEmpty(game.CompletionStatus.Name) ? game.CompletionStatus.Name : string.Empty;
+                currentInsertColumn++;
+            }
+
             if (Settings.Settings.ExportSettings.Links)
             {
                 properties[currentInsertColumn] = game.Links?.HasItems() == true ? string.Join(Settings.Settings.ListsSeparator, game.Links.Select(x => $"{x.Name}:{x.Url}")) : string.Empty;
@@ -339,7 +346,7 @@ namespace LibraryExporter.ViewModels
                 properties[currentInsertColumn] = game.Id.ToString();
                 currentInsertColumn++;
             }
-            
+
             return properties;
         }
 
