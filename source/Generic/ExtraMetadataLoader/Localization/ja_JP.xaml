@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingGeneralHeaderLabel">General settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingOtherHeaderLabel">Other settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideosHeaderLabel">Videos settings</sys:String>
@@ -47,12 +47,12 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Select logos to download automatically</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Left</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Center</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Right</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">Top</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">Center</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Bottom</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">左</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">中央</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">右</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">上</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">中央</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">下</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo to download for {0}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Select game</sys:String>
@@ -91,7 +91,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Download videos from YouTube for all selected games automatically</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Downloading videos from YouTube…</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Setting game video from selected video file...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logos</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">ロゴ</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Videos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">Micro videos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">Generate Micro video from downloaded video for selected games</sys:String>
