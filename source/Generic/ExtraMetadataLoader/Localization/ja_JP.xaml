@@ -7,44 +7,44 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoEnablePlayerLabel">動画プレーヤーを有効にする</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoAutoplayLabel">動画の自動再生</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel">動画の繰り返し再生</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel">Play videos initially without sound</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel">Use micro videos instead of full videos by default</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">Use other video type if selected type is not found</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">Stream trailer videos from Steam on demand if available</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">Stream videos in High Definition quality</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">Show playback controls</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel">最初は消音で動画を再生</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel">フル動画の代わりにマイクロ動画をデフォルトで使用する</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">選択したタイプが見つからない場合は他の動画タイプを使用する</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">利用可能な場合は Steam からトレーラー動画をストリーミング再生する</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">高画質で動画をストリーミング再生する</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">再生コントロールを表示</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel">動画コントロールの不透明度</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">動画コントロールの不透明度(マウスホバー時)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel">動画コントロールの垂直方向の配置</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">Default audio volume</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">既定のオーディオ音量</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel">ロゴの設定</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel">ロゴを有効にする</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel">ロゴの幅の最大値</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosMaxHeightLabel">ロゴの高さの最大値</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">ロゴの水平方向の配置</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">ロゴの垂直方向の配置</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">Enable shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Depth of shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direction of shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Blur radius of shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacity of shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">Video download settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">Details View player settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">Grid View player settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView">Other views player settings</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">影の効果を有効にする</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">影の効果の深さ</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">影の効果の向き</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">影の効果のぼかし半径</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">影の効果の不透明度</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">動画ダウンロードの設定</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">詳細ビューのプレイヤー設定</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">グリッドビューのプレイヤー設定</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoOtherView">その他のビューのプレイヤー設定</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoDownload">ロゴのダウンロード設定</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl">ロゴローダーの設定</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoPlayerControl">動画プレーヤーの設定</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel">Display video preview when video is not playing</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">Use alternative video player (Requires restart and support in custom theme)</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDisplayVideoPreviewLabel">動画が再生されていないときに動画プレビューを表示</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">代替ビデオプレーヤーを使用する (カスタムテーマでのサポートと再起動が必要です)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">SteamGridDB API キー:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">API キーを取得</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Include assets marked as &quot;Humor&quot; in searches</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Include assets marked as &quot;Adult Content&quot; in searches</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">検索に「ユーモア」とマークされたアセットを含める</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">検索に「アダルトコンテンツ」とマークされたアセットを含める</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームの動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームのマイクロ動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームのロゴをダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Select logos to download automatically</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">自動的にダウンロードするロゴを選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">動画</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">左</sys:String>
@@ -54,11 +54,11 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">中央</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">下</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo to download for {0}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">{0} にダウンロードするロゴを選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">ゲームを選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">オプションを選択</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Overwrite logos of games that already have them?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">Overwrite videos of games that already have them?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">既に設定されているゲームのロゴを上書きしますか？</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">既に設定されているゲームの動画を上書きしますか？</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Steam から動画をダウンロード中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Steam からマイクロ動画をダウンロード中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Steam からロゴをダウンロード中...</sys:String>
@@ -73,16 +73,16 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured">Extra Metadata: ffmpeg 実行ファイルのパスが設定されていません</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Extra Metadata: ffmpeg 実行ファイルが設定された場所に見つかりません</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured">Extra Metadata: ffprobe 実行ファイルのパスが設定されていません</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Extra Metadata: ffprobe executable was not found in the configured location</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: yt-dlp executable path has not been configured in the extension settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp executable was not found in the configured location</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: Error deleting file in {0}. Error: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: Error deleting directory in {0}. Error: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Extra Metadata: ffprobe 実行ファイルが設定された場所に見つかりません</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: yt-dlp 実行ファイルのパスが設定されていません</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp 実行ファイルが設定された場所に見つかりません</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: {0} のファイル削除中にエラーが発生しました。エラー: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: {0} のディレクトリ削除中にエラーが発生しました。エラー: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Steam から選択したゲームの動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Steam から選択したゲームのマイクロ動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Steam から選択したゲームのロゴをダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">SteamGridDB から選択したゲームのロゴをダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Open Extra Metadata directory</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Extra Metadata ディレクトリを開く</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">選択したゲームのロゴを削除</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">選択したゲームの動画を削除</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">選択したゲームのマイクロ動画を削除</sys:String>
@@ -94,28 +94,28 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">ロゴ</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">動画</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">マイクロ動画</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">Generate Micro video from downloaded video for selected games</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">選択したゲームのダウンロードした動画からマイクロ動画を生成</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">動画からマイクロ動画を生成中...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">ダウンロード後にロゴを処理する</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">ロゴをトリミングする</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Removes transparent border around image</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">画像の周囲の透明な枠線を削除します</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">縮小する</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Resize down image preserving the aspect ratio if it exceeds any of the configured dimensions.
-Resizing down is recommended because large images can cause Playnite to slowdown.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">設定されたサイズを超えた場合、アスペクト比を維持したまま画像のサイズを縮小します。
+大きな画像は Playnite の動作を遅くする可能性があるため、サイズを小さくすることをお勧めします。</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">幅の最大値:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">高さの最大値:</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Updating tags of Extra Metadata assets status...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">A tag will be added to all games in database that are missing the specific asset</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Update tag that indicates if a game is missing logo on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Update tag that indicates if a game is missing video on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Update tag that indicates if a game is missing micro video on library update</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">ライブラリの更新時にゲームにロゴがないことを示すタグを更新</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">ライブラリの更新時にゲームに動画がないことを示すタグを更新</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">ライブラリの更新時にゲームにマイクロ動画がないことを示すタグを更新</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">ffmpeg パス:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">ffprobe パス:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">yt-dlp パス:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">YouTube cookies.txt ファイルへのパス:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Configuring it allows to download videos that are age restricted</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">この項目を設定すると、年齢制限のある動画をダウンロードすることができます</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">参照...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">ffmpeg パッケージをダウンロード</sys:String>
@@ -123,10 +123,10 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">YouTube にログイン</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Login in allows to view age restricted videos in the full version site</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Download videos from Steam in High Definition quality</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Steam から高解像度で動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Select video to download or view</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">ダウンロードまたは表示するビデオを選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">動画リスト:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">検索</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">選択した動画をダウンロード</sys:String>
@@ -134,7 +134,7 @@ Resizing down is recommended because large images can cause Playnite to slowdown
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">Google から選択したゲームのロゴをダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">選択したロゴをダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Search only transparent</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">透過画像のみを検索</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">ファイルから選択したゲームのロゴを設定</sys:String>
 
@@ -144,10 +144,10 @@ Resizing down is recommended because large images can cause Playnite to slowdown
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">YouTube で動画を検索</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">動画が見つかりませんでした</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
-    
-Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
-Select &quot;No&quot; to manually make selections when necessary.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">ダウンロードするロゴを自動的に選択しますか？
+
+「はい」を選択すると、ユーザーの操作なしにダウンロードするロゴを自動的に選択します。
+必要に応じて手動で選択する場合は、「いいえ」を選択してください。</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
 Failed to get video information: {0}, {1}, {2}.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
