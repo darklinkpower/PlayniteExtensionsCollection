@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">Process Images in Cache</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">Select ImageMagick executable</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick executable path saved</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">Magick executable not found in {0}. 
-Please run the extension again to configure it to the correct location.</sys:String>
-    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">Image processing finished. Results:
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MenuItemProcessImagesDescription">キャッシュ内の画像を処理</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableSelectMessage">ImageMagick 実行ファイルを選択してください</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutablePathSavedMessage">Magick 実行ファイルのパスを保存しました</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_MagickExecutableNotFoundMessage" xml:space="preserve">{0} に Magick 実行ファイルが見つかりません。 
+もう一度拡張機能を実行して、正しい場所に設定してください。</sys:String>
+    <sys:String x:Key="LOCImage_Cache_Size_Saver_ResultsMessage" xml:space="preserve">画像処理が完了しました。 結果:
 
-Images Processed: {0}
+処理された画像 : {0}
 
-Images that had size reduced: {1}
-Errors: {2}
+サイズが縮小された画像 : {1}
+エラー: {2}
 
-Image Cache Size Before: {3} MB
-Image Cache Size After: {4} MB</sys:String>
+処理前の画像キャッシュサイズ: {3} MB
+処理後の画像キャッシュサイズ: {4} MB</sys:String>
 </ResourceDictionary>
