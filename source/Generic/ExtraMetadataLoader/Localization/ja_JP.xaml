@@ -107,7 +107,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">高さの最大値:</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Updating tags of Extra Metadata assets status...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">A tag will be added to all games in database that are missing the specific asset</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">特定のアセットが不足しているデータベース内のすべてのゲームにタグが追加されます</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">ライブラリの更新時にゲームにロゴがないことを示すタグを更新</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">ライブラリの更新時にゲームに動画がないことを示すタグを更新</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">ライブラリの更新時にゲームにマイクロ動画がないことを示すタグを更新</sys:String>
@@ -121,10 +121,10 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">ffmpeg パッケージをダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">yt-dlp をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">YouTube にログイン</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Login in allows to view age restricted videos in the full version site</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">ログインすると、フルバージョンのサイトで年齢制限のある動画を表示できます</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Steam から高解像度で動画をダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Steam からメタデータを取得する場合は Steam または PC ゲームのみを処理する</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">ダウンロードまたは表示するビデオを選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">動画リスト:</sys:String>
@@ -149,9 +149,9 @@
 「はい」を選択すると、ユーザーの操作なしにダウンロードするロゴを自動的に選択します。
 必要に応じて手動で選択する場合は、「いいえ」を選択してください。</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
-Failed to get video information: {0}, {1}, {2}.</sys:String>
+動画の情報の取得に失敗しました: {0}, {1}, {2}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
-Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
+ffmpeg の動画の処理に失敗しました: {0}, {1}, {2}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
-Error during download of video from YouTube: {0}, {1}, {2}</sys:String>
+YouTube から動画をダウンロード中にエラーが発生しました: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>
