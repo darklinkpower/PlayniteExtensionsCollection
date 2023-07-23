@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowRepeatTrailerLabel">動画の繰り返し再生</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStartNoSoundLabel">最初は消音で動画を再生</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoMicroDefaultLabel">フル動画の代わりにマイクロ動画をデフォルトで使用する</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">選択したタイプが見つからない場合は他の動画タイプを使用する</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoFallbackLabel">選択した動画タイプが見つからない場合は他の動画タイプを使用する</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">利用可能な場合は Steam からトレーラー動画をストリーミング再生する</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">高画質で動画をストリーミング再生する</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">再生コントロールを表示</sys:String>
@@ -44,7 +44,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームの動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームのマイクロ動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">ライブラリの更新時に新しく追加されたゲームのロゴをダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">自動的にダウンロードするロゴを選択</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">ダウンロードするロゴを自動的に選択</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">動画</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">左</sys:String>
@@ -106,7 +106,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">幅の最大値:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">高さの最大値:</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Updating tags of Extra Metadata assets status...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Extra Metadata アセットのステータスのタグを更新中...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">特定のアセットが不足しているデータベース内のすべてのゲームにタグが追加されます</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">ライブラリの更新時にゲームにロゴがないことを示すタグを更新</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">ライブラリの更新時にゲームに動画がないことを示すタグを更新</sys:String>
