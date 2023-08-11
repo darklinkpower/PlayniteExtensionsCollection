@@ -78,17 +78,17 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp 実行ファイルが設定された場所に見つかりません</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: {0} のファイル削除中にエラーが発生しました。エラー: {1}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: {0} のディレクトリ削除中にエラーが発生しました。エラー: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Steam から選択したゲームの動画をダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Steam から選択したゲームのマイクロ動画をダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Steam から選択したゲームのロゴをダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">SteamGridDB から選択したゲームのロゴをダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">選択したゲームの動画を Steam からダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">選択したゲームのマイクロ動画を Steam からダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">選択したゲームのロゴを Steam からダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">選択したゲームのロゴを SteamGridDB からダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Extra Metadata ディレクトリを開く</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">選択したゲームのロゴを削除</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">選択したゲームの動画を削除</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">選択したゲームのマイクロ動画を削除</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">選択したゲームの動画として設定する動画ファイルを選択してください</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">YouTube から動画をダウンロード</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">YouTube から選択したすべてのゲームの動画を自動的にダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">選択したゲームの動画として設定する動画ファイルを選択</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">選択したゲームの動画を YouTube からダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">選択したすべてのゲームの動画を YouTube から自動的にダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">YouTube から動画をダウンロード中…</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">選択した動画ファイルからゲームの動画を設定中…</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">ロゴ</sys:String>
@@ -132,11 +132,11 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">選択した動画をダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">選択した動画を見る</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">Google から選択したゲームのロゴをダウンロード</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">選択したゲームのロゴを Google からダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">選択したロゴをダウンロード</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">透過画像のみを検索</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">ファイルから選択したゲームのロゴを設定</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">選択したゲームのロゴをファイルから設定</sys:String>
 
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">YouTube で動画を見るメニュー項目を表示</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">YouTube でレビュー動画を見る</sys:String>
