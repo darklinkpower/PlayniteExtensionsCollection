@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Process = System.Diagnostics.Process;
 
 namespace SpecialKHelper
@@ -61,6 +62,20 @@ namespace SpecialKHelper
             };
 
             sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, pluginInstallPath);
+
+            AddTextIcoFontResource("skHelperControllerIcon", "\xEA30");
+            AddTextIcoFontResource("skHelperNotAllowedIcon", "\xEFA9");
+            AddTextIcoFontResource("skHelperCheckCircledIcon", "\xEED7");
+        }
+
+        private void AddTextIcoFontResource(string key, string text)
+        {
+            Application.Current.Resources.Add(key, new TextBlock
+            {
+                Text = text,
+                FontSize = 20,
+                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+            });
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -854,6 +869,7 @@ namespace SpecialKHelper
                 {
                     Description = string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig"), firstGame.Name),
                     MenuSection = $"Special K Helper",
+                    Icon = "skHelperControllerIcon",
                     Action = o =>
                     {
                         OpenGameSteamControllerConfig(firstGame);
@@ -867,6 +883,7 @@ namespace SpecialKHelper
                 {
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature"),
                     MenuSection = $"Special K Helper",
+                    Icon = "skHelperNotAllowedIcon",
                     Action = o =>
                     {
                         PlayniteUtilities.AddFeatureToGames(PlayniteApi, args.Games.Distinct(), "[SK] Global Mode Disable");
@@ -877,6 +894,7 @@ namespace SpecialKHelper
                 {
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature"),
                     MenuSection = $"Special K Helper",
+                    Icon = "skHelperCheckCircledIcon",
                     Action = o => {
                         PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, args.Games.Distinct(), "[SK] Global Mode Disable");
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
@@ -889,6 +907,7 @@ namespace SpecialKHelper
                 {
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature"),
                     MenuSection = $"Special K Helper",
+                    Icon = "skHelperCheckCircledIcon",
                     Action = o =>
                     {
                         PlayniteUtilities.AddFeatureToGames(PlayniteApi, args.Games.Distinct(), "[SK] Selective Mode Enable");
@@ -899,6 +918,7 @@ namespace SpecialKHelper
                 {
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeRemoveFeature"),
                     MenuSection = $"Special K Helper",
+                    Icon = "skHelperNotAllowedIcon",
                     Action = o => {
                         PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, args.Games.Distinct(), "[SK] Selective Mode Enable");
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSpecial_K_Helper_DoneMessage"));
