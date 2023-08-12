@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ReviewViewer
 {
@@ -55,6 +56,16 @@ namespace ReviewViewer
             {
                 steamApiLanguage = Steam.GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
             }
+
+            var menuIcon = new TextBlock
+            {
+                Text = "\xEC80",
+                FontSize = 20,
+                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+            };
+
+            Application.Current.Resources.Add("reviewViewerUpdateIcon", menuIcon);
+
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
@@ -85,6 +96,7 @@ namespace ReviewViewer
                 {
                     Description = ResourceProvider.GetString("LOCReview_Viewer_MenuItemUpdateDataDescription"),
                     MenuSection = "Steam Reviews Viewer",
+                    Icon = "reviewViewerUpdateIcon",
                     Action = a => {
                        RefreshGameData(args.Games);
                     }
