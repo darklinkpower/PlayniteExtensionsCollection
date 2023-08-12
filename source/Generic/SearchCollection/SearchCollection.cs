@@ -96,7 +96,16 @@ namespace SearchCollection
             }
             if (settings.Settings.SearchIsEnabledSteamGridDB)
             {
-                menuItems.Add(GetGenericDefaultSearchItem(args.Games, "SteamGridDB", "SteamGridDB.png", @"https://www.steamgriddb.com/search/grids?term={0}"));
+                menuItems.Add(new GameMenuItem
+                {
+                    Description = "SteamGridDB",
+                    Icon = Path.Combine(iconsDirectory, @"SteamGridDB.png"),
+                    MenuSection = searchMenuDescription,
+                    Action = _ =>
+                    {
+                        InvokeSteamGridDbSearch(args.Games);
+                    }
+                });
             }
             if (settings.Settings.SearchIsEnabledTwitch)
             {
@@ -132,6 +141,24 @@ namespace SearchCollection
             }
 
             return menuItems;
+        }
+
+        private void InvokeSteamGridDbSearch(List<Game> games)
+        {
+            foreach (var game in games)
+            {
+                var steamId = Steam.GetGameSteamId(game, true);
+                if (!steamId.IsNullOrEmpty())
+                {
+                    var searchUrl = string.Format(@"https://www.steamgriddb.com/steam/{0}", steamId);
+                    ProcessStarter.StartUrl(searchUrl);
+                }
+                else if (PlayniteUtilities.IsGamePcGame(game))
+                {
+                    var searchUrl = string.Format(@"https://www.steamgriddb.com/search/grids?term={0}", game.Name.UrlEncode());
+                    ProcessStarter.StartUrl(searchUrl);
+                }
+            }
         }
 
         private void InvokeSteamDbSearch(List<Game> games)
