@@ -482,6 +482,11 @@ namespace ReviewViewer.Controls
         {
             ResetBindingValues();
             CurrentSteamId = Steam.GetGameSteamId(currentGame, true);
+            if (CurrentSteamId.IsNullOrEmpty())
+            {
+                return;
+            }
+
             ControlVisibility = Visibility.Visible;
             SettingsModel.Settings.IsControlVisible = true;
             switch (selectedReviewSearch)
