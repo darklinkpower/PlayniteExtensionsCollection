@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using YouTubeCommon;
 
 namespace ExtraMetadataLoader
@@ -97,8 +98,28 @@ namespace ExtraMetadataLoader
                     extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
                 }
             };
+
+            AddTextIcoFontResource("emtDownloadIcon", "\xEF08");
+            AddTextIcoFontResource("emtYoutubeIcon", "\xE95F");
+            AddTextIcoFontResource("emtSteamIcon", "\xED71");
+            AddTextIcoFontResource("emtVideoMicroGenIcon", "\xECB4");
+            AddTextIcoFontResource("emtVideoFileIcon", "\xEB0A");
+            AddTextIcoFontResource("emtImageFileIcon", "\xEB1A");
+            AddTextIcoFontResource("emtFileDeleteIcon", "\xEC53");
+            AddTextIcoFontResource("emtFolderIcon", "\xEC5B");
+            AddTextIcoFontResource("emtGoogleIcon", "\xE8DF");
         }
         
+        private void AddTextIcoFontResource(string key, string text)
+        {
+            Application.Current.Resources.Add(key, new TextBlock
+            {
+                Text = text,
+                FontSize = 20,
+                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+            });
+        }
+
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (args.Name == "LogoLoaderControl")
@@ -270,6 +291,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames"),
                     MenuSection = $"Extra Metadata|{logosSection}",
+                    Icon = "emtSteamIcon",
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
                         var isBackgroundDownload = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically"));
@@ -300,6 +322,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames"),
                     MenuSection = $"Extra Metadata|{logosSection}",
+                    Icon = "emtDownloadIcon",
                     Action = _ => {
                         var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice"));
                         var isBackgroundDownload = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically"));
@@ -329,6 +352,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame"),
                     MenuSection = $"Extra Metadata|{logosSection}",
+                    Icon = "emtGoogleIcon",
                     Action = _ =>
                     {
                         CreateGoogleWindow();
@@ -338,6 +362,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile"),
                     MenuSection = $"Extra Metadata|{logosSection}",
+                    Icon = "emtImageFileIcon",
                     Action = _ => {
                         var game = args.Games.Last();
                         var filePath = PlayniteApi.Dialogs.SelectFile("Logo|*.png");
@@ -357,6 +382,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames"),
                     MenuSection = $"Extra Metadata|{logosSection}",
+                    Icon = "emtFileDeleteIcon",
                     Action = _ => {
                         foreach (var game in args.Games.Distinct())
                         {
@@ -369,6 +395,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtSteamIcon",
                     Action = _ =>
                     {
                         if (!ValidateExecutablesSettings(true, false))
@@ -405,6 +432,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtYoutubeIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
@@ -420,6 +448,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtYoutubeIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
@@ -436,6 +465,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
+                    Icon = "emtSteamIcon",
                     Action = _ => 
                     {
                         if (!ValidateExecutablesSettings(true, false))
@@ -472,6 +502,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory"),
                     MenuSection = $"Extra Metadata",
+                    Icon = "emtFolderIcon",
                     Action = _ =>
                     {
                         foreach (var game in args.Games.Distinct())
@@ -484,6 +515,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
+                    Icon = "emtVideoMicroGenIcon",
                     Action = _ =>
                     {
                         if (!ValidateExecutablesSettings(true, false))
@@ -520,6 +552,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtVideoFileIcon",
                     Action = _ =>
                     {
                         if (!ValidateExecutablesSettings(true, false))
@@ -539,6 +572,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosSection}",
+                    Icon = "emtFileDeleteIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
@@ -554,6 +588,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames"),
                     MenuSection = $"Extra Metadata|{videosSection}|{videosMicroSection}",
+                    Icon = "emtFileDeleteIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
@@ -573,6 +608,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview"),
                     MenuSection = $"{videosSection}",
+                    Icon = "emtYoutubeIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
@@ -594,6 +630,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay"),
                     MenuSection = $"{videosSection}",
+                    Icon = "emtYoutubeIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
@@ -615,6 +652,7 @@ namespace ExtraMetadataLoader
                 {
                     Description = ResourceProvider.GetString("LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch"),
                     MenuSection = $"{videosSection}",
+                    Icon = "emtYoutubeIcon",
                     Action = _ =>
                     {
                         ClearVideoSources();
