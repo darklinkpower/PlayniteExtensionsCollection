@@ -1,4 +1,4 @@
-﻿using OpenCriticMetadata.Services;
+﻿using MetacriticMetadata.Services;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
@@ -8,27 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace OpenCriticMetadata
+namespace MetacriticMetadata
 {
-    public class OpenCriticMetadata : MetadataPlugin
+    public class MetacriticMetadata : MetadataPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private OpenCriticMetadataSettingsViewModel settings { get; set; }
+        private MetacriticMetadataSettingsViewModel settings { get; set; }
 
-        public override Guid Id { get; } = Guid.Parse("c29e6c13-089b-43d5-a916-514d85e10486");
-        private readonly OpenCriticService openCriticService = new OpenCriticService();
+        public override Guid Id { get; } = Guid.Parse("841bb91d-dd55-4f40-9d5a-f82a45267394");
 
         public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
             MetadataField.CriticScore
         };
 
-        public override string Name => "OpenCritic";
+        public override string Name => "Metacritic";
 
-        public OpenCriticMetadata(IPlayniteAPI api) : base(api)
+        public MetacriticMetadata(IPlayniteAPI api) : base(api)
         {
-            settings = new OpenCriticMetadataSettingsViewModel(this);
+            settings = new MetacriticMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
                 HasSettings = false
@@ -37,7 +36,7 @@ namespace OpenCriticMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new OpenCriticMetadataProvider(options, this, openCriticService);
+            return new MetacriticMetadataProvider(options, this);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -47,7 +46,8 @@ namespace OpenCriticMetadata
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new OpenCriticMetadataSettingsView();
+            return new MetacriticMetadataSettingsView();
         }
+
     }
 }

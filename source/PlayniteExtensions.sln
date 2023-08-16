@@ -71,6 +71,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{BC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCriticMetadata", "Metadata\OpenCriticMetadata\OpenCriticMetadata.csproj", "{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetacriticMetadata", "Metadata\MetacriticMetadata\MetacriticMetadata.csproj", "{8B1168A9-90BE-4839-94B5-FD2B9143076C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,10 @@ Global
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +238,7 @@ Global
 		{871CD6E7-1343-4FFB-9D28-CC09E5639E38} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{A84836B3-7800-48BC-837D-13F237E2C508} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B} = {BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C} = {BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}
