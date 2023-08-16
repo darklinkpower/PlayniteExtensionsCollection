@@ -1,6 +1,8 @@
 ﻿using AngleSharp.Parser.Html;
+using ComposableAsync;
 using MetacriticMetadata.Models;
 using Playnite.SDK.Models;
+using RateLimiter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +15,23 @@ namespace MetacriticMetadata.Services
 {
     public class MetacriticService
     {
+        private static readonly Playnite.SDK.ILogger logger = Playnite.SDK.LogManager.GetLogger();
         private const string searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
         private const string searchGameTemplate = @"https://www.metacritic.com/search/game/{0}/results";
+        private readonly TimeLimiter timeConstraint;
 
-        public static List<MetacriticSearchResult> GetGameSearchResults(Game game)
+        public MetacriticService()
+        {
+            timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
+        }
+
+        public async Task<DownloadStringResult> ExecuteRequestAsync(string requestUrl)
+        {
+            await timeConstraint;
+            return HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
+        }
+
+        public List<MetacriticSearchResult> GetGameSearchResults(Game game)
         {
             var metacriticPlatformId = GetGamePlatformMetacriticId(game);
             if (metacriticPlatformId.IsNullOrEmpty())
@@ -30,16 +45,16 @@ namespace MetacriticMetadata.Services
             }
         }
 
-        public static List<MetacriticSearchResult> GetGameSearchResults(string gameName)
+        public List<MetacriticSearchResult> GetGameSearchResults(string gameName)
         {
             var requestUrl = string.Format(searchGameTemplate, gameName.UrlEncode());
             return ParseGameSearchPage(requestUrl);
         }
 
-        private static List<MetacriticSearchResult> ParseGameSearchPage(string requestUrl)
+        private List<MetacriticSearchResult> ParseGameSearchPage(string requestUrl)
         {
             var results = new List<MetacriticSearchResult>();
-            var searchRequest = HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
+            var searchRequest = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
             if (!searchRequest.Success)
             {
                 return results;

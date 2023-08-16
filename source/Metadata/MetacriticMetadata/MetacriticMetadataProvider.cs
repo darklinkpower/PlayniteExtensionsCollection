@@ -16,6 +16,7 @@ namespace MetacriticMetadata
     {
         private readonly MetadataRequestOptions options;
         private readonly MetacriticMetadata plugin;
+        private readonly MetacriticService metacriticService;
         private List<MetacriticSearchResult> currentResults = new List<MetacriticSearchResult>();
         private bool firstSearchMade = false;
 
@@ -24,17 +25,18 @@ namespace MetacriticMetadata
             MetadataField.CriticScore
         };
 
-        public MetacriticMetadataProvider(MetadataRequestOptions options, MetacriticMetadata plugin)
+        public MetacriticMetadataProvider(MetadataRequestOptions options, MetacriticMetadata plugin, MetacriticService metacriticService)
         {
             this.options = options;
             this.plugin = plugin;
+            this.metacriticService = metacriticService;
         }
 
         public override int? GetCriticScore(GetMetadataFieldArgs args)
         {
             if (options.IsBackgroundDownload)
             {
-                var gameResults = MetacriticService.GetGameSearchResults(options.GameData);
+                var gameResults = metacriticService.GetGameSearchResults(options.GameData);
                 if (!gameResults.HasItems())
                 {
                     return base.GetCriticScore(args);
@@ -95,12 +97,12 @@ namespace MetacriticMetadata
         {
             if (!firstSearchMade) //First search makes use of game platform
             {
-                currentResults = MetacriticService.GetGameSearchResults(options.GameData);
+                currentResults = metacriticService.GetGameSearchResults(options.GameData);
                 firstSearchMade = true;
             }
             else
             {
-                currentResults = MetacriticService.GetGameSearchResults(gameName);
+                currentResults = metacriticService.GetGameSearchResults(gameName);
             }
 
             return GetItemOptionListFromResults(currentResults);

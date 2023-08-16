@@ -13,6 +13,7 @@ namespace MetacriticMetadata
     public class MetacriticMetadata : MetadataPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly MetacriticService metacriticService;
 
         private MetacriticMetadataSettingsViewModel settings { get; set; }
 
@@ -32,11 +33,13 @@ namespace MetacriticMetadata
             {
                 HasSettings = false
             };
+
+            metacriticService = new MetacriticService();
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new MetacriticMetadataProvider(options, this);
+            return new MetacriticMetadataProvider(options, this, metacriticService);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

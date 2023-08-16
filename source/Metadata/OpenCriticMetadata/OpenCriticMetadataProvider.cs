@@ -35,7 +35,7 @@ namespace OpenCriticMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                var gameResults = OpenCriticService.GetGameSearchResults(options.GameData.Name);
+                var gameResults = openCriticService.GetGameSearchResults(options.GameData.Name);
                 if (!gameResults.HasItems())
                 {
                     return base.GetCriticScore(args);
@@ -74,7 +74,7 @@ namespace OpenCriticMetadata
 
         private List<GenericItemOption> GetOpencriticSearchOptions(string gameName)
         {
-            return OpenCriticService.GetGameSearchResults(gameName)
+            return openCriticService.GetGameSearchResults(gameName)
                 .Select(x => new GenericItemOption(x.Name, x.Id.ToString()))
                 .ToList();
 
