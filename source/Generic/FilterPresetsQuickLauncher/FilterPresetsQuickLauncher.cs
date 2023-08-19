@@ -168,7 +168,11 @@ namespace FilterPresetsQuickLauncher
                 Activated = () =>
                 {
                     var foundFilterPreset = PlayniteApi.Database.FilterPresets.FirstOrDefault(x => x.Id == displaySettings.Id);
-                    if (foundFilterPreset != null)
+                    if (foundFilterPreset is null)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCFiltersPresetsQL_FilterPresetNotFoundLabel"), displaySettings.Name));
+                    }
+                    else
                     {
                         PlayniteUtilities.ApplyFilterPreset(PlayniteApi, foundFilterPreset);
                     }
@@ -287,7 +291,11 @@ namespace FilterPresetsQuickLauncher
                 Activated = () =>
                 {
                     var foundFilterPreset = PlayniteApi.Database.FilterPresets.FirstOrDefault(x => x.Id == displaySettings.Id);
-                    if (foundFilterPreset != null)
+                    if (foundFilterPreset is null)
+                    {
+                        PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCFiltersPresetsQL_FilterPresetNotFoundLabel"), displaySettings.Name));
+                    }
+                    else
                     {
                         PlayniteUtilities.ApplyFilterPreset(PlayniteApi, foundFilterPreset);
                     }
