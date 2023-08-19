@@ -6,6 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PlayniteUtilitiesCommon
 {
@@ -311,5 +314,26 @@ namespace PlayniteUtilitiesCommon
             return pageSource.Substring(startIndex, lenght);
         }
 
+        public static bool ApplyFilterPreset(IPlayniteAPI PlayniteApi, FilterPreset filterPreset)
+        {
+            var currentFilterPresetSettings = PlayniteApi.MainView.GetCurrentFilterSettings();
+            if (currentFilterPresetSettings != filterPreset.Settings)
+            {
+                PlayniteApi.MainView.ApplyFilterPreset(filterPreset);
+                return true;
+            }
+
+            return false;
+        }
+
+        public static void AddTextIcoFontResource(string key, string text)
+        {
+            Application.Current.Resources.Add(key, new TextBlock
+            {
+                Text = text,
+                FontSize = 16,
+                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+            });
+        }
     }
 }
