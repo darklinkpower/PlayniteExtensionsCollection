@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Resolution</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frequency</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Clear resolution configuration from selected games</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Clear display frequency configuration from selected games</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Set launch resolution to {0}x{1} ({2}) for selected games</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Set launch display frequency to {0}Hz for selected games</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Only change resolution when there are not games running</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Done</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">ヘルプ</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">解像度</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">リフレッシュレート</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">選択したゲームから解像度の設定を削除</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">選択したゲームからリフレッシュレートの設定を削除</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">選択したゲームの起動解像度を {0}x{1} ({2}) に設定</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">選択したゲームの起動リフレッシュレートを {0}Hzに設定</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">ゲームが実行されていない場合のみ解像度を変更する</sys:String>
+    <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">完了</sys:String>
 </ResourceDictionary>

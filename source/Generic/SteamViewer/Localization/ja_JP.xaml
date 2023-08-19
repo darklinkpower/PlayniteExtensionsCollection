@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Components</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Activate product</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">Downloads</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Friends</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">Screenshots</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">Settings</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">Store Page</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">Community Hub</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">Discussions</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Guides</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">News</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Achievements</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">View in Steam Library</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">コンポーネント</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">製品を有効化する</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">ダウンロード</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">フレンド</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">ニュース</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentScreenshotsDescription">スクリーンショット</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentSettingsDescription">設定</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameStorePageDescription">ストアページ</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameCommunityHubDescription">コミュニティハブ</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameDiscussionsDescription">掲示板</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">ガイド</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">ニュース</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">実績</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">ポイントショップ</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Steam ライブラリで見る</sys:String>
 </ResourceDictionary>

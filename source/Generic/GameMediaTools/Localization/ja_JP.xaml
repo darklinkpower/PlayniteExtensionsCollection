@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">Open Tools Menu</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">See missing media statistics (All games)</sys:String>
-    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">See missing media statistics (Selected games)</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemOpenMenuDescription">ツールメニューを開く</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsAllDescription">不足しているメディアの統計情報を見る (すべてのゲーム)</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_MenuItemMissingMediaStatsSelectionDescription">不足しているメディアの統計情報を見る (選択したゲーム)</sys:String>
 
-    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">No games are selected</sys:String>
+    <sys:String x:Key="LOCGame_Media_Tools_NoSelectedGamesMessage">ゲームが選択されていません</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvalidInputHeightErrorMessage">Invalid input in Width and height input boxes.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvalidInputSizeErrorMessage">Invalid input in size input box.</sys:String>
     <sys:String x:Key="LOCGame_Media_Tools_InvaludInputExtensionErrorMessage">Invalid input in extension input box.</sys:String>

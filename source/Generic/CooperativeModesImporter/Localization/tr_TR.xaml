@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Update cooperative modes features of all games in library</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Update cooperative modes features of selected games</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGamesManual">Update cooperative modes features of selected games (Manual)</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Updating games cooperative modes features…</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Done.
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingsHelpLabel">Yardım</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesAllGames">Kütüphanedeki tüm oyunların eşli kip özelliklerini güncelle</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGames">Seçilen oyunların eşli kip özelliklerini güncelle</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_MenuItemDescriptionAddMultiplayerFeaturesSelectedGamesManual">Seçilen oyunların eşli kip özelliklerini güncelle (Elle)</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_ProgressDialogMessageFeaturesUpdateInProgress">Oyunların eşli kip özellikleri güncelleniyor…</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_UpdateFeaturesResult" xml:space="preserve">Tamamlandı.
 
-Added cooperative modes features to {0} games.</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Add prefix to the added features</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">If enabled, this text and the original cooperative mode name will be combined to use in the feature name</sys:String>
+{0} oyuna eşli kip özellikleri eklendi.</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddPrefix">Eklenen özelliklere ön ek ekle</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_PrefixTooltip">Etkinleştirilirse, özellik adında kullanılmak üzere bu metin ve özgün eşli kip adı birleştirilecektir</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Import basic Co-op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Import detailed Co-op data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportBasicData">Temel Eşli oyun verisini içe aktar</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedData">Ayrıntılı Eşli oyun verisini içe aktar</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Import Local Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Import Online Co-Op data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Import Combo Co-Op (Local + Online) data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">Import LAN Play or System Link data</sys:String>
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Import Co-Op Extras data</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLocalMode">Yerel Eşli oyun verisini içe aktar</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataOnlineMode">Çevrimiçi Eşli oyun verisini içe aktar</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataComboMode">Bileşik Eşli oyun (Yerel + Çevrimiçi) verisini içe aktar</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataLanMode">LAN Oyun veya Sistem Bağlantı verisini içe aktar</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingImportDetailedDataExtras">Eşli Oyun Ekstraları verisini içe aktar</sys:String>
 
-    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">Add Co-Optimus game link to games during import</sys:String>
+    <sys:String x:Key="LOCCooperativeModesImporter_SettingAddCooptimusLinkOnImport">İçe aktarma sırasında oyunlara Eşli-Optimus oyun bağlantısını ekle</sys:String>
 </ResourceDictionary>

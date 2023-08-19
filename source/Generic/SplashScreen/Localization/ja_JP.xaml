@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemInvoke-OpenVideoManagerWindowDescription">Open video manager</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemAdd-DisableFeature">Disable extension for the selected games</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemRemove-DisableFeature">Re-Enable extension for the selected games</sys:String>
@@ -28,12 +28,12 @@
     <sys:String x:Key="LOCSplashScreen_SettingCBuseBlackSplashscreen">Use black splashscreen instead of the splashscreen image</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoPosition">Logo horizontal position:</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingTextBlockLogoVerticalAlignment">Logo vertical position:</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">Left</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">Center</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">Right</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">Top</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">Center</sys:String>
-    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">Bottom</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentLeftLabel">左</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentCenterLabel">中央</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingHorizontalAlignmentRightLabel">右</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentTopLabel">上</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentCenterLabel">中央</sys:String>
+    <sys:String x:Key="LOCSplashScreen_SettingVerticalAlignmentBottomLabel">下</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashImageUseFadeInAnimationLabel">Use fade-in animation for the splash screen image</sys:String>
     <sys:String x:Key="LOCSplashScreen_SettingSplashLogoUseFadeInAnimationLabel">Use fade-in animation for the splash screen logo</sys:String>
     
