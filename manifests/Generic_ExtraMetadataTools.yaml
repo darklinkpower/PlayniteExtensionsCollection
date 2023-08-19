@@ -88,3 +88,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.11.14_873c946b/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_12.pext
     Changelog:
     - 'Fix extension corrupting theme if Windows user contains certain characters'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_13.pext
+    Changelog:
+    - 'Updated localizations'

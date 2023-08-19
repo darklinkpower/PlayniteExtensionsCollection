@@ -68,3 +68,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_10.pext
     Changelog:
     - 'Fix rare error related to paths handling'
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_11.pext
+    Changelog:
+    - 'Updated localizations'

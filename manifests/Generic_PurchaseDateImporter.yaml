@@ -55,3 +55,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.07.19_7051579c/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_21.pext
     Changelog:
     - 'Fix failing to obtain Epic library licenses'
+  - Version: 2.22
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_22.pext
+    Changelog:
+    - 'Updated localizations'
