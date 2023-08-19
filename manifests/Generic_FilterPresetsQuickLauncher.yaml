@@ -1,2 +1,8 @@
 AddonId: FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_720fb69d/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_0.pext
+    Changelog:
+    - 'Initial release'
