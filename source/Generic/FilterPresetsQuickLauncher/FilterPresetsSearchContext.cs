@@ -2,8 +2,10 @@
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +15,12 @@ namespace FilterPresetsQuickLauncher
 {
     public class FilterPresetsSearchContext : SearchContext
     {
-        private readonly FilterPresetsQuickLauncherSettingsViewModel settings;
+        private readonly FilterPresetsQuickLauncherSettings settings;
+        private static readonly string defaultSearchIconName = "FPQL_FilterIcon";
         private readonly IPlayniteAPI playniteApi;
+        private readonly string imagesDirectory;
 
-        public FilterPresetsSearchContext(FilterPresetsQuickLauncherSettingsViewModel settings, IPlayniteAPI playniteApi)
+        public FilterPresetsSearchContext(FilterPresetsQuickLauncherSettings settings, IPlayniteAPI playniteApi, string imagesDirectory)
         {
             Description = ResourceProvider.GetString("LOCFiltersPresetsQL_FilterPresetSearchDescription");
             Label = ResourceProvider.GetString("LOCFiltersPresetsQL_FilterPresetSearchLabel");
@@ -24,7 +28,8 @@ namespace FilterPresetsQuickLauncher
             Delay = 80;
             this.settings = settings;
             this.playniteApi = playniteApi;
-            PlayniteUtilities.AddTextIcoFontResource("FH_FilterIcon", "\xEF29");
+            this.imagesDirectory = imagesDirectory;
+            PlayniteUtilities.AddTextIcoFontResource(defaultSearchIconName, "\xEF29");
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -75,8 +80,23 @@ namespace FilterPresetsQuickLauncher
                 filterPreset.Name,
                 new SearchItemAction(ResourceProvider.GetString("LOCFiltersPresetsQL_ActivateActionLabel"),
                 () => { ApplyFilterPreset(filterPreset); }),
-                "FH_FilterIcon"
+                GetSearchItemIcon(filterPreset)
             );
+        }
+
+        private string GetSearchItemIcon(FilterPreset filterPreset)
+        {
+            var displaySettings = settings.FilterPresetsDisplaySettings.FirstOrDefault(x => x.Id == filterPreset.Id);
+            if (displaySettings != null && !displaySettings.Image.IsNullOrEmpty())
+            {
+                var imagePath = Path.Combine(imagesDirectory, displaySettings.Image);
+                if (FileSystem.FileExists(imagePath))
+                {
+                    return imagePath;
+                }
+            }
+
+            return defaultSearchIconName;
         }
 
         private void ApplyFilterPreset(FilterPreset filterPreset)

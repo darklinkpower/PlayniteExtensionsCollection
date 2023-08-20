@@ -40,7 +40,7 @@ namespace FilterPresetsQuickLauncher
             {
                 new SearchSupport("fp",
                     ResourceProvider.GetString("LOCFiltersPresetsQL_SearchHelperDescription"),
-                    new FilterPresetsSearchContext(settings, api))
+                    new FilterPresetsSearchContext(settings.Settings, api, GetPluginUserDataPath()))
             };
 
             applicationFont = Fonts.SystemFontFamilies.FirstOrDefault(x => x.Source == PlayniteApi.ApplicationSettings.FontFamilyName);
