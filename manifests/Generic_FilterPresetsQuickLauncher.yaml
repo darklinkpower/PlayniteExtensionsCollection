@@ -6,3 +6,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_720fb69d/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.19_7bc43c06/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_1.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Added support to display configured images in Search bar Filter presets results'
