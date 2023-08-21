@@ -4,6 +4,10 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
+using SearchCollection.BaseClasses;
+using SearchCollection.Interfaces;
+using SearchCollection.Models;
+using SearchCollection.SearchDefinitions;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -23,6 +27,7 @@ namespace SearchCollection
         private readonly string iconsDirectory;
         private readonly string userIconsDirectory;
         private readonly string searchMenuDescription;
+        private readonly List<ISearchDefinition> defaultSearches;
 
         private SearchCollectionSettingsViewModel settings { get; set; }
 
@@ -34,9 +39,21 @@ namespace SearchCollection
             iconsDirectory = Path.Combine(pluginInstallPath, "Resources", "Icons");
             userIconsDirectory = Path.Combine(GetPluginUserDataPath(), "Icons");
 
-            // I don't want to paste this long string everywhere :)
+            defaultSearches = new List<ISearchDefinition>
+            {
+                new IGDB(),
+                new Metacritic(),
+                new PCGamingWiki(),
+                new SteamSearch(),
+                new SteamDB(),
+                new SteamGridDB(),
+                new Twitch(),
+                new VNDB(),
+                new YouTube()
+            };
+
             searchMenuDescription = ResourceProvider.GetString("LOCSearch_Collection_MenuItemSearchSection");
-            settings = new SearchCollectionSettingsViewModel(this, PlayniteApi, userIconsDirectory, pluginInstallPath);
+            settings = new SearchCollectionSettingsViewModel(this, PlayniteApi, userIconsDirectory, pluginInstallPath, defaultSearches);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -46,78 +63,28 @@ namespace SearchCollection
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var menuItems = new List<GameMenuItem>();
-
-            if (settings.Settings.SearchIsEnabledIgdb)
+            foreach (var searchDefinition in defaultSearches)
             {
-                menuItems.Add(GetGenericDefaultSearchItem(args.Games, "IGDB", "IGDB.png", @"https://www.igdb.com/search?utf8=✓&type=1&q={0}"));
-            }
-            if (settings.Settings.SearchIsEnabledMetacritic)
-            {
-                menuItems.Add(GetGenericDefaultSearchItem(args.Games, "Metacritic", "Metacritic.png", @"https://www.metacritic.com/search/game/{0}/results"));
-            }
-            if (settings.Settings.SearchIsEnabledPcgw)
-            {
-                menuItems.Add(new GameMenuItem
+                if (settings.Settings.DefaultSearchesSettings.TryGetValue(searchDefinition.Name, out bool isEnabled) && isEnabled)
                 {
-                    Description = "PCGamingWiki",
-                    Icon = Path.Combine(iconsDirectory, @"Pcgw.png"),
-                    MenuSection = searchMenuDescription,
-                    Action = _ =>
+                    menuItems.Add(new GameMenuItem
                     {
-                        InvokePcGamingWikiSearch(args.Games);
-                    }
-                });
-            }
-            if (settings.Settings.SearchIsEnabledSteam)
-            {
-                menuItems.Add(new GameMenuItem
-                {
-                    Description = "Steam",
-                    Icon = Path.Combine(iconsDirectory, @"Steam.png"),
-                    MenuSection = searchMenuDescription,
-                    Action = _ =>
-                    {
-                        InvokeSteamSearch(args.Games);
-                    }
-                });
-            }
-            if (settings.Settings.SearchIsEnabledSteamDb)
-            {
-                menuItems.Add(new GameMenuItem
-                {
-                    Description = "SteamDB",
-                    Icon = Path.Combine(iconsDirectory, @"SteamDb.png"),
-                    MenuSection = searchMenuDescription,
-                    Action = _ =>
-                    {
-                        InvokeSteamDbSearch(args.Games);
-                    }
-                });
-            }
-            if (settings.Settings.SearchIsEnabledSteamGridDB)
-            {
-                menuItems.Add(new GameMenuItem
-                {
-                    Description = "SteamGridDB",
-                    Icon = Path.Combine(iconsDirectory, @"SteamGridDB.png"),
-                    MenuSection = searchMenuDescription,
-                    Action = _ =>
-                    {
-                        InvokeSteamGridDbSearch(args.Games);
-                    }
-                });
-            }
-            if (settings.Settings.SearchIsEnabledTwitch)
-            {
-                menuItems.Add(GetGenericDefaultSearchItem(args.Games, "Twitch", "Twitch.png", @"https://www.twitch.tv/search?term={0}"));
-            }
-            if (settings.Settings.SearchIsEnabledVndb)
-            {
-                menuItems.Add(GetGenericDefaultSearchItem(args.Games, "VNDB", "Vndb.png", @"https://vndb.org/v/all?q={0}"));
-            }
-            if (settings.Settings.SearchIsEnabledYoutube)
-            {
-                menuItems.Add(GetGenericDefaultSearchItem(args.Games, "YouTube", "Youtube.png", @"https://www.youtube.com/results?search_query={0}"));
+                        Description = searchDefinition.Name,
+                        Icon = Path.Combine(iconsDirectory, searchDefinition.Icon),
+                        MenuSection = searchMenuDescription,
+                        Action = _ =>
+                        {
+                            foreach (var game in args.Games)
+                            {
+                                var url = searchDefinition.GetSearchUrl(game);
+                                if (!url.IsNullOrEmpty())
+                                {
+                                    ProcessStarter.StartUrl(url);
+                                }
+                            }
+                        }
+                    });
+                }
             }
 
             foreach (var searchDefinition in settings.Settings.SearchDefinitions)
@@ -135,121 +102,20 @@ namespace SearchCollection
                         Icon = Path.Combine(userIconsDirectory, searchDefinition.Icon),
                         Action = _ =>
                         {
-                            InvokeSearchDefinition(searchDefinition, args.Games);
+                            foreach (var game in args.Games)
+                            {
+                                var url = searchDefinition.GetSearchUrl(game.Name);
+                                if (!url.IsNullOrEmpty())
+                                {
+                                    ProcessStarter.StartUrl(url);
+                                }
+                            }
                         }
                     });
             }
 
+            menuItems.Sort((x, y) => x.Description.CompareTo(y.Description));
             return menuItems;
-        }
-
-        private void InvokeSteamGridDbSearch(List<Game> games)
-        {
-            foreach (var game in games)
-            {
-                var steamId = Steam.GetGameSteamId(game, true);
-                if (!steamId.IsNullOrEmpty())
-                {
-                    var searchUrl = string.Format(@"https://www.steamgriddb.com/steam/{0}", steamId);
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-                else if (PlayniteUtilities.IsGamePcGame(game))
-                {
-                    var searchUrl = string.Format(@"https://www.steamgriddb.com/search/grids?term={0}", game.Name.UrlEncode());
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-            }
-        }
-
-        private void InvokeSteamDbSearch(List<Game> games)
-        {
-            foreach (var game in games)
-            {
-                var steamId = Steam.GetGameSteamId(game, true);
-                if (!steamId.IsNullOrEmpty())
-                {
-                    var searchUrl = string.Format(@"https://steamdb.info/app/{0}", steamId);
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-                else if (PlayniteUtilities.IsGamePcGame(game))
-                {
-                    var searchUrl = string.Format(@"https://steamdb.info/search/?a=app&q={0}&&type=1&category=0", game.Name.UrlEncode());
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-            }
-        }
-
-        private void InvokeSteamSearch(List<Game> games)
-        {
-            foreach (var game in games)
-            {
-                var steamId = Steam.GetGameSteamId(game, true);
-                if (!steamId.IsNullOrEmpty())
-                {
-                    var searchUrl = string.Format(@"https://store.steampowered.com/app/{0}", steamId);
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-                else if (PlayniteUtilities.IsGamePcGame(game))
-                {
-                    var searchUrl = string.Format(@"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998", game.Name.UrlEncode());
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-            }
-        }
-
-        private void InvokePcGamingWikiSearch(List<Game> games)
-        {
-            foreach (var game in games)
-            {
-                if (!PlayniteUtilities.IsGamePcGame(game))
-                {
-                    continue;
-                }
-
-                var steamId = Steam.GetGameSteamId(game, true);
-                if (!steamId.IsNullOrEmpty())
-                {
-                    var searchUrl = string.Format(@"https://pcgamingwiki.com/api/appid.php?appid={0}", steamId);
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-                else
-                {
-                    var searchUrl = string.Format(@"http://pcgamingwiki.com/w/index.php?search={0}", game.Name.UrlEncode());
-                    ProcessStarter.StartUrl(searchUrl);
-                }
-            }
-        }
-
-        private GameMenuItem GetGenericDefaultSearchItem(List<Game> games, string description, string iconName, string searchTemplate)
-        {
-            return new GameMenuItem
-            {
-                Description = description,
-                Icon = Path.Combine(iconsDirectory, iconName),
-                MenuSection = $"Search",
-                Action = _ =>
-                {
-                    InvokeGenericDefaultSearch(games, searchTemplate);
-                }
-            };
-        }
-
-        private void InvokeGenericDefaultSearch(List<Game> games, string searchTemplate)
-        {
-            foreach (var game in games)
-            {
-                var searchUrl = string.Format(searchTemplate, game.Name.UrlEncode());
-                ProcessStarter.StartUrl(searchUrl);
-            }
-        }
-
-        private void InvokeSearchDefinition(Models.SearchDefinition searchDefinition, List<Game> games)
-        {
-            foreach (var game in games)
-            {
-                var searchUrl = searchDefinition.SearchTemplate.Replace($"%s", game.Name.UrlEncode());
-                ProcessStarter.StartUrl(searchUrl);
-            }
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)

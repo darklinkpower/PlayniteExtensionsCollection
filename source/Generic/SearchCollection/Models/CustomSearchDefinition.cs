@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SearchCollection.Models
 {
-    public class SearchDefinition : ObservableObject
+    public class CustomSearchDefinition : ObservableObject
     {
         private string name;
         public string Name
@@ -53,5 +53,14 @@ namespace SearchCollection.Models
             }
         }
 
+        public string GetSearchUrl(string searchTerm)
+        {
+            if (searchTerm.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            return SearchTemplate.Replace($"%s", searchTerm.UrlEncode());
+        }
     }
 }
