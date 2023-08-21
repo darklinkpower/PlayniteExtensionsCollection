@@ -17,20 +17,27 @@
                             <Run Text="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultHelp}" />
                         </Hyperlink>
                     </TextBlock>
-                    <ListBox ItemsSource="{Binding EditingDefaultSearchesSettings}" Margin="0,10,10,0" SelectionMode="Multiple">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox Content="{Binding Name, Mode=OneWay}" IsChecked="{Binding Value, Mode=TwoWay}" Margin="0,0,5,0" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                    <ListView ItemsSource="{Binding EditingDefaultSearchesSettings}" Margin="0,10,10,0" SelectionMode="Multiple">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionEnabled}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding Value, Mode=TwoWay}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </StackPanel>
             </TabItem>
 
@@ -40,7 +47,6 @@
                               ItemsSource="{Binding Settings.SearchDefinitions}">
                         <ListView.View>
                             <GridView>
-
                                 <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionEnabled}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -49,7 +55,7 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="250" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox Text="{Binding Name}" VerticalAlignment="Center"/>
@@ -57,7 +63,7 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="250"  Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate}">
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox Text="{Binding SearchTemplate}" VerticalAlignment="Center"/>

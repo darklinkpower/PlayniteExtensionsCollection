@@ -24,7 +24,7 @@ namespace SearchCollection
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly string pluginInstallPath;
-        private readonly string iconsDirectory;
+        public readonly string iconsDirectory;
         private readonly string userIconsDirectory;
         private readonly string searchMenuDescription;
         private readonly List<ISearchDefinition> defaultSearches;
@@ -116,16 +116,6 @@ namespace SearchCollection
 
             menuItems.Sort((x, y) => x.Description.CompareTo(y.Description));
             return menuItems;
-        }
-
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            var defaultIcon = Path.Combine(iconsDirectory, "Default.png");
-            var targetDefaultIcon = Path.Combine(userIconsDirectory, "Default.png");
-            if (!FileSystem.FileExists(targetDefaultIcon))
-            {
-                FileSystem.CopyFile(defaultIcon, targetDefaultIcon);
-            }
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

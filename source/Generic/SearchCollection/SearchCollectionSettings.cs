@@ -20,6 +20,7 @@ namespace SearchCollection
         private Dictionary<string, bool> defaultSearchesSettings = new Dictionary<string, bool>();
         public Dictionary<string, bool> DefaultSearchesSettings { get => defaultSearchesSettings; set => SetValue(ref defaultSearchesSettings, value); }
         private List<CustomSearchDefinition> searchDefinitions { get; set; } = new List<CustomSearchDefinition>();
+
         public List<CustomSearchDefinition> SearchDefinitions
         {
             get => searchDefinitions;
@@ -30,7 +31,7 @@ namespace SearchCollection
             }
         }
 
-
+        public bool FirstStartCompleted = false;
     }
 
     public class NameValueObject : ObservableObject
@@ -139,6 +140,27 @@ namespace SearchCollection
                 {
                     settings.DefaultSearchesSettings.Add(search.Name, true);
                 }
+            }
+
+            if (!settings.FirstStartCompleted)
+            {
+                foreach (var iconFile in new string[] { "Default.png", "Google.png" })
+                {
+                    var iconPath = Path.Combine(plugin.iconsDirectory, iconFile);
+                    var targetDefaultIcon = Path.Combine(userIconsDirectory, iconFile);
+                    FileSystem.CopyFile(iconPath, targetDefaultIcon);
+                }
+
+                settings.SearchDefinitions.Add(new CustomSearchDefinition
+                {
+                    Name = "Google",
+                    IsEnabled = true,
+                    Icon = "Google.png",
+                    SearchTemplate = @"https://www.google.com/search?q=%s"
+                });
+
+                settings.FirstStartCompleted = true;
+                plugin.SavePluginSettings(Settings);
             }
         }
 
