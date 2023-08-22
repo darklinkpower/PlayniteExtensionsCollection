@@ -4,7 +4,7 @@
     <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Steam ストア検索に特定の国を使用</sys:String>
     <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">ゲームがライブラリ内にあるかどうかを検索結果に表示</sys:String>
     <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Steam ストア</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">検索したい単語を入力</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">検索語句を入力</sys:String>
     <sys:String x:Key="LOCSteam_Search_SearcherHint">Steam ストアでゲームを検索</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Web で開く</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Steam で開く</sys:String>
