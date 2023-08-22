@@ -396,6 +396,12 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 return false;
             }
 
+            if (searchString.GetJaroWinklerSimilarityIgnoreCase(toMatch) > 0.85)
+            {
+                return true;
+            }
+
+            var searchFilterSplit = searchString.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
             var toMatchSplit = toMatch.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
             foreach (var word in searchFilterSplit)
             {
@@ -526,17 +532,6 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         }
 
         public Uri DefaultBannerUri { get; }
-
-        //private BitmapImage defaultBannerImage;
-        //public BitmapImage DefaultBannerImage
-        //{
-        //    get { return defaultBannerImage; }
-        //    set
-        //    {
-        //        defaultBannerImage = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
 
         private void OpenWishlistItemOnSteam(WishlistItemCache wishlistItem)
         {

@@ -13,7 +13,8 @@ namespace System
     public static class StringExtensions
     {
         private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
-
+        private static readonly EqualityComparer<char> _charCaseInsensitiveComparer = new CaseInsensitiveCharComparer();
+        
         public static string MD5(this string s)
         {
             var builder = new StringBuilder();
@@ -47,14 +48,14 @@ namespace System
             return newName;
         }
 
-        public static string RemoveTrademarks(this string str, string remplacement = "")
+        public static string RemoveTrademarks(this string str, string replacement = "")
         {
             if (str.IsNullOrEmpty())
             {
                 return str;
             }
 
-            return Regex.Replace(str, @"[™©®]", remplacement);
+            return Regex.Replace(str, @"[™©®]", replacement);
         }
 
         public static bool IsNullOrEmpty(this string source)
@@ -245,7 +246,21 @@ namespace System
 
         public static string GetMatchModifiedName(this string str)
         {
-            return Regex.Replace(str, @"[^\p{L}\p{Nd}]", "").ToLower();
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder(str.Length);
+            foreach (char c in str)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    sb.Append(char.ToLowerInvariant(c));
+                }
+            }
+
+            return sb.ToString();
         }
 
         // Courtesy of https://stackoverflow.com/questions/6275980/string-replace-ignoring-case
@@ -387,6 +402,137 @@ namespace System
             }
 
             return costs[costs.Length - 1];
+        }
+
+        //From https://gist.github.com/ronnieoverby/2aa19724199df4ec8af6
+        //The Winkler modification will not be applied unless the 
+        //percent match was at or above the mWeightThreshold percent 
+        //without the modification. 
+        //Winkler's paper used a default value of 0.7
+        private const double WeightThreshold = 0.7;
+
+        //Size of the prefix to be concidered by the Winkler modification. 
+        //Winkler's paper used a default value of 4
+        private const int NumChars = 4;
+
+        public static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2)
+        {
+            return GetJaroWinklerSimilarity(str, str2, _charCaseInsensitiveComparer);
+        }
+
+        /// <summary>
+        /// Returns the Jaro-Winkler similarity between the specified
+        /// strings. The distance is symmetric and will fall in the
+        /// range 0 (no match) to 1 (perfect match).
+        /// </summary>
+        /// <param name="str">First String</param>
+        /// <param name="str2">Second String</param>
+        /// <param name="comparer">Comparer used to determine character equality.</param>
+        /// <returns>Returns the Jaro-Winkler distance between the specified strings.</returns>
+        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer = null)
+        {
+            comparer = comparer ?? EqualityComparer<char>.Default;
+
+            var lLen1 = str.Length;
+            var lLen2 = str2.Length;
+            if (lLen1 == 0)
+            {
+                return lLen2 == 0 ? 1.0 : 0.0;
+            }
+
+            var lSearchRange = Math.Max(0, Math.Max(lLen1, lLen2) / 2 - 1);
+
+            var lMatched1 = new bool[lLen1];
+            var lMatched2 = new bool[lLen2];
+
+            var lNumCommon = 0;
+            for (var i = 0; i < lLen1; ++i)
+            {
+                var lStart = Math.Max(0, i - lSearchRange);
+                var lEnd = Math.Min(i + lSearchRange + 1, lLen2);
+                for (var j = lStart; j < lEnd; ++j)
+                {
+                    if (lMatched2[j])
+                    {
+                        continue;
+                    }
+                    
+                    if (!comparer.Equals(str[i], str2[j]))
+                    {
+                        continue;
+                    }
+
+                    lMatched1[i] = true;
+                    lMatched2[j] = true;
+                    ++lNumCommon;
+                    break;
+                }
+            }
+
+            if (lNumCommon == 0)
+            {
+                return 0.0;
+            }
+
+            var lNumHalfTransposed = 0;
+            var k = 0;
+            for (var i = 0; i < lLen1; ++i)
+            {
+                if (!lMatched1[i])
+                {
+                    continue;
+                }
+
+                while (!lMatched2[k])
+                {
+                    ++k;
+                }
+                
+                if (!comparer.Equals(str[i], str2[k]))
+                {
+                    ++lNumHalfTransposed;
+                }
+
+                ++k;
+            }
+
+            var lNumTransposed = lNumHalfTransposed / 2;
+            double lNumCommonD = lNumCommon;
+            var lWeight = (lNumCommonD / lLen1
+                            + lNumCommonD / lLen2
+                            + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
+
+            if (lWeight <= WeightThreshold)
+            {
+                return lWeight;
+            }
+            
+            var lMax = Math.Min(NumChars, Math.Min(str.Length, str2.Length));
+            var lPos = 0;
+            while (lPos < lMax && comparer.Equals(str[lPos], str2[lPos]))
+            {
+                ++lPos;
+            }
+
+            if (lPos == 0)
+            {
+                return lWeight;
+            }
+
+            return lWeight + 0.1 * lPos * (1.0 - lWeight);
+        }
+    }
+
+    class CaseInsensitiveCharComparer : EqualityComparer<char>
+    {
+        public override bool Equals(char x, char y)
+        {
+            return char.ToUpperInvariant(x) == char.ToUpperInvariant(y);
+        }
+
+        public override int GetHashCode(char obj)
+        {
+            return char.ToUpperInvariant(obj).GetHashCode();
         }
     }
 }
