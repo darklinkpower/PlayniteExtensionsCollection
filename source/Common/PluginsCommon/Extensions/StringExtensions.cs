@@ -12,9 +12,16 @@ namespace System
 {
     public static class StringExtensions
     {
+        #region Constants and Fields
+
         private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
+        private static readonly char[] _textMatchSplitter = { ' ', ',', ';' };
         private static readonly EqualityComparer<char> _charCaseInsensitiveComparer = new CaseInsensitiveCharComparer();
-        
+
+        #endregion
+
+        #region Hashing and Encoding
+
         public static string MD5(this string s)
         {
             var builder = new StringBuilder();
@@ -33,6 +40,8 @@ namespace System
                 return provider.ComputeHash(Encoding.UTF8.GetBytes(s));
             }
         }
+
+        #region Hashing and Encoding
 
         public static string ConvertToSortableName(string name)
         {
@@ -344,6 +353,17 @@ namespace System
         public static bool ContainsCurrentCulture(this string source, string value, CompareOptions compareOptions)
         {
             return CultureInfo.CurrentCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
+        }
+
+        public static bool MatchesAllWords(this string str, string toMatch, CompareOptions compareOptions = CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols | CompareOptions.IgnoreNonSpace, char[] textMatchSplitter = null)
+        {
+            textMatchSplitter = textMatchSplitter ?? _textMatchSplitter;
+
+            var searchFilterSplit = str.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
+            var toMatchSplit = toMatch.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
+
+            return searchFilterSplit.All(word =>
+                toMatchSplit.Any(a => a.ContainsInvariantCulture(word, compareOptions)));
         }
 
         //From https://github.com/DanHarltey/Fastenshtein
