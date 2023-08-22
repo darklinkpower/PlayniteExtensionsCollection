@@ -31,7 +31,7 @@ You can try using a diferent HotKey combination to possibly fix the issue</sys:S
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">通知メッセージを有効にする</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
 
 The configured hotkeys won't be able to be used in other applications.</sys:String>
@@ -75,22 +75,22 @@ Playtime suspend: Games will be suspended and resumed automatically when the gam
     <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Switch to Playnite Desktop Mode if there isn't any controller connected</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Only switch Playnite Modes if games are not currently running</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Playnite をデスクトップモードに切り替え中…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Playnite をフルスクリーンモードに切り替え中…</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">プレイ時間:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">合計プレイ時間:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} 時間 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} 時間 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} 時間 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} 時間 {1} 分</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} 秒</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} 秒</sys:String>
 
     <sys:String x:Key="LOCPlayStateYesLabel">はい</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">いいえ</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">無効</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">ゲーム</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
@@ -101,7 +101,7 @@ Playtime suspend: Games will be suspended and resumed automatically when the gam
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
 
-    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">ホットキー</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
