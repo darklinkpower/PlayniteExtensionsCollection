@@ -53,6 +53,7 @@
     <Compile Include="BindingTools.cs" />
     <Compile Include="Converters\NumericConverters.cs" />
     <Compile Include="Encryption.cs" />
+    <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="GlobalCommands.cs" />
