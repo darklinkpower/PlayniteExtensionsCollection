@@ -6,6 +6,6 @@
     <sys:String x:Key="LOCSteam_Game_Importer_RequestInputSteamIdUrlMessage">Enter Steam game Id or URL:</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_InvalidSteamIdWarningMessage" xml:space="preserve">Warning. Couldn't verify if obtained AppId &quot;{0}&quot; is valid.
 Add this and all unknown AppIds?</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Importer_GameInformationDownloadFailMessage">AppId &quot;{0}&quot; のゲーム情報のダウンロード中にエラーが発生しました。エラー: {1}</sys:String>
     <sys:String x:Key="LOCSteam_Game_Importer_InputNoValidAppIdsMessage">Could not obtain any valid Steam AppId.</sys:String>
 </ResourceDictionary>
