@@ -152,6 +152,7 @@
     <Compile Include="BaseClasses\BaseSearchDefinition.cs" />
     <Compile Include="Interfaces\ISearchDefinition.cs" />
     <Compile Include="SearchCollection.cs" />
+    <Compile Include="SearchCollectionSearchContext.cs" />
     <Compile Include="SearchCollectionSettings.cs" />
     <Compile Include="SearchCollectionSettingsView.xaml.cs">
       <DependentUpon>SearchCollectionSettingsView.xaml</DependentUpon>

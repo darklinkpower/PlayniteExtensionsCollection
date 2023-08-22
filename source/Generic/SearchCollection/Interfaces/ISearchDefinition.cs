@@ -12,5 +12,6 @@ namespace SearchCollection.Interfaces
         string Name { get; }
         string Icon { get; }
         string GetSearchUrl(Game game);
+        string GetSearchUrl(string searchTerm);
     }
 }

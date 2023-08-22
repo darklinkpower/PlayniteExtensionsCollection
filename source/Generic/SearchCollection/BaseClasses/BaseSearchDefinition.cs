@@ -15,12 +15,17 @@ namespace SearchCollection.BaseClasses
 
         public virtual string GetSearchUrl(Game game)
         {
-            if (game.Name.IsNullOrEmpty())
+            return GetSearchUrl(game.Name);
+        }
+
+        public virtual string GetSearchUrl(string searchTerm)
+        {
+            if (searchTerm.IsNullOrEmpty())
             {
                 return null;
             }
 
-            return string.Format(UrlFormat, Uri.EscapeUriString(game.Name));
+            return string.Format(UrlFormat, Uri.EscapeUriString(searchTerm));
         }
 
         protected abstract string UrlFormat { get; }

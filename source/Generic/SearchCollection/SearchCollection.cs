@@ -58,6 +58,13 @@ namespace SearchCollection
             {
                 HasSettings = true
             };
+
+            Searches = new List<SearchSupport>
+            {
+                new SearchSupport("scl",
+                    "Search Collection",
+                    new SearchCollectionSearchContext(PlayniteApi, settings.Settings, defaultSearches, iconsDirectory, userIconsDirectory))
+            };
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
