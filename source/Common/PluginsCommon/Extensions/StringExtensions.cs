@@ -14,6 +14,8 @@ namespace System
     {
         #region Constants and Fields
 
+        private const double WinklerWeightThreshold = 0.7; //Winkler's paper used a default value of 0.7
+        private const int WinklerNumChars = 4; //Size of the prefix to be considered by the Winkler modification.
         private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
         private static readonly char[] _textMatchSplitter = { ' ', ',', ';' };
         private static readonly EqualityComparer<char> _charCaseInsensitiveComparer = new CaseInsensitiveCharComparer();
@@ -41,156 +43,13 @@ namespace System
             }
         }
 
-        #region Hashing and Encoding
-
-        public static string ConvertToSortableName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return string.Empty;
-            }
-
-            var newName = name;
-            newName = Regex.Replace(newName, @"^the\s+", "", RegexOptions.IgnoreCase);
-            newName = Regex.Replace(newName, @"^a\s+", "", RegexOptions.IgnoreCase);
-            newName = Regex.Replace(newName, @"^an\s+", "", RegexOptions.IgnoreCase);
-            return newName;
-        }
-
-        public static string RemoveTrademarks(this string str, string replacement = "")
-        {
-            if (str.IsNullOrEmpty())
-            {
-                return str;
-            }
-
-            return Regex.Replace(str, @"[™©®]", replacement);
-        }
-
-        public static bool IsNullOrEmpty(this string source)
-        {
-            return string.IsNullOrEmpty(source);
-        }
-
-        public static bool IsNullOrWhiteSpace(this string source)
-        {
-            return string.IsNullOrWhiteSpace(source);
-        }
-
-        public static string Format(this string source, params object[] args)
-        {
-            return string.Format(source, args);
-        }
-
-        public static string TrimEndString(this string source, string value, StringComparison comp = StringComparison.Ordinal)
-        {
-            if (!source.EndsWith(value, comp))
-            {
-                return source;
-            }
-
-            return source.Remove(source.LastIndexOf(value, comp));
-        }
-
-        public static string ToTitleCase(this string source, CultureInfo culture = null)
-        {
-            if (source.IsNullOrEmpty())
-            {
-                return source;
-            }
-
-            if (culture != null)
-            {
-                return culture.TextInfo.ToTitleCase(source);
-            }
-            else
-            {
-                return enUSCultInfo.TextInfo.ToTitleCase(source);
-            }
-        }
-
-        private static string RemoveUnlessThatEmptiesTheString(string input, string pattern)
-        {
-            string output = Regex.Replace(input, pattern, string.Empty);
-
-            if (string.IsNullOrWhiteSpace(output))
-            {
-                return input;
-            }
-            return output;
-        }
-
-        public static string NormalizeGameName(this string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return string.Empty;
-            }
-
-            var newName = name;
-            newName = newName.RemoveTrademarks();
-            newName = newName.Replace("_", " ");
-            newName = newName.Replace(".", " ");
-            newName = newName.Replace('’', '\'');
-            newName = RemoveUnlessThatEmptiesTheString(newName, @"\[.*?\]");
-            newName = RemoveUnlessThatEmptiesTheString(newName, @"\(.*?\)");
-            newName = Regex.Replace(newName, @"\s*:\s*", ": ");
-            newName = Regex.Replace(newName, @"\s+", " ");
-            if (Regex.IsMatch(newName, @",\s*The$"))
-            {
-                newName = "The " + Regex.Replace(newName, @",\s*The$", "", RegexOptions.IgnoreCase);
-            }
-
-            return newName.Trim();
-        }
-
         public static string GetSHA256Hash(this string input)
         {
-            using (var sha = System.Security.Cryptography.SHA256.Create())
+            using (var sha = Security.Cryptography.SHA256.Create())
             {
                 var hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
                 return BitConverter.ToString(hash).Replace("-", "");
             }
-        }
-
-        public static string GetPathWithoutAllExtensions(string path)
-        {
-            if (string.IsNullOrEmpty(path))
-            {
-                return string.Empty;
-            }
-
-            return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
-        }
-
-        public static bool Contains(this string str, string value, StringComparison comparisonType)
-        {
-            return str?.IndexOf(value, 0, comparisonType) != -1;
-        }
-
-        public static bool ContainsAny(this string str, char[] chars)
-        {
-            return str?.IndexOfAny(chars) >= 0;
-        }
-
-        public static bool IsHttpUrl(this string str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
-
-            return Regex.IsMatch(str, @"^https?:\/\/", RegexOptions.IgnoreCase);
-        }
-
-        public static bool IsUri(this string str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return false;
-            }
-
-            return Uri.IsWellFormedUriString(str, UriKind.Absolute);
         }
 
         public static string UrlEncode(this string str)
@@ -253,23 +112,85 @@ namespace System
             return Encoding.UTF8.GetString(Convert.FromBase64String(str));
         }
 
-        public static string GetMatchModifiedName(this string str)
+        #endregion
+
+        #region Utility Methods
+
+        public static bool IsNullOrEmpty(this string source)
+        {
+            return string.IsNullOrEmpty(source);
+        }
+
+        public static bool IsNullOrWhiteSpace(this string source)
+        {
+            return string.IsNullOrWhiteSpace(source);
+        }
+
+        public static string Format(this string source, params object[] args)
+        {
+            return string.Format(source, args);
+        }
+
+        public static string TrimEndString(this string source, string value, StringComparison comp = StringComparison.Ordinal)
+        {
+            if (!source.EndsWith(value, comp))
+            {
+                return source;
+            }
+
+            return source.Remove(source.LastIndexOf(value, comp));
+        }
+
+        private static string RemoveUnlessThatEmptiesTheString(string input, string pattern)
+        {
+            string output = Regex.Replace(input, pattern, string.Empty);
+
+            if (string.IsNullOrWhiteSpace(output))
+            {
+                return input;
+            }
+            return output;
+        }
+
+        public static bool IsHttpUrl(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
-                return string.Empty;
+                return false;
             }
 
-            var sb = new StringBuilder(str.Length);
-            foreach (char c in str)
+            return Regex.IsMatch(str, @"^https?:\/\/", RegexOptions.IgnoreCase);
+        }
+
+        public static bool IsUri(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
             {
-                if (char.IsLetterOrDigit(c))
-                {
-                    sb.Append(char.ToLowerInvariant(c));
-                }
+                return false;
             }
 
-            return sb.ToString();
+            return Uri.IsWellFormedUriString(str, UriKind.Absolute);
+        }
+
+        #endregion
+
+        #region String Manipulation
+
+        public static string ToTitleCase(this string source, CultureInfo culture = null)
+        {
+            if (source.IsNullOrEmpty())
+            {
+                return source;
+            }
+
+            if (culture != null)
+            {
+                return culture.TextInfo.ToTitleCase(source);
+            }
+            else
+            {
+                return enUSCultInfo.TextInfo.ToTitleCase(source);
+            }
         }
 
         // Courtesy of https://stackoverflow.com/questions/6275980/string-replace-ignoring-case
@@ -343,6 +264,97 @@ namespace System
             int @charsUntilStringEnd = str.Length - startSearchFromIndex;
             resultStringBuilder.Append(str, startSearchFromIndex, @charsUntilStringEnd);
             return resultStringBuilder.ToString();
+        }
+
+        public static string ConvertToSortableName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.Empty;
+            }
+
+            var newName = name;
+            newName = Regex.Replace(newName, @"^the\s+", "", RegexOptions.IgnoreCase);
+            newName = Regex.Replace(newName, @"^a\s+", "", RegexOptions.IgnoreCase);
+            newName = Regex.Replace(newName, @"^an\s+", "", RegexOptions.IgnoreCase);
+            return newName;
+        }
+
+        public static string RemoveTrademarks(this string str, string replacement = "")
+        {
+            if (str.IsNullOrEmpty())
+            {
+                return str;
+            }
+
+            return Regex.Replace(str, @"[™©®]", replacement);
+        }
+
+        public static string NormalizeGameName(this string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.Empty;
+            }
+
+            var newName = name;
+            newName = newName.RemoveTrademarks();
+            newName = newName.Replace("_", " ");
+            newName = newName.Replace(".", " ");
+            newName = newName.Replace('’', '\'');
+            newName = RemoveUnlessThatEmptiesTheString(newName, @"\[.*?\]");
+            newName = RemoveUnlessThatEmptiesTheString(newName, @"\(.*?\)");
+            newName = Regex.Replace(newName, @"\s*:\s*", ": ");
+            newName = Regex.Replace(newName, @"\s+", " ");
+            if (Regex.IsMatch(newName, @",\s*The$"))
+            {
+                newName = "The " + Regex.Replace(newName, @",\s*The$", "", RegexOptions.IgnoreCase);
+            }
+
+            return newName.Trim();
+        }
+
+        public static string GetPathWithoutAllExtensions(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return string.Empty;
+            }
+
+            return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
+        }
+
+        public static string GetMatchModifiedName(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder(str.Length);
+            foreach (char c in str)
+            {
+                if (char.IsLetterOrDigit(c))
+                {
+                    sb.Append(char.ToLowerInvariant(c));
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region Comparison and Search
+
+        public static bool Contains(this string str, string value, StringComparison comparisonType)
+        {
+            return str?.IndexOf(value, 0, comparisonType) != -1;
+        }
+
+        public static bool ContainsAny(this string str, char[] chars)
+        {
+            return str?.IndexOfAny(chars) >= 0;
         }
 
         public static bool ContainsInvariantCulture(this string source, string value, CompareOptions compareOptions)
@@ -425,16 +437,6 @@ namespace System
         }
 
         //From https://gist.github.com/ronnieoverby/2aa19724199df4ec8af6
-        //The Winkler modification will not be applied unless the 
-        //percent match was at or above the mWeightThreshold percent 
-        //without the modification. 
-        //Winkler's paper used a default value of 0.7
-        private const double WeightThreshold = 0.7;
-
-        //Size of the prefix to be concidered by the Winkler modification. 
-        //Winkler's paper used a default value of 4
-        private const int NumChars = 4;
-
         public static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2)
         {
             return GetJaroWinklerSimilarity(str, str2, _charCaseInsensitiveComparer);
@@ -522,12 +524,12 @@ namespace System
                             + lNumCommonD / lLen2
                             + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
 
-            if (lWeight <= WeightThreshold)
+            if (lWeight <= WinklerWeightThreshold)
             {
                 return lWeight;
             }
             
-            var lMax = Math.Min(NumChars, Math.Min(str.Length, str2.Length));
+            var lMax = Math.Min(WinklerNumChars, Math.Min(str.Length, str2.Length));
             var lPos = 0;
             while (lPos < lMax && comparer.Equals(str[lPos], str2[lPos]))
             {
@@ -541,6 +543,8 @@ namespace System
 
             return lWeight + 0.1 * lPos * (1.0 - lWeight);
         }
+
+        #endregion
     }
 
     class CaseInsensitiveCharComparer : EqualityComparer<char>
