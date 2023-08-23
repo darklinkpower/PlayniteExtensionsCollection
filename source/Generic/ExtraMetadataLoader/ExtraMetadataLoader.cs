@@ -26,6 +26,9 @@ namespace ExtraMetadataLoader
 {
     public class ExtraMetadataLoader : GenericPlugin
     {
+        private const string _logoMissingTag = "[EMT] Logo Missing";
+        private const string _videoMissingTag = "[EMT] Video missing";
+        private const string _videoMicroMissingTag = "[EMT] Video Micro missing";
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly LogosDownloader logosDownloader;
         private readonly VideosDownloader videosDownloader;
@@ -47,8 +50,10 @@ namespace ExtraMetadataLoader
             {
                 HasSettings = true
             };
+
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
+                SourceName = "ExtraMetadataLoader",
                 ElementList = new List<string>
                 {
                     "VideoLoaderControl",
@@ -58,9 +63,7 @@ namespace ExtraMetadataLoader
                     "VideoLoaderControl_NoControls_NoSound",
                     "VideoLoaderControl_NoControls_Sound",
                     "LogoLoaderControl"
-                },
-
-                SourceName = "ExtraMetadataLoader",
+                }
             });
 
             AddSettingsSupport(new AddSettingsSupportArgs
@@ -99,63 +102,59 @@ namespace ExtraMetadataLoader
                 }
             };
 
-            AddTextIcoFontResource("emtDownloadIcon", "\xEF08");
-            AddTextIcoFontResource("emtYoutubeIcon", "\xE95F");
-            AddTextIcoFontResource("emtSteamIcon", "\xED71");
-            AddTextIcoFontResource("emtVideoMicroGenIcon", "\xECB4");
-            AddTextIcoFontResource("emtVideoFileIcon", "\xEB0A");
-            AddTextIcoFontResource("emtImageFileIcon", "\xEB1A");
-            AddTextIcoFontResource("emtFileDeleteIcon", "\xEC53");
-            AddTextIcoFontResource("emtFolderIcon", "\xEC5B");
-            AddTextIcoFontResource("emtGoogleIcon", "\xE8DF");
-        }
-        
-        private void AddTextIcoFontResource(string key, string text)
-        {
-            Application.Current.Resources.Add(key, new TextBlock
+            var iconResourcesToAdd = new Dictionary<string, string>
             {
-                Text = text,
-                FontSize = 20,
-                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
-            });
+                { "emtDownloadIcon", "\xEF08" },
+                { "emtYoutubeIcon", "\xE95F" },
+                { "emtSteamIcon", "\xED71" },
+                { "emtVideoMicroGenIcon", "\xECB4" },
+                { "emtVideoFileIcon", "\xEB0A" },
+                { "emtImageFileIcon", "\xEB1A" },
+                { "emtFileDeleteIcon", "\xEC53" },
+                { "emtFolderIcon", "\xEC5B" },
+                { "emtGoogleIcon", "\xE8DF" }
+            };
+
+            foreach (var iconResource in iconResourcesToAdd)
+            {
+                PlayniteUtilities.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
+            }
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name == "LogoLoaderControl")
+            switch (args.Name)
             {
-                return new LogoLoaderControl(PlayniteApi, settings);
-            }
+                case "LogoLoaderControl":
+                    return new LogoLoaderControl(PlayniteApi, settings);
+                case "VideoLoaderControl":
+                    return GetVideoLoaderControl();
+                case "VideoLoaderControlAlternative":
+                    return GetVideoLoaderAlternativeControl();
+                default:
+                    if (args.Name.StartsWith("VideoLoaderControl_"))
+                    {
+                        return GetVideoLoaderControlConfigured(args.Name);
+                    }
 
-            if (args.Name == "VideoLoaderControl")
-            {
-                return GetVideoLoaderControl();
+                    return null;
             }
-
-            if (args.Name == "VideoLoaderControlAlternative")
-            {
-                return GetVideoLoaderAlternativeControl();
-            }
-
-            if (args.Name.StartsWith("VideoLoaderControl_"))
-            {
-                return GetVideoLoaderControlConfigured(args.Name);
-            }
-
-            return null;
         }
 
         private Control GetVideoLoaderControlConfigured(string controlName)
         {
-            char splitChar = '_';
-            var split = controlName.Split(splitChar);
-            var displayControls = !split.Any(x => x.Equals("NoControls", StringComparison.OrdinalIgnoreCase));
-            var useSound = !split.Any(x => x.Equals("NoSound", StringComparison.OrdinalIgnoreCase));
+            const char splitChar = '_';
+            const string noControlsToken = "NoControls";
+            const string noSoundToken = "NoSound";
 
-            var newVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath(), true, displayControls, useSound);
-            configuredVideoControls.Add(newVideoControl);
+            var controlNameParts = controlName.Split(splitChar);
+            var displayControls = !controlNameParts.Contains(noControlsToken, StringComparer.OrdinalIgnoreCase);
+            var useSound = !controlNameParts.Contains(noSoundToken, StringComparer.OrdinalIgnoreCase);
 
-            return newVideoControl;
+            var videoPlayerControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath(), true, displayControls, useSound);
+            configuredVideoControls.Add(videoPlayerControl);
+
+            return videoPlayerControl;
         }
 
         private Control GetVideoLoaderAlternativeControl()
@@ -165,45 +164,50 @@ namespace ExtraMetadataLoader
                 return null;
             }
 
-            if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && settings.Settings.EnableAlternativeDetailsVideoPlayer)
+            if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && settings.Settings.EnableAlternativeDetailsVideoPlayer)
             {
-                detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                return detailsVideoControl;
-            }
-            else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && settings.Settings.EnableAlternativeGridVideoPlayer)
-            {
-                gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                return gridVideoControl;
+                return CreateVideoPlayerControlIfNeeded(ref detailsVideoControl);
             }
 
-            if (genericVideoControl == null && settings.Settings.EnableAlternativeGenericVideoPlayer)
+            if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && settings.Settings.EnableAlternativeGridVideoPlayer)
             {
-                genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                return genericVideoControl;
+                return CreateVideoPlayerControlIfNeeded(ref gridVideoControl);
+            }
+
+            if (settings.Settings.EnableAlternativeGenericVideoPlayer)
+            {
+                return CreateVideoPlayerControlIfNeeded(ref genericVideoControl);
             }
 
             return null;
+        }
+
+        private Control CreateVideoPlayerControlIfNeeded(ref VideoPlayerControl control)
+        {
+            if (control == null)
+            {
+                control = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
+            }
+
+            return control;
         }
 
         private Control GetVideoLoaderControl()
         {
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && detailsVideoControl == null && !settings.Settings.EnableAlternativeDetailsVideoPlayer)
+                if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Details && !settings.Settings.EnableAlternativeDetailsVideoPlayer)
                 {
-                    detailsVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                    return detailsVideoControl;
+                    return CreateVideoPlayerControlIfNeeded(ref detailsVideoControl);
                 }
-                else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && gridVideoControl == null && !settings.Settings.EnableAlternativeGridVideoPlayer)
+                else if (PlayniteApi.MainView.ActiveDesktopView == DesktopView.Grid && !settings.Settings.EnableAlternativeGridVideoPlayer)
                 {
-                    gridVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                    return gridVideoControl;
+                    return CreateVideoPlayerControlIfNeeded(ref gridVideoControl);
                 }
 
-                if (genericVideoControl == null && !settings.Settings.EnableAlternativeGenericVideoPlayer)
+                if (!settings.Settings.EnableAlternativeGenericVideoPlayer)
                 {
-                    genericVideoControl = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
-                    return genericVideoControl;
+                    return CreateVideoPlayerControlIfNeeded(ref genericVideoControl);
                 }
             }
             else
@@ -667,13 +671,13 @@ namespace ExtraMetadataLoader
             return gameMenuItems;
         }
 
-        private string GetPlatformName(Game game, bool addSpaceEnd = false)
+        private string GetPlatformName(Game game, bool appendSpace = false)
         {
-            if (game.Platforms == null)
+            if (!game.Platforms.HasItems())
             {
                 return string.Empty;
             }
-            else if (addSpaceEnd)
+            else if (appendSpace)
             {
                 return game.Platforms[0].Name + " ";
             }
@@ -727,34 +731,39 @@ namespace ExtraMetadataLoader
                 </head>
                 <body style='margin:0'>
                 </body>", youtubeLink);
-            var webView = PlayniteApi.WebViews.CreateView(1280, 750);
-
-            // Age restricted videos can only be seen in the full version while logged in
-            // so it's needed to redirect to the full YouTube site to view them
-            var embedLoaded = false;
-            webView.LoadingChanged += async (s, e) =>
+            using (var webView = PlayniteApi.WebViews.CreateView(1280, 750))
             {
-                if (!embedLoaded)
+                // Age restricted videos can only be seen in the full version while logged in
+                // so it's needed to redirect to the full YouTube site to view them
+                var embedLoaded = false;
+                webView.LoadingChanged += async (s, e) =>
                 {
-                    if (webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
+                    if (!embedLoaded && webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
                     {
                         var source = await webView.GetPageSourceAsync();
                         if (source.Contains("<div class=\"ytp-error-content-wrap\"><div class=\"ytp-error-content-wrap-reason\">"))
                         {
                             webView.Navigate($"https://www.youtube.com/watch?v={youtubeVideoId}");
                         }
+
                         embedLoaded = true;
                     }
-                }
-            };
+                };
 
-            webView.Navigate("data:text/html," + html);
-            webView.OpenDialog();
-            webView.Dispose();
+                webView.Navigate("data:text/html," + html);
+                webView.OpenDialog();
+            }
         }
 
         private void CreateGoogleWindow()
         {
+            var selectedGames = PlayniteApi.MainView.SelectedGames;
+            if (!selectedGames.HasItems())
+            {
+                return;
+            }
+
+            var game = PlayniteApi.MainView.SelectedGames.Last();
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false
@@ -762,9 +771,7 @@ namespace ExtraMetadataLoader
 
             window.Height = 600;
             window.Width = 840;
-            var game = PlayniteApi.MainView.SelectedGames.Last();
             window.Title = string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"), game.Name);
-
             window.Content = new GoogleImageDownloaderView();
             window.DataContext = new GoogleImageDownloaderViewModel(PlayniteApi, game, logosDownloader);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
@@ -773,8 +780,15 @@ namespace ExtraMetadataLoader
             window.ShowDialog();
         }
 
-        private void CreateYoutubeWindow(bool searchShortVideos = true, bool showDownloadButton = true, string defaultSearchTerm = null)
+        private void CreateYoutubeWindow(bool searchShortVideos = true, bool showDownloadButton = true, string defaultSearchTerm = "")
         {
+            var selectedGames = PlayniteApi.MainView.SelectedGames;
+            if (!selectedGames.HasItems())
+            {
+                return;
+            }
+
+            var game = PlayniteApi.MainView.SelectedGames.Last();
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false
@@ -783,9 +797,8 @@ namespace ExtraMetadataLoader
             window.Height = 600;
             window.Width = 840;
             window.Title = ResourceProvider.GetString("LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle");
-
             window.Content = new YoutubeSearchView();
-            window.DataContext = new YoutubeSearchViewModel(PlayniteApi, PlayniteApi.MainView.SelectedGames.Last(), videosDownloader, searchShortVideos, showDownloadButton, defaultSearchTerm);
+            window.DataContext = new YoutubeSearchViewModel(PlayniteApi, game, videosDownloader, searchShortVideos, showDownloadButton, defaultSearchTerm);
             window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
@@ -794,17 +807,10 @@ namespace ExtraMetadataLoader
 
         private bool GetBoolFromYesNoDialog(string caption)
         {
-            var selection = PlayniteApi.Dialogs.ShowMessage(caption,
-                ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectOption"),
-                MessageBoxButton.YesNo);
-            if (selection == MessageBoxResult.Yes)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var messageBoxTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectOption");
+            var selection = PlayniteApi.Dialogs.ShowMessage(caption, messageBoxTitle, MessageBoxButton.YesNo);
+
+            return selection == MessageBoxResult.Yes;
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
@@ -829,6 +835,7 @@ namespace ExtraMetadataLoader
                         {
                             break;
                         }
+
                         if (!logosDownloader.DownloadSteamLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically, a.CancelToken))
                         {
                             logosDownloader.DownloadSgdbLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically, a.CancelToken);
@@ -844,7 +851,7 @@ namespace ExtraMetadataLoader
                 progressOptions.IsIndeterminate = false;
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
-                    var games = PlayniteApi.Database.Games.Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
+                    var games = PlayniteApi.Database.Games.Where(x => x.Added.HasValue && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
                     a.ProgressMaxValue = games.Count() + 1;
                     foreach (var game in games)
                     {
@@ -867,127 +874,103 @@ namespace ExtraMetadataLoader
 
         private void UpdateAssetsTagsStatus()
         {
-            if (settings.Settings.UpdateMissingLogoTagOnLibUpdate ||
-                settings.Settings.UpdateMissingVideoTagOnLibUpdate ||
-                settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate)
+            if (!ShouldUpdateAssetsTags())
             {
-                PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
-                {
-                    Tag logoMissingTag = null;
-                    Tag videoMissingTag = null;
-                    Tag microvideoMissingTag = null;
-                    if (settings.Settings.UpdateMissingLogoTagOnLibUpdate)
-                    {
-                        logoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Logo Missing");
-                    }
-                    if (settings.Settings.UpdateMissingVideoTagOnLibUpdate)
-                    {
-                        videoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Video missing");
-                    }
-                    if (settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate)
-                    {
-                        microvideoMissingTag = PlayniteApi.Database.Tags.Add("[EMT] Video Micro missing");
-                    }
-
-                    using (PlayniteApi.Database.BufferedUpdate())
-                    foreach (var game in PlayniteApi.Database.Games)
-                    {
-                        if (logoMissingTag != null)
-                        {
-                            if (FileSystem.FileExists(extraMetadataHelper.GetGameLogoPath(game)))
-                            {
-                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, logoMissingTag);
-                            }
-                            else
-                            {
-                                PlayniteUtilities.AddTagToGame(PlayniteApi, game, logoMissingTag);
-                            }
-                        }
-
-                        if (videoMissingTag != null)
-                        {
-                            if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
-                            {
-                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, videoMissingTag);
-                            }
-                            else
-                            {
-                                PlayniteUtilities.AddTagToGame(PlayniteApi, game, videoMissingTag);
-                            }
-                        }
-
-                        if (microvideoMissingTag != null)
-                        {
-                            if (FileSystem.FileExists(extraMetadataHelper.GetGameVideoMicroPath(game)))
-                            {
-                                PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, microvideoMissingTag);
-                            }
-                            else
-                            {
-                                PlayniteUtilities.AddTagToGame(PlayniteApi, game, microvideoMissingTag);
-                            }
-                        }
-                    }
-                }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
+                return;
             }
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                UpdateTagsForAllGames();
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags")));
+        }
+
+        private bool ShouldUpdateAssetsTags()
+        {
+            return settings.Settings.UpdateMissingLogoTagOnLibUpdate ||
+                   settings.Settings.UpdateMissingVideoTagOnLibUpdate ||
+                   settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate;
+        }
+
+        private void UpdateTagsForAllGames()
+        {
+            var tagSettings = new Dictionary<string, Tag>
+            {
+                { _logoMissingTag, settings.Settings.UpdateMissingLogoTagOnLibUpdate ? PlayniteApi.Database.Tags.Add(_logoMissingTag) : null },
+                { _videoMissingTag, settings.Settings.UpdateMissingVideoTagOnLibUpdate ? PlayniteApi.Database.Tags.Add(_videoMissingTag) : null },
+                { _videoMicroMissingTag, settings.Settings.UpdateMissingMicrovideoTagOnLibUpdate ? PlayniteApi.Database.Tags.Add(_videoMicroMissingTag) : null },
+            };
+
+            using (PlayniteApi.Database.BufferedUpdate())
+            {
+                foreach (var game in PlayniteApi.Database.Games)
+                {
+                    foreach (var tag in tagSettings)
+                    {
+                        if (tag.Value is null)
+                        {
+                            continue;
+                        }
+                        
+                        if (HasFileForTag(tag.Value, game))
+                        {
+                            PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, tag.Value);
+                        }
+                        else
+                        {
+                            PlayniteUtilities.AddTagToGame(PlayniteApi, game, tag.Value);
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool HasFileForTag(Tag tag, Game game)
+        {
+            return tag.Name == _logoMissingTag && FileSystem.FileExists(extraMetadataHelper.GetGameLogoPath(game)) ||
+                   tag.Name == _videoMissingTag && FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)) ||
+                   tag.Name == _videoMicroMissingTag && FileSystem.FileExists(extraMetadataHelper.GetGameVideoMicroPath(game));
         }
 
         private bool ValidateExecutablesSettings(bool validateFfmpeg, bool validateYtdl)
         {
-            var youtubeDlPath = extraMetadataHelper.ExpandVariables(settings.Settings.YoutubeDlPath);
-            var ffmpegPath = extraMetadataHelper.ExpandVariables(settings.Settings.FfmpegPath);
-            var ffprobePath = extraMetadataHelper.ExpandVariables(settings.Settings.FfprobePath);
-
             var success = true;
             if (validateFfmpeg)
             {
-                // ffmpeg
-                if (ffmpegPath.IsNullOrEmpty())
-                {
-                    logger.Debug($"ffmpeg has not been configured");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
-                    success = false;
-                }
-                else if (!FileSystem.FileExists(ffmpegPath))
-                {
-                    logger.Debug($"ffmpeg executable not found in {ffmpegPath}");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffmpegExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound"), NotificationType.Error, () => OpenSettingsView()));
-                    success = false;
-                }
-
-                // ffprobe
-                if (ffprobePath.IsNullOrEmpty())
-                {
-                    logger.Debug($"ffprobe has not been configured");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
-                    success = false;
-                }
-                else if (!FileSystem.FileExists(ffprobePath))
-                {
-                    logger.Debug($"ffprobe executable not found in {ffprobePath}");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ffprobeExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound"), NotificationType.Error, () => OpenSettingsView()));
-                    success = false;
-                }
+                success &= ValidateExecutable("ffmpeg", settings.Settings.FfmpegPath, "LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured", "LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound");
+                success &= ValidateExecutable("ffprobe", settings.Settings.FfprobePath, "LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured", "LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound");
             }
-            
+
             if (validateYtdl)
             {
-                // youtube-dl
-                if (youtubeDlPath.IsNullOrEmpty())
-                {
-                    logger.Debug($"youtube-dl has not been configured");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotConfigured", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured"), NotificationType.Error, () => OpenSettingsView()));
-                    success = false;
-                }
-                else if (!FileSystem.FileExists(youtubeDlPath))
-                {
-                    logger.Debug($"youtube-dl executable not found in {youtubeDlPath}");
-                    PlayniteApi.Notifications.Add(new NotificationMessage("ytdlExeNotFound", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound"), NotificationType.Error, () => OpenSettingsView()));
-                    success = false;
-                }
+                success &= ValidateExecutable("youtube-dl", settings.Settings.YoutubeDlPath, "LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured", "LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound");
             }
 
             return success;
+        }
+
+        private bool ValidateExecutable(string exeName, string exePath, string notConfiguredKey, string notFoundKey)
+        {
+            if (exePath.IsNullOrEmpty())
+            {
+                logger.Debug($"{exeName} has not been configured");
+                ShowConfigurationError(notConfiguredKey);
+                return false;
+            }
+
+            if (!FileSystem.FileExists(exePath))
+            {
+                logger.Debug($"{exeName} executable not found in {exePath}");
+                ShowConfigurationError(notFoundKey);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void ShowConfigurationError(string messageKey)
+        {
+            PlayniteApi.Notifications.Add(new NotificationMessage(messageKey, ResourceProvider.GetString(messageKey), NotificationType.Error, () => OpenSettingsView()));
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
