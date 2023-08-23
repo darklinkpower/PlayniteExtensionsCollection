@@ -3,6 +3,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
+using ResolutionChanger.Enums;
 using ResolutionChanger.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace ResolutionChanger
     public class ResolutionChanger : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private List<MainMenuItem> mainMenuitems;
+        private List<MainMenuItem> mainMenuItems;
         private DisplayConfigChangeData displayRestoreData = null;
 
         private ResolutionChangerSettingsViewModel settings { get; set; }
@@ -35,12 +36,42 @@ namespace ResolutionChanger
             };
         }
 
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            CreateMainMenuItems();
+        }
+
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            return mainMenuItems;
+        }
+
+        public override void OnGameStarted(OnGameStartedEventArgs args)
+        {
+            ApplyDisplayConfiguration(args);
+        }
+
+        public override void OnGameStopped(OnGameStoppedEventArgs args)
+        {
+            RestoreDisplayData(args);
+        }
+
+        public override ISettings GetSettings(bool firstRunSettings)
+        {
+            return settings;
+        }
+
+        public override UserControl GetSettingsView(bool firstRunSettings)
+        {
+            return new ResolutionChangerSettingsView();
+        }
+
         private bool IsAnyOtherGameRunning(Game game)
         {
             return PlayniteApi.Database.Games.Any(x => x.IsRunning && x.Id != game.Id);
         }
 
-        public override void OnGameStarted(OnGameStartedEventArgs args)
+        private void ApplyDisplayConfiguration(OnGameStartedEventArgs args)
         {
             var game = args.Game;
             if (!game.Features.HasItems())
@@ -54,33 +85,34 @@ namespace ResolutionChanger
                 return;
             }
 
-            var width = 0;
-            var height = 0;
-            var refreshRate = 0;    
+            var newWidth = 0;
+            var newHeight = 0;
+            var newRefreshRate = 0;
             foreach (var feature in game.Features)
             {
-                if (width == 0 && height == 0)
+                if (newWidth == 0 && newHeight == 0)
                 {
                     var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
                     if (resMatch.Success)
                     {
-                        width = int.Parse(resMatch.Groups[1].Value);
-                        height = int.Parse(resMatch.Groups[2].Value);
+                        newWidth = int.Parse(resMatch.Groups[1].Value);
+                        newHeight = int.Parse(resMatch.Groups[2].Value);
                         continue;
                     }
                 }
 
-                if (refreshRate == 0)
+                if (newRefreshRate == 0)
                 {
                     var refreshMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)Hz$", RegexOptions.IgnoreCase);
                     if (refreshMatch.Success)
                     {
-                        refreshRate = int.Parse(refreshMatch.Groups[1].Value);
+                        newRefreshRate = int.Parse(refreshMatch.Groups[1].Value);
+                        continue;
                     }
                 }
             }
 
-            if (width == 0 && height == 0 && refreshRate == 0)
+            if (newWidth == 0 && newHeight == 0 && newRefreshRate == 0)
             {
                 return;
             }
@@ -88,8 +120,8 @@ namespace ResolutionChanger
             // If the screen configuration was changed before, restore it before changing it again
             if (displayRestoreData != null)
             {
-                var restoreSuccess = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
-                if (restoreSuccess)
+                var displayRestoreResult = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
+                if (displayRestoreResult == ResolutionChangeResult.Success)
                 {
                     displayRestoreData = null;
                 }
@@ -101,24 +133,20 @@ namespace ResolutionChanger
             }
 
             var currentDevMode = DisplayHelper.GetMainScreenDevMode();
-            var changeResolution = width != 0 && height != 0;
-            var changeRefreshRate = refreshRate != 0;
-            var displayChanged = DisplayHelper.ChangeDisplayConfiguration(currentDevMode, width, height, refreshRate);
-            if (displayChanged)
+            var mainScreenName = DisplayHelper.GetMainScreenName();
+            var displayChangeResult = DisplayHelper.ChangeDisplayConfiguration(mainScreenName, newWidth, newHeight, newRefreshRate);
+            if (displayChangeResult == ResolutionChangeResult.Success)
             {
-                displayRestoreData = new DisplayConfigChangeData(currentDevMode, changeResolution, changeRefreshRate);
+                var changeResolution = newWidth != 0 && newHeight != 0;
+                var changeRefreshRate = newRefreshRate != 0;
+                displayRestoreData = new DisplayConfigChangeData(currentDevMode, mainScreenName, changeResolution, changeRefreshRate);
                 logger.Info($"Stored DevMode. Device: {displayRestoreData.DevMode.dmDeviceName}. Resolution {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}. Frequency: {displayRestoreData.DevMode.dmDisplayFrequency}");
             }
         }
 
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        private void RestoreDisplayData(OnGameStoppedEventArgs args)
         {
-            return mainMenuitems;
-        }
-
-        public override void OnGameStopped(OnGameStoppedEventArgs args)
-        {
-            if (displayRestoreData == null)
+            if (displayRestoreData is null)
             {
                 return;
             }
@@ -128,28 +156,26 @@ namespace ResolutionChanger
             //running in all the database
             if (settings.Settings.ChangeResOnlyGamesNotRunning && IsAnyOtherGameRunning(args.Game))
             {
-                logger.Debug("Another game was detected as running during game stop");
+                logger.Debug("Another game was detected as running during OnGameStopped");
                 return;
             }
 
-            if (displayRestoreData == null)
+            if (displayRestoreData.ResolutionChanged || displayRestoreData.RefreshRateChanged)
             {
-                return;
-            }
-
-            logger.Info($"Restoring previous display configuration {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}, refresh rate {displayRestoreData.DevMode.dmDisplayFrequency}");
-            var restoreSuccess = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
-            if (restoreSuccess)
-            {
-                displayRestoreData = null;
-            }
-            else
-            {
-                logger.Info($"Failed to restore display configuration");
+                logger.Info($"Restoring previous display for screen: {displayRestoreData.DevMode.dmDeviceName}, configuration: {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight} {displayRestoreData.DevMode.dmDisplayFrequency}hz");
+                var restoreSuccess = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
+                if (restoreSuccess == ResolutionChangeResult.Success)
+                {
+                    displayRestoreData = null;
+                }
+                else
+                {
+                    logger.Info($"Failed to restore display configuration");
+                }
             }
         }
 
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        private void CreateMainMenuItems()
         {
             var devModes = DisplayHelper.GetMainScreenAvailableDevModes()
                 .Distinct()
@@ -161,7 +187,7 @@ namespace ResolutionChanger
             var resolutionSection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayResolution");
             var frequencySection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayFrequency");
 
-            mainMenuitems = new List<MainMenuItem>
+            mainMenuItems = new List<MainMenuItem>
             {
                 new MainMenuItem
                 {
@@ -185,13 +211,13 @@ namespace ResolutionChanger
                 }
             };
 
-            var resolutions = GetAvailableResolutionsFromDevModes(devModes);
+            var resolutions = GetUniqueResolutionsFromDevModes(devModes);
             foreach (var resolution in resolutions)
             {
-                mainMenuitems.Add(
+                mainMenuItems.Add(
                     new MainMenuItem
                     {
-                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.GetResolutionAspectRatio(resolution.Key, resolution.Value)),
+                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.CalculateAspectRatioString(resolution.Key, resolution.Value)),
                         MenuSection = $"@Resolution Changer|{resolutionSection}",
                         Action = a =>
                         {
@@ -204,7 +230,7 @@ namespace ResolutionChanger
 
             foreach (var displayFrequency in devModes.Select(dm => dm.dmDisplayFrequency).Distinct())
             {
-                mainMenuitems.Add(
+                mainMenuItems.Add(
                     new MainMenuItem
                     {
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature"), displayFrequency),
@@ -219,50 +245,37 @@ namespace ResolutionChanger
             }
         }
 
-        private List<KeyValuePair<int, int>> GetAvailableResolutionsFromDevModes(List<DEVMODE> dms)
+        private IEnumerable<KeyValuePair<int, int>> GetUniqueResolutionsFromDevModes(List<DEVMODE> devModes)
         {
-            var list = new List<KeyValuePair<int, int>>();
-            foreach (var dm in dms)
-            {
-                list.Add(new KeyValuePair<int, int>(dm.dmPelsWidth, dm.dmPelsHeight));
-            }
-
-            return list.Distinct().ToList();
+            return devModes
+                .Select(devMode => new KeyValuePair<int, int>(devMode.dmPelsWidth, devMode.dmPelsHeight))
+                .Distinct();
         }
 
         private void RemoveResolutionConfigurationSelected(string regexDef)
         {
             using (PlayniteApi.Database.BufferedUpdate())
-            foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
             {
-                if (!game.FeatureIds.HasItems())
+                foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
                 {
-                    continue;
-                }
-
-                var rcFeatures = game.Features.Where(x => Regex.IsMatch(x.Name, regexDef, RegexOptions.IgnoreCase));
-                if (rcFeatures != null)
-                {
-                    foreach (var rcFeature in rcFeatures)
+                    if (!game.FeatureIds.HasItems())
                     {
-                        game.FeatureIds.Remove(rcFeature.Id);
+                        continue;
                     }
 
-                    PlayniteApi.Database.Games.Update(game);
+                    var extensionFeatures = game.Features.Where(x => Regex.IsMatch(x.Name, regexDef, RegexOptions.IgnoreCase));
+                    if (extensionFeatures != null)
+                    {
+                        foreach (var rcFeature in extensionFeatures)
+                        {
+                            game.FeatureIds.Remove(rcFeature.Id);
+                        }
+
+                        PlayniteApi.Database.Games.Update(game);
+                    }
                 }
             }
         }
-
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return settings;
-        }
-
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new ResolutionChangerSettingsView();
-        }
-
 
     }
 }

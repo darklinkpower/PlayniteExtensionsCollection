@@ -9,13 +9,15 @@ namespace ResolutionChanger.Models
 {
     public class DisplayConfigChangeData
     {
-        public DEVMODE DevMode { get; }
-        public bool ResolutionChanged { get; }
-        public bool RefreshRateChanged { get; }
+        public readonly DEVMODE DevMode;
+        public readonly string DisplayDeviceName;
+        public readonly bool ResolutionChanged;
+        public readonly bool RefreshRateChanged;
 
-        public DisplayConfigChangeData(DEVMODE devMode, bool resolutionChanged, bool refreshRateChanged)
+        public DisplayConfigChangeData(DEVMODE devMode, string displayDeviceName, bool resolutionChanged, bool refreshRateChanged)
         {
             DevMode = devMode;
+            DisplayDeviceName = displayDeviceName;
             ResolutionChanged = resolutionChanged;
             RefreshRateChanged = refreshRateChanged;
         }

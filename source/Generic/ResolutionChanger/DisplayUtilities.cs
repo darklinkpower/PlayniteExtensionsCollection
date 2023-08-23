@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using ResolutionChanger.Enums;
 using ResolutionChanger.Models;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,10 @@ namespace ResolutionChanger
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         public struct DEVMODE
         {
-            private const int CCHDEVICENAME = 0x20;
-            private const int CCHFORMNAME = 0x20;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
             public string dmDeviceName;
             public short dmSpecVersion;
             public short dmDriverVersion;
@@ -35,7 +34,7 @@ namespace ResolutionChanger
             public short dmYResolution;
             public short dmTTOption;
             public short dmCollate;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 0x20)]
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
             public string dmFormName;
             public short dmLogPixels;
             public int dmBitsPerPel;
@@ -53,12 +52,31 @@ namespace ResolutionChanger
             public int dmPanningHeight;
         }
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct DISPLAY_DEVICE
+        {
+            public int cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string DeviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceString;
+            public int StateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceID;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceKey;
+        }
+
         public static class User_32
         {
+            [DllImport("user32.dll")]
+            public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
             [DllImport("user32.dll")]
             public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DEVMODE devMode);
             [DllImport("user32.dll")]
             public static extern int ChangeDisplaySettings(ref DEVMODE devMode, int flags);
+            [DllImport("user32.dll")]
+            public static extern int ChangeDisplaySettingsEx(string lpszDeviceName, ref DEVMODE lpDevMode, IntPtr hwnd, uint dwflags, IntPtr lParam);
 
             public const int ENUM_CURRENT_SETTINGS = -1;
             public const int ENUM_REGISTRY_SETTINGS = -2;
@@ -71,158 +89,194 @@ namespace ResolutionChanger
             public const int DISP_CHANGE_NOTUPDATED = -3;
             public const int DISP_CHANGE_BADFLAGS = -4;
             public const int DISP_CHANGE_BADPARAM = -5;
+            public const int CCDEVICENAME = 32;
+            public const int CCFORMNAME = 32;
+            public const int DM_PELSWIDTH = 0x00080000;
+            public const int DM_PELSHEIGHT = 0x00100000;
+            public const int DM_DISPLAYFREQUENCY = 0x00040000;
         }
 
         public static class DisplayHelper
         {
+            private static DEVMODE GetDevMode()
+            {
+                return new DEVMODE()
+                {
+                    dmDeviceName = new string(new char[32]),
+                    dmFormName = new string(new char[32]),
+                    dmSize = (short)Marshal.SizeOf(typeof(DEVMODE))
+                };
+            }
+
+            private static DISPLAY_DEVICE GetDisplayDevice()
+            {
+                return new DISPLAY_DEVICE()
+                {
+                    cb = (short)Marshal.SizeOf(typeof(DISPLAY_DEVICE))
+                };
+            }
+
             public static DEVMODE GetMainScreenDevMode()
             {
-                DEVMODE dm = new DEVMODE();
-                var screen = Screen.PrimaryScreen;
-                dm.dmSize = (short)Marshal.SizeOf(typeof(DEVMODE));
-                User_32.EnumDisplaySettings(screen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref dm);
-
-                return dm;
+                DEVMODE devMode = GetDevMode();
+                User_32.EnumDisplaySettings(Screen.PrimaryScreen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref devMode);
+                return devMode;
             }
-            
-            public static int ChangeScreenConfigurationV(DEVMODE dm, int width, int height, int refreshRate)
+
+            public static string GetMainScreenName()
             {
-                if (width == 0 && height == 0 && refreshRate == 0)
+                return Screen.PrimaryScreen.DeviceName;
+            }
+
+            public static ResolutionChangeResult ChangeScreenConfiguration(string displayDeviceName, int newWidth, int newHeight, int newRefreshRate)
+            {
+                if (newWidth == 0 && newHeight == 0 && newRefreshRate == 0)
                 {
-                    logger.Debug($"Nothing to set. Width, height and refresh rate is 0");
-                    return 0;
+                    logger.Debug("Nothing to set. Width, height, and refresh rate are 0.");
+                    return ResolutionChangeResult.Success;
                 }
 
-                logger.Debug($"Setting configuration of device \"{dm.dmDeviceName}\" to {width}x{height} and refresh rate {refreshRate}...");
-                DEVMODE vDevMode = GetDevMode();
-                if (User_32.EnumDisplaySettings(Screen.PrimaryScreen.DeviceName, User_32.ENUM_CURRENT_SETTINGS, ref vDevMode))
+                try
                 {
-                    if (width != 0 && height != 0)
+                    logger.Debug($"Setting configuration of device \"{displayDeviceName}\" to {newWidth}x{newHeight} and refresh rate {newRefreshRate}...");
+                    DEVMODE devMode = GetDevMode();
+                    if (User_32.EnumDisplaySettings(displayDeviceName, User_32.ENUM_CURRENT_SETTINGS, ref devMode))
                     {
-                        vDevMode.dmPelsWidth = width;
-                        vDevMode.dmPelsHeight = height;
-                    }
+                        if (newWidth != 0 && newHeight != 0)
+                        {
+                            devMode.dmPelsWidth = newWidth;
+                            devMode.dmPelsHeight = newHeight;
+                            devMode.dmFields |= User_32.DM_PELSWIDTH | User_32.DM_PELSHEIGHT;
+                        }
 
-                    if (refreshRate != 0)
-                    {
-                        vDevMode.dmDisplayFrequency = refreshRate;
-                    }
+                        if (newRefreshRate != 0)
+                        {
+                            devMode.dmDisplayFrequency = newRefreshRate;
+                            devMode.dmFields |= User_32.DM_DISPLAYFREQUENCY;
+                        }
 
-                    int iRet = User_32.ChangeDisplaySettings(ref vDevMode, User_32.CDS_TEST);
-                    if (iRet == User_32.DISP_CHANGE_FAILED)
-                    {
-                        logger.Info($"Failed to set resolution DISP_CHANGE_FAILED");
-                        return -1;
+                        int testResult = User_32.ChangeDisplaySettingsEx(displayDeviceName, ref devMode, IntPtr.Zero, User_32.CDS_TEST, IntPtr.Zero);
+                        if (testResult == User_32.DISP_CHANGE_SUCCESSFUL)
+                        {
+                            var changeResult = User_32.ChangeDisplaySettingsEx(displayDeviceName, ref devMode, IntPtr.Zero, User_32.CDS_UPDATEREGISTRY, IntPtr.Zero);
+                            switch (changeResult)
+                            {
+                                case User_32.DISP_CHANGE_SUCCESSFUL:
+                                    logger.Info($"Display settings changed successfully");
+                                    return ResolutionChangeResult.Success;
+                                case User_32.DISP_CHANGE_RESTART:
+                                    logger.Info("Resolution change requires restart.");
+                                    return ResolutionChangeResult.RestartRequired;
+                                default:
+                                    logger.Info($"Failed to set resolution ({changeResult}).");
+                                    return ResolutionChangeResult.Failed;
+                            }
+                        }
+                        else
+                        {
+                            logger.Info($"Display change test failed with value {testResult}");
+                            return ResolutionChangeResult.Failed;
+                        }
                     }
                     else
                     {
-                        iRet = User_32.ChangeDisplaySettings(ref vDevMode, User_32.CDS_UPDATEREGISTRY);
-                        switch (iRet)
-                        {
-                            case User_32.DISP_CHANGE_SUCCESSFUL:
-                                logger.Info($"Resolution set to {width}x{height} succesfully");
-                                return 0;
-                            case User_32.DISP_CHANGE_RESTART:
-                                logger.Info($"Failed to set resolution DISP_CHANGE_RESTART");
-                                return 1;
-                            default:
-                                logger.Info($"Failed to set resolution {iRet}");
-                                return iRet;
-                        }
-                    }
-                }
-                else
-                {
-                    logger.Info($"Failed to set resolution. EnumDisplaySettings returned false");
-                    return -1;
-                }
-            }
-
-            public static bool ChangeDisplayConfiguration(DEVMODE devMode, int width, int height, int refreshRate)
-            {
-                return ChangeScreenConfigurationV(devMode, width, height, refreshRate) == 0;
-            }
-
-            public static bool RestoreDisplayConfiguration(DisplayConfigChangeData displayRestoreData)
-            {
-                if (!displayRestoreData.ResolutionChanged && !displayRestoreData.RefreshRateChanged)
-                {
-                    return true;
-                }
-
-                var width = 0;
-                var height = 0;
-                var frequency = 0;
-
-                if (displayRestoreData.ResolutionChanged)
-                {
-                    width = displayRestoreData.DevMode.dmPelsWidth;
-                    height = displayRestoreData.DevMode.dmPelsHeight;
-                }
-
-                if (displayRestoreData.RefreshRateChanged)
-                {
-                    frequency = displayRestoreData.DevMode.dmDisplayFrequency;
-                }
-
-                return ChangeScreenConfigurationV(displayRestoreData.DevMode, width, height, frequency) == 0;
-            }
-
-            private static DEVMODE GetDevMode()
-            {
-                DEVMODE dm = new DEVMODE();
-                dm.dmDeviceName = new string(new char[32]);
-                dm.dmFormName = new string(new char[32]);
-                dm.dmSize = (short)Marshal.SizeOf(dm);
-                return dm;
-            }
-
-            public static List<DEVMODE> GetScreenAvailableDevModes(DEVMODE dm)
-            {
-                var list = new List<DEVMODE>();
-                int i = 0;
-                try
-                {
-                    while (User_32.EnumDisplaySettings(null, i, ref dm))
-                    {
-                        var width = dm.dmPelsWidth;
-                        var height = dm.dmPelsHeight;
-                        if (width != 0 && height != 0)
-                        {
-                            list.Add(dm);
-                        }
-
-                        i++;
+                        logger.Info($"Failed to enumerate {displayDeviceName} display settings");
+                        return ResolutionChangeResult.Failed;
                     }
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, "Error while obtaining display resolutions");
+                    logger.Error(e, $"An error occurred during ChangeScreenConfiguration");
+                    return ResolutionChangeResult.Failed;
+                }
+            }
+
+            public static ResolutionChangeResult ChangeDisplayConfiguration(string displayDeviceName, int newWidth, int newHeight, int newRefreshRate)
+            {
+                return ChangeScreenConfiguration(displayDeviceName, newWidth, newHeight, newRefreshRate);
+            }
+
+            public static ResolutionChangeResult RestoreDisplayConfiguration(DisplayConfigChangeData displayRestoreData)
+            {
+                if (!displayRestoreData.ResolutionChanged && !displayRestoreData.RefreshRateChanged)
+                {
+                    return ResolutionChangeResult.Success;
                 }
 
-                return list;
+                var newWidth = displayRestoreData.ResolutionChanged ? displayRestoreData.DevMode.dmPelsWidth : 0;
+                var newHeight = displayRestoreData.ResolutionChanged ? displayRestoreData.DevMode.dmPelsHeight : 0;
+                var newFrequency = displayRestoreData.RefreshRateChanged ? displayRestoreData.DevMode.dmDisplayFrequency : 0;
+
+                return ChangeScreenConfiguration(displayRestoreData.DisplayDeviceName, newWidth, newHeight, newFrequency);
+            }
+
+            public static List<DEVMODE> GetScreenAvailableDevModes(string displayDeviceName)
+            {
+                var availableModes = new List<DEVMODE>();
+                try
+                {
+                    var devMode = GetDevMode();
+                    for (int modeIndex = 0; User_32.EnumDisplaySettings(displayDeviceName, modeIndex, ref devMode); modeIndex++)
+                    {
+                        int width = devMode.dmPelsWidth;
+                        int height = devMode.dmPelsHeight;
+                        if (width != 0 && height != 0)
+                        {
+                            availableModes.Add(devMode);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error while enumerating {displayDeviceName} display settings");
+                }
+
+                return availableModes;
+            }
+
+            public static List<DISPLAY_DEVICE> GetAvailableScreenDevices()
+            {
+                var availableDisplayDevices = new List<DISPLAY_DEVICE>();
+                try
+                {
+                    DISPLAY_DEVICE displayDevice = GetDisplayDevice();
+                    for (uint deviceIndex = 0; (User_32.EnumDisplayDevices(null, deviceIndex, ref displayDevice, 0)); deviceIndex++)
+                    {
+                        availableDisplayDevices.Add(displayDevice);
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error while enumarating display devices");
+                }
+
+                return availableDisplayDevices;
             }
 
             public static List<DEVMODE> GetMainScreenAvailableDevModes()
             {
-                return GetScreenAvailableDevModes(GetMainScreenDevMode());
+                return GetScreenAvailableDevModes(GetMainScreenName());
             }
 
-            public static string GetResolutionAspectRatio(int width, int height)
+            public static string CalculateAspectRatioString(int width, int height)
             {
-                int Remainder;
+                int gcd = CalculateGreatestCommonDivisor(width, height);
+                int aspectWidth = width / gcd;
+                int aspectHeight = height / gcd;
 
-                var a = width;
-                var b = height;
+                return $"{aspectWidth}:{aspectHeight}";
+            }
+
+            private static int CalculateGreatestCommonDivisor(int a, int b)
+            {
                 while (b != 0)
                 {
-                    Remainder = a % b;
+                    int remainder = a % b;
                     a = b;
-                    b = Remainder;
+                    b = remainder;
                 }
 
-                var gcd = a;
-                return $"{width/gcd}:{height/gcd}";
+                return a;
             }
         }
     }
