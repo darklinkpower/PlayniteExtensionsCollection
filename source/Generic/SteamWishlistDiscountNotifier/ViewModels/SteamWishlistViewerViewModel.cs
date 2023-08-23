@@ -388,12 +388,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 return true;
             }
 
-            if (searchString.Length > toMatch.Length)
-            {
-                return false;
-            }
-
-            if (searchString.GetJaroWinklerSimilarityIgnoreCase(toMatch) > 0.85)
+            if (searchString.GetJaroWinklerSimilarityIgnoreCase(toMatch) >= 0.95)
             {
                 return true;
             }
