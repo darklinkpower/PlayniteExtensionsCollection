@@ -12,6 +12,6 @@ namespace SearchCollection.SearchDefinitions
         public override string Name => "Twitch";
         public override string Icon => "Twitch.png";
 
-        protected override string UrlFormat => @"hhttps://www.twitch.tv/search?term={0}";
+        protected override string UrlFormat => @"https://www.twitch.tv/search?term={0}";
     }
 }
