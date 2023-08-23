@@ -19,6 +19,8 @@ namespace ResolutionChanger
 {
     public class ResolutionChanger : GenericPlugin
     {
+        private const string menuItemsMonitorIconName = "rcMonitorIconResource";
+        private const string menuItemsDeleteIconName = "rcDeleteIcon";
         private static readonly ILogger logger = LogManager.GetLogger();
         private List<MainMenuItem> mainMenuItems;
         private DisplayConfigChangeData displayRestoreData = null;
@@ -34,6 +36,9 @@ namespace ResolutionChanger
             {
                 HasSettings = true
             };
+
+            PlayniteUtilities.AddTextIcoFontResource(menuItemsMonitorIconName, "\xEA48");
+            PlayniteUtilities.AddTextIcoFontResource(menuItemsDeleteIconName, "\xEF00");
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
@@ -193,6 +198,7 @@ namespace ResolutionChanger
                 {
                     Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature"),
                     MenuSection = $"@Resolution Changer|{resolutionSection}",
+                    Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
                         RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)x(\d+)$");
@@ -203,6 +209,7 @@ namespace ResolutionChanger
                 {
                     Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature"),
                     MenuSection = $"@Resolution Changer|{frequencySection}",
+                    Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
                         RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)Hz$");
@@ -219,6 +226,7 @@ namespace ResolutionChanger
                     {
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.CalculateAspectRatioString(resolution.Key, resolution.Value)),
                         MenuSection = $"@Resolution Changer|{resolutionSection}",
+                        Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
                             PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Key}x{resolution.Value}");
@@ -235,6 +243,7 @@ namespace ResolutionChanger
                     {
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature"), displayFrequency),
                         MenuSection = $"@Resolution Changer|{frequencySection}",
+                        Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
                             PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {displayFrequency}Hz");
