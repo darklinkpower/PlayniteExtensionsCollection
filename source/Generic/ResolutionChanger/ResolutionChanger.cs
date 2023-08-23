@@ -22,7 +22,7 @@ namespace ResolutionChanger
         private const string menuItemsMonitorIconName = "rcMonitorIconResource";
         private const string menuItemsDeleteIconName = "rcDeleteIcon";
         private static readonly ILogger logger = LogManager.GetLogger();
-        private List<MainMenuItem> mainMenuItems;
+        private List<GameMenuItem> gameMenuItems = new List<GameMenuItem>();
         private DisplayConfigChangeData displayRestoreData = null;
 
         private ResolutionChangerSettingsViewModel settings { get; set; }
@@ -43,12 +43,12 @@ namespace ResolutionChanger
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            CreateMainMenuItems();
+            CreateGameMenuItems();
         }
 
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            return mainMenuItems;
+            return gameMenuItems;
         }
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
@@ -180,7 +180,7 @@ namespace ResolutionChanger
             }
         }
 
-        private void CreateMainMenuItems()
+        private void CreateGameMenuItems()
         {
             var devModes = DisplayHelper.GetMainScreenAvailableDevModes()
                 .Distinct()
@@ -192,12 +192,12 @@ namespace ResolutionChanger
             var resolutionSection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayResolution");
             var frequencySection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayFrequency");
 
-            mainMenuItems = new List<MainMenuItem>
+            gameMenuItems = new List<GameMenuItem>
             {
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature"),
-                    MenuSection = $"@Resolution Changer|{resolutionSection}",
+                    MenuSection = $"Resolution Changer|{resolutionSection}",
                     Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
@@ -205,10 +205,10 @@ namespace ResolutionChanger
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                     }
                 },
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature"),
-                    MenuSection = $"@Resolution Changer|{frequencySection}",
+                    MenuSection = $"Resolution Changer|{frequencySection}",
                     Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
@@ -221,11 +221,11 @@ namespace ResolutionChanger
             var resolutions = GetUniqueResolutionsFromDevModes(devModes);
             foreach (var resolution in resolutions)
             {
-                mainMenuItems.Add(
-                    new MainMenuItem
+                gameMenuItems.Add(
+                    new GameMenuItem
                     {
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.CalculateAspectRatioString(resolution.Key, resolution.Value)),
-                        MenuSection = $"@Resolution Changer|{resolutionSection}",
+                        MenuSection = $"Resolution Changer|{resolutionSection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
@@ -238,11 +238,11 @@ namespace ResolutionChanger
 
             foreach (var displayFrequency in devModes.Select(dm => dm.dmDisplayFrequency).Distinct())
             {
-                mainMenuItems.Add(
-                    new MainMenuItem
+                gameMenuItems.Add(
+                    new GameMenuItem
                     {
                         Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature"), displayFrequency),
-                        MenuSection = $"@Resolution Changer|{frequencySection}",
+                        MenuSection = $"Resolution Changer|{frequencySection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
