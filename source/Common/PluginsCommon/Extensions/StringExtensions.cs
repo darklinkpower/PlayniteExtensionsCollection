@@ -367,6 +367,11 @@ namespace System
             return CultureInfo.CurrentCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
         }
 
+        public static bool EqualsIgnoreCase(this string str, string toMatch)
+        {
+            return str.Equals(toMatch, StringComparison.InvariantCultureIgnoreCase);
+        }
+
         public static bool MatchesAllWords(this string str, string toMatch, CompareOptions compareOptions = CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols | CompareOptions.IgnoreNonSpace, char[] textMatchSplitter = null)
         {
             textMatchSplitter = textMatchSplitter ?? _textMatchSplitter;
@@ -442,6 +447,11 @@ namespace System
             return GetJaroWinklerSimilarity(str, str2, _charCaseInsensitiveComparer);
         }
 
+        public static double GetJaroWinklerSimilarity(this string str, string str2)
+        {
+            return GetJaroWinklerSimilarity(str, str2, EqualityComparer<char>.Default);
+        }
+
         /// <summary>
         /// Returns the Jaro-Winkler similarity between the specified
         /// strings. The distance is symmetric and will fall in the
@@ -450,11 +460,9 @@ namespace System
         /// <param name="str">First String</param>
         /// <param name="str2">Second String</param>
         /// <param name="comparer">Comparer used to determine character equality.</param>
-        /// <returns>Returns the Jaro-Winkler distance between the specified strings.</returns>
-        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer = null)
+        /// <returns>Similarity between the specified strings.</returns>
+        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer)
         {
-            comparer = comparer ?? EqualityComparer<char>.Default;
-
             var lLen1 = str.Length;
             var lLen2 = str2.Length;
             if (lLen1 == 0)
