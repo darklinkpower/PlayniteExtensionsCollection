@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCFiltersPresetsQL_SearchHelperDescription">Search and activate filter presets</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchLabel">Filter Presets</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchDescription">Enter the search term</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchHint">Search for filter presets in the Playnite database</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_ActivateActionLabel">Activate</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_ClearFiltersLabel">Clear filters</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Filter preset &quot;{0}&quot; not found</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filter Preset: {0}</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Changes require restarting</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Image</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Add image</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Remove image</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Filter preset name</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Display name</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Text to display instead of the name acronym if an image has not been configured.</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Show in top panel</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">Show in sidebar</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SearchHelperDescription">Cerca e attiva le preimpostazioni dei filtri</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchLabel">Preset filtri</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchDescription">Inserisci il termine di ricerca</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchHint">Cerca i preset dei filtri nel database di Playnite</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_ActivateActionLabel">Attiva</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_ClearFiltersLabel">Rimuovi filtri</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Preset filtro &quot;{0}&quot; non trovato</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Preset filtro: {0}</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Le modifiche richiedono il riavvio</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Immagine</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Aggiungi immagine</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Rimuovi immagine</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Nome del preset del filtro</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Nome visualizzato</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Testo da visualizzare invece dell'acronimo di nome se un'immagine non è stata configurata.</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Mostra nel pannello superiore</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">Mostra nella barra laterale</sys:String>
 </ResourceDictionary>
