@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using ResolutionChanger.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,15 @@ namespace ResolutionChanger
     {
         [DontSerialize]
         private bool changeResOnlyGamesNotRunning = true;
-        
         public bool ChangeResOnlyGamesNotRunning { get => changeResOnlyGamesNotRunning; set => SetValue(ref changeResOnlyGamesNotRunning, value); }
+
+        [DontSerialize]
+        private ModeDisplaySettings fullscreenModeDisplayInfo;
+        public ModeDisplaySettings FullscreenModeDisplayInfo { get => fullscreenModeDisplayInfo; set => SetValue(ref fullscreenModeDisplayInfo, value); }
+
+        [DontSerialize]
+        private ModeDisplaySettings desktopModeDisplayInfo;
+        public ModeDisplaySettings DesktopModeDisplayInfo { get => desktopModeDisplayInfo; set => SetValue(ref desktopModeDisplayInfo, value); }
     }
 
     public class ResolutionChangerSettingsViewModel : ObservableObject, ISettings

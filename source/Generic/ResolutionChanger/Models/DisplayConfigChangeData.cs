@@ -1,25 +1,28 @@
-﻿using System;
+﻿using ResolutionChanger.Structs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ResolutionChanger.DisplayUtilities;
 
 namespace ResolutionChanger.Models
 {
     public class DisplayConfigChangeData
     {
         public readonly DEVMODE DevMode;
-        public readonly string DisplayDeviceName;
-        public readonly bool ResolutionChanged;
-        public readonly bool RefreshRateChanged;
+        public readonly string TargetDisplayName;
+        public readonly string PrimaryDisplayName;
+        public readonly bool RestoreResolutionValues;
+        public readonly bool RestoreRefreshRate;
+        public bool RestorePrimaryDisplay => TargetDisplayName != PrimaryDisplayName;
 
-        public DisplayConfigChangeData(DEVMODE devMode, string displayDeviceName, bool resolutionChanged, bool refreshRateChanged)
+        public DisplayConfigChangeData(DEVMODE devMode, string targetDisplayName, string primaryDisplayName, bool restoreResolutionValues, bool restoreRefreshRate)
         {
             DevMode = devMode;
-            DisplayDeviceName = displayDeviceName;
-            ResolutionChanged = resolutionChanged;
-            RefreshRateChanged = refreshRateChanged;
+            TargetDisplayName = targetDisplayName;
+            PrimaryDisplayName = primaryDisplayName;
+            RestoreResolutionValues = restoreResolutionValues;
+            RestoreRefreshRate = restoreRefreshRate;
         }
     }
 }

@@ -5,6 +5,7 @@ using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using ResolutionChanger.Enums;
 using ResolutionChanger.Models;
+using ResolutionChanger.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using static ResolutionChanger.DisplayUtilities;
 
 namespace ResolutionChanger
 {
@@ -51,9 +51,9 @@ namespace ResolutionChanger
             return gameMenuItems;
         }
 
-        public override void OnGameStarted(OnGameStartedEventArgs args)
+        public override void OnGameStarting(OnGameStartingEventArgs args)
         {
-            ApplyDisplayConfiguration(args);
+            ApplyDisplayGameStartConfiguration(args);
         }
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
@@ -76,23 +76,92 @@ namespace ResolutionChanger
             return PlayniteApi.Database.Games.Any(x => x.IsRunning && x.Id != game.Id);
         }
 
-        private void ApplyDisplayConfiguration(OnGameStartedEventArgs args)
+        private void ApplyDisplayGameStartConfiguration(OnGameStartingEventArgs args)
         {
             var game = args.Game;
-            if (!game.Features.HasItems())
-            {
-                return;
-            }
-
             if (settings.Settings.ChangeResOnlyGamesNotRunning && IsAnyOtherGameRunning(game))
             {
                 logger.Debug("Another game was detected as running during game start");
                 return;
             }
 
-            var newWidth = 0;
-            var newHeight = 0;
-            var newRefreshRate = 0;
+            GetDisplaySettingsNewValues(game, out int newWidth, out int newHeight, out int newRefreshRate, out string targetDisplayName);
+            var changeDisplaySettings = (newWidth != 0 && newHeight != 0) && newRefreshRate != 0;
+            var availableDisplays = DisplayUtilities.GetAvailableDisplayDevices();
+            var currentPrimaryDisplayName = DisplayUtilities.GetPrimaryScreenName();
+            if (targetDisplayName.IsNullOrEmpty())
+            {
+                targetDisplayName = currentPrimaryDisplayName; // If no specific display device has been specified, make changes to current primary display
+            }
+
+            var targetDisplay = availableDisplays.FirstOrDefault(x => x.DeviceName == targetDisplayName);
+            var isTargetDisplayAvailable = !targetDisplay.DeviceName.IsNullOrEmpty();
+            if (!isTargetDisplayAvailable)
+            {
+                logger.Debug($"Target display {targetDisplayName} is not attached to computer");
+                return;
+            }
+
+            var setAsPrimaryDisplay = currentPrimaryDisplayName != targetDisplayName &&
+                                      !targetDisplay.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
+            if (changeDisplaySettings || setAsPrimaryDisplay)
+            {
+                // If the screen configuration was changed before, restore it before changing it again
+                if (!RestoreDisplayData())
+                {
+                    return;
+                }
+
+                ApplyGameStartDisplayConfiguration(newWidth, newHeight, newRefreshRate, targetDisplayName, currentPrimaryDisplayName, setAsPrimaryDisplay);
+            }
+        }
+
+        private void ApplyGameStartDisplayConfiguration(int newWidth, int newHeight, int newRefreshRate, string targetDisplayName, string currentPrimaryDisplayName, bool setAsPrimaryDisplay)
+        {
+            var targetDisplayCurrentDevMode = DisplayUtilities.GetScreenDevMode(targetDisplayName);
+            var displayChangeSuccess = DisplayUtilities.ChangeDisplayConfiguration(targetDisplayName, newWidth, newHeight, newRefreshRate, setAsPrimaryDisplay);
+            if (displayChangeSuccess)
+            {
+                var restoreResolution = newWidth != 0 && newHeight != 0;
+                var restoreRefreshRate = newRefreshRate != 0;
+
+                displayRestoreData = new DisplayConfigChangeData(targetDisplayCurrentDevMode, targetDisplayName, currentPrimaryDisplayName, restoreResolution, restoreRefreshRate);
+                logger.Info($"Stored restore display data. Screen: {currentPrimaryDisplayName}. Resolution {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}. Frequency: {displayRestoreData.DevMode.dmDisplayFrequency}");
+            }
+        }
+
+        private void GetDisplaySettingsNewValues(Game game, out int newWidth, out int newHeight, out int newRefreshRate, out string targetDisplayName)
+        {
+            newWidth = 0;
+            newHeight = 0;
+            newRefreshRate = 0;
+            targetDisplayName = string.Empty;
+            var modeDisplayInfo = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ?
+                                  settings.Settings.DesktopModeDisplayInfo : settings.Settings.FullscreenModeDisplayInfo;
+            if (modeDisplayInfo != null)
+            {
+                if (modeDisplayInfo.ChangeResolution && modeDisplayInfo.Width > 0 && modeDisplayInfo.Height > 0)
+                {
+                    newWidth = modeDisplayInfo.Width;
+                    newHeight = modeDisplayInfo.Height;
+                }
+
+                if (modeDisplayInfo.ChangeRefreshRate && modeDisplayInfo.RefreshRate > 0)
+                {
+                    newRefreshRate = modeDisplayInfo.RefreshRate;
+                }
+
+                if (modeDisplayInfo.TargetSpecificDisplay && modeDisplayInfo.TargetDisplay != null)
+                {
+                    targetDisplayName = modeDisplayInfo.TargetDisplay.DeviceName;
+                }
+            }
+
+            if (!game.Features.HasItems())
+            {
+                return;
+            }
+
             foreach (var feature in game.Features)
             {
                 if (newWidth == 0 && newHeight == 0)
@@ -116,37 +185,6 @@ namespace ResolutionChanger
                     }
                 }
             }
-
-            if (newWidth == 0 && newHeight == 0 && newRefreshRate == 0)
-            {
-                return;
-            }
-
-            // If the screen configuration was changed before, restore it before changing it again
-            if (displayRestoreData != null)
-            {
-                var displayRestoreResult = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
-                if (displayRestoreResult == ResolutionChangeResult.Success)
-                {
-                    displayRestoreData = null;
-                }
-                else
-                {
-                    // Don't continue if restore failed
-                    return;
-                }
-            }
-
-            var currentDevMode = DisplayHelper.GetMainScreenDevMode();
-            var mainScreenName = DisplayHelper.GetMainScreenName();
-            var displayChangeResult = DisplayHelper.ChangeDisplayConfiguration(mainScreenName, newWidth, newHeight, newRefreshRate);
-            if (displayChangeResult == ResolutionChangeResult.Success)
-            {
-                var changeResolution = newWidth != 0 && newHeight != 0;
-                var changeRefreshRate = newRefreshRate != 0;
-                displayRestoreData = new DisplayConfigChangeData(currentDevMode, mainScreenName, changeResolution, changeRefreshRate);
-                logger.Info($"Stored DevMode. Device: {displayRestoreData.DevMode.dmDeviceName}. Resolution {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight}. Frequency: {displayRestoreData.DevMode.dmDisplayFrequency}");
-            }
         }
 
         private void RestoreDisplayData(OnGameStoppedEventArgs args)
@@ -165,24 +203,31 @@ namespace ResolutionChanger
                 return;
             }
 
-            if (displayRestoreData.ResolutionChanged || displayRestoreData.RefreshRateChanged)
+            RestoreDisplayData();
+        }
+
+        private bool RestoreDisplayData()
+        {
+            if (displayRestoreData is null)
             {
-                logger.Info($"Restoring previous display for screen: {displayRestoreData.DevMode.dmDeviceName}, configuration: {displayRestoreData.DevMode.dmPelsWidth}x{displayRestoreData.DevMode.dmPelsHeight} {displayRestoreData.DevMode.dmDisplayFrequency}hz");
-                var restoreSuccess = DisplayHelper.RestoreDisplayConfiguration(displayRestoreData);
-                if (restoreSuccess == ResolutionChangeResult.Success)
-                {
-                    displayRestoreData = null;
-                }
-                else
-                {
-                    logger.Info($"Failed to restore display configuration");
-                }
+                return true;
+            }
+
+            var displayRestoreSuccess = DisplayUtilities.RestoreDisplayConfiguration(displayRestoreData);
+            if (displayRestoreSuccess)
+            {
+                displayRestoreData = null;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
         private void CreateGameMenuItems()
         {
-            var devModes = DisplayHelper.GetMainScreenAvailableDevModes()
+            var devModes = DisplayUtilities.GetMainScreenAvailableDevModes()
                 .Distinct()
                 .OrderByDescending(dm => dm.dmPelsWidth)
                 .ThenByDescending(dm => dm.dmPelsHeight)
@@ -224,7 +269,7 @@ namespace ResolutionChanger
                 gameMenuItems.Add(
                     new GameMenuItem
                     {
-                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayHelper.CalculateAspectRatioString(resolution.Key, resolution.Value)),
+                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayUtilities.CalculateAspectRatioString(resolution.Key, resolution.Value)),
                         MenuSection = $"Resolution Changer|{resolutionSection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
