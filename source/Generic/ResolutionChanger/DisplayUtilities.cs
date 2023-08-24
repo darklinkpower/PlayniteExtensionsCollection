@@ -275,19 +275,38 @@ namespace ResolutionChanger
             var displays = new List<DisplayInfo>();
             foreach (var displayDevice in GetAvailableDisplayDevices())
             {
-                var devModes = GetScreenAvailableDevModes(displayDevice.DeviceName);
-                var displayModes = devModes.Where(x => x.dmPelsWidth != 0 && x.dmPelsHeight != 0 && x.dmDisplayFrequency != 0)
-                    .Select(x => new DisplayMode(x.dmPelsWidth, x.dmPelsHeight, x.dmDisplayFrequency))
-                    .Distinct()
-                    .OrderByDescending(x => x.Width)
-                    .ThenByDescending(x => x.Height)
-                    .ThenByDescending(x => x.DisplayFrenquency)
-                    .ToList();
-                var displayInfo = new DisplayInfo(displayDevice.DeviceName, displayDevice.DeviceString, displayDevice.DeviceID, displayDevice.DeviceKey, displayModes);
+                DisplayInfo displayInfo = GetDisplayDeviceInfo(displayDevice);
                 displays.Add(displayInfo);
             }
 
             return displays;
+        }
+
+        public static DisplayInfo GetPrimaryDisplayDeviceInfo()
+        {
+            foreach (var displayDevice in GetAvailableDisplayDevices())
+            {
+                if (displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice))
+                {
+                    return GetDisplayDeviceInfo(displayDevice);
+                }
+            }
+
+            return null;
+        }
+
+        private static DisplayInfo GetDisplayDeviceInfo(DISPLAY_DEVICE displayDevice)
+        {
+            var devModes = GetScreenAvailableDevModes(displayDevice.DeviceName);
+            var displayModes = devModes.Where(x => x.dmPelsWidth != 0 && x.dmPelsHeight != 0 && x.dmDisplayFrequency != 0)
+                .Select(x => new DisplayMode(x.dmPelsWidth, x.dmPelsHeight, x.dmDisplayFrequency))
+                .Distinct()
+                .OrderByDescending(x => x.Width)
+                .ThenByDescending(x => x.Height)
+                .ThenByDescending(x => x.DisplayFrenquency)
+                .ToList();
+            var displayInfo = new DisplayInfo(displayDevice.DeviceName, displayDevice.DeviceString, displayDevice.DeviceID, displayDevice.DeviceKey, displayModes);
+            return displayInfo;
         }
 
         public static string CalculateAspectRatioString(int width, int height)

@@ -227,12 +227,11 @@ namespace ResolutionChanger
 
         private void CreateGameMenuItems()
         {
-            var devModes = DisplayUtilities.GetMainScreenAvailableDevModes()
-                .Distinct()
-                .OrderByDescending(dm => dm.dmPelsWidth)
-                .ThenByDescending(dm => dm.dmPelsHeight)
-                .ThenByDescending(dm => dm.dmDisplayFrequency)
-                .ToList();
+            var mainDisplayInfo = DisplayUtilities.GetPrimaryDisplayDeviceInfo();
+            if (mainDisplayInfo is null)
+            {
+                return;
+            }
 
             var resolutionSection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayResolution");
             var frequencySection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayFrequency");
@@ -263,7 +262,7 @@ namespace ResolutionChanger
                 }
             };
 
-            var resolutions = GetUniqueResolutionsFromDevModes(devModes);
+            var resolutions = GetUniqueResolutionsFromDisplayInfo(mainDisplayInfo);
             foreach (var resolution in resolutions)
             {
                 gameMenuItems.Add(
@@ -281,7 +280,7 @@ namespace ResolutionChanger
                 );
             }
 
-            foreach (var displayFrequency in devModes.Select(dm => dm.dmDisplayFrequency).Distinct())
+            foreach (var displayFrequency in mainDisplayInfo.DisplayModes.Select(x => x.DisplayFrenquency).Distinct())
             {
                 gameMenuItems.Add(
                     new GameMenuItem
@@ -299,10 +298,10 @@ namespace ResolutionChanger
             }
         }
 
-        private IEnumerable<KeyValuePair<int, int>> GetUniqueResolutionsFromDevModes(List<DEVMODE> devModes)
+        private IEnumerable<KeyValuePair<int, int>> GetUniqueResolutionsFromDisplayInfo(DisplayInfo displayInfo)
         {
-            return devModes
-                .Select(devMode => new KeyValuePair<int, int>(devMode.dmPelsWidth, devMode.dmPelsHeight))
+            return displayInfo.DisplayModes
+                .Select(x => new KeyValuePair<int, int>(x.Width, x.Height))
                 .Distinct();
         }
 

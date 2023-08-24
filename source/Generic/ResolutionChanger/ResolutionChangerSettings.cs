@@ -50,8 +50,6 @@ namespace ResolutionChanger
             }
         }
 
-        
-
         private List<DisplayInfo> availableDisplays = new List<DisplayInfo>();
         public List<DisplayInfo> AvailableDisplays { get => availableDisplays; set => SetValue(ref availableDisplays, value); }
 
