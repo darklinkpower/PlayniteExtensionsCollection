@@ -140,20 +140,20 @@ namespace ResolutionChanger
                                   settings.Settings.DesktopModeDisplayInfo : settings.Settings.FullscreenModeDisplayInfo;
             if (modeDisplayInfo != null)
             {
-                if (modeDisplayInfo.ChangeResolution && modeDisplayInfo.Width > 0 && modeDisplayInfo.Height > 0)
+                if (modeDisplayInfo.ChangeResolution && modeDisplayInfo.Width.HasValue && modeDisplayInfo.Height.HasValue)
                 {
-                    newWidth = modeDisplayInfo.Width;
-                    newHeight = modeDisplayInfo.Height;
+                    newWidth = modeDisplayInfo.Width.Value;
+                    newHeight = modeDisplayInfo.Height.Value;
                 }
 
-                if (modeDisplayInfo.ChangeRefreshRate && modeDisplayInfo.RefreshRate > 0)
+                if (modeDisplayInfo.ChangeRefreshRate && modeDisplayInfo.RefreshRate.HasValue)
                 {
-                    newRefreshRate = modeDisplayInfo.RefreshRate;
+                    newRefreshRate = modeDisplayInfo.RefreshRate.Value;
                 }
 
-                if (modeDisplayInfo.TargetSpecificDisplay && modeDisplayInfo.TargetDisplay != null)
+                if (modeDisplayInfo.TargetSpecificDisplay && !modeDisplayInfo.TargetDisplay.IsNullOrEmpty())
                 {
-                    targetDisplayName = modeDisplayInfo.TargetDisplay.DeviceName;
+                    targetDisplayName = modeDisplayInfo.TargetDisplay;
                 }
             }
 

@@ -8,20 +8,22 @@ namespace ResolutionChanger.Models
 {
     public class ModeDisplaySettings : ObservableObject
     {
-        private DisplayInfo targetDisplay = null;
-        public DisplayInfo TargetDisplay { get => targetDisplay; set => SetValue(ref targetDisplay, value); }
+        private string targetDisplay = string.Empty;
+        public string TargetDisplay { get => targetDisplay; set => SetValue(ref targetDisplay, value); }
 
         private bool targetSpecificDisplay = false;
         public bool TargetSpecificDisplay { get => targetSpecificDisplay; set => SetValue(ref targetSpecificDisplay, value); }
 
         private bool changeResolution = false;
         public bool ChangeResolution { get => changeResolution; set => SetValue(ref changeResolution, value); }
-
-        public int Width = 0;
-        public int Height = 0;
-
+        private int? width = null;
+        public int? Width { get => width; set => SetValue(ref width, value); }
+        private int? height = null;
+        public int? Height { get => height; set => SetValue(ref height, value); }
         private bool changeRefreshRate = false;
         public bool ChangeRefreshRate { get => changeRefreshRate; set => SetValue(ref changeRefreshRate, value); }
-        public int RefreshRate = 0;
+
+        private int? refreshRate = null;
+        public int? RefreshRate { get => refreshRate; set => SetValue(ref refreshRate, value); }
     }
 }
