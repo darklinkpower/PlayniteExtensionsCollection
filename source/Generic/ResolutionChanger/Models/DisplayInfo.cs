@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Models
+namespace DisplayHelper.Models
 {
     public class DisplayMode : ObservableObject, IEquatable<DisplayMode>
     {
@@ -18,13 +18,36 @@ namespace ResolutionChanger.Models
         private int displayFrenquency;
         public int DisplayFrenquency { get => displayFrenquency; set => SetValue(ref displayFrenquency, value); }
 
-        public string DisplayName => $"{width}x{height} {DisplayFrenquency}Hz";
+        public string AspectRatio => CalculateAspectRatioString();
+
+        public string DisplayName => $"{width}x{height} ({AspectRatio}) {DisplayFrenquency}Hz";
 
         public DisplayMode(int width, int height, int displayFrenquency)
         {
             Width = width;
             Height = height;
             DisplayFrenquency = displayFrenquency;
+        }
+
+        private string CalculateAspectRatioString()
+        {
+            int gcd = CalculateGreatestCommonDivisor(width, height);
+            int aspectWidth = width / gcd;
+            int aspectHeight = height / gcd;
+
+            return $"{aspectWidth}:{aspectHeight}";
+        }
+
+        private static int CalculateGreatestCommonDivisor(int a, int b)
+        {
+            while (b != 0)
+            {
+                int remainder = a % b;
+                a = b;
+                b = remainder;
+            }
+
+            return a;
         }
 
         public override bool Equals(object obj)

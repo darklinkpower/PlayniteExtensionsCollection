@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Models
+namespace DisplayHelper.Models
 {
     public class ModeDisplaySettings : ObservableObject
     {
-        private string targetDisplay = string.Empty;
-        public string TargetDisplay { get => targetDisplay; set => SetValue(ref targetDisplay, value); }
+        private string targetDisplayName = string.Empty;
+        public string TargetDisplayName { get => targetDisplayName; set => SetValue(ref targetDisplayName, value); }
 
         private bool targetSpecificDisplay = false;
         public bool TargetSpecificDisplay { get => targetSpecificDisplay; set => SetValue(ref targetSpecificDisplay, value); }

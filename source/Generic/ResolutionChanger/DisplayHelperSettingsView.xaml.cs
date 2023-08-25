@@ -13,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ResolutionChanger
+namespace DisplayHelper
 {
-    public partial class ResolutionChangerSettingsView : UserControl
+    public partial class DisplayHelperSettingsView : UserControl
     {
-        public ResolutionChangerSettingsView()
+        public DisplayHelperSettingsView()
         {
             InitializeComponent();
         }

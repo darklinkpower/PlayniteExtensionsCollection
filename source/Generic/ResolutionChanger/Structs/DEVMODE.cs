@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using ResolutionChanger.Enums;
+using DisplayHelper.Enums;
 
-namespace ResolutionChanger.Structs
+namespace DisplayHelper.Structs
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DEVMODE

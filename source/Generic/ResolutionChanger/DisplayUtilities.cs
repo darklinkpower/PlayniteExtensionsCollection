@@ -1,8 +1,8 @@
 ﻿using Playnite.SDK;
-using ResolutionChanger.Enums;
-using ResolutionChanger.Models;
-using ResolutionChanger.Native;
-using ResolutionChanger.Structs;
+using DisplayHelper.Enums;
+using DisplayHelper.Models;
+using DisplayHelper.Native;
+using DisplayHelper.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger
+namespace DisplayHelper
 {
     public static class DisplayUtilities
     {
@@ -307,27 +307,6 @@ namespace ResolutionChanger
                 .ToList();
             var displayInfo = new DisplayInfo(displayDevice.DeviceName, displayDevice.DeviceString, displayDevice.DeviceID, displayDevice.DeviceKey, displayModes);
             return displayInfo;
-        }
-
-        public static string CalculateAspectRatioString(int width, int height)
-        {
-            int gcd = CalculateGreatestCommonDivisor(width, height);
-            int aspectWidth = width / gcd;
-            int aspectHeight = height / gcd;
-
-            return $"{aspectWidth}:{aspectHeight}";
-        }
-
-        private static int CalculateGreatestCommonDivisor(int a, int b)
-        {
-            while (b != 0)
-            {
-                int remainder = a % b;
-                a = b;
-                b = remainder;
-            }
-
-            return a;
         }
     }
 }

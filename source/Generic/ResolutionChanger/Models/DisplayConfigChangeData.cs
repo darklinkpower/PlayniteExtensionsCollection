@@ -1,11 +1,11 @@
-﻿using ResolutionChanger.Structs;
+﻿using DisplayHelper.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Models
+namespace DisplayHelper.Models
 {
     public class DisplayConfigChangeData
     {

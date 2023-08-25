@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="DisplayHelper.DisplayHelperSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <ScrollViewer Margin="20">
+        <StackPanel>
+            <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
+                <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Display-Helper"
+                           Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                           CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                    <Run Text="{DynamicResource LOCResolutionChanger_SettingsHelpLabel}" />
+                </Hyperlink>
+            </TextBlock>
+            <CheckBox IsChecked="{Binding Settings.ChangeResOnlyGamesNotRunning}" Content="{DynamicResource LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning}"/>
+
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
+                       Margin="0,0,10,0"
+                       Text="{DynamicResource LOCDisplayHelper_DisplayLabel}" />
+                <ComboBox Grid.Row="0" Grid.Column="1" MinWidth="200"
+                      ItemsSource="{Binding AvailableDisplays}"
+                      SelectedItem="{Binding SelectedDisplay}"
+                      DisplayMemberPath="DisplayName" />
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
+                       Margin="0,10,10,0"
+                       Text="{DynamicResource LOCDisplayHelper_DisplayModesLabel}" />
+                <ComboBox Grid.Row="1" Grid.Column="1" MinWidth="200"
+                      Margin="0,10,0,0"
+                      ItemsSource="{Binding SelectedDisplayModes}"
+                      DisplayMemberPath="DisplayName"
+                      SelectedItem="{Binding SelectedDisplayMode}" />
+            </Grid>
+
+            <TextBlock Text="{DynamicResource LOCDisplayHelper_GlobalSettingsLabel}" Margin="0,15,0,0"/>
+            <Separator Margin="0,5,0,0" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Text="{DynamicResource LOCDisplayHelper_PlayniteModeLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                <ComboBox ItemsSource="{Binding PlayniteModes, Mode=OneWay}"
+                      MinWidth="150"
+                      SelectedItem="{Binding SelectedPlayniteMode}"
+                      DisplayMemberPath="Key" />
+            </StackPanel>
+            <StackPanel>
+                <CheckBox x:Name="cbTargetDisplay" VerticalAlignment="Center"
+                      Content="{DynamicResource LOCDisplayHelper_UseConfiguredDisplayLabel}"
+                      ToolTip="{DynamicResource LOCDisplayHelper_UseConfiguredDisplayTooltip}"
+                      Margin="0,15,0,0"
+                      IsChecked="{Binding SelectedGlobalSettings.TargetSpecificDisplay}" />
+                <StackPanel Orientation="Horizontal" Margin="20,10,0,0"
+                        IsEnabled="{Binding ElementName=cbTargetDisplay, Path=IsChecked}">
+                    <Button Content="{DynamicResource LOCDisplayHelper_SetSettingValueLabel}"
+                            Command="{Binding SetDisplayCommand}"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                    <Button Content="{DynamicResource LOCDisplayHelper_ClearSettingValueLabel}" Command="{Binding ClearDisplayCommand}"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource LOCDisplayHelper_DisplayLabel}" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBox IsReadOnly="True" Text="{Binding SelectedGlobalSettings.TargetDisplayName}" MinWidth="250" />
+                </StackPanel>
+
+                <CheckBox x:Name="cbResolution" VerticalAlignment="Center" Content="Change resolution"
+                    Margin="0,15,0,0"
+                    IsChecked="{Binding SelectedGlobalSettings.ChangeResolution}" />
+                <StackPanel Orientation="Horizontal" Margin="20,10,0,0"
+                        IsEnabled="{Binding ElementName=cbResolution, Path=IsChecked}">
+                    <Button Content="{DynamicResource LOCDisplayHelper_SetSettingValueLabel}" Command="{Binding SetResolutionCommand}"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                    <Button Content="{DynamicResource LOCDisplayHelper_ClearSettingValueLabel}" Command="{Binding ClearResolutionCommand}"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource LOCDisplayHelper_ResolutionLabel}" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBox IsReadOnly="True" Text="{Binding SelectedGlobalSettings.Width}" MinWidth="50" />
+                    <TextBlock Text="x" Margin="5,0,5,0" />
+                    <TextBox IsReadOnly="True" Text="{Binding SelectedGlobalSettings.Height}" MinWidth="50" />
+                </StackPanel>
+
+                <CheckBox x:Name="cbRefreshRate" VerticalAlignment="Center" Content="Change refresh rate"
+                          Margin="0,15,0,0"
+                          IsChecked="{Binding SelectedGlobalSettings.ChangeRefreshRate}" />
+                <StackPanel Orientation="Horizontal" Margin="20,10,0,0"
+                        IsEnabled="{Binding ElementName=cbRefreshRate, Path=IsChecked}">
+                    <Button Content="{DynamicResource LOCDisplayHelper_SetSettingValueLabel}" Command="{Binding SetRefreshRateCommand}"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                    <Button Content="{DynamicResource LOCDisplayHelper_ClearSettingValueLabel}" Command="{Binding ClearRefreshRateCommand}"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource LOCDisplayHelper_RefreshRateLabel}" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <TextBox IsReadOnly="True" Text="{Binding SelectedGlobalSettings.RefreshRate}" MinWidth="25" />
+                    <TextBlock Text="Hz" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

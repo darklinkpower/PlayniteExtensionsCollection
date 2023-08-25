@@ -1,6 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
-using ResolutionChanger.Models;
+using DisplayHelper.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger
+namespace DisplayHelper
 {
-    public class ResolutionChangerSettings : ObservableObject
+    public class DisplayHelperSettings : ObservableObject
     {
         [DontSerialize]
         private bool changeResOnlyGamesNotRunning = true;
@@ -25,10 +25,10 @@ namespace ResolutionChanger
         public ModeDisplaySettings DesktopModeDisplayInfo { get => desktopModeDisplayInfo; set => SetValue(ref desktopModeDisplayInfo, value); }
     }
 
-    public class ResolutionChangerSettingsViewModel : ObservableObject, ISettings
+    public class DisplayHelperSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly ResolutionChanger plugin;
-        private ResolutionChangerSettings editingClone { get; set; }
+        private readonly DisplayHelper plugin;
+        private DisplayHelperSettings editingClone { get; set; }
 
         private Dictionary<string, ApplicationMode> playniteModes = new Dictionary<string, ApplicationMode>
         {
@@ -101,8 +101,8 @@ namespace ResolutionChanger
             }
         }
 
-        private ResolutionChangerSettings settings;
-        public ResolutionChangerSettings Settings
+        private DisplayHelperSettings settings;
+        public DisplayHelperSettings Settings
         {
             get => settings;
             set
@@ -112,13 +112,13 @@ namespace ResolutionChanger
             }
         }
 
-        public ResolutionChangerSettingsViewModel(ResolutionChanger plugin)
+        public DisplayHelperSettingsViewModel(DisplayHelper plugin)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<ResolutionChangerSettings>();
+            var savedSettings = plugin.LoadPluginSettings<DisplayHelperSettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
@@ -127,7 +127,7 @@ namespace ResolutionChanger
             }
             else
             {
-                Settings = new ResolutionChangerSettings();
+                Settings = new DisplayHelperSettings();
             }
         }
 
@@ -172,7 +172,7 @@ namespace ResolutionChanger
                     return;
                 }
 
-                SelectedGlobalSettings.TargetDisplay = SelectedDisplay.DeviceName;
+                SelectedGlobalSettings.TargetDisplayName = SelectedDisplay.DeviceName;
             });
         }
 
@@ -180,9 +180,9 @@ namespace ResolutionChanger
         {
             get => new RelayCommand(() =>
             {
-                if (!SelectedGlobalSettings.TargetDisplay.IsNullOrEmpty())
+                if (!SelectedGlobalSettings.TargetDisplayName.IsNullOrEmpty())
                 {
-                    SelectedGlobalSettings.TargetDisplay = string.Empty;
+                    SelectedGlobalSettings.TargetDisplayName = string.Empty;
                 }
             });
         }

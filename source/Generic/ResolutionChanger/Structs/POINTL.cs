@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Structs
+namespace DisplayHelper.Structs
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct POINTL

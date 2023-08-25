@@ -1,4 +1,4 @@
-﻿using ResolutionChanger.Enums;
+﻿using DisplayHelper.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Structs
+namespace DisplayHelper.Structs
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DISPLAY_DEVICE

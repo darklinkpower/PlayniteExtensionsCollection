@@ -3,9 +3,9 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
-using ResolutionChanger.Enums;
-using ResolutionChanger.Models;
-using ResolutionChanger.Structs;
+using DisplayHelper.Enums;
+using DisplayHelper.Models;
+using DisplayHelper.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +15,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace ResolutionChanger
+namespace DisplayHelper
 {
-    public class ResolutionChanger : GenericPlugin
+    public class DisplayHelper : GenericPlugin
     {
         private const string menuItemsMonitorIconName = "rcMonitorIconResource";
         private const string menuItemsDeleteIconName = "rcDeleteIcon";
@@ -25,13 +25,13 @@ namespace ResolutionChanger
         private List<GameMenuItem> gameMenuItems = new List<GameMenuItem>();
         private DisplayConfigChangeData displayRestoreData = null;
 
-        private ResolutionChangerSettingsViewModel settings { get; set; }
+        private DisplayHelperSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("32b6a5c7-be17-4852-b4f7-f059a7321f4c");
 
-        public ResolutionChanger(IPlayniteAPI api) : base(api)
+        public DisplayHelper(IPlayniteAPI api) : base(api)
         {
-            settings = new ResolutionChangerSettingsViewModel(this);
+            settings = new DisplayHelperSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -68,7 +68,7 @@ namespace ResolutionChanger
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new ResolutionChangerSettingsView();
+            return new DisplayHelperSettingsView();
         }
 
         private bool IsAnyOtherGameRunning(Game game)
@@ -86,7 +86,7 @@ namespace ResolutionChanger
             }
 
             GetDisplaySettingsNewValues(game, out int newWidth, out int newHeight, out int newRefreshRate, out string targetDisplayName);
-            var changeDisplaySettings = (newWidth != 0 && newHeight != 0) && newRefreshRate != 0;
+            var changeDisplaySettings = (newWidth != 0 && newHeight != 0) || newRefreshRate != 0;
             var availableDisplays = DisplayUtilities.GetAvailableDisplayDevices();
             var currentPrimaryDisplayName = DisplayUtilities.GetPrimaryScreenName();
             if (targetDisplayName.IsNullOrEmpty())
@@ -151,9 +151,9 @@ namespace ResolutionChanger
                     newRefreshRate = modeDisplayInfo.RefreshRate.Value;
                 }
 
-                if (modeDisplayInfo.TargetSpecificDisplay && !modeDisplayInfo.TargetDisplay.IsNullOrEmpty())
+                if (modeDisplayInfo.TargetSpecificDisplay && !modeDisplayInfo.TargetDisplayName.IsNullOrEmpty())
                 {
-                    targetDisplayName = modeDisplayInfo.TargetDisplay;
+                    targetDisplayName = modeDisplayInfo.TargetDisplayName;
                 }
             }
 
@@ -164,6 +164,11 @@ namespace ResolutionChanger
 
             foreach (var feature in game.Features)
             {
+                if (feature.Name.IsNullOrEmpty())
+                {
+                    continue;
+                }
+                
                 if (newWidth == 0 && newHeight == 0)
                 {
                     var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
@@ -233,15 +238,16 @@ namespace ResolutionChanger
                 return;
             }
 
+            var menuSection = "Display Helper";
             var resolutionSection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayResolution");
-            var frequencySection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayFrequency");
+            var refreshRateSection = ResourceProvider.GetString("LOCDisplayHelper_MenuSectionDisplayRefreshRate");
 
             gameMenuItems = new List<GameMenuItem>
             {
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature"),
-                    MenuSection = $"Resolution Changer|{resolutionSection}",
+                    Description = ResourceProvider.GetString("LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature"),
+                    MenuSection = $"{menuSection}|{resolutionSection}",
                     Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
@@ -251,8 +257,8 @@ namespace ResolutionChanger
                 },
                 new GameMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature"),
-                    MenuSection = $"Resolution Changer|{frequencySection}",
+                    Description = ResourceProvider.GetString("LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature"),
+                    MenuSection = $"{menuSection}|{refreshRateSection}",
                     Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
@@ -268,12 +274,12 @@ namespace ResolutionChanger
                 gameMenuItems.Add(
                     new GameMenuItem
                     {
-                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Key, resolution.Value, DisplayUtilities.CalculateAspectRatioString(resolution.Key, resolution.Value)),
-                        MenuSection = $"Resolution Changer|{resolutionSection}",
+                        Description = string.Format(ResourceProvider.GetString("LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Value.Key, resolution.Value.Value, resolution.Key),
+                        MenuSection = $"{menuSection}|{resolutionSection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
-                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Key}x{resolution.Value}");
+                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Value.Key}x{resolution.Value.Value}");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
                     }
@@ -285,8 +291,8 @@ namespace ResolutionChanger
                 gameMenuItems.Add(
                     new GameMenuItem
                     {
-                        Description = string.Format(ResourceProvider.GetString("LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature"), displayFrequency),
-                        MenuSection = $"Resolution Changer|{frequencySection}",
+                        Description = string.Format(ResourceProvider.GetString("LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature"), displayFrequency),
+                        MenuSection = $"{menuSection}|{refreshRateSection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
@@ -298,10 +304,10 @@ namespace ResolutionChanger
             }
         }
 
-        private IEnumerable<KeyValuePair<int, int>> GetUniqueResolutionsFromDisplayInfo(DisplayInfo displayInfo)
+        private IEnumerable<KeyValuePair<string, KeyValuePair<int, int>>> GetUniqueResolutionsFromDisplayInfo(DisplayInfo displayInfo)
         {
             return displayInfo.DisplayModes
-                .Select(x => new KeyValuePair<int, int>(x.Width, x.Height))
+                .Select(x => new KeyValuePair<string, KeyValuePair<int, int>>(x.AspectRatio, new KeyValuePair<int, int>(x.Width, x.Height)))
                 .Distinct();
         }
 

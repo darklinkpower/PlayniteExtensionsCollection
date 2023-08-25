@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Enums
+namespace DisplayHelper.Enums
 {
     /// <summary>
     /// Specifies the angle of the screen.

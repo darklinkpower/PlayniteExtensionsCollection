@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Enums
+namespace DisplayHelper.Enums
 {
     public enum DISP_CHANGE : int
     {

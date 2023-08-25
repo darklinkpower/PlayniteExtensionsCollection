@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NVIDIAGeForceNowLibrary", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayState", "Generic\PlayState\PlayState.csproj", "{F3021AE3-EF99-480A-8CFE-A97672A36985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResolutionChanger", "Generic\ResolutionChanger\ResolutionChanger.csproj", "{7BDB4FCC-B0A7-4D81-B54F-2E0133B28FF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayHelper", "Generic\ResolutionChanger\DisplayHelper.csproj", "{7BDB4FCC-B0A7-4D81-B54F-2E0133B28FF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewViewer", "Generic\ReviewViewer\ReviewViewer.csproj", "{E63CAD2F-E238-4F0B-B294-90810D6134B2}"
 EndProject

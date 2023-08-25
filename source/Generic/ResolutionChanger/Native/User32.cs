@@ -1,5 +1,5 @@
-﻿using ResolutionChanger.Enums;
-using ResolutionChanger.Structs;
+﻿using DisplayHelper.Enums;
+using DisplayHelper.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ResolutionChanger.Native
+namespace DisplayHelper.Native
 {
     public static class User32
     {
