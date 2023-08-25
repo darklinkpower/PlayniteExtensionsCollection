@@ -161,6 +161,7 @@
     <Compile Include="MetacriticMetadataSettingsView.xaml.cs">
       <DependentUpon>MetacriticMetadataSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MetacriticSearchContext.cs" />
     <Compile Include="Models\MetacriticSearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MetacriticService.cs" />
