@@ -25,7 +25,7 @@ namespace SearchCollection.BaseClasses
                 return null;
             }
 
-            return string.Format(UrlFormat, Uri.EscapeUriString(searchTerm));
+            return string.Format(UrlFormat, Uri.EscapeUriString(searchTerm)).Trim();
         }
 
         protected abstract string UrlFormat { get; }
