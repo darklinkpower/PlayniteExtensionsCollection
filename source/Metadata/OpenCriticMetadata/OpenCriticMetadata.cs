@@ -33,6 +33,13 @@ namespace OpenCriticMetadata
             {
                 HasSettings = false
             };
+
+            Searches = new List<SearchSupport>
+            {
+                new SearchSupport("oc",
+                    "OpenCritic",
+                    new OpenCriticSearchContext(openCriticService))
+            };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
