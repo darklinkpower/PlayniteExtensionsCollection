@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using SearchCollection.Interfaces;
 using SearchCollection.Models;
@@ -88,7 +89,7 @@ namespace SearchCollection
             return new SearchItemAction(ResourceProvider.GetString("LOCSearch_Collection_SearchOnPlayniteActionLabel"),
             () =>
             {
-                OpenUrlOnWebview(searchDefinition.GetSearchUrl(args.SearchTerm));
+                PlayniteUtilities.OpenUrlOnWebView(searchDefinition.GetSearchUrl(args.SearchTerm));
             });
         }
 
@@ -97,18 +98,8 @@ namespace SearchCollection
             return new SearchItemAction(ResourceProvider.GetString("LOCSearch_Collection_SearchOnPlayniteActionLabel"),
             () =>
             {
-                OpenUrlOnWebview(searchDefinition.GetSearchUrl(args.SearchTerm));
+                PlayniteUtilities.OpenUrlOnWebView(searchDefinition.GetSearchUrl(args.SearchTerm));
             });
-        }
-
-        private void OpenUrlOnWebview(string url)
-        {
-            var scalingFactor = 1.25;
-            using (var webView = playniteApi.WebViews.CreateView(Convert.ToInt32(Math.Floor(1900 / scalingFactor)), Convert.ToInt32(Math.Floor(1000 / scalingFactor))))
-            {
-                webView.Navigate(url);
-                webView.OpenDialog();
-            }
         }
     }
 }

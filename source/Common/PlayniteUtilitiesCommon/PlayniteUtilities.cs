@@ -335,5 +335,14 @@ namespace PlayniteUtilitiesCommon
                 FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
             });
         }
+
+        public static void OpenUrlOnWebView(string url, int width = 1900, int height = 1000, double dpiScalingFactor = 1.25)
+        {
+            using (var webView = API.Instance.WebViews.CreateView(Convert.ToInt32(Math.Floor(width / dpiScalingFactor)), Convert.ToInt32(Math.Floor(height / dpiScalingFactor))))
+            {
+                webView.Navigate(url);
+                webView.OpenDialog();
+            }
+        }
     }
 }
