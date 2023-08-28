@@ -2,11 +2,24 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Ayuda</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Resolución</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frecuencia</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Borrar la configuración de resolución de los juegos seleccionados</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Borrar la configuración de frequencia de pantalla de los juegos seleccionados</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Establecer resolución de lanzamiento a {0}x{1} ({2}) para los juegos seleccionados</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Establecer frecuencia de pantalla de inicio a {0}Hz para los juegos seleccionados</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuSectionDisplayRefreshRate">Frecuencia de Actualización</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Borrar configuración de resolución</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Borrar configuración de actualización de pantalla</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Establecer resolución de lanzamiento a {0}x{1} ({2})</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Establecer frecuencia de pantalla de lanzamiento a {0}Hz</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Sólo cambiar resolución cuando no hay juegos en ejecución</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Hecho</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Pantalla:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ResolutionLabel">Resolución:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Frecuencia de Actualización:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Modos de pantalla:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Configuración global</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Modo de Playnite:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Usar pantalla configurada:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Al activar esta opción y seleccionar una pantalla, la extensión aplicará exclusivamente los cambios configurados a la pantalla elegida cada vez que se inicie un juego.
+Además, si la pantalla seleccionada aún no es la principal, se establecerá como tal.
+
+Por otro lado, si esta opción esta desactivada, la extensión aplicará los ajustes configurados a la pantalla primaria actual en el momento en que se inicie un juego.</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Establecer</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Borrar</sys:String>
 </ResourceDictionary>

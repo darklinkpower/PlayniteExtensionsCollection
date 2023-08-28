@@ -16,4 +16,9 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Додати нове визначення пошуку</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Використовуйте %s , де потрібно замінити назву гри. Наприклад: &quot;https://duckduckgo.com/?q=%s&quot; перетвориться на &quot;https://duckduckgo.com/?q=Braid&quot; під час пошуку гри з назвою &quot;Braid&quot;</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Пошук у Playnite</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnSiteActionLabel">Пошук на {0}</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchActionLabel">Пошук</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextDescription">Введіть термін для пошуку</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Пошук на сайтах, налаштованих у розширенні Search Collection</sys:String>
 </ResourceDictionary>

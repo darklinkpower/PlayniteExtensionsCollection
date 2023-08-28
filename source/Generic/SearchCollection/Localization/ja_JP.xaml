@@ -16,4 +16,9 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">新しい検索定義を追加</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">ゲーム名を置き換える場所に %s を使用します。例: &quot;https://duckduckgo.com/?q=%s&quot; は、&quot;Braid&quot; という名前のゲームで検索するときに &quot;https://duckduckgo.com/?q=Braid&quot; に変わります。</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Playnite で検索</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnSiteActionLabel">{0} で検索</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchActionLabel">検索</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextDescription">検索語句を入力</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Search in the sites configured in the Search Collection plugin</sys:String>
 </ResourceDictionary>
