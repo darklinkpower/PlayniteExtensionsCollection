@@ -20,12 +20,15 @@ namespace ThemesDetailsViewToGridViewConverter
     public class ThemesDetailsViewToGridViewConverter : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+
+        //TODO Rework to not use hardcoded values...
         private const string themeIdHelium = @"8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1";
         private const string themeIdStardust = @"Stardust 2.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002";
         private const string themeIdMythic = @"Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8";
         private const string themeIdHarmony = @"Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047";
         private const string themeIdDhDawn = @"felixkmh_DesktopTheme_DH_Dawn";
         private const string themeIdDhNight = @"felixkmh_DuplicateHider_Night_Theme";
+        private const string themeIdNovaX = @"Nova_X_0a95b7a3-00e4-412d-b301-f2fa3f98dfad";
         private const string messagesCaption = "Details to Grid View Converter";
 
         private readonly string baseThemesDirectory;
@@ -65,7 +68,8 @@ namespace ThemesDetailsViewToGridViewConverter
                 themeIdMythic,
                 themeIdHarmony,
                 themeIdDhDawn,
-                themeIdDhNight
+                themeIdDhNight,
+                themeIdNovaX
             };
 
             foreach (var themeId in themesIds)
@@ -270,6 +274,8 @@ namespace ThemesDetailsViewToGridViewConverter
                     return "felixkmh_DesktopTheme_DH_Dawn";
                 case themeIdDhNight:
                     return "felixkmh_DuplicateHider_Night_Theme";
+                case themeIdNovaX:
+                    return "Nova_X_0a95b7a3-00e4-412d-b301-f2fa3f98dfad";
                 default:
                     return null;
             }
@@ -291,6 +297,8 @@ namespace ThemesDetailsViewToGridViewConverter
                     return settings.Settings.ConvertDhDawn;
                 case themeIdDhNight:
                     return settings.Settings.ConvertDhNight;
+                case themeIdNovaX:
+                    return settings.Settings.ConvertNovaX;
                 default:
                     return false;
             }
@@ -312,6 +320,8 @@ namespace ThemesDetailsViewToGridViewConverter
                     return Version.Parse("1.0");
                 case themeIdDhNight:
                     return Version.Parse("3.0");
+                case themeIdNovaX:
+                    return Version.Parse("1.0");
                 default:
                     return Version.Parse("9999");
             }

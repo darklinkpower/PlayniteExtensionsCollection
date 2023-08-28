@@ -9,24 +9,27 @@
         <StackPanel>
             <TextBlock Text="{DynamicResource LOCThemeDetailsToGridConverter_ThemesToConvertLabel}" />
             <StackPanel Margin="40,0,0,0">
-                <CheckBox Content="Helium"
-                          Margin="0,10,0,0"
-                          IsChecked="{Binding Settings.ConvertHelium}"/>
-                <CheckBox Content="Stardust"
-                          Margin="0,10,0,0"
-                          IsChecked="{Binding Settings.ConvertStardust}"/>
-                <CheckBox Content="Mythic"
-                          Margin="0,10,0,0"
-                          IsChecked="{Binding Settings.ConvertMythic}"/>
-                <CheckBox Content="Harmony"
-                          Margin="0,10,0,0"
-                          IsChecked="{Binding Settings.ConvertHarmony}"/>
                 <CheckBox Content="DH Dawn"
                           Margin="0,10,0,0"
                           IsChecked="{Binding Settings.ConvertDhDawn}"/>
                 <CheckBox Content="DH Night"
                           Margin="0,10,0,0"
                           IsChecked="{Binding Settings.ConvertDhNight}"/>
+                <CheckBox Content="Harmony"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertHarmony}"/>
+                <CheckBox Content="Helium"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertHelium}"/>
+                <CheckBox Content="Mythic"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertMythic}"/>
+                <CheckBox Content="Nova X"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertNovaX}"/>
+                <CheckBox Content="Stardust"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertStardust}"/>
             </StackPanel>
             
         </StackPanel>
