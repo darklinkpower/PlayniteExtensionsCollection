@@ -13,3 +13,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Added support to display configured images in Search bar Filter presets results'
+  - Version: 1.2
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.28_553d8252/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_2.pext
+    Changelog:
+    - 'Updated localizations'

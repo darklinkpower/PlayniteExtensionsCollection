@@ -37,3 +37,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.04.11_03a5475a/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_5.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.6
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.28_553d8252/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_6.pext
+    Changelog:
+    - 'Added support for "Nova X" theme'

@@ -121,3 +121,13 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Open SteamGridDB game page directly for Steam games'
+  - Version: 2.19
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.28_553d8252/Search_Collection_2_19.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Google custom search definition on first startup to be used as an example'
+    - 'Add support to search configured searches in Playnite's Keyboard launcher with the "scl" keyword'
+    - 'Available searches list in context menu will now be sorted alphabetically'
+    - 'Open game pages directly if game has a VNDB link'

@@ -140,3 +140,16 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_21.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.22
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.28_553d8252/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_22.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Improved support for multi-monitor setups'
+    - 'Added icons to menu items'
+    - 'Moved menu items to game right click context menu'
+    - 'Added support to set global configuration in extension setups for Playnite Desktop and Fullscreen Mode'
+    - 'Added support to change primary display on game launch by configuring it as a global configuration in extension settings'
+    - 'Misc code improvements to fix potential issues that could cause the extension to not work in some cases'
+    - 'Changed extension name to "Display Helper"'
