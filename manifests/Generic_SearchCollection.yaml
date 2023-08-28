@@ -128,6 +128,6 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Google custom search definition on first startup to be used as an example'
-    - 'Add support to search configured searches in Playnite's Keyboard launcher with the "scl" keyword'
+    - 'Add support to search configured searches in Playnite''s Keyboard launcher with the "scl" keyword'
     - 'Available searches list in context menu will now be sorted alphabetically'
     - 'Open game pages directly if game has a VNDB link'
