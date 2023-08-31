@@ -131,3 +131,10 @@ Packages:
     - 'Add support to search configured searches in Playnite''s Keyboard launcher with the "scl" keyword'
     - 'Available searches list in context menu will now be sorted alphabetically'
     - 'Open game pages directly if game has a VNDB link'
+  - Version: 2.20
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.31_2c93441b/Search_Collection_2_20.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix opening an incorrect page when searching on SteamDB'
