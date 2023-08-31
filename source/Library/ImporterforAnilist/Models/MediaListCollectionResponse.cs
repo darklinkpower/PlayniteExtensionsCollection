@@ -95,7 +95,7 @@ namespace ImporterforAnilist.Models
         public List<string> Genres { get; set; }
 
         [SerializationPropertyName("tags")]
-        public List<Tag> Tags { get; set; }
+        public List<MediaTag> Tags { get; set; }
 
         [SerializationPropertyName("season")]
         public Season? Season { get; set; }
@@ -168,7 +168,7 @@ namespace ImporterforAnilist.Models
         public int? Day { get; set; }
     }
 
-    public partial class Tag
+    public partial class MediaTag
     {
         [SerializationPropertyName("name")]
         public string Name { get; set; }

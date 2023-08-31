@@ -3,6 +3,7 @@ using ImporterforAnilist.Services;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
@@ -63,20 +64,23 @@ namespace ImporterforAnilist
 
             InitializeStatuses();
             var libraryCache = new Dictionary<string, int>();
+            var tagsCache = new Dictionary<string, Tag>();
+            var genresCache = new Dictionary<string, Genre>();
+            var companiesCache = new Dictionary<string, Company>();
             var alreadyImportedEntries = playniteApi.Database.Games.Where(a => a.PluginId == plugin.Id)
                                          .ToDictionary(x => x.GameId, x => x);
             if (settings.ImportAnimeLibrary)
             {
                 var animeEntries = anilistService.GetEntries("ANIME");
                 logger.Debug($"Found {animeEntries.Count} Anime items");
-                ProcessEntriesResponse(importedGames, libraryCache, animeEntries, alreadyImportedEntries);
+                ProcessEntriesResponse(importedGames, libraryCache, tagsCache, genresCache, companiesCache, animeEntries, alreadyImportedEntries);
             }
 
             if (settings.ImportMangaLibrary)
             {
                 var mangaEntries = anilistService.GetEntries("MANGA");
                 logger.Debug($"Found {mangaEntries.Count} Manga items");
-                ProcessEntriesResponse(importedGames, libraryCache, mangaEntries, alreadyImportedEntries);
+                ProcessEntriesResponse(importedGames, libraryCache, tagsCache, genresCache, companiesCache, mangaEntries, alreadyImportedEntries);
             }
 
             FileSystem.WriteStringToFile(anilistLibraryCachePath, Serialization.ToJson(libraryCache));
@@ -97,12 +101,12 @@ namespace ImporterforAnilist
             };
         }
 
-        private void ProcessEntriesResponse(List<Game> importedGames, Dictionary<string, int> libraryCache, List<Entry> anilistUserEntry, Dictionary<string, Game> alreadyImportedEntries)
+        private void ProcessEntriesResponse(List<Game> importedGames, Dictionary<string, int> libraryCache, Dictionary<string, Tag> tagsCache, Dictionary<string, Genre> genresCache, Dictionary<string, Company> companiesCache, List<Entry> anilistUserEntry, Dictionary<string, Game> alreadyImportedEntries)
         {
             foreach (var entry in anilistUserEntry)
             {
                 var mediaId = entry.Media.Id.ToString();
-                // For some reason there was a report of repeated mediaId
+                // For some reason there was a report of repeated mediaId in received AniList response
                 if (libraryCache.ContainsKey(mediaId))
                 {
                     logger.Warn($"Library cache already contained mediaId with key {mediaId}. Current entryId {libraryCache[mediaId]} |  New {entry.Id}");
@@ -112,7 +116,7 @@ namespace ImporterforAnilist
                 libraryCache.Add(mediaId, entry.Id);
                 if (alreadyImportedEntries.TryGetValue(mediaId, out var existingEntry))
                 {
-                    UpdateExistingEntry(entry, existingEntry);
+                    UpdateExistingEntry(entry, existingEntry, tagsCache, genresCache, companiesCache);
                 }
                 else
                 {
@@ -121,9 +125,12 @@ namespace ImporterforAnilist
             }
         }
 
-        private void UpdateExistingEntry(Entry entry, Game existingEntry)
+        private void UpdateExistingEntry(Entry entry, Game existingEntry, Dictionary<string, Tag> tagsCache, Dictionary<string, Genre> genresCache, Dictionary<string, Company> companiesCache)
         {
             var shouldUpdateGame = false;
+            AnilistResponseHelper.ApplyPrefixToMediaProperties(entry.Media, settings.PropertiesPrefix);
+
+            //Scores
             if (settings.UpdateUserScoreOnLibUpdate && entry.Score != 0 && entry.Score != existingEntry.UserScore)
             {
                 existingEntry.UserScore = entry.Score;
@@ -136,6 +143,104 @@ namespace ImporterforAnilist
                 shouldUpdateGame = true;
             }
 
+            //Genres
+            if (entry.Media.Genres.HasItems())
+            {
+                var nonMatchingGenres = entry.Media.Genres
+                    .Where(genre => !existingEntry.Genres.HasItems() || !existingEntry.Genres.Any(existingGenre => existingGenre.Name == genre));
+                foreach (var genreName in nonMatchingGenres)
+                {
+                    if (!genresCache.ContainsKey(genreName))
+                    {
+                        genresCache.Add(genreName, playniteApi.Database.Genres.Add(genreName));
+                    }
+
+                    PlayniteUtilities.AddGenreToGame(playniteApi, existingEntry, genresCache[genreName], false);
+                    shouldUpdateGame = true;
+                }
+            }
+
+            //Developers and Publishers
+            if (entry.Media.Type == TypeEnum.Manga && entry.Media.Staff?.Nodes?.HasItems() == true)
+            {
+                var nonMatchingItems = entry.Media.Staff.Nodes
+                    .Where(x => !existingEntry.Developers.HasItems() || !existingEntry.Developers.Any(existingItem => existingItem.Name == x.Name.Full));
+                foreach (var item in nonMatchingItems)
+                {
+                    if (!companiesCache.ContainsKey(item.Name.Full))
+                    {
+                        companiesCache.Add(item.Name.Full, playniteApi.Database.Companies.Add(item.Name.Full));
+                    }
+
+                    var company = companiesCache[item.Name.Full];
+                    if (existingEntry.DeveloperIds is null)
+                    {
+                        existingEntry.DeveloperIds = new List<Guid> { company.Id };
+                    }
+                    else
+                    {
+                        existingEntry.DeveloperIds.Add(company.Id);
+                    }
+
+                    shouldUpdateGame = true;
+                }
+            }
+            else if (entry.Media.Type == TypeEnum.Anime && entry.Media.Studios?.Nodes?.HasItems() == true)
+            {
+                var studios = entry.Media.Studios?.Nodes?.Where(s => s.IsAnimationStudio);
+                if (studios.HasItems())
+                {
+                    var nonMatchingItems = studios
+                        .Where(x => !existingEntry.Developers.HasItems() || !existingEntry.Developers.Any(existingItem => existingItem.Name == x.Name));
+                    foreach (var itemName in nonMatchingItems)
+                    {
+                        if (!companiesCache.ContainsKey(itemName.Name))
+                        {
+                            companiesCache.Add(itemName.Name, playniteApi.Database.Companies.Add(itemName.Name));
+                        }
+
+                        var company = companiesCache[itemName.Name];
+                        if (existingEntry.DeveloperIds is null)
+                        {
+                            existingEntry.DeveloperIds = new List<Guid> { company.Id };
+                        }
+                        else
+                        {
+                            existingEntry.DeveloperIds.Add(company.Id);
+                        }
+
+                        shouldUpdateGame = true;
+                    }
+                }
+
+                var publishers = entry.Media.Studios?.Nodes?.Where(s => !s.IsAnimationStudio);
+                if (publishers.HasItems())
+                {
+                    var nonMatchingItems = studios
+                        .Where(x => !existingEntry.Publishers.HasItems() || !existingEntry.Publishers.Any(existingItem => existingItem.Name == x.Name));
+                    foreach (var itemName in nonMatchingItems)
+                    {
+                        if (!companiesCache.ContainsKey(itemName.Name))
+                        {
+                            companiesCache.Add(itemName.Name, playniteApi.Database.Companies.Add(itemName.Name));
+                        }
+
+                        var company = companiesCache[itemName.Name];
+                        if (existingEntry.PublisherIds is null)
+                        {
+                            existingEntry.PublisherIds = new List<Guid> { company.Id };
+                        }
+                        else
+                        {
+                            existingEntry.PublisherIds.Add(company.Id);
+                        }
+
+                        shouldUpdateGame = true;
+                    }
+                }
+            }
+
+            //Progress
             if (settings.UpdateProgressOnLibUpdate)
             {
                 var versionString = GetEntryVersionString(entry);
@@ -146,12 +251,35 @@ namespace ImporterforAnilist
                 }
             }
 
+            //LastActivity
             if (settings.UpdateLastActivityOnLibUpdate && entry.UpdatedAt != 0)
             {
                 var updatedTime = DateTimeOffset.FromUnixTimeSeconds(entry.UpdatedAt).LocalDateTime;
                 if (existingEntry.LastActivity is null || updatedTime > existingEntry.LastActivity)
                 {
                     existingEntry.LastActivity = updatedTime;
+                    shouldUpdateGame = true;
+                }
+            }
+
+            //Tags
+            if (entry.Media.Tags.HasItems())
+            {
+                var nonMatchingTags = entry.Media.Tags.Where(x => !x.IsMediaSpoiler && !x.IsGeneralSpoiler);
+                if (existingEntry.Tags.HasItems())
+                {
+                    var tagNames = new HashSet<string>(existingEntry.Tags.Select(tag => tag.Name));
+                    nonMatchingTags = nonMatchingTags.Where(tag => !tagNames.Contains(tag.Name));
+                }
+
+                foreach (var mediaTag in nonMatchingTags)
+                {
+                    if (!tagsCache.ContainsKey(mediaTag.Name))
+                    {
+                        tagsCache.Add(mediaTag.Name, playniteApi.Database.Tags.Add(mediaTag.Name));
+                    }
+
+                    PlayniteUtilities.AddTagToGame(playniteApi, existingEntry, tagsCache[mediaTag.Name], false);
                     shouldUpdateGame = true;
                 }
             }
@@ -177,12 +305,44 @@ namespace ImporterforAnilist
                 shouldUpdateGame = true;
             }
 
+            if (entry.Media.Season != null)
+            {
+                var seasonTagName = $"{settings.PropertiesPrefix}Season: {entry.Media.Season}";
+                if (!tagsCache.ContainsKey(seasonTagName))
+                {
+                    tagsCache.Add(seasonTagName, playniteApi.Database.Tags.Add(seasonTagName));
+                }
+
+                var tagAdded = PlayniteUtilities.AddTagToGame(playniteApi, existingEntry, tagsCache[seasonTagName], false);
+                if (tagAdded)
+                {
+                    shouldUpdateGame = true;
+                }
+            }
+
+            if (entry.Media.Format != null)
+            {
+                var formatTagName = $"{settings.PropertiesPrefix}Format: {entry.Media.Format}";
+                if (!tagsCache.ContainsKey(formatTagName))
+                {
+                    tagsCache.Add(formatTagName, playniteApi.Database.Tags.Add(formatTagName));
+                }
+
+                var tagAdded = PlayniteUtilities.AddTagToGame(playniteApi, existingEntry, tagsCache[formatTagName], false);
+                if (tagAdded)
+                {
+                    shouldUpdateGame = true;
+                }
+            }
+
+            //Installation Status
             if (!existingEntry.IsInstalled)
             {
                 existingEntry.IsInstalled = true;
                 shouldUpdateGame = true;
             }
 
+            //Completion Status
             if (settings.UpdateCompletionStatusOnLibUpdate && entry.Status != null)
             {
                 if (UpdateGameCompletionStatusFromEntryStatus(existingEntry, entry.Status))
@@ -199,39 +359,39 @@ namespace ImporterforAnilist
 
         public GameMetadata EntryToGameMetadata(Entry entry)
         {
-            var game = AnilistResponseHelper.MediaToGameMetadata(entry.Media, false, settings.PropertiesPrefix);
-            if (entry.Score != 0 && game.UserScore != entry.Score)
+            var gameMetadata = AnilistResponseHelper.MediaToGameMetadata(entry.Media, false, settings.PropertiesPrefix);
+            if (entry.Score != 0 && gameMetadata.UserScore != entry.Score)
             {
-                game.UserScore = entry.Score;
+                gameMetadata.UserScore = entry.Score;
             }
 
             if (entry.Status.HasValue && completionStatusMap.TryGetValue(entry.Status.Value, out var completionStatus))
             {
                 if (completionStatus != null)
                 {
-                    game.CompletionStatus = new MetadataNameProperty(completionStatus?.Name);
+                    gameMetadata.CompletionStatus = new MetadataNameProperty(completionStatus?.Name);
                 }
             }
 
             if (entry.UpdatedAt != 0)
             {
                 var newLastActivity = DateTimeOffset.FromUnixTimeSeconds(entry.UpdatedAt).LocalDateTime;
-                if (game.LastActivity != newLastActivity)
+                if (gameMetadata.LastActivity != newLastActivity)
                 {
-                    game.LastActivity = newLastActivity;
+                    gameMetadata.LastActivity = newLastActivity;
                 }
             }
 
             if (settings.UpdateProgressOnLibUpdate)
             {
                 var newVersionString = GetEntryVersionString(entry);
-                if (game.Version != newVersionString)
+                if (gameMetadata.Version != newVersionString)
                 {
-                    game.Version = newVersionString;
+                    gameMetadata.Version = newVersionString;
                 }
             }
 
-            return game;
+            return gameMetadata;
         }
 
         private string GetEntryVersionString(Entry entry)

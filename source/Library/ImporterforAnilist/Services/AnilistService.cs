@@ -69,7 +69,27 @@ namespace ImporterforAnilist.Services
                                 month
                                 day
                             }
+                            genres
+                            tags {
+                                name
+                                isGeneralSpoiler
+                                isMediaSpoiler
+                            }
+                            studios {
+                                nodes {
+                                    name
+                                    isAnimationStudio
+                                }
+                            }
+                            staff {
+                                nodes {
+                                    name {
+                                        full
+                                    }
+                                }
+                            }
                             status
+                            season
                         }
                     }
                 }
@@ -185,17 +205,16 @@ namespace ImporterforAnilist.Services
 
         public UpdateMediaListEntriesResponse UpdateEntriesStatuses(List<int> Ids, EntryStatus newStatus)
         {
-            var vars = @"
-            {{
-              ""ids"": [{0}],
-              ""status"": ""{1}""
-            }}";
+            var variables = new Dictionary<string, string>
+            {
+                { "ids", string.Join(", ", Ids) },
+                { "status", newStatus.ToString().ToUpperInvariant() }
+            };
 
-            var varsEnc = string.Format(vars, string.Join(", ", Ids), newStatus.ToString().ToUpperInvariant());
             var postParams = new Dictionary<string, string>
                 {
                     { "query", updateIdsStatusQuery },
-                    { "variables", varsEnc }
+                    { "variables", Serialization.ToJson(variables) }
                 };
 
             var response = GetApiPostResponse(postParams);

@@ -15,6 +15,10 @@ namespace PlayniteUtilitiesCommon
     public static class PlayniteUtilities
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private const string pcWinPlatformName = "PC (Windows)";
+        private const string pcPlatformName = "PC";
+        private const string pcSpecId = "pc_windows";
+
         public static bool AddFeatureToGame(IPlayniteAPI PlayniteApi, Game game, string featureName)
         {
             var feature = PlayniteApi.Database.Features.Add(featureName);
@@ -128,28 +132,32 @@ namespace PlayniteUtilitiesCommon
             return false;
         }
 
-        public static bool AddTagToGame(IPlayniteAPI PlayniteApi, Game game, string tagName)
+        public static bool AddTagToGame(IPlayniteAPI PlayniteApi, Game game, string tagName, bool updateInDatabase = true)
         {
             var tag = PlayniteApi.Database.Tags.Add(tagName);
-            return AddTagToGame(PlayniteApi, game, tag);
+            return AddTagToGame(PlayniteApi, game, tag, updateInDatabase);
         }
 
-        public static bool AddTagToGame(IPlayniteAPI PlayniteApi, Game game, Tag tag)
+        public static bool AddTagToGame(IPlayniteAPI PlayniteApi, Game game, Tag tag, bool updateInDatabase = true)
         {
+            var itemAdded = false;
             if (game.Tags == null)
             {
                 game.TagIds = new List<Guid> { tag.Id };
-                PlayniteApi.Database.Games.Update(game);
-                return true;
+                itemAdded = true;
             }
             else if (!game.TagIds.Contains(tag.Id))
             {
                 game.TagIds.Add(tag.Id);
-                PlayniteApi.Database.Games.Update(game);
-                return true;
+                itemAdded = true;
             }
 
-            return false;
+            if (itemAdded && updateInDatabase)
+            {
+                PlayniteApi.Database.Games.Update(game);
+            }
+
+            return itemAdded;
         }
 
         public static int AddTagToGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, string tagName)
@@ -161,7 +169,6 @@ namespace PlayniteUtilitiesCommon
         public static int AddTagToGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, Tag tag)
         {
             var addedCount = 0;
-
             using (PlayniteApi.Database.BufferedUpdate())
             foreach (var game in games)
             {
@@ -177,22 +184,23 @@ namespace PlayniteUtilitiesCommon
         public static int RemoveTagFromGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, string tagName)
         {
             var removedCount = 0;
-
             using (PlayniteApi.Database.BufferedUpdate())
-            foreach (var game in games)
             {
-                if (RemoveTagFromGame(PlayniteApi, game, tagName))
+                foreach (var game in games)
                 {
-                    removedCount++;
+                    if (RemoveTagFromGame(PlayniteApi, game, tagName))
+                    {
+                        removedCount++;
+                    }
                 }
-            }
 
-            return removedCount;
+                return removedCount;
+            }
         }
 
         public static bool RemoveTagFromGame(IPlayniteAPI PlayniteApi, Game game, string tagName)
         {
-            if (game.Tags == null)
+            if (!game.Tags.HasItems())
             {
                 return false;
             }
@@ -225,9 +233,34 @@ namespace PlayniteUtilitiesCommon
             return false;
         }
 
-        private const string pcWinPlatformName = "PC (Windows)";
-        private const string pcPlatformName = "PC";
-        private const string pcSpecId = "pc_windows";
+        public static bool AddGenreToGame(IPlayniteAPI PlayniteApi, Game game, string genreName, bool updateInDatabase = true)
+        {
+            var genre = PlayniteApi.Database.Genres.Add(genreName);
+            return AddGenreToGame(PlayniteApi, game, genre, updateInDatabase);
+        }
+
+        public static bool AddGenreToGame(IPlayniteAPI PlayniteApi, Game game, Genre genre, bool updateInDatabase = true)
+        {
+            var itemAdded = false;
+            if (game.Genres == null)
+            {
+                game.GenreIds = new List<Guid> { genre.Id };
+                itemAdded = true;
+            }
+            else if (!game.GenreIds.Contains(genre.Id))
+            {
+                game.GenreIds.Add(genre.Id);
+                itemAdded = true;
+            }
+
+            if (itemAdded && updateInDatabase)
+            {
+                PlayniteApi.Database.Games.Update(game);
+            }
+
+            return itemAdded;
+        }
+
         public static bool IsGamePcGame(Game game)
         {
             if (!game.Platforms.HasItems())

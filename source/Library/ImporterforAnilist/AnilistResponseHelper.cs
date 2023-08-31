@@ -14,6 +14,7 @@ namespace ImporterforAnilist
 
         public static GameMetadata MediaToGameMetadata(Media media, bool addLinksAndImages, string propertiesPrefix)
         {
+            ApplyPrefixToMediaProperties(media, propertiesPrefix);
             var game = new GameMetadata()
             {
                 Source = new MetadataNameProperty("Anilist"),
@@ -23,7 +24,7 @@ namespace ImporterforAnilist
                 Platforms = new HashSet<MetadataProperty> { new MetadataNameProperty($"AniList {media.Type}") },
                 Description = media.Description ?? string.Empty,
                 CommunityScore = media.AverageScore ?? null,
-                Genres = media.Genres?.Select(a => new MetadataNameProperty($"{propertiesPrefix}{a}")).Cast<MetadataProperty>().ToHashSet() ?? null
+                Genres = media.Genres?.Select(x => new MetadataNameProperty(x)).Cast<MetadataProperty>().ToHashSet() ?? null
             };
 
             //Links and images
@@ -46,23 +47,26 @@ namespace ImporterforAnilist
             }
 
             //Developers and Publishers
-            if (media.Type == TypeEnum.Manga)
+            if (media.Type == TypeEnum.Manga && media.Staff?.Nodes?.HasItems() == true)
             {
-                game.Developers = media.Staff?.Nodes?
-                    .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name.Full}")).Cast<MetadataProperty>().ToHashSet();
+                game.Developers = media.Staff.Nodes
+                    .Select(a => new MetadataNameProperty(a.Name.Full))
+                    .Cast<MetadataProperty>().ToHashSet();
             }
-            else if (media.Type == TypeEnum.Anime)
+            else if (media.Type == TypeEnum.Anime && media.Studios?.Nodes?.HasItems() == true)
             {
-                game.Developers = media.Studios?.Nodes?.Where(s => s.IsAnimationStudio)?
-                    .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
-                game.Publishers = media.Studios?.Nodes?.Where(s => s.IsAnimationStudio)?
-                    .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
+                game.Developers = media.Studios.Nodes.Where(s => s.IsAnimationStudio)?
+                    .Select(a => new MetadataNameProperty(a.Name))
+                    .Cast<MetadataProperty>().ToHashSet();
+                game.Publishers = media.Studios.Nodes.Where(s => !s.IsAnimationStudio)?
+                    .Select(a => new MetadataNameProperty(a.Name))
+                    .Cast<MetadataProperty>().ToHashSet();
             }
 
             //Tags
             var tags = media.Tags?
                 .Where(s => !s.IsMediaSpoiler && !s.IsGeneralSpoiler)?
-                .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}"))
+                .Select(a => new MetadataNameProperty(a.Name))
                 .Cast<MetadataProperty>().ToHashSet() ?? new HashSet<MetadataProperty>();
             tags.Add(new MetadataNameProperty($"{propertiesPrefix}Status: {media.Status}"));
             if (media.Season != null)
@@ -77,6 +81,34 @@ namespace ImporterforAnilist
 
             game.Tags = tags;
             return game;
+        }
+
+        public static void ApplyPrefixToMediaProperties(Media media, string propertiesPrefix)
+        {
+            if (propertiesPrefix.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            if (media.Genres.HasItems())
+            {
+                media.Genres = media.Genres.Select(x => x = $"{propertiesPrefix}{x}").ToList();
+            }
+
+            if (media.Tags.HasItems())
+            {
+                media.Tags.ForEach(x => x.Name = $"{propertiesPrefix}{x.Name}");
+            }
+
+            if (media.Staff?.Nodes?.HasItems() == true)
+            {
+                media.Staff.Nodes.ForEach(x => x.Name.Full = $"{propertiesPrefix}{x.Name.Full}");
+            }
+
+            if (media.Studios?.Nodes?.HasItems() == true)
+            {
+                media.Studios.Nodes.ForEach(x => x.Name = $"{propertiesPrefix}{x.Name}");
+            }
         }
 
     }
