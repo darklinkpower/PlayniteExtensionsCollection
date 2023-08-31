@@ -37,12 +37,14 @@ namespace ImporterforAnilist
         public IEnumerable<Game> ImportGames()
         {
             var importedGames = new List<Game>();
+            playniteApi.Notifications.Remove(dbImportMessageId);
             if (settings.AccountAccessCode.IsNullOrEmpty())
             {
                 playniteApi.Notifications.Add(new NotificationMessage(
                     dbImportMessageId,
                     ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAccessCodeNotConfigured"),
-                    NotificationType.Error));
+                    NotificationType.Error,
+                    () => plugin.OpenSettingsView()));
 
                 return importedGames;
             }
@@ -53,25 +55,28 @@ namespace ImporterforAnilist
                 playniteApi.Notifications.Add(new NotificationMessage(
                     dbImportMessageId,
                     ResourceProvider.GetString("LOCImporter_For_Anilist_NotificationMessageAniListUsernameNotObtained"),
-                    NotificationType.Error));
+                    NotificationType.Error,
+                    () => plugin.OpenSettingsView()));
 
                 return importedGames;
             }
 
             InitializeStatuses();
             var libraryCache = new Dictionary<string, int>();
+            var alreadyImportedEntries = playniteApi.Database.Games.Where(a => a.PluginId == plugin.Id)
+                                         .ToDictionary(x => x.GameId, x => x);
             if (settings.ImportAnimeLibrary)
             {
                 var animeEntries = anilistService.GetEntries("ANIME");
                 logger.Debug($"Found {animeEntries.Count} Anime items");
-                ProcessEntriesResponse(importedGames, libraryCache, animeEntries);
+                ProcessEntriesResponse(importedGames, libraryCache, animeEntries, alreadyImportedEntries);
             }
 
             if (settings.ImportMangaLibrary)
             {
                 var mangaEntries = anilistService.GetEntries("MANGA");
                 logger.Debug($"Found {mangaEntries.Count} Manga items");
-                ProcessEntriesResponse(importedGames, libraryCache, mangaEntries);
+                ProcessEntriesResponse(importedGames, libraryCache, mangaEntries, alreadyImportedEntries);
             }
 
             FileSystem.WriteStringToFile(anilistLibraryCachePath, Serialization.ToJson(libraryCache));
@@ -92,7 +97,7 @@ namespace ImporterforAnilist
             };
         }
 
-        private void ProcessEntriesResponse(List<Game> importedGames, Dictionary<string, int> libraryCache, List<Entry> anilistUserEntry)
+        private void ProcessEntriesResponse(List<Game> importedGames, Dictionary<string, int> libraryCache, List<Entry> anilistUserEntry, Dictionary<string, Game> alreadyImportedEntries)
         {
             foreach (var entry in anilistUserEntry)
             {
@@ -105,8 +110,7 @@ namespace ImporterforAnilist
                 }
 
                 libraryCache.Add(mediaId, entry.Id);
-                var existingEntry = playniteApi.Database.Games.FirstOrDefault(a => a.PluginId == plugin.Id && a.GameId == mediaId);
-                if (existingEntry != null)
+                if (alreadyImportedEntries.TryGetValue(mediaId, out var existingEntry))
                 {
                     UpdateExistingEntry(entry, existingEntry);
                 }
@@ -119,11 +123,17 @@ namespace ImporterforAnilist
 
         private void UpdateExistingEntry(Entry entry, Game existingEntry)
         {
-            var updateGame = false;
+            var shouldUpdateGame = false;
             if (settings.UpdateUserScoreOnLibUpdate && entry.Score != 0 && entry.Score != existingEntry.UserScore)
             {
                 existingEntry.UserScore = entry.Score;
-                updateGame = true;
+                shouldUpdateGame = true;
+            }
+
+            if (entry.Media.AverageScore.HasValue && entry.Media.AverageScore.Value > 0 && entry.Media.AverageScore.Value != existingEntry.CommunityScore)
+            {
+                existingEntry.CommunityScore = entry.Media.AverageScore;
+                shouldUpdateGame = true;
             }
 
             if (settings.UpdateProgressOnLibUpdate)
@@ -132,7 +142,7 @@ namespace ImporterforAnilist
                 if (!existingEntry.Version.Equals(versionString))
                 {
                     existingEntry.Version = versionString;
-                    updateGame = true;
+                    shouldUpdateGame = true;
                 }
             }
 
@@ -142,7 +152,7 @@ namespace ImporterforAnilist
                 if (existingEntry.LastActivity is null || updatedTime > existingEntry.LastActivity)
                 {
                     existingEntry.LastActivity = updatedTime;
-                    updateGame = true;
+                    shouldUpdateGame = true;
                 }
             }
 
@@ -150,39 +160,38 @@ namespace ImporterforAnilist
             if (existingEntry.TagIds is null)
             {
                 existingEntry.TagIds = new List<Guid>() { playniteApi.Database.Tags.Add(progressTagName).Id };
+                shouldUpdateGame = true;
             }
-            else
+
+            var tagStartStr = $"{settings.PropertiesPrefix}Status: ";
+            var progressTag = existingEntry.Tags.FirstOrDefault(x => x.Name.StartsWith(tagStartStr));
+            if (progressTag is null)
             {
-                var tagStartStr = $"{settings.PropertiesPrefix}Status: ";
-                var progressTag = existingEntry.Tags.FirstOrDefault(x => x.Name.StartsWith(tagStartStr));
-                if (progressTag is null)
-                {
-                    existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
-                    updateGame = true;
-                }
-                else if (progressTag.Name != progressTagName)
-                {
-                    existingEntry.TagIds.Remove(progressTag.Id);
-                    existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
-                    updateGame = true;
-                }
+                existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
+                shouldUpdateGame = true;
+            }
+            else if (progressTag.Name != progressTagName)
+            {
+                existingEntry.TagIds.Remove(progressTag.Id);
+                existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
+                shouldUpdateGame = true;
             }
 
             if (!existingEntry.IsInstalled)
             {
                 existingEntry.IsInstalled = true;
-                updateGame = true;
+                shouldUpdateGame = true;
             }
 
             if (settings.UpdateCompletionStatusOnLibUpdate && entry.Status != null)
             {
                 if (UpdateGameCompletionStatusFromEntryStatus(existingEntry, entry.Status))
                 {
-                    updateGame = true;
+                    shouldUpdateGame = true;
                 }
             }
 
-            if (updateGame)
+            if (shouldUpdateGame)
             {
                 playniteApi.Database.Games.Update(existingEntry);
             }

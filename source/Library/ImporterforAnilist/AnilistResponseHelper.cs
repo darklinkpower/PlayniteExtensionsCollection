@@ -48,22 +48,22 @@ namespace ImporterforAnilist
             //Developers and Publishers
             if (media.Type == TypeEnum.Manga)
             {
-                game.Developers = media.Staff.Nodes?.
-                    Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name.Full}")).Cast<MetadataProperty>().ToHashSet();
+                game.Developers = media.Staff?.Nodes?
+                    .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name.Full}")).Cast<MetadataProperty>().ToHashSet();
             }
             else if (media.Type == TypeEnum.Anime)
             {
-                game.Developers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == true)?.
-                    Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
-                game.Publishers = media.Studios.Nodes.Where(s => s.IsAnimationStudio == false)?.
-                    Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
+                game.Developers = media.Studios?.Nodes?.Where(s => s.IsAnimationStudio)?
+                    .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
+                game.Publishers = media.Studios?.Nodes?.Where(s => s.IsAnimationStudio)?
+                    .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
             }
 
             //Tags
-            var tags = media.Tags.
-                Where(s => s.IsMediaSpoiler == false).
-                Where(s => s.IsGeneralSpoiler == false)?.
-                Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}")).Cast<MetadataProperty>().ToHashSet();
+            var tags = media.Tags?
+                .Where(s => !s.IsMediaSpoiler && !s.IsGeneralSpoiler)?
+                .Select(a => new MetadataNameProperty($"{propertiesPrefix}{a.Name}"))
+                .Cast<MetadataProperty>().ToHashSet() ?? new HashSet<MetadataProperty>();
             tags.Add(new MetadataNameProperty($"{propertiesPrefix}Status: {media.Status}"));
             if (media.Season != null)
             {

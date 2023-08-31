@@ -64,37 +64,12 @@ namespace ImporterforAnilist.Services
                                 english
                                 native
                             }
-                            description(asHtml: true)
                             startDate {
                                 year
                                 month
                                 day
                             }
-                            genres
-                            tags {
-                                name
-                                isGeneralSpoiler
-                                isMediaSpoiler
-                            }
-                            season
                             status
-                            studios(sort: [NAME]) {
-                                nodes {
-                                    name
-                                    isAnimationStudio
-                                }
-                            }
-                            staff {
-                                nodes {
-                                    name {
-                                        full
-                                    }
-                                }
-                            }
-                            coverImage {
-                                extraLarge
-                            }
-                            bannerImage
                         }
                     }
                 }
@@ -106,8 +81,8 @@ namespace ImporterforAnilist.Services
             Media (id: $id) {
                 id
         	    idMal
-        	    siteUrl	
-                type 
+        	    siteUrl
+                type
                 format
                 episodes
                 chapters
