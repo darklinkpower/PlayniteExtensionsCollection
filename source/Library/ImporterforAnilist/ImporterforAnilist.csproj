@@ -154,6 +154,7 @@
     <Compile Include="ImporterForAnilistSettingsView.xaml.cs">
       <DependentUpon>ImporterForAnilistSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LibraryUpdater.cs" />
     <Compile Include="MalSyncRateLimiter.cs" />
     <Compile Include="Models\AnilistUserResponse.cs" />
     <Compile Include="Models\MalSyncSiteItem.cs" />
@@ -161,7 +162,8 @@
     <Compile Include="Models\MediaListCollectionResponse.cs" />
     <Compile Include="Models\UpdateMediaListEntriesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AnilistAccountClient.cs" />
+    <Compile Include="Services\AnilistService.cs" />
+    <Compile Include="Services\MalSyncService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -10,6 +10,8 @@ namespace ImporterforAnilist
 {
     public class AnilistResponseHelper
     {
+        private const string myAnimeListUrlTemplate = "https://myanimelist.net/{0}/{1}/";
+
         public static GameMetadata MediaToGameMetadata(Media media, bool addLinksAndImages, string propertiesPrefix)
         {
             var game = new GameMetadata()
@@ -30,7 +32,7 @@ namespace ImporterforAnilist
                 game.Links = new List<Link>() { new Link("AniList", media.SiteUrl.ToString()) };
                 if (media.IdMal != null)
                 {
-                    game.Links.Add(new Link("MyAnimeList", string.Format("https://myanimelist.net/{0}/{1}/", media.Type.ToString().ToLower(), media.IdMal.ToString())));
+                    game.Links.Add(new Link("MyAnimeList", string.Format(myAnimeListUrlTemplate, media.Type.ToString().ToLower(), media.IdMal.ToString())));
                 }
 
                 game.BackgroundImage = new MetadataFile(media.BannerImage ?? string.Empty);
@@ -74,7 +76,6 @@ namespace ImporterforAnilist
             }
 
             game.Tags = tags;
-
             return game;
         }
 
