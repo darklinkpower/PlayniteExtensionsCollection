@@ -10,19 +10,19 @@ namespace JastUsaLibrary.Models
     public class UserGamesResponse
     {
         [SerializationPropertyName("@context")]
-        public Context Context { get; set; }
-
-        [SerializationPropertyName("@type")]
-        public string Type { get; set; }
+        public string Context { get; set; }
 
         [SerializationPropertyName("@id")]
         public string Id { get; set; }
 
+        [SerializationPropertyName("@type")]
+        public string Type { get; set; }
+
         [SerializationPropertyName("products")]
-        public Products Products { get; set; }
+        public JastProduct[] Products { get; set; }
 
         [SerializationPropertyName("attributes")]
-        public Attributes Attributes { get; set; }
+        public UserGamesResponseAtribute[][] Attributes { get; set; }
 
         [SerializationPropertyName("total")]
         public int Total { get; set; }
@@ -31,34 +31,10 @@ namespace JastUsaLibrary.Models
         public int Pages { get; set; }
     }
 
-    public class Attributes
-    {
-        [SerializationPropertyName("@context")]
-        public string Context { get; set; }
-
-        [SerializationPropertyName("@id")]
-        public string Id { get; set; }
-
-        [SerializationPropertyName("@type")]
-        public string Type { get; set; }
-
-        [SerializationPropertyName("hydra:member")]
-        public AttributesHydraMember[][] HydraMember { get; set; }
-
-        [SerializationPropertyName("hydra:totalItems")]
-        public long HydraTotalItems { get; set; }
-
-        [SerializationPropertyName("hydra:view")]
-        public HydraView HydraView { get; set; }
-    }
-
-    public class AttributesHydraMember
+    public class UserGamesResponseAtribute
     {
         [SerializationPropertyName("@type")]
         public string Type { get; set; }
-
-        [SerializationPropertyName("@id")]
-        public string Id { get; set; }
 
         [SerializationPropertyName("name")]
         public string Name { get; set; }
@@ -67,16 +43,16 @@ namespace JastUsaLibrary.Models
         public Value[] Values { get; set; }
 
         [SerializationPropertyName("code")]
-        public long Code { get; set; }
+        public int Code { get; set; }
+
+        [SerializationPropertyName("position")]
+        public int Position { get; set; }
     }
 
     public class Value
     {
         [SerializationPropertyName("@type")]
-        public string Type { get; set; }
-
-        [SerializationPropertyName("@id")]
-        public string Id { get; set; }
+        public ValueType Type { get; set; }
 
         [SerializationPropertyName("label")]
         public string Label { get; set; }
@@ -85,88 +61,43 @@ namespace JastUsaLibrary.Models
         public string Code { get; set; }
 
         [SerializationPropertyName("counter")]
-        public long Counter { get; set; }
-    }
-
-    public class HydraView
-    {
-        [SerializationPropertyName("@id")]
-        public string Id { get; set; }
-
-        [SerializationPropertyName("@type")]
-        public string Type { get; set; }
-    }
-
-    public class Context
-    {
-        [SerializationPropertyName("@vocab")]
-        public Uri Vocab { get; set; }
-
-        [SerializationPropertyName("hydra")]
-        public Uri Hydra { get; set; }
-
-        [SerializationPropertyName("products")]
-        public string Products { get; set; }
-
-        [SerializationPropertyName("attributes")]
-        public string Attributes { get; set; }
-
-        [SerializationPropertyName("total")]
-        public string Total { get; set; }
-
-        [SerializationPropertyName("pages")]
-        public string Pages { get; set; }
-    }
-
-    public class Products
-    {
-        [SerializationPropertyName("@context")]
-        public string Context { get; set; }
-
-        [SerializationPropertyName("@id")]
-        public string Id { get; set; }
-
-        [SerializationPropertyName("@type")]
-        public string Type { get; set; }
-
-        [SerializationPropertyName("hydra:member")]
-        public JastProduct[] JastProducts { get; set; }
-
-        [SerializationPropertyName("hydra:totalItems")]
-        public long HydraTotalItems { get; set; }
-
-        [SerializationPropertyName("hydra:view")]
-        public HydraView HydraView { get; set; }
+        public int Counter { get; set; }
     }
 
     public class JastProduct
     {
         [SerializationPropertyName("@id")]
-        public string Id { get; set; }
+        public string IdApiEndpoint { get; set; }
 
         [SerializationPropertyName("@type")]
         public string Type { get; set; }
 
+        [SerializationPropertyName("variants")]
+        public UserGamesProductVariant[] ProductVariants { get; set; }
+
         [SerializationPropertyName("variant")]
-        public ProductVariant ProductVariant { get; set; }
+        public UserGamesProductVariant ProductVariant { get; set; }
     }
 
-    public class ProductVariant
+    public class UserGamesProductVariant
     {
         [SerializationPropertyName("@id")]
         public string Id { get; set; }
 
         [SerializationPropertyName("@type")]
-        public string Type { get; set; }
+        public ProductVariantType Type { get; set; }
 
         [SerializationPropertyName("game")]
         public JastGame Game { get; set; }
 
-        [SerializationPropertyName("price")]
-        public long Price { get; set; }
-
         [SerializationPropertyName("inStock")]
         public bool InStock { get; set; }
+
+        [SerializationPropertyName("price")]
+        public int Price { get; set; }
+
+        [SerializationPropertyName("originalPrice")]
+        public int OriginalPrice { get; set; }
 
         [SerializationPropertyName("productName")]
         public string ProductName { get; set; }
@@ -181,13 +112,25 @@ namespace JastUsaLibrary.Models
         public string ProductImageBackground { get; set; }
 
         [SerializationPropertyName("platforms")]
-        public Dictionary<string, string>[] Platforms { get; set; }
+        public Dictionary<string, JastPlatform>[] Platforms { get; set; }
 
         [SerializationPropertyName("productCode")]
         public string ProductCode { get; set; }
 
         [SerializationPropertyName("gameId")]
         public int GameId { get; set; }
+
+        [SerializationPropertyName("userGameTags")]
+        public UserGameTag[] UserGameTags { get; set; }
+
+        [SerializationPropertyName("hasPatches_en_US")]
+        public bool HasPatchesEnUs { get; set; }
+
+        [SerializationPropertyName("hasPatches_zh_Hans")]
+        public bool HasPatchesZhHans { get; set; }
+
+        [SerializationPropertyName("hasPatches_zh_Hant")]
+        public bool HasPatchesZhHant { get; set; }
     }
 
     public class JastGame
@@ -196,38 +139,52 @@ namespace JastUsaLibrary.Models
         public string Id { get; set; }
 
         [SerializationPropertyName("@type")]
-        public string Type { get; set; }
+        public GameType Type { get; set; }
 
         [SerializationPropertyName("translations")]
-        public Dictionary<string, Translation> Translations { get; set; }
+        public Dictionary<Locale, UserGamesResponseTranslation> Translations { get; set; }
     }
 
-    public class Translations
-    {
-        [SerializationPropertyName("en_US")]
-        public Translation EnUs { get; set; }
-    }
-
-    public class Translation
+    public class UserGamesResponseTranslation
     {
         [SerializationPropertyName("@id")]
-        public string ApiIdUri { get; set; }
+        public string ApiEndpoint { get; set; }
 
         [SerializationPropertyName("@type")]
-        public string Type { get; set; }
+        public TranslationType Type { get; set; }
 
         [SerializationPropertyName("id")]
         public int Id { get; set; }
 
         [SerializationPropertyName("locale")]
-        public string Locale { get; set; }
+        public Locale Locale { get; set; }
     }
 
-    public class Platform
+    public class UserGameTag
     {
-        [SerializationPropertyName("en_US")]
-        public string EnUs { get; set; }
+        [SerializationPropertyName("@id")]
+        public string ApiEndpoint { get; set; }
+
+        [SerializationPropertyName("@type")]
+        public UserGameTagType Type { get; set; }
+
+        [SerializationPropertyName("id")]
+        public int Id { get; set; }
+
+        [SerializationPropertyName("type")]
+        public string Name { get; set; }
     }
 
+    public enum ValueType { AttributeValue };
+
+    public enum UserGameTagType { UserGameTag };
+
+    public enum TranslationType { GameLinkTranslation };
+
+    public enum GameType { Game };
+
+    public enum JastPlatform { Linux, Mac, Windows };
+
+    public enum ProductVariantType { ProductVariant };
 
 }

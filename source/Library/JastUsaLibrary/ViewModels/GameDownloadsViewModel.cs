@@ -97,23 +97,23 @@ namespace JastUsaLibrary.ViewModels
             this.SettingsViewModel = settingsViewModel;
             Game = game;
             this.accountClient = accountClient;
-            if (gameTranslationsResponse.GamePathLinks.HydraMember.Count > 0)
+            if (gameTranslationsResponse.GamePathLinks.Count > 0)
             {
                 SelectedTabItemIndex = 0;
             }
-            else if (gameTranslationsResponse.GamePatchLinks.HydraMember.Count > 0)
+            else if (gameTranslationsResponse.GamePatchLinks.Count > 0)
             {
                 SelectedTabItemIndex = 1;
             }
-            else if (gameTranslationsResponse.GameExtraLinks.HydraMember.Count > 0)
+            else if (gameTranslationsResponse.GameExtraLinks.Count > 0)
             {
                 SelectedTabItemIndex = 2;
             }
         }
 
-        public RelayCommand<HydraMember> GetAndOpenDownloadLinkCommand
+        public RelayCommand<GameLink> GetAndOpenDownloadLinkCommand
         {
-            get => new RelayCommand<HydraMember>((a) =>
+            get => new RelayCommand<GameLink>((a) =>
             {
                 GetAndOpenDownloadLink(a);
             });
@@ -127,19 +127,18 @@ namespace JastUsaLibrary.ViewModels
             });
         }
 
-        private void GetAndOpenDownloadLink(HydraMember downloadAsset)
+        private void GetAndOpenDownloadLink(GameLink downloadAsset)
         {
             var url = accountClient.GetAssetDownloadLinkAsync(downloadAsset.GameId, downloadAsset.GameLinkId);
             if (url != null)
             {
-                //ProcessStarter.StartUrl(url);
                 DownloadAssetLink(url);
             }
         }
 
-        private void DownloadAssetLink(string url)
+        private void DownloadAssetLink(Uri url)
         {
-            var fileName = Regex.Match(url, @"([^\/]+)(?=\?token=)").Groups[1].Value.UrlDecode();
+            var fileName = Path.GetFileName(url.LocalPath);
             var progressTitle = ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadingLabel");
             var tempFileName = fileName + ".tmp";
             var downloadPath = Path.Combine(DownloadDirectory, tempFileName);
@@ -155,13 +154,14 @@ namespace JastUsaLibrary.ViewModels
             if (Path.GetExtension(fileName).Equals(".zip", StringComparison.OrdinalIgnoreCase))
             {
                 var extractDirectory = Path.Combine(DownloadDirectory, Path.GetFileNameWithoutExtension(fileName));
-                if (FileSystem.DirectoryExists(extractDirectory))
+                var targetDirectoryExists = FileSystem.DirectoryExists(extractDirectory);
+                if (targetDirectoryExists)
                 {
-                    var selection = playniteApi.Dialogs.ShowMessage(
+                    var shouldDownloadChoice = playniteApi.Dialogs.ShowMessage(
                         string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected"), fileName, extractDirectory),
                         ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderWindowTitle"),
                         MessageBoxButton.YesNo);
-                    if (selection != MessageBoxResult.Yes)
+                    if (shouldDownloadChoice != MessageBoxResult.Yes)
                     {
                         return;
                     }
@@ -170,15 +170,17 @@ namespace JastUsaLibrary.ViewModels
 
             var downloadSuccess = false;
             var downloadCanceled = false;
-            var progressOptions = new GlobalProgressOptions(progressTitle, true);
-            progressOptions.IsIndeterminate = false;
+            var progressOptions = new GlobalProgressOptions(progressTitle, true)
+            {
+                IsIndeterminate = false
+            };
+
             playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 a.ProgressMaxValue = 100;
 
                 var tickOldDate = DateTime.Now;
                 long tickoldBytesReceived = 0;
-                
                 void progressChangedAction(DownloadProgressChangedEventArgs e)
                 {
                     var tickNewDate = DateTime.Now;
@@ -218,7 +220,7 @@ namespace JastUsaLibrary.ViewModels
                             $"{string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond"), speedReadeable)}"; //Download speed e.g. 5MB/s
                 }
 
-                downloadSuccess = HttpDownloader.DownloadFile(url, downloadPath, a.CancelToken, progressChangedAction);
+                downloadSuccess = HttpDownloader.DownloadFile(url.ToString(), downloadPath, a.CancelToken, progressChangedAction);
                 downloadCanceled = a.CancelToken.IsCancellationRequested;
             }, progressOptions);
 

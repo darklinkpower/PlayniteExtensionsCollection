@@ -150,7 +150,7 @@ namespace JastUsaLibrary.Services
 
             var headers = new Dictionary<string, string>
             {
-                ["Authorization"] = "Bearer " + authenticationToken.Token.UrlDecode(),
+                ["Authorization"] = $"Bearer {authenticationToken.Token.UrlDecode()}",
                 ["Accept-Encoding"] = "utf-8"
             };
             
@@ -162,29 +162,28 @@ namespace JastUsaLibrary.Services
             }
 
             var response = Serialization.FromJson<GameTranslationsResponse>(downloadStringResult.Result);
-
             // We remove all the assets that are not for Windows because Playnite only supports windows after all
-            foreach (var gameLinkItem in response.GamePathLinks.HydraMember.ToList())
+            foreach (var gameLinkItem in response.GamePathLinks.ToList())
             {
-                if (!gameLinkItem.Platforms.Any(x => x == "windows"))
+                if (!gameLinkItem.Platforms.Any(x => x == JastPlatform.Windows))
                 {
-                    response.GamePathLinks.HydraMember.Remove(gameLinkItem);
+                    response.GamePathLinks.Remove(gameLinkItem);
                 }
             }
 
-            foreach (var gameLinkItem in response.GamePatchLinks.HydraMember.ToList())
+            foreach (var gameLinkItem in response.GamePatchLinks.ToList())
             {
-                if (!gameLinkItem.Platforms.Any(x => x == "windows"))
+                if (!gameLinkItem.Platforms.Any(x => x == JastPlatform.Windows))
                 {
-                    response.GamePathLinks.HydraMember.Remove(gameLinkItem);
+                    response.GamePathLinks.Remove(gameLinkItem);
                 }
             }
 
-            foreach (var gameLinkItem in response.GameExtraLinks.HydraMember.ToList())
+            foreach (var gameLinkItem in response.GameExtraLinks.ToList())
             {
-                if (!gameLinkItem.Platforms.Any(x => x == "windows"))
+                if (!gameLinkItem.Platforms.Any(x => x == JastPlatform.Windows))
                 {
-                    response.GamePathLinks.HydraMember.Remove(gameLinkItem);
+                    response.GamePathLinks.Remove(gameLinkItem);
                 }
             }
 
@@ -217,7 +216,7 @@ namespace JastUsaLibrary.Services
                 }
 
                 var response = Serialization.FromJson<UserGamesResponse>(downloadStringResult.Result);
-                foreach (var product in response.Products.JastProducts)
+                foreach (var product in response.Products)
                 {
                     products.Add(product);
                 }
@@ -232,7 +231,7 @@ namespace JastUsaLibrary.Services
             return products;
         }
 
-        internal string GetAssetDownloadLinkAsync(int gameId, int gameLinkId)
+        internal Uri GetAssetDownloadLinkAsync(int gameId, int gameLinkId)
         {
             var tokens = GetAuthenticationToken();
             if (tokens == null)
