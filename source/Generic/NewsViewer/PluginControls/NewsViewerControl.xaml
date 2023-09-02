@@ -29,7 +29,19 @@
                     LinkForeground="{DynamicResource GlyphColor}"
                     HtmlFontSize="{DynamicResource FontSize}" />
             </ScrollViewer>
-            <Button Content="{DynamicResource LOC_NewsViewer_NewsViewerControl_OpenNewsLabel}" HorizontalAlignment="Right" Command="{Binding OpenSelectedNewsCommand}" />
+            <DockPanel LastChildFill="False">
+                <Button Content="{DynamicResource LOC_NewsViewer_NewsViewerControl_OpenNewsLabel}"
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Right" Command="{Binding OpenSelectedNewsCommand}" />
+                <Button Content="&#xEC44;"
+                        FontFamily="{DynamicResource FontIcoFont}"
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Right" Command="{Binding OpenSelectedNewsInBrowserCommand}" />
+                <Button Content="&#xED71;"
+                        FontFamily="{DynamicResource FontIcoFont}"
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Right" Command="{Binding OpenSelectedNewsInSteamCommand}" />
+            </DockPanel>
         </StackPanel>
     </Grid>
 </PluginUserControl>

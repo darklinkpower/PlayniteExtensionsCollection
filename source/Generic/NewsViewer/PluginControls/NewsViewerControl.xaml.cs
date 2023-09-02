@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
+using PluginsCommon;
 using SteamCommon;
 using System;
 using System.Collections.Concurrent;
@@ -222,32 +223,68 @@ namespace NewsViewer.PluginControls
 
         void OpenSelectedNews()
         {
-            if (CurrentNewsNode == null)
-            {
-                return;
-            }
-
             if (SettingsModel.Settings.UseCompactWebNewsViewer)
             {
                 OpenNewsOnCompactView();
             }
             else
             {
-                var linkChild = CurrentNewsNode.SelectSingleNode(@"link");
-                if (linkChild != null)
+                var newsLink = GetCurrentNewsLink();
+                if (!newsLink.IsNullOrEmpty())
                 {
-                    var webView = PlayniteApi.WebViews.CreateView(1024, 700);
-                    webView.Navigate(linkChild.InnerText);
-                    webView.OpenDialog();
-                    webView.Dispose();
+                    using (var webView = PlayniteApi.WebViews.CreateView(1024, 700))
+                    {
+                        webView.Navigate(newsLink);
+                        webView.OpenDialog();
+                    }
                 }
             }
         }
 
+        private void OpenSelectedNewsInBrowser()
+        {
+            var newsLink = GetCurrentNewsLink();
+            if (!newsLink.IsNullOrEmpty())
+            {
+                ProcessStarter.StartUrl(newsLink);
+            }
+        }
+
+        private void OpenSelectedNewsInSteam()
+        {
+            var newsLink = GetCurrentNewsLink();
+            if (!newsLink.IsNullOrEmpty())
+            {
+                var steamUri = string.Format("steam://openurl/{0}", newsLink);
+                ProcessStarter.StartUrl(steamUri);
+            }
+        }
+
+        private string GetCurrentNewsLink()
+        {
+            if (CurrentNewsNode is null)
+            {
+                return null;
+            }
+
+            var linkChild = CurrentNewsNode.SelectSingleNode(@"link");
+            if (linkChild is null)
+            {
+                return null;
+            }
+
+            return linkChild.InnerText;
+        }
+
         private void OpenNewsOnCompactView()
         {
+            if (CurrentNewsNode is null)
+            {
+                return;
+            }
+
             var descriptionChild = CurrentNewsNode.SelectSingleNode(@"description");
-            if (descriptionChild == null)
+            if (descriptionChild is null)
             {
                 return;
             }
@@ -287,14 +324,14 @@ namespace NewsViewer.PluginControls
                 CurrentNewsNode.SelectSingleNode(@"title")?.InnerText ?? "",
                 descriptionChild.InnerText);
 
-            var webView = PlayniteApi.WebViews.CreateView(650, 700);
-
-            // The webview fails to correctly render if it includes reserved
-            // characters (See https://datatracker.ietf.org/doc/html/rfc3986#section-2.2)
-            // To fix this, we encode to base 64 and load it
-            webView.Navigate("data:text/html;base64," + html.Base64Encode());
-            webView.OpenDialog();
-            webView.Dispose();
+            using (var webView = PlayniteApi.WebViews.CreateView(650, 700))
+            {
+                // The webview fails to render correctly if it contains reserved
+                // characters (See https://datatracker.ietf.org/doc/html/rfc3986#section-2.2)
+                // To fix this, we encode to base 64 and load it
+                webView.Navigate("data:text/html;base64," + html.Base64Encode());
+                webView.OpenDialog();
+            }
         }
 
         private void SetControlTextBlockStyle()
@@ -331,7 +368,7 @@ namespace NewsViewer.PluginControls
             SwitchNewsVisibility = Visibility.Collapsed;
             SettingsModel.Settings.ReviewsAvailable = false;
 
-            if (currentGame == null || !SettingsModel.Settings.EnableNewsControl)
+            if (currentGame is null || !SettingsModel.Settings.EnableNewsControl)
             {
                 updateContextTimer.Stop();
             }
@@ -427,26 +464,42 @@ namespace NewsViewer.PluginControls
             }
 
             // From https://stackoverflow.com/a/50363077
-            string buf;
-            string block = "address|article|aside|blockquote|canvas|dd|div|dl|dt|" +
+            var block = "address|article|aside|blockquote|canvas|dd|div|dl|dt|" +
               "fieldset|figcaption|figure|footer|form|h\\d|header|hr|li|main|nav|" +
               "noscript|ol|output|p|pre|section|table|tfoot|ul|video";
 
-            string patNestedBlock = $"(\\s*?</?({block})[^>]*?>)+\\s*";
-            buf = Regex.Replace(html, patNestedBlock, "\n", RegexOptions.IgnoreCase);
+            var patNestedBlock = $"(\\s*?</?({block})[^>]*?>)+\\s*";
+            var result = Regex.Replace(html, patNestedBlock, "\n", RegexOptions.IgnoreCase);
 
             // Replace br tag to newline.
-            buf = Regex.Replace(buf, @"<(br)[^>]*>", "\n", RegexOptions.IgnoreCase);
+            result = Regex.Replace(result, @"<(br)[^>]*>", "\n", RegexOptions.IgnoreCase);
 
             // (Optional) remove styles and scripts.
-            buf = Regex.Replace(buf, @"<(script|style)[^>]*?>.*?</\1>", "", RegexOptions.Singleline);
+            result = Regex.Replace(result, @"<(script|style)[^>]*?>.*?</\1>", "", RegexOptions.Singleline);
 
             // Remove all tags.
-            buf = Regex.Replace(buf, @"<[^>]*(>|$)", "", RegexOptions.Multiline);
+            result = Regex.Replace(result, @"<[^>]*(>|$)", "", RegexOptions.Multiline);
 
             // Replace HTML entities.
-            buf = WebUtility.HtmlDecode(buf);
-            return buf;
+            result = WebUtility.HtmlDecode(result);
+
+            return result;
+        }
+
+        public RelayCommand OpenSelectedNewsInBrowserCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenSelectedNewsInBrowser();
+            }, () => SettingsModel.Settings.ReviewsAvailable);
+        }
+
+        public RelayCommand OpenSelectedNewsInSteamCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenSelectedNewsInSteam();
+            }, () => SettingsModel.Settings.ReviewsAvailable);
         }
 
         public RelayCommand OpenSelectedNewsCommand
