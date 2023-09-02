@@ -99,7 +99,7 @@ namespace LibraryExporter.ViewModels
             if (Settings.Settings.ExportSettings.Modified) { columnNames.Add(GetLocalizationString("LOCDateModifiedLabel")); }
             if (Settings.Settings.ExportSettings.RecentActivity) { columnNames.Add(GetLocalizationString("LOCRecentActivityLabel")); }
             if (Settings.Settings.ExportSettings.Roms) { columnNames.Add("Roms"); }
-            if (Settings.Settings.ExportSettings.CompletionStatus) { columnNames.Add("CompletionStatus"); }
+            if (Settings.Settings.ExportSettings.CompletionStatus) { columnNames.Add(GetLocalizationString("LOCCompletionStatus")); }
             if (Settings.Settings.ExportSettings.Links) { columnNames.Add(GetLocalizationString("LOCLinksLabel")); }
             if (Settings.Settings.ExportSettings.Manual) { columnNames.Add(GetLocalizationString("LOCGameManualTitle")); }
             if (Settings.Settings.ExportSettings.Notes) { columnNames.Add(GetLocalizationString("LOCNotesLabel")); }
@@ -247,7 +247,7 @@ namespace LibraryExporter.ViewModels
 
             if (Settings.Settings.ExportSettings.CompletionStatus)
             {
-                properties[currentInsertColumn] = !string.IsNullOrEmpty(game.CompletionStatus.Name) ? game.CompletionStatus.Name : string.Empty;
+                properties[currentInsertColumn] = (game.CompletionStatus != null && !game.CompletionStatus.Name.IsNullOrEmpty() ? game.CompletionStatus.Name : string.Empty);
                 currentInsertColumn++;
             }
 

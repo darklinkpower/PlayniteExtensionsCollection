@@ -65,7 +65,7 @@
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Roms}"
                       Content="Roms" Margin="0,0,0,5" />
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.CompletionStatus}"
-                      Content="CompletionStatus" Margin="0,0,0,5" />
+                      Content="{DynamicResource LOCCompletionStatus}" Margin="0,0,0,5" />
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Links}"
                       Content="{DynamicResource LOCLinksLabel}" Margin="0,0,0,5" />
                 <CheckBox IsChecked="{Binding Settings.Settings.ExportSettings.Manual}"
