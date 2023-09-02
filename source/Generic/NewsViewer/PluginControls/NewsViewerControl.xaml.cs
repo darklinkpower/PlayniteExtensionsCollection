@@ -454,6 +454,17 @@ namespace NewsViewer.PluginControls
             ControlVisibility = Visibility.Visible;
             newsNodes = newsCache.NewsNodes;
             SelectedNewsIndex = 0;
+
+            NotifyCommandsChanged();
+        }
+
+        private void NotifyCommandsChanged()
+        {
+            OnPropertyChanged(nameof(PreviousNewsCommand));
+            OnPropertyChanged(nameof(NextNewsCommand));
+            OnPropertyChanged(nameof(OpenSelectedNewsCommand));
+            OnPropertyChanged(nameof(OpenSelectedNewsInBrowserCommand));
+            OnPropertyChanged(nameof(OpenSelectedNewsInSteamCommand));
         }
 
         static string HtmlToPlainText(string html)
