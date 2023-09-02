@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePassCatalogBrowser", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallationStatusUpdater", "Generic\InstallationStatusUpdater\InstallationStatusUpdater.csproj", "{51C3FE65-214E-4A7C-BD8C-9C3D46CD30B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsViewer", "Generic\NewsViewer\NewsViewer.csproj", "{D7941592-8D0A-4521-A29C-7E79571291A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamNewsAndPlayersViewer", "Generic\NewsViewer\SteamNewsAndPlayersViewer.csproj", "{D7941592-8D0A-4521-A29C-7E79571291A1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NVIDIAGeForceNowLibrary", "Library\NVIDIAGeForceNowLibrary\NVIDIAGeForceNowLibrary.csproj", "{9942EA2C-F4EA-46CB-9033-FD063BD3D931}"
 EndProject
