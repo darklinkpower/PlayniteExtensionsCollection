@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using WebCommon;
 using System.Windows.Threading;
 using System.Threading;
+using RateLimiter;
+using ComposableAsync;
 
 namespace OpenCriticMetadata.Services
 {
@@ -15,36 +17,23 @@ namespace OpenCriticMetadata.Services
     {
         private const string searchGameTemplate = @"https://api.opencritic.com/api/game/search?criteria={0}";
         private const string getGameDataTemplate = @"https://api.opencritic.com/api/game/{0}";
-        private readonly int maxRequestsPerSecond;
-        private readonly DispatcherTimer rateLimitedTimer;
-        private int apiRequestsRemaining;
+        private readonly TimeLimiter timeConstraint;
 
         public OpenCriticService()
         {
-            maxRequestsPerSecond = 4;
-            apiRequestsRemaining = maxRequestsPerSecond;
-            rateLimitedTimer = new DispatcherTimer();
-            rateLimitedTimer.Interval = TimeSpan.FromMilliseconds(5000);
-            rateLimitedTimer.Tick += new EventHandler(RateLimitedTimer_Tick);
+            timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
         }
 
-        private void RateLimitedTimer_Tick(object sender, EventArgs e)
+        public async Task<DownloadStringResult> ExecuteRequestAsync(string requestUrl)
         {
-            if (apiRequestsRemaining < maxRequestsPerSecond)
-            {
-                apiRequestsRemaining++;
-            }
-
-            if (apiRequestsRemaining == maxRequestsPerSecond)
-            {
-                rateLimitedTimer.Stop();
-            }
+            await timeConstraint;
+            return HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
         }
 
-        public static List<OpenCriticGameResult> GetGameSearchResults(string searchTerm)
+        public List<OpenCriticGameResult> GetGameSearchResults(string searchTerm)
         {
             var requestUrl = string.Format(searchGameTemplate, searchTerm.UrlEncode());
-            var request = HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
+            var request = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
             if (request.Success)
             {
                 return Serialization.FromJson<List<OpenCriticGameResult>>(request.Result);
@@ -63,7 +52,7 @@ namespace OpenCriticMetadata.Services
         public OpenCriticGameData GetGameData(string gameId)
         {
             var requestUrl = string.Format(getGameDataTemplate, gameId);
-            var request = ProcessRequest(requestUrl);
+            var request = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
             if (request.Success)
             {
                 return Serialization.FromJson<OpenCriticGameData>(request.Result);
@@ -72,23 +61,6 @@ namespace OpenCriticMetadata.Services
             {
                 return null;
             }
-        }
-
-        private DownloadStringResult ProcessRequest(string requestUrl)
-        {
-            if (apiRequestsRemaining <= 0)
-            {
-                Thread.Sleep(250);
-            }
-
-            var request = HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
-            apiRequestsRemaining--;
-            if (!rateLimitedTimer.IsEnabled)
-            {
-                rateLimitedTimer.Start();
-            }
-
-            return request;
         }
 
         private static Dictionary<string, string> GetSearchHeaders()

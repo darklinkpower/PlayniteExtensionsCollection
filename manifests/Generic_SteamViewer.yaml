@@ -68,3 +68,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_2_10.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_2_11.pext
+    Changelog:
+    - 'Updated localizations'

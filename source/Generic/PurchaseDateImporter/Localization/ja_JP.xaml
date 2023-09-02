@@ -7,10 +7,10 @@ Verify that you are logged in</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage">Changed the added date of {0} of the {1} library</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportMessage">Licenses for {0} library exported successfully to &quot;{1}&quot;</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage">Failed to export library to &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnName">Name</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate">Date</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLibraryLabel">Library:</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLoginLabel">Login</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnName">名前</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate">日付</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLibraryLabel">ライブラリ:</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLoginLabel">ログイン</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowImportDatesButtonLabel">Import purchase dates as added dates</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowExportLicensesButtonLabel">Export licenses</sys:String>
 </ResourceDictionary>

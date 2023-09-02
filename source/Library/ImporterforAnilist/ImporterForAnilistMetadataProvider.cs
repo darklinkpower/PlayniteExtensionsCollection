@@ -11,152 +11,49 @@ using System.Net.Http;
 using System.Threading;
 using Playnite.SDK.Data;
 using WebCommon;
+using ImporterforAnilist.Services;
 
 namespace ImporterforAnilist
 {
     public class AnilistMetadataProvider : LibraryMetadataProvider
     {
-        private ILogger logger = LogManager.GetLogger(); 
-        private readonly IPlayniteAPI PlayniteApi;
-        private readonly ImporterForAnilist library;
-        public const string GraphQLEndpoint = @"https://graphql.AniList.co";
-        private readonly string apiListQueryString = @"";
-        public const string MalSyncAnilistEndpoint = @"https://api.malsync.moe/mal/{0}/anilist:{1}";
-        public const string MalSyncMyanimelistEndpoint = @"https://api.malsync.moe/mal/{0}/{1}";
-        private readonly string propertiesPrefix = @"";
-        private readonly MalSyncRateLimiter malSyncRateLimiter;
+        private ILogger logger = LogManager.GetLogger();
+        private ImporterForAnilistSettings settings;
+        private AnilistService anilistService;
+        private MalSyncService malSyncService;
 
-        public AnilistMetadataProvider(ImporterForAnilist library, IPlayniteAPI PlayniteApi, string propertiesPrefix, MalSyncRateLimiter malSyncRateLimiter)
+        public AnilistMetadataProvider(ImporterForAnilistSettings settings, AnilistService anilistService, MalSyncService malSyncService)
         {
-            this.PlayniteApi = PlayniteApi;
-            this.library = library;
-            this.propertiesPrefix = propertiesPrefix;
-            this.malSyncRateLimiter = malSyncRateLimiter;
-            this.apiListQueryString = @"
-                query ($id: Int) {
-                    Media (id: $id) {
-                        id
-        	            idMal
-        	            siteUrl	
-                        type 
-                        format
-                        episodes
-                        chapters
-                        averageScore
-                        title {
-                            romaji
-                            english
-                            native
-                        }
-                        description(asHtml: true)
-                        startDate {
-                            year
-                            month
-                            day
-                        }
-                        genres
-                        tags {
-                            name
-                            isGeneralSpoiler
-                            isMediaSpoiler
-                        }
-                        season
-                        status
-                        studios(sort: [NAME]) {
-                            nodes {
-                                name
-                                isAnimationStudio
-                            }
-                        }
-                        staff {
-                            nodes {
-                                name {
-                                    full
-                                }
-                            }
-                        }
-                        coverImage {
-                            extraLarge
-                        }
-                        bannerImage
-                    }
-                }";
+            this.settings = settings;
+            this.anilistService = anilistService;
+            this.malSyncService = malSyncService;
         }
 
         public override GameMetadata GetMetadata(Game game)
         {
-            var metadata = new GameMetadata() { };
-            string type = string.Empty;
-            string idMal = string.Empty;
-
-            var headers = new Dictionary<string, string>
+            var metadata = new GameMetadata();
+            var mediaData = anilistService.GetMediaDataById(game.GameId);
+            if (mediaData is null)
             {
-                ["Accept"] = "application/json"
-            };
-
-            var variables = new Dictionary<string, string>
-            {
-                { "id", game.GameId }
-            };
-
-            var variablesJson = Serialization.ToJson(variables);
-            var postParams = new Dictionary<string, string>
-            {
-                { "query", apiListQueryString },
-                { "variables", variablesJson }
-            };
-
-            var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(GraphQLEndpoint, jsonPostContent, headers);
-            if (downloadStringResult.Success)
-            {
-                var mediaEntryData = Serialization.FromJson<MediaEntryData>(downloadStringResult.Result);
-                metadata = AnilistResponseHelper.MediaToGameMetadata(mediaEntryData.Data.Media, true, propertiesPrefix);
-                type = mediaEntryData.Data.Media.Type.ToString().ToLower() ?? string.Empty;
-                idMal = mediaEntryData.Data.Media.IdMal.ToString().ToLower() ?? string.Empty;
-            }
-            else
-            {
-                logger.Error($"Failed to process AniList query");
+                return metadata;
             }
 
-            GetMalSyncData(game, metadata, type, idMal);
+            metadata = AnilistResponseHelper.MediaToGameMetadata(mediaData.Data.Media, true, settings.PropertiesPrefix);
+            var type = mediaData.Data.Media.Type.ToString().ToLower() ?? string.Empty;
+            var idMal = mediaData.Data.Media.IdMal.ToString().ToLower() ?? string.Empty;
+
+            var malSyncData = malSyncService.GetMalSyncData(type, game.GameId, idMal);
+            if (malSyncData != null)
+            {
+                AddMalSyncLinksToMetadata(metadata, malSyncData);
+            }
+
             return metadata;
         }
 
-        private void GetMalSyncData(Game game, GameMetadata metadata, string type, string idMal)
+        private void AddMalSyncLinksToMetadata(GameMetadata metadata, MalSyncResponse malSyncResponse)
         {
-            if (type.IsNullOrEmpty())
-            {
-                return;
-            }
-            
-            var queryUri = string.Format(MalSyncAnilistEndpoint, type, game.GameId);
-            if (!idMal.IsNullOrEmpty())
-            {
-                queryUri = string.Format(MalSyncMyanimelistEndpoint, type, idMal);
-            }
-
-            malSyncRateLimiter.WaitForSlot();
-            var downloadStringResult = HttpDownloader.DownloadString(queryUri);
-            if (!downloadStringResult.Success || downloadStringResult.Result.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            if (downloadStringResult.Result == "Not found in the fire" || downloadStringResult.Result == "Request failed with status code 404")
-            {
-                logger.Info($"MalSync query {queryUri} doesn't have data");
-                return;
-            }
-
-            var malSyncResponse = Serialization.FromJson<MalSyncResponse>(downloadStringResult.Result);
-            AddMalSyncLinksToMetadata(metadata, malSyncResponse);
-        }
-
-        private static void AddMalSyncLinksToMetadata(GameMetadata metadata, MalSyncResponse malSyncResponse)
-        {
-            if (malSyncResponse.Sites == null)
+            if (malSyncResponse.Sites is null)
             {
                 return;
             }

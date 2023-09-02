@@ -100,7 +100,7 @@ namespace ExtraMetadataLoader.ViewModels
             this.videosDownloader = videosDownloader;
             this.game = game;
 
-            if (defaultSearchTerm != null)
+            if (!defaultSearchTerm.IsNullOrEmpty())
             {
                 SearchTerm = defaultSearchTerm;
             }

@@ -114,3 +114,27 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/Search_Collection_2_17.pext
     Changelog:
     - 'Updated links'
+  - Version: 2.18
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Search_Collection_2_18.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Open SteamGridDB game page directly for Steam games'
+  - Version: 2.19
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.28_553d8252/Search_Collection_2_19.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Google custom search definition on first startup to be used as an example'
+    - 'Add support to search configured searches in Playnite''s Keyboard launcher with the "scl" keyword'
+    - 'Available searches list in context menu will now be sorted alphabetically'
+    - 'Open game pages directly if game has a VNDB link'
+  - Version: 2.20
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.31_2c93441b/Search_Collection_2_20.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Fix opening an incorrect page when searching on SteamDB'

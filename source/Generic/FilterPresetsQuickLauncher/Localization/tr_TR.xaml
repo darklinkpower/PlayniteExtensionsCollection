@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCFiltersPresetsQL_SearchHelperDescription">Filtre ayarlarını ara ve etkinleştir</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchLabel">Filtre Ön Ayarları</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchDescription">Arama terimini girin</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchHint">Playnite veritabanında süzgeç ön ayarlarını ara</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_ActivateActionLabel">Etkinleştir</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_ClearFiltersLabel">Filtreleri temizle</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">&quot;{0}&quot; filtre ön ayarı bulunamadı</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filtre Ön Ayarı: {0}</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Değişiklikler yeniden başlatmayı gerektiriyor</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Görsel</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Görsel ekle</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Görseli kaldır</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Filtre ön ayar adı</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Görüntülenecek isim</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Bir görsel yapılandırılmamış ise ismin baş harfleri yerine görüntülenecek metin.</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Üst panelde göster</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">Kenar çubuğunda göster</sys:String>
+</ResourceDictionary>

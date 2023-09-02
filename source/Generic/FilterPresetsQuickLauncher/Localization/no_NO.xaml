@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCFiltersPresetsQL_SearchHelperDescription">Søk og aktiver filteroppsett</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchLabel">Filteroppsett</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchDescription">Skriv inn søkeord</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchHint">Søk etter filteroppsett i Playnite-databasen</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_ActivateActionLabel">Aktiver</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_ClearFiltersLabel">Tilbakestill filtre</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Filteroppsettet &quot;{0}&quot; ble ikke funnet</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filteroppsett: {0}</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Endringer krever omstart</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Bilde</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Legg til bilde</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Fjern bilde</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Navn på filteroppsett</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Visningsnavn</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Tekst som skal vises i stedet for en forkortelse av navnet dersom et bilde ikke er konfigurert.</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Vis i toppanelet</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">Vis i sidestolpen</sys:String>
+</ResourceDictionary>

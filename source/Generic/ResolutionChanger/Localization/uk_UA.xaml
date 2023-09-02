@@ -2,11 +2,24 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Довідка</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Роздільна здатність</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Частота</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Очистити конфігурацію роздільної здатності у вибраних іграх</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Очистити конфігурацію роздільної здатності у вибраних іграх</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Встановити роздільну здатність при запуску {0}x{1} ({2}) для вибраних ігор</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">При запуску вибраних ігор встановити частоту дисплею {0}Гц</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuSectionDisplayRefreshRate">Частота оновлення</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Очистити налаштування роздільної здатності</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Очистити налаштування частоти оновлення дисплея</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Встановити роздільну здатність при запуску на {0}x{1} ({2})</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Встановити частоту оновлення дисплея при запуску на {0}Гц</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Змінювати роздільну здатність тільки коли не запущено жодної гри</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Готово</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Дисплей:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ResolutionLabel">Роздільна здатність:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Частота оновлення:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Режими дисплея:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Глобальні налаштування</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Режим Playnite:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Використовувати налаштований дисплей:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Увімкнення цієї опції та вибір дисплея гарантує, що розширення застосовуватиме налаштовані зміни виключно до вибраного дисплея під час кожного запуску гри.
+Додатково, якщо вибраний дисплей ще не є основним, його буде встановлено як основний.
+
+З іншого боку, якщо цей параметр вимкнено, розширення застосовуватиме налаштовані параметри до поточного основного дисплея на момент запуску гри.</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Встановити</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Очистити</sys:String>
 </ResourceDictionary>

@@ -73,3 +73,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.12.11_3fe9a125/Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85_2_11.pext
     Changelog:
     - 'Fix not working anymore due to data url change in NexusMods site'
+  - Version: 2.12
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-19
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.19_7bc43c06/Nexus_Mods_Checker_ece2874c-be52-4a64-b178-ed379a042f85_2_12.pext
+    Changelog:
+    - 'Updated localizations'

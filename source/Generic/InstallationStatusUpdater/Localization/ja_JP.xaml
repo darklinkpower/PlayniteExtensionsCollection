@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCInstallation_Status_Updater_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuItemStatusUpdaterDescription">Check installation status of all games</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription">Add selected games to ignore list</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription">Update tag with drive where games are installed on</sys:String>
@@ -26,11 +26,11 @@ Previously uninstalled games were set as installed: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">Update installation status when files change in directories (Changes require restart)</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">Include subdirectories for detection</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">Detection directories</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">Enabled</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">有効</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvScanSubdirsLabel">Scan subdirectories</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Path</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Add</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Remove</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">パス</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">追加</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">削除</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater: Marked {0} games as installed and {1} as uninstalled</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_SettingDetectInstallationStatusWithInstallButton">Detect installation statuses of games when using the Install button</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Detect installation status with &quot;Installation Status Updater&quot; extension</sys:String>
@@ -39,9 +39,9 @@ Previously uninstalled games were set as installed: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel">Games set as uninstalled:</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel">Set as installed</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel">Set as uninstalled</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel">Source</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel">Platforms</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel">名前</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel">ソース</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel">プラットフォーム</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogViewResultsLabel">View results</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogCloseLabel">Close</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogCloseLabel">閉じる</sys:String>
 </ResourceDictionary>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Browse Game Pass Catalog</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Add all Catalog to the Playnite library</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Reset Cache</sys:String>
@@ -15,7 +15,7 @@
     
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">Search:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">検索:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
 

@@ -12,7 +12,7 @@
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Nyheter</sys:String>
 
     <sys:String x:Key="LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel">Aktiver kontroll som viser spillere i spillet</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">I spillet</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">i spillet</sys:String>
     <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_OnlineNowCountLabel">Tilkoblet nå</sys:String>
     <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">Vis også data for spill som ikke er fra Steam</sys:String>
 </ResourceDictionary>

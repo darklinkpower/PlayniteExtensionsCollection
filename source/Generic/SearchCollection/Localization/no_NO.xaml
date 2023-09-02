@@ -16,4 +16,9 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Ny søkedefinisjon</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Bruk %s der spillnavnet skal erstattes. For eksempel vil &quot;https://duckduckgo.com/?q=%s&quot; bli til &quot;https://duckduckgo.com/?q=Braid&quot; når du søker med spillet &quot;Braid&quot;</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Søk i Playnite</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnSiteActionLabel">Søk på {0}</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchActionLabel">Søk</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextDescription">Skriv inn søkeord</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Søk på nettstedene som er konfigurert i innstilliingene for Search Collection</sys:String>
 </ResourceDictionary>

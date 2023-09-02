@@ -278,3 +278,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.02.15_7796d0ce/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_42.pext
     Changelog:
     - 'Updated links'
+  - Version: 2.43
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_43.pext
+    Changelog:
+    - 'Updated localizations'
+    - 'Do not display control for games without Steam Id'
+    - 'Add icons to game menu items'

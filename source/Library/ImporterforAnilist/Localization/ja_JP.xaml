@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingLabel">Account access code:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_AccountAccessCodeSettingButton">Get access code</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_MetadataPrefixSetting">Metadata properties prefix:</sys:String>
@@ -13,9 +13,9 @@
     <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Browser path:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Select browser</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Remove</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">削除</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_PlayActionNoLinksAvailableLabel">AniList game entry doesn't have links available, please download metadata using the &quot;Official store&quot; option to get links from different providers.</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">Open link</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_PlayActionOpenLinkLabel">リンクを開く</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingAnilistStatusLabel">AniList status</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingCompletionStatusLabel">Completion status</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">Plan to watch/read</sys:String>

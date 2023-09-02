@@ -2,11 +2,24 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Oppløsning</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayFrequency">Frekvens</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearResolutionFeature">Fjern oppløsningskonfigurasjon fra valgte spill</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionClearFrequencyFeature">Fjern frekvenskonfigurasjon fra valgte spill</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchResolutionFeature">Satt oppstartsoppløsning til {0}x{1} ({2}) for valgte spill</sys:String>
-    <sys:String x:Key="LOCResolutionChanger_MenuItemDescriptionSetLaunchFrequencyFeature">Angi oppstartsfrekvens til {0}Hz for valgte spill</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuSectionDisplayRefreshRate">Oppdateringsfrekvens</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Fjern oppløsningskonfigurasjon</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Fjern konfigurasjon for oppdateringsfrekvens</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Sett oppløsning ved oppstart til {0}x{1} ({2})</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Angi skjermfrekvens ved oppstart til {0}Hz</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Endre bare oppløsningen når ingen spill kjører</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Ferdig</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Skjerm:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ResolutionLabel">Oppløsning:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Oppdateringsfrekvens:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Skjermmoduser:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Globale innstillinger</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Playnite-modus:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Bruk konfigurert skjerm:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Ved å aktivere dette valget og velge en skjerm, sikrer du at utvidelsen kun aktiverer de valge endringene for den valge skjermen når et spill starter.
+Hvis den valget skjermen ikke allerede er valgt som primærskjerm, får den status som primær.
+
+Hvis denne innstillingen derimot er deaktivert, vil utvidelsen aktivere de valgte innstillingene for den nåværende primære skjermen i det øyeblikket et spill starter.</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Velg</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Fjern</sys:String>
 </ResourceDictionary>

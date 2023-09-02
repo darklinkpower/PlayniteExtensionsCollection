@@ -11,21 +11,33 @@
             <TabItem Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultSearches}">
                 <StackPanel Margin="0,10,0,0">
                     <TextBlock VerticalAlignment="Center" Margin="0,0,0,20">
-                    <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Search-Collection"
-                               Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
-                               CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
-                        <Run Text="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultHelp}" />
-                    </Hyperlink>
+                        <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Search-Collection"
+                                   Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                   CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                            <Run Text="{DynamicResource LOCSearch_Collection_SettingsLabelDefaultHelp}" />
+                        </Hyperlink>
                     </TextBlock>
-                    <CheckBox Content="IGDB" IsChecked="{Binding Settings.SearchIsEnabledIgdb}" Margin="0,0,0,0" />
-                    <CheckBox Content="Metacritic" IsChecked="{Binding Settings.SearchIsEnabledMetacritic}" Margin="0,10,0,0" />
-                    <CheckBox Content="PCGamingWiki" IsChecked="{Binding Settings.SearchIsEnabledPcgw}" Margin="0,10,0,0" />
-                    <CheckBox Content="Twitch" IsChecked="{Binding Settings.SearchIsEnabledTwitch}" Margin="0,10,0,0" />
-                    <CheckBox Content="Steam" IsChecked="{Binding Settings.SearchIsEnabledSteam}" Margin="0,10,0,0" />
-                    <CheckBox Content="SteamDB" IsChecked="{Binding Settings.SearchIsEnabledSteamDb}" Margin="0,10,0,0" />
-                    <CheckBox Content="SteamGridDB" IsChecked="{Binding Settings.SearchIsEnabledSteamGridDB}" Margin="0,10,0,0" />
-                    <CheckBox Content="VNDB" IsChecked="{Binding Settings.SearchIsEnabledVndb}" Margin="0,10,0,0" />
-                    <CheckBox Content="YouTube" IsChecked="{Binding Settings.SearchIsEnabledYoutube}" Margin="0,10,0,0" />
+                    <ListView ItemsSource="{Binding EditingDefaultSearchesSettings}" Margin="0,10,10,0" SelectionMode="Multiple">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionEnabled}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding Value, Mode=TwoWay}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </StackPanel>
             </TabItem>
 
@@ -35,7 +47,6 @@
                               ItemsSource="{Binding Settings.SearchDefinitions}">
                         <ListView.View>
                             <GridView>
-
                                 <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionEnabled}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -44,7 +55,7 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="250" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionName}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox Text="{Binding Name}" VerticalAlignment="Center"/>
@@ -52,7 +63,7 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
 
-                                <GridViewColumn Width="250"  Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate}">
+                                <GridViewColumn Width="Auto" Header="{DynamicResource LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBox Text="{Binding SearchTemplate}" VerticalAlignment="Center"/>

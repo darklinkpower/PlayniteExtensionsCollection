@@ -43,3 +43,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/Links_Sorter_2_6.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Links_Sorter_2_7.pext
+    Changelog:
+    - 'Updated localizations'

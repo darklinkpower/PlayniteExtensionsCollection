@@ -19,6 +19,7 @@
                 <StackPanel Grid.Column="0">
                     <Image MaxWidth="{Binding ElementName=BttnDirOpen, Path=ActualWidth}"
                            Source="{Binding Game.CoverImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
+                           RenderOptions.BitmapScalingMode="Fant"
                            Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Left"/>
                     <TextBlock Text="{Binding Game.Name}" Margin="0,10,0,0" TextWrapping="Wrap" FontSize="16"
                                MaxWidth="{Binding ElementName=BttnDirOpen, Path=ActualWidth}"/>
@@ -37,9 +38,9 @@
                 <StackPanel Grid.Column="1" Margin="10,0,0,0">
                     <TabControl SelectedIndex="{Binding SelectedTabItemIndex}" Margin="0,0,0,0">
                         <TabItem Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads}"
-                             Visibility="{Binding GameTranslationsResponse.GamePathLinks.HydraMember, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
+                             Visibility="{Binding GameTranslationsResponse.GamePathLinks, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
                             <ListView SelectionMode="Single"  Margin="0,10,10,0"
-                              ItemsSource="{Binding GameTranslationsResponse.GamePathLinks.HydraMember}">
+                              ItemsSource="{Binding GameTranslationsResponse.GamePathLinks}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderNameLabel}">
@@ -67,9 +68,9 @@
                         </TabItem>
 
                         <TabItem Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderPatches}"
-                             Visibility="{Binding GameTranslationsResponse.GamePatchLinks.HydraMember, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
+                             Visibility="{Binding GameTranslationsResponse.GamePatchLinks, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
                             <ListView SelectionMode="Single"  Margin="0,10,10,0"
-                                  ItemsSource="{Binding GameTranslationsResponse.GamePatchLinks.HydraMember}">
+                                  ItemsSource="{Binding GameTranslationsResponse.GamePatchLinks}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderNameLabel}">
@@ -97,9 +98,9 @@
                         </TabItem>
 
                         <TabItem Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderExtras}"
-                             Visibility="{Binding GameTranslationsResponse.GameExtraLinks.HydraMember, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
+                             Visibility="{Binding GameTranslationsResponse.GameExtraLinks, Converter={StaticResource ICollectionNullOrEmptyToVisibilityConverter}}">
                             <ListView SelectionMode="Single"  Margin="0,10,10,0"
-                                  ItemsSource="{Binding GameTranslationsResponse.GameExtraLinks.HydraMember}">
+                                  ItemsSource="{Binding GameTranslationsResponse.GameExtraLinks}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Width="Auto" Header="{DynamicResource LOCJast_Usa_Library_JastDownloaderNameLabel}">

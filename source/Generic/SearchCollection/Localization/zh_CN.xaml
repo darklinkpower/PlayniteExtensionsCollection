@@ -17,4 +17,9 @@
 
     <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">在应当替代游戏名称处使用 %s。例如：
 当搜索名为“Braid”的游戏时，“https://duckduckgo.com/?q=%s”将变为“https://duckduckgo.com/?q=Braid”。</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Search on Playnite</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnSiteActionLabel">Search on {0}</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchActionLabel">Search</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextDescription">Enter the search term</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Search in the sites configured in the Search Collection plugin</sys:String>
 </ResourceDictionary>

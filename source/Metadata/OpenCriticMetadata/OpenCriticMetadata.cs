@@ -24,7 +24,7 @@ namespace OpenCriticMetadata
             MetadataField.CriticScore
         };
 
-        public override string Name => "OpenCritic Metadata";
+        public override string Name => "OpenCritic";
 
         public OpenCriticMetadata(IPlayniteAPI api) : base(api)
         {
@@ -32,6 +32,13 @@ namespace OpenCriticMetadata
             Properties = new MetadataPluginProperties
             {
                 HasSettings = false
+            };
+
+            Searches = new List<SearchSupport>
+            {
+                new SearchSupport("oc",
+                    "OpenCritic",
+                    new OpenCriticSearchContext(openCriticService))
             };
         }
 

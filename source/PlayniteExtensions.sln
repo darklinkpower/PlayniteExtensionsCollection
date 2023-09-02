@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NVIDIAGeForceNowLibrary", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayState", "Generic\PlayState\PlayState.csproj", "{F3021AE3-EF99-480A-8CFE-A97672A36985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResolutionChanger", "Generic\ResolutionChanger\ResolutionChanger.csproj", "{7BDB4FCC-B0A7-4D81-B54F-2E0133B28FF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayHelper", "Generic\ResolutionChanger\DisplayHelper.csproj", "{7BDB4FCC-B0A7-4D81-B54F-2E0133B28FF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewViewer", "Generic\ReviewViewer\ReviewViewer.csproj", "{E63CAD2F-E238-4F0B-B294-90810D6134B2}"
 EndProject
@@ -70,6 +70,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metadata", "Metadata", "{BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCriticMetadata", "Metadata\OpenCriticMetadata\OpenCriticMetadata.csproj", "{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetacriticMetadata", "Metadata\MetacriticMetadata\MetacriticMetadata.csproj", "{8B1168A9-90BE-4839-94B5-FD2B9143076C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterPresetsQuickLauncher", "Generic\FilterPresetsQuickLauncher\FilterPresetsQuickLauncher.csproj", "{E2246410-C505-4C5D-BA43-8C2375BA1DB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -197,6 +201,14 @@ Global
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2246410-C505-4C5D-BA43-8C2375BA1DB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2246410-C505-4C5D-BA43-8C2375BA1DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2246410-C505-4C5D-BA43-8C2375BA1DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2246410-C505-4C5D-BA43-8C2375BA1DB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +244,8 @@ Global
 		{871CD6E7-1343-4FFB-9D28-CC09E5639E38} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{A84836B3-7800-48BC-837D-13F237E2C508} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B} = {BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}
+		{8B1168A9-90BE-4839-94B5-FD2B9143076C} = {BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}
+		{E2246410-C505-4C5D-BA43-8C2375BA1DB0} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

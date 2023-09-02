@@ -16,4 +16,9 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Add new search definition</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Use %s where the game name should be substituted. For example: &quot;https://duckduckgo.com/?q=%s&quot; will turn into &quot;https://duckduckgo.com/?q=Braid&quot; when searching with a game named &quot;Braid&quot;</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Search on Playnite</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnSiteActionLabel">Search on {0}</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchActionLabel">Search</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextDescription">Enter the search term</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Search in the sites configured in the Search Collection plugin</sys:String>
 </ResourceDictionary>

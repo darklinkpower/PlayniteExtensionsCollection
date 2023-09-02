@@ -80,3 +80,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/Image_Cache_Size_Saver_2_12.pext
     Changelog:
     - 'Fix rare error related to paths handling'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Image_Cache_Size_Saver_2_13.pext
+    Changelog:
+    - 'Updated localizations'

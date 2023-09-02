@@ -22,6 +22,8 @@ namespace ThemesDetailsViewToGridViewConverter
         public bool ConvertDhDawn { get => convertDhDawn; set => SetValue(ref convertDhDawn, value); }
         private bool convertDhNight = false;
         public bool ConvertDhNight { get => convertDhNight; set => SetValue(ref convertDhNight, value); }
+        private bool convertNovaX = false;
+        public bool ConvertNovaX { get => convertNovaX; set => SetValue(ref convertNovaX, value); }
     }
 
     public class ThemesDetailsViewToGridViewConverterSettingsViewModel : ObservableObject, ISettings

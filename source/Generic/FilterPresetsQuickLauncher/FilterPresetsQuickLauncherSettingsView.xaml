@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="FilterPresetsQuickLauncher.FilterPresetsQuickLauncherSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <DockPanel Margin="20" LastChildFill="True">
+        <TextBlock DockPanel.Dock="Bottom" Margin="0,10,0,0" Text="{DynamicResource LOCFiltersPresetsQL_SettingsChangesRestartLabel}" />
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" Margin="0,0,10,0" LastChildFill="True">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0">
+                    <Button Content="&#xEA6A;"
+                            FontFamily="{DynamicResource FontIcoFont}"
+                            Margin="0,0,5,0"
+                            Command="{Binding SelectedFilterPresetSettingMoveUpCommand}" />
+                    <Button Content="&#xEA67;"
+                            FontFamily="{DynamicResource FontIcoFont}"
+                            Margin="0,0,5,0"
+                            Command="{Binding SelectedFilterPresetSettingMoveDownCommand}" />
+                </StackPanel>
+                <ListView DockPanel.Dock="Top" Name="FilterPresetDdisplaySettings" SelectionMode="Single" Margin="0,10,0,0"
+                          SelectedItem="{Binding SelectedFilterPresetDisplaySetting}"
+                          ItemsSource="{Binding Settings.FilterPresetsDisplaySettings}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCFiltersPresetsQL_SettingsImageLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                                               Margin="1" MaxHeight="15" MaxWidth="15"
+                                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                                               Source="{Binding ImageFullPath, Mode=OneWay, Converter={StaticResource ImageStringToImageConverter}}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCFiltersPresetsQL_SettingsFilterPresetNameLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCFiltersPresetsQL_SettingsDisplayNameLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding DisplayName}"
+                                                 ToolTip="{DynamicResource LOCFiltersPresetsQL_SettingsDisplayNameTooltip}"
+                                                 MinWidth="25" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto"  Header="{DynamicResource LOCFiltersPresetsQL_SettingsShowInTopPanelLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ShowInTopPanel}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="Auto" Header="{DynamicResource LOCFiltersPresetsQL_SettingsShowInSidebarLabel}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding ShowInSidebar}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+            <StackPanel Grid.Column="1" Visibility="{Binding SelectedFilterPresetDisplaySetting, Converter={StaticResource NullToVisibilityConverter}}">
+                <Border Height="100">
+                    <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                        Margin="3"
+                        HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Source="{Binding SelectedDisplaySettingIconPath, Mode=OneWay, Converter={StaticResource ImageStringToImageConverter}}" />
+                </Border>
+                
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,10,0,0">
+                    <Button Content="{DynamicResource LOCFiltersPresetsQL_SettingsAddImageLabel}"
+                            Margin="0,0,5,0"
+                            Command="{Binding SelectedFilterPresetSettingAddIconCommand}" />
+                    <Button Content="{DynamicResource LOCFiltersPresetsQL_SettingsRemoveImageLabel}"
+                            Margin="0,0,5,0"
+                            Command="{Binding SelectedFilterPresetSettingRemoveIconCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</UserControl>

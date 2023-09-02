@@ -82,8 +82,6 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             get { return wishlistCollectionView; }
         }
 
-        private string[] searchFilterSplit = new string[0];
-
         private string searchString = string.Empty;
         public string SearchString
         {
@@ -92,7 +90,6 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             {
                 searchString = value;
                 OnPropertyChanged();
-                searchFilterSplit = searchString.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
                 wishlistCollectionView.Refresh();
             }
         }
@@ -391,18 +388,14 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 return true;
             }
 
-            if (searchString.Length > toMatch.Length)
+            if (searchString.GetJaroWinklerSimilarityIgnoreCase(toMatch) >= 0.95)
             {
-                return false;
+                return true;
             }
 
-            var toMatchSplit = toMatch.Split(textMatchSplitter, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in searchFilterSplit)
+            if (!searchString.MatchesAllWords(toMatch))
             {
-                if (!toMatchSplit.Any(a => a.ContainsInvariantCulture(word, CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols | CompareOptions.IgnoreNonSpace)))
-                {
-                    return false;
-                }
+                return false;
             }
 
             return true;
@@ -526,17 +519,6 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         }
 
         public Uri DefaultBannerUri { get; }
-
-        //private BitmapImage defaultBannerImage;
-        //public BitmapImage DefaultBannerImage
-        //{
-        //    get { return defaultBannerImage; }
-        //    set
-        //    {
-        //        defaultBannerImage = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
 
         private void OpenWishlistItemOnSteam(WishlistItemCache wishlistItem)
         {

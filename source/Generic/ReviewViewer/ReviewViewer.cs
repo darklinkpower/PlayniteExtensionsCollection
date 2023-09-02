@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ReviewViewer
 {
@@ -55,6 +56,16 @@ namespace ReviewViewer
             {
                 steamApiLanguage = Steam.GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
             }
+
+            var menuIcon = new TextBlock
+            {
+                Text = "\xEC80",
+                FontSize = 20,
+                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
+            };
+
+            Application.Current.Resources.Add("reviewViewerUpdateIcon", menuIcon);
+
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
@@ -84,7 +95,8 @@ namespace ReviewViewer
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCReview_Viewer_MenuItemUpdateDataDescription"),
-                    MenuSection = "Review Viewer",
+                    MenuSection = "Steam Reviews Viewer",
+                    Icon = "reviewViewerUpdateIcon",
                     Action = a => {
                        RefreshGameData(args.Games);
                     }
@@ -94,7 +106,7 @@ namespace ReviewViewer
 
         public void RefreshGameData(List<Game> games)
         {
-            var userOverwriteChoice = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogOverwriteChoiceMessage"), "Review Viewer", MessageBoxButton.YesNo);
+            var userOverwriteChoice = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogOverwriteChoiceMessage"), "Steam Reviews Viewer", MessageBoxButton.YesNo);
             var reviewSearchTypes = new string[] { "all", "positive", "negative" };
             var pluginDataPath = GetPluginUserDataPath();
             var reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
@@ -112,7 +124,7 @@ namespace ReviewViewer
                         break;
                     }
                     a.CurrentProgressValue++;
-                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue - 1}\n{game.Name}";
                     var steamId = Steam.GetGameSteamId(game, true);
                     if (steamId.IsNullOrEmpty())
                     {
@@ -135,7 +147,7 @@ namespace ReviewViewer
                 }
             }, progressOptions);
 
-            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Review Viewer");
+            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Steam Reviews Viewer");
         }
 
     }

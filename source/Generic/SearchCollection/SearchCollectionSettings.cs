@@ -9,42 +9,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SearchCollection.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace SearchCollection
 {
     public class SearchCollectionSettings : ObservableObject
     {
         [DontSerialize]
-        private bool searchIsEnabledIgdb = true;
-        public bool SearchIsEnabledIgdb { get => searchIsEnabledIgdb; set => SetValue(ref searchIsEnabledIgdb, value); }
-        [DontSerialize]
-        private bool searchIsEnabledMetacritic = true;
-        public bool SearchIsEnabledMetacritic { get => searchIsEnabledMetacritic; set => SetValue(ref searchIsEnabledMetacritic, value); }
+        private Dictionary<string, bool> defaultSearchesSettings = new Dictionary<string, bool>();
+        public Dictionary<string, bool> DefaultSearchesSettings { get => defaultSearchesSettings; set => SetValue(ref defaultSearchesSettings, value); }
+        private List<CustomSearchDefinition> searchDefinitions { get; set; } = new List<CustomSearchDefinition>();
 
-        [DontSerialize]
-        private bool searchIsEnabledPcgw = true;
-        public bool SearchIsEnabledPcgw { get => searchIsEnabledPcgw; set => SetValue(ref searchIsEnabledPcgw, value); }
-
-        [DontSerialize]
-        private bool searchIsEnabledTwitch = true;
-        public bool SearchIsEnabledTwitch { get => searchIsEnabledTwitch; set => SetValue(ref searchIsEnabledTwitch, value); }
-        [DontSerialize]
-        private bool searchIsEnabledSteam = true;
-        public bool SearchIsEnabledSteam { get => searchIsEnabledSteam; set => SetValue(ref searchIsEnabledSteam, value); }
-        [DontSerialize]
-        private bool searchIsEnabledSteamDb = true;
-        public bool SearchIsEnabledSteamDb { get => searchIsEnabledSteamDb; set => SetValue(ref searchIsEnabledSteamDb, value); }
-        [DontSerialize]
-        private bool searchIsEnabledSteamGridDB = true;
-        public bool SearchIsEnabledSteamGridDB { get => searchIsEnabledSteamGridDB; set => SetValue(ref searchIsEnabledSteamGridDB, value); }
-        [DontSerialize]
-        private bool searchIsEnabledVndb = true;
-        public bool SearchIsEnabledVndb { get => searchIsEnabledVndb; set => SetValue(ref searchIsEnabledVndb, value); }
-        [DontSerialize]
-        private bool searchIsEnabledYoutube = true;
-        public bool SearchIsEnabledYoutube { get => searchIsEnabledYoutube; set => SetValue(ref searchIsEnabledYoutube, value); }
-        private List<SearchDefinition> searchDefinitions { get; set; } = new List<SearchDefinition>();
-        public List<SearchDefinition> SearchDefinitions
+        public List<CustomSearchDefinition> SearchDefinitions
         {
             get => searchDefinitions;
             set
@@ -54,13 +31,39 @@ namespace SearchCollection
             }
         }
 
+        public bool FirstStartCompleted = false;
+    }
 
+    public class NameValueObject : ObservableObject
+    {
+        public string Name { get; }
+
+        private bool _value;
+        public bool Value
+        {
+            get { return _value; }
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public NameValueObject(string name, bool value)
+        {
+            Name = name;
+            Value = value;
+        }
     }
 
     public class SearchCollectionSettingsViewModel : ObservableObject, ISettings
     {
         private readonly SearchCollection plugin;
         private SearchCollectionSettings editingClone { get; set; }
+        public ObservableCollection<NameValueObject> EditingDefaultSearchesSettings { get; private set; }
 
         private SearchCollectionSettings settings;
         public SearchCollectionSettings Settings
@@ -108,7 +111,8 @@ namespace SearchCollection
             }
 
         }
-        public SearchCollectionSettingsViewModel(SearchCollection plugin, IPlayniteAPI playniteApi, string userIconsDirectory, string pluginInstallPath)
+
+        public SearchCollectionSettingsViewModel(SearchCollection plugin, IPlayniteAPI playniteApi, string userIconsDirectory, string pluginInstallPath, List<ISearchDefinition> defaultSearches)
         {
             this.playniteApi = playniteApi;
             this.userIconsDirectory = userIconsDirectory;
@@ -129,6 +133,35 @@ namespace SearchCollection
             {
                 Settings = new SearchCollectionSettings();
             }
+
+            foreach (var search in defaultSearches)
+            {
+                if (!settings.DefaultSearchesSettings.ContainsKey(search.Name))
+                {
+                    settings.DefaultSearchesSettings.Add(search.Name, true);
+                }
+            }
+
+            if (!settings.FirstStartCompleted)
+            {
+                foreach (var iconFile in new string[] { "Default.png", "Google.png" })
+                {
+                    var iconPath = Path.Combine(plugin.iconsDirectory, iconFile);
+                    var targetDefaultIcon = Path.Combine(userIconsDirectory, iconFile);
+                    FileSystem.CopyFile(iconPath, targetDefaultIcon);
+                }
+
+                settings.SearchDefinitions.Add(new CustomSearchDefinition
+                {
+                    Name = "Google",
+                    IsEnabled = true,
+                    Icon = "Google.png",
+                    SearchTemplate = @"https://www.google.com/search?q=%s"
+                });
+
+                settings.FirstStartCompleted = true;
+                plugin.SavePluginSettings(Settings);
+            }
         }
 
         public void BeginEdit()
@@ -137,6 +170,8 @@ namespace SearchCollection
             editingClone = Serialization.GetClone(Settings);
             NewDefinitionName = string.Empty;
             NewDefinitionSearchTemplate = string.Empty;
+            EditingDefaultSearchesSettings = settings.DefaultSearchesSettings
+                .OrderBy(x => x.Key).Select(x => new NameValueObject(x.Key, x.Value)).ToObservable();
         }
 
         public void CancelEdit()
@@ -150,6 +185,8 @@ namespace SearchCollection
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
+            Settings.DefaultSearchesSettings = EditingDefaultSearchesSettings.ToDictionary(kv => kv.Name, kv => kv.Value);
+            Settings.SearchDefinitions.Sort((x, y) => x.Name.CompareTo(y.Name));
             plugin.SavePluginSettings(Settings);
         }
 
@@ -184,7 +221,7 @@ namespace SearchCollection
                     return;
                 }
 
-                var newDefinition = new SearchDefinition
+                var newDefinition = new CustomSearchDefinition
                 {
                     IsEnabled = true,
                     Name = NewDefinitionName,
@@ -198,7 +235,7 @@ namespace SearchCollection
             }, () => AddButtonEnabled);
         }
 
-        private string GetNewDefinitionIcon(SearchDefinition newDefinition)
+        private string GetNewDefinitionIcon(CustomSearchDefinition newDefinition)
         {
             var domain = newDefinition.SearchTemplate.Replace($"%s", "Braid");
             var iconDownloadUrl = string.Format(@"http://www.google.com/s2/favicons?domain={0}", domain);
@@ -219,7 +256,7 @@ namespace SearchCollection
         {
             get => new RelayCommand<IList<object>>((items) =>
             {
-                foreach (SearchDefinition searchDefinition in items.ToList())
+                foreach (CustomSearchDefinition searchDefinition in items.ToList())
                 {
                     if (searchDefinition.Icon != "Default.png")
                     {

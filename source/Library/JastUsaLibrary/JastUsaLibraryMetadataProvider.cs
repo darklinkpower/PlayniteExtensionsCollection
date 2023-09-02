@@ -15,8 +15,7 @@ namespace JastUsaLibrary
     public class JastUsaLibraryMetadataProvider : LibraryMetadataProvider
     {
         private ILogger logger = LogManager.GetLogger();
-        private string userGamesCachePath;
-        private const string productsApiTemplate = @"https://app.jastusa.com/api/v2/shop/products/";
+        private readonly string userGamesCachePath;
         private const string jastMediaUrlTemplate = @"https://app.jastusa.com/media/image/{0}";
         private const string jastBaseAppUrl = @"https://app.jastusa.com";
 
@@ -42,8 +41,9 @@ namespace JastUsaLibrary
             var productResponse = Serialization.FromJson<ProductResponse>(downloadedString.Result);
             var metadata = new GameMetadata()
             {
+                Name = productResponse.Name,
                 Description = productResponse.Description,
-                ReleaseDate = new ReleaseDate(productResponse.ReleaseDate),
+                ReleaseDate = new ReleaseDate(productResponse.OriginalReleaseDate),
                 Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
             };
 
@@ -72,16 +72,36 @@ namespace JastUsaLibrary
             }
 
             metadata.Links = new List<Link> { new Link("Store", @"https://jastusa.com/games/" + productResponse.Code) };
-            var urlAttributes = productResponse.Attributes.Where(x => x.Code.EndsWith("_url") && x.Value.First().StartsWith("http"));
-            if (urlAttributes.Count() > 0)
+            var urlAttributes = productResponse.Attributes.Where(x => x.Code.EndsWith("_url") && x.Value.HasItems() &&
+                                x.Value.First().StartsWith("http"));
+            if (urlAttributes.HasItems())
             {
                 metadata.Links.AddRange(urlAttributes.Select(x => new Link(x.Code.Replace("_", " ").ToTitleCase(), x.Value.First())));
             }
 
             var tags = GetMultipleAttributeMatch(productResponse, "tag");
-            if (tags != null && tags.Count > 0)
+            if (tags.HasItems())
             {
                 metadata.Tags = tags.Select(x => new MetadataNameProperty(x.ToTitleCase())).Cast<MetadataProperty>().ToHashSet();
+            }
+
+            var platforms = GetMultipleAttributeMatch(productResponse, "platform");
+            if (platforms.HasItems())
+            {
+                var platformToSpecIdMapper = new Dictionary<string, string>
+                {
+                    {"Windows", "pc_windows" },
+                    {"Mac", "macintosh" },
+                    {"Linux", "pc_linux" }
+                };
+
+                foreach (var platform in platforms)
+                {
+                    if (platformToSpecIdMapper.TryGetValue(platform, out var platformSpecId))
+                    {
+                        metadata.Platforms.Add(new MetadataSpecProperty(platformSpecId));
+                    }
+                }
             }
 
             return metadata;
@@ -95,52 +115,52 @@ namespace JastUsaLibrary
             }
 
             var cache = Serialization.FromJsonFile<List<JastProduct>>(userGamesCachePath);
-            return cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == gameId)?.Id ?? null;
+            return cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == gameId)?.IdApiEndpoint ?? null;
         }
 
-        private string GetSingleAttributeMatch(ProductResponse productResponse, string attributeName, string locale = "en_US")
+        private string GetSingleAttributeMatch(ProductResponse productResponse, string attributeName, Locale locale = Locale.En_Us)
         {
             var attribute = productResponse.Attributes.FirstOrDefault(x => x.Code == attributeName && x.LocaleCode == locale);
-            if (attribute == null)
+            if (attribute is null || !attribute.Value.HasItems())
             {
                 return null;
             }
 
             var attributeValue = attribute.Value.First();
-            var attributeMatches = attribute.Configuration.Choices.Where(x => x.Key == attributeValue);
-            if (attributeMatches.Count() == 0)
+            var attributeMatch = attribute.Configuration.Choices.FirstOrDefault(x => x.Key == attributeValue);
+            if (attributeMatch.Equals(default(KeyValuePair<string, Dictionary<Locale, string>>)))
             {
                 return null;
             }
 
-            var attributeMatch = attributeMatches.First().Value.FirstOrDefault(x => x.Key == locale);
-            if (!attributeMatch.Equals(default(KeyValuePair<string, string>)))
+            var localizedChoice = attributeMatch.Value.FirstOrDefault(x => x.Key == locale);
+            if (!attributeMatch.Equals(default(KeyValuePair<Locale, string>)))
             {
-                return attributeMatch.Value;
+                return localizedChoice.Value;
             }
 
             return null;
         }
 
-        private List<string> GetMultipleAttributeMatch(ProductResponse productResponse, string attributeName, string locale = "en_US")
+        private List<string> GetMultipleAttributeMatch(ProductResponse productResponse, string attributeName, Locale locale = Locale.En_Us)
         {
+            var values = new List<string>();
             var attribute = productResponse.Attributes.FirstOrDefault(x => x.Code == attributeName && x.LocaleCode == locale);
-            if (attribute == null)
+            if (attribute is null || !attribute.Value.HasItems())
             {
-                return null;
+                return values;
             }
 
             var matches = attribute.Configuration.Choices.Where(x => attribute.Value.Any(y => y == x.Key));
-            if (matches.Count() == 0)
+            if (!matches.HasItems())
             {
-                return null;
+                return values;
             }
 
-            var values = new List<string>();
             var maxValue = attribute.Configuration.Max;
             foreach (var item in matches)
             {
-                if (values.Count >= maxValue && values.Count != 0)
+                if (maxValue.HasValue && values.Count >= maxValue && values.Count != 0)
                 {
                     break;
                 }

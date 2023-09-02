@@ -60,3 +60,17 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.03.26_e5534fd9/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_9.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.10
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-08-18
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_10.pext
+    Changelog:
+    - 'Improve rendering quality of game cover images in downloads window'
+  - Version: 1.11
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.01_c3eb6aad/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_11.pext
+    Changelog:
+    - 'Fix general features not working due to changes in JAST USA store API'
+    - 'Fix not obtaining platforms when obtaining metadata after initial import'
+    - 'Metadata download will now use the game original release date'
