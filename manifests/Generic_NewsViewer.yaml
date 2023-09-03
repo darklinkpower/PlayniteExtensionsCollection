@@ -187,3 +187,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.19_7bc43c06/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_29.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.30
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.03_e4bd8de7/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_30.pext
+    Changelog:
+    - 'Add buttons to open news on browser or Steam client'
+    - 'Fix News Control buttons not being enabled when first displaying news on game change'
+    - 'Fix YouTube videos not using all available width in News window'

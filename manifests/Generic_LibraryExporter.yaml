@@ -63,3 +63,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_9.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.10
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2023-09-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.03_e4bd8de7/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_10.pext
+    Changelog:
+    - 'Added support to export Completion Status (By luskynavy)'
