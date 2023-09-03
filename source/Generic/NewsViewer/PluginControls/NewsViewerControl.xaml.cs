@@ -310,6 +310,13 @@ namespace NewsViewer.PluginControls
         img {{
             max-width: 100%;
         }}
+		iframe {{
+		  width: 90vw;
+		  height: calc(90vw/1.77);
+		}}
+		img.sharedFilePreviewYouTubeVideo.sizeFull {{
+			display: none;
+		}}
     </style>
 </head>
 <body>
