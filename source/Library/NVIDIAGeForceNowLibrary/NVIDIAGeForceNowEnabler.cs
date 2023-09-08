@@ -74,6 +74,7 @@ namespace NVIDIAGeForceNowEnabler
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Stove,
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Unknown,
                 [Guid.Parse("c2f038e5-8b92-4877-91f1-da9094155fc5")] = AppStore.Uplay,
+                [Guid.Parse("7e4fbb5e-2ae3-48d4-8ba0-6b30e7a4e287")] = AppStore.Xbox
                 //[Guid.Parse("99999999-9999-9999-9999-999999999999")] = AppStore.Wargaming
             };
         }
@@ -249,7 +250,7 @@ namespace NVIDIAGeForceNowEnabler
                         continue;
                     }
 
-                    if (itemVariant.AppStore == AppStore.Epic || itemVariant.AppStore == AppStore.Origin)
+                    if (itemVariant.AppStore == AppStore.Epic || itemVariant.AppStore == AppStore.EA_APP || itemVariant.AppStore == AppStore.Xbox)
                     {
                         var key = Tuple.Create(itemVariant.AppStore, SatinizeGameName(itemVariant.Title));
                         detectionDictionary[key] = itemVariant;
@@ -363,7 +364,7 @@ namespace NVIDIAGeForceNowEnabler
 
                 // For Epic they don't share any similarity and remains to be investigated. Examples:
                 // Epic: Pillars of Eternity - Definitive Edition, GameId: bcc75c246fe04e45b0c1f1c3fd52503a, StoreId: bc31288122a7443b818f4e77eed5ce25
-                if (appStore == AppStore.Epic || appStore == AppStore.EA_APP)
+                if (appStore == AppStore.Epic || appStore == AppStore.Xbox || appStore == AppStore.EA_APP)
                 {
                     var key = Tuple.Create(appStore, SatinizeGameName(game.Name));
                     if (detectionDictionary.TryGetValue(key, out var itemVariant))
