@@ -30,7 +30,8 @@ namespace NVIDIAGeForceNowEnabler
         private readonly string geforceNowWorkingPath;
         public readonly string geforceNowExecutablePath;
         private readonly string gfnDatabasePath;
-        private Dictionary<Guid, AppStore> pluginIdToAppStore;
+        private Dictionary<Guid, AppStore> pluginIdToAppStoreMapper;
+        private readonly HashSet<AppStore> appStoresToMatchByName;
         private bool databaseUpdatedOnGetGames = false;
         private Dictionary<Tuple<AppStore, string>, GeforceNowItemVariant> detectionDictionary = new Dictionary<Tuple<AppStore, string>, GeforceNowItemVariant>();
 
@@ -51,13 +52,29 @@ namespace NVIDIAGeForceNowEnabler
                 HasSettings = true
             };
 
+            // For some libraries, game names need to be used because the GameId provided by plugins
+            // don't match with the StoreId used in the GeForce Now database
+
+            // For Origin, they are a little different. Probably due to some version and/or regional thing. Examples:
+            // Origin: Battlefield 1, GameId: Origin.OFR.50.0004657, StoreId: Origin.OFR.50.000055
+            // Origin: Dragon Age Inquisition, GameId: Origin.OFR.50.0000483, StoreId: Origin.OFR.50.0001131
+
+            // For Epic they don't share any similarity and remains to be investigated. Examples:
+            // Epic: Pillars of Eternity - Definitive Edition, GameId: bcc75c246fe04e45b0c1f1c3fd52503a, StoreId: bc31288122a7443b818f4e77eed5ce25
+            appStoresToMatchByName = new HashSet<AppStore>
+            {
+                AppStore.Epic,
+                AppStore.EA_APP,
+                AppStore.Xbox
+            };
+
             LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             SetEnumsDictionary();
         }
 
         private void SetEnumsDictionary()
         {
-            pluginIdToAppStore = new Dictionary<Guid, AppStore>
+            pluginIdToAppStoreMapper = new Dictionary<Guid, AppStore>
             {
                 [Guid.Parse("e3c26a3d-d695-4cb7-a769-5ff7612c7edd")] = AppStore.Battlenet,
                 [Guid.Parse("0e2e793e-e0dd-4447-835c-c44a1fd506ec")] = AppStore.Bethesda,
@@ -250,7 +267,7 @@ namespace NVIDIAGeForceNowEnabler
                         continue;
                     }
 
-                    if (itemVariant.AppStore == AppStore.Epic || itemVariant.AppStore == AppStore.EA_APP || itemVariant.AppStore == AppStore.Xbox)
+                    if (appStoresToMatchByName.Contains(itemVariant.AppStore))
                     {
                         var key = Tuple.Create(itemVariant.AppStore, SatinizeGameName(itemVariant.Title));
                         detectionDictionary[key] = itemVariant;
@@ -353,18 +370,9 @@ namespace NVIDIAGeForceNowEnabler
 
         private GeforceNowItemVariant GetDatabaseMatchingEntryForGame(Game game)
         {
-            if (pluginIdToAppStore.TryGetValue(game.PluginId, out var appStore))
+            if (pluginIdToAppStoreMapper.TryGetValue(game.PluginId, out var appStore))
             {
-                // For some libraries, names need to be used because the GameId provided by plugins
-                // don't match with the StoreId used in the GeForce Now database
-
-                // For Origin, they are a little different. Probably due to some version and/or regional thing. Examples:
-                // Origin: Battlefield 1, GameId: Origin.OFR.50.0004657, StoreId: Origin.OFR.50.000055
-                // Origin: Dragon Age Inquisition, GameId: Origin.OFR.50.0000483, StoreId: Origin.OFR.50.0001131
-
-                // For Epic they don't share any similarity and remains to be investigated. Examples:
-                // Epic: Pillars of Eternity - Definitive Edition, GameId: bcc75c246fe04e45b0c1f1c3fd52503a, StoreId: bc31288122a7443b818f4e77eed5ce25
-                if (appStore == AppStore.Epic || appStore == AppStore.Xbox || appStore == AppStore.EA_APP)
+                if (appStoresToMatchByName.Contains(appStore))
                 {
                     var key = Tuple.Create(appStore, SatinizeGameName(game.Name));
                     if (detectionDictionary.TryGetValue(key, out var itemVariant))
