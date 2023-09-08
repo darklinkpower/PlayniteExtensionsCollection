@@ -46,7 +46,6 @@ namespace NVIDIAGeForceNowEnabler
             geforceNowWorkingPath = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "NVIDIA Corporation", "GeForceNOW", "CEF");
             geforceNowExecutablePath = Path.Combine(geforceNowWorkingPath, "GeForceNOWStreamer.exe");
             gfnDatabasePath = Path.Combine(GetPluginUserDataPath(), "gfnDatabase.json");
-            LoadDatabaseFromFile();
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
@@ -70,6 +69,7 @@ namespace NVIDIAGeForceNowEnabler
 
             LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             SetEnumsDictionary();
+            LoadDatabaseFromFile();
         }
 
         private void SetEnumsDictionary()
