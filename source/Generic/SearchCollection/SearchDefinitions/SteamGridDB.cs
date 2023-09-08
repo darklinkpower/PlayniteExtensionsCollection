@@ -32,11 +32,11 @@ namespace SearchCollection.SearchDefinitions
             var steamId = Steam.GetGameSteamId(game, true);
             if (!steamId.IsNullOrEmpty())
             {
-                return string.Format(UrlFormat, steamId);
+                return string.Format(UrlSteamFormat, steamId);
             }
             else
             {
-                return string.Format(UrlSteamFormat, game.Name.UrlEncode());
+                return string.Format(UrlFormat, game.Name.UrlEncode());
             }
         }
     }
