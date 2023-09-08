@@ -289,4 +289,5 @@ Packages:
     ReleaseDate: 2023-09-08
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.08_905b17cd/NVIDIA_GeForce_Now_Enabler_2_46.pext
     Changelog:
-    - ''
+    - 'Added support for Xbox library (By msmarcel)'
+    - 'Fixed EA library detection (By msmarcel)'
