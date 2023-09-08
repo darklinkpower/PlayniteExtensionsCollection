@@ -138,3 +138,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix opening an incorrect page when searching on SteamDB'
+  - Version: 2.21
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.08_908380f0/Search_Collection_2_21.pext
+    Changelog:
+    - 'Fix SteamGridDB search not opening the correct page when searching'
