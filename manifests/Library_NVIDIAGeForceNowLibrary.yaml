@@ -291,3 +291,9 @@ Packages:
     Changelog:
     - 'Added support for Xbox library (By msmarcel)'
     - 'Fixed EA library detection (By msmarcel)'
+  - Version: 2.47
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.08_12a144cb/NVIDIA_GeForce_Now_Enabler_2_47.pext
+    Changelog:
+    - 'Fix error on startup'
