@@ -284,3 +284,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.03.26_e5534fd9/NVIDIA_GeForce_Now_Enabler_2_45.pext
     Changelog:
     - 'Fix EA App games not being correctly detected'
+  - Version: 2.46
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.08_905b17cd/NVIDIA_GeForce_Now_Enabler_2_46.pext
+    Changelog:
+    - ''
