@@ -25,6 +25,7 @@ namespace ReviewViewer.Controls
             font-size: {font_size}px;
             margin: 0;
             padding: 0;
+            
         }
 
         a {
@@ -37,11 +38,14 @@ namespace ReviewViewer.Controls
         img {
             max-width: 100%;
         }
+        .text-container {
+            white-space: pre-wrap;
+        }
     </style>
     <title>Game Description</title>
 </head>
 <body>
-<div>
+<div class=""text-container"">
 {text}
 </div>
 </body>
