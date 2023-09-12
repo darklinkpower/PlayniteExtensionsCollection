@@ -12,6 +12,6 @@ namespace SearchCollection.SearchDefinitions
         public override string Name => "Metacritic";
         public override string Icon => "Metacritic.png";
 
-        protected override string UrlFormat => @"https://www.metacritic.com/search/game/{0}/results";
+        protected override string UrlFormat => @"https://www.metacritic.com/search/{0}/?page=1&category=13";
     }
 }
