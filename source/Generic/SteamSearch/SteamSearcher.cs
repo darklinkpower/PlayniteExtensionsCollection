@@ -27,23 +27,19 @@ namespace SteamSearch
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
         {
+            var searchItems = new List<SearchItem>();
             if (args.SearchTerm.IsNullOrEmpty())
             {
-                return null;
+                return searchItems;
             }
 
             var searchResults = GetStoreSearchResults(args.SearchTerm);
             if (args.CancelToken.IsCancellationRequested)
             {
-                return null;
+                return searchItems;
             }
 
-            var searchItems = new List<SearchItem>();
-            foreach (var searchResult in searchResults)
-            {
-                searchItems.Add(GetSearchItemFromSearchResult(searchResult));
-            }
-
+            searchItems.AddRange(searchResults.Select(searchResult => GetSearchItemFromSearchResult(searchResult)));
             return searchItems;
         }
 
