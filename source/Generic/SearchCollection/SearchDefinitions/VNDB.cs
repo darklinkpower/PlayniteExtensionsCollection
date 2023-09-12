@@ -24,7 +24,7 @@ namespace SearchCollection.SearchDefinitions
                 return string.Format(UrlIdFormat, vndbId);
             }
 
-            return GetSearchUrl(game.Name);
+            return base.GetSearchUrl(game.Name);
         }
 
         private static string GetVndbIdFromLinks(Game game)

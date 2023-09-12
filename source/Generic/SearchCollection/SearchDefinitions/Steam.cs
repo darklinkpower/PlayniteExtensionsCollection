@@ -31,7 +31,7 @@ namespace SearchCollection.SearchDefinitions
             }
             else if (PlayniteUtilities.IsGamePcGame(game))
             {
-                return string.Format(UrlFormat, game.Name.UrlEncode());
+                return base.GetSearchUrl(game.Name);
             }
 
             return null;

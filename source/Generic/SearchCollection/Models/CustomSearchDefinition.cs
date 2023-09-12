@@ -60,7 +60,7 @@ namespace SearchCollection.Models
                 return null;
             }
 
-            return SearchTemplate.Replace($"%s", searchTerm.UrlEncode()).Trim();
+            return SearchTemplate.Replace($"%s", searchTerm.EscapeDataString()).Trim();
         }
     }
 }

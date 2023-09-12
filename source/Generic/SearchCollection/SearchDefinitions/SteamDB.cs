@@ -36,7 +36,7 @@ namespace SearchCollection.SearchDefinitions
             }
             else
             {
-                return string.Format(UrlFormat, game.Name.UrlEncode());
+                return base.GetSearchUrl(game.Name);
             }
         }
     }

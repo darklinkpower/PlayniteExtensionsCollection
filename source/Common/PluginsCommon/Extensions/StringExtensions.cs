@@ -92,6 +92,16 @@ namespace System
             return HttpUtility.HtmlDecode(str);
         }
 
+        public static string EscapeDataString(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            return Uri.EscapeDataString(str);
+        }
+
         public static string Base64Encode(this string str)
         {
             if (string.IsNullOrEmpty(str))
