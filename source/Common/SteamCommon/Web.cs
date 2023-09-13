@@ -148,7 +148,7 @@ namespace SteamCommon
 
         private static string GetStoreSearchUrl(string searchTerm, string steamApiCountry)
         {
-            var searchUrl = string.Format(steamGameSearchUrl, searchTerm);
+            var searchUrl = string.Format(steamGameSearchUrl, searchTerm.EscapeDataString());
             if (!steamApiCountry.IsNullOrEmpty())
             {
                 searchUrl += $"&cc={steamApiCountry}";
