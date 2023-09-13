@@ -3,9 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        
+        <ScrollViewer>
+            <DockPanel LastChildFill="True">
+                <TextBlock DockPanel.Dock="Left" Text="API Key:" VerticalAlignment="Center" />
+                <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0">
+                    <Hyperlink NavigateUri="https://pastebin.com/guTPXPDY"
+                               Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                               CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="Help" />
+                    </Hyperlink>
+                </TextBlock>
+                <TextBox DockPanel.Dock="Left"
+                         VerticalAlignment="Center"
+                         Margin="10,0,0,0"
+                         Text="{Binding Settings.ApiKey}" />
+            </DockPanel>
+        </ScrollViewer>
     </StackPanel>
 </UserControl>

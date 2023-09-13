@@ -83,7 +83,7 @@ namespace MetacriticMetadata
 
         private static string GenerateItemOptionName(MetacriticSearchResult result)
         {
-            var name = $"{result.Name} ({result.Platform} - {result.ReleaseInfo.Replace("Game, ", string.Empty)}";
+            var name = $"{result.Name} ({string.Join(", ", result.Platforms)} - {result.ReleaseDate}";
             if (result.MetacriticScore.HasValue)
             {
                 name += $" - {result.MetacriticScore.Value}";

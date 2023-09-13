@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Parser.Html;
 using ComposableAsync;
 using MetacriticMetadata.Models;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using RateLimiter;
 using System;
@@ -17,12 +18,15 @@ namespace MetacriticMetadata.Services
     {
         private static readonly Playnite.SDK.ILogger logger = Playnite.SDK.LogManager.GetLogger();
         private const string searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
-        private const string searchGameTemplate = @"https://www.metacritic.com/search/game/{0}/results";
+        private const string searchGameTemplate = @"https://www.metacritic.com/search/{0}/?category=13&page=1";
+        private const string searchGameApiTemplate = @"https://fandom-prod.apigee.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
         private readonly TimeLimiter timeConstraint;
+        private readonly MetacriticMetadataSettings settings;
 
-        public MetacriticService()
+        public MetacriticService(MetacriticMetadataSettings settings)
         {
             timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
+            this.settings = settings;
         }
 
         public async Task<DownloadStringResult> ExecuteRequestAsync(string requestUrl)
@@ -34,68 +38,57 @@ namespace MetacriticMetadata.Services
         public List<MetacriticSearchResult> GetGameSearchResults(Game game)
         {
             var metacriticPlatformId = GetGamePlatformMetacriticId(game);
-            if (metacriticPlatformId.IsNullOrEmpty())
+            if (metacriticPlatformId.IsNullOrEmpty() || true)
             {
                 return GetGameSearchResults(game.Name); //Fallback to search by name only
             }
             else
             {
-                var requestUrl = string.Format(searchGameWithPlatformTemplate, game.Name.UrlEncode(), metacriticPlatformId);
-                return ParseGameSearchPage(requestUrl);
+                var requestUrl = string.Format(searchGameWithPlatformTemplate, game.Name.EscapeDataString(), metacriticPlatformId);
+                return GetSearchResults(requestUrl);
             }
         }
 
         public List<MetacriticSearchResult> GetGameSearchResults(string gameName)
         {
-            var requestUrl = string.Format(searchGameTemplate, gameName.UrlEncode());
-            return ParseGameSearchPage(requestUrl);
+            var requestUrl = string.Format(searchGameApiTemplate, gameName.EscapeDataString(), settings.ApiKey);
+            return GetSearchResults(requestUrl);
         }
 
-        private List<MetacriticSearchResult> ParseGameSearchPage(string requestUrl)
+        private List<MetacriticSearchResult> GetSearchResults(string requestUrl)
         {
             var results = new List<MetacriticSearchResult>();
+            if (settings.ApiKey.IsNullOrEmpty())
+            {
+                logger.Info("API Key has not been configured.");
+                return results;
+            }
+
             var searchRequest = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
             if (!searchRequest.Success)
             {
                 return results;
             }
 
-            var parser = new HtmlParser();
-            var searchPage = parser.Parse(searchRequest.Result);
-            var elements = searchPage.QuerySelectorAll("ul.search_results li");
-            if (elements == null || !elements.HasItems())
+            var response = Serialization.FromJson<MetacriticSearchResponse>(searchRequest.Result);
+            foreach (var searchResult in response.Data.Items)
             {
-                return results;
-            }
-
-            foreach (var resultElem in elements)
-            {
-                var dataName = resultElem.QuerySelector("a");
-                var releaseInfo = resultElem.QuerySelector("p");
-                var platformElem = releaseInfo.QuerySelector("span.platform");
-
-                int? metacriticScore = null;
-                var metacriticScoreElem = resultElem.QuerySelector(".metascore_w");
-                if (int.TryParse(metacriticScoreElem.InnerHtml, out var metacriticScoreP))
+                if (searchResult.Type != "game-title")
                 {
-                    metacriticScore = metacriticScoreP;
+                    continue;
                 }
 
                 var result = new MetacriticSearchResult
                 {
-                    Name = dataName.InnerHtml.HtmlDecode().Trim(),
-                    Url = @"https://www.metacritic.com" + dataName.GetAttribute("href"),
-                    Platform = platformElem.InnerHtml,
-                    ReleaseInfo = releaseInfo.InnerHtml
-                        .Trim()
-                        .Replace(platformElem.OuterHtml, string.Empty)
-                        .Trim(),
-                    Description = resultElem.QuerySelector(".deck")?.InnerHtml.HtmlDecode() ?? string.Empty,
-                    MetacriticScore = metacriticScore
+                    Name = searchResult.Title,
+                    Url = @"https://www.metacritic.com" + searchResult.CriticScoreSummary.Url.Replace("critic-reviews/", string.Empty),
+                    Platforms = searchResult.Platforms.Select(x => x.Name).ToList(),
+                    ReleaseDate = searchResult.ReleaseDate,
+                    Description = !searchResult.Description.IsNullOrEmpty() ? searchResult.Description: string.Empty,
+                    MetacriticScore = searchResult.CriticScoreSummary.Score
                 };
 
                 results.Add(result);
-
             }
 
             return results.Distinct().ToList(); // There are cases of duplicate games being returned in searches, e.g. Marco & The Galaxy Dragon on PC

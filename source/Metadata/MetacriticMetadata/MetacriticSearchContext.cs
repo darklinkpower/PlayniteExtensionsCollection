@@ -49,7 +49,7 @@ namespace MetacriticMetadata
                 )
                 {
                     Description = GetSearchItemDescription(searchResult),
-                    SecondaryAction = new SearchItemAction("Open on browser",
+                    SecondaryAction = new SearchItemAction("Open on Playnite",
                     () => { PlayniteUtilities.OpenUrlOnWebView(url); })
                 };
 
@@ -61,7 +61,7 @@ namespace MetacriticMetadata
 
         private string GetSearchItemDescription(MetacriticSearchResult searchResult)
         {
-            var description = $"{searchResult.Platform} - {searchResult.ReleaseInfo.Replace("Game, ", string.Empty)}";
+            var description = $"{string.Join(", ", searchResult.Platforms)} - {searchResult.ReleaseDate}";
             if (searchResult.MetacriticScore.HasValue)
             {
                 description += $" - {searchResult.MetacriticScore}";

@@ -10,7 +10,8 @@ namespace MetacriticMetadata
 {
     public class MetacriticMetadataSettings : ObservableObject
     {
-
+        private string apiKey = string.Empty;
+        public string ApiKey { get => apiKey; set => SetValue(ref apiKey, value); }
     }
 
     public class MetacriticMetadataSettingsViewModel : ObservableObject, ISettings

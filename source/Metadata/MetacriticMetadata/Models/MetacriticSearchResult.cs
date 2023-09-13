@@ -10,8 +10,8 @@ namespace MetacriticMetadata.Models
     {
         public string Name { get; set; }
         public string Url { get; set; }
-        public string Platform { get; set; }
-        public string ReleaseInfo { get; set; }
+        public List<string> Platforms { get; set; }
+        public string ReleaseDate { get; set; }
         public string Description { get; set; }
         public int? MetacriticScore { get; set; }
 
@@ -41,8 +41,8 @@ namespace MetacriticMetadata.Models
         {
             return Name == other.Name &&
                 Url == other.Url &&
-                Platform == other.Platform &&
-                ReleaseInfo == other.ReleaseInfo &&
+                Platforms == other.Platforms &&
+                ReleaseDate == other.ReleaseDate &&
                 Description == other.Description &&
                 MetacriticScore == other.MetacriticScore;
         }
@@ -51,8 +51,8 @@ namespace MetacriticMetadata.Models
         {
             return Name.GetHashCode() ^
                 Url.GetHashCode() ^
-                Platform.GetHashCode() ^
-                ReleaseInfo.GetHashCode() ^
+                Platforms.GetHashCode() ^
+                ReleaseDate.GetHashCode() ^
                 Description.GetHashCode() ^
                 (MetacriticScore ?? 0).GetHashCode();
         }

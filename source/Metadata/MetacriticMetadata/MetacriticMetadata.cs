@@ -1,5 +1,6 @@
 ﻿using MetacriticMetadata.Services;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace MetacriticMetadata
     public class MetacriticMetadata : MetadataPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly MetacriticService metacriticService = new MetacriticService();
+        private readonly MetacriticService metacriticService;
 
         private MetacriticMetadataSettingsViewModel settings { get; set; }
 
@@ -31,9 +32,10 @@ namespace MetacriticMetadata
             settings = new MetacriticMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
 
+            metacriticService = new MetacriticService(settings.Settings);
             Searches = new List<SearchSupport>
             {
                 new SearchSupport("mc",
@@ -57,5 +59,18 @@ namespace MetacriticMetadata
             return new MetacriticMetadataSettingsView();
         }
 
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            if (settings.Settings.ApiKey.IsNullOrEmpty())
+            {
+                PlayniteApi.Notifications.Add(
+                    new NotificationMessage(
+                        "MetacriticApiKeyNotConfigured",
+                        "Metacritic Metadata:\n" + "API Key has not been configured",
+                        NotificationType.Info,
+                        () => OpenSettingsView())
+                );
+            }
+        }
     }
 }
