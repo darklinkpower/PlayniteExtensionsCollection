@@ -27,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using CodeKicker.BBCode;
 
 namespace ReviewViewer.Controls
 {
@@ -44,6 +45,7 @@ namespace ReviewViewer.Controls
 
         private readonly DesktopView ActiveViewAtCreation;
         private readonly DispatcherTimer timer;
+        private readonly BBCodeParser bbcodeParser;
         IPlayniteAPI PlayniteApi;
         public ReviewViewerSettingsViewModel SettingsModel { get; }
         
@@ -292,7 +294,18 @@ namespace ReviewViewer.Controls
                     {
                         ThumbsDownVisibility = Visibility.Visible;
                     }
-                    SelectedReviewText = BbCodeProcessor.FormatBbCodeToHtml(SelectedReview.ReviewReview);
+
+                    try
+                    {
+                        SelectedReviewText = bbcodeParser.ToHtml(SelectedReview.ReviewReview);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error(e, $"Error while parsing review of Author: {SelectedReview.Author}");
+                        // Certain reviews will be badly formatted by authors or the parser will fail.
+                        // Fallback to old parser in those cases
+                        SelectedReviewText = BbCodeProcessor.FormatBbCodeToHtml(SelectedReview.ReviewReview);
+                    }
                 }
 
                 OnPropertyChanged();
@@ -415,6 +428,46 @@ namespace ReviewViewer.Controls
             timer.Interval = TimeSpan.FromMilliseconds(220);
             timer.Tick += new EventHandler(TimerUpdateContext);
             SetControlTextBlockStyle();
+
+            var bbTags = new List<BBTag>()
+            {
+                new BBTag("b", "<strong>", "</strong>"),
+                new BBTag("u", "<u>", "</u>"),
+                new BBTag("s", "<strike>", "</strike>"),
+                new BBTag("i", "<em>", "</em>"),
+                new BBTag("h1", "<h1>", "</h1>"),
+                new BBTag("h2", "<h2>", "</h2>"),
+                new BBTag("h3", "<h3>", "</h3>"),
+                new BBTag("hr", "<hr>", "</hr>"),
+
+                //Lists
+                new BBTag("list", "<ul>", "</ul>") { SuppressFirstNewlineAfter = true },
+                new BBTag("li", "<li>", "</li>", true, false),
+                new BBTag("*", "<li>", "</li>", true, false),
+                new BBTag("olist", "<ol>", "</ol>"),
+                new BBTag("url", "<a href=\"${href}\">", "</a>",
+                    new BBAttribute("href", ""),
+                    new BBAttribute("href", "href"),
+                    new BBAttribute("target", "target")),
+                new BBTag("code", "<code>", "</code>")
+                {
+                    StopProcessing = true,
+                    SuppressFirstNewlineAfter = true
+                },
+                //Tables
+                new BBTag("table", "<table>", "</table>"),
+                new BBTag("th", "<th>", "</th>"),
+                new BBTag("tr", "<tr>", "</tr>"),
+                new BBTag("td", "<td>", "</td>"),
+
+                // Spoiler
+                new BBTag("spoiler", "<spoiler>", "</spoiler>"),
+
+                // quote
+                new BBTag("quote", "<blockquote>", "</blockquote>"),
+            };
+
+            bbcodeParser = new BBCodeParser(ErrorMode.TryErrorCorrection, null, bbTags);
         }
 
         private void SetControlTextBlockStyle()
