@@ -30,3 +30,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_4.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 1.5
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-09-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.12_e3d10655/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_5.pext
+    Changelog:
+    - 'Fix searches being incorrect when the search included certain special characters'

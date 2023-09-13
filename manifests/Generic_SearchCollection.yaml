@@ -144,3 +144,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.08_908380f0/Search_Collection_2_21.pext
     Changelog:
     - 'Fix SteamGridDB search not opening the correct page when searching'
+  - Version: 2.22
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.12_e3d10655/Search_Collection_2_22.pext
+    Changelog:
+    - 'Updated Metacritic search to use URL used in the new site update'
+    - 'Fix searches being incorrect when the game name included certain special characters'
