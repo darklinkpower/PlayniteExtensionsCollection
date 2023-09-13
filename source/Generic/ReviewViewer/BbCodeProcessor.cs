@@ -50,8 +50,8 @@ namespace ReviewViewer
                 //Spoiler
                 {@"\[spoiler\]((.|\n)*?)\[\/spoiler\]", "<spoiler>$1</spoiler>" },
                 //Quote
-                {@"\[quote\]((.|\n)*?)\[\/quote\]", "<code>$1</code><br>" },
-                {@"\[quote=([^\]]+)]((.|\n)*?)\[\/quote\]", "<code>$1:</code><br><code>$2</code><br>" }
+                {@"\[quote\]((.|\n)*?)\[\/quote\]", "<blockquote>$1</blockquote><br>" },
+                {@"\[quote=([^\]]+)]((.|\n)*?)\[\/quote\]", "<blockquote>$1:</blockquote><br><blockquote>$2</blockquote><br>" }
             };
         }
 
