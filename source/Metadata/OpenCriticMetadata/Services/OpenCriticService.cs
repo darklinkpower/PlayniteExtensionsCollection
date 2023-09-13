@@ -32,7 +32,7 @@ namespace OpenCriticMetadata.Services
 
         public List<OpenCriticGameResult> GetGameSearchResults(string searchTerm)
         {
-            var requestUrl = string.Format(searchGameTemplate, searchTerm.UrlEncode());
+            var requestUrl = string.Format(searchGameTemplate, searchTerm.EscapeDataString());
             var request = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
             if (request.Success)
             {
