@@ -13,13 +13,13 @@
     <sys:String x:Key="LOCDisplayHelper_ResolutionLabel">Résolution :</sys:String>
     <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Taux de rafraîchissement :</sys:String>
     <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Modes d'affichage :</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Global settings</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Playnite Mode:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Use configured display:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Enabling this option and selecting a display will ensure that the extension exclusively applies the configured changes to the chosen display whenever a game is launched.
-Additionally, if the selected display isn't already the primary screen, it will be set as the primary.
+    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Paramètres globaux</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Mode Playnite :</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Utiliser l'affichage configuré :</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Activer cette option et sélectionner un affichage vous assurera que l'extension applique exclusivement les modifications configurées à l'affichage choisi à chaque lancement d'un jeu.
+De plus, si l'écran sélectionné n'est pas déjà l'écran principal, il sera défini comme principal.
 
-On the other hand, if this option is disabled, the extension will apply the configured settings to the current primary display at the moment a game is launched.</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Set</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Clear</sys:String>
+D'autre part, si cette option est désactivée, l'extension appliquera les paramètres configurés à l'affichage principal actuel au moment du lancement d'un jeu.</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Définir</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Effacer</sys:String>
 </ResourceDictionary>
