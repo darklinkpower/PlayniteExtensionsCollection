@@ -85,8 +85,12 @@ namespace MetacriticMetadata.Services
                     Platforms = searchResult.Platforms.Select(x => x.Name).ToList(),
                     ReleaseDate = searchResult.ReleaseDate,
                     Description = !searchResult.Description.IsNullOrEmpty() ? searchResult.Description: string.Empty,
-                    MetacriticScore = searchResult.CriticScoreSummary.Score
                 };
+
+                if (searchResult.CriticScoreSummary.Score.HasValue && searchResult.CriticScoreSummary.Score > 0)
+                {
+                    result.MetacriticScore = searchResult.CriticScoreSummary.Score.Value;
+                }
 
                 results.Add(result);
             }
