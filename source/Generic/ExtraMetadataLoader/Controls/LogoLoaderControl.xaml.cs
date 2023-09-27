@@ -81,25 +81,56 @@ namespace ExtraMetadataLoader
                 return;
             }
 
-            LogoSource = null;
+            if (!(LogoImage.Source is null))
+            {
+                LogoImage.Source = null;
+            }
+
             SettingsModel.Settings.IsLogoAvailable = false;
-            
             if (!SettingsModel.Settings.EnableLogos)
             {
                 ControlVisibility = Visibility.Collapsed;
                 return;
             }
 
-            if (newContext != null)
+            if (newContext is null)
             {
-                var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
-                if (FileSystem.FileExists(logoPath))
-                {
-                    LogoSource = logoPath;
-                    SettingsModel.Settings.IsLogoAvailable = true;
-                    ControlVisibility = Visibility.Visible;
-                }
+                return;
             }
+                
+            var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
+            if (!FileSystem.FileExists(logoPath))
+            {
+                return;
+            }
+
+            BitmapImage originalBitmap = new BitmapImage(new Uri(logoPath));
+
+            int newWidth = 0;
+            int newHeight = 0;
+            double aspectRatio = originalBitmap.PixelWidth / originalBitmap.PixelHeight;
+            if (aspectRatio > 1)
+            {
+                // Landscape image
+                newWidth = (int)SettingsModel.Settings.LogoMaxWidth;
+            }
+            else
+            {
+                // Portrait image or square image
+                newHeight = (int)SettingsModel.Settings.LogoMaxHeight;
+            }
+
+            BitmapImage adjustedBitmap = new BitmapImage();
+            adjustedBitmap.BeginInit();
+            adjustedBitmap.UriSource = new Uri(logoPath, UriKind.RelativeOrAbsolute);
+            adjustedBitmap.DecodePixelWidth = newWidth;
+            adjustedBitmap.DecodePixelHeight = newHeight;
+            adjustedBitmap.EndInit();
+            adjustedBitmap.Freeze();
+
+            LogoImage.Source = adjustedBitmap;
+            SettingsModel.Settings.IsLogoAvailable = true;
+            ControlVisibility = Visibility.Visible;
         }
     }
 }
