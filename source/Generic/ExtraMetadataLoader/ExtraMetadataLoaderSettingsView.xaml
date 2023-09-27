@@ -234,7 +234,7 @@
                         <Label Content="{DynamicResource LOCExtra_Metadata_Loader_SettingsSectionLabelLogoControl}" Margin="0,0,0,5"/>
                         <Separator Margin="0,0,0,5" />
                         <CheckBox Name="EnableLogo" IsChecked="{Binding Settings.EnableLogos, UpdateSourceTrigger=PropertyChanged}" Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEnableLabel}" Margin="0,0,0,10"/>
-                        <StackPanel IsEnabled="{Binding ElementName=EnableLogo, Path=IsChecked}" Margin="40,0,0,0">
+                        <StackPanel IsEnabled="{Binding ElementName=EnableLogo, Path=IsChecked}" Margin="0,0,0,0">
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                 <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosMaxWidthLabel}" Margin="0,0,10,0" VerticalAlignment="Center"/>
                                 <Slider Value="{Binding Settings.LogoMaxWidth, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="300" VerticalAlignment="Center"
@@ -288,6 +288,25 @@
                                     <TextBlock Text="{Binding Settings.LogosEffectOpacity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </StackPanel>
+
+                            <CheckBox IsChecked="{Binding Settings.LogosEnableSemiWhiteGrayscaleEffect, UpdateSourceTrigger=PropertyChanged}"
+                                      Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel}"
+                                      Margin="0,0,0,10"/>
+                            <StackPanel IsEnabled="{Binding Settings.LogosEnableSemiWhiteGrayscaleEffect, UpdateSourceTrigger=PropertyChanged}" Margin="40,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <Slider Value="{Binding Settings.SemiWhiteLogoEffectExposure, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="3" VerticalAlignment="Center"
+                                            TickFrequency="0.02" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Text="{Binding Settings.SemiWhiteLogoEffectExposure, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Label Content="{DynamicResource LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                    <Slider Value="{Binding Settings.SemiWhiteLogoEffectMaxLuminance, UpdateSourceTrigger=PropertyChanged}" Width="150" Minimum="0" Maximum="1" VerticalAlignment="Center"
+                                            TickFrequency="0.02" Margin="0,0,10,0" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Text="{Binding Settings.SemiWhiteLogoEffectMaxLuminance, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                            
                         </StackPanel>
                     </StackPanel>
                 </TabItem>

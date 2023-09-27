@@ -136,7 +136,7 @@ namespace ExtraMetadataLoader
             switch (args.Name)
             {
                 case "LogoLoaderControl":
-                    return new LogoLoaderControl(PlayniteApi, settings);
+                    return new LogoLoaderControl(PlayniteApi, settings.Settings);
                 case "VideoLoaderControl":
                     return GetVideoLoaderControl();
                 case "VideoLoaderControlAlternative":

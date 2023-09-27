@@ -700,6 +700,39 @@ namespace ExtraMetadataLoader
                 OnPropertyChanged();
             }
         }
+
+        private bool logosEnableSemiWhiteGrayscaleEffect { get; set; } = false;
+        public bool LogosEnableSemiWhiteGrayscaleEffect
+        {
+            get => logosEnableSemiWhiteGrayscaleEffect;
+            set
+            {
+                logosEnableSemiWhiteGrayscaleEffect = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private float semiWhiteLogoEffectExposure { get; set; } = 1.0f;
+        public float SemiWhiteLogoEffectExposure
+        {
+            get => semiWhiteLogoEffectExposure;
+            set
+            {
+                semiWhiteLogoEffectExposure = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private float semiWhiteLogoEffectMaxLuminance { get; set; } = 1.0f;
+        public float SemiWhiteLogoEffectMaxLuminance
+        {
+            get => semiWhiteLogoEffectMaxLuminance;
+            set
+            {
+                semiWhiteLogoEffectMaxLuminance = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public class ExtraMetadataLoaderSettingsViewModel : ObservableObject, ISettings

@@ -31,7 +31,19 @@ namespace ExtraMetadataLoader
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        IPlayniteAPI PlayniteApi; public ExtraMetadataLoaderSettingsViewModel SettingsModel { get; set; }
+
+        IPlayniteAPI PlayniteApi;
+
+        private ExtraMetadataLoaderSettings _settings;
+        public ExtraMetadataLoaderSettings _Settings
+        {
+            get => _settings;
+            set
+            {
+                _settings = value;
+                OnPropertyChanged();
+            }
+        }
 
         private Visibility controlVisibility = Visibility.Collapsed;
         public Visibility ControlVisibility
@@ -57,11 +69,11 @@ namespace ExtraMetadataLoader
 
         public DesktopView ActiveViewAtCreation { get; }
 
-        public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettingsViewModel settings)
+        public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettings settings)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
-            SettingsModel = settings;
+            _settings = settings;
             DataContext = this;
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
@@ -86,8 +98,8 @@ namespace ExtraMetadataLoader
                 LogoImage.Source = null;
             }
 
-            SettingsModel.Settings.IsLogoAvailable = false;
-            if (!SettingsModel.Settings.EnableLogos)
+            _settings.IsLogoAvailable = false;
+            if (!_settings.EnableLogos)
             {
                 ControlVisibility = Visibility.Collapsed;
                 return;
@@ -112,12 +124,12 @@ namespace ExtraMetadataLoader
             if (aspectRatio > 1)
             {
                 // Landscape image
-                newWidth = (int)SettingsModel.Settings.LogoMaxWidth;
+                newWidth = (int)_settings.LogoMaxWidth;
             }
             else
             {
                 // Portrait image or square image
-                newHeight = (int)SettingsModel.Settings.LogoMaxHeight;
+                newHeight = (int)_settings.LogoMaxHeight;
             }
 
             BitmapImage adjustedBitmap = new BitmapImage();
@@ -129,7 +141,7 @@ namespace ExtraMetadataLoader
             adjustedBitmap.Freeze();
 
             LogoImage.Source = adjustedBitmap;
-            SettingsModel.Settings.IsLogoAvailable = true;
+            _settings.IsLogoAvailable = true;
             ControlVisibility = Visibility.Visible;
         }
     }

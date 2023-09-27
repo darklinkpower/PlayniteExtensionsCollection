@@ -5,33 +5,52 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExtraMetadataLoader"
              xmlns:sdk="clr-namespace:Playnite.SDK.Controls;assembly=Playnite.SDK"
+             xmlns:shaders="clr-namespace:ExtraMetadataLoader.Shaders"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Visibility="{Binding ControlVisibility}"
           UseLayoutRounding="True">
         <Grid.Resources>
-            <DropShadowEffect x:Key="LogoEffect" Direction="{Binding SettingsModel.Settings.LogosShadowDirection}"
-                              Opacity="{Binding SettingsModel.Settings.LogosEffectOpacity}" Color="#808080"
-                              ShadowDepth="{Binding SettingsModel.Settings.LogosShadowDepth}"
-                              BlurRadius="{Binding SettingsModel.Settings.LogosBlurRadius}" />
+            <DropShadowEffect x:Key="DropShadowEffect"
+                              Color="#808080"
+                              Direction="{Binding _Settings.LogosShadowDirection}"
+                              Opacity="{Binding _Settings.LogosEffectOpacity}"
+                              ShadowDepth="{Binding _Settings.LogosShadowDepth}"
+                              BlurRadius="{Binding _Settings.LogosBlurRadius}" />
+            <shaders:SemiWhiteGrayscaleEffect x:Key="SemiWhiteGrayscaleEffect"
+                                              Exposure="{Binding _Settings.SemiWhiteLogoEffectExposure}"
+                                              MaxLuminance="{Binding _Settings.SemiWhiteLogoEffectMaxLuminance}"/>
         </Grid.Resources>
-        <Image Name="LogoImage" Stretch="Uniform"
-               RenderOptions.BitmapScalingMode="Fant"
-               VerticalAlignment="{Binding SettingsModel.Settings.LogoVerticalAlignment}"
-               HorizontalAlignment="{Binding SettingsModel.Settings.LogoHorizontalAlignment}"
-               MaxWidth="{Binding SettingsModel.Settings.LogoMaxWidth}"
-               MaxHeight="{Binding SettingsModel.Settings.LogoMaxHeight}"
-               StretchDirection="Both">
-            <Image.Style>
-                <Style TargetType="Image">
+        <Border>
+            <Border.Style>
+                <Style TargetType="Border">
                     <Setter Property="Effect" Value="{x:Null}"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding SettingsModel.Settings.LogosEnableShadowEffect}" Value="true">
-                            <Setter Property="Effect" Value="{DynamicResource LogoEffect}"/>
+                        <DataTrigger Binding="{Binding _Settings.LogosEnableShadowEffect}" Value="true">
+                            <Setter Property="Effect" Value="{DynamicResource DropShadowEffect}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Image.Style>
-        </Image>
+            </Border.Style>
+            <Image Name="LogoImage" Stretch="Uniform"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   VerticalAlignment="{Binding _Settings.LogoVerticalAlignment}"
+                   HorizontalAlignment="{Binding _Settings.LogoHorizontalAlignment}"
+                   MaxWidth="{Binding _Settings.LogoMaxWidth}"
+                   MaxHeight="{Binding _Settings.LogoMaxHeight}"
+                   StretchDirection="Both">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="Effect" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding _Settings.LogosEnableSemiWhiteGrayscaleEffect}" Value="true">
+                                <Setter Property="Effect" Value="{DynamicResource SemiWhiteGrayscaleEffect}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Border>
+        
     </Grid>
 </PluginUserControl>

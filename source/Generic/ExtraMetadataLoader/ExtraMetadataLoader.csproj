@@ -117,6 +117,9 @@
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\BindingTools.cs">
+      <Link>Shared\PluginsCommon\BindingTools.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
       <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
     </Compile>
@@ -205,6 +208,7 @@
       <DependentUpon>LogoLoaderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\VideosDownloader.cs" />
+    <Compile Include="Shaders\SemiWhiteGrayscaleEffect.cs" />
     <Compile Include="ViewModels\GoogleImageDownloaderViewModel.cs" />
     <Compile Include="ViewModels\YoutubeSearchViewModel.cs" />
     <Compile Include="Views\GoogleImageDownloaderView.xaml.cs">
@@ -220,6 +224,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Shaders\SemiWhiteGrayscaleShader.hlsl" />
+    <Resource Include="Shaders\SemiWhiteGrayscaleShader.ps" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="app.xaml">
