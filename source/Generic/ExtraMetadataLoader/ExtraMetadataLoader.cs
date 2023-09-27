@@ -1,7 +1,10 @@
 ﻿using ExtraMetadataLoader.Helpers;
+using ExtraMetadataLoader.Interfaces;
+using ExtraMetadataLoader.LogoProviders;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
 using ExtraMetadataLoader.Views;
+using ImageMagick;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -16,10 +19,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WebCommon;
 using YouTubeCommon;
 
 namespace ExtraMetadataLoader
@@ -30,9 +35,9 @@ namespace ExtraMetadataLoader
         private const string _videoMissingTag = "[EMT] Video missing";
         private const string _videoMicroMissingTag = "[EMT] Video Micro missing";
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly LogosDownloader logosDownloader;
         private readonly VideosDownloader videosDownloader;
         private readonly ExtraMetadataHelper extraMetadataHelper;
+        private readonly List<ILogoProvider> _logoProviders;
         private VideoPlayerControl detailsVideoControl;
         private VideoPlayerControl gridVideoControl;
         private VideoPlayerControl genericVideoControl;
@@ -73,7 +78,6 @@ namespace ExtraMetadataLoader
             });
 
             extraMetadataHelper = new ExtraMetadataHelper(PlayniteApi);
-            logosDownloader = new LogosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
             videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
@@ -119,6 +123,12 @@ namespace ExtraMetadataLoader
             {
                 PlayniteUtilities.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
             }
+
+            _logoProviders = new List<ILogoProvider>
+            {
+                new SteamProvider(PlayniteApi, settings.Settings),
+                new SteamGridDBProvider(PlayniteApi, settings.Settings)
+            };
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
@@ -303,6 +313,7 @@ namespace ExtraMetadataLoader
 
                         var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
+                        var logoProvider = _logoProviders.FirstOrDefault(x => x.Id == "steamProvider");
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
@@ -316,7 +327,7 @@ namespace ExtraMetadataLoader
 
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                                logosDownloader.DownloadSteamLogo(game, overwrite, isBackgroundDownload, a.CancelToken);
+                                GetGameLogo(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken);
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -334,6 +345,7 @@ namespace ExtraMetadataLoader
 
                         var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
+                        var logoProvider = _logoProviders.FirstOrDefault(x => x.Id == "sgdbProvider");
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
@@ -344,9 +356,11 @@ namespace ExtraMetadataLoader
                                 {
                                     break;
                                 }
+
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                                logosDownloader.DownloadSgdbLogo(game, overwrite, isBackgroundDownload, a.CancelToken);
+
+                                GetGameLogo(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken);
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -359,7 +373,9 @@ namespace ExtraMetadataLoader
                     Icon = "emtGoogleIcon",
                     Action = _ =>
                     {
-                        CreateGoogleWindow();
+                        var game = args.Games.Last();
+                        var googleProvider = new GoogleProvider(PlayniteApi, settings.Settings);
+                        GetGameLogo(googleProvider, game, false, true);
                     }
                 },
                 new GameMenuItem
@@ -376,7 +392,7 @@ namespace ExtraMetadataLoader
                             var fileCopied = FileSystem.CopyFile(filePath, logoPath, true);
                             if (settings.Settings.ProcessLogosOnDownload && fileCopied)
                             {
-                                logosDownloader.ProcessLogoImage(logoPath);
+                                ProcessLogoImage(logoPath);
                             }
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                         }
@@ -460,6 +476,7 @@ namespace ExtraMetadataLoader
                         {
                             return;
                         }
+
                         DownloadYoutubeVideosBatch();
                         UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -687,6 +704,82 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private bool GetGameLogo(ILogoProvider logoProvider, Game game, bool isBackgroundDownload, bool overwrite, CancellationToken cancelToken = default)
+        {
+            var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
+            if (FileSystem.FileExists(logoPath) && !overwrite)
+            {
+                logger.Debug("Logo exists and overwrite is set to false, skipping");
+                return true;
+            }
+
+            var logoUrl = logoProvider.GetLogoUrl(game, isBackgroundDownload, cancelToken);
+            var downloadFileResult = HttpDownloader.DownloadFile(logoUrl, logoPath, cancelToken);
+            if (downloadFileResult.Success && settings.Settings.ProcessLogosOnDownload)
+            {
+                ProcessLogoImage(logoPath);
+            }
+
+            return downloadFileResult.Success;
+        }
+
+        private bool ProcessLogoImage(string logoPath)
+        {
+            try
+            {
+                using (var image = new MagickImage(logoPath))
+                {
+                    var originalWitdh = image.Width;
+                    var originalHeight = image.Height;
+                    var imageChanged = false;
+                    if (settings.Settings.LogoTrimOnDownload)
+                    {
+                        image.Trim();
+                        if (originalWitdh != image.Width || originalHeight != image.Height)
+                        {
+                            imageChanged = true;
+                            originalWitdh = image.Width;
+                            originalHeight = image.Height;
+                        }
+                    }
+
+                    if (settings.Settings.SetLogoMaxProcessDimensions)
+                    {
+                        if (settings.Settings.MaxLogoProcessWidth < image.Width || settings.Settings.MaxLogoProcessHeight < image.Height)
+                        {
+                            var targetWidth = settings.Settings.MaxLogoProcessWidth;
+                            var targetHeight = settings.Settings.MaxLogoProcessHeight;
+                            MagickGeometry size = new MagickGeometry(targetWidth, targetHeight)
+                            {
+                                IgnoreAspectRatio = false
+                            };
+
+                            image.Resize(size);
+                            if (originalWitdh != image.Width || originalHeight != image.Height)
+                            {
+                                imageChanged = true;
+                                originalWitdh = image.Width;
+                                originalHeight = image.Height;
+                            }
+                        }
+                    }
+
+                    // Only save new image if dimensions changed
+                    if (imageChanged)
+                    {
+                        image.Write(logoPath);
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error while processing logo {logoPath}");
+                return false;
+            }
+        }
+
         private void DownloadYoutubeVideosBatch()
         {
             var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
@@ -755,31 +848,6 @@ namespace ExtraMetadataLoader
             }
         }
 
-        private void CreateGoogleWindow()
-        {
-            var selectedGames = PlayniteApi.MainView.SelectedGames;
-            if (!selectedGames.HasItems())
-            {
-                return;
-            }
-
-            var game = PlayniteApi.MainView.SelectedGames.Last();
-            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-            {
-                ShowMinimizeButton = false
-            });
-
-            window.Height = 600;
-            window.Width = 840;
-            window.Title = string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"), game.Name);
-            window.Content = new GoogleImageDownloaderView();
-            window.DataContext = new GoogleImageDownloaderViewModel(PlayniteApi, game, logosDownloader);
-            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-            window.ShowDialog();
-        }
-
         private void CreateYoutubeWindow(bool searchShortVideos = true, bool showDownloadButton = true, string defaultSearchTerm = "")
         {
             var selectedGames = PlayniteApi.MainView.SelectedGames;
@@ -836,9 +904,13 @@ namespace ExtraMetadataLoader
                             break;
                         }
 
-                        if (!logosDownloader.DownloadSteamLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically, a.CancelToken))
+                        foreach (var logoProvider in _logoProviders)
                         {
-                            logosDownloader.DownloadSgdbLogo(game, false, settings.Settings.LibUpdateSelectLogosAutomatically, a.CancelToken);
+                            var logoDownloaded = GetGameLogo(logoProvider, game, true, settings.Settings.LibUpdateSelectLogosAutomatically, a.CancelToken);
+                            if (logoDownloaded)
+                            {
+                                break;
+                            }
                         }
                     };
                 }, progressOptions);

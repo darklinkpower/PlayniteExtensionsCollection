@@ -86,14 +86,12 @@ namespace ExtraMetadataLoader.ViewModels
         }
 
         private IPlayniteAPI PlayniteApi { get; }
-
-        private readonly LogosDownloader logosDownloader;
         private readonly Game game;
+        public string LogoUrl = null;
 
-        public GoogleImageDownloaderViewModel(IPlayniteAPI PlayniteApi, Game game, LogosDownloader logosDownloader)
+        public GoogleImageDownloaderViewModel(IPlayniteAPI PlayniteApi, Game game)
         {
             this.PlayniteApi = PlayniteApi;
-            this.logosDownloader = logosDownloader;
             this.game = game;
             SearchTransparent = true;
             SearchTerm = $"{game.Name} logo";
@@ -123,9 +121,9 @@ namespace ExtraMetadataLoader.ViewModels
             {
                 url += "&tbs=ic:trans";
             }
+
             var webView = PlayniteApi.WebViews.CreateOffscreenView(webViewSettings);
             webView.NavigateAndWait(url);
-
             if (webView.GetCurrentAddress().StartsWith(@"https://consent.google.com", StringComparison.OrdinalIgnoreCase))
             {
                 // This rejects Google's consent form for cookies
@@ -142,6 +140,7 @@ namespace ExtraMetadataLoader.ViewModels
                 {
                     break;
                 }
+
                 var data = Serialization.FromJson<List<List<object>>>($"[{match.Value}]");
                 images.Add(new GoogleImage
                 {
@@ -171,15 +170,7 @@ namespace ExtraMetadataLoader.ViewModels
 
         public void DownloadSelectedImage()
         {
-            var success = logosDownloader.DownloadGoogleImage(game, SelectedItem.ImageUrl, true);
-            if (success)
-            {
-                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
-            }
-            else
-            {
-                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError"), "Extra Metadata Loader");
-            }
+            LogoUrl = SelectedItem.ImageUrl;
         }
     }
 }

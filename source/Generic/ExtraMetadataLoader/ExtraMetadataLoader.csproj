@@ -192,6 +192,10 @@
       <DependentUpon>ExtraMetadataLoaderSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExtraMetadataHelper.cs" />
+    <Compile Include="Interfaces\ILogoProvider.cs" />
+    <Compile Include="LogoProviders\GoogleProvider.cs" />
+    <Compile Include="LogoProviders\SteamGridDBProvider.cs" />
+    <Compile Include="LogoProviders\SteamProvider.cs" />
     <Compile Include="Models\FfprobeVideoInfoOutput.cs" />
     <Compile Include="Models\GoogleImage.cs" />
     <Compile Include="Models\SteamGridDbGameSearchResponse.cs" />
@@ -200,7 +204,6 @@
     <Compile Include="Controls\LogoLoaderControl.xaml.cs">
       <DependentUpon>LogoLoaderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\LogosDownloader.cs" />
     <Compile Include="Services\VideosDownloader.cs" />
     <Compile Include="ViewModels\GoogleImageDownloaderViewModel.cs" />
     <Compile Include="ViewModels\YoutubeSearchViewModel.cs" />
