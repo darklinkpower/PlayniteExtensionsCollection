@@ -475,3 +475,17 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Add icons to game menu items'
+  - Version: 1.69
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.27_1fcfc18d/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_69.pext
+    Changelog:
+    - 'Added: Option to display logos in white and grayscale colors'
+    - 'Changed: Improved quality of logos display. Logos will now be crisper'
+    - 'Changed: Logo will now be updated when it has been downloaded or deleted'
+    - 'Changed: Google Logos download window will now close after selecting a logo to download'
+    - 'Changed: Logos for all games will now be downloaded games on library update after the first install'
+    - 'Changed: Error message when failing to download video from YouTube will now indicate that yt-dlp must be up to date'
+    - 'Changed: Updated localizations'
+    - 'Fixed: Fix maximum value in games download dialogs counters being one number above the real value'
+    - 'Note: The extension code has gone through a major code cleanup and optimization that may result in unexpected bugs. If you find any please report in on GitHub.'

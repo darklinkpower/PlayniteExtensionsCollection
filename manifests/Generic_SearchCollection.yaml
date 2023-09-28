@@ -151,3 +151,9 @@ Packages:
     Changelog:
     - 'Updated Metacritic search to use URL used in the new site update'
     - 'Fix searches being incorrect when the game name included certain special characters'
+  - Version: 2.23
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.27_1fcfc18d/Search_Collection_2_23.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -94,3 +94,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_13.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-09-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.27_1fcfc18d/Extra_Metadata_tools_2e0349ed-6da2-4095-9457-4c9fb544551e_2_14.pext
+    Changelog:
+    - 'Changed: Updated localizations'
