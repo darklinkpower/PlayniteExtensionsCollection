@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Ajuda</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Add selected games to PlayState Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Remove selected games from Playstate Blacklist</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspender {0}</sys:String>
     <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
 
