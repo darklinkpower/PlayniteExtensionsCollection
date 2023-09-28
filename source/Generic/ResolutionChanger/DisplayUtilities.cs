@@ -41,7 +41,7 @@ namespace DisplayHelper
         public static DEVMODE GetScreenDevMode(string deviceName)
         {
             DEVMODE devMode = GetDevMode();
-            User32.EnumDisplaySettings(deviceName, User32.ENUM_CURRENT_SETTINGS, ref devMode);
+            User32.EnumDisplaySettings(deviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref devMode);
             return devMode;
         }
 
@@ -65,7 +65,7 @@ namespace DisplayHelper
             }
 
             var deviceMode = GetDevMode();
-            if (!User32.EnumDisplaySettings(primaryDisplayDevice.DeviceName, User32.ENUM_CURRENT_SETTINGS, ref deviceMode))
+            if (!User32.EnumDisplaySettings(primaryDisplayDevice.DeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref deviceMode))
             {
                 return false;
             }
@@ -90,7 +90,7 @@ namespace DisplayHelper
             foreach (var otherDisplay in otherDisplays)
             {
                 var otherDeviceMode = GetDevMode();
-                if (!User32.EnumDisplaySettings(otherDisplay.DeviceName, User32.ENUM_CURRENT_SETTINGS, ref otherDeviceMode))
+                if (!User32.EnumDisplaySettings(otherDisplay.DeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref otherDeviceMode))
                 {
                     return false;
                 }
@@ -116,21 +116,21 @@ namespace DisplayHelper
             try
             {
                 DEVMODE devMode = GetDevMode();
-                if (User32.EnumDisplaySettings(displayDeviceName, User32.ENUM_CURRENT_SETTINGS, ref devMode))
+                if (User32.EnumDisplaySettings(displayDeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref devMode))
                 {
                     var displayChangeFlags = ChangeDisplaySettingsFlags.CDS_NONE;
                     if (newWidth != 0 && newHeight != 0)
                     {
                         devMode.dmPelsWidth = newWidth;
                         devMode.dmPelsHeight = newHeight;
-                        devMode.dmFields |= User32.DM_PELSWIDTH | User32.DM_PELSHEIGHT;
+                        devMode.dmFields |= WinApiConstants.DM_PELSWIDTH | WinApiConstants.DM_PELSHEIGHT;
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
                     if (newRefreshRate != 0)
                     {
                         devMode.dmDisplayFrequency = newRefreshRate;
-                        devMode.dmFields |= User32.DM_DISPLAYFREQUENCY;
+                        devMode.dmFields |= WinApiConstants.DM_DISPLAYFREQUENCY;
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
