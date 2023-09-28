@@ -67,7 +67,9 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Scaricamento loghi da Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Scaricamento loghi da SteamGridDB...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Scaricamento video da YouTube...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError">Impossibile scaricare il video da YouTube. Prova con un video diverso.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Failed to download video from YouTube.
+
+Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Impossibile scaricare il logo da Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Scaricamento dei loghi dei nuovi giochi...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Scaricamento dei video dei nuovi giochi...</sys:String>
