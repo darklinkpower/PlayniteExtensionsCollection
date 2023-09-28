@@ -21,7 +21,7 @@ namespace DisplayHelper
         public const int DISP_CHANGE_BADFLAGS = -4;
         public const int DISP_CHANGE_BADPARAM = -5;
 
-        // Display DmFields
+        // DevMode DmFields
         public const int DM_ORIENTATION = 0x00000001;
         public const int DM_PAPERSIZE = 0x00000002;
         public const int DM_PAPERLENGTH = 0x00000004;

@@ -19,8 +19,8 @@ namespace DisplayHelper
         {
             return new DEVMODE()
             {
-                dmDeviceName = new string(new char[32]),
-                dmFormName = new string(new char[32]),
+                dmDeviceName = new string('\0', 32),
+                dmFormName = new string('\0', 32),
                 dmSize = (short)Marshal.SizeOf(typeof(DEVMODE))
             };
         }
@@ -119,7 +119,7 @@ namespace DisplayHelper
                 if (User32.EnumDisplaySettings(displayDeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref devMode))
                 {
                     var displayChangeFlags = ChangeDisplaySettingsFlags.CDS_NONE;
-                    if (newWidth != 0 && newHeight != 0)
+                    if (newWidth != 0 && newHeight != 0 && (devMode.dmPelsWidth != newWidth || devMode.dmPelsHeight != newHeight))
                     {
                         devMode.dmPelsWidth = newWidth;
                         devMode.dmPelsHeight = newHeight;
@@ -127,7 +127,7 @@ namespace DisplayHelper
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
-                    if (newRefreshRate != 0)
+                    if (newRefreshRate != 0 && devMode.dmDisplayFrequency != newRefreshRate)
                     {
                         devMode.dmDisplayFrequency = newRefreshRate;
                         devMode.dmFields |= WinApiConstants.DM_DISPLAYFREQUENCY;
