@@ -1,11 +1,12 @@
-﻿using DisplayHelper.Enums;
-using DisplayHelper.Structs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static WinApi.Enums;
+using static WinApi.Flags;
+using static WinApi.Structs;
 
 namespace DisplayHelper.Native
 {

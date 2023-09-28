@@ -3,9 +3,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
-using DisplayHelper.Enums;
 using DisplayHelper.Models;
-using DisplayHelper.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using static WinApi.Flags;
 
 namespace DisplayHelper
 {

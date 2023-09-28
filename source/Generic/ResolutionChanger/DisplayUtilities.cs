@@ -1,14 +1,16 @@
 ﻿using Playnite.SDK;
-using DisplayHelper.Enums;
 using DisplayHelper.Models;
 using DisplayHelper.Native;
-using DisplayHelper.Structs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WinApi;
+using static WinApi.Structs;
+using static WinApi.Flags;
+using static WinApi.Enums;
 
 namespace DisplayHelper
 {
@@ -41,7 +43,7 @@ namespace DisplayHelper
         public static DEVMODE GetScreenDevMode(string deviceName)
         {
             DEVMODE devMode = GetDevMode();
-            User32.EnumDisplaySettings(deviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref devMode);
+            User32.EnumDisplaySettings(deviceName, Constants.ENUM_CURRENT_SETTINGS, ref devMode);
             return devMode;
         }
 
@@ -65,7 +67,7 @@ namespace DisplayHelper
             }
 
             var deviceMode = GetDevMode();
-            if (!User32.EnumDisplaySettings(primaryDisplayDevice.DeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref deviceMode))
+            if (!User32.EnumDisplaySettings(primaryDisplayDevice.DeviceName, Constants.ENUM_CURRENT_SETTINGS, ref deviceMode))
             {
                 return false;
             }
@@ -90,7 +92,7 @@ namespace DisplayHelper
             foreach (var otherDisplay in otherDisplays)
             {
                 var otherDeviceMode = GetDevMode();
-                if (!User32.EnumDisplaySettings(otherDisplay.DeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref otherDeviceMode))
+                if (!User32.EnumDisplaySettings(otherDisplay.DeviceName, Constants.ENUM_CURRENT_SETTINGS, ref otherDeviceMode))
                 {
                     return false;
                 }
@@ -117,7 +119,7 @@ namespace DisplayHelper
             try
             {
                 var devMode = GetDevMode();
-                if (User32.EnumDisplaySettings(displayDeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref devMode))
+                if (User32.EnumDisplaySettings(displayDeviceName, Constants.ENUM_CURRENT_SETTINGS, ref devMode))
                 {
                     var newDevMode = GetDevMode();
                     var displayChangeFlags = ChangeDisplaySettingsFlags.CDS_NONE;
@@ -125,14 +127,14 @@ namespace DisplayHelper
                     {
                         newDevMode.dmPelsWidth = newWidth;
                         newDevMode.dmPelsHeight = newHeight;
-                        newDevMode.dmFields |= WinApiConstants.DM_PELSWIDTH | WinApiConstants.DM_PELSHEIGHT;
+                        newDevMode.dmFields |= DeviceModeFieldsFlags.DM_PELSWIDTH | DeviceModeFieldsFlags.DM_PELSHEIGHT;
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
                     if (newRefreshRate != 0 && devMode.dmDisplayFrequency != newRefreshRate)
                     {
                         newDevMode.dmDisplayFrequency = newRefreshRate;
-                        newDevMode.dmFields |= WinApiConstants.DM_DISPLAYFREQUENCY;
+                        newDevMode.dmFields |= DeviceModeFieldsFlags.DM_DISPLAYFREQUENCY;
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
