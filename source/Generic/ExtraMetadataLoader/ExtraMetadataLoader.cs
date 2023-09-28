@@ -714,6 +714,11 @@ namespace ExtraMetadataLoader
             }
 
             var logoUrl = logoProvider.GetLogoUrl(game, isBackgroundDownload, cancelToken);
+            if (logoUrl.IsNullOrEmpty())
+            {
+                return false;
+            }
+
             var downloadFileResult = HttpDownloader.DownloadFile(logoUrl, logoPath, cancelToken);
             if (downloadFileResult.Success && settings.Settings.ProcessLogosOnDownload)
             {
