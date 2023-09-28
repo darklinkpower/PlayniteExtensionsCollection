@@ -2,22 +2,11 @@
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace ExtraMetadataLoader
 {
@@ -116,33 +105,58 @@ namespace ExtraMetadataLoader
                 return;
             }
 
-            BitmapImage originalBitmap = new BitmapImage(new Uri(logoPath));
-
-            int newWidth = 0;
-            int newHeight = 0;
-            double aspectRatio = originalBitmap.PixelWidth / originalBitmap.PixelHeight;
-            if (aspectRatio > 1)
-            {
-                // Landscape image
-                newWidth = (int)_settings.LogoMaxWidth;
-            }
-            else
-            {
-                // Portrait image or square image
-                newHeight = (int)_settings.LogoMaxHeight;
-            }
-
-            BitmapImage adjustedBitmap = new BitmapImage();
-            adjustedBitmap.BeginInit();
-            adjustedBitmap.UriSource = new Uri(logoPath, UriKind.RelativeOrAbsolute);
-            adjustedBitmap.DecodePixelWidth = newWidth;
-            adjustedBitmap.DecodePixelHeight = newHeight;
-            adjustedBitmap.EndInit();
-            adjustedBitmap.Freeze();
-
+            var adjustedBitmap = CreateResizedBitmapImageFromPath(logoPath, (int)_settings.LogoMaxWidth, (int)_settings.LogoMaxHeight);
             LogoImage.Source = adjustedBitmap;
             _settings.IsLogoAvailable = true;
             ControlVisibility = Visibility.Visible;
+        }
+
+        private static BitmapImage CreateResizedBitmapImageFromPath(string filePath, int maxWidth, int maxHeight)
+        {
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    fileStream.CopyTo(memoryStream);
+                    BitmapImage originalBitmap = GetBitmapImageFromMemoryStream(memoryStream);
+                    if (maxWidth <= 0 && maxHeight <= 0)
+                    {
+                        return originalBitmap;
+                    }
+
+                    int newWidth = 0;
+                    int newHeight = 0;
+                    double aspectRatio = originalBitmap.PixelWidth / (double)originalBitmap.PixelHeight;
+                    if (aspectRatio > 1)
+                    {
+                        // Landscape image
+                        newWidth = maxWidth;
+                    }
+                    else
+                    {
+                        // Portrait image or square image
+                        newHeight = maxHeight;
+                    }
+
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    BitmapImage resizedBitmap = GetBitmapImageFromMemoryStream(memoryStream, newWidth, newHeight);
+                    return resizedBitmap;
+                }
+            }
+        }
+
+        private static BitmapImage GetBitmapImageFromMemoryStream(MemoryStream memoryStream, int newWidth = 0, int newHeight = 0)
+        {
+            var bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.DecodePixelWidth = newWidth;
+            bitmapImage.DecodePixelHeight = newHeight;
+            bitmapImage.StreamSource = memoryStream;
+            bitmapImage.EndInit();
+            bitmapImage.Freeze();
+
+            return bitmapImage;
         }
     }
 }
