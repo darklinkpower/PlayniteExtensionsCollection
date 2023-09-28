@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ExtraMetadataLoader.ViewModels
 {
@@ -171,6 +172,19 @@ namespace ExtraMetadataLoader.ViewModels
         public void DownloadSelectedImage()
         {
             LogoUrl = SelectedItem.ImageUrl;
+            CloseWindow();
+        }
+
+        private void CloseWindow()
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window.DataContext == this)
+                {
+                    window.Close();
+                    break;
+                }
+            }
         }
     }
 }
