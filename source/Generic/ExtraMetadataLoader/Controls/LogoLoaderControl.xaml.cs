@@ -2,6 +2,7 @@
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using PluginsCommon;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -22,6 +23,7 @@ namespace ExtraMetadataLoader
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        private static readonly ILogger logger = LogManager.GetLogger();
         IPlayniteAPI PlayniteApi;
 
         private ExtraMetadataLoaderSettings _settings;
@@ -129,54 +131,73 @@ namespace ExtraMetadataLoader
                 return;
             }
 
-            var adjustedBitmap = CreateResizedBitmapImageFromPath(logoPath, (int)_settings.LogoMaxWidth, (int)_settings.LogoMaxHeight);
+            var adjustedBitmap = CreateResizedBitmapImageFromPath(logoPath, Convert.ToInt32(_settings.LogoMaxWidth), Convert.ToInt32(_settings.LogoMaxHeight));
             LogoImage.Source = adjustedBitmap;
             _settings.IsLogoAvailable = true;
             ControlVisibility = Visibility.Visible;
         }
 
-        private static BitmapImage CreateResizedBitmapImageFromPath(string filePath, int maxWidth, int maxHeight)
+        private BitmapImage CreateResizedBitmapImageFromPath(string filePath, int maxWidth, int maxHeight)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var fileStream = FileSystem.OpenReadFileStreamSafe(filePath))
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     fileStream.CopyTo(memoryStream);
-                    BitmapImage originalBitmap = GetBitmapImageFromMemoryStream(memoryStream);
-                    if (maxWidth <= 0 && maxHeight <= 0)
-                    {
-                        return originalBitmap;
-                    }
 
-                    int newWidth = 0;
-                    int newHeight = 0;
-                    double aspectRatio = originalBitmap.PixelWidth / (double)originalBitmap.PixelHeight;
-                    if (aspectRatio > 1)
+                    // Using a buffered Steam apparently prevents memory not being released https://stackoverflow.com/a/76687288
+                    using (var bufferedStream = new BufferedStream(memoryStream))
                     {
-                        // Landscape image
-                        newWidth = maxWidth;
-                    }
-                    else
-                    {
-                        // Portrait image or square image
-                        newHeight = maxHeight;
-                    }
+                        BitmapImage originalBitmap = GetBitmapImageFromBufferedStream(bufferedStream);
+                        if (maxWidth <= 0 && maxHeight <= 0)
+                        {
+                            return originalBitmap;
+                        }
 
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    BitmapImage resizedBitmap = GetBitmapImageFromMemoryStream(memoryStream, newWidth, newHeight);
-                    return resizedBitmap;
+                        int decodeWidth = 0;
+                        int decodeHeight = 0;
+                        double aspectRatio = originalBitmap.PixelWidth / (double)originalBitmap.PixelHeight;
+                        if (aspectRatio > 1)
+                        {
+                            // Landscape image
+                            if (originalBitmap.PixelWidth > maxWidth)
+                            {
+                                decodeWidth = maxWidth;
+                            }
+                            else
+                            {
+                                return originalBitmap;
+                            }
+                        }
+                        else
+                        {
+                            // Portrait image or square image
+                            if (originalBitmap.PixelHeight > maxHeight)
+                            {
+                                decodeHeight = maxHeight;
+                            }
+                            else
+                            {
+                                return originalBitmap;
+                            }
+                        }
+
+                        bufferedStream.Seek(0, SeekOrigin.Begin);
+                        return GetBitmapImageFromBufferedStream(bufferedStream, decodeWidth, decodeHeight);
+                    }
                 }
             }
         }
 
-        private static BitmapImage GetBitmapImageFromMemoryStream(MemoryStream memoryStream, int newWidth = 0, int newHeight = 0)
+        private static BitmapImage GetBitmapImageFromBufferedStream(BufferedStream bufferedStream, int decodeWidth = 0, int decodeHeight = 0)
         {
             var bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
             bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.DecodePixelWidth = newWidth;
-            bitmapImage.DecodePixelHeight = newHeight;
-            bitmapImage.StreamSource = memoryStream;
+            bitmapImage.DecodePixelWidth = decodeWidth;
+            bitmapImage.DecodePixelHeight = decodeHeight;
+            bitmapImage.StreamSource = bufferedStream;
+            bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
             bitmapImage.EndInit();
             bitmapImage.Freeze();
 
