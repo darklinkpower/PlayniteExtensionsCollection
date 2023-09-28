@@ -326,7 +326,7 @@ namespace ExtraMetadataLoader
                                 }
 
                                 a.CurrentProgressValue++;
-                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                                 GetGameLogo(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken);
                             };
                         }, progressOptions);
@@ -358,7 +358,7 @@ namespace ExtraMetadataLoader
                                 }
 
                                 a.CurrentProgressValue++;
-                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
 
                                 GetGameLogo(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken);
                             };
@@ -440,7 +440,7 @@ namespace ExtraMetadataLoader
                                 }
 
                                 a.CurrentProgressValue++;
-                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                                 videosDownloader.DownloadSteamVideo(game, overwrite, false, a.CancelToken, true, false);
                             };
                         }, progressOptions);
@@ -511,7 +511,7 @@ namespace ExtraMetadataLoader
                                 }
 
                                 a.CurrentProgressValue++;
-                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                                 videosDownloader.DownloadSteamVideo(game, overwrite, false, a.CancelToken, false, true);
                             };
                         }, progressOptions);
@@ -561,7 +561,7 @@ namespace ExtraMetadataLoader
                                 }
 
                                 a.CurrentProgressValue++;
-                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                                a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                                 videosDownloader.ConvertVideoToMicro(game, overwrite);
                             };
                         }, progressOptions);
@@ -803,7 +803,7 @@ namespace ExtraMetadataLoader
                     }
 
                     a.CurrentProgressValue++;
-                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                     if (!overwrite && FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
                     {
                         continue;
@@ -903,7 +903,7 @@ namespace ExtraMetadataLoader
                     foreach (var game in games)
                     {
                         a.CurrentProgressValue++;
-                        a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                        a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                         if (a.CancelToken.IsCancellationRequested)
                         {
                             break;
@@ -938,7 +938,7 @@ namespace ExtraMetadataLoader
                         }
 
                         a.CurrentProgressValue++;
-                        a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                        a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
                         videosDownloader.DownloadSteamVideo(game, false, true, a.CancelToken, settings.Settings.DownloadVideosOnLibUpdate, settings.Settings.DownloadVideosMicroOnLibUpdate);
                     };
                 }, progressOptions);
