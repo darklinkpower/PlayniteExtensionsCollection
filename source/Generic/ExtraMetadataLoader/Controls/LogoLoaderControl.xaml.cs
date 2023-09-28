@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace ExtraMetadataLoader
 {
@@ -36,6 +37,7 @@ namespace ExtraMetadataLoader
 
         private Visibility controlVisibility = Visibility.Collapsed;
         private Game gameContext;
+        private readonly Dispatcher _dispatcher;
 
         public Visibility ControlVisibility
         {
@@ -71,14 +73,15 @@ namespace ExtraMetadataLoader
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
 
-            extraMetadataLoader.LogoUpdatedEvent += ExtraMetadataLoader_LogoUpdatedEvent; ;
+            _dispatcher = Application.Current.Dispatcher;
+            extraMetadataLoader.LogoUpdatedEvent += ExtraMetadataLoader_LogoUpdatedEvent;
         }
 
         private void ExtraMetadataLoader_LogoUpdatedEvent(object sender, LogoUpdatedEventArgs e)
         {
             if (e.GameId == gameContext?.Id)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                _dispatcher.Invoke(() =>
                 {
                     UpdateLogo();
                 });
