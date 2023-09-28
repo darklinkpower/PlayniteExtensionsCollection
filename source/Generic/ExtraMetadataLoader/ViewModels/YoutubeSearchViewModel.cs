@@ -164,7 +164,7 @@ namespace ExtraMetadataLoader.ViewModels
             }
             else
             {
-                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeError"), "Extra Metadata Loader");
+                PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage"), "Extra Metadata Loader");
             }
         }
 
