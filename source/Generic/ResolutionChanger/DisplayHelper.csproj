@@ -107,6 +107,7 @@
     <Compile Include="Structs\DEVMODE.cs" />
     <Compile Include="Structs\DISPLAY_DEVICE.cs" />
     <Compile Include="Structs\POINTL.cs" />
+    <Compile Include="WinApiConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

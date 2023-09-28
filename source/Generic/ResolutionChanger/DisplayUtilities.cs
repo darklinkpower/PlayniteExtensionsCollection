@@ -113,24 +113,26 @@ namespace DisplayHelper
 
         public static DISP_CHANGE ChangeDisplaySettings(string displayDeviceName, int newWidth = 0, int newHeight = 0, int newRefreshRate = 0, bool applyChanges = true)
         {
+            logger.Debug($"ChangeDisplaySettings Parameters - displayDeviceName: {displayDeviceName}, newWidth: {newWidth}, newHeight: {newHeight}, newRefreshRate: {newRefreshRate}, applyChanges: {applyChanges}");
             try
             {
-                DEVMODE devMode = GetDevMode();
+                var devMode = GetDevMode();
                 if (User32.EnumDisplaySettings(displayDeviceName, WinApiConstants.ENUM_CURRENT_SETTINGS, ref devMode))
                 {
+                    var newDevMode = GetDevMode();
                     var displayChangeFlags = ChangeDisplaySettingsFlags.CDS_NONE;
                     if (newWidth != 0 && newHeight != 0 && (devMode.dmPelsWidth != newWidth || devMode.dmPelsHeight != newHeight))
                     {
-                        devMode.dmPelsWidth = newWidth;
-                        devMode.dmPelsHeight = newHeight;
-                        devMode.dmFields |= WinApiConstants.DM_PELSWIDTH | WinApiConstants.DM_PELSHEIGHT;
+                        newDevMode.dmPelsWidth = newWidth;
+                        newDevMode.dmPelsHeight = newHeight;
+                        newDevMode.dmFields |= WinApiConstants.DM_PELSWIDTH | WinApiConstants.DM_PELSHEIGHT;
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
                     if (newRefreshRate != 0 && devMode.dmDisplayFrequency != newRefreshRate)
                     {
-                        devMode.dmDisplayFrequency = newRefreshRate;
-                        devMode.dmFields |= WinApiConstants.DM_DISPLAYFREQUENCY;
+                        newDevMode.dmDisplayFrequency = newRefreshRate;
+                        newDevMode.dmFields |= WinApiConstants.DM_DISPLAYFREQUENCY;
                         displayChangeFlags |= ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY;
                     }
 
@@ -147,10 +149,10 @@ namespace DisplayHelper
                     }
 
                     logger.Debug($"Setting configuration of device \"{displayDeviceName}\", {newWidth}x{newHeight}, {newRefreshRate}, {displayChangeFlags}");
-                    var testResult = User32.ChangeDisplaySettingsEx(displayDeviceName, ref devMode, IntPtr.Zero, ChangeDisplaySettingsFlags.CDS_TEST, IntPtr.Zero);
+                    var testResult = User32.ChangeDisplaySettingsEx(displayDeviceName, ref newDevMode, IntPtr.Zero, ChangeDisplaySettingsFlags.CDS_TEST, IntPtr.Zero);
                     if (testResult == DISP_CHANGE.Successful)
                     {
-                        var changeResult = User32.ChangeDisplaySettingsEx(displayDeviceName, ref devMode, IntPtr.Zero, displayChangeFlags, IntPtr.Zero);
+                        var changeResult = User32.ChangeDisplaySettingsEx(displayDeviceName, ref newDevMode, IntPtr.Zero, displayChangeFlags, IntPtr.Zero);
                         switch (changeResult)
                         {
                             case DISP_CHANGE.Successful:
