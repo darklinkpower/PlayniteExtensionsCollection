@@ -29,8 +29,22 @@ using YouTubeCommon;
 
 namespace ExtraMetadataLoader
 {
+    public delegate void LogoUpdatedEventHandler(object sender, LogoUpdatedEventArgs e);
+
+    public class LogoUpdatedEventArgs : EventArgs
+    {
+        public Guid GameId { get; private set; }
+
+        public LogoUpdatedEventArgs(Guid gameId)
+        {
+            GameId = gameId;
+        }
+    }
+
     public class ExtraMetadataLoader : GenericPlugin
     {
+        public event LogoUpdatedEventHandler LogoUpdatedEvent;
+
         private const string _logoMissingTag = "[EMT] Logo Missing";
         private const string _videoMissingTag = "[EMT] Video missing";
         private const string _videoMicroMissingTag = "[EMT] Video Micro missing";
@@ -131,12 +145,22 @@ namespace ExtraMetadataLoader
             };
         }
 
+        protected virtual void OnLogoUpdatedEvent(LogoUpdatedEventArgs e)
+        {
+            LogoUpdatedEvent?.Invoke(this, e);
+        }
+
+        public void OnLogoUpdated(Game game)
+        {
+            OnLogoUpdatedEvent(new LogoUpdatedEventArgs(game.Id));
+        }
+
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             switch (args.Name)
             {
                 case "LogoLoaderControl":
-                    return new LogoLoaderControl(PlayniteApi, settings.Settings);
+                    return new LogoLoaderControl(PlayniteApi, settings.Settings, this);
                 case "VideoLoaderControl":
                     return GetVideoLoaderControl();
                 case "VideoLoaderControlAlternative":
@@ -394,6 +418,8 @@ namespace ExtraMetadataLoader
                             {
                                 ProcessLogoImage(logoPath);
                             }
+
+                            OnLogoUpdated(game);
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                         }
                     }
@@ -407,7 +433,9 @@ namespace ExtraMetadataLoader
                         foreach (var game in args.Games.Distinct())
                         {
                             extraMetadataHelper.DeleteGameLogo(game);
+                            OnLogoUpdated(game);
                         };
+
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
                 },
@@ -720,9 +748,14 @@ namespace ExtraMetadataLoader
             }
 
             var downloadFileResult = HttpDownloader.DownloadFile(logoUrl, logoPath, cancelToken);
-            if (downloadFileResult.Success && settings.Settings.ProcessLogosOnDownload)
+            if (downloadFileResult.Success)
             {
-                ProcessLogoImage(logoPath);
+                if (settings.Settings.ProcessLogosOnDownload)
+                {
+                    ProcessLogoImage(logoPath);
+                }
+
+                OnLogoUpdated(game);
             }
 
             return downloadFileResult.Success;

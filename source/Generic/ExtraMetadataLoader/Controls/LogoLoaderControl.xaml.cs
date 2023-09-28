@@ -35,6 +35,8 @@ namespace ExtraMetadataLoader
         }
 
         private Visibility controlVisibility = Visibility.Collapsed;
+        private Game gameContext;
+
         public Visibility ControlVisibility
         {
             get => controlVisibility;
@@ -58,7 +60,7 @@ namespace ExtraMetadataLoader
 
         public DesktopView ActiveViewAtCreation { get; }
 
-        public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettings settings)
+        public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettings settings, ExtraMetadataLoader extraMetadataLoader)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
@@ -68,9 +70,28 @@ namespace ExtraMetadataLoader
             {
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
+
+            extraMetadataLoader.LogoUpdatedEvent += ExtraMetadataLoader_LogoUpdatedEvent; ;
+        }
+
+        private void ExtraMetadataLoader_LogoUpdatedEvent(object sender, LogoUpdatedEventArgs e)
+        {
+            if (e.GameId == gameContext?.Id)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    UpdateLogo();
+                });
+            }
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
+        {
+            gameContext = newContext;
+            UpdateLogo();
+        }
+
+        private void UpdateLogo()
         {
             //The GameContextChanged method is rised even when the control
             //is not in the active view. To prevent unecessary processing we
@@ -94,12 +115,12 @@ namespace ExtraMetadataLoader
                 return;
             }
 
-            if (newContext is null)
+            if (gameContext is null)
             {
                 return;
             }
-                
-            var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", newContext.Id.ToString(), "Logo.png");
+
+            var logoPath = Path.Combine(PlayniteApi.Paths.ConfigurationPath, "ExtraMetadata", "games", gameContext.Id.ToString(), "Logo.png");
             if (!FileSystem.FileExists(logoPath))
             {
                 return;
