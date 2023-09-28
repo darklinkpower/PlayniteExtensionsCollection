@@ -423,7 +423,7 @@ namespace ExtraMetadataLoader
             }
         }
 
-        public DateTime LastAutoLibUpdateAssetsDownload = DateTime.Now;
+        public DateTime LastAutoLibUpdateAssetsDownload = DateTime.MinValue;
 
         [DontSerialize]
         private bool processLogosOnDownload = true;
