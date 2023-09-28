@@ -489,3 +489,11 @@ Packages:
     - 'Changed: Updated localizations'
     - 'Fixed: Fix maximum value in games download dialogs counters being one number above the real value'
     - 'Note: The extension code has gone through a major code cleanup and optimization that may result in unexpected bugs. If you find any please report in on GitHub.'
+  - Version: 1.70
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.28_ea60cdf8/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_70.pext
+    Changelog:
+    - 'Changed: Improved logo rendering quality if its dimensions are inferior to configured maximum dimensions in settings'
+    - 'Changed: Updated localizations'
+    - 'Fixed: Potential memory leak when loading logo images'
