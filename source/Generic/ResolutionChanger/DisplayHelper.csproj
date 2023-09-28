@@ -100,7 +100,6 @@
       <DependentUpon>DisplayHelperSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WinApi\Constants.cs" />
     <Compile Include="WinApi\Enums.cs" />
     <Compile Include="WinApi\Flags.cs" />
     <Compile Include="WinApi\Structs.cs" />

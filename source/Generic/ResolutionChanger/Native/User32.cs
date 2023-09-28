@@ -15,7 +15,9 @@ namespace DisplayHelper.Native
         [DllImport("user32.dll")]
         public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
         [DllImport("user32.dll")]
-        public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DEVMODE devMode);
+        public static extern bool EnumDisplaySettings(string deviceName, DisplaySettings displaySetting, ref DEVMODE devMode);
+        [DllImport("user32.dll")]
+        public static extern bool EnumDisplaySettings(string deviceName, int modeNumber, ref DEVMODE devMode);
         [DllImport("user32.dll")]
         public static extern DISP_CHANGE ChangeDisplaySettings(ref DEVMODE devMode, ChangeDisplaySettingsFlags dwflags);
         [DllImport("user32.dll")]

@@ -43,7 +43,7 @@ namespace DisplayHelper
         public static DEVMODE GetScreenDevMode(string deviceName)
         {
             DEVMODE devMode = GetDevMode();
-            User32.EnumDisplaySettings(deviceName, Constants.ENUM_CURRENT_SETTINGS, ref devMode);
+            User32.EnumDisplaySettings(deviceName, DisplaySettings.ENUM_CURRENT_SETTINGS, ref devMode);
             return devMode;
         }
 
@@ -67,7 +67,7 @@ namespace DisplayHelper
             }
 
             var deviceMode = GetDevMode();
-            if (!User32.EnumDisplaySettings(primaryDisplayDevice.DeviceName, Constants.ENUM_CURRENT_SETTINGS, ref deviceMode))
+            if (!User32.EnumDisplaySettings(primaryDisplayDevice.DeviceName, DisplaySettings.ENUM_CURRENT_SETTINGS, ref deviceMode))
             {
                 return false;
             }
@@ -92,7 +92,7 @@ namespace DisplayHelper
             foreach (var otherDisplay in otherDisplays)
             {
                 var otherDeviceMode = GetDevMode();
-                if (!User32.EnumDisplaySettings(otherDisplay.DeviceName, Constants.ENUM_CURRENT_SETTINGS, ref otherDeviceMode))
+                if (!User32.EnumDisplaySettings(otherDisplay.DeviceName, DisplaySettings.ENUM_CURRENT_SETTINGS, ref otherDeviceMode))
                 {
                     return false;
                 }
@@ -119,7 +119,7 @@ namespace DisplayHelper
             try
             {
                 var devMode = GetDevMode();
-                if (User32.EnumDisplaySettings(displayDeviceName, Constants.ENUM_CURRENT_SETTINGS, ref devMode))
+                if (User32.EnumDisplaySettings(displayDeviceName, DisplaySettings.ENUM_CURRENT_SETTINGS, ref devMode))
                 {
                     var newDevMode = GetDevMode();
                     var displayChangeFlags = ChangeDisplaySettingsFlags.CDS_NONE;

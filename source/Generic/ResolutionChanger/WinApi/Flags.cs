@@ -49,6 +49,7 @@ namespace WinApi
         [Flags]
         public enum DeviceModeFieldsFlags : uint
         {
+            DM_NONE = 0,
             DM_ORIENTATION = 0x00000001,
             DM_PAPERSIZE = 0x00000002,
             DM_PAPERLENGTH = 0x00000004,

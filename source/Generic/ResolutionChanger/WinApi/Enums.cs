@@ -8,6 +8,12 @@ namespace WinApi
 {
     public static class Enums
     {
+        public enum DisplaySettings
+        {
+            ENUM_CURRENT_SETTINGS = -1,
+            ENUM_REGISTRY_SETTINGS = -2
+        }
+
         public enum DISP_CHANGE : int
         {
             Successful = 0,
