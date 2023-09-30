@@ -165,3 +165,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.27_1fcfc18d/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_24.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.25
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-29
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.29_01221187/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_25.pext
+    Changelog:
+    - 'Fixed: Failing to change display resolution in some systems.'
