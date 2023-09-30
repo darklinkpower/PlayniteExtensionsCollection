@@ -19,7 +19,7 @@ namespace MetacriticMetadata.Services
         private static readonly Playnite.SDK.ILogger logger = Playnite.SDK.LogManager.GetLogger();
         private const string searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
         private const string searchGameTemplate = @"https://www.metacritic.com/search/{0}/?category=13&page=1";
-        private const string searchGameApiTemplate = @"https://fandom-prod.apigee.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
+        private const string searchGameApiTemplate = @"https://fandom-prod.apigee.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
         private readonly TimeLimiter timeConstraint;
         private readonly MetacriticMetadataSettings settings;
 
