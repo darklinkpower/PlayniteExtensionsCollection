@@ -20,6 +20,12 @@ namespace MetacriticMetadata.Services
         private const string searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
         private const string searchGameTemplate = @"https://www.metacritic.com/search/{0}/?category=13&page=1";
         private const string searchGameApiTemplate = @"https://fandom-prod.apigee.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
+        private static readonly Dictionary<string, string> defaultApiHeaders = new Dictionary<string, string>
+        {
+            {"Referer", @"https://www.metacritic.com"},
+            {"User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+        };
+
         private readonly TimeLimiter timeConstraint;
         private readonly MetacriticMetadataSettings settings;
 
@@ -32,7 +38,7 @@ namespace MetacriticMetadata.Services
         public async Task<DownloadStringResult> ExecuteRequestAsync(string requestUrl)
         {
             await timeConstraint;
-            return HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
+            return HttpDownloader.DownloadStringWithHeaders(requestUrl, defaultApiHeaders);
         }
 
         public List<MetacriticSearchResult> GetGameSearchResults(Game game)
@@ -162,15 +168,6 @@ namespace MetacriticMetadata.Services
             }
 
             return null;
-        }
-
-        private static Dictionary<string, string> GetSearchHeaders()
-        {
-            return new Dictionary<string, string>
-            {
-                {"Referer", @"https://www.metacritic.com"},
-                {"User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-            };
         }
     }
 }
