@@ -13,13 +13,11 @@ namespace System
     public static class StringExtensions
     {
         #region Constants and Fields
-
-        private const double WinklerWeightThreshold = 0.7; //Winkler's paper used a default value of 0.7
-        private const int WinklerNumChars = 4; //Size of the prefix to be considered by the Winkler modification.
         private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
         private static readonly char[] _textMatchSplitter = { ' ', ',', ';' };
+        private const double _defaultWinklerWeightThreshold = 0.7; //Winkler's paper used a default value of 0.7
+        private const int _winklerNumChars = 4; //Size of the prefix to be considered by the Winkler modification.
         private static readonly EqualityComparer<char> _charCaseInsensitiveComparer = new CaseInsensitiveCharComparer();
-
         #endregion
 
         #region Hashing and Encoding
@@ -393,13 +391,23 @@ namespace System
                 toMatchSplit.Any(a => a.ContainsInvariantCulture(word, compareOptions)));
         }
 
+        public static int GetLevenshteinDistanceIgnoreCase(this string source, string value)
+        {
+            return GetLevenshteinDistance(source, value, _charCaseInsensitiveComparer);
+        }
+
+        public static int GetLevenshteinDistance(this string source, string value)
+        {
+            return GetLevenshteinDistance(source, value, EqualityComparer<char>.Default);
+        }
+
         //From https://github.com/DanHarltey/Fastenshtein
         /// <summary>
         /// Compares the two values to find the minimum Levenshtein distance. 
         /// Thread safe.
         /// </summary>
         /// <returns>Difference. 0 complete match.</returns>
-        public static int GetLevenshteinDistance(this string value1, string value2)
+        public static int GetLevenshteinDistance(this string value1, string value2, IEqualityComparer<char> comparer)
         {
             if (value2.Length == 0)
             {
@@ -428,7 +436,7 @@ namespace System
                     int currentCost = cost;
                     cost = costs[j];
 
-                    if (value1Char != value2[j])
+                    if (!comparer.Equals(value1Char, value2[j]))
                     {
                         if (previousCost < currentCost)
                         {
@@ -451,15 +459,15 @@ namespace System
             return costs[costs.Length - 1];
         }
 
-        //From https://gist.github.com/ronnieoverby/2aa19724199df4ec8af6
-        public static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2)
+        //Based on https://gist.github.com/ronnieoverby/2aa19724199df4ec8af6
+        public static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
         {
-            return GetJaroWinklerSimilarity(str, str2, _charCaseInsensitiveComparer);
+            return GetJaroWinklerSimilarity(str, str2, _charCaseInsensitiveComparer, winklerWeightThreshold);
         }
 
-        public static double GetJaroWinklerSimilarity(this string str, string str2)
+        public static double GetJaroWinklerSimilarity(this string str, string str2, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
         {
-            return GetJaroWinklerSimilarity(str, str2, EqualityComparer<char>.Default);
+            return GetJaroWinklerSimilarity(str, str2, EqualityComparer<char>.Default, winklerWeightThreshold);
         }
 
         /// <summary>
@@ -470,8 +478,9 @@ namespace System
         /// <param name="str">First String</param>
         /// <param name="str2">Second String</param>
         /// <param name="comparer">Comparer used to determine character equality.</param>
+        /// <param name="winklerWeightThreshold">The weight threshold is used to determine whether the similarity score is high enough to consider two strings as a match. Winkler's paper used a default value of 0.7.</param>
         /// <returns>Similarity between the specified strings.</returns>
-        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer)
+        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
         {
             var lLen1 = str.Length;
             var lLen2 = str2.Length;
@@ -496,7 +505,7 @@ namespace System
                     {
                         continue;
                     }
-                    
+
                     if (!comparer.Equals(str[i], str2[j]))
                     {
                         continue;
@@ -527,7 +536,7 @@ namespace System
                 {
                     ++k;
                 }
-                
+
                 if (!comparer.Equals(str[i], str2[k]))
                 {
                     ++lNumHalfTransposed;
@@ -542,12 +551,12 @@ namespace System
                             + lNumCommonD / lLen2
                             + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
 
-            if (lWeight <= WinklerWeightThreshold)
+            if (lWeight <= winklerWeightThreshold)
             {
                 return lWeight;
             }
-            
-            var lMax = Math.Min(WinklerNumChars, Math.Min(str.Length, str2.Length));
+
+            var lMax = Math.Min(_winklerNumChars, Math.Min(str.Length, str2.Length));
             var lPos = 0;
             while (lPos < lMax && comparer.Equals(str[lPos], str2[lPos]))
             {
