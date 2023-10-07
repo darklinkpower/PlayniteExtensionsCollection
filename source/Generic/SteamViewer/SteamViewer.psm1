@@ -37,55 +37,53 @@ function GetGameMenuItems
     $menuItem14.FunctionName = "Start-ComponentSettings"
     $menuItem14.MenuSection = "$extensionName|$subSection"
 
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -eq "SteamLibrary")
+    $game = $scriptGameMenuItemActionArgs.Games[-1]
+    if ([Playnite.SDK.BuiltinExtensions]::GetExtensionFromId($game.PluginId) -ne "SteamLibrary")
     {
-        $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameStorePageDescription")
-        $menuItem1.FunctionName = "Start-StorePage"
-        $menuItem1.MenuSection = $extensionName
-
-        $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameCommunityHubDescription")
-        $menuItem2.FunctionName = "Start-CommunityHub"
-        $menuItem2.MenuSection = $extensionName
-
-        $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameDiscussionsDescription")
-        $menuItem3.FunctionName = "Start-Discussions"
-        $menuItem3.MenuSection = $extensionName
-
-        $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameGuidesDescription")
-        $menuItem4.FunctionName = "Start-Guides"
-        $menuItem4.MenuSection = $extensionName
-        
-        $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameNewsDescription")
-        $menuItem5.FunctionName = "Start-News"
-        $menuItem5.MenuSection = $extensionName
-
-        $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameAchievementsDescription")
-        $menuItem6.FunctionName = "Start-Achievements"
-        $menuItem6.MenuSection = $extensionName
-
-        $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGamePointsShopDescription")
-        $menuItem7.FunctionName = "Start-PointsShop"
-        $menuItem7.MenuSection = $extensionName
-
-        $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
-        $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameLibraryDescription")
-        $menuItem8.FunctionName = "Start-Library"
-        $menuItem8.MenuSection = $extensionName
-
-        return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13, $menuItem14
+        return $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13, $menuItem14
     }
-    else
-    {
-        return $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13, $menuItem14  
-    }
+
+    $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem1.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameStorePageDescription")
+    $menuItem1.FunctionName = "Start-StorePage"
+    $menuItem1.MenuSection = $extensionName
+
+    $menuItem2 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem2.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameCommunityHubDescription")
+    $menuItem2.FunctionName = "Start-CommunityHub"
+    $menuItem2.MenuSection = $extensionName
+
+    $menuItem3 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem3.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameDiscussionsDescription")
+    $menuItem3.FunctionName = "Start-Discussions"
+    $menuItem3.MenuSection = $extensionName
+
+    $menuItem4 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem4.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameGuidesDescription")
+    $menuItem4.FunctionName = "Start-Guides"
+    $menuItem4.MenuSection = $extensionName
+    
+    $menuItem5 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem5.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameNewsDescription")
+    $menuItem5.FunctionName = "Start-News"
+    $menuItem5.MenuSection = $extensionName
+
+    $menuItem6 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem6.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameAchievementsDescription")
+    $menuItem6.FunctionName = "Start-Achievements"
+    $menuItem6.MenuSection = $extensionName
+
+    $menuItem7 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem7.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGamePointsShopDescription")
+    $menuItem7.FunctionName = "Start-PointsShop"
+    $menuItem7.MenuSection = $extensionName
+
+    $menuItem8 = New-Object Playnite.SDK.Plugins.ScriptGameMenuItem
+    $menuItem8.Description =  [Playnite.SDK.ResourceProvider]::GetString("LOCSteam_Viewer_MenuItemGameLibraryDescription")
+    $menuItem8.FunctionName = "Start-Library"
+    $menuItem8.MenuSection = $extensionName
+
+    return $menuItem1, $menuItem2, $menuItem3, $menuItem4, $menuItem5, $menuItem6, $menuItem7, $menuItem8, $menuItem9, $menuItem10, $menuItem11, $menuItem12, $menuItem13, $menuItem14
 }
 
 function Start-Library
@@ -94,8 +92,20 @@ function Start-Library
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
+    $game = $scriptGameMenuItemActionArgs.Games[-1]
     $uri = "steam://nav/games/details/{0}" -f $game.GameId
+    Start-Process $uri
+}
+
+function Start-UrlTemplateOnSteamWithGameId {
+    param (
+        $scriptGameMenuItemActionArgs,
+        [string]$steamUrlTemplate
+    )
+
+    $game = $scriptGameMenuItemActionArgs.Games[-1]
+    $steamUrl =  $steamUrlTemplate -f $game.GameId
+    $uri = "steam://openurl/{0}" -f $steamUrl
     Start-Process $uri
 }
 
@@ -104,11 +114,8 @@ function Start-CommunityHub
     param(
         $scriptGameMenuItemActionArgs
     )
-    
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://steamcommunity.com/app/{0}/" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
-    Start-Process $uri
+
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://steamcommunity.com/app/{0}/"
 }
 
 function Start-Discussions
@@ -117,10 +124,7 @@ function Start-Discussions
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://steamcommunity.com/app/{0}/discussions/" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
-    Start-Process $uri
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://steamcommunity.com/app/{0}/discussions/"
 }
 
 function Start-Guides
@@ -129,10 +133,7 @@ function Start-Guides
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://steamcommunity.com/app/{0}/guides/" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
-    Start-Process $uri
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://steamcommunity.com/app/{0}/guides/"
 }
 
 function Start-Achievements
@@ -141,10 +142,7 @@ function Start-Achievements
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://steamcommunity.com/stats/{0}/achievements/" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
-    Start-Process $uri
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://steamcommunity.com/stats/{0}/achievements/"
 }
 
 function Start-StorePage
@@ -153,10 +151,7 @@ function Start-StorePage
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://store.steampowered.com/app/{0}/" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
-    Start-Process $uri
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://store.steampowered.com/app/{0}/"
 }
 
 function Start-News
@@ -165,10 +160,7 @@ function Start-News
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://store.steampowered.com/news/?appids={0}" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
-    Start-Process $uri
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://store.steampowered.com/news/?appids={0}"
 }
 
 function Start-PointsShop
@@ -177,9 +169,15 @@ function Start-PointsShop
         $scriptGameMenuItemActionArgs
     )
     
-    $game = $scriptGameMenuItemActionArgs.Games | Select-Object -last 1
-    $url =  "https://store.steampowered.com/points/shop/app/{0}" -f $game.GameId
-    $uri = "steam://openurl/{0}" -f $url
+    Start-UrlTemplateOnSteamWithGameId $scriptGameMenuItemActionArgs "https://store.steampowered.com/points/shop/app/{0}"
+}
+
+function Open-SteamComponent {
+    param (
+        [string] $componentName
+    )
+    
+    $uri =  "steam://open/{0}" -f $componentName
     Start-Process $uri
 }
 
@@ -189,8 +187,7 @@ function Start-ComponentActivateProduct
         $scriptGameMenuItemActionArgs
     )
     
-    $uri =  "steam://open/{0}" -f "activateproduct"
-    Start-Process $uri
+    Open-SteamComponent "activateproduct"
 }
 
 function Start-ComponentDownloads
@@ -199,8 +196,7 @@ function Start-ComponentDownloads
         $scriptGameMenuItemActionArgs
     )
     
-    $uri =  "steam://open/{0}" -f "downloads"
-    Start-Process $uri
+    Open-SteamComponent "downloads"
 }
 
 function Start-ComponentFriends
@@ -209,8 +205,7 @@ function Start-ComponentFriends
         $scriptGameMenuItemActionArgs
     )
     
-    $uri =  "steam://open/{0}" -f "friends"
-    Start-Process $uri
+    Open-SteamComponent "friends"
 }
 
 function Start-ComponentNews
@@ -219,8 +214,7 @@ function Start-ComponentNews
         $scriptGameMenuItemActionArgs
     )
     
-    $uri =  "steam://open/{0}" -f "news"
-    Start-Process $uri
+    Open-SteamComponent "news"
 }
 
 function Start-ComponentScreenshots
@@ -229,8 +223,7 @@ function Start-ComponentScreenshots
         $scriptGameMenuItemActionArgs
     )
     
-    $uri =  "steam://open/{0}" -f "screenshots"
-    Start-Process $uri
+    Open-SteamComponent "screenshots"
 }
 
 function Start-ComponentSettings
@@ -239,6 +232,5 @@ function Start-ComponentSettings
         $scriptGameMenuItemActionArgs
     )
     
-    $uri =  "steam://open/{0}" -f "settings"
-    Start-Process $uri
+    Open-SteamComponent "settings"
 }
