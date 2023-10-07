@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="PlayNotes_NewNoteLabel">New note</sys:String>
+    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notes for {0} saved.</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Title:</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Note:</sys:String>
+</ResourceDictionary>

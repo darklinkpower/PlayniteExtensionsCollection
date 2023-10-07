@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A94B45A-B63C-487F-990E-7BD0C5B10B5A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PlayNotes</RootNamespace>
+    <AssemblyName>PlayNotes</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AvalonEdit.6.0.0\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="MdXaml, Version=1.21.0.0, Culture=neutral, PublicKeyToken=9f8c7afb435b7edc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MdXaml.1.21.0\lib\net45\MdXaml.dll</HintPath>
+    </Reference>
+    <Reference Include="MdXaml.Plugins, Version=1.21.0.0, Culture=neutral, PublicKeyToken=9f8c7afb435b7edc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MdXaml.Plugins.1.21.0\lib\net45\MdXaml.Plugins.dll</HintPath>
+    </Reference>
+    <Reference Include="Playnite.SDK, Version=6.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PlayniteSDK.6.9.0\lib\net462\Playnite.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Common\PlayniteUtilitiesCommon\PlayniteUtilities.cs">
+      <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\BindingTools.cs">
+      <Link>Shared\PluginsCommon\BindingTools.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\InvertedVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\NumericConverters.cs">
+      <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Encryption.cs">
+      <Link>Shared\PluginsCommon\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\CharExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\EnumExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\FileSystem.cs">
+      <Link>Shared\PluginsCommon\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\GlobalCommands.cs">
+      <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DatabaseCommon\IDatabaseItem.cs">
+      <Link>Shared\DatabaseCommon\IDatabaseItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DatabaseCommon\IRepository.cs">
+      <Link>Shared\DatabaseCommon\IRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DatabaseCommon\LiteDbRepository.cs">
+      <Link>Shared\DatabaseCommon\LiteDbRepository.cs</Link>
+    </Compile>
+    <Compile Include="Converters\MarkdownUnescapeConverter.cs" />
+    <Compile Include="PlayniteControls\MdEngineCommands.cs" />
+    <Compile Include="PlayNotes.cs" />
+    <Compile Include="PlayNotesSettings.cs" />
+    <Compile Include="PlayNotesSettingsView.xaml.cs">
+      <DependentUpon>PlayNotesSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlayNote.cs" />
+    <Compile Include="PlayniteControls\NotesViewerControl.xaml.cs">
+      <DependentUpon>NotesViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Localization\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlayNotesSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayniteControls\NotesViewerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

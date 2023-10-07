@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CBED3B97-8FB8-4CA4-8827-13065AB64113}</ProjectGuid>
+    <ProjectGuid>{3B45BE73-7CA4-4FEF-AA74-EC33A41C631C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PluginsCommon</RootNamespace>
-    <AssemblyName>PluginsCommon</AssemblyName>
+    <RootNamespace>DatabaseCommon</RootNamespace>
+    <AssemblyName>DatabaseCommon</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,41 +31,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Web" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BindingTools.cs" />
-    <Compile Include="Converters\InvertedVisibilityConverter.cs" />
-    <Compile Include="Converters\NumericConverters.cs" />
-    <Compile Include="Encryption.cs" />
-    <Compile Include="Extensions\CharExtensions.cs" />
-    <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="FileSystem.cs" />
-    <Compile Include="GlobalCommands.cs" />
-    <Compile Include="Native\Kernel32.cs" />
-    <Compile Include="Native\Ntdll.cs" />
-    <Compile Include="Native\Processthreadsapi.cs" />
-    <Compile Include="Native\WinBase.cs" />
-    <Compile Include="Paths.cs" />
-    <Compile Include="ProcessStarter.cs" />
+    <Compile Include="IDatabaseItem.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="LiteDbRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

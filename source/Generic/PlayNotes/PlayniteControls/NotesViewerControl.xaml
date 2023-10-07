@@ -1,0 +1,123 @@
+﻿<PluginUserControl x:Class="PlayNotes.PlayniteControls.NotesViewerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
+             xmlns:commonConverters="clr-namespace:PluginsCommon.Converters"
+             xmlns:converters="clr-namespace:PlayNotes.Converters"
+             xmlns:mdEngineCommands="clr-namespace:PlayNotes.MdEngineCommands"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <PluginUserControl.Resources>
+        <commonConverters:InvertedVisibilityConverter x:Key="InvertedVisibilityConverter" />
+        <converters:MarkdownUnescapeConverter x:Key="MarkdownUnescapeConverter" />
+        <mdxam:Markdown x:Key="MdEngine">
+            <mdxam:Markdown.HyperlinkCommand>
+                <mdEngineCommands:HyperlinkCommand/>
+            </mdxam:Markdown.HyperlinkCommand>
+        </mdxam:Markdown>
+    </PluginUserControl.Resources>
+    <StackPanel>
+        <DockPanel LastChildFill="True" Margin="0,0,0,0">
+            <Button Content="&#xE105;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
+                    Command="{Binding SaveItemCommand}" Margin="15,0,0,0" />
+            
+            <Button Content="&#xE109;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
+                    Command="{Binding AddItemCommand}" Margin="5,0,0,0" />
+            <Button Content="&#xE107;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
+                    Command="{Binding RemoveCurrentItemCommand}" Margin="15,0,0,0" />
+
+            <Button Content="&#xE00F;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
+                    Command="{Binding MoveNoteNextCommand}" Margin="5,0,0,0" />
+            <Button Content="&#xE00E;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
+                    Command="{Binding MoveNotePreviousCommand}" Margin="5,0,0,0" />
+            <Separator VerticalAlignment="Center" Margin="0,0,0,0"  DockPanel.Dock="Left" />
+        </DockPanel>
+
+        <StackPanel Visibility="{Binding NotesSectionVisibility}">
+            <TabControl Margin="0,15,0,0" ItemsSource="{Binding CurrentGameNotes.Notes}"
+                    SelectionChanged="TabControl_SelectionChanged"
+                    SelectedItem="{Binding SelectedNotes}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}" />
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+
+            <mdxam:MarkdownScrollViewer x:Name="NotesRenderer" Margin="0,10,0,0"
+                                        Engine="{StaticResource MdEngine}"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    MarkdownStyle="{Binding Settings.MarkdownStyle}"
+                                    Markdown="{Binding SelectedNotes.Text, Mode=OneWay, Converter={StaticResource MarkdownUnescapeConverter}}">
+                <mdxam:MarkdownScrollViewer.Style>
+                    <Style TargetType="mdxam:MarkdownScrollViewer">
+                        <Style.Resources>
+                            <Style TargetType="Image">
+                                <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant" />
+                                <Setter Property="Stretch" Value="Uniform" />
+                                <Setter Property="StretchDirection" Value="DownOnly" />
+                                <Setter Property="MaxWidth" Value="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type mdxam:MarkdownScrollViewer}}}" />
+                                <Style.Triggers>
+                                    <Trigger Property="Tag" Value="imageright">
+                                        <Setter Property="Margin"  Value="20,0,0,0" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ExpandNotes}" Value="False">
+                                <Setter Property="MaxHeight" Value="400" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </mdxam:MarkdownScrollViewer.Style>
+            </mdxam:MarkdownScrollViewer>
+
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Content="&#xE011;" FontFamily="Segoe MDL2 Assets"
+                    Grid.Column="0"
+                    Visibility="{Binding ExpandNotes, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                    Command="{Binding SwitchMarkdownHeightCommand}" />
+
+                <Button Content="&#xE010;" FontFamily="Segoe MDL2 Assets"
+                    Grid.Column="0"
+                    Visibility="{Binding ExpandNotes, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Command="{Binding SwitchMarkdownHeightCommand}" />
+
+                <Button Content="&#xE104;" FontFamily="Segoe MDL2 Assets"
+                    Grid.Column="1" Margin="10,0,0,0"
+                    Command="{Binding SwitchEditorVisibilityCommand}"/>
+
+            </Grid>
+
+            <StackPanel x:Name="EditSection" Visibility="{Binding EditorVisibility}" Margin="0,15,0,0">
+                <DockPanel>
+                    <TextBlock Text="{DynamicResource PlayNotes_EditorNoteTitleLabel}" VerticalAlignment="Center"  Margin="0,0,10,0"/>
+                    <TextBox Text="{Binding SelectedNotes.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                </DockPanel>
+
+                <TextBlock Text="{DynamicResource PlayNotes_EditorNoteNoteLabel}" VerticalAlignment="Center"  Margin="0,0,10,0"/>
+                <TextBox Text="{Binding SelectedNotes.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}"
+                     Margin="0,5,0,0"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     MaxHeight="400" />
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</PluginUserControl>
