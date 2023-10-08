@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeKicker.BBCode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace ReviewViewer
 
         private static readonly Dictionary<string, string> replaceFormatters;
         private static readonly Dictionary<string, string> regexFormatters;
+        private static readonly BBCodeParser bbcodeParser;
 
         static BbCodeProcessor()
         {
@@ -53,26 +55,77 @@ namespace ReviewViewer
                 {@"\[quote\]((.|\n)*?)\[\/quote\]", "<blockquote>$1</blockquote><br>" },
                 {@"\[quote=([^\]]+)]((.|\n)*?)\[\/quote\]", "<blockquote>$1:</blockquote><br><blockquote>$2</blockquote><br>" }
             };
+
+            var bbTags = new List<BBTag>()
+            {
+                new BBTag("b", "<strong>", "</strong>"),
+                new BBTag("u", "<u>", "</u>"),
+                new BBTag("s", "<strike>", "</strike>"),
+                new BBTag("i", "<em>", "</em>"),
+                new BBTag("h1", "<h1>", "</h1>"),
+                new BBTag("h2", "<h2>", "</h2>"),
+                new BBTag("h3", "<h3>", "</h3>"),
+                new BBTag("hr", "<hr>", "</hr>"),
+
+                //Lists
+                new BBTag("list", "<ul>", "</ul>") { SuppressFirstNewlineAfter = true },
+                new BBTag("li", "<li>", "</li>", true, false),
+                new BBTag("*", "<li>", "</li>", true, false),
+                new BBTag("olist", "<ol>", "</ol>"),
+                new BBTag("url", "<a href=\"${href}\">", "</a>",
+                    new BBAttribute("href", ""),
+                    new BBAttribute("href", "href"),
+                    new BBAttribute("target", "target")),
+                new BBTag("code", "<code>", "</code>")
+                {
+                    StopProcessing = true,
+                    SuppressFirstNewlineAfter = true
+                },
+                //Tables
+                new BBTag("table", "<table>", "</table>"),
+                new BBTag("th", "<th>", "</th>"),
+                new BBTag("tr", "<tr>", "</tr>"),
+                new BBTag("td", "<td>", "</td>"),
+
+                // Spoiler
+                new BBTag("spoiler", "<spoiler>", "</spoiler>"),
+
+                // quote
+                new BBTag("quote", "<blockquote>", "</blockquote>"),
+                // image
+                new BBTag("img", "<img src=\"${content}\"/>", "", false, true)
+            };
+
+            bbcodeParser = new BBCodeParser(ErrorMode.TryErrorCorrection, null, bbTags);
         }
 
-        public static string FormatBbCodeToHtml(string bbCodeString)
+        public string ToHtml(string bbCodeString)
         {
-            if (string.IsNullOrEmpty(bbCodeString))
+            try
             {
-                return string.Empty;
+                return bbcodeParser.ToHtml(bbCodeString);
             }
-            
-            foreach (var item in replaceFormatters)
+            catch (Exception e)
             {
-                bbCodeString = bbCodeString.Replace(item.Key, item.Value);
-            }
+                // Certain reviews will be badly formatted by authors or the parser will fail.
+                // Fallback to old parser in those cases
+                if (string.IsNullOrEmpty(bbCodeString))
+                {
+                    return string.Empty;
+                }
 
-            foreach (var item in regexFormatters)
-            {
-                bbCodeString = Regex.Replace(bbCodeString, item.Key, item.Value);
-            }
+                foreach (var item in replaceFormatters)
+                {
+                    bbCodeString = bbCodeString.Replace(item.Key, item.Value);
+                }
 
-            return bbCodeString;
+                foreach (var item in regexFormatters)
+                {
+                    bbCodeString = Regex.Replace(bbCodeString, item.Key, item.Value);
+                }
+
+                return bbCodeString;
+            }
         }
 
     }
