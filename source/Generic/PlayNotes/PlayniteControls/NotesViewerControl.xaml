@@ -31,10 +31,37 @@
             <Button Content="&#xE00F;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
                     Command="{Binding MoveNoteNextCommand}" Margin="5,0,0,0" />
             <Button Content="&#xE00E;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
-                    Command="{Binding MoveNotePreviousCommand}" Margin="5,0,0,0" />
+                    Command="{Binding MoveNotePreviousCommand}" Margin="15,0,0,0" />
+
+            <Button Content="&#xEC7A;" FontFamily="Segoe MDL2 Assets" DockPanel.Dock="Right"
+                    Command="{Binding SwitchToolsVisibilityCommand}" Margin="5,0,0,0" />
+            
             <Separator VerticalAlignment="Center" Margin="0,0,0,0"  DockPanel.Dock="Left" />
         </DockPanel>
 
+        <StackPanel x:Name="ToolsSection" Visibility="{Binding ToolsVisibility}" Margin="0,15,0,0">
+            <TabControl>
+                <TabItem Header="{DynamicResource PlayNotes_SteamGuideImporterLabel}">
+                    <StackPanel>
+                        <DockPanel Margin="0,10,0,0" LastChildFill="True">
+                            <TextBlock Text="{DynamicResource PlayNotes_UrlInputLabel}" DockPanel.Dock="Left" VerticalAlignment="Center" />
+                            <TextBox Margin="10,0,0,0" DockPanel.Dock="Left" VerticalAlignment="Center"
+                                         Text="{Binding SteamGuideImporter.Url}" />
+                        </DockPanel>
+
+                        <CheckBox Margin="0,10,0,0" IsChecked="{Binding SteamGuideImporter.ImportSectionsSeparately}"
+                                      Content="{DynamicResource PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel}" />
+                        <CheckBox Margin="0,10,0,0" IsChecked="{Binding SteamGuideImporter.ClearBaseNotes}"
+                                      Content="{DynamicResource PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel}" />
+                        <Button Margin="0,15,0,0" HorizontalAlignment="Left" Content="{DynamicResource PlayNotes_ImportLabel}"
+                                Command="{Binding ImportSteamGuideCommand}" />
+
+                        <Separator Margin="0,10,0,0" />
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+        
         <StackPanel Visibility="{Binding NotesSectionVisibility}">
             <TabControl Margin="0,15,0,0" ItemsSource="{Binding CurrentGameNotes.Notes}"
                     SelectionChanged="TabControl_SelectionChanged"
@@ -88,21 +115,21 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Content="&#xE011;" FontFamily="Segoe MDL2 Assets"
-                    Grid.Column="0"
-                    Visibility="{Binding ExpandNotes, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
-                    Command="{Binding SwitchMarkdownHeightCommand}" />
+                        Grid.Column="0"
+                        Visibility="{Binding ExpandNotes, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                        Command="{Binding SwitchMarkdownHeightCommand}" />
 
                 <Button Content="&#xE010;" FontFamily="Segoe MDL2 Assets"
-                    Grid.Column="0"
-                    Visibility="{Binding ExpandNotes, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Command="{Binding SwitchMarkdownHeightCommand}" />
+                        Grid.Column="0"
+                        Visibility="{Binding ExpandNotes, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Command="{Binding SwitchMarkdownHeightCommand}" />
 
                 <Button Content="&#xE104;" FontFamily="Segoe MDL2 Assets"
-                    Grid.Column="1" Margin="10,0,0,0"
-                    Command="{Binding SwitchEditorVisibilityCommand}"/>
+                        Grid.Column="1" Margin="10,0,0,0"
+                        Command="{Binding SwitchEditorVisibilityCommand}"/>
 
             </Grid>
-
+            
             <StackPanel x:Name="EditSection" Visibility="{Binding EditorVisibility}" Margin="0,15,0,0">
                 <DockPanel>
                     <TextBlock Text="{DynamicResource PlayNotes_EditorNoteTitleLabel}" VerticalAlignment="Center"  Margin="0,0,10,0"/>

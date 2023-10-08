@@ -36,10 +36,13 @@ namespace PlayNotes.PlayniteControls
         private readonly LiteDbRepository<MarkdownDatabaseItem> _notesDatabase;
         private readonly DesktopView ActiveViewAtCreation;
         private readonly DispatcherTimer _updateControl;
+        
         private bool _multipleNotesAvailable = false;
         private bool _isSelectedItemFirst = false;
         private bool _isSelectedItemLast = false;
         private Game currentGame = null;
+
+        public SteamGuideImporter SteamGuideImporter { get; }
 
         private PlayNote _selectedNotes;
         public PlayNote SelectedNotes
@@ -101,6 +104,22 @@ namespace PlayNotes.PlayniteControls
             }
         }
 
+        public Visibility _toolsVisibility = Visibility.Collapsed;
+        public Visibility ToolsVisibility
+        {
+            get { return _toolsVisibility; }
+            set
+            {
+                if (_toolsVisibility == value)
+                {
+                    return;
+                }
+
+                _toolsVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Visibility _notesSectionVisibility = Visibility.Collapsed;
         public Visibility NotesSectionVisibility
         {
@@ -134,6 +153,7 @@ namespace PlayNotes.PlayniteControls
             _updateControl.Interval = TimeSpan.FromMilliseconds(300);
             _updateControl.Tick += UpdateControl_Tick;
             SetControlTextBlockStyle();
+            SteamGuideImporter = new SteamGuideImporter(playniteApi);
         }
 
         private void UpdateControl_Tick(object sender, EventArgs e)
@@ -206,8 +226,10 @@ namespace PlayNotes.PlayniteControls
             SelectedNotes = CurrentGameNotes.Notes.HasItems() ? CurrentGameNotes.Notes.First() : null;
             ExpandNotes = false;
             EditorVisibility = Visibility.Collapsed;
+            ToolsVisibility = Visibility.Collapsed;
             Visibility = Visibility.Visible;
             Settings.IsControlVisible = true;
+            SteamGuideImporter.ResetValues();
             UpdateSectionsVisibilityAndCanExecute();
         }
 
@@ -237,6 +259,7 @@ namespace PlayNotes.PlayniteControls
             OnPropertyChanged(nameof(MoveNoteNextCommand));
             OnPropertyChanged(nameof(MoveNotePreviousCommand));
             OnPropertyChanged(nameof(RemoveCurrentItemCommand));
+            OnPropertyChanged(nameof(ImportSteamGuideCommand));
         }
 
         private void AddItem()
@@ -304,6 +327,29 @@ namespace PlayNotes.PlayniteControls
             }
         }
 
+        private void ImportSteamGuide()
+        {
+            var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("PlayNotes_SteamGuideImporterImportingMessage"), true)
+            {
+                IsIndeterminate = true
+            };
+
+            var importSuccessful = false;
+            _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    importSuccessful = SteamGuideImporter.ImportSteamGuide(CurrentGameNotes, a.CancelToken);
+                });
+            }, progressOptions);
+
+            if (importSuccessful)
+            {
+                SelectedNotes = CurrentGameNotes.Notes.FirstOrDefault();
+                UpdateSectionsVisibilityAndCanExecute();
+            }
+        }
+
         public RelayCommand SwitchMarkdownHeightCommand
         {
             get => new RelayCommand(() =>
@@ -318,6 +364,14 @@ namespace PlayNotes.PlayniteControls
             {
                 EditorVisibility = EditorVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
             }, () => !(SelectedNotes is null));
+        }
+
+        public RelayCommand SwitchToolsVisibilityCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ToolsVisibility = ToolsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            });
         }
 
         public RelayCommand RemoveCurrentItemCommand
@@ -360,5 +414,12 @@ namespace PlayNotes.PlayniteControls
             });
         }
 
+        public RelayCommand ImportSteamGuideCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ImportSteamGuide();
+            }, () => !(CurrentGameNotes is null));
+        }
     }
 }

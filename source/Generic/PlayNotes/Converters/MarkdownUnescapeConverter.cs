@@ -17,7 +17,8 @@ namespace PlayNotes.Converters
         {
             if (value is string markdownText)
             {
-                markdownText = MarkdownEscapeRegex.Replace(markdownText, "$1");
+                //markdownText = MarkdownEscapeRegex.Replace(markdownText, "$1"); // For some reason the \ escape character is displayed
+                markdownText = Regex.Replace(markdownText, "\n", "\n\n"); // For some reason single line breaks sometimes don't result in a new line being displayed
                 return markdownText;
             }
 
