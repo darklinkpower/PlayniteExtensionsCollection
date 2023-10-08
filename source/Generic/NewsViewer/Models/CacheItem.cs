@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace NewsViewer.Models
 {
-    public class GamePlayersCountCache
+    public class CacheItem<T>
     {
         public readonly DateTime CreationDate;
-        public readonly long PlayerCount;
+        public readonly T Item;
 
-        public GamePlayersCountCache(DateTime creationDate, long playerCount)
+        public CacheItem(DateTime creationDate, T newsNodes)
         {
             CreationDate = creationDate;
-            PlayerCount = playerCount;
+            Item = newsNodes;
         }
     }
 }

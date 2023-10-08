@@ -40,7 +40,7 @@ namespace NewsViewer.PluginControls
         }
 
         IPlayniteAPI PlayniteApi;
-        private readonly PlayersCountCacheManager playersCountCacheManager;
+        private readonly CacheManager<NumberOfPlayersResponse> playersCountCacheManager;
         private readonly DispatcherTimer updateControlDataDelayTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
         private static string steamApiGetCurrentPlayersMask = @"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid={0}";
@@ -61,9 +61,9 @@ namespace NewsViewer.PluginControls
         }
         
         private string steamId = null;
-        private long inGamePlayersCount = 0;
+        private int inGamePlayersCount = 0;
 
-        public long InGamePlayersCount
+        public int InGamePlayersCount
         {
             get => inGamePlayersCount;
             set
@@ -73,7 +73,7 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        public PlayersInGameViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, PlayersCountCacheManager playersCountCacheManager)
+        public PlayersInGameViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, CacheManager<NumberOfPlayersResponse> playersCountCacheManager)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
@@ -110,7 +110,7 @@ namespace NewsViewer.PluginControls
             steamId = null;
             SettingsModel.Settings.PlayersCountAvailable = false;
 
-            if (currentGame == null || !SettingsModel.Settings.EnablePlayersCountControl)
+            if (currentGame is null || !SettingsModel.Settings.EnablePlayersCountControl)
             {
                 currentGameId = Guid.Empty;
                 updateControlDataDelayTimer.Stop();
@@ -140,7 +140,7 @@ namespace NewsViewer.PluginControls
 
         private void UpdateControl()
         {
-            if (currentGame == null)
+            if (currentGame is null)
             {
                 return;
             }
@@ -151,8 +151,8 @@ namespace NewsViewer.PluginControls
                 return;
             }
 
-            var processingId = currentGame.Id;
-            currentGameId = processingId;
+            var contextGameId = currentGame.Id;
+            currentGameId = contextGameId;
             Task.Run(() =>
             {
                 var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
@@ -175,9 +175,9 @@ namespace NewsViewer.PluginControls
                         return;
                     }
 
-                    var savedCache = playersCountCacheManager.SaveCache(processingId, data.Response.PlayerCount);
+                    var savedCache = playersCountCacheManager.SaveCache(contextGameId, data);
                     // To detect if game changed while downloading data
-                    if (currentGameId != null && processingId == currentGameId)
+                    if (currentGameId != null && contextGameId == currentGameId)
                     {
                         UpdatePlayersCount(savedCache);
                     }
@@ -185,9 +185,9 @@ namespace NewsViewer.PluginControls
             });
         }
 
-        private void UpdatePlayersCount(GamePlayersCountCache playersCountCache)
+        private void UpdatePlayersCount(CacheItem<NumberOfPlayersResponse> cacheItem)
         {
-            InGamePlayersCount = playersCountCache.PlayerCount;
+            InGamePlayersCount = cacheItem.Item.Response.PlayerCount;
             ControlVisibility = Visibility.Visible;
             SettingsModel.Settings.PlayersCountAvailable = true;
         }

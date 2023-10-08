@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -376,6 +377,33 @@ namespace PlayniteUtilitiesCommon
                 webView.Navigate(url);
                 webView.OpenDialog();
             }
+        }
+
+        public static CultureInfo GetPlayniteMatchingLanguageCulture(CultureInfo defaultCulture = null)
+        {
+            if (defaultCulture is null)
+            {
+                defaultCulture = CultureInfo.InvariantCulture;
+            }
+
+            var settingsLanguage = API.Instance.ApplicationSettings.Language;
+            try
+            {
+                var cultureParts = settingsLanguage.Split('_');
+                if (cultureParts.Length == 2)
+                {
+                    var languageCode = cultureParts[0];
+                    var regionCode = cultureParts[1];
+
+                    return new CultureInfo($"{languageCode}-{regionCode}");
+                }
+            }
+            catch (CultureNotFoundException e)
+            {
+                logger.Error(e, $"Culture not found for language: {settingsLanguage}");
+            }
+
+            return defaultCulture;
         }
     }
 }

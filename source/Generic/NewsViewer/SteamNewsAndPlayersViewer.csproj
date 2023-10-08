@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.46.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlAgilityPack.1.11.46\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
     </Reference>
@@ -161,11 +164,10 @@
       <Link>Shared\WebCommon\Models\DownloadStringResult.cs</Link>
     </Compile>
     <Compile Include="Controls\HtmlTextView.cs" />
-    <Compile Include="Models\GamePlayersCountCache.cs" />
-    <Compile Include="NewsCacheManager.cs" />
-    <Compile Include="Models\NewsRequestCache.cs" />
+    <Compile Include="Models\SteamNewsRssFeed.cs" />
+    <Compile Include="CacheManager.cs" />
+    <Compile Include="Models\CacheItem.cs" />
     <Compile Include="Models\NumberOfPlayersResponse.cs" />
-    <Compile Include="PlayersCountCacheManager.cs" />
     <Compile Include="NewsViewer.cs" />
     <Compile Include="NewsViewerSettings.cs" />
     <Compile Include="NewsViewerSettingsView.xaml.cs">

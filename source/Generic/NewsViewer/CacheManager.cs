@@ -7,16 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace NewsViewer
 {
-    public class PlayersCountCacheManager
+    public class CacheManager<T>
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly ConcurrentDictionary<Guid, GamePlayersCountCache> cacheDictionary = new ConcurrentDictionary<Guid, GamePlayersCountCache>();
+        private readonly ConcurrentDictionary<Guid, CacheItem<T>> cacheDictionary = new ConcurrentDictionary<Guid, CacheItem<T>>();
         private readonly DispatcherTimer cacheCleanupTimer;
 
-        public PlayersCountCacheManager()
+        public CacheManager()
         {
             cacheCleanupTimer = new DispatcherTimer();
             cacheCleanupTimer.Interval = TimeSpan.FromSeconds(20);
@@ -42,7 +43,7 @@ namespace NewsViewer
             }
         }
 
-        public GamePlayersCountCache GetCache(Guid gameId)
+        public CacheItem<T> GetCache(Guid gameId)
         {
             if (cacheDictionary.TryGetValue(gameId, out var cache))
             {
@@ -54,10 +55,10 @@ namespace NewsViewer
             }
         }
 
-        public GamePlayersCountCache SaveCache(Guid gameId, long playersCount)
+        public CacheItem<T> SaveCache(Guid id, T item)
         {
-            var cache = new GamePlayersCountCache(DateTime.Now, playersCount);
-            cacheDictionary[gameId] = cache;
+            var cache = new CacheItem<T>(DateTime.Now, item);
+            cacheDictionary[id] = cache;
             cacheCleanupTimer.Start();
             return cache;
         }

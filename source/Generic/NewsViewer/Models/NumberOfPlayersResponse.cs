@@ -10,13 +10,13 @@ namespace NewsViewer.Models
     public class NumberOfPlayersResponse
     {
         [SerializationPropertyName("response")]
-        public Response Response { get; set; }
+        public NumberOfPlayersResponseResponse Response { get; set; }
     }
 
-    public class Response
+    public class NumberOfPlayersResponseResponse
     {
         [SerializationPropertyName("player_count")]
-        public long PlayerCount { get; set; }
+        public int PlayerCount { get; set; }
 
         [SerializationPropertyName("result")]
         public int Result { get; set; }

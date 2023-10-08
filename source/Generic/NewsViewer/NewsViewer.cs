@@ -1,4 +1,5 @@
-﻿using NewsViewer.PluginControls;
+﻿using NewsViewer.Models;
+using NewsViewer.PluginControls;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
@@ -17,8 +18,8 @@ namespace NewsViewer
     public class NewsViewer : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly NewsCacheManager newsCacheManager = new NewsCacheManager();
-        private readonly PlayersCountCacheManager playersCountCacheManager = new PlayersCountCacheManager();
+        private readonly CacheManager<SteamNewsRssFeed> newsCacheManager = new CacheManager<SteamNewsRssFeed>();
+        private readonly CacheManager<NumberOfPlayersResponse> playersCountCacheManager = new CacheManager<NumberOfPlayersResponse>();
         private readonly string steamApiLanguage;
 
         public NewsViewerSettingsViewModel settings { get; set; }
