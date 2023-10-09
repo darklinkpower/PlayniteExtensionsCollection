@@ -4,22 +4,22 @@
     <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Risoluzione</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuSectionDisplayRefreshRate">Frequenza di aggiornamento</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Cancella configurazione risoluzione</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Clear display refresh rate configuration</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Cancella la configurazione della frequenza di aggiornamento dello schermo</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Set launch resolution to {0}x{1} ({2})</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Set launch display frequency to {0}Hz</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Cambia la risoluzione solo quando non ci sono giochi in esecuzione</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Fatto</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Display:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_ResolutionLabel">Resolution:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Refresh Rate:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Display modes:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Global settings</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Playnite Mode:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Use configured display:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Enabling this option and selecting a display will ensure that the extension exclusively applies the configured changes to the chosen display whenever a game is launched.
-Additionally, if the selected display isn't already the primary screen, it will be set as the primary.
+    <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Schermo:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ResolutionLabel">Risoluzione:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Frequenza di aggiornamento:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Modalità di visualizzazione:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Impostazioni globali</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Modalità Playnite:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Usa display configurato:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Abilitando questa opzione e selezionando un display si assicurerà che l'estensione applichi esclusivamente le modifiche configurate al display scelto ogni volta che un gioco viene avviato.
+Inoltre, se il display selezionato non è già lo schermo principale, verrà impostato come lo schermo principale.
 
-On the other hand, if this option is disabled, the extension will apply the configured settings to the current primary display at the moment a game is launched.</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Set</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Clear</sys:String>
+D'altra parte, se questa opzione è disabilitata, l'estensione applicherà le impostazioni configurate al display primario corrente al momento in cui viene avviato un gioco.</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Imposta</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Cancella</sys:String>
 </ResourceDictionary>
