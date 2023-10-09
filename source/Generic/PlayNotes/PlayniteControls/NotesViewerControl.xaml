@@ -80,25 +80,15 @@
 
             <mdxam:MarkdownScrollViewer x:Name="NotesRenderer" Margin="0,10,0,0"
                                         Engine="{StaticResource MdEngine}"
+                                        FontSize="{DynamicResource FontSize}"
+                                        FontFamily="{DynamicResource FontFamily}"
+                                        Foreground="{DynamicResource TextBrush}"
                                     VerticalAlignment="Stretch"
                                     HorizontalAlignment="Stretch"
                                     MarkdownStyle="{Binding Settings.MarkdownStyle}"
                                     Markdown="{Binding SelectedNotes.Text, Mode=OneWay, Converter={StaticResource MarkdownUnescapeConverter}}">
                 <mdxam:MarkdownScrollViewer.Style>
                     <Style TargetType="mdxam:MarkdownScrollViewer">
-                        <Style.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant" />
-                                <Setter Property="Stretch" Value="Uniform" />
-                                <Setter Property="StretchDirection" Value="DownOnly" />
-                                <Setter Property="MaxWidth" Value="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type mdxam:MarkdownScrollViewer}}}" />
-                                <Style.Triggers>
-                                    <Trigger Property="Tag" Value="imageright">
-                                        <Setter Property="Margin"  Value="20,0,0,0" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Style.Resources>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ExpandNotes}" Value="False">
                                 <Setter Property="MaxHeight" Value="400" />

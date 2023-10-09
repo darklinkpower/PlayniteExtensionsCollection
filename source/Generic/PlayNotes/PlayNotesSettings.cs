@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace PlayNotes
@@ -69,13 +71,18 @@ namespace PlayNotes
             var markdownStyle = MarkdownStyle.Sasabune;
             if (markdownStyle.Resources[typeof(Image)] is Style imageStyle)
             {
-                markdownStyle.Resources.Remove(typeof(Image));
+                imageStyle.Setters.Add(new Setter(RenderOptions.BitmapScalingModeProperty, BitmapScalingMode.Fant));
+                imageStyle.Setters.Add(new Setter(Image.StretchProperty, Stretch.Uniform));
+                imageStyle.Setters.Add(new Setter(Image.StretchDirectionProperty, StretchDirection.DownOnly));
 
-                // For some reason nothing of this works to stretch the image so a max width dependency
-                /// needs to be set in xaml
-                //imageStyle.Setters.Add(new Setter(Image.StretchProperty, Stretch.Uniform));
-                //imageStyle.Setters.Add(new Setter(Image.StretchDirectionProperty, StretchDirection.DownOnly));
-                //imageStyle.Setters.Add(new Setter(FrameworkElement.MaxWidthProperty, double.PositiveInfinity));
+                var maxWidthBinding = new Binding("ActualWidth");
+                var relativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
+                {
+                    AncestorType = typeof(MarkdownScrollViewer)
+                };
+
+                maxWidthBinding.RelativeSource = relativeSource;
+                imageStyle.Setters.Add(new Setter(Image.MaxWidthProperty, maxWidthBinding));
             }
 
             settings.MarkdownStyle = markdownStyle;
