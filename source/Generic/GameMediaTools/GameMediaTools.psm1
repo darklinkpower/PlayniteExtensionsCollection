@@ -42,15 +42,10 @@ function OpenMetadataFolder
         $scriptGameMenuItemActionArgs
     )
 
-    # Set GameDatabase
-    $gameDatabase = $PlayniteApi.MainView.SelectedGames
-    
-    foreach ($game in $gameDatabase) {
-        # Set metadata folder directory
-        $directory = Join-Path $PlayniteApi.Database.DatabasePath -ChildPath "Files" | Join-Path -ChildPath $game.Id
+    foreach ($game in $scriptGameMenuItemActionArgs.Games) {
+        $directory = [System.IO.Path]::Combine($PlayniteApi.Database.DatabasePath, "Files", $game.Id)
         
-        # Verify if metadata folder exists and open
-        if (Test-Path $directory)
+        if ([System.IO.Directory]::Exists($directory))
         {
             Invoke-Item $directory
         }
