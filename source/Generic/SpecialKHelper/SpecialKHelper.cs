@@ -116,7 +116,7 @@ namespace SpecialKHelper
             
             using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Kaldaien\Special K"))
             {
-                if (key == null)
+                if (key is null)
                 {
                     logger.Debug("Special K Registry subkey not found");
                     PlayniteApi.Notifications.Add(new NotificationMessage(
@@ -130,7 +130,7 @@ namespace SpecialKHelper
                 }
 
                 var pathValue = key.GetValue("Path");
-                if (pathValue == null)
+                if (pathValue is null)
                 {
                     logger.Debug("Special K Path registry key not found");
                     PlayniteApi.Notifications.Add(new NotificationMessage(
@@ -395,7 +395,7 @@ namespace SpecialKHelper
         private int ValidateIniValue(IniData ini, string key, string subKey, string newValue)
         {
             var currentValue = ini[key][subKey];
-            if (currentValue == null || currentValue != newValue)
+            if (currentValue is null || currentValue != newValue)
             {
                 ini[key][subKey] = newValue;
                 logger.Info($"Default ini validated and updated value in [{key}]{subKey} to \"{newValue}\"");

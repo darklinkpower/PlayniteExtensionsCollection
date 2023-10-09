@@ -75,7 +75,7 @@ namespace ExtraMetadataLoader.Services
             }
 
             var steamAppDetails = SteamWeb.GetSteamAppDetails(steamId);
-            if (steamAppDetails == null || steamAppDetails.data.Movies == null || steamAppDetails.data.Movies.Count == 0)
+            if (steamAppDetails is null || steamAppDetails.data.Movies is null || steamAppDetails.data.Movies.Count == 0)
             {
                 return false;
             }

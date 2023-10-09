@@ -13,8 +13,8 @@ namespace SteamSearch
 {
     public class SteamSearcher : SearchContext
     {
-        private readonly SteamSearchSettingsViewModel settings;
-        private const string steamUriOpenUrlMask = @"steam://openurl/{0}";
+        private readonly SteamSearchSettingsViewModel _settings;
+        private const string _steamUriOpenUrlMask = @"steam://openurl/{0}";
 
         public SteamSearcher(SteamSearchSettingsViewModel settings)
         {
@@ -22,7 +22,7 @@ namespace SteamSearch
             Label = ResourceProvider.GetString("LOCSteam_Search_SteamStoreLabel");
             Hint = ResourceProvider.GetString("LOCSteam_Search_SearcherHint");
             Delay = 600;
-            this.settings = settings;
+            this._settings = settings;
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -55,14 +55,14 @@ namespace SteamSearch
 
             searchItem.SecondaryAction = new SearchItemAction(
                 ResourceProvider.GetString("LOCSteam_Search_ItemActionLabelOpenOnSteam"),
-                () => { ProcessStarter.StartUrl(string.Format(steamUriOpenUrlMask, searchResult.StoreUrl));});
+                () => { ProcessStarter.StartUrl(string.Format(_steamUriOpenUrlMask, searchResult.StoreUrl));});
 
             return searchItem;
         }
 
         private string GetSearchItemName(StoreSearchResult searchResult)
         {
-            if (settings.Settings.IndicateIfGameIsInLibrary && settings.Settings.SteamIdsInLibrary.Contains(searchResult.GameId))
+            if (_settings.Settings.IndicateIfGameIsInLibrary && _settings.Settings.SteamIdsInLibrary.Contains(searchResult.GameId))
             {
                 return $"{searchResult.Name} - {ResourceProvider.GetString("LOCSteam_Search_ItemActionIndicateGameInLibrary")}";
             }
@@ -99,9 +99,9 @@ namespace SteamSearch
 
         private List<StoreSearchResult> GetStoreSearchResults(string searchTerm)
         {
-            if (settings.Settings.UseCountryStore)
+            if (_settings.Settings.UseCountryStore)
             {
-                return SteamWeb.GetSteamSearchResults(searchTerm, settings.Settings.SelectedManualCountry);
+                return SteamWeb.GetSteamSearchResults(searchTerm, _settings.Settings.SelectedManualCountry);
             }
             else
             {

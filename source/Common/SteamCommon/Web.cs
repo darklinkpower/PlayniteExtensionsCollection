@@ -31,7 +31,7 @@ namespace SteamCommon
 
             var matchingGameName = normalizedName.GetMatchModifiedName();
             var exactMatch = results.FirstOrDefault(x => x.Name.GetMatchModifiedName() == matchingGameName);
-            if (exactMatch != null)
+            if (!(exactMatch is null))
             {
                 logger.Info($"Found steam id for search {searchTerm} via steam search, Id: {exactMatch.GameId}");
                 return exactMatch.GameId;
@@ -75,8 +75,16 @@ namespace SteamCommon
                     {
                         // Game has pricing data
                         var discountBlock = priceData.QuerySelector(".discount_block");
-                        discountPercentage = int.Parse(discountBlock.GetAttribute("data-discount"));
-                        priceFinal = int.Parse(discountBlock.GetAttribute("data-price-final")) * 0.01;
+                        if (discountBlock.HasAttribute("data-discount"))
+                        {
+                            discountPercentage = int.Parse(discountBlock.GetAttribute("data-discount"));
+                        }
+
+                        if (discountBlock.HasAttribute("data-price-final"))
+                        {
+                            priceFinal = int.Parse(discountBlock.GetAttribute("data-price-final")) * 0.01;
+                        }
+
                         priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
                         isDiscounted = priceFinal != priceOriginal && priceOriginal != 0;
                         GetCurrencyFromSearchPriceDiv(priceData, out currency, out isReleased, out isFree);
