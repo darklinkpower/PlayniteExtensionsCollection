@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="PlayNotes_NewNoteLabel">New note</sys:String>
-    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notes for {0} saved.</sys:String>
-    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Title:</sys:String>
-    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Note:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam Guide Importer</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importing Steam guide…</sys:String>
-    <sys:String x:Key="PlayNotes_InvalidUrlMessage">Url is invalid.</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Failed to obtain guide.</sys:String>
-    <sys:String x:Key="PlayNotes_ImportLabel">Import</sys:String>
-    <sys:String x:Key="PlayNotes_UrlInputLabel">Url:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Import each section as a separate note</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Clear existing notes</sys:String>
+    <sys:String x:Key="PlayNotes_NewNoteLabel">Nova nota</sys:String>
+    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notas de {0} guardadas.</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Titulo:</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Nota:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Importador do Guia Steam</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">A importar o guia Steam...</sys:String>
+    <sys:String x:Key="PlayNotes_InvalidUrlMessage">O URL é inválido.</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Não foi possível obter o guia.</sys:String>
+    <sys:String x:Key="PlayNotes_ImportLabel">Importar</sys:String>
+    <sys:String x:Key="PlayNotes_UrlInputLabel">URL:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Importar cada secção como uma nota separada</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Limpar notas existentes</sys:String>
 </ResourceDictionary>
