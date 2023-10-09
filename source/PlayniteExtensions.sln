@@ -79,7 +79,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNDBMetadata", "Metadata\VN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayNotes", "Generic\PlayNotes\PlayNotes.csproj", "{4A94B45A-B63C-487F-990E-7BD0C5B10B5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseCommon", "DatabaseCommon\DatabaseCommon.csproj", "{3B45BE73-7CA4-4FEF-AA74-EC33A41C631C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseCommon", "Common\DatabaseCommon\DatabaseCommon.csproj", "{3B45BE73-7CA4-4FEF-AA74-EC33A41C631C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

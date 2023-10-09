@@ -174,13 +174,13 @@
     <Compile Include="..\..\common\webcommon\models\DownloadStringResult.cs">
       <Link>Shared\WebCommon\Models\DownloadStringResult.cs</Link>
     </Compile>
-    <Compile Include="..\..\DatabaseCommon\IDatabaseItem.cs">
+    <Compile Include="..\..\common\DatabaseCommon\IDatabaseItem.cs">
       <Link>Shared\DatabaseCommon\IDatabaseItem.cs</Link>
     </Compile>
-    <Compile Include="..\..\DatabaseCommon\IRepository.cs">
+    <Compile Include="..\..\common\DatabaseCommon\IRepository.cs">
       <Link>Shared\DatabaseCommon\IRepository.cs</Link>
     </Compile>
-    <Compile Include="..\..\DatabaseCommon\LiteDbRepository.cs">
+    <Compile Include="..\..\common\DatabaseCommon\LiteDbRepository.cs">
       <Link>Shared\DatabaseCommon\LiteDbRepository.cs</Link>
     </Compile>
     <Compile Include="Converters\MarkdownUnescapeConverter.cs" />
