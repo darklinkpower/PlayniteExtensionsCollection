@@ -164,6 +164,7 @@
       <Link>Shared\WebCommon\Models\DownloadStringResult.cs</Link>
     </Compile>
     <Compile Include="Controls\HtmlTextView.cs" />
+    <Compile Include="Models\SteamHtmlTransformDefinition.cs" />
     <Compile Include="Models\SteamNewsRssFeed.cs" />
     <Compile Include="CacheManager.cs" />
     <Compile Include="Models\CacheItem.cs" />

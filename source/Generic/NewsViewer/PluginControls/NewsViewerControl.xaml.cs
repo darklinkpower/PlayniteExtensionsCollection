@@ -54,6 +54,7 @@ namespace NewsViewer.PluginControls
         private readonly string steamLanguage;
         private readonly DesktopView ActiveViewAtCreation;
         private readonly CultureInfo _dateTimeConvertCulture;
+        private readonly List<SteamHtmlTransformDefinition> _descriptionTransformElems;
         private List<RssItem> newsNodes = new List<RssItem>();
         private int selectedNewsIndex;
         private bool multipleNewsAvailable;
@@ -62,7 +63,7 @@ namespace NewsViewer.PluginControls
 
         public string NewsTitle => CurrentNewsNode?.Title ?? string.Empty;
         public string NewsDate => CurrentNewsNode?.PubDate.ToString("ddd, MMMM d yyyy HH:mm", _dateTimeConvertCulture) ?? string.Empty;
-        public string NewsText => CurrentNewsNode?.Description ?? string.Empty;
+        public string NewsText => CleanSteamNewsDescription(CurrentNewsNode?.Description ?? string.Empty);
         private RssItem currentNewsNode;
         public RssItem CurrentNewsNode
         {
@@ -143,6 +144,16 @@ namespace NewsViewer.PluginControls
             var dateTimeConvertCulture = PlayniteUtilities.GetPlayniteMatchingLanguageCulture();
             _dateTimeConvertCulture = dateTimeConvertCulture;
             SetControlTextBlockStyle();
+
+            _descriptionTransformElems = new List<SteamHtmlTransformDefinition>()
+            {
+                new SteamHtmlTransformDefinition("span", "bb_strike", "strike"),
+                new SteamHtmlTransformDefinition("div", "bb_h1", "h1"),
+                new SteamHtmlTransformDefinition("div", "bb_h2", "h2"),
+                new SteamHtmlTransformDefinition("div", "bb_h3", "h3"),
+                new SteamHtmlTransformDefinition("div", "bb_h4", "h4"),
+                new SteamHtmlTransformDefinition("div", "bb_h5", "h5")
+            };
         }
 
         private static string CleanSteamNewsDescription(string str)
@@ -390,7 +401,7 @@ namespace NewsViewer.PluginControls
             });
         }
 
-        private static SteamNewsRssFeed ParseRssResponse(string xmlContent)
+        private SteamNewsRssFeed ParseRssResponse(string xmlContent)
         {
             try
             {
@@ -417,12 +428,12 @@ namespace NewsViewer.PluginControls
                     return rssFeed;
                 }
 
+                var descriptionDocument = new HtmlDocument();
                 foreach (var itemNode in itemNodes)
                 {
                     var rssItem = new RssItem
                     {
                         Title = itemNode.SelectSingleNode(".//title")?.InnerText.HtmlDecode(),
-                        Description = itemNode.SelectSingleNode(".//description")?.InnerText.HtmlDecode(),
                         Link = itemNode.SelectSingleNode(".//guid")?.InnerText,
                         PubDate = DateTime.ParseExact(itemNode.SelectSingleNode(".//pubdate")?.InnerText, "ddd, dd MMM yyyy HH:mm:ss zzz", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal),
                         Author = itemNode.SelectSingleNode(".//author")?.InnerText.HtmlDecode(),
@@ -433,16 +444,51 @@ namespace NewsViewer.PluginControls
                         }
                     };
 
-                    rssItem.Description = CleanSteamNewsDescription(rssItem.Description);
+                    var descriptionNode = itemNode.SelectSingleNode(".//description");
+                    if (!(descriptionNode is null))
+                    {
+                        descriptionDocument.LoadHtml(descriptionNode.InnerText.HtmlDecode());
+                        FixNewsDescriptionElements(descriptionDocument);
+                        rssItem.Description = descriptionDocument.DocumentNode.InnerHtml;
+                    }
+
                     rssFeed.Channel.Items.Add(rssItem);
                 }
 
+                
                 return rssFeed;
             }
             catch (Exception e)
             {
                 logger.Error(e, "Error while parsing rss feed");
                 return null;
+            }
+        }
+
+        private void FixNewsDescriptionElements(HtmlDocument descriptionDocument)
+        {
+            if (!descriptionDocument.DocumentNode.HasChildNodes)
+            {
+                return;
+            }
+
+            foreach (var childNode in descriptionDocument.DocumentNode.ChildNodes)
+            {
+                foreach (var transformElem in _descriptionTransformElems)
+                {
+                    if (childNode.Name != transformElem.Name)
+                    {
+                        continue;
+                    }
+
+                    if (childNode.GetAttributeValue("class", string.Empty) != transformElem.ClassName)
+                    {
+                        continue;
+                    }
+
+                    childNode.Name = transformElem.NewName;
+                    break;
+                }
             }
         }
 
