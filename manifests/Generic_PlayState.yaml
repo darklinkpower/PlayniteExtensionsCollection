@@ -454,3 +454,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/PlayState_2_65.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.66
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2023-10-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/PlayState_2_66.pext
+    Changelog:
+    - 'Changed: Updated localizations'

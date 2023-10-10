@@ -80,3 +80,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.07.08_f601c982/NVIDIA_GE_GameStream_Export_2_12.pext
     Changelog:
     - 'Fix rare error related to paths handling'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-10-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/NVIDIA_GE_GameStream_Export_2_13.pext
+    Changelog:
+    - 'Changed: Updated localizations'

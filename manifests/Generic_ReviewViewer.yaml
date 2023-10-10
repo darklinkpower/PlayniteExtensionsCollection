@@ -294,3 +294,9 @@ Packages:
     - 'Improved processing of reviews text'
     - 'Fix quotes being displayed as code blocks'
     - 'Fix spaces after new lines being collapsed into a single space, causing text to be incorrectly displayed and breaking text art'
+  - Version: 2.45
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_45.pext
+    Changelog:
+    - 'Improved: Improvements to how reviews are processed during display'

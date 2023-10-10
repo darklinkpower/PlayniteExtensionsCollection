@@ -25,3 +25,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.27_1fcfc18d/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_3.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.4
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_4.pext
+    Changelog:
+    - 'Changed: Updated localizations'

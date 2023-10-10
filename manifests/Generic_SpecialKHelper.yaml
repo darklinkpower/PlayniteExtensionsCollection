@@ -178,3 +178,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_27.pext
     Changelog:
     - 'Add icons to game menu items'
+  - Version: 1.28
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_28.pext
+    Changelog:
+    - 'Fixed: Failing to obtain Steam store search results in some searches'
