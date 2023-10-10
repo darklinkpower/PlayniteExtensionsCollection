@@ -63,7 +63,7 @@
         </StackPanel>
         
         <StackPanel Visibility="{Binding NotesSectionVisibility}">
-            <TabControl Margin="0,15,0,0" ItemsSource="{Binding CurrentGameNotes.Notes}"
+            <TabControl x:Name="NotesTabControl" Margin="0,15,0,0" ItemsSource="{Binding CurrentGameNotes.Notes}"
                     SelectionChanged="TabControl_SelectionChanged"
                     SelectedItem="{Binding SelectedNotes}">
                 <TabControl.ItemTemplate>
@@ -73,31 +73,29 @@
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
-
-            <mdxam:MarkdownScrollViewer x:Name="NotesRenderer" Margin="0,10,0,0"
+                        <mdxam:MarkdownScrollViewer x:Name="NotesRenderer" Margin="0,10,0,0"
                                         Engine="{StaticResource MdEngine}"
                                         FontSize="{DynamicResource FontSize}"
                                         FontFamily="{DynamicResource FontFamily}"
                                         Foreground="{DynamicResource TextBrush}"
-                                    VerticalAlignment="Stretch"
-                                    HorizontalAlignment="Stretch"
-                                    MarkdownStyle="{Binding Settings.MarkdownStyle}"
-                                    Markdown="{Binding SelectedNotes.Text, Mode=OneWay, Converter={StaticResource MarkdownUnescapeConverter}}">
-                <mdxam:MarkdownScrollViewer.Style>
-                    <Style TargetType="mdxam:MarkdownScrollViewer">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ExpandNotes}" Value="False">
-                                <Setter Property="MaxHeight" Value="400" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </mdxam:MarkdownScrollViewer.Style>
-            </mdxam:MarkdownScrollViewer>
-
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        MarkdownStyle="{Binding ElementName=NotesTabControl, Path=DataContext.Settings.MarkdownStyle}"
+                                        Markdown="{Binding Text, Mode=OneWay, Converter={StaticResource MarkdownUnescapeConverter}}">
+                            <mdxam:MarkdownScrollViewer.Style>
+                                <Style TargetType="mdxam:MarkdownScrollViewer">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=NotesTabControl, Path=DataContext.ExpandNotes}" Value="False">
+                                            <Setter Property="MaxHeight" Value="400" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </mdxam:MarkdownScrollViewer.Style>
+                        </mdxam:MarkdownScrollViewer>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>
+            
             <Grid Margin="0,10,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
