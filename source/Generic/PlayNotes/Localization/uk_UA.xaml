@@ -12,9 +12,8 @@
     <sys:String x:Key="PlayNotes_UrlInputLabel">URL:</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Імпортувати кожен розділ як окрему нотатку</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Очистити наявні нотатки</sys:String>
-    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Import Playnite notes</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotes">Import Playnite notes</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Enter the title to be used in the imported notes:</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importing notes…</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notes import finished.</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Імпорт нотаток Playnite</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Введіть заголовок для нотаток, що імпортуються:</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Імпортування нотаток…</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Імпорт нотаток завершено.</sys:String>
 </ResourceDictionary>
