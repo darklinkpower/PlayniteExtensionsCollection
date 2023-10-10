@@ -13,7 +13,6 @@
     <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Import each section as a separate note</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Clear existing notes</sys:String>
     <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Import Playnite notes</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotes">Import Playnite notes</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Enter the title to be used in the imported notes:</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importing notes…</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notes import finished.</sys:String>
