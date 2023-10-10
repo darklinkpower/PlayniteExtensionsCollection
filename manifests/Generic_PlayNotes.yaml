@@ -1,8 +1,8 @@
 AddonId: PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1
 Packages:
-  - Version: 1.0
+  - Version: 1.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-10-10
-    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_0.pext
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_c7dac08a/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_1.pext
     Changelog:
     - 'Initial release'
