@@ -91,6 +91,22 @@ namespace DatabaseCommon
             return _collection.FindById(id);
         }
 
+        public T GetOrCreateById(BsonValue id)
+        {
+            T existingItem = GetById(id);
+            if (existingItem != null)
+            {
+                return existingItem;
+            }
+            else
+            {
+                var newItem = Activator.CreateInstance<T>();
+                newItem.Id = id;
+                Insert(newItem);
+                return newItem;
+            }
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _collection.FindAll();

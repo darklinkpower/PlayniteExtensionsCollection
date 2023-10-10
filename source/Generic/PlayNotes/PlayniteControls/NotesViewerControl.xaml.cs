@@ -210,17 +210,7 @@ namespace PlayNotes.PlayniteControls
 
         private void UpdateControl()
         {
-            var gameNotesItem = _notesDatabase.GetById(currentGame.Id);
-            if (gameNotesItem is null)
-            {
-                gameNotesItem = new MarkdownDatabaseItem()
-                {
-                    Id = currentGame.Id
-                };
-
-                _notesDatabase.Insert(gameNotesItem);
-            }
-
+            var gameNotesItem = _notesDatabase.GetOrCreateById(currentGame.Id);
             var clonedObject = gameNotesItem.GetClone();
             CurrentGameNotes = clonedObject;
             SelectedNotes = CurrentGameNotes.Notes.HasItems() ? CurrentGameNotes.Notes.First() : null;
