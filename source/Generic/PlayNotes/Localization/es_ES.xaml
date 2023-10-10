@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="PlayNotes_NewNoteLabel">Nueva nota</sys:String>
+    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notas para {0} guardadas.</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Título:</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Nota:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Importador de Guías de Steam</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importando guía de Steam…</sys:String>
+    <sys:String x:Key="PlayNotes_InvalidUrlMessage">La URL no es válida.</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Error al obtener la guía.</sys:String>
+    <sys:String x:Key="PlayNotes_ImportLabel">Importar</sys:String>
+    <sys:String x:Key="PlayNotes_UrlInputLabel">Url:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Importar cada sección como nota separada</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Borrar notas existentes</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Importar notas de Playnite</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Introduzca el título que se utilizará en las notas importadas:</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importando notas…</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Importación de notas terminada.</sys:String>
+</ResourceDictionary>

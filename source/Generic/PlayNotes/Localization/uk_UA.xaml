@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="PlayNotes_NewNoteLabel">Нова нотатка</sys:String>
+    <sys:String x:Key="PlayNotes_SavedNotesMessage">Нотатки для {0} збережено.</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Заголовок:</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Нотатка:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Імпорт посібника Steam</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Імпортування посібника зі Steam…</sys:String>
+    <sys:String x:Key="PlayNotes_InvalidUrlMessage">Неприпустима URL-адреса.</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Не вдалося отримати посібник.</sys:String>
+    <sys:String x:Key="PlayNotes_ImportLabel">Імпорт</sys:String>
+    <sys:String x:Key="PlayNotes_UrlInputLabel">URL:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Імпортувати кожен розділ як окрему нотатку</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Очистити наявні нотатки</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Імпорт нотаток Playnite</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Введіть заголовок для нотаток, що імпортуються:</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Імпортування нотаток…</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Імпорт нотаток завершено.</sys:String>
+</ResourceDictionary>

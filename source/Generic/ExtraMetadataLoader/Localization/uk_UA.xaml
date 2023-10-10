@@ -24,13 +24,13 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Горизонтальне вирівнювання логотипів</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Вертикальне вирівнювання логотипів</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">Увімкнути тінь</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel">Enable white and grayscale effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Depth</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direction</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Blur radius</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacity</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel">Brightness</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel">Maximum luminance</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel">Увімкнути ефект білого та відтінків сірого</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Глибина</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Напрямок</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Радіус розмиття</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Прозорість</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel">Яскравість</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel">Максимальна яскравість</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">Налаштування завантаження відео</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">Налаштування плеєра в режимі &quot;Деталі&quot;</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">Налаштування плеєра в режимі &quot;Сітка&quot;</sys:String>
@@ -67,9 +67,9 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Завантаження логотипів із Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Завантаження логотипів із SteamGridDB...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Завантаження відео з YouTube...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Failed to download video from YouTube.
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Не вдалося завантажити відео з YouTube.
 
-Please verify that your yt-dlp installation is up to date.</sys:String>
+Переконайтеся, що у вас встановлено останню версію yt-dlp.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Не вдалося завантажити логотип з Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Завантаження логотипів нещодавно доданих ігор...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Завантаження відео нещодавно доданих ігор...</sys:String>

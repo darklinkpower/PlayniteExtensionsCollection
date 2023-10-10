@@ -4,7 +4,7 @@
     <sys:String x:Key="LOCMameRenamer_MenuItemRenameNoRegionInNameDescription">Rename selected MAME games (Without region in game name)</sys:String>
     <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsBackgroundDescription">Import snapshots of selected game(s) as Background images from MAME into Playnite</sys:String>
     <sys:String x:Key="LOCMameRenamer_MenuItemSetSnapAsCoverDescription">Import snapshots of selected game(s) as Cover images from MAME into Playnite</sys:String>
-    <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">Select the MAME executable.</sys:String>
+    <sys:String x:Key="LOCMameRenamer_MameExecutableSelectMessage">Selecione o executável do MAME.</sys:String>
     <sys:String x:Key="LOCMameRenamer_MameExecutablePathSavedMessage">MAME executable path saved.</sys:String>
     <sys:String x:Key="LOCMameRenamer_MameExecutableNotFoundMessage" xml:space="preserve">MAME executable not found in {0}. 
 Please run the extension again to configure it to the correct location.</sys:String>

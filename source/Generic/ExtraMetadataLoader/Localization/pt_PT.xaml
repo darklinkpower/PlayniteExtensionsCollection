@@ -24,7 +24,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">Horizontal alignment of logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">Vertical alignment of logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">Enable shadow effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel">Enable white and grayscale effect</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel">Ativar o efeito de branco e de escala de cinzentos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Profundidade</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direção</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Raio de desfocagem</sys:String>
