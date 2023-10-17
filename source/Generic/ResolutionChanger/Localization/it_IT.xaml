@@ -5,8 +5,8 @@
     <sys:String x:Key="LOCDisplayHelper_MenuSectionDisplayRefreshRate">Frequenza di aggiornamento</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Cancella configurazione risoluzione</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Cancella la configurazione della frequenza di aggiornamento dello schermo</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Set launch resolution to {0}x{1} ({2})</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Set launch display frequency to {0}Hz</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Imposta la risoluzione all'avvio a {0}x{1} ({2})</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Imposta la frequenza del display all'avvio a {0}Hz</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Cambia la risoluzione solo quando non ci sono giochi in esecuzione</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Fatto</sys:String>
     <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Schermo:</sys:String>
