@@ -201,6 +201,7 @@
     <Compile Include="LogoProviders\SteamProvider.cs" />
     <Compile Include="Models\FfprobeVideoInfoOutput.cs" />
     <Compile Include="Models\GoogleImage.cs" />
+    <Compile Include="Models\LogoControlThemeSettings.cs" />
     <Compile Include="Models\SteamGridDbGameSearchResponse.cs" />
     <Compile Include="Models\SteamGridDbLogoResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

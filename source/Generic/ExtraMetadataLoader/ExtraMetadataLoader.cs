@@ -1,6 +1,7 @@
 ﻿using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Interfaces;
 using ExtraMetadataLoader.LogoProviders;
+using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
 using ExtraMetadataLoader.Views;
@@ -81,7 +82,8 @@ namespace ExtraMetadataLoader
                     "VideoLoaderControl_Controls_NoSound",
                     "VideoLoaderControl_NoControls_NoSound",
                     "VideoLoaderControl_NoControls_Sound",
-                    "LogoLoaderControl"
+                    "LogoLoaderControl",
+                    "LogoLoaderControl_DisableOpacityAnimation"
                 }
             });
 
@@ -160,7 +162,7 @@ namespace ExtraMetadataLoader
             switch (args.Name)
             {
                 case "LogoLoaderControl":
-                    return new LogoLoaderControl(PlayniteApi, settings.Settings, this);
+                    return new LogoLoaderControl(PlayniteApi, settings.Settings, this, new LogoControlThemeSettings());
                 case "VideoLoaderControl":
                     return GetVideoLoaderControl();
                 case "VideoLoaderControlAlternative":
@@ -169,6 +171,17 @@ namespace ExtraMetadataLoader
                     if (args.Name.StartsWith("VideoLoaderControl_"))
                     {
                         return GetVideoLoaderControlConfigured(args.Name);
+                    }
+                    
+                    if (args.Name.StartsWith("LogoLoaderControl_"))
+                    {
+                        var controlSettings = new LogoControlThemeSettings();
+                        if (args.Name.Contains("DisableOpacityAnimation"))
+                        {
+                            controlSettings.EnableOpacityAnimation = false;
+                        }
+
+                        return new LogoLoaderControl(PlayniteApi, settings.Settings, this, controlSettings);
                     }
 
                     return null;

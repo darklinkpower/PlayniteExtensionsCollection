@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using ExtraMetadataLoader.Models;
+using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using PluginsCommon;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -27,6 +29,8 @@ namespace ExtraMetadataLoader
         IPlayniteAPI PlayniteApi;
 
         private ExtraMetadataLoaderSettings _settings;
+        private readonly LogoControlThemeSettings _controlSettings;
+
         public ExtraMetadataLoaderSettings _Settings
         {
             get => _settings;
@@ -40,6 +44,7 @@ namespace ExtraMetadataLoader
         private Visibility controlVisibility = Visibility.Collapsed;
         private Game gameContext;
         private readonly Dispatcher _dispatcher;
+        private readonly DoubleAnimation _opacityAnimation;
 
         public Visibility ControlVisibility
         {
@@ -64,11 +69,12 @@ namespace ExtraMetadataLoader
 
         public DesktopView ActiveViewAtCreation { get; }
 
-        public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettings settings, ExtraMetadataLoader extraMetadataLoader)
+        public LogoLoaderControl(IPlayniteAPI PlayniteApi, ExtraMetadataLoaderSettings settings, ExtraMetadataLoader extraMetadataLoader, LogoControlThemeSettings controlThemeSettings)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
             _settings = settings;
+            _controlSettings = controlThemeSettings;
             DataContext = this;
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
@@ -76,6 +82,13 @@ namespace ExtraMetadataLoader
             }
 
             _dispatcher = Application.Current.Dispatcher;
+            _opacityAnimation = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 1.0,
+                Duration = TimeSpan.FromMilliseconds(950)
+            };
+
             extraMetadataLoader.LogoUpdatedEvent += ExtraMetadataLoader_LogoUpdatedEvent;
         }
 
@@ -135,6 +148,15 @@ namespace ExtraMetadataLoader
             LogoImage.Source = adjustedBitmap;
             _settings.IsLogoAvailable = true;
             ControlVisibility = Visibility.Visible;
+            StartLogoAnimation();
+        }
+
+        private void StartLogoAnimation()
+        {
+            if (_controlSettings.EnableOpacityAnimation && _settings.LogoEnableOpacityAnimation)
+            {
+                LogoImage.BeginAnimation(OpacityProperty, _opacityAnimation);
+            }
         }
 
         private BitmapImage CreateResizedBitmapImageFromPath(string filePath, int maxWidth, int maxHeight)

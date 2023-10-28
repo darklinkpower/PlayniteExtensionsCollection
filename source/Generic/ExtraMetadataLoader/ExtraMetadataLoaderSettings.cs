@@ -215,6 +215,17 @@ namespace ExtraMetadataLoader
             }
         }
 
+        private bool logoEnableOpacityAnimation { get; set; } = true;
+        public bool LogoEnableOpacityAnimation
+        {
+            get => logoEnableOpacityAnimation;
+            set
+            {
+                logoEnableOpacityAnimation = value;
+                OnPropertyChanged();
+            }
+        }
+
         [DontSerialize]
         private double logosShadowDepth { get; set; } = 0;
         public double LogosShadowDepth
