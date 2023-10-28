@@ -15,5 +15,5 @@
     <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Importer Playnite-notater</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Angi tittelen som skal brukes i de importerte notatene:</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importerer notater …</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notes import finished.</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Import av notater er fullført.</sys:String>
 </ResourceDictionary>
