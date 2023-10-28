@@ -103,7 +103,7 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Genererer Mikrovideoer fra videoer...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Prosesser logoer etter nedlasting</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Enable opacity animation</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Aktiver gjennomsiktighetsanimasjon</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Trim logoer</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Fjerner gjennomsiktig ramme rundt bilde</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Reduser størrelse</sys:String>
