@@ -13,8 +13,8 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamVideosOnDemandLabel">Потокові відео зі Steam за вимогою, якщо доступно</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoStreamSteamHighQualityLabel">Потокове відео в високій якості</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoShowControlsLabel">Показувати елементи керування відтворенням</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel">Непрозорість елементів керування відео</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">Непрозорість елементів керування відео під час наведення курсору на відео</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityLabel">Напівпрозорість елементів керування відео</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsOpacityMouseOverLabel">Напівпрозорість елементів керування відео під час наведення курсору на відео</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoControlsVerticalAlignmentLabel">Вертикальне вирівнювання елементів керування відео</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingVideoDefaultVolumeLabel">Гучність за замовчуванням</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHeaderLabel">Налаштування логотипів</sys:String>
@@ -28,7 +28,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Глибина</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Напрямок</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Радіус розмиття</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Непрозорість</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Напівпрозорість</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel">Яскравість</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel">Максимальна яскравість</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">Налаштування завантаження відео</sys:String>
@@ -103,7 +103,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Генерування мікро-відео з відео...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Обробляти логотипи після завантаження</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Увімкнути анімацію непрозорості</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Увімкнути анімацію напівпрозорості</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Обрізати логотипи</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Видаляє прозору рамку навколо зображення</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Зменшити розмір</sys:String>
