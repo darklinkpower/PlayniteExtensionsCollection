@@ -89,21 +89,18 @@ namespace PlayNotes
             if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle &&
                 baseStyle.TargetType == typeof(TextBlock))
             {
-                foreach(Setter s in baseStyle.Setters.Cast<Setter>())
+                var propertyMapping = new Dictionary<string, DependencyProperty>
                 {
-                    switch (s.Property.Name)
+                    { "FontSize", FlowDocument.FontSizeProperty },
+                    { "FontFamily", FlowDocument.FontFamilyProperty },
+                    { "Foreground", FlowDocument.ForegroundProperty }
+                };
+
+                foreach (SetterBase baseSetter in markdownStyle.Setters)
+                {
+                    if (baseSetter is Setter setter && propertyMapping.TryGetValue(setter.Property.Name, out var targetProperty))
                     {
-                        case "FontSize":
-                            markdownStyle.Setters.Add(new Setter(FlowDocument.FontSizeProperty, s.Value));
-                            break;
-
-                        case "FontFamily":
-                            markdownStyle.Setters.Add(new Setter(FlowDocument.FontFamilyProperty, s.Value));
-                            break;
-
-                        case "Foreground":
-                            markdownStyle.Setters.Add(new Setter(FlowDocument.ForegroundProperty, s.Value));
-                            break;
+                        markdownStyle.Setters.Add(new Setter(targetProperty, setter.Value));
                     }
                 }
             }
