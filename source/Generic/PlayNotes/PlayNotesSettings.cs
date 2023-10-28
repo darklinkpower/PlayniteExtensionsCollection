@@ -85,6 +85,29 @@ namespace PlayNotes
                 imageStyle.Setters.Add(new Setter(Image.MaxWidthProperty, maxWidthBinding));
             }
 
+            var baseStyleName = plugin.PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "BaseTextBlockStyle" : "TextBlockBaseStyle";
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle &&
+                baseStyle.TargetType == typeof(TextBlock))
+            {
+                foreach(Setter s in baseStyle.Setters.Cast<Setter>())
+                {
+                    switch (s.Property.Name)
+                    {
+                        case "FontSize":
+                            markdownStyle.Setters.Add(new Setter(FlowDocument.FontSizeProperty, s.Value));
+                            break;
+
+                        case "FontFamily":
+                            markdownStyle.Setters.Add(new Setter(FlowDocument.FontFamilyProperty, s.Value));
+                            break;
+
+                        case "Foreground":
+                            markdownStyle.Setters.Add(new Setter(FlowDocument.ForegroundProperty, s.Value));
+                            break;
+                    }
+                }
+            }
+
             settings.MarkdownStyle = markdownStyle;
         }
 
