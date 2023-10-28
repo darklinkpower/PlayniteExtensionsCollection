@@ -96,7 +96,7 @@ namespace PlayNotes
                     { "Foreground", FlowDocument.ForegroundProperty }
                 };
 
-                foreach (SetterBase baseSetter in markdownStyle.Setters)
+                foreach (SetterBase baseSetter in baseStyle.Setters)
                 {
                     if (baseSetter is Setter setter && propertyMapping.TryGetValue(setter.Property.Name, out var targetProperty))
                     {
