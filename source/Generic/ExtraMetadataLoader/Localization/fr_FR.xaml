@@ -103,6 +103,7 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Génération de micro vidéos à partir de vidéos...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Traiter les logos après téléchargement</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Enable opacity animation</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Ajuster les logos</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Supprime la bordure transparente autour de l'image</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Redimensionner</sys:String>
