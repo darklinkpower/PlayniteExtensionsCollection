@@ -103,6 +103,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Генерування мікро-відео з відео...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Обробляти логотипи після завантаження</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Enable opacity animation</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Обрізати логотипи</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Видаляє прозору рамку навколо зображення</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Зменшити розмір</sys:String>
