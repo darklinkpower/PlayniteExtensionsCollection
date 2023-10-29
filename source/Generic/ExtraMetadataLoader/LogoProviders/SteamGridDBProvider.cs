@@ -103,9 +103,14 @@ namespace ExtraMetadataLoader.LogoProviders
 
         private string GetSgdbRequestUrl(Game game, bool isBackgroundDownload)
         {
-            if (Steam.IsGameSteamGame(game))
+            // Standard steam game AppIDs typically stay within the uint32 range,
+            // while Steam mods use randomly generated IDs that exceed this limit
+            // for example, 15042072108903675942
+            // Source: https://partner.steamgames.com/doc/api/steam_api#AppId_t
+            // For this reason source mods should be matched by name
+            if (Steam.IsGameSteamGame(game) && uint.TryParse(game.GameId, out _))
             {
-                return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId.ToString()));
+                return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId));
             }
             else
             {
