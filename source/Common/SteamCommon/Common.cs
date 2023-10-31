@@ -34,7 +34,7 @@ namespace SteamCommon
 
         private static string GetSteamIdFromLinks(Game game)
         {
-            if (game.Links == null)
+            if (game.Links is null)
             {
                 return null;
             }

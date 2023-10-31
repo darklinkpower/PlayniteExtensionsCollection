@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Threading;
 
 namespace SteamCommon
 {
@@ -23,7 +24,7 @@ namespace SteamCommon
             return GetSteamSearchResults(searchTerm).Select(x => new GenericItemOption(x.Name, x.GameId)).ToList();
         }
 
-        public static string GetSteamIdFromSearch(string searchTerm)
+        public static string GetSteamIdFromSearch(string searchTerm, string steamApiCountry = null, CancellationToken cancelToken = default)
         {
             var normalizedName = searchTerm.NormalizeGameName();
             var results = GetSteamSearchResults(normalizedName);
@@ -41,10 +42,10 @@ namespace SteamCommon
             return null;
         }
 
-        public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null)
+        public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null, CancellationToken cancelToken = default)
         {
             var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpDownloader.DownloadString(GetStoreSearchUrl(searchTerm, steamApiCountry));
+            var searchPageSrc = HttpDownloader.DownloadString(GetStoreSearchUrl(searchTerm, steamApiCountry), cancelToken);
             if (searchPageSrc.Success)
             {
                 var parser = new HtmlParser();
@@ -176,10 +177,10 @@ namespace SteamCommon
         }
 
         private const string steamAppDetailsMask = @"https://store.steampowered.com/api/appdetails?appids={0}";
-        public static SteamAppDetails GetSteamAppDetails(string steamId)
+        public static SteamAppDetails GetSteamAppDetails(string steamId, CancellationToken cancelToken = default)
         {
             var url = string.Format(steamAppDetailsMask, steamId);
-            var downloadedString = HttpDownloader.DownloadString(url);
+            var downloadedString = HttpDownloader.DownloadString(url, cancelToken);
             if (downloadedString.Success)
             {
                 var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString.Result);
