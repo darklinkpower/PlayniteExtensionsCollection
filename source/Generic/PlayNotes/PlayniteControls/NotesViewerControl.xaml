@@ -75,6 +75,7 @@
                     <DataTemplate>
                         <mdxam:MarkdownScrollViewer x:Name="NotesRenderer" Margin="0,10,0,0"
                                         Engine="{StaticResource MdEngine}"
+                                        ClickAction="OpenBrowser"
                                         FontSize="{DynamicResource FontSize}"
                                         FontFamily="{DynamicResource FontFamily}"
                                         Foreground="{DynamicResource TextBrush}"
