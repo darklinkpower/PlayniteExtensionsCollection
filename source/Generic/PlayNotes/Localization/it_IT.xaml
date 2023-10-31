@@ -12,8 +12,8 @@
     <sys:String x:Key="PlayNotes_UrlInputLabel">Url:</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Importa ogni sezione come nota separata</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Cancella le note esistenti</sys:String>
-    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Import Playnite notes</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Enter the title to be used in the imported notes:</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importing notes…</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notes import finished.</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Importa note di Playnite</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Inserire il titolo da utilizzare nelle note importate:</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importazione note…</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Importazione note terminata.</sys:String>
 </ResourceDictionary>
