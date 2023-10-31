@@ -504,3 +504,12 @@ Packages:
     Changelog:
     - 'Changed: Updated localizations'
     - 'Fixed: Failing to obtain Steam store search results in some searches'
+  - Version: 1.72
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_72.pext
+    Changelog:
+    - 'Added: Option to animate logo opacity when it is displayed'
+    - 'Changed: Updated localizations'
+    - 'Fixed: Not searching for logos on Steam on library update in some cases'
+    - 'Fixed: Error when downloading logos for Source engine mods on SteamGridDB'

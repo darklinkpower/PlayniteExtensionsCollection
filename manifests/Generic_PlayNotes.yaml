@@ -6,3 +6,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_c7dac08a/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_1.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.2
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_2.pext
+    Changelog:
+    - 'Changed: Notes will now use the configured Playnite font and size (By EricKotato)'
+    - 'Clicking links that point to anchor headers will now scroll to them'
+    - 'Changed: Updated localizations'
+    - 'Fixed: New lines being higher in paragraphs and tables not rendering correctly'

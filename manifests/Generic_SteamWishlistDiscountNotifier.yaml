@@ -175,3 +175,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.28_553d8252/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_24.pext
     Changelog:
     - 'Improved fuzzy search matching in Wishtlist searches'
+  - Version: 1.25
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_25.pext
+    Changelog:
+    - 'Added: Button to return to library view in Wishlist view'
+    - 'Fixed: Not being logged out and being unable to authenticate on Steam in some cases'
