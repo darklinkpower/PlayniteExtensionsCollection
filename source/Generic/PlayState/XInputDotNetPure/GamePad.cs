@@ -523,6 +523,11 @@ namespace PlayState.XInputDotNetPure
             get { return isConnected; }
         }
 
+        public bool IsAnyButtonOrDpadPressed
+        {
+            get { return (buttons.IsAnyPressed() || dPad.IsAnyPressed()); }
+        }
+
         public GamePadButtons Buttons
         {
             get { return buttons; }

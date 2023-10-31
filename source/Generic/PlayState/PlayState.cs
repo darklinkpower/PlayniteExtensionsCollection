@@ -32,7 +32,7 @@ namespace PlayState
 
         private IntPtr mainWindowHandle;
         private bool globalHotkeyRegistered = false;
-        private bool isAnyGameRunning = false;
+        private bool _isAnyGameRunning = false;
         private bool switchPlayniteModeStarted = false;
         public PlayStateSettingsViewModel Settings { get; set; }
 
@@ -40,6 +40,7 @@ namespace PlayState
 
         private readonly PlayStateManagerViewModel playStateManager;
         private readonly string playstateIconImagePath;
+        private readonly GamePadHandler _gamePadHandler;
         private readonly MessagesHandler messagesHandler;
         private readonly bool isWindows10Or11;
         private const string featureBlacklist = "[PlayState] Blacklist";
@@ -71,15 +72,7 @@ namespace PlayState
             messagesHandler = new MessagesHandler(PlayniteApi, Settings, playStateManager);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
 
-            Task.Run(() =>
-            {
-                var controllersStateCheck = new Timer(80) { AutoReset = false, Enabled = true };
-                controllersStateCheck.Elapsed += (_, __) =>
-                {
-                    CheckControllers();
-                    controllersStateCheck.Enabled = true;
-                };
-            });
+            _gamePadHandler = new GamePadHandler(this, Settings.Settings, playStateManager);
         }
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -91,11 +84,15 @@ namespace PlayState
             }
         }
 
+        public bool IsAnyGameRunning()
+        {
+            return _isAnyGameRunning;
+        }
+
         public void SetSwitchModesOnControlCheck()
         {
             Task.Run(() =>
-            {                
-                
+            {
                 var switchModeControllerTimer = new Timer(2000)
                 {
                     AutoReset = true,
@@ -113,41 +110,35 @@ namespace PlayState
 
         private void SwitchModeOnControllerStatus()
         {
-            if ((isAnyGameRunning && Settings.Settings.SwitchModesOnlyIfNoRunningGames)
-                || switchPlayniteModeStarted)
+            if ((_isAnyGameRunning && Settings.Settings.SwitchModesOnlyIfNoRunningGames) || switchPlayniteModeStarted)
             {
                 return;
             }
 
             if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
-                if (!Settings.Settings.SwitchToFullscreenModeOnControllerStatus || !IsAnyControllerConnected())
+                if (Settings.Settings.SwitchToFullscreenModeOnControllerStatus && _gamePadHandler.IsAnyControllerConnected())
                 {
-                    return;
-                }
-
-                var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, "Playnite.FullscreenApp.exe");
-                if (FileSystem.FileExists(playniteExecutable))
-                {
-                    messagesHandler.ShowGenericNotification(ResourceProvider.GetString("LOCPlayState_SwitchingToFullscreenModeMessage"));
-                    ProcessStarter.StartProcess(playniteExecutable);
-                    switchPlayniteModeStarted = true;
+                    PerformModeSwitch("Playnite.FullscreenApp.exe", "LOCPlayState_SwitchingToFullscreenModeMessage");
                 }
             }
             else
             {
-                if (!Settings.Settings.SwitchToDesktopModeOnControllerStatus || IsAnyControllerConnected())
+                if (Settings.Settings.SwitchToDesktopModeOnControllerStatus && !_gamePadHandler.IsAnyControllerConnected())
                 {
-                    return;
+                    PerformModeSwitch("Playnite.DesktopApp.exe", "LOCPlayState_SwitchingToDesktopModeMessage");
                 }
+            }
+        }
 
-                var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, "Playnite.DesktopApp.exe");
-                if (FileSystem.FileExists(playniteExecutable))
-                {
-                    messagesHandler.ShowGenericNotification(ResourceProvider.GetString("LOCPlayState_SwitchingToDesktopModeMessage"));
-                    ProcessStarter.StartProcess(playniteExecutable);
-                    switchPlayniteModeStarted = true;
-                }
+        private void PerformModeSwitch(string modeToSwitch, string message)
+        {
+            var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, modeToSwitch);
+            if (FileSystem.FileExists(playniteExecutable))
+            {
+                messagesHandler.ShowGenericNotification(ResourceProvider.GetString(message));
+                ProcessStarter.StartProcess(playniteExecutable);
+                switchPlayniteModeStarted = true;
             }
         }
 
@@ -196,7 +187,7 @@ namespace PlayState
             }
 
             var mainWindow = Application.Current.MainWindow;
-            if (mainWindow == null)
+            if (mainWindow is null)
             {
                 logger.Error("Could not find main window. Shortcuts could not be registered.");
                 return;
@@ -213,7 +204,7 @@ namespace PlayState
 
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
-            isAnyGameRunning = true;
+            _isAnyGameRunning = true;
             if (Settings.Settings.GlobalSuspendMode == SuspendModes.Disabled)
             {
                 return;
@@ -238,7 +229,7 @@ namespace PlayState
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            isAnyGameRunning = PlayniteApi.Database.Games.Any(x => x.IsRunning);
+            _isAnyGameRunning = PlayniteApi.Database.Games.Any(x => x.IsRunning);
             var game = args.Game;
             messagesHandler.HideWindow();
 
@@ -267,9 +258,9 @@ namespace PlayState
             }
 
             var suspendedTime = gameData.Stopwatch.Elapsed;
-            if (suspendedTime == null)
+            if (suspendedTime.Ticks == 0)
             {
-                logger.Debug($"PlayState data for {game.Name} had null suspendedTime");
+                logger.Debug($"PlayState data for {game.Name} didn't ellapse time");
                 return;
             }
 
@@ -289,7 +280,6 @@ namespace PlayState
         {
             // This method will remove the info of the txt file in order to avoid reusing the previous play information.
             string[] info = { " ", " " };
-
             File.WriteAllLines(Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt"), info);
         }
 
@@ -297,7 +287,6 @@ namespace PlayState
         {
             // This method will write the Id and pausedTime to PlayState.txt file placed inside ExtensionsData Roaming Playnite folder
             string[] info = { game.Id.ToString(), elapsedSeconds.ToString() };
-
             File.WriteAllLines(Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt"), info);
         }
 
@@ -367,29 +356,29 @@ namespace PlayState
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var game = args.Games.LastOrDefault();
-            if (game == null)
+            var menuList = new List<GameMenuItem>();
+            if (game is null)
             {
-                return null;
+                return menuList;
             }
 
             var isGameSuspended = playStateManager.GetIsGameSuspended(game);
-            if (isGameSuspended == null)
+            if (isGameSuspended is null)
             {
-                return null;
+                return menuList;
             }
 
-            return new List<GameMenuItem>
+            menuList.Add(new GameMenuItem
             {
-                new GameMenuItem
+                Description = GetGameMenuSwitchStatusDescription(game, isGameSuspended),
+                Icon = playstateIconImagePath,
+                Action = a =>
                 {
-                    Description = GetGameMenuSwitchStatusDescription(game, isGameSuspended),
-                    Icon = playstateIconImagePath,
-                    Action = a =>
-                    {
-                        playStateManager.SwitchGameState(game);
-                    }
+                    playStateManager.SwitchGameState(game);
                 }
-            };
+            });
+
+            return menuList;
         }
 
         private string GetGameMenuSwitchStatusDescription(Game game, bool? isGameSuspended)
