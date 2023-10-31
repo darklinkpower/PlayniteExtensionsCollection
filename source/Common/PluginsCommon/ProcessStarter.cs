@@ -73,7 +73,7 @@ namespace PluginsCommon
             logger.Debug($"Opening URL: {url}");
             try
             {
-                if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 {
                     logger.Debug($"URL {url} is not well formatted. Start aborted.");
                     return null;
