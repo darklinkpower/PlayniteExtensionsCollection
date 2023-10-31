@@ -152,7 +152,7 @@ namespace JastUsaLibrary.Models
         public int OriginalPrice { get; set; }
 
         [SerializationPropertyName("discount")]
-        public int Discount { get; set; }
+        public double Discount { get; set; }
 
         [SerializationPropertyName("isFree")]
         public bool IsFree { get; set; }
