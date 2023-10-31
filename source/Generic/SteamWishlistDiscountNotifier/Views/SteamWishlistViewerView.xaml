@@ -214,11 +214,20 @@
         <DockPanel DockPanel.Dock="Top">
             <ScrollViewer Padding="5,30,5,5">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center"
+                               WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Hyperlink Command="{Binding NavigateBackCommand}">
+                            <TextBlock Text="&#xea5c;"
+                                       FontFamily="{DynamicResource FontIcoFont}"
+                                       FontSize="26" />
+                        </Hyperlink>
+                    </TextBlock>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                         <TextBlock Text="{Binding AccountInfo.Username}" />
                         <TextBlock Text="{Binding AccountInfo.WalletString, StringFormat=' ({0})'}"  />
                     </StackPanel>
-                    
+
                     <TextBlock Margin="0,15,0,0" Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelSearch}" VerticalAlignment="Center"/>
                     <DockPanel Margin="0,5,0,0">
                         <Button DockPanel.Dock="Right"

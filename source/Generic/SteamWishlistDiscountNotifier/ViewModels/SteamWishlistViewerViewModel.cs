@@ -518,6 +518,14 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             });
         }
 
+        public RelayCommand NavigateBackCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                playniteApi.MainView.SwitchToLibraryView();
+            });
+        }
+
         public Uri DefaultBannerUri { get; }
 
         private void OpenWishlistItemOnSteam(WishlistItemCache wishlistItem)
