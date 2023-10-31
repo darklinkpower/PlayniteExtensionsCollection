@@ -47,7 +47,7 @@ namespace SteamWishlistDiscountNotifier
     public class SteamWishlistDiscountNotifierSettingsViewModel : ObservableObject, ISettings
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
+        private const string _webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
         private readonly SteamWishlistDiscountNotifier plugin;
         private SteamWishlistDiscountNotifierSettings editingClone { get; set; }
 
@@ -72,7 +72,7 @@ namespace SteamWishlistDiscountNotifier
                     return CheckedStatus;
                 }
 
-                using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = webViewUserAgent }))
+                using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = _webViewUserAgent }))
                 {
                     var accountInfo = SteamLogin.GetLoggedInSteamId64(webView);
                     CheckedStatus = accountInfo.AuthStatus;
@@ -144,51 +144,54 @@ namespace SteamWishlistDiscountNotifier
             try
             {
                 var status = AuthStatus.AuthRequired;
-                using (var view = plugin.PlayniteApi.WebViews.CreateView(675, 640))
+                var webViewSettings = new WebViewSettings { UserAgent = _webViewUserAgent, WindowWidth = 675, WindowHeight = 640 };
+                using (var webView = plugin.PlayniteApi.WebViews.CreateView(webViewSettings))
                 {
-                    view.LoadingChanged += async (_, __) =>
+                    webView.LoadingChanged += async (_, __) =>
                     {
-                        var address = view.GetCurrentAddress();
+                        var address = webView.GetCurrentAddress();
                         if (address.IsNullOrEmpty())
                         {
                             status = AuthStatus.NoConnection;
-                            view.Close();
+                            webView.Close();
                         }
                         else if (address.Contains(@"steampowered.com"))
                         {
-                            var source = await view.GetPageSourceAsync();
+                            var source = await webView.GetPageSourceAsync();
                             if (source == @"<html><head></head><body></body></html>")
                             {
                                 status = AuthStatus.NoConnection;
-                                view.Close();
+                                webView.Close();
                             }
 
                             var idMatch = Regex.Match(source, @"<div class=""youraccount_steamid"">[^\d]+(\d+)");
                             if (idMatch.Success)
                             {
                                 status = AuthStatus.Ok;
-                                view.Close();
+                                webView.Close();
                             }
                         }
                     };
 
-                    var machineAuthCookies = view.GetCookies().Where(x => x.Domain == "store.steampowered.com" && x.Name.StartsWith("steamMachineAuth"));
-                    view.DeleteDomainCookies(".steamcommunity.com");
-                    view.DeleteDomainCookies("steamcommunity.com");
-                    view.DeleteDomainCookies("store.steampowered.com");
-                    view.DeleteDomainCookies("help.steampowered.com");
-
-                    // The checkbox to remember login only shows if a "machineAuthCookie..." is set. For that reason,
-                    // we make a backup and restore it after deleting all the other cookies
-                    foreach (var cookie in machineAuthCookies)
+                    var cookiesDomainsToDelete = new List<string>
                     {
-                        // Cefsharp adds a dot at the start of the cookie domain if it's not empty when adding it
-                        cookie.Domain = string.Empty;
-                        view.SetCookies("https://store.steampowered.com/", cookie);
+                        "steamcommunity.com",
+                        "store.steampowered.com",
+                        "help.steampowered.com",
+                        "steampowered.com",
+                        "steam.tv",
+                        "checkout.steampowered.com",
+                        "login.steampowered.com"
+                    };
+
+                    foreach (var domain in cookiesDomainsToDelete)
+                    {
+                        webView.DeleteDomainCookies(domain);
+                        webView.DeleteDomainCookies($".{domain}"); //Cookies can also have a domain starting with a dot
                     }
 
-                    view.Navigate(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
-                    view.OpenDialog();
+                    webView.Navigate(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
+                    webView.OpenDialog();
                 }
 
                 CheckedStatus = status;
