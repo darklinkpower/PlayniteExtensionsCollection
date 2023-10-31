@@ -31,19 +31,27 @@ namespace ExtraMetadataLoader.LogoProviders
 
         public string GetLogoUrl(Game game, bool isBackgroundDownload, CancellationToken cancelToken = default)
         {
-            var steamId = string.Empty;
+            var gameSteamId = GetGameSteamId(game, cancelToken);
+            if (!gameSteamId.IsNullOrEmpty())
+            {
+                return string.Format(steamLogoUriTemplate, gameSteamId);
+            }
+
+            return null;
+        }
+
+        private string GetGameSteamId(Game game, CancellationToken cancelToken)
+        {
             if (Steam.IsGameSteamGame(game) || (!settings.SteamDlOnlyProcessPcGames || PlayniteUtilities.IsGamePcGame(game)))
             {
-                steamId = Steam.GetGameSteamId(game, true);
+                var steamId = Steam.GetGameSteamId(game, true);
+                if (!steamId.IsNullOrEmpty())
+                {
+                    return steamId;
+                }
             }
 
-            if (steamId.IsNullOrEmpty())
-            {
-                return null;
-            }
-
-            return string.Format(steamLogoUriTemplate, steamId);
-
+            return SteamWeb.GetSteamIdFromSearch(game.Name, null, cancelToken);
         }
     }
 }
