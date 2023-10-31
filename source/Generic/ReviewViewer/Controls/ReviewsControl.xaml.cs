@@ -44,6 +44,7 @@ namespace ReviewViewer.Controls
         }
 
         private readonly DesktopView ActiveViewAtCreation;
+        private readonly Dispatcher _applicationDispatcher;
         private readonly DispatcherTimer timer;
         private readonly BbCodeProcessor bbCodeProcessor = new BbCodeProcessor();
         IPlayniteAPI PlayniteApi;
@@ -160,7 +161,11 @@ namespace ReviewViewer.Controls
             {
                 selectedReviewText = value;
                 OnPropertyChanged();
-                ReviewsScrollViewer.ScrollToTop();
+
+                _applicationDispatcher.Invoke(() =>
+                {
+                    ReviewsScrollViewer.ScrollToTop();
+                });
             }
         }
 
@@ -414,6 +419,7 @@ namespace ReviewViewer.Controls
                 ActiveViewAtCreation = PlayniteApi.MainView.ActiveDesktopView;
             }
 
+            _applicationDispatcher = Application.Current.Dispatcher;
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(220);
             timer.Tick += new EventHandler(TimerUpdateContext);
@@ -509,64 +515,67 @@ namespace ReviewViewer.Controls
 
         private void UpdateReviewsContextByType(string reviewSearchType)
         {
-            var gameDataPath = Path.Combine(pluginUserDataPath, $"{currentGame.Id}_{reviewSearchType}.json");
-            if (FileSystem.FileExists(gameDataPath))
+            var contextGameId = currentGame.Id;
+            var gameDataPath = Path.Combine(pluginUserDataPath, $"{contextGameId}_{reviewSearchType}.json");
+            Task.Run(() =>
             {
-                DownloadReviewDataIfOlder(gameDataPath, reviewSearchType);
-            }
-            else
-            {
-                if (!SettingsModel.Settings.DownloadDataOnGameSelection)
+                if (FileSystem.FileExists(gameDataPath))
+                {
+                    DownloadReviewDataIfOlder(gameDataPath, reviewSearchType);
+                }
+                else
+                {
+                    if (!SettingsModel.Settings.DownloadDataOnGameSelection)
+                    {
+                        return;
+                    }
+
+                    DownloadReviewData(gameDataPath, reviewSearchType);
+                    if (!FileSystem.FileExists(gameDataPath))
+                    {
+                        return;
+                    }
+                }
+
+                // To detect if game changed while downloading data
+                if (currentGame is null || currentGame.Id != contextGameId)
                 {
                     return;
                 }
 
-                DownloadReviewData(gameDataPath, reviewSearchType);
-                if (!FileSystem.FileExists(gameDataPath))
+                if (!Serialization.TryFromJsonFile<ReviewsResponse>(gameDataPath, out var data))
                 {
                     return;
                 }
-            }
 
-            try
-            {
-                Reviews = Serialization.FromJsonFile<ReviewsResponse>(gameDataPath);
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error deserializing file {gameDataPath}. Error: {e.Message}.");
-                return;
-            }
-
-            if (Reviews.Success != 1)
-            {
-                logger.Debug($"Deserialized json in {gameDataPath} had Success value {Reviews.Success}.");
-                return;
-            }
-
-            try
-            {
-                if (Reviews.QuerySummary.NumReviews == 0)
+                Reviews = data;
+                if (Reviews.Success != 1)
                 {
-                    logger.Debug($"Deserialized json in {gameDataPath} had 0 reviews.");
+                    logger.Debug($"Deserialized json in {gameDataPath} had Success value {Reviews.Success}.");
                     return;
                 }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error obtaining reviews number for file {gameDataPath}. Error: {e.Message}.");
-            }
 
-            if (Reviews.QuerySummary.NumReviews > 1)
-            {
-                multipleReviewsAvailable = true;
-            }
+                try
+                {
+                    if (Reviews.QuerySummary.NumReviews == 0)
+                    {
+                        logger.Debug($"Deserialized json in {gameDataPath} had 0 reviews.");
+                        return;
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e, $"Error obtaining reviews number for file {gameDataPath}. Error: {e.Message}.");
+                    return;
+                }
 
-            SelectedReviewIndex = 0;
-            SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
-            TotalReviewsAvailable = Reviews.QuerySummary.NumReviews;
-            CalculateUserScore();
-            MainPanelVisibility = Visibility.Visible;
+                multipleReviewsAvailable = Reviews.QuerySummary.NumReviews > 1;
+                SelectedReviewIndex = 0;
+                SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
+                TotalReviewsAvailable = Reviews.QuerySummary.NumReviews;
+                CalculateUserScore();
+                MainPanelVisibility = Visibility.Visible;
+            });
         }
 
         private void DownloadReviewDataIfOlder(string gameDataPath, string reviewSearchType)
@@ -586,7 +595,7 @@ namespace ReviewViewer.Controls
         private void DownloadReviewData(string gameDataPath, string reviewSearchType)
         {
             CurrentSteamId = Steam.GetGameSteamId(currentGame, true);
-            if (CurrentSteamId == null)
+            if (CurrentSteamId is null)
             {
                 MainPanelVisibility = Visibility.Collapsed;
                 return;
