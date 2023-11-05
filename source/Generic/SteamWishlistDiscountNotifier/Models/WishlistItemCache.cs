@@ -17,7 +17,6 @@ namespace SteamWishlistDiscountNotifier.Models
         public double DiscountPercent { get; set; }
         public bool IsDiscounted { get; set; }
         public SteamWishlistItem WishlistItem { get; set; }
-        public string BannerImagePath { get; set; } = null;
 
         public bool Equals(WishlistItemCache other)
         {

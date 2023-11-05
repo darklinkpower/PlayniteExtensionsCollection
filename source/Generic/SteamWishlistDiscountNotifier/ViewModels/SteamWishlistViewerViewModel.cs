@@ -37,6 +37,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 
         public Dictionary<WishlistViewSorting, string> WishlistSortingTypes { get; }
         public Dictionary<ListSortDirection, string> WishlistSortingOrders { get; }
+        public Dictionary<Ownership, string> OwnershipTypes { get; }
         private WishlistViewSorting selectedSortingType = WishlistViewSorting.Rank;
         public WishlistViewSorting SelectedSortingType
         {
@@ -62,8 +63,21 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        private List<WishlistItemCache> wishlistItemsCollection;
-        public List<WishlistItemCache> WishlistItemsCollection
+        private Ownership selectedOwnershipType = Ownership.Any;
+        public Ownership SelectedOwnershipType
+        {
+            get { return selectedOwnershipType; }
+            set
+            {
+
+                selectedOwnershipType = value;
+                OnPropertyChanged();
+                UpdateWishlistSorting();
+            }
+        }
+
+        private List<WishlistCacheItemViewWrapper> wishlistItemsCollection;
+        public List<WishlistCacheItemViewWrapper> WishlistItemsCollection
         {
             get
             {
@@ -94,8 +108,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        private WishlistItemCache selectedWishlistItem;
-        public WishlistItemCache SelectedWishlistItem
+        private WishlistCacheItemViewWrapper selectedWishlistItem;
+        public WishlistCacheItemViewWrapper SelectedWishlistItem
         {
             get { return selectedWishlistItem; }
             set
@@ -260,7 +274,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, SteamAccountInfo accountInfo, List<WishlistItemCache> wishlistItems, string pluginInstallPath)
+        public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, SteamAccountInfo accountInfo, List<WishlistCacheItemViewWrapper> wishlistItems, string pluginInstallPath)
         {
             this.playniteApi = playniteApi;
             AccountInfo = accountInfo;
@@ -271,7 +285,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             var tagsFiltersSource = new ObservableCollection<FilterItem>();
             foreach (var item in wishlistItems)
             {
-                foreach (var tag in item.WishlistItem.Tags)
+                foreach (var tag in item.Data.WishlistItem.Tags)
                 {
                     if (tags.Contains(tag))
                     {
@@ -304,6 +318,13 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 [ListSortDirection.Descending] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending"),
             };
 
+            OwnershipTypes = new Dictionary<Ownership, string>
+            {
+                [Ownership.Any] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOwnershipAny"),
+                [Ownership.Owned] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOwnershipOwned"),
+                [Ownership.NotOwned] = ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOwnershipNotOwned")
+            };
+
             wishlistCollectionView.SortDescriptions.Add(new SortDescription(GetSortingDescription(), selectedSortingDirection));
         }
 
@@ -314,8 +335,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 
         bool FilterWishlistCollection(object item)
         {
-            var wishlistItem = item as WishlistItemCache;
-
+            var wishlistItemWrapper = item as WishlistCacheItemViewWrapper;
+            var wishlistItem = wishlistItemWrapper.Data;
             if (filterOnlyDiscounted)
             {
                 if (!wishlistItem.IsDiscounted || wishlistItem.DiscountPercent < FilterMinimumDiscount)
@@ -350,6 +371,15 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 {
                     return false;
                 }
+            }
+
+            if (selectedOwnershipType == Ownership.Owned && !wishlistItemWrapper.OwnedSources.HasItems())
+            {
+                return false;
+            }
+            else if (selectedOwnershipType == Ownership.NotOwned && wishlistItemWrapper.OwnedSources.HasItems())
+            {
+                return false;
             }
 
             if (!MatchTextFilter(wishlistItem.Name))
@@ -442,33 +472,33 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             switch (selectedSortingType)
             {
                 case WishlistViewSorting.Name:
-                    return "Name";
+                    return "Data.Name";
                 case WishlistViewSorting.Rank:
-                    return "WishlistItem.Priority";
+                    return "Data.WishlistItem.Priority";
                 case WishlistViewSorting.Discount:
-                    return "DiscountPercent";
+                    return "Data.DiscountPercent";
                 case WishlistViewSorting.Price:
-                    return "PriceFinal";
+                    return "Data.PriceFinal";
                 case WishlistViewSorting.ReleaseDate:
-                    return "WishlistItem.ReleaseDate";
+                    return "Data.WishlistItem.ReleaseDate";
                 case WishlistViewSorting.Added:
-                    return "WishlistItem.Added";
+                    return "Data.WishlistItem.Added";
                 default:
-                    return "Name";
+                    return "Data.Name";
             }
         }
 
-        public RelayCommand<WishlistItemCache> OpenWishlistItemOnSteamCommand
+        public RelayCommand<WishlistCacheItemViewWrapper> OpenWishlistItemOnSteamCommand
         {
-            get => new RelayCommand<WishlistItemCache>((a) =>
+            get => new RelayCommand<WishlistCacheItemViewWrapper>((a) =>
             {
                 OpenWishlistItemOnSteam(a);
             });
         }
 
-        public RelayCommand<WishlistItemCache> OpenWishlistItemOnWebCommand
+        public RelayCommand<WishlistCacheItemViewWrapper> OpenWishlistItemOnWebCommand
         {
-            get => new RelayCommand<WishlistItemCache>((a) =>
+            get => new RelayCommand<WishlistCacheItemViewWrapper>((a) =>
             {
                 OpenWishlistItemOnWeb(a);
             });
@@ -528,15 +558,15 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 
         public Uri DefaultBannerUri { get; }
 
-        private void OpenWishlistItemOnSteam(WishlistItemCache wishlistItem)
+        private void OpenWishlistItemOnSteam(WishlistCacheItemViewWrapper wishlistItem)
         {
-            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
+            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.Data.StoreId);
             ProcessStarter.StartUrl(string.Format(steamUriOpenUrlMask, subIdSteamUrl));
         }
 
-        private void OpenWishlistItemOnWeb(WishlistItemCache wishlistItem)
+        private void OpenWishlistItemOnWeb(WishlistCacheItemViewWrapper wishlistItem)
         {
-            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.StoreId);
+            var subIdSteamUrl = string.Format(steamStoreSubUrlMask, wishlistItem.Data.StoreId);
             ProcessStarter.StartUrl(subIdSteamUrl);
         }
 

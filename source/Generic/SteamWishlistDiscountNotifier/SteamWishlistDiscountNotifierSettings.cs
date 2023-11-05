@@ -24,6 +24,10 @@ namespace SteamWishlistDiscountNotifier
         public bool OpenUrlsInBrowser { get => openUrlsInBrowser; set => SetValue(ref openUrlsInBrowser, value); }
         private int databaseVersion = 0;
         public int DatabaseVersion { get => databaseVersion; set => SetValue(ref databaseVersion, value); }
+
+        private bool notificationDisplayOwnedSources = true;
+        public bool NotificationDisplayOwnedSources { get => notificationDisplayOwnedSources; set => SetValue(ref notificationDisplayOwnedSources, value); }
+
         private int wishlistAutoCheckIntervalMins = 60;
         public int WishlistAutoCheckIntervalMins { get => wishlistAutoCheckIntervalMins; set => SetValue(ref wishlistAutoCheckIntervalMins, value); }
         private int notificationMinDiscount = 1;

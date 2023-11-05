@@ -52,10 +52,12 @@
                       Margin="0,10,0,0"
                       Content="{DynamicResource LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel}"
                       IsChecked="{Binding Settings.EnableWishlistNotifications}" />
-            <StackPanel Margin="40,10,0,0"
+            <StackPanel Margin="40,0,0,0"
                         IsEnabled="{Binding ElementName=CbEnableNotifications, Path=IsChecked}">
-                <CheckBox IsChecked="{Binding Settings.OpenUrlsInBrowser}"
+                <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.OpenUrlsInBrowser}"
                           Content="{DynamicResource LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel}"/>
+                <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.NotificationDisplayOwnedSources}"
+                          Content="{DynamicResource LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary}"/>
                 <StackPanel Margin="0,10,0,0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel}"/>

@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:conv="clr-namespace:PluginsCommon.Converters"
              xmlns:local="clr-namespace:SteamWishlistDiscountNotifier.Views"
+             xmlns:viewmodels="clr-namespace:SteamWishlistDiscountNotifier.ViewModels"
+             xmlns:models="clr-namespace:SteamWishlistDiscountNotifier.Models"
+             d:DataContext="{d:DesignInstance viewmodels:SteamWishlistViewerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="800">
     <Grid>
@@ -21,7 +24,8 @@
             <SolidColorBrush Color="#313d4a" x:Key="RankBorderSeparatorBrush" />
             <BitmapImage x:Key="DefaultBannerBitmap" UriSource="{Binding DefaultBannerUri}" CacheOption="Default" />
             <DataTemplate x:Key="WishlistItemTemplate">
-                <Grid Margin="0" Background="{StaticResource WishlistItemBackgroundBrush}">
+                <Grid d:DataContext="{d:DesignInstance models:WishlistCacheItemViewWrapper}"
+                      Margin="0" Background="{StaticResource WishlistItemBackgroundBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="135" />
@@ -31,7 +35,7 @@
                     <Border Grid.Column="0" Padding="0,0,0,3"
                             MinWidth="50" BorderThickness="0,0,3,0"
                             BorderBrush="{StaticResource RankBorderSeparatorBrush}">
-                        <TextBlock Text="{Binding WishlistItem.Priority}"
+                        <TextBlock Text="{Binding Data.WishlistItem.Priority}"
                                   Foreground="{StaticResource RankForegroundBrush}"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Bottom" />
@@ -52,10 +56,22 @@
 
                     <StackPanel Grid.Column="2" VerticalAlignment="Center"
                                 Margin="5,0,0,0">
-                        <TextBlock Text="{Binding Name}" Margin="0,3,0,0"
+                        <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                            <TextBlock Text="{Binding Data.Name}" Margin="0,0,10,0"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    TextTrimming="CharacterEllipsis"/>
+                            <StackPanel Orientation="Horizontal"
+                                        Visibility="{Binding OwnedSources, Converter={conv:IEnumerableHasItemsToVisibilityConverter}}">
+                                <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat}"
+                                           Foreground="{StaticResource DiscountPercentTextForegroundBrush}"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding OwnedSources, Converter={StaticResource ListToStringConverter}, ConverterParameter=', ', StringFormat=' {0}'}"
+                                           Foreground="{StaticResource DiscountPercentTextForegroundBrush}" TextTrimming="CharacterEllipsis"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+
                         <Grid Margin="0,3,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -79,15 +95,15 @@
                                        Grid.Column="0" Grid.Row="2"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}" />
-                            <TextBlock Text="{Binding WishlistItem.ReviewDesc}"
+                            <TextBlock Text="{Binding Data.WishlistItem.ReviewDesc}"
                                        Foreground="#66c0f4"
                                        FontWeight="Medium"
                                        Grid.Column="2" Grid.Row="0" />
-                            <TextBlock Text="{Binding WishlistItem.ReleaseString}"
+                            <TextBlock Text="{Binding Data.WishlistItem.ReleaseString}"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        FontWeight="Medium"
                                        Grid.Column="2" Grid.Row="1" />
-                            <TextBlock Text="{Binding WishlistItem.Tags, Converter={StaticResource ListToStringConverter}, ConverterParameter=', '}"
+                            <TextBlock Text="{Binding Data.WishlistItem.Tags, Converter={StaticResource ListToStringConverter}, ConverterParameter=', '}"
                                        TextWrapping="Wrap"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}"
@@ -99,8 +115,8 @@
                     <Border Grid.Column="3" Background="{StaticResource DiscountBlockBackgroundBrush}" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
                         <DockPanel>
                             <Border Background="{StaticResource DiscountPercentAreaBackgroundBrush}" MinWidth="60"
-                                    Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBlock Text="{Binding DiscountPercent, StringFormat='-{0}%'}"
+                                    Visibility="{Binding Data.IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="{Binding Data.DiscountPercent, StringFormat='-{0}%'}"
                                            Foreground="{StaticResource DiscountPercentTextForegroundBrush}"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center"
@@ -110,19 +126,19 @@
                                 <TextBlock Opacity="0.85" TextDecorations="StrikeThrough"
                                            Foreground="{StaticResource DiscountBlockStrikeTextForegroundBrush}"
                                            HorizontalAlignment="Center"
-                                           Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                           Visibility="{Binding Data.IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0:00} {1:N2}">
-                                            <Binding Path="Currency" />
-                                            <Binding Path="PriceOriginal" />
+                                            <Binding Path="Data.Currency" />
+                                            <Binding Path="Data.PriceOriginal" />
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
                                 <TextBlock HorizontalAlignment="Center">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} {1:N2}">
-                                            <Binding Path="Currency" />
-                                            <Binding Path="PriceFinal" />
+                                            <Binding Path="Data.Currency" />
+                                            <Binding Path="Data.PriceFinal" />
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
@@ -140,7 +156,6 @@
                             </StackPanel>
                         </DockPanel>
                     </Border>
-
                 </Grid>
             </DataTemplate>
             
@@ -413,6 +428,18 @@
                     <CheckBox Margin="0,5,0,0" IsChecked="{Binding FilterIncludeNotReleased}"
                               VerticalAlignment="Center"
                               Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased}"/>
+
+                    <DockPanel Margin="0,15,0,0">
+                        <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_OwnershipLabel}"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding OwnershipTypes}"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  SelectedValuePath="Key"
+                                  DisplayMemberPath="Value"
+                                  SelectedValue="{Binding SelectedOwnershipType}" />
+                    </DockPanel>
+                    
                 </StackPanel>
             </ScrollViewer>
             <Border Background="{StaticResource ItemsPanelBackgroundBrush}"
