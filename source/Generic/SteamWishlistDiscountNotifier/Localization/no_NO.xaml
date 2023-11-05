@@ -51,6 +51,12 @@ Kunne ikke sjekke Steam-ønskelisten. Godkjenning er påkrevd.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Samlet vurdering:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Utgivelsesdato:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Stikkord:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Owned in:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Show if game is owned in other sources</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Ownership:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Any</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Owned</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Not owned</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Åpne i nettleser</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Åpne i Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Se etter tilbud på spill på Steam-ønskelisten</sys:String>
