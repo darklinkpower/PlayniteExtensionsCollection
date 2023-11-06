@@ -182,3 +182,12 @@ Packages:
     Changelog:
     - 'Added: Button to return to library view in Wishlist view'
     - 'Fixed: Not being logged out and being unable to authenticate on Steam in some cases'
+  - Version: 1.26
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.05_a43e778b/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_26.pext
+    Changelog:
+    - 'Added: Indication if game is owned in another source in Playnite on wishlist view'
+    - 'Added: Support to filter wishlist view by ownership status'
+    - 'Added: Option to show if game is owned in another source in notifications'
+    - 'Changed: Updated localizations'
