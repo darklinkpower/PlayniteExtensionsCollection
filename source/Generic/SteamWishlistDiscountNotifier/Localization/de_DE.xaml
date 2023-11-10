@@ -60,4 +60,7 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Im Web öffnen</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">In Steam öffnen</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Steam Wunschliste auf Rabatte Prüfen</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Remove from wishlist</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Failed to remove from wishlist</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Removing from wishlist…</sys:String>
 </ResourceDictionary>
