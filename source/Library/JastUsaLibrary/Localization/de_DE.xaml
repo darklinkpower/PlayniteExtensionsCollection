@@ -26,7 +26,6 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Herunterladen…</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Heruntergeladen {0} von {1}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Verbleibende Zeit: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0}/s</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Datei &quot;{0}&quot; wurde bereits heruntergeladen</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">Datei erfolgreich nach &quot;{0} &quot; heruntergeladen</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">Beim Herunterladen der Datei ist ein Fehler aufgetreten</sys:String>
