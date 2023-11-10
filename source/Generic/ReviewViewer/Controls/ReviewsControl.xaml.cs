@@ -602,7 +602,7 @@ namespace ReviewViewer.Controls
             }
 
             var uri = string.Format(reviewsApiMask, CurrentSteamId, steamApiLanguage, reviewSearchType);
-            HttpDownloader.DownloadFile(uri, gameDataPath);
+            HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFile();
         }
 
         private void CalculateUserScore()

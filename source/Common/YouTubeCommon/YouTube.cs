@@ -28,10 +28,10 @@ namespace YouTubeCommon
                 uri = string.Format(youtubeSearchTemplate, Uri.EscapeDataString(searchTerm));
             }
 
-            var downloadedString = HttpDownloader.DownloadString(uri);
-            if (downloadedString.Success)
+            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(uri).DownloadString();
+            if (downloadedString.IsSuccessful)
             {
-                var embeddedJsonMatch = Regex.Match(downloadedString.Result, youtubeResponseRegexStr);
+                var embeddedJsonMatch = Regex.Match(downloadedString.Response.Content, youtubeResponseRegexStr);
                 if (embeddedJsonMatch.Success)
                 {
                     var response = JsonConvert.DeserializeObject<YoutubeEmbeddedResponse>(embeddedJsonMatch.Groups[1].Value);

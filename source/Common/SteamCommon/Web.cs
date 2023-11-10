@@ -45,11 +45,14 @@ namespace SteamCommon
         public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null, CancellationToken cancelToken = default)
         {
             var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpDownloader.DownloadString(GetStoreSearchUrl(searchTerm, steamApiCountry), cancelToken);
-            if (searchPageSrc.Success)
+            var searchPageSrc = HttpDownloader.GetRequestBuilder()
+                .WithUrl(GetStoreSearchUrl(searchTerm, steamApiCountry))
+                .WithCancellationToken(cancelToken)
+                .DownloadString();
+            if (searchPageSrc.IsSuccessful)
             {
                 var parser = new HtmlParser();
-                var searchPage = parser.Parse(searchPageSrc.Result);
+                var searchPage = parser.Parse(searchPageSrc.Response.Content);
                 foreach (var gameElem in searchPage.QuerySelectorAll(".search_result_row"))
                 {
                     if (gameElem.HasAttribute("data-ds-packageid"))
@@ -180,10 +183,11 @@ namespace SteamCommon
         public static SteamAppDetails GetSteamAppDetails(string steamId, CancellationToken cancelToken = default)
         {
             var url = string.Format(steamAppDetailsMask, steamId);
-            var downloadedString = HttpDownloader.DownloadString(url, cancelToken);
-            if (downloadedString.Success)
+            var request = HttpDownloader.GetRequestBuilder().WithUrl(url).WithCancellationToken(cancelToken);
+            var downloadedString = request.DownloadString();
+            if (downloadedString.IsSuccessful)
             {
-                var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString.Result);
+                var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString.Response.Content);
                 if (parsedData.Keys?.Any() == true)
                 {
                     var response = parsedData[parsedData.Keys.First()];

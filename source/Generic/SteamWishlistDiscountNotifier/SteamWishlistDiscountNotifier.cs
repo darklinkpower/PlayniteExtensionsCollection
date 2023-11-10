@@ -190,14 +190,15 @@ namespace SteamWishlistDiscountNotifier
                 }
                 else
                 {
-                    try
+                    var request = HttpDownloader.GetRequestBuilder()
+                        .WithUrl(wishlistItem.WishlistItem.Capsule.ToString())
+                        .WithDownloadTo(localBannerPath)
+                        .WithCancellationToken(a.CancelToken);
+
+                    var result = request.DownloadFile();
+                    if (result.IsSuccessful)
                     {
-                        HttpDownloader.DownloadFile(wishlistItem.WishlistItem.Capsule.ToString(), localBannerPath);
                         bannerImagePath = localBannerPath;
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Error(e, $"Error downloading banner image {wishlistItem.WishlistItem.Capsule}");
                     }
                 }
 
@@ -226,7 +227,7 @@ namespace SteamWishlistDiscountNotifier
             else if (accountInfo.AuthStatus == AuthStatus.Ok)
             {
                 PlayniteApi.Notifications.Remove(notLoggedInNotifId);
-                var wishlistItems = GetWishlistDiscounts(accountInfo.SteamId, webView, a);
+                var wishlistItems = GetWishlistDiscounts(accountInfo.SteamId, webView, a.CancelToken);
                 if (wishlistItems is null)
                 {
                     return null;
@@ -569,7 +570,7 @@ namespace SteamWishlistDiscountNotifier
             return new List<WishlistItemCache>();
         }
 
-        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, GlobalProgressActionArgs a = null)
+        private List<WishlistItemCache> GetWishlistDiscounts(string steamId, IWebView webView, CancellationToken cancelToken = default)
         {
             var wishlistItems = new List<WishlistItemCache>();
             var baseWishlistUrl = string.Format(@"https://store.steampowered.com/wishlist/profiles/{0}/", steamId);
@@ -613,25 +614,34 @@ namespace SteamWishlistDiscountNotifier
             var currentPage = 0;
             while (true)
             {
-                if (a?.CancelToken.IsCancellationRequested == true)
+                if (cancelToken.IsCancellationRequested == true)
                 {
                     return null;
                 }
 
                 var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
-                var downloadResult = HttpDownloader.DownloadStringWithHeaders(url, headers, cookies);
-                if (!downloadResult.Success)
+                var request = HttpDownloader.GetRequestBuilder()
+                    .WithUrl(url)
+                    .WithHeaders(headers)
+                    .WithCookies(cookies)
+                    .WithCancellationToken(cancelToken);
+                var downloadResult = request.DownloadString();
+                if (!downloadResult.IsSuccessful)
                 {
                     return null;
                 }
 
                 // Page yielded no items
-                if (downloadResult.Result == "[]")
+                if (downloadResult.Response.Content == "[]")
                 {
                     break;
                 }
 
-                var response = Serialization.FromJson<Dictionary<string, SteamWishlistItem>>(downloadResult.Result);
+                if (!Serialization.TryFromJson<Dictionary<string, SteamWishlistItem>>(downloadResult.Response.Content, out var response))
+                {
+                    break;
+                }
+
                 foreach (var wishlistItem in response.Values)
                 {
                     wishlistItem.ReleaseString = HttpUtility.HtmlDecode(wishlistItem.ReleaseString);

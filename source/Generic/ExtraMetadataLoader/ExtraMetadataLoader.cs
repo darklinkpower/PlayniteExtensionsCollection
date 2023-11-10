@@ -760,8 +760,9 @@ namespace ExtraMetadataLoader
                 return false;
             }
 
-            var downloadFileResult = HttpDownloader.DownloadFile(logoUrl, logoPath, cancelToken);
-            if (downloadFileResult.Success)
+            var request = HttpDownloader.GetRequestBuilder().WithUrl(logoUrl).WithDownloadTo(logoPath).WithCancellationToken(cancelToken);
+            var downloadFileResult = request.DownloadFile();
+            if (downloadFileResult.IsSuccessful)
             {
                 if (settings.Settings.ProcessLogosOnDownload)
                 {
@@ -771,7 +772,7 @@ namespace ExtraMetadataLoader
                 OnLogoUpdated(game);
             }
 
-            return downloadFileResult.Success;
+            return downloadFileResult.IsSuccessful;
         }
 
         private bool ProcessLogoImage(string logoPath)

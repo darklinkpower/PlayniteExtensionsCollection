@@ -66,13 +66,13 @@ namespace GamePassCatalogBrowser.Services
             var gamePassGames = new List<GamePassCatalogProduct>();
             try
             {
-                var downloadResult = HttpDownloader.DownloadString(catalogUrl);
-                if (!downloadResult.Success)
+                var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(catalogUrl).DownloadString();
+                if (!downloadResult.IsSuccessful)
                 {
                     return null;
                 }
                 
-                var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(downloadResult.Result);
+                var gamePassCatalog = JsonConvert.DeserializeObject<List<GamePassCatalogProduct>>(downloadResult.Response.Content);
                 foreach (var gamePassProduct in gamePassCatalog)
                 {
                     if (gamePassProduct.Id == null)
@@ -237,10 +237,10 @@ namespace GamePassCatalogBrowser.Services
             var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
             try
             {
-                var downloadResult = HttpDownloader.DownloadString(catalogDataApiUrl);
-                if (downloadResult.Success)
+                var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(catalogDataApiUrl).DownloadString();
+                if (downloadResult.IsSuccessful)
                 {
-                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Result), false, gameProductType, true, product.ProductId);
+                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Response.Content), false, gameProductType, true, product.ProductId);
                 }
                 else
                 {
@@ -470,10 +470,10 @@ namespace GamePassCatalogBrowser.Services
             var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
             try
             {
-                var downloadResult = HttpDownloader.DownloadString(catalogDataApiUrl);
-                if (downloadResult.Success)
+                var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(catalogDataApiUrl).DownloadString();
+                if (downloadResult.IsSuccessful)
                 {
-                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Result), true, gameProductType, false, string.Empty);
+                    AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Response.Content), true, gameProductType, false, string.Empty);
                     File.WriteAllText(gameDataCachePath, JsonConvert.SerializeObject(gamePassGamesList));
                 }
                 else
@@ -490,15 +490,24 @@ namespace GamePassCatalogBrowser.Services
         public void DownloadGamePassGameCache(GamePassGame game)
         {
             game.CoverImageLowRes = Path.Combine(imageCachePath, game.CoverImageLowRes);
-            HttpDownloader.DownloadFile(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl), game.CoverImageLowRes);
+            HttpDownloader.GetRequestBuilder()
+                .WithUrl(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl))
+                .WithDownloadTo(game.CoverImageLowRes)
+                .DownloadFile();
             
             game.CoverImage = Path.Combine(imageCachePath, game.CoverImage);
-            HttpDownloader.DownloadFile(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl), game.CoverImage);
+            HttpDownloader.GetRequestBuilder()
+                .WithUrl(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl))
+                .WithDownloadTo(game.CoverImage)
+                .DownloadFile();
 
             if (game.Icon != null)
             {
                 game.Icon = Path.Combine(imageCachePath, game.Icon);
-                HttpDownloader.DownloadFile(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl), game.Icon);
+                HttpDownloader.GetRequestBuilder()
+                    .WithUrl(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl))
+                    .WithDownloadTo(game.Icon)
+                    .DownloadFile();
             }
         }
 

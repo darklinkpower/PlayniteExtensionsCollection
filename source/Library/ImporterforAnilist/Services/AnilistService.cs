@@ -173,14 +173,20 @@ namespace ImporterforAnilist.Services
             };
 
             var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(graphQLEndpoint, jsonPostContent, headers);
-            if (downloadStringResult.Success)
+            var downloadStringResult = HttpDownloader.GetRequestBuilder()
+                .WithUrl(graphQLEndpoint)
+                .WithPostHttpMethod()
+                .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
+                .WithHeaders(headers)
+                .DownloadString();
+
+            if (downloadStringResult.IsSuccessful)
             {
-                return downloadStringResult.Result;
+                return downloadStringResult.Response.Content;
             }
             else
             {
-                logger.Error(downloadStringResult.HttpRequestException, "Failed to process post request.");
+                logger.Error(downloadStringResult.Exception, "Failed to process post request.");
                 return string.Empty;
             }
         }
@@ -284,10 +290,16 @@ namespace ImporterforAnilist.Services
             };
 
             var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(graphQLEndpoint, jsonPostContent, headers);
-            if (downloadStringResult.Success)
+            var downloadStringResult = HttpDownloader.GetRequestBuilder()
+                .WithUrl(graphQLEndpoint)
+                .WithPostHttpMethod()
+                .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
+                .WithHeaders(headers)
+                .DownloadString();
+
+            if (downloadStringResult.IsSuccessful)
             {
-                return Serialization.FromJson<MediaEntryData>(downloadStringResult.Result);
+                return Serialization.FromJson<MediaEntryData>(downloadStringResult.Response.Content);
             }
 
             return null;

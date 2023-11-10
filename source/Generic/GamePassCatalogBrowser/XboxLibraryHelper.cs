@@ -224,7 +224,10 @@ namespace GamePassCatalogBrowser
             {
                 var fileName = string.Format("{0}.jpg", Guid.NewGuid().ToString());
                 var downloadPath = Path.Combine(PlayniteApi.Database.GetFileStoragePath(newGame.Id), fileName);
-                HttpDownloader.DownloadFile($"{game.BackgroundImageUrl}?mode=scale&q=90&h=1080&w=1920", downloadPath);
+                HttpDownloader.GetRequestBuilder()
+                    .WithUrl($"{game.BackgroundImageUrl}?mode=scale&q=90&h=1080&w=1920")
+                    .WithDownloadTo(downloadPath)
+                    .DownloadFile();
                 if (FileSystem.FileExists(downloadPath))
                 {
                     newGame.BackgroundImage = string.Format("{0}/{1}", newGame.Id.ToString(), fileName);

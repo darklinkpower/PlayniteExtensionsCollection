@@ -117,26 +117,31 @@ namespace JastUsaLibrary.Services
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(authenticationTokenUrl, Serialization.ToJson(authentication), headers);
-            if (downloadStringResult.Success)
+            var request = HttpDownloader.GetRequestBuilder().WithUrl(authenticationTokenUrl)
+                .WithPostHttpMethod()
+                .WithContent(Serialization.ToJson(authentication), StandardMediaTypesConstants.Json)
+                .WithHeaders(headers);
+
+            var downloadStringResult = request.DownloadString();
+            if (downloadStringResult.IsSuccessful)
             {
-                return Serialization.FromJson<AuthenticationToken>(downloadStringResult.Result);
+                return Serialization.FromJson<AuthenticationToken>(downloadStringResult.Response.Content);
             }
             else
             {
                 if (showErrors)
                 {
-                    if (downloadStringResult.HttpStatusCode == HttpStatusCode.Unauthorized)
+                    if (downloadStringResult.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials"), "JAST USA Library");
                     }
                     else
                     {
-                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), downloadStringResult.HttpRequestException.Message), "JAST USA Library");
+                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), downloadStringResult.Exception?.Message), "JAST USA Library");
                     }
                 }
 
-                logger.Error(downloadStringResult.HttpRequestException, $"Failed during GetAuthenticationToken. Status: {downloadStringResult.HttpStatusCode}");
+                logger.Error(downloadStringResult.Exception, $"Failed during GetAuthenticationToken. Status: {downloadStringResult.StatusCode}");
                 return null;
             }
         }
@@ -155,13 +160,16 @@ namespace JastUsaLibrary.Services
             };
             
             var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
-            var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(translationsUrl, headers);
-            if (!downloadStringResult.Success)
+            var request = HttpDownloader.GetRequestBuilder()
+                .WithUrl(translationsUrl)
+                .WithHeaders(headers);
+            var downloadStringResult = request.DownloadString();
+            if (!downloadStringResult.IsSuccessful)
             {
                 return null;
             }
 
-            var response = Serialization.FromJson<GameTranslationsResponse>(downloadStringResult.Result);
+            var response = Serialization.FromJson<GameTranslationsResponse>(downloadStringResult.Response.Content);
             // We remove all the assets that are not for Windows because Playnite only supports windows after all
             foreach (var gameLinkItem in response.GamePathLinks.ToList())
             {
@@ -209,13 +217,16 @@ namespace JastUsaLibrary.Services
             {
                 currentPage++;
                 var url = string.Format(getGamesUrlTemplate, currentPage);
-                var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(url, headers);
-                if (!downloadStringResult.Success)
+                var request = HttpDownloader.GetRequestBuilder()
+                    .WithUrl(url)
+                    .WithHeaders(headers);
+                var downloadStringResult = request.DownloadString();
+                if (!downloadStringResult.IsSuccessful)
                 {
                     return null;
                 }
 
-                var response = Serialization.FromJson<UserGamesResponse>(downloadStringResult.Result);
+                var response = Serialization.FromJson<UserGamesResponse>(downloadStringResult.Response.Content);
                 foreach (var product in response.Products)
                 {
                     products.Add(product);
@@ -248,15 +259,20 @@ namespace JastUsaLibrary.Services
             };
 
             var jsonPostContent = Serialization.ToJson(new GenerateLinkRequest { downloaded = true, gameId = gameId, gameLinkId = gameLinkId });
-            var downloadStringResult = HttpDownloader.DownloadStringFromPostContent(generateLinkUrl, jsonPostContent, headers);
-            if (downloadStringResult.Success)
+            var request = HttpDownloader.GetRequestBuilder()
+                .WithUrl(generateLinkUrl)
+                .WithPostHttpMethod()
+                .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
+                .WithHeaders(headers);
+            var downloadStringResult = request.DownloadString();
+            if (downloadStringResult.IsSuccessful)
             {
-                return Serialization.FromJson<GenerateLinkResponse>(downloadStringResult.Result).Url;
+                return Serialization.FromJson<GenerateLinkResponse>(downloadStringResult.Response.Content).Url;
             }
             else
             {
-                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), downloadStringResult.HttpRequestException.Message), "JAST USA Library");
-                logger.Warn(downloadStringResult.HttpRequestException, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}");
+                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), downloadStringResult.Exception.Message), "JAST USA Library");
+                logger.Warn(downloadStringResult.Exception, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}");
                 return null;
             }
         }

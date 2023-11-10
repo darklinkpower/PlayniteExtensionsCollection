@@ -76,13 +76,13 @@ namespace PlayNotes.Models
                 return false;
             }
 
-            var downloadResult = HttpDownloader.DownloadString(Url, cancelToken);
+            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(Url).WithCancellationToken(cancelToken).DownloadString();
             if (cancelToken.IsCancellationRequested)
             {
                 return false;
             }
 
-            if (!downloadResult.Success)
+            if (!downloadResult.IsSuccessful)
             {
                 ShowFailedMessage();
                 return false;
@@ -90,7 +90,7 @@ namespace PlayNotes.Models
 
             logger.Debug($"Steam guide url: {Url}");
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(downloadResult.Result);
+            doc.LoadHtml(downloadResult.Response.Content);
             var guideTitleDiv = doc.DocumentNode.SelectSingleNode("//div[@class='workshopItemTitle']");
             if (guideTitleDiv is null)
             {

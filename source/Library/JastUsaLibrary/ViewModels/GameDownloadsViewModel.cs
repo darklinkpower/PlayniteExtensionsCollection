@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using WebCommon.Models;
 
 namespace JastUsaLibrary.ViewModels
 {
@@ -178,49 +179,34 @@ namespace JastUsaLibrary.ViewModels
             playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 a.ProgressMaxValue = 100;
-
-                var tickOldDate = DateTime.Now;
-                long tickoldBytesReceived = 0;
-                void progressChangedAction(DownloadProgressChangedEventArgs e)
+                //downloadSuccess = HttpDownloader.DownloadFile(url.ToString(), downloadPath, a.CancelToken, progressChangedAction);
+                var progress = new Progress<DownloadProgressReport>(report =>
                 {
-                    var tickNewDate = DateTime.Now;
-                    var secondsElapsed = (tickNewDate - tickOldDate).TotalMilliseconds / 1000;
-
-                    // Only update text if at least half a second has passed since last update
-                    if (secondsElapsed < 0.5)
+                    var reportLines = new List<string>
                     {
-                        return;
-                    }
+                        progressTitle,
+                        fileName,
+                        string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress"),
+                            report.FormattedBytesReceived, report.FormattedTotalBytesToReceive), // Download progress e.g. 5MB of 10MB
+                        string.Format("{0:0.00}/100.00%", report.ProgressPercentage),// Percentage e.g. 24.42/100%
+                        string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining"),
+                            GetTimeReadable(report.TimeRemaining.TotalSeconds)), //Time remaining e.g. 6 seconds left
+                        report.FormattedDownloadSpeedPerSecond //Download speed e.g. 5MB/s
+                    };
 
-                    // Calculate download speed per second
-                    var tickNewBytesReceived = e.BytesReceived;
+                    a.Text = string.Join("\n\n", reportLines);
+                    a.CurrentProgressValue = report.ProgressPercentage;
+                });
 
-                    var tickBytesReceived = tickNewBytesReceived - tickoldBytesReceived;
-                    tickOldDate = tickNewDate;
-                    tickoldBytesReceived = tickNewBytesReceived;
+                var request = HttpDownloader.GetRequestBuilder()
+                    .WithUrl(url.ToString())
+                    .WithDownloadTo(downloadPath)
+                    .WithCancellationToken(a.CancelToken)
+                    .WithProgressReporter(progress);
 
-                    var bytesPerSecond = tickBytesReceived / secondsElapsed;
-                    var speedReadeable = GetBytesReadable((long)bytesPerSecond);
+                var result = request.DownloadFile();
 
-                    // Calculate remaining time
-                    var bytesRemaining = e.TotalBytesToReceive - tickNewBytesReceived;
-                    var remainingTimeSeconds = (bytesRemaining * secondsElapsed) / tickBytesReceived;
-                    var timeRemainingReadable = GetTimeReadable(remainingTimeSeconds);
-
-                    // Calculate current download percentage
-                    double percentage = double.Parse(e.BytesReceived.ToString()) / double.Parse(e.TotalBytesToReceive.ToString()) * 100;
-                    a.CurrentProgressValue = percentage;
-
-                    // Update dialog text
-                    a.Text = $"{progressTitle}\n\n" +
-                            $"{fileName}\n\n" +
-                            $"{string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress"), GetBytesReadable(e.BytesReceived), GetBytesReadable(e.TotalBytesToReceive))}\n\n" + // Download progress e.g. 5MB of 10MB
-                            $"{string.Format("{0:0.00}", percentage)}/100.00%\n\n" + // Percentage e.g. 24.42/100%
-                            $"{string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining"), timeRemainingReadable)}\n\n" + //Time remaining e.g. 6 seconds left
-                            $"{string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond"), speedReadeable)}"; //Download speed e.g. 5MB/s
-                }
-
-                downloadSuccess = HttpDownloader.DownloadFile(url.ToString(), downloadPath, a.CancelToken, progressChangedAction);
+                downloadSuccess = result.IsSuccessful;
                 downloadCanceled = a.CancelToken.IsCancellationRequested;
             }, progressOptions);
 
@@ -292,42 +278,6 @@ namespace JastUsaLibrary.ViewModels
             {
                 return string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat"), timeSeconds);
             }
-        }
-
-        // Returns the human-readable file size for an arbitrary, 64-bit file size 
-        // The default format is "0.### XB", e.g. "4.2 KB" or "1.434 GB"
-        // From https://stackoverflow.com/a/11124118
-        private string GetBytesReadable(long i)
-        {
-            // Get absolute value
-            long absolute_i = (i < 0 ? -i : i);
-            // Determine the suffix and readable value
-            string suffix;
-            double readable;
-            if (absolute_i >= 0x40000000) // Gigabyte
-            {
-                suffix = "GB";
-                readable = (i >> 20);
-            }
-            else if (absolute_i >= 0x100000) // Megabyte
-            {
-                suffix = "MB";
-                readable = (i >> 10);
-            }
-            else if (absolute_i >= 0x400) // Kilobyte
-            {
-                suffix = "KB";
-                readable = i;
-            }
-            else
-            {
-                return i.ToString("0 B"); // Byte
-            }
-
-            // Divide by 1024 to get fractional value
-            readable /= 1024;
-            // Return formatted number with suffix
-            return readable.ToString("0.000 ") + suffix;
         }
     }
 }

@@ -137,14 +137,35 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\webcommon\Downloader.cs">
+    <Compile Include="..\..\Common\WebCommon\CookiesUtilities.cs">
+      <Link>Shared\WebCommon\CookiesUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\Downloader.cs">
       <Link>Shared\WebCommon\Downloader.cs</Link>
     </Compile>
-    <Compile Include="..\..\common\webcommon\HttpDownloader.cs">
+    <Compile Include="..\..\Common\WebCommon\HttpClientFactory.cs">
+      <Link>Shared\WebCommon\HttpClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\HttpDownloader.cs">
       <Link>Shared\WebCommon\HttpDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\HttpRequestBuilder.cs">
+      <Link>Shared\WebCommon\HttpRequestBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\Models\DownloadProgressReport.cs">
+      <Link>Shared\WebCommon\Models\DownloadProgressReport.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\WebCommon\Models\DownloadStringResult.cs">
       <Link>Shared\WebCommon\Models\DownloadStringResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\Models\HttpDownloaderResponse.cs">
+      <Link>Shared\WebCommon\Models\HttpDownloaderResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\Models\HttpDownloaderResult.cs">
+      <Link>Shared\WebCommon\Models\HttpDownloaderResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebCommon\StandardMediaTypesConstants.cs">
+      <Link>Shared\WebCommon\StandardMediaTypesConstants.cs</Link>
     </Compile>
     <Compile Include="Models\GfnGraphQlResponse.cs" />
     <Compile Include="NVIDIAGeForceNowClient.cs" />

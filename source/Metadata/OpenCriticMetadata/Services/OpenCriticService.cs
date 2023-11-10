@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using System.Threading;
 using RateLimiter;
 using ComposableAsync;
+using WebCommon.Models;
 
 namespace OpenCriticMetadata.Services
 {
@@ -24,19 +25,22 @@ namespace OpenCriticMetadata.Services
             timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
         }
 
-        public async Task<DownloadStringResult> ExecuteRequestAsync(string requestUrl)
+        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(string requestUrl)
         {
             await timeConstraint;
-            return HttpDownloader.DownloadStringWithHeaders(requestUrl, GetSearchHeaders());
+            return HttpDownloader.GetRequestBuilder()
+                .WithUrl(requestUrl)
+                .WithHeaders(GetSearchHeaders())
+                .DownloadString();
         }
 
         public List<OpenCriticGameResult> GetGameSearchResults(string searchTerm)
         {
             var requestUrl = string.Format(searchGameTemplate, searchTerm.EscapeDataString());
-            var request = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
-            if (request.Success)
+            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
+            if (result.IsSuccessful)
             {
-                return Serialization.FromJson<List<OpenCriticGameResult>>(request.Result);
+                return Serialization.FromJson<List<OpenCriticGameResult>>(result.Response.Content);
             }
             else
             {
@@ -52,10 +56,10 @@ namespace OpenCriticMetadata.Services
         public OpenCriticGameData GetGameData(string gameId)
         {
             var requestUrl = string.Format(getGameDataTemplate, gameId);
-            var request = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
-            if (request.Success)
+            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
+            if (result.IsSuccessful)
             {
-                return Serialization.FromJson<OpenCriticGameData>(request.Result);
+                return Serialization.FromJson<OpenCriticGameData>(result.Response.Content);
             }
             else
             {

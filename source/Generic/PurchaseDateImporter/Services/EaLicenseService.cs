@@ -87,21 +87,22 @@ namespace PurchaseDateImporter.Services
                 ["accept"] = "application/vnd.origin.v3+json; x-cache/force-write",
             };
 
-            var identityResponse = HttpDownloader.DownloadStringWithHeaders("https://gateway.ea.com/proxy/identity/pids/me", headers);
-            if (!identityResponse.Success)
+            var identityResponse = HttpDownloader.GetRequestBuilder().WithUrl("https://gateway.ea.com/proxy/identity/pids/me").WithHeaders(headers).DownloadString();
+            if (!identityResponse.IsSuccessful)
             {
                 return null;
             }
 
-            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse.Result);
+            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse.Response.Content);
             // For some reason somtimes the response is in XML format when the Headers contain the
             // Authorization header
             headers.Clear();
             headers["accept"] = "application/vnd.origin.v3+json; x-cache/force-write";
             headers["authtoken"] = authResponse.AccessToken;
             var url = string.Format("https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", identity.Pid.PidId);
-            var entitlementsResponseData = HttpDownloader.DownloadStringWithHeaders(url, headers);
-            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData.Result);
+            var entitlementsResponseData = HttpDownloader.GetRequestBuilder().WithUrl(url)
+                .WithHeaders(headers).DownloadString();
+            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData.Response.Content);
         }
     }
 }

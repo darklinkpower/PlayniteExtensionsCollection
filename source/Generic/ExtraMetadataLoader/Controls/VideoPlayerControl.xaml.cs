@@ -497,7 +497,7 @@ namespace ExtraMetadataLoader
                     if (steamId != null)
                     {
                         var url = string.Format(@"https://store.steampowered.com/api/appdetails?appids={0}", steamId);
-                        HttpDownloader.DownloadFile(url, gameDataPath);
+                        HttpDownloader.GetRequestBuilder().WithUrl(url).WithDownloadTo(gameDataPath).DownloadFile();
                     }
                 }
 

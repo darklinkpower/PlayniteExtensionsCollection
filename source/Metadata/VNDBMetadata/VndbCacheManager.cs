@@ -67,8 +67,10 @@ namespace VNDBMetadata
 
         private bool DownloadAndDecompress(string sourceUrl, string compressedPath, string outputPath)
         {
-            var downloadResult = HttpDownloader.DownloadFile(sourceUrl, compressedPath);
-            if (downloadResult.Success)
+            var downloadResult = HttpDownloader.GetRequestBuilder()
+                .WithUrl(sourceUrl).WithDownloadTo(compressedPath)
+                .DownloadFile();
+            if (downloadResult.IsSuccessful)
             {
                 DecompressGZipFile(compressedPath, outputPath);
                 FileSystem.DeleteFile(compressedPath);

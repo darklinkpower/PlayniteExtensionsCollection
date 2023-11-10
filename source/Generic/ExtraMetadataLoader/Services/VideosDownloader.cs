@@ -88,8 +88,10 @@ namespace ExtraMetadataLoader.Services
                     videoUrl = steamAppDetails.data.Movies[0].Mp4.Max;
                 }
 
-                var downloadFileResult = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath, cancelToken);
-                if (downloadFileResult.Success)
+                var downloadFileResult = HttpDownloader.GetRequestBuilder()
+                    .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath).WithCancellationToken(cancelToken)
+                    .DownloadFile();
+                if (downloadFileResult.IsSuccessful)
                 {
                     GetVideoInformation(tempDownloadPath);
                     ProcessVideo(tempDownloadPath, videoPath, false, true);
@@ -98,8 +100,10 @@ namespace ExtraMetadataLoader.Services
             if (downloadVideoMicro)
             {
                 var videoUrl = string.Format(steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
-                var downloadFileResult = HttpDownloader.DownloadFile(videoUrl.ToString(), tempDownloadPath, cancelToken);
-                if (downloadFileResult.Success)
+                var downloadFileResult = HttpDownloader.GetRequestBuilder()
+                    .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath).WithCancellationToken(cancelToken)
+                    .DownloadFile();
+                if (downloadFileResult.IsSuccessful)
                 {
                     ProcessVideo(tempDownloadPath, videoMicroPath, false, true);
                 }
