@@ -26,7 +26,6 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">正在下载…</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">已下载 {0} / {1}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">剩余时间：{0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0} 秒</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">文件 “{0}” 已被下载</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">文件已成功下载到 “{0}”</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">下载文件时出错。</sys:String>
