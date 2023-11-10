@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="GameRelations.GameRelationsSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             xmlns:models="clr-namespace:GameRelations.Models"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock" />
+        <DataTemplate x:Key="GameRelationsControlSettingsTemplate" DataType="{x:Type models:GameRelationsControlSettings}">
+            <StackPanel Margin="0,0,0,0">
+                <CheckBox x:Name="IsEnabledCb" IsChecked="{Binding IsEnabled}"
+                          Content="{DynamicResource LOCGameRelations_ControlSettingEnableLabel}"
+                          Margin="0,5,0,0" />
+                <StackPanel IsEnabled="{Binding ElementName=IsEnabledCb, Path=IsChecked}">
+                    <CheckBox IsChecked="{Binding DisplayGameNames}"
+                              Content="{DynamicResource LOCGameRelations_ControlSettingDisplayGameNamesLabel}"
+                              Margin="0,5,0,0" />
+                    <CheckBox IsChecked="{Binding DisplayOnlyInstalled}" Margin="0,5,0,0"
+                              Content="{DynamicResource LOCGameRelations_ControlSettingOnlyShowInstalledLabel}" />
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        <TextBlock VerticalAlignment="Center"
+                                   Text="{DynamicResource LOCGameRelations_ControlSettingDisplayMaxItemsLabel}" 
+                                   Margin="0,0,10,0" />
+                        <TextBox VerticalAlignment="Center"
+                                 Margin="0,0,10,0"
+                                 Text="{Binding  MaxItems}" />
+                        <Slider IsSnapToTickEnabled="True" Minimum="3"
+                                Width="200"
+                                VerticalAlignment="Center"
+                                TickFrequency="1"
+                                Value="{Binding MaxItems}"
+                                Maximum="40" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <ScrollViewer>
+            <StackPanel>
+                <TextBlock Text="{DynamicResource LOCGameRelations_GeneralSettingsLabel}" />
+                <Separator Margin="0,5,0,5" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center"
+                               Text="{DynamicResource LOCGameRelations_CoversHeightSettingsLabel}" 
+                               Margin="0,0,10,0" />
+                    <TextBox VerticalAlignment="Center"
+                             Margin="0,0,10,0"
+                             Text="{Binding Settings.CoversHeight}" />
+                    <Slider IsSnapToTickEnabled="True" Minimum="80"
+                            Width="200"
+                            VerticalAlignment="Center"
+                            TickFrequency="5"
+                            Value="{Binding Settings.CoversHeight}"
+                            Maximum="300" />
+                </StackPanel>
+
+                <TextBlock Text="{DynamicResource LOCGameRelations_ControlsSettingsLabel}" Margin="0,15,0,0"/>
+                <Separator Margin="0,5,0,5" />
+
+                <Expander Header="{DynamicResource LOCGameRelations_SimilarGamesLabel}" IsExpanded="True" Margin="0,0,0,15">
+                    <ContentControl Margin="20,0,0,0"
+                                    Content="{Binding Settings.SimilarGamesControlSettings}"
+                                    ContentTemplate="{StaticResource GameRelationsControlSettingsTemplate}" />
+                </Expander>
+
+                <Expander Header="{DynamicResource LOCGameRelations_SameSeriesLabel}" IsExpanded="True" Margin="0,0,0,15">
+                    <ContentControl Margin="20,0,0,0"
+                                    Content="{Binding Settings.SameSeriesControlSettings}"
+                                    ContentTemplate="{StaticResource GameRelationsControlSettingsTemplate}" />
+                </Expander>
+
+                <Expander Header="{DynamicResource LOCGameRelations_SameDeveloperLabel}" IsExpanded="True" Margin="0,0,0,15">
+                    <ContentControl Margin="20,0,0,0"
+                                    Content="{Binding Settings.SameDeveloperControlSettings}"
+                                    ContentTemplate="{StaticResource GameRelationsControlSettingsTemplate}" />
+                </Expander>
+
+                <Expander Header="{DynamicResource LOCGameRelations_SamePublisherLabel}" IsExpanded="True" Margin="0,0,0,15">
+                    <ContentControl Margin="20,0,0,0"
+                                    Content="{Binding Settings.SamePublisherControlSettings}"
+                                    ContentTemplate="{StaticResource GameRelationsControlSettingsTemplate}" />
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
