@@ -87,7 +87,7 @@ namespace SteamWishlistDiscountNotifier.Models
 
     public enum ReviewCss { Mixed, NoReviews, Positive };
 
-    public enum ReviewDesc { Mixed, MostlyPositive, NoUserReviews, Overwhelmingly_Positive, OverwhelminglyPositive, Positive, VeryPositive };
+    public enum ReviewDesc { Mixed, MostlyPositive, NoUserReviews, OverwhelminglyPositive, Positive, VeryPositive, MostlyNegative, OverwhelminglyNegative };
 
     public enum StoreItemType
     {
@@ -100,7 +100,8 @@ namespace SteamWishlistDiscountNotifier.Models
         Hardware = 6,
         Mod = 7,
         Demo = 8,
-        Tool = 9
+        Tool = 9,
+        Advertising = 10
     };
 
     public partial struct ReleaseDate
