@@ -12,14 +12,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TemporaryCache;
 
 namespace NewsViewer
 {
     public class NewsViewer : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly CacheManager<SteamNewsRssFeed> newsCacheManager = new CacheManager<SteamNewsRssFeed>();
-        private readonly CacheManager<NumberOfPlayersResponse> playersCountCacheManager = new CacheManager<NumberOfPlayersResponse>();
+        private readonly CacheManager<Guid, SteamNewsRssFeed> newsCacheManager = new CacheManager<Guid, SteamNewsRssFeed>(TimeSpan.FromSeconds(120));
+        private readonly CacheManager<Guid, NumberOfPlayersResponse> playersCountCacheManager = new CacheManager<Guid, NumberOfPlayersResponse>(TimeSpan.FromSeconds(120));
         private readonly string steamApiLanguage;
 
         public NewsViewerSettingsViewModel settings { get; set; }

@@ -29,6 +29,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Xml;
+using TemporaryCache;
+using TemporaryCache.Models;
 using WebCommon;
 
 namespace NewsViewer.PluginControls
@@ -45,7 +47,7 @@ namespace NewsViewer.PluginControls
         }
 
         IPlayniteAPI PlayniteApi;
-        private readonly CacheManager<SteamNewsRssFeed> newsCacheManager;
+        private readonly CacheManager<Guid, SteamNewsRssFeed> newsCacheManager;
         private static readonly ILogger logger = LogManager.GetLogger();
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
         private readonly Dictionary<string, string>  headers = new Dictionary<string, string> {["Accept"] = "text/xml", ["Accept-Encoding"] = "utf-8"};
@@ -123,7 +125,7 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        public NewsViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, string steamLanguage, CacheManager<SteamNewsRssFeed> newsCacheManager)
+        public NewsViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, string steamLanguage, CacheManager<Guid, SteamNewsRssFeed> newsCacheManager)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
@@ -381,13 +383,16 @@ namespace NewsViewer.PluginControls
 
             Task.Run(() =>
             {
-                var downloadStringResult = HttpDownloader.DownloadStringWithHeaders(string.Format(steamRssTemplate, steamId, steamLanguage), headers);
-                if (!downloadStringResult.Success)
+                var request = HttpDownloader.GetRequestBuilder()
+                    .WithUrl(string.Format(steamRssTemplate, steamId, steamLanguage))
+                    .WithHeaders(headers);
+                var result = request.DownloadString();
+                if (!result.IsSuccessful)
                 {
                     return;
                 }
 
-                var newsFeed = ParseRssResponse(downloadStringResult.Result);
+                var newsFeed = ParseRssResponse(result.Content);
                 if (newsFeed is null)
                 {
                     return;

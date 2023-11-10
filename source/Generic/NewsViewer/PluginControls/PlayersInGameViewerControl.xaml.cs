@@ -25,6 +25,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Collections.Concurrent;
+using TemporaryCache;
+using TemporaryCache.Models;
 
 namespace NewsViewer.PluginControls
 {
@@ -40,7 +42,7 @@ namespace NewsViewer.PluginControls
         }
 
         IPlayniteAPI PlayniteApi;
-        private readonly CacheManager<NumberOfPlayersResponse> playersCountCacheManager;
+        private readonly CacheManager<Guid, NumberOfPlayersResponse> playersCountCacheManager;
         private readonly DispatcherTimer updateControlDataDelayTimer;
         private static readonly ILogger logger = LogManager.GetLogger();
         private static string steamApiGetCurrentPlayersMask = @"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid={0}";
@@ -73,7 +75,7 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        public PlayersInGameViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, CacheManager<NumberOfPlayersResponse> playersCountCacheManager)
+        public PlayersInGameViewerControl(IPlayniteAPI PlayniteApi, NewsViewerSettingsViewModel settings, CacheManager<Guid, NumberOfPlayersResponse> playersCountCacheManager)
         {
             InitializeComponent();
             this.PlayniteApi = PlayniteApi;
@@ -156,19 +158,19 @@ namespace NewsViewer.PluginControls
             Task.Run(() =>
             {
                 var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
-                var downloadStringResult = HttpDownloader.DownloadString(url);
-                if (!downloadStringResult.Success)
+                var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(url).DownloadString();
+                if (!downloadStringResult.IsSuccessful)
                 {
                     return;
                 }
 
                 // Invalid responses
-                if (downloadStringResult.Result == @"{""response"":{""result"":42}}")
+                if (downloadStringResult.Content == @"{""response"":{""result"":42}}")
                 {
                     return;
                 }
 
-                if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Result, out var data))
+                if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Content, out var data))
                 {
                     if (data.Response.Result != 1)
                     {
