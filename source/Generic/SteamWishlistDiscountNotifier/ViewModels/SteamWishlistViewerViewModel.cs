@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using WebCommon;
 
 namespace SteamWishlistDiscountNotifier.ViewModels
 {
@@ -264,6 +265,9 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         }
 
         private FilterGroup tagFilters;
+        private string _steamSessionId;
+        private string _steamLoginSecure;
+
         public FilterGroup TagFilters
         {
             get => tagFilters;
@@ -296,6 +300,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                     tags.Add(tag);
                 }
             }
+
+            UpdateSteamCookiesValues();
 
             TagFilters = new FilterGroup(tagsFiltersSource);
             TagFilters.SettingsChanged += TagFilters_SettingsChanged;
@@ -331,6 +337,25 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         private void TagFilters_SettingsChanged(object sender, EventArgs e)
         {
             wishlistCollectionView.Refresh();
+        }
+
+        private void UpdateSteamCookiesValues()
+        {
+            using (var webView = playniteApi.WebViews.CreateOffscreenView())
+            {
+                webView.NavigateAndWait(@"https://store.steampowered.com/cart");
+
+                _steamSessionId = GetCookieValue(webView, "store.steampowered.com", "sessionid");
+                _steamLoginSecure = GetCookieValue(webView, "store.steampowered.com", "steamLoginSecure");
+            }
+        }
+
+        private string GetCookieValue(IWebView webView, string domain, string cookieName)
+        {
+            var cookie = webView.GetCookies()
+                .FirstOrDefault(x => x.Domain == domain && x.Name == cookieName);
+
+            return cookie?.Value;
         }
 
         bool FilterWishlistCollection(object item)
@@ -486,6 +511,33 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                 default:
                     return "Data.Name";
             }
+        }
+
+        private void RemoveItemFromWishlist(WishlistCacheItemViewWrapper a)
+        {
+            var request = HttpDownloader.GetRequestBuilder()
+                .WithUrl("https://store.steampowered.com/api/removefromwishlist")
+                .WithCookies(new Dictionary<string, string> { { "sessionid", _steamSessionId }, { "steamLoginSecure", _steamLoginSecure } })
+                .WithPostHttpMethod()
+                .WithContent($"sessionid={_steamSessionId}&appid={a.Data.StoreId}", StandardMediaTypesConstants.FormUrlEncoded, Encoding.UTF8);
+
+            var result = request.DownloadString();
+            if (result.IsSuccessful)
+            {
+                var aa = "";
+            }
+            else
+            {
+                var ee = "";
+            }
+        }
+
+        public RelayCommand<WishlistCacheItemViewWrapper> RemoveItemFromWishlistCommand
+        {
+            get => new RelayCommand<WishlistCacheItemViewWrapper>((a) =>
+            {
+                RemoveItemFromWishlist(a);
+            });
         }
 
         public RelayCommand<WishlistCacheItemViewWrapper> OpenWishlistItemOnSteamCommand

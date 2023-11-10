@@ -144,14 +144,18 @@
                                 </TextBlock>
                             </StackPanel>
 
-                            <StackPanel VerticalAlignment="Center">
+                            <StackPanel VerticalAlignment="Center" Margin="0,5,0,5">
                                 <Button Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb}"
-                                        Margin="0,10,0,5"
+                                        Margin="0,5,0,5"
                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnWebCommand}"
                                         CommandParameter="{Binding}" />
                                 <Button Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam}"
-                                        Margin="0,5,0,10"
+                                        Margin="0,5,0,5"
                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamCommand}"
+                                        CommandParameter="{Binding}" />
+                                <Button Content="Remove"
+                                        Margin="0,5,0,5"
+                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RemoveItemFromWishlistCommand}"
                                         CommandParameter="{Binding}" />
                             </StackPanel>
                         </DockPanel>
