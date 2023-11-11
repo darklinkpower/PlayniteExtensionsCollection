@@ -116,3 +116,9 @@ Packages:
     Changelog:
     - 'Updated localizations'
     - 'Fix error when game does not have data on PcGamingWiki'
+  - Version: 2.18
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_18.pext
+    Changelog:
+    - 'Improved: Processing of internet requests'

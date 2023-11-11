@@ -247,3 +247,9 @@ Packages:
     Changelog:
     - 'Add support to automatically update entries genres, tags and staff during library update'
     - 'Fix not obtaining description when obtaining metadata after first import'
+  - Version: 2.40
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_40.pext
+    Changelog:
+    - 'Improved: Processing of internet requests'

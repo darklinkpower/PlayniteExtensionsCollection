@@ -80,3 +80,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_12.pext
     Changelog:
     - 'Fixed: Error when obtaining metadata if game is discounted'
+  - Version: 1.13
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_13.pext
+    Changelog:
+    - 'Changed: Updated localizations'
+    - 'Improved: Processing of internet requests'

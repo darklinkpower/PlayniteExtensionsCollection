@@ -513,3 +513,10 @@ Packages:
     - 'Changed: Updated localizations'
     - 'Fixed: Not searching for logos on Steam on library update in some cases'
     - 'Fixed: Error when downloading logos for Source engine mods on SteamGridDB'
+  - Version: 1.73
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_73.pext
+    Changelog:
+    - 'Improved: Processing of internet requests'
+    - 'Changed: Updated localizations'

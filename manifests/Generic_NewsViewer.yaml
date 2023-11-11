@@ -201,3 +201,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_31.pext
     Changelog:
     - 'Changed: Some elements in news will be modified to display the same way they do in the Steam news page'
+  - Version: 1.32
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_32.pext
+    Changelog:
+    - 'Improved: Processing of controls data when selecting games'
+    - 'Improved: Processing of internet requests'

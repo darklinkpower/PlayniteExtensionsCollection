@@ -42,3 +42,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_6.pext
     Changelog:
     - 'Fixed: Failing to obtain Steam store search results in some searches'
+  - Version: 1.7
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/SteamSearch_78c7912a-32bb-4a42-8485-d348d10023ac_1_7.pext
+    Changelog:
+    - 'Improved: Processing of internet requests'

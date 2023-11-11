@@ -306,3 +306,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_46.pext
     Changelog:
     - 'Fixed: Freezing Playnite when downloading review data'
+  - Version: 2.47
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_47.pext
+    Changelog:
+    - 'Improved: Processing of controls data when selecting games'
+    - 'Improved: Processing of internet requests'

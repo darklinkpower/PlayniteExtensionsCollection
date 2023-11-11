@@ -297,3 +297,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.08_12a144cb/NVIDIA_GeForce_Now_Enabler_2_47.pext
     Changelog:
     - 'Fix error on startup'
+  - Version: 2.48
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/NVIDIA_GeForce_Now_Enabler_2_48.pext
+    Changelog:
+    - 'Improved: Processing of internet requests'

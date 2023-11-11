@@ -191,3 +191,12 @@ Packages:
     - 'Added: Support to filter wishlist view by ownership status'
     - 'Added: Option to show if game is owned in another source in notifications'
     - 'Changed: Updated localizations'
+  - Version: 1.27
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_27.pext
+    Changelog:
+    - 'Added: Support to remove items from wishlist in wishlist view'
+    - 'Improved: Processing of internet requests'
+    - 'Changed: Updated localizations'
+    - 'Fixed: Failed to obtain wishlist when it contains Advertisement type items'
