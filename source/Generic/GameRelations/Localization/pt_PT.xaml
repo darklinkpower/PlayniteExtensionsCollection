@@ -6,11 +6,11 @@
     <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Jogos relacionados</sys:String>
     <sys:String x:Key="LOCGameRelations_SameSeriesLabel">A mesma série</sys:String>
     <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Etiquetas a excluir durante a correspondência</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">O mesmo programador</sys:String>
-    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">O mesmo editor</sys:String>
-    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Similar games</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Enable</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Display game names</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Only show installed</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximum items to display</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">O mesmo developer</sys:String>
+    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">A mesma editora</sys:String>
+    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Jogos semelhantes</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Ativar</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Mostrar nomes de jogos</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Mostrar apenas os instalados</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Máximo de itens a serem exibidos</sys:String>
 </ResourceDictionary>
