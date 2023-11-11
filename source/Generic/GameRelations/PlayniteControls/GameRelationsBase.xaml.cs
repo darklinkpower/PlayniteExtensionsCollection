@@ -33,9 +33,6 @@ namespace GameRelations.PlayniteControls
         protected IPlayniteAPI PlayniteApi { get; private set; }
         public GameRelationsSettings Settings { get; private set; }
         public IGameRelationsControlSettings ControlSettings { get; private set; }
-        public int CoversHeight => Settings.CoversHeight;
-        private readonly BitmapImage _defaultCover;
-        private readonly Dispatcher _dispatcher;
         private readonly DispatcherTimer _updateDataTimer;
         private readonly DesktopView _activeViewAtCreation;
         private static readonly ILogger _logger = LogManager.GetLogger();
@@ -62,8 +59,6 @@ namespace GameRelations.PlayniteControls
             PlayniteApi = playniteApi;
             Settings = settings;
             DataContext = this;
-            _defaultCover = new BitmapImage(new Uri("/GameRelations;component/Resources/DefaultCover.png", UriKind.Relative));
-            _dispatcher = Application.Current.Dispatcher;
             _updateDataTimer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(220)
@@ -150,7 +145,6 @@ namespace GameRelations.PlayniteControls
             }
 
             var contextGame = GameContext;
-
             var matchedGames = GetMatchingGames(contextGame);
             if (GameContext is null || GameContext.Id != contextGame.Id || !matchedGames.HasItems())
             {
@@ -162,7 +156,7 @@ namespace GameRelations.PlayniteControls
                 .Take(ControlSettings.MaxItems);
 
             var gameWrappers = await MatchedGamesUtilities.GetGamesWrappersAsync(filteredGames, Settings);
-            if (GameContext is null || GameContext.Id != contextGame.Id || !matchedGames.HasItems())
+            if (GameContext is null || GameContext.Id != contextGame.Id || !gameWrappers.HasItems())
             {
                 return;
             }
@@ -198,7 +192,7 @@ namespace GameRelations.PlayniteControls
             }
 
             var commonCount = listToMatch.Count(item => hashSet.Contains(item));
-            if (listToMatch.Count == 0)
+            if (commonCount == 0)
             {
                 return 0;
             }

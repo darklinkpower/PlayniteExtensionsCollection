@@ -15,7 +15,7 @@ namespace GameRelations.PlayniteControls
     public partial class SimilarGamesControl : GameRelationsBase
     {
         private readonly Dictionary<string, double> _propertiesWeights;
-        private const double _minMatchPercent = 0.75;
+        private const double _minMatchValueFactor = 0.75;
 
         public SimilarGamesControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
             : base(playniteApi, settings, controlSettings)
@@ -35,7 +35,7 @@ namespace GameRelations.PlayniteControls
             var genresSet = game.GenreIds?.ToHashSet() ?? new HashSet<Guid>();
             var categoriesSet = game.CategoryIds?.ToHashSet() ?? new HashSet<Guid>();
 
-            var minScoreThreshold = _propertiesWeights.Count * _minMatchPercent;
+            var minScoreThreshold = _propertiesWeights.Count * _minMatchValueFactor;
             var similarityScores = new Dictionary<Game, double>();
             foreach (var otherGame in PlayniteApi.Database.Games)
             {
