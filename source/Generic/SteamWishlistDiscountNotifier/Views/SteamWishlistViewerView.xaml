@@ -35,10 +35,19 @@
                     <Border Grid.Column="0" Padding="0,0,0,3"
                             MinWidth="50" BorderThickness="0,0,3,0"
                             BorderBrush="{StaticResource RankBorderSeparatorBrush}">
-                        <TextBlock Text="{Binding Data.WishlistItem.Priority}"
-                                  Foreground="{StaticResource RankForegroundBrush}"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Bottom" />
+                        <DockPanel>
+                            <Button DockPanel.Dock="Top"
+                                    HorizontalAlignment="Center"
+                                    ToolTip="{DynamicResource LOCSteam_Wishlist_Notif_RemoveFromWishlist}"
+                                    Content="&#xEE09;" FontFamily="{DynamicResource FontIcoFont}"
+                                    Margin="0,5,0,5"
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RemoveItemFromWishlistCommand}"
+                                    CommandParameter="{Binding}" />
+                            <TextBlock DockPanel.Dock="Bottom" Text="{Binding Data.WishlistItem.Priority}"
+                                       Foreground="{StaticResource RankForegroundBrush}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Bottom" />
+                        </DockPanel>
                     </Border>
                     <Image Height="60" Grid.Column="1"
                            Margin="2"
@@ -152,10 +161,6 @@
                                 <Button Content="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam}"
                                         Margin="0,5,0,5"
                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamCommand}"
-                                        CommandParameter="{Binding}" />
-                                <Button Content="Remove"
-                                        Margin="0,5,0,5"
-                                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.RemoveItemFromWishlistCommand}"
                                         CommandParameter="{Binding}" />
                             </StackPanel>
                         </DockPanel>

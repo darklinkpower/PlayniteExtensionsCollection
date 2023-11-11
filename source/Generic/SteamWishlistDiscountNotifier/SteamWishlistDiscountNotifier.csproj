@@ -146,9 +146,6 @@
     <Compile Include="..\..\Common\WebCommon\CookiesUtilities.cs">
       <Link>Shared\WebCommon\CookiesUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\WebCommon\Downloader.cs">
-      <Link>Shared\WebCommon\Downloader.cs</Link>
-    </Compile>
     <Compile Include="..\..\Common\WebCommon\HttpClientFactory.cs">
       <Link>Shared\WebCommon\HttpClientFactory.cs</Link>
     </Compile>
@@ -179,6 +176,7 @@
     <Compile Include="Models\FilterGroup.cs" />
     <Compile Include="Models\FilterItem.cs" />
     <Compile Include="Models\SteamAccountInfo.cs" />
+    <Compile Include="Models\WishlistAddRemoveRequestResponse.cs" />
     <Compile Include="Models\WishlistItemCache.cs" />
     <Compile Include="Models\SteamWishlistItem.cs" />
     <Compile Include="Models\WishlistViewItemWrapper.cs" />

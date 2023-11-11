@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using PluginsCommon;
 using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
@@ -19,7 +20,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 {
     class SteamWishlistViewerViewModel : ObservableObject, IDisposable
     {
-        private readonly IPlayniteAPI playniteApi;
+        private readonly IPlayniteAPI _playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
         private static readonly char[] textMatchSplitter = new char[] { ' ' };
         private const string steamStoreSubUrlMask = @"https://store.steampowered.com/app/{0}/";
@@ -280,7 +281,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 
         public SteamWishlistViewerViewModel(IPlayniteAPI playniteApi, SteamAccountInfo accountInfo, List<WishlistCacheItemViewWrapper> wishlistItems, string pluginInstallPath)
         {
-            this.playniteApi = playniteApi;
+            this._playniteApi = playniteApi;
             AccountInfo = accountInfo;
             WishlistItemsCollection = wishlistItems;
             DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
@@ -341,7 +342,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
 
         private void UpdateSteamCookiesValues()
         {
-            using (var webView = playniteApi.WebViews.CreateOffscreenView())
+            using (var webView = _playniteApi.WebViews.CreateOffscreenView())
             {
                 webView.NavigateAndWait(@"https://store.steampowered.com/cart");
 
@@ -513,22 +514,33 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             }
         }
 
-        private void RemoveItemFromWishlist(WishlistCacheItemViewWrapper a)
+        private void RemoveItemFromWishlist(WishlistCacheItemViewWrapper cacheItem)
         {
-            var request = HttpDownloader.GetRequestBuilder()
-                .WithUrl("https://store.steampowered.com/api/removefromwishlist")
-                .WithCookies(new Dictionary<string, string> { { "sessionid", _steamSessionId }, { "steamLoginSecure", _steamLoginSecure } })
-                .WithPostHttpMethod()
-                .WithContent($"sessionid={_steamSessionId}&appid={a.Data.StoreId}", StandardMediaTypesConstants.FormUrlEncoded, Encoding.UTF8);
+            var success = false;
+            _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+            {
+                var request = HttpDownloader.GetRequestBuilder()
+                    .WithUrl("https://store.steampowered.com/api/removefromwishlist")
+                    .WithCookies(new Dictionary<string, string> { { "sessionid", _steamSessionId }, { "steamLoginSecure", _steamLoginSecure } })
+                    .WithPostHttpMethod()
+                    .WithCancellationToken(a.CancelToken)
+                    .WithContent($"sessionid={_steamSessionId}&appid={cacheItem.Data.StoreId}", StandardMediaTypesConstants.FormUrlEncoded, Encoding.UTF8);
 
-            var result = request.DownloadString();
-            if (result.IsSuccessful)
+                var result = await request.DownloadStringAsync();
+                if (!result.IsSuccessful || !Serialization.TryFromJson<WishlistAddRemoveRequestResponse>(result.Response.Content, out var response) || !response.Success)
+                {
+                    _playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_RemoveFromWishlistFail"), "Steam Wishlist Discount Notifier");
+                    return;
+                }
+
+                success = true;
+                
+            }, new GlobalProgressOptions(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_RemovingFromWishlist")) { Cancelable = true });
+
+            if (success)
             {
-                var aa = "";
-            }
-            else
-            {
-                var ee = "";
+                WishlistItemsCollection.Remove(cacheItem);
+                wishlistCollectionView.Refresh();
             }
         }
 
@@ -604,7 +616,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                playniteApi.MainView.SwitchToLibraryView();
+                _playniteApi.MainView.SwitchToLibraryView();
             });
         }
 
