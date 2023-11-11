@@ -158,9 +158,6 @@
     <Compile Include="..\..\Common\WebCommon\CookiesUtilities.cs">
       <Link>Shared\WebCommon\CookiesUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\WebCommon\Downloader.cs">
-      <Link>Shared\WebCommon\Downloader.cs</Link>
-    </Compile>
     <Compile Include="..\..\Common\WebCommon\HttpClientFactory.cs">
       <Link>Shared\WebCommon\HttpClientFactory.cs</Link>
     </Compile>
