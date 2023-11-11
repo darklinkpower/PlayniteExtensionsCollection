@@ -32,7 +32,7 @@
                                                VerticalAlignment="Center"
                                                Height="{Binding ElementName=MainGrid, Path=DataContext.CoversHeight}"
                                                RenderOptions.BitmapScalingMode="HighQuality" />
-                                        <Border Background="#B3000000"
+                                        <Border Background="#BF000000"
                                                 Visibility="{Binding Game.IsInstalled, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
                                     </Grid>
                                 </Button>
