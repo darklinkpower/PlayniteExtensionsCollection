@@ -24,6 +24,7 @@
                                    Text="{DynamicResource LOCGameRelations_ControlSettingDisplayMaxItemsLabel}" 
                                    Margin="0,0,10,0" />
                         <TextBox VerticalAlignment="Center"
+                                 IsReadOnly="True" MinWidth="30"
                                  Margin="0,0,10,0"
                                  Text="{Binding  MaxItems}" />
                         <Slider IsSnapToTickEnabled="True" Minimum="3"
@@ -47,6 +48,7 @@
                                Text="{DynamicResource LOCGameRelations_CoversHeightSettingsLabel}" 
                                Margin="0,0,10,0" />
                     <TextBox VerticalAlignment="Center"
+                             IsReadOnly="True" MinWidth="30"
                              Margin="0,0,10,0"
                              Text="{Binding Settings.CoversHeight}" />
                     <Slider IsSnapToTickEnabled="True" Minimum="80"
