@@ -31,7 +31,7 @@ namespace GameRelations.PlayniteControls
     public partial class GameRelationsBase : PluginUserControl, INotifyPropertyChanged
     {
         protected IPlayniteAPI PlayniteApi { get; private set; }
-        protected GameRelationsSettings Settings { get; private set; }
+        public GameRelationsSettings Settings { get; private set; }
         public IGameRelationsControlSettings ControlSettings { get; private set; }
         public int CoversHeight => Settings.CoversHeight;
         private readonly BitmapImage _defaultCover;

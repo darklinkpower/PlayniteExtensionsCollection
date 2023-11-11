@@ -30,7 +30,7 @@
                                         <Border x:Name="Mask" Background="Black" CornerRadius="5" />
                                         <Image x:Name="CoverImage" Source="{Binding CoverImage}"
                                                VerticalAlignment="Center"
-                                               Height="{Binding ElementName=MainGrid, Path=DataContext.CoversHeight}"
+                                               Height="{Binding ElementName=MainGrid, Path=DataContext.Settings.CoversHeight}"
                                                RenderOptions.BitmapScalingMode="HighQuality" />
                                         <Border Background="#BF000000"
                                                 Visibility="{Binding Game.IsInstalled, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
