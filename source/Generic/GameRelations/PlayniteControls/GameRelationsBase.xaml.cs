@@ -172,9 +172,9 @@ namespace GameRelations.PlayniteControls
         /// <param name="listToMatch">The list of items to compare.</param>
         /// <param name="hashSet">The HashSet to compare against.</param>
         /// <returns>A match value between 0 and 1 representing the percentage of common elements.</returns>
-        protected double CalculateListHashSetMatchPercentage<T>(List<T> listToMatch, HashSet<T> hashSet)
+        protected double CalculateListHashSetMatchPercentage<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
-            if (listToMatch is null || listToMatch.Count == 0)
+            if (listToMatch is null || !listToMatch.Any())
             {
                 if (hashSet.Count == 0)
                 {
@@ -197,7 +197,7 @@ namespace GameRelations.PlayniteControls
                 return 0;
             }
 
-            var matchPercent = commonCount / (double)Math.Max(listToMatch.Count, hashSet.Count);
+            var matchPercent = commonCount / (double)Math.Max(listToMatch.Count(), hashSet.Count);
             return matchPercent;
         }
 

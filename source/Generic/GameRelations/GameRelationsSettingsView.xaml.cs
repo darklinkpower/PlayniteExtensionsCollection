@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +23,36 @@ namespace GameRelations
         {
             InitializeComponent();
         }
+
+        private void SimilarGamesNotExcludeTagsLb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listbox && DataContext is GameRelationsSettingsViewModel viewModel)
+            {
+                ClearAndAddItems(listbox, viewModel.SgNotExcludeTagsSelectedItems);
+                viewModel.NotifyCommandsPropertyChanged();
+            }
+        }
+
+        private void SgExcludeTagsSelectedItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listbox && DataContext is GameRelationsSettingsViewModel viewModel)
+            {
+                ClearAndAddItems(listbox, viewModel.SgExcludeTagsSelectedItems);
+                viewModel.NotifyCommandsPropertyChanged();
+            }
+        }
+
+        private void ClearAndAddItems<T>(ListBox listbox, ObservableCollection<T> collection) where T : class
+        {
+            collection.Clear();
+            foreach (var selectedItem in listbox.SelectedItems)
+            {
+                if (selectedItem is T item)
+                {
+                    collection.Add(item);
+                }
+            }
+        }
+
     }
 }

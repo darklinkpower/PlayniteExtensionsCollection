@@ -16,11 +16,12 @@ namespace GameRelations.PlayniteControls
     {
         private readonly Dictionary<string, double> _propertiesWeights;
         private const double _minMatchValueFactor = 0.75;
+        private readonly SimilarGamesControlSettings _controlSettings;
 
         public SimilarGamesControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
             : base(playniteApi, settings, controlSettings)
         {
-            SetSettings(controlSettings);
+            _controlSettings = controlSettings;
             _propertiesWeights = new Dictionary<string, double>
             {
                 {"tags", 1 },
@@ -31,7 +32,7 @@ namespace GameRelations.PlayniteControls
 
         public override IEnumerable<Game> GetMatchingGames(Game game)
         {
-            var tagsSet = game.TagIds?.ToHashSet() ?? new HashSet<Guid>();
+            var tagsSet = game.TagIds?.Where(x => !_controlSettings.TagsToIgnore.Contains(x)).ToHashSet() ?? new HashSet<Guid>();
             var genresSet = game.GenreIds?.ToHashSet() ?? new HashSet<Guid>();
             var categoriesSet = game.CategoryIds?.ToHashSet() ?? new HashSet<Guid>();
 
@@ -49,7 +50,7 @@ namespace GameRelations.PlayniteControls
                     continue;
                 }
                 
-                var tagsScore = CalculateListHashSetMatchPercentage(otherGame.TagIds, tagsSet) * _propertiesWeights["tags"];
+                var tagsScore = CalculateListHashSetMatchPercentage(otherGame.TagIds?.Where(x => !_controlSettings.TagsToIgnore.Contains(x)), tagsSet) * _propertiesWeights["tags"];
                 var genresScore = CalculateListHashSetMatchPercentage(otherGame.GenreIds, genresSet) * _propertiesWeights["genres"];
                 var categoriesScore = CalculateListHashSetMatchPercentage(otherGame.CategoryIds, categoriesSet) * _propertiesWeights["categories"];
 

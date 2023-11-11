@@ -1,8 +1,10 @@
 ﻿using GameRelations.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +33,8 @@ namespace GameRelations
     {
         private readonly GameRelations plugin;
         private GameRelationsSettings editingClone { get; set; }
+        public ObservableCollection<Tag> SimilarGamesExcludeTags { get; private set; } = new ObservableCollection<Tag>();
+        public ObservableCollection<Tag> SimilarGamesNotExcludeTags { get; private set; } = new ObservableCollection<Tag>();
 
         private GameRelationsSettings settings;
         public GameRelationsSettings Settings
@@ -40,6 +44,28 @@ namespace GameRelations
             {
                 settings = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Tag> _sgNotExcludeTagsSelectedItems = new ObservableCollection<Tag>();
+        public ObservableCollection<Tag> SgNotExcludeTagsSelectedItems
+        {
+            get { return _sgNotExcludeTagsSelectedItems; }
+            set
+            {
+                _sgNotExcludeTagsSelectedItems = value;
+                OnPropertyChanged(nameof(SgNotExcludeTagsSelectedItems));
+            }
+        }
+
+        private ObservableCollection<Tag> _sgExcludeTagsSelectedItems = new ObservableCollection<Tag>();
+        public ObservableCollection<Tag> SgExcludeTagsSelectedItems
+        {
+            get { return _sgExcludeTagsSelectedItems; }
+            set
+            {
+                _sgExcludeTagsSelectedItems = value;
+                OnPropertyChanged(nameof(SgExcludeTagsSelectedItems));
             }
         }
 
@@ -66,20 +92,43 @@ namespace GameRelations
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
+            var excludeTags = new List<Tag>();
+            var notExcludeTags = new List<Tag>();
+            foreach (var tag in plugin.PlayniteApi.Database.Tags)
+            {
+                if (Settings.SimilarGamesControlSettings.TagsToIgnore.Contains(tag.Id))
+                {
+                    excludeTags.Add(tag);
+                }
+                else
+                {
+                    notExcludeTags.Add(tag);
+                }
+            }
+
+            SimilarGamesNotExcludeTags = notExcludeTags.OrderBy(x => x.Name).ToObservable();
+            SimilarGamesExcludeTags = excludeTags.OrderBy(x => x.Name).ToObservable();
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
             Settings = editingClone;
+            ClearEditingTags();
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
+            Settings.SimilarGamesControlSettings.TagsToIgnore = SimilarGamesExcludeTags.Select(x => x.Id).ToHashSet();
             plugin.SavePluginSettings(Settings);
+            ClearEditingTags();
+        }
+
+        private void ClearEditingTags()
+        {
+            SimilarGamesExcludeTags.Clear();
+            SimilarGamesNotExcludeTags.Clear();
+            SgExcludeTagsSelectedItems.Clear();
+            SgNotExcludeTagsSelectedItems.Clear();
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -90,5 +139,39 @@ namespace GameRelations
             errors = new List<string>();
             return true;
         }
+
+        public void NotifyCommandsPropertyChanged()
+        {
+            OnPropertyChanged(nameof(AddSelectedTagsToExcludeCommand));
+            OnPropertyChanged(nameof(RemoveSelectedTagsFromExcludeCommand));
+        }
+
+        public RelayCommand AddSelectedTagsToExcludeCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                foreach (var tag in SgNotExcludeTagsSelectedItems.ToList())
+                {
+                    SgNotExcludeTagsSelectedItems.Remove(tag);
+                    SimilarGamesNotExcludeTags.Remove(tag);
+                    SimilarGamesExcludeTags.Add(tag);
+                }
+            }, () => SgNotExcludeTagsSelectedItems.Count > 0);
+        }
+
+        public RelayCommand RemoveSelectedTagsFromExcludeCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                foreach (var tag in SgExcludeTagsSelectedItems.ToList())
+                {
+                    SgExcludeTagsSelectedItems.Remove(tag);
+                    SimilarGamesExcludeTags.Remove(tag);
+                    SimilarGamesNotExcludeTags.Add(tag);
+                }
+            }, () => SgExcludeTagsSelectedItems.Count > 0);
+        }
+
+
     }
 }

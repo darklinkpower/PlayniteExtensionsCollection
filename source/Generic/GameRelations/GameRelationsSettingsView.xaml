@@ -65,9 +65,84 @@
                 <Separator Margin="0,5,0,5" />
 
                 <Expander Header="{DynamicResource LOCGameRelations_SimilarGamesLabel}" IsExpanded="True" Margin="0,0,0,15">
-                    <ContentControl Margin="20,0,0,0"
-                                    Content="{Binding Settings.SimilarGamesControlSettings}"
-                                    ContentTemplate="{StaticResource GameRelationsControlSettingsTemplate}" />
+                    <StackPanel Margin="20,0,0,0">
+                        <ContentControl Content="{Binding Settings.SimilarGamesControlSettings}"
+                                        ContentTemplate="{StaticResource GameRelationsControlSettingsTemplate}" />
+                        <Expander Margin="0,10,0,0" Header="{DynamicResource LOCGameRelations_TagsToExcludeLabel}">
+                            <Grid Margin="0,10,0,0" MaxHeight="400">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Column="0">
+                                    <TextBlock Text="&#xEED7;" FontFamily="{DynamicResource FontIcoFont}"
+                                           DockPanel.Dock="Top"
+                                           HorizontalAlignment="Center" FontSize="22"/>
+                                    <ListBox Margin="0,5,0,0" DockPanel.Dock="Top"
+                                                 ItemsSource="{Binding SimilarGamesNotExcludeTags}"
+                                                 SelectionChanged="SimilarGamesNotExcludeTagsLb_SelectionChanged"
+                                                 SelectionMode="Extended">
+                                        <ListBox.Template>
+                                            <ControlTemplate TargetType="ListBox">
+                                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            Background="{TemplateBinding Background}">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                        <ItemsPresenter />
+                                                    </ScrollViewer>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ListBox.Template>
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                    </ListBox>
+
+                                </DockPanel>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                                            Margin="5,0,5,0">
+                                    <Button Content="&#xEA5D;" FontFamily="{DynamicResource FontIcoFont}"
+                                            Margin="0,5,0,5"
+                                            Command="{Binding AddSelectedTagsToExcludeCommand}" />
+                                    <Button Content="&#xEA5C;" FontFamily="{DynamicResource FontIcoFont}"
+                                            Margin="0,5,0,5"
+                                            Command="{Binding RemoveSelectedTagsFromExcludeCommand}" />
+                                </StackPanel>
+
+                                <DockPanel Grid.Column="2">
+                                    <TextBlock Text="&#xEEDD;" FontFamily="{DynamicResource FontIcoFont}"
+                                               DockPanel.Dock="Top"
+                                               HorizontalAlignment="Center" FontSize="22"/>
+                                    <ListBox Margin="0,5,0,0" DockPanel.Dock="Top" ItemsSource="{Binding SimilarGamesExcludeTags}"
+                                                 SelectionChanged="SgExcludeTagsSelectedItems_SelectionChanged"
+                                                 SelectionMode="Extended">
+                                        <ListBox.Template>
+                                            <ControlTemplate TargetType="ListBox">
+                                                <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            Background="{TemplateBinding Background}">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                        <ItemsPresenter />
+                                                    </ScrollViewer>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ListBox.Template>
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                    </ListBox>
+
+                                </DockPanel>
+                            </Grid>
+                        </Expander>
+
+                    </StackPanel>
                 </Expander>
 
                 <Expander Header="{DynamicResource LOCGameRelations_SameSeriesLabel}" IsExpanded="True" Margin="0,0,0,15">
