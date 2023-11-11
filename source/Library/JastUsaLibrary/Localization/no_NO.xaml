@@ -26,7 +26,6 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Laster ned …</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Lastet ned {0} av {1}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Gjenstående tid: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0}/s</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Filen &quot;{0}&quot; er allerede lastet ned</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">Filen ble lastet ned til &quot;{0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">Det oppstod en feil under nedlasting av filen</sys:String>

@@ -26,7 +26,6 @@
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Завантаження…</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Завантажено {0} з {1}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Часу залишилось: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSpeedPerSecond">{0}/с</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Файл &quot;{0}&quot; вже було завантажено</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">Файл успішно завантажено до &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">Сталася помилка під час завантаження файлу</sys:String>

@@ -60,4 +60,7 @@ Impossibile controllare la lista dei desideri di Steam. È richiesta l'autentica
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Apri sul web</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Apri su Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Controlla la lista dei desideri di Steam per gli sconti</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Rimuovi dalla lista dei desideri</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Impossibile rimuovere dalla lista dei desideri</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Rimozione dalla lista dei desideri…</sys:String>
 </ResourceDictionary>
