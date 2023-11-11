@@ -34,6 +34,7 @@ namespace PlayNotes.PlayniteControls
         private readonly IPlayniteAPI _playniteApi;
         public PlayNotesSettings Settings { get; private set; }
         private readonly LiteDbRepository<MarkdownDatabaseItem> _notesDatabase;
+        private readonly Dispatcher _dispatcher;
         private readonly DesktopView ActiveViewAtCreation;
         private readonly DispatcherTimer _updateControl;
         
@@ -143,6 +144,7 @@ namespace PlayNotes.PlayniteControls
             _playniteApi = playniteApi;
             Settings = settings;
             _notesDatabase = notesDatabase;
+            _dispatcher = Application.Current.Dispatcher;
             DataContext = this;
             if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
@@ -154,12 +156,6 @@ namespace PlayNotes.PlayniteControls
             _updateControl.Tick += UpdateControl_Tick;
             SetControlTextBlockStyle();
             SteamGuideImporter = new SteamGuideImporter(playniteApi);
-        }
-
-        private void UpdateControl_Tick(object sender, EventArgs e)
-        {
-            _updateControl.Stop();
-            UpdateControl();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -208,7 +204,16 @@ namespace PlayNotes.PlayniteControls
             _updateControl.Start();
         }
 
-        private void UpdateControl()
+        private async void UpdateControl_Tick(object sender, EventArgs e)
+        {
+            _updateControl.Stop();
+            await _dispatcher.Invoke(async () =>
+            {
+                await UpdateControlAsync();
+            });
+        }
+
+        private async Task UpdateControlAsync()
         {
             var gameNotesItem = _notesDatabase.GetOrCreateById(currentGame.Id);
             var clonedObject = gameNotesItem.GetClone();
@@ -220,7 +225,7 @@ namespace PlayNotes.PlayniteControls
             Visibility = Visibility.Visible;
             Settings.IsControlVisible = true;
             SteamGuideImporter.ResetValues();
-            UpdateSectionsVisibilityAndCanExecute();
+            await Task.Run(UpdateSectionsVisibilityAndCanExecute);
         }
 
         private void UpdateSectionsVisibilityAndCanExecute()
