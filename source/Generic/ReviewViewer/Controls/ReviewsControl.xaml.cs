@@ -353,21 +353,21 @@ namespace ReviewViewer.Controls
         {
             get => new RelayCommand<object>((a) =>
             {
-                SwitchAllReviews();
+                SwitchAllReviewsAsync();
             }, (a) => selectedReviewSearch != ReviewSearchType.All);
         }
 
-        void SwitchAllReviews()
+        private async void SwitchAllReviewsAsync()
         {
             selectedReviewSearch = ReviewSearchType.All;
-            UpdateReviewsContext();
+            await UpdateReviewsContextAsync();
         }
 
         public RelayCommand<object> SwitchPositiveReviewsCommand
         {
             get => new RelayCommand<object>((a) =>
             {
-                SwitchPositiveReviews();
+                SwitchPositiveReviewsAsync();
             }, (a) => selectedReviewSearch != ReviewSearchType.Positive);
         }
 
@@ -383,26 +383,26 @@ namespace ReviewViewer.Controls
             });
         }
 
-        void SwitchPositiveReviews()
+        private async void SwitchPositiveReviewsAsync()
         {
             selectedReviewSearch = ReviewSearchType.Positive;
             MainPanelVisibility = Visibility.Collapsed;
-            UpdateReviewsContext();
+            await UpdateReviewsContextAsync();
         }
 
         public RelayCommand<object> SwitchNegativeReviewsCommand
         {
             get => new RelayCommand<object>((a) =>
             {
-                SwitchNegativeReviews();
+                SwitchNegativeReviewsAsync();
             }, (a) => selectedReviewSearch != ReviewSearchType.Negative);
         }
 
-        void SwitchNegativeReviews()
+        private async void SwitchNegativeReviewsAsync()
         {
             selectedReviewSearch = ReviewSearchType.Negative;
             MainPanelVisibility = Visibility.Collapsed;
-            UpdateReviewsContext();
+            await UpdateReviewsContextAsync();
         }
 
         public ReviewsControl(string pluginUserDataPath, string steamApiLanguage, ReviewViewerSettingsViewModel settings, IPlayniteAPI playniteApi)
@@ -439,10 +439,10 @@ namespace ReviewViewer.Controls
             }
         }
 
-        private void TimerUpdateContext(object sender, EventArgs e)
+        private async void TimerUpdateContext(object sender, EventArgs e)
         {
             timer.Stop();
-            UpdateReviewsContext();
+            await UpdateReviewsContextAsync();
         }
 
         private void ResetBindingValues()
@@ -488,7 +488,7 @@ namespace ReviewViewer.Controls
             timer.Start();
         }
 
-        public void UpdateReviewsContext()
+        public async Task UpdateReviewsContextAsync()
         {
             ResetBindingValues();
             CurrentSteamId = Steam.GetGameSteamId(currentGame, true);
@@ -502,83 +502,80 @@ namespace ReviewViewer.Controls
             switch (selectedReviewSearch)
             {
                 case ReviewSearchType.Positive:
-                    UpdateReviewsContextByType("positive");
+                    await UpdateReviewsContextByTypeAsync("positive");
                     break;
                 case ReviewSearchType.Negative:
-                    UpdateReviewsContextByType("negative");
+                    await UpdateReviewsContextByTypeAsync("negative");
                     break;
                 default:
-                    UpdateReviewsContextByType("all");
+                    await UpdateReviewsContextByTypeAsync("all");
                     break;
             }
         }
 
-        private void UpdateReviewsContextByType(string reviewSearchType)
+        private async Task UpdateReviewsContextByTypeAsync(string reviewSearchType)
         {
             var contextGameId = currentGame.Id;
             var gameDataPath = Path.Combine(pluginUserDataPath, $"{contextGameId}_{reviewSearchType}.json");
-            Task.Run(() =>
+            if (FileSystem.FileExists(gameDataPath))
             {
-                if (FileSystem.FileExists(gameDataPath))
-                {
-                    DownloadReviewDataIfOlder(gameDataPath, reviewSearchType);
-                }
-                else
-                {
-                    if (!SettingsModel.Settings.DownloadDataOnGameSelection)
-                    {
-                        return;
-                    }
-
-                    DownloadReviewData(gameDataPath, reviewSearchType);
-                    if (!FileSystem.FileExists(gameDataPath))
-                    {
-                        return;
-                    }
-                }
-
-                // To detect if game changed while downloading data
-                if (currentGame is null || currentGame.Id != contextGameId)
+                await DownloadReviewDataIfOlderAsync(gameDataPath, reviewSearchType);
+            }
+            else
+            {
+                if (!SettingsModel.Settings.DownloadDataOnGameSelection)
                 {
                     return;
                 }
 
-                if (!Serialization.TryFromJsonFile<ReviewsResponse>(gameDataPath, out var data))
+                await DownloadReviewData(gameDataPath, reviewSearchType);
+                if (!FileSystem.FileExists(gameDataPath))
                 {
                     return;
                 }
+            }
 
-                Reviews = data;
-                if (Reviews.Success != 1)
+            // To detect if game changed while downloading data
+            if (currentGame is null || currentGame.Id != contextGameId)
+            {
+                return;
+            }
+
+            if (!Serialization.TryFromJsonFile<ReviewsResponse>(gameDataPath, out var data))
+            {
+                return;
+            }
+
+            Reviews = data;
+            if (Reviews.Success != 1)
+            {
+                logger.Debug($"Deserialized json in {gameDataPath} had Success value {Reviews.Success}.");
+                return;
+            }
+
+            try
+            {
+                if (Reviews.QuerySummary.NumReviews == 0)
                 {
-                    logger.Debug($"Deserialized json in {gameDataPath} had Success value {Reviews.Success}.");
+                    logger.Debug($"Deserialized json in {gameDataPath} had 0 reviews.");
                     return;
                 }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Error obtaining reviews number for file {gameDataPath}. Error: {e.Message}.");
+                return;
+            }
 
-                try
-                {
-                    if (Reviews.QuerySummary.NumReviews == 0)
-                    {
-                        logger.Debug($"Deserialized json in {gameDataPath} had 0 reviews.");
-                        return;
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Error obtaining reviews number for file {gameDataPath}. Error: {e.Message}.");
-                    return;
-                }
-
-                multipleReviewsAvailable = Reviews.QuerySummary.NumReviews > 1;
-                SelectedReviewIndex = 0;
-                SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
-                TotalReviewsAvailable = Reviews.QuerySummary.NumReviews;
-                CalculateUserScore();
-                MainPanelVisibility = Visibility.Visible;
-            });
+            multipleReviewsAvailable = Reviews.QuerySummary.NumReviews > 1;
+            SelectedReviewIndex = 0;
+            SelectedReviewDisplayIndex = SelectedReviewIndex + 1;
+            TotalReviewsAvailable = Reviews.QuerySummary.NumReviews;
+            CalculateUserScore();
+            MainPanelVisibility = Visibility.Visible;
         }
 
-        private void DownloadReviewDataIfOlder(string gameDataPath, string reviewSearchType)
+        private async Task DownloadReviewDataIfOlderAsync(string gameDataPath, string reviewSearchType)
         {
             if (!SettingsModel.Settings.DownloadDataIfOlderThanDays)
             {
@@ -588,11 +585,11 @@ namespace ReviewViewer.Controls
             var fi = new FileInfo(FileSystem.FixPathLength(gameDataPath));
             if (fi.LastWriteTime < DateTime.Now.AddDays(-SettingsModel.Settings.DownloadIfOlderThanValue))
             {
-                DownloadReviewData(gameDataPath, reviewSearchType);
+                await DownloadReviewData(gameDataPath, reviewSearchType);
             }
         }
 
-        private void DownloadReviewData(string gameDataPath, string reviewSearchType)
+        private async Task DownloadReviewData(string gameDataPath, string reviewSearchType)
         {
             CurrentSteamId = Steam.GetGameSteamId(currentGame, true);
             if (CurrentSteamId is null)
@@ -602,7 +599,7 @@ namespace ReviewViewer.Controls
             }
 
             var uri = string.Format(reviewsApiMask, CurrentSteamId, steamApiLanguage, reviewSearchType);
-            HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFile();
+            await HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFileAsync();
         }
 
         private void CalculateUserScore()
