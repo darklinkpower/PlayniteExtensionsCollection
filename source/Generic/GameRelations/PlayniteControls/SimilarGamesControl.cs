@@ -14,10 +14,19 @@ namespace GameRelations.PlayniteControls
 {
     public partial class SimilarGamesControl : GameRelationsBase
     {
-        public SimilarGamesControl(CacheManager<string, BitmapImage> _imagesCacheManager, IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
-            : base(_imagesCacheManager, playniteApi, settings, controlSettings)
+        private readonly Dictionary<string, double> _propertiesWeights;
+        private const double _minMatchPercent = 0.75;
+
+        public SimilarGamesControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
+            : base(playniteApi, settings, controlSettings)
         {
             SetSettings(controlSettings);
+            _propertiesWeights = new Dictionary<string, double>
+            {
+                {"tags", 1 },
+                {"genres", 1.2 },
+                {"categories", 1.3 }
+            };
         }
 
         public override IEnumerable<Game> GetMatchingGames(Game game)
@@ -25,15 +34,8 @@ namespace GameRelations.PlayniteControls
             var tagsSet = game.TagIds?.ToHashSet() ?? new HashSet<Guid>();
             var genresSet = game.GenreIds?.ToHashSet() ?? new HashSet<Guid>();
             var categoriesSet = game.CategoryIds?.ToHashSet() ?? new HashSet<Guid>();
-            var propertiesWeights = new Dictionary<string, double>
-            {
-                {"tags", 1 },
-                {"genres", 1.2 },
-                {"categories", 1.3 }
-            };
 
-            var minMatchPercent = 0.75;
-            var minScoreThreshold = propertiesWeights.Count * minMatchPercent;
+            var minScoreThreshold = _propertiesWeights.Count * _minMatchPercent;
             var similarityScores = new Dictionary<Game, double>();
             foreach (var otherGame in PlayniteApi.Database.Games)
             {
@@ -47,9 +49,9 @@ namespace GameRelations.PlayniteControls
                     continue;
                 }
                 
-                var tagsScore = CalculateListHashSetMatchPercentage(otherGame.TagIds, tagsSet) * propertiesWeights["tags"];
-                var genresScore = CalculateListHashSetMatchPercentage(otherGame.GenreIds, genresSet) * propertiesWeights["genres"];
-                var categoriesScore = CalculateListHashSetMatchPercentage(otherGame.CategoryIds, categoriesSet) * propertiesWeights["categories"];
+                var tagsScore = CalculateListHashSetMatchPercentage(otherGame.TagIds, tagsSet) * _propertiesWeights["tags"];
+                var genresScore = CalculateListHashSetMatchPercentage(otherGame.GenreIds, genresSet) * _propertiesWeights["genres"];
+                var categoriesScore = CalculateListHashSetMatchPercentage(otherGame.CategoryIds, categoriesSet) * _propertiesWeights["categories"];
 
                 var finalScore = tagsScore + genresScore + categoriesScore;
                 if (finalScore >= minScoreThreshold)
@@ -59,8 +61,7 @@ namespace GameRelations.PlayniteControls
             }
 
             var similarGames = similarityScores.OrderByDescending(pair => pair.Value)
-                .Select(pair => pair.Key)
-                .Take(8);
+                .Select(pair => pair.Key);
 
             return similarGames;
         }

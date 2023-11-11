@@ -99,7 +99,7 @@
     <Compile Include="GameRelationsSettingsView.xaml.cs">
       <DependentUpon>GameRelationsSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImageHelper.cs" />
+    <Compile Include="MatchedGamesUtilities.cs" />
     <Compile Include="Interfaces\IGameRelationsControlSettings.cs" />
     <Compile Include="Models\GameRelationsControlSettings.cs" />
     <Compile Include="Models\MatchedGameWrapper.cs" />

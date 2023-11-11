@@ -30,7 +30,6 @@ namespace GameRelations.PlayniteControls
     /// </summary>
     public partial class GameRelationsBase : PluginUserControl, INotifyPropertyChanged
     {
-        private readonly CacheManager<string, BitmapImage> _imagesCacheManager;
         protected IPlayniteAPI PlayniteApi { get; private set; }
         protected GameRelationsSettings Settings { get; private set; }
         public IGameRelationsControlSettings ControlSettings { get; private set; }
@@ -57,10 +56,9 @@ namespace GameRelations.PlayniteControls
             }
         }
 
-        public GameRelationsBase(CacheManager<string, BitmapImage> imagesCacheManager, IPlayniteAPI playniteApi, GameRelationsSettings settings, IGameRelationsControlSettings controlSettings)
+        public GameRelationsBase(IPlayniteAPI playniteApi, GameRelationsSettings settings, IGameRelationsControlSettings controlSettings)
         {
             InitializeComponent();
-            _imagesCacheManager = imagesCacheManager;
             PlayniteApi = playniteApi;
             Settings = settings;
             DataContext = this;
@@ -97,9 +95,9 @@ namespace GameRelations.PlayniteControls
             ControlSettings = newSettings;
         }
 
-        private void UpdateDataEvent(object sender, EventArgs e)
+        private async void UpdateDataEvent(object sender, EventArgs e)
         {
-            UpdateData();
+            await UpdateDataAsync();
         }
 
         public void RestartTimer()
@@ -111,7 +109,7 @@ namespace GameRelations.PlayniteControls
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             _updateDataTimer.Stop();
-            if ( PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
+            if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop &&
                 _activeViewAtCreation != PlayniteApi.MainView.ActiveDesktopView)
             {
                 return;
@@ -143,69 +141,35 @@ namespace GameRelations.PlayniteControls
             return Enumerable.Empty<Game>();
         }
 
-        public void UpdateData()
+        public async Task UpdateDataAsync()
         {
             _updateDataTimer.Stop();
+            if (GameContext is null)
+            {
+                return;
+            }
+
             var contextGame = GameContext;
-            Task.Run(() =>
+
+            var matchedGames = GetMatchingGames(contextGame);
+            if (GameContext is null || GameContext.Id != contextGame.Id || !matchedGames.HasItems())
             {
-                _dispatcher.BeginInvoke(new Action(() =>
-                {
-                    var matchedGames = GetMatchingGames(contextGame);
-                    if (GameContext is null || GameContext.Id != contextGame.Id || !matchedGames.HasItems())
-                    {
-                        return;
-                    }
-
-                    MatchedGames = matchedGames
-                        .Where(g => g.IsInstalled || !ControlSettings.DisplayOnlyInstalled)
-                        .Take(ControlSettings.MaxItems)
-                        .Select(x => GetMatchedGameWrapper(x));
-
-                    HorizontallScrollViewer.ScrollToHome();
-                    DisplayControl();
-                }));
-            });
-        }
-
-        public virtual MatchedGameWrapper GetMatchedGameWrapper(Game game)
-        {
-            var bitmapImage = GetGameCoverImage(game);
-            return new MatchedGameWrapper(game, bitmapImage);
-        }
-
-        private BitmapImage GetGameCoverImage(Game game)
-        {
-            if (game.CoverImage.IsNullOrEmpty())
-            {
-                return _defaultCover;
+                return;
             }
 
-            var imagePath = PlayniteApi.Database.GetFullFilePath(game.CoverImage);
-            if (FileSystem.FileExists(imagePath))
+            var filteredGames = matchedGames
+                .Where(g => g.IsInstalled || !ControlSettings.DisplayOnlyInstalled)
+                .Take(ControlSettings.MaxItems);
+
+            var gameWrappers = await MatchedGamesUtilities.GetGamesWrappersAsync(filteredGames, Settings);
+            if (GameContext is null || GameContext.Id != contextGame.Id || !matchedGames.HasItems())
             {
-                try
-                {
-                    var coverHeight = Settings.CoversHeight;
-                    var cacheKey = $"{imagePath}_{coverHeight}";
-                    var cacheBitmap = _imagesCacheManager.GetCache(cacheKey, true);
-                    if (!(cacheBitmap is null))
-                    {
-                        return cacheBitmap.Item;
-                    }
-
-                    var createdBitmap = ImageHelper.CreateResizedBitmapImageFromPath(imagePath, 0, coverHeight);
-                    _imagesCacheManager.SaveCache(cacheKey, createdBitmap);
-
-                    return createdBitmap;
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex, $"Error while decoding image {imagePath}");
-                }
+                return;
             }
-            
-            return _defaultCover;
+
+            MatchedGames = gameWrappers;
+            HorizontallScrollViewer.ScrollToHome();
+            DisplayControl();
         }
 
         /// <summary>

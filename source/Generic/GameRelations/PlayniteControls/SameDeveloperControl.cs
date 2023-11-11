@@ -13,8 +13,8 @@ namespace GameRelations.PlayniteControls
 {
     public partial class SameDeveloperControl : GameRelationsBase
     {
-        public SameDeveloperControl(CacheManager<string, BitmapImage> _imagesCacheManager, IPlayniteAPI playniteApi, GameRelationsSettings settings, IGameRelationsControlSettings controlSettings)
-            : base(_imagesCacheManager, playniteApi, settings, controlSettings)
+        public SameDeveloperControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, IGameRelationsControlSettings controlSettings)
+            : base(playniteApi, settings, controlSettings)
         {
 
         }

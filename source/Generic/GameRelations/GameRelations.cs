@@ -16,8 +16,7 @@ namespace GameRelations
 {
     public class GameRelations : GenericPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly CacheManager<string, BitmapImage> _imagesCacheManager;
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _pluginSourceName = "GameRelations";
         private const string _similarGamesControlName = "SimilarGamesControl";
         private const string _sameDeveloperControlName = "SameDeveloperControl";
@@ -47,8 +46,6 @@ namespace GameRelations
                 ElementList = new List<string> { _similarGamesControlName, _sameDeveloperControlName, _samePublisherControlName, _sameSeriesControlName },
                 SourceName = _pluginSourceName
             });
-
-            _imagesCacheManager = new CacheManager<string, BitmapImage>(TimeSpan.FromSeconds(30));
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
@@ -56,13 +53,13 @@ namespace GameRelations
             switch (args.Name)
             {
                 case _similarGamesControlName:
-                    return new SimilarGamesControl(_imagesCacheManager, PlayniteApi, Settings.Settings, Settings.Settings.SimilarGamesControlSettings);
+                    return new SimilarGamesControl(PlayniteApi, Settings.Settings, Settings.Settings.SimilarGamesControlSettings);
                 case _sameDeveloperControlName:
-                    return new SameDeveloperControl(_imagesCacheManager, PlayniteApi, Settings.Settings, Settings.Settings.SameDeveloperControlSettings);
+                    return new SameDeveloperControl(PlayniteApi, Settings.Settings, Settings.Settings.SameDeveloperControlSettings);
                 case _samePublisherControlName:
-                    return new SamePublisherControl(_imagesCacheManager, PlayniteApi, Settings.Settings, Settings.Settings.SamePublisherControlSettings);
+                    return new SamePublisherControl(PlayniteApi, Settings.Settings, Settings.Settings.SamePublisherControlSettings);
                 case _sameSeriesControlName:
-                    return new SameSeriesControl(_imagesCacheManager, PlayniteApi, Settings.Settings, Settings.Settings.SameSeriesControlSettings);
+                    return new SameSeriesControl(PlayniteApi, Settings.Settings, Settings.Settings.SameSeriesControlSettings);
                 default:
                     return null;
             }
