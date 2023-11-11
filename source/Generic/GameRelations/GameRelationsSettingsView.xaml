@@ -7,8 +7,10 @@
              xmlns:models="clr-namespace:GameRelations.Models"
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
-        <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock" />
         <DataTemplate x:Key="GameRelationsControlSettingsTemplate" DataType="{x:Type models:GameRelationsControlSettings}">
+            <DataTemplate.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+            </DataTemplate.Resources>
             <StackPanel Margin="0,0,0,0">
                 <CheckBox x:Name="IsEnabledCb" IsChecked="{Binding IsEnabled}"
                           Content="{DynamicResource LOCGameRelations_ControlSettingEnableLabel}"

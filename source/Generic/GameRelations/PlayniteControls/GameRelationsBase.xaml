@@ -17,6 +17,9 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
+                        <DataTemplate.Resources>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+                        </DataTemplate.Resources>
                         <StackPanel Margin="0,0,10,0" Width="{Binding Width, ElementName=CoverImage}"
                                     ToolTip="{Binding Game.Name}">
                             <Grid>
@@ -37,9 +40,7 @@
                                     </Grid>
                                 </Button>
                             </Grid>
-                            <!--TODO Figure out why text style is not inheriting-->
                             <TextBlock Text="{Binding Game.Name}"
-                                       Foreground="White"
                                        TextWrapping="NoWrap"
                                        TextTrimming="CharacterEllipsis"
                                        Width="{Binding ActualWidth, ElementName=CoverImage}"
