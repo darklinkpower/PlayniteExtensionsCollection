@@ -6,50 +6,71 @@
              xmlns:local="clr-namespace:GameRelations.PlayniteControls"
              mc:Ignorable="d"   
              d:DesignHeight="450" d:DesignWidth="800">
+    <PluginUserControl.Resources>
+
+        <ControlTemplate TargetType="ListBox" x:Key="GamesContainerTemplate">
+            <ControlTemplate.Resources>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ControlTemplate.Resources>
+            
+            <ScrollViewer x:Name="GamesContainerScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ItemsPresenter />
+            </ScrollViewer>
+        </ControlTemplate>
+        
+        <DataTemplate x:Key="GameTemplate">
+            <DataTemplate.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+            </DataTemplate.Resources>
+            <StackPanel Margin="0,0,10,0" Width="{Binding Width, ElementName=CoverImage}"
+                        ToolTip="{Binding Game.Name}">
+                <Grid>
+                    <Button Command="{Binding ElementName=MainGrid, Path=DataContext.OpenGameDetailsCommand}" CommandParameter="{Binding}"
+                            Margin="0" Background="Transparent" BorderThickness="0" Padding="0"
+                            Height="{Binding ElementName=CoverImage, Path=Height}" Width="{Binding ElementName=CoverImage, Path=Width}">
+                        <Grid>
+                            <Grid.OpacityMask>
+                                <VisualBrush Visual="{Binding ElementName=Mask}"/>
+                            </Grid.OpacityMask>
+                            <Border x:Name="Mask" Background="Black" CornerRadius="5" />
+                            <Image x:Name="CoverImage" Source="{Binding CoverImage}"
+                                   VerticalAlignment="Center"
+                                   Height="{Binding ElementName=MainGrid, Path=DataContext.Settings.CoversHeight}"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                            <Border Background="#BF000000"
+                                    Visibility="{Binding Game.IsInstalled, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        </Grid>
+                    </Button>
+                </Grid>
+                <TextBlock Text="{Binding Game.Name}"
+                           TextWrapping="NoWrap"
+                           TextTrimming="CharacterEllipsis"
+                           Width="{Binding ActualWidth, ElementName=CoverImage}"
+                           Margin="0,5,0,0"
+                           Visibility="{Binding ElementName=MainGrid, Path=DataContext.ControlSettings.DisplayGameNames, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </StackPanel>
+        </DataTemplate>
+    </PluginUserControl.Resources>
+    
     <Grid x:Name="MainGrid">
-        <ScrollViewer x:Name="HorizontallScrollViewer"
-                      VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding MatchedGames}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <DataTemplate.Resources>
-                            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
-                        </DataTemplate.Resources>
-                        <StackPanel Margin="0,0,10,0" Width="{Binding Width, ElementName=CoverImage}"
-                                    ToolTip="{Binding Game.Name}">
-                            <Grid>
-                                <Button Command="{Binding ElementName=MainGrid, Path=DataContext.OpenGameDetailsCommand}" CommandParameter="{Binding}"
-                                        Margin="0" Background="Transparent" BorderThickness="0" Padding="0"
-                                        Height="{Binding ElementName=CoverImage, Path=Height}" Width="{Binding ElementName=CoverImage, Path=Width}">
-                                    <Grid>
-                                        <Grid.OpacityMask>
-                                            <VisualBrush Visual="{Binding ElementName=Mask}"/>
-                                        </Grid.OpacityMask>
-                                        <Border x:Name="Mask" Background="Black" CornerRadius="5" />
-                                        <Image x:Name="CoverImage" Source="{Binding CoverImage}"
-                                               VerticalAlignment="Center"
-                                               Height="{Binding ElementName=MainGrid, Path=DataContext.Settings.CoversHeight}"
-                                               RenderOptions.BitmapScalingMode="HighQuality" />
-                                        <Border Background="#BF000000"
-                                                Visibility="{Binding Game.IsInstalled, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
-                                    </Grid>
-                                </Button>
-                            </Grid>
-                            <TextBlock Text="{Binding Game.Name}"
-                                       TextWrapping="NoWrap"
-                                       TextTrimming="CharacterEllipsis"
-                                       Width="{Binding ActualWidth, ElementName=CoverImage}"
-                                       Margin="0,5,0,0"
-                                       Visibility="{Binding ElementName=MainGrid, Path=DataContext.ControlSettings.DisplayGameNames, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <ListBox x:Name="GamesContainerLb" ItemsSource="{Binding MatchedGames}"
+                 Template="{StaticResource GamesContainerTemplate}"
+                 ItemTemplate="{StaticResource GameTemplate}">
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        
     </Grid>
 </PluginUserControl>

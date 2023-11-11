@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Data;
 
 namespace PluginsCommon
@@ -123,6 +124,31 @@ namespace PluginsCommon
         public static void ClearBinding(DependencyObject target, DependencyProperty dp)
         {
             BindingOperations.ClearBinding(target, dp);
+        }
+
+        public static T FindVisualChild<T>(DependencyObject depObj, string childName = null) where T : DependencyObject
+        {
+            if (depObj != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T t && (childName == null || (child is FrameworkElement fe && fe.Name == childName)))
+                    {
+                        return t;
+                    }
+                    else
+                    {
+                        T childItem = FindVisualChild<T>(child, childName);
+                        if (childItem != null)
+                        {
+                            return childItem;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

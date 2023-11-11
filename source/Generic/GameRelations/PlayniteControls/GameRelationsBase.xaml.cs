@@ -43,6 +43,8 @@ namespace GameRelations.PlayniteControls
         }
 
         private IEnumerable<MatchedGameWrapper> matchedGames = Enumerable.Empty<MatchedGameWrapper>();
+        private ScrollViewer gamesScrollViewer;
+
         public IEnumerable<MatchedGameWrapper> MatchedGames
         {
             get => matchedGames;
@@ -50,6 +52,7 @@ namespace GameRelations.PlayniteControls
             {
                 matchedGames = value;
                 OnPropertyChanged();
+                ScrollGamesContainerToStart();
             }
         }
 
@@ -162,8 +165,20 @@ namespace GameRelations.PlayniteControls
             }
 
             MatchedGames = gameWrappers;
-            HorizontallScrollViewer.ScrollToHome();
             DisplayControl();
+        }
+
+        private void ScrollGamesContainerToStart()
+        {
+            if (GamesContainerLb.Items.Count > 0)
+            {
+                if (gamesScrollViewer is null)
+                {
+                    gamesScrollViewer = BindingTools.FindVisualChild<ScrollViewer>(GamesContainerLb, "GamesContainerScrollViewer");
+                }
+
+                gamesScrollViewer?.ScrollToHome();
+            }
         }
 
         /// <summary>
