@@ -353,13 +353,13 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private void UpdateContextTimer_Tick(object sender, EventArgs e)
+        private async void UpdateContextTimer_Tick(object sender, EventArgs e)
         {
             updateContextTimer.Stop();
             var cache = newsCacheManager.GetCache(currentGame.Id);
             if (cache is null)
             {
-                UpdateNewsContext();
+                await UpdateNewsContextAsync();
             }
             else
             {
@@ -367,7 +367,7 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private void UpdateNewsContext()
+        private async Task UpdateNewsContextAsync()
         {
             if (currentGame is null)
             {
@@ -381,29 +381,26 @@ namespace NewsViewer.PluginControls
                 return;
             }
 
-            Task.Run(() =>
+            var request = HttpDownloader.GetRequestBuilder()
+                .WithUrl(string.Format(steamRssTemplate, steamId, steamLanguage))
+                .WithHeaders(headers);
+            var result = await request.DownloadStringAsync();
+            if (!result.IsSuccessful)
             {
-                var request = HttpDownloader.GetRequestBuilder()
-                    .WithUrl(string.Format(steamRssTemplate, steamId, steamLanguage))
-                    .WithHeaders(headers);
-                var result = request.DownloadString();
-                if (!result.IsSuccessful)
-                {
-                    return;
-                }
+                return;
+            }
 
-                var newsFeed = ParseRssResponse(result.Content);
-                if (newsFeed is null)
-                {
-                    return;
-                }
+            var newsFeed = ParseRssResponse(result.Response.Content);
+            if (newsFeed is null)
+            {
+                return;
+            }
 
-                var savedCache = newsCacheManager.SaveCache(contextId, newsFeed);
-                if (currentGame != null && currentGame.Id == contextId)
-                {
-                    UpdateControlData(savedCache);
-                }
-            });
+            var savedCache = newsCacheManager.SaveCache(contextId, newsFeed);
+            if (currentGame != null && currentGame?.Id == contextId)
+            {
+                UpdateControlData(savedCache);
+            }
         }
 
         private SteamNewsRssFeed ParseRssResponse(string xmlContent)

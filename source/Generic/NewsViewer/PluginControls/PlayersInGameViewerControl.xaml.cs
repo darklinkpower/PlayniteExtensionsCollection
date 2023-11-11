@@ -90,7 +90,7 @@ namespace NewsViewer.PluginControls
 
             updateControlDataDelayTimer = new DispatcherTimer();
             updateControlDataDelayTimer.Interval = TimeSpan.FromMilliseconds(700);
-            updateControlDataDelayTimer.Tick += new EventHandler(UpdateInGameCount);
+            updateControlDataDelayTimer.Tick += new EventHandler(UpdateInGameCountAsync);
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -134,13 +134,13 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private void UpdateInGameCount(object sender, EventArgs e)
+        private async void UpdateInGameCountAsync(object sender, EventArgs e)
         {
             updateControlDataDelayTimer.Stop();
-            UpdateControl();
+            await UpdateControlAsync();
         }
 
-        private void UpdateControl()
+        private async Task UpdateControlAsync()
         {
             if (currentGame is null)
             {
@@ -155,36 +155,27 @@ namespace NewsViewer.PluginControls
 
             var contextGameId = currentGame.Id;
             currentGameId = contextGameId;
-            Task.Run(() =>
+            var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
+            var downloadStringResult = await HttpDownloader.GetRequestBuilder().WithUrl(url).DownloadStringAsync();
+            if (!downloadStringResult.IsSuccessful)
             {
-                var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
-                var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(url).DownloadString();
-                if (!downloadStringResult.IsSuccessful)
+                return;
+            }
+
+            if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Response.Content, out var data))
+            {
+                if (data.Response.Result != 1)
                 {
                     return;
                 }
 
-                // Invalid responses
-                if (downloadStringResult.Content == @"{""response"":{""result"":42}}")
+                var savedCache = playersCountCacheManager.SaveCache(contextGameId, data);
+                // To detect if game changed while downloading data
+                if (currentGameId != null && contextGameId == currentGameId)
                 {
-                    return;
+                    UpdatePlayersCount(savedCache);
                 }
-
-                if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Content, out var data))
-                {
-                    if (data.Response.Result != 1)
-                    {
-                        return;
-                    }
-
-                    var savedCache = playersCountCacheManager.SaveCache(contextGameId, data);
-                    // To detect if game changed while downloading data
-                    if (currentGameId != null && contextGameId == currentGameId)
-                    {
-                        UpdatePlayersCount(savedCache);
-                    }
-                }
-            });
+            }
         }
 
         private void UpdatePlayersCount(CacheItem<NumberOfPlayersResponse> cacheItem)
