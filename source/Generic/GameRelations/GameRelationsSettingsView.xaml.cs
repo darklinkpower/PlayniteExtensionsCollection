@@ -42,6 +42,42 @@ namespace GameRelations
             }
         }
 
+        private void SimilarGamesNotExcludeGenresLb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listbox && DataContext is GameRelationsSettingsViewModel viewModel)
+            {
+                ClearAndAddItems(listbox, viewModel.SgNotExcludeGenresSelectedItems);
+                viewModel.NotifyCommandsPropertyChanged();
+            }
+        }
+
+        private void SgExcludeGenresSelectedItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listbox && DataContext is GameRelationsSettingsViewModel viewModel)
+            {
+                ClearAndAddItems(listbox, viewModel.SgExcludeGenresSelectedItems);
+                viewModel.NotifyCommandsPropertyChanged();
+            }
+        }
+
+        private void SimilarGamesNotExcludeCategoriesLb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listbox && DataContext is GameRelationsSettingsViewModel viewModel)
+            {
+                ClearAndAddItems(listbox, viewModel.SgNotExcludeCategoriesSelectedItems);
+                viewModel.NotifyCommandsPropertyChanged();
+            }
+        }
+
+        private void SgExcludeCategoriesSelectedItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ListBox listbox && DataContext is GameRelationsSettingsViewModel viewModel)
+            {
+                ClearAndAddItems(listbox, viewModel.SgExcludeCategoriesSelectedItems);
+                viewModel.NotifyCommandsPropertyChanged();
+            }
+        }
+
         private void ClearAndAddItems<T>(ListBox listbox, ObservableCollection<T> collection) where T : class
         {
             collection.Clear();

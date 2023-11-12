@@ -32,9 +32,10 @@ namespace GameRelations.PlayniteControls
 
         public override IEnumerable<Game> GetMatchingGames(Game game)
         {
-            var tagsSet = game.TagIds?.Where(x => !_controlSettings.TagsToIgnore.Contains(x)).ToHashSet() ?? new HashSet<Guid>();
-            var genresSet = game.GenreIds?.ToHashSet() ?? new HashSet<Guid>();
-            var categoriesSet = game.CategoryIds?.ToHashSet() ?? new HashSet<Guid>();
+            var tagsSet = GetItemsNotInHashSet(game.TagIds, _controlSettings.TagsToIgnore).ToHashSet();
+            var genresSet = GetItemsNotInHashSet(game.GenreIds, _controlSettings.GenresToIgnore).ToHashSet();
+            var categoriesSet = GetItemsNotInHashSet(game.CategoryIds, _controlSettings.CategoriesToIgnore).ToHashSet();
+
             var seriesHashSet = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
 
             var minScoreThreshold = _propertiesWeights.Count * _minMatchValueFactor;
@@ -51,16 +52,14 @@ namespace GameRelations.PlayniteControls
                     continue;
                 }
                 
-                if (_controlSettings.ExcludeGamesSameSeries
-                    && otherGame.SeriesIds != null
-                    && otherGame.SeriesIds.Any(x => seriesHashSet.Contains(x)))
+                if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, seriesHashSet))
                 {
                     continue;
                 }
 
-                var tagsScore = CalculateListHashSetMatchPercentage(otherGame.TagIds?.Where(x => !_controlSettings.TagsToIgnore.Contains(x)), tagsSet) * _propertiesWeights["tags"];
-                var genresScore = CalculateListHashSetMatchPercentage(otherGame.GenreIds, genresSet) * _propertiesWeights["genres"];
-                var categoriesScore = CalculateListHashSetMatchPercentage(otherGame.CategoryIds, categoriesSet) * _propertiesWeights["categories"];
+                var tagsScore = CalculateListHashSetMatchPercentage(GetItemsNotInHashSet(otherGame.TagIds, _controlSettings.TagsToIgnore), tagsSet) * _propertiesWeights["tags"];
+                var genresScore = CalculateListHashSetMatchPercentage(GetItemsNotInHashSet(otherGame.GenreIds, _controlSettings.GenresToIgnore), genresSet) * _propertiesWeights["genres"];
+                var categoriesScore = CalculateListHashSetMatchPercentage(GetItemsNotInHashSet(otherGame.CategoryIds, _controlSettings.CategoriesToIgnore), categoriesSet) * _propertiesWeights["categories"];
 
                 var finalScore = tagsScore + genresScore + categoriesScore;
                 if (finalScore >= minScoreThreshold)

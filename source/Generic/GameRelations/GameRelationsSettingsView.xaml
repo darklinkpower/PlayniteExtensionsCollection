@@ -41,6 +41,62 @@
                 </StackPanel>
             </StackPanel>
         </DataTemplate>
+        
+        <Style x:Key="ExcludeListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+            <Setter Property="SelectionMode" Value="Extended"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ExcludeArrowRightStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
+            <Setter Property="Margin" Value="0,5,0,5" />
+            <Setter Property="Content" Value="&#xEA5D;" />
+        </Style>
+
+        <Style x:Key="ExcludeArrowLeftStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
+            <Setter Property="Margin" Value="0,5,0,5" />
+            <Setter Property="Content" Value="&#xEA5C;" />
+        </Style>
+        
+        <Style x:Key="ExclusionAllowTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
+            <Setter Property="DockPanel.Dock" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Text" Value="&#xEED7;" />
+        </Style>
+
+        <Style x:Key="ExclusionNotAllowTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}" />
+            <Setter Property="DockPanel.Dock" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Text" Value="&#xEEDD;" />
+        </Style>
+        
     </UserControl.Resources>
     <Grid Margin="20">
         <ScrollViewer>
@@ -81,72 +137,91 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <DockPanel Grid.Column="0">
-                                    <TextBlock Text="&#xEED7;" FontFamily="{DynamicResource FontIcoFont}"
-                                           DockPanel.Dock="Top"
-                                           HorizontalAlignment="Center" FontSize="22"/>
-                                    <ListBox Margin="0,5,0,0" DockPanel.Dock="Top"
-                                                 ItemsSource="{Binding SimilarGamesNotExcludeTags}"
-                                                 SelectionChanged="SimilarGamesNotExcludeTagsLb_SelectionChanged"
-                                                 SelectionMode="Extended">
-                                        <ListBox.Template>
-                                            <ControlTemplate TargetType="ListBox">
-                                                <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                                            Background="{TemplateBinding Background}">
-                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                                        <ItemsPresenter />
-                                                    </ScrollViewer>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </ListBox.Template>
-                                        <ListBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel />
-                                            </ItemsPanelTemplate>
-                                        </ListBox.ItemsPanel>
-                                    </ListBox>
-
+                                    <TextBlock Style="{DynamicResource ExclusionAllowTextBlockStyle}"/>
+                                    <ListBox Style="{StaticResource ExcludeListBoxStyle}"
+                                             ItemsSource="{Binding SimilarGamesNotExcludeTags}"
+                                             SelectionChanged="SimilarGamesNotExcludeTagsLb_SelectionChanged" />
                                 </DockPanel>
-
+                                
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center"
                                             Margin="5,0,5,0">
-                                    <Button Content="&#xEA5D;" FontFamily="{DynamicResource FontIcoFont}"
-                                            Margin="0,5,0,5"
+                                    <Button Style="{DynamicResource ExcludeArrowRightStyle}"
                                             Command="{Binding AddSelectedTagsToExcludeCommand}" />
-                                    <Button Content="&#xEA5C;" FontFamily="{DynamicResource FontIcoFont}"
-                                            Margin="0,5,0,5"
+                                    <Button Style="{DynamicResource ExcludeArrowLeftStyle}"
                                             Command="{Binding RemoveSelectedTagsFromExcludeCommand}" />
                                 </StackPanel>
 
                                 <DockPanel Grid.Column="2">
-                                    <TextBlock Text="&#xEEDD;" FontFamily="{DynamicResource FontIcoFont}"
-                                               DockPanel.Dock="Top"
-                                               HorizontalAlignment="Center" FontSize="22"/>
-                                    <ListBox Margin="0,5,0,0" DockPanel.Dock="Top" ItemsSource="{Binding SimilarGamesExcludeTags}"
-                                                 SelectionChanged="SgExcludeTagsSelectedItems_SelectionChanged"
-                                                 SelectionMode="Extended">
-                                        <ListBox.Template>
-                                            <ControlTemplate TargetType="ListBox">
-                                                <Border BorderBrush="{TemplateBinding BorderBrush}"
-                                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                                            Background="{TemplateBinding Background}">
-                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                                        <ItemsPresenter />
-                                                    </ScrollViewer>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </ListBox.Template>
-                                        <ListBox.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <VirtualizingStackPanel />
-                                            </ItemsPanelTemplate>
-                                        </ListBox.ItemsPanel>
-                                    </ListBox>
-
+                                    <TextBlock Style="{DynamicResource ExclusionNotAllowTextBlockStyle}" />
+                                    <ListBox Style="{StaticResource ExcludeListBoxStyle}"
+                                             ItemsSource="{Binding SimilarGamesExcludeTags}"
+                                             SelectionChanged="SgExcludeTagsSelectedItems_SelectionChanged" />
                                 </DockPanel>
                             </Grid>
                         </Expander>
 
+                        <Expander Margin="0,10,0,0" Header="{DynamicResource LOCGameRelations_GenresToExcludeLabel}">
+                            <Grid Margin="0,10,0,0" MaxHeight="400">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Column="0">
+                                    <TextBlock Style="{DynamicResource ExclusionAllowTextBlockStyle}"/>
+                                    <ListBox Style="{StaticResource ExcludeListBoxStyle}"
+                                             ItemsSource="{Binding SimilarGamesNotExcludeGenres}"
+                                             SelectionChanged="SimilarGamesNotExcludeGenresLb_SelectionChanged" />
+                                </DockPanel>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                                            Margin="5,0,5,0">
+                                    <Button Style="{DynamicResource ExcludeArrowRightStyle}"
+                                            Command="{Binding AddSelectedGenresToExcludeCommand}" />
+                                    <Button Style="{DynamicResource ExcludeArrowLeftStyle}"
+                                            Command="{Binding RemoveSelectedGenresFromExcludeCommand}" />
+                                </StackPanel>
+
+                                <DockPanel Grid.Column="2">
+                                    <TextBlock Style="{DynamicResource ExclusionNotAllowTextBlockStyle}" />
+                                    <ListBox Style="{StaticResource ExcludeListBoxStyle}"
+                                             ItemsSource="{Binding SimilarGamesExcludeGenres}"
+                                             SelectionChanged="SgExcludeGenresSelectedItems_SelectionChanged" />
+                                </DockPanel>
+                            </Grid>
+                        </Expander>
+
+                        <Expander Margin="0,10,0,0" Header="{DynamicResource LOCGameRelations_CategoriesToExcludeLabel}">
+                            <Grid Margin="0,10,0,0" MaxHeight="400">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <DockPanel Grid.Column="0">
+                                    <TextBlock Style="{DynamicResource ExclusionAllowTextBlockStyle}"/>
+                                    <ListBox Style="{StaticResource ExcludeListBoxStyle}"
+                                             ItemsSource="{Binding SimilarGamesNotExcludeCategories}"
+                                             SelectionChanged="SimilarGamesNotExcludeCategoriesLb_SelectionChanged" />
+                                </DockPanel>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center"
+                                            Margin="5,0,5,0">
+                                    <Button Style="{DynamicResource ExcludeArrowRightStyle}"
+                                            Command="{Binding AddSelectedCategoriesToExcludeCommand}" />
+                                    <Button Style="{DynamicResource ExcludeArrowLeftStyle}"
+                                            Command="{Binding RemoveSelectedCategoriesFromExcludeCommand}" />
+                                </StackPanel>
+
+                                <DockPanel Grid.Column="2">
+                                    <TextBlock Style="{DynamicResource ExclusionNotAllowTextBlockStyle}" />
+                                    <ListBox Style="{StaticResource ExcludeListBoxStyle}"
+                                             ItemsSource="{Binding SimilarGamesExcludeCategories}"
+                                             SelectionChanged="SgExcludeCategoriesSelectedItems_SelectionChanged" />
+                                </DockPanel>
+                            </Grid>
+                        </Expander>
+                        
                     </StackPanel>
                 </Expander>
 

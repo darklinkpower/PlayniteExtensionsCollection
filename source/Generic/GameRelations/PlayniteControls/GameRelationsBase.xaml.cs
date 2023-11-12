@@ -187,7 +187,7 @@ namespace GameRelations.PlayniteControls
         /// <param name="listToMatch">The list of items to compare.</param>
         /// <param name="hashSet">The HashSet to compare against.</param>
         /// <returns>A match value between 0 and 1 representing the percentage of common elements.</returns>
-        protected double CalculateListHashSetMatchPercentage<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
+        protected static double CalculateListHashSetMatchPercentage<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
             if (listToMatch is null || !listToMatch.Any())
             {
@@ -222,7 +222,7 @@ namespace GameRelations.PlayniteControls
         /// <param name="listToMatch">The list to check for common items.</param>
         /// <param name="hashSet">The HashSet to check against.</param>
         /// <returns>Returns the common item if found, default value otherwise</returns>
-        protected T GetAnyCommonItem<T>(List<T> listToMatch, HashSet<T> hashSet)
+        protected static T GetAnyCommonItem<T>(List<T> listToMatch, HashSet<T> hashSet)
         {
             if (listToMatch is null || listToMatch.Count == 0 || hashSet.Count == 0)
             {
@@ -238,6 +238,39 @@ namespace GameRelations.PlayniteControls
             }
 
             return default;
+        }
+
+        /// <summary>
+        /// Checks if any item in the provided list is contained within the HashSet.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the lists and the HashSet.</typeparam>
+        /// <param name="listToMatch">The list of items to compare against the HashSet.</param>
+        /// <param name="hashSet">The HashSet to check for item presence.</param>
+        /// <returns>True if any item in the list is found in the HashSet, otherwise false.
+        /// Returns false if the list is null or empty.</returns>
+        protected static bool HashSetContainsAnyItem<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
+        {
+            if (listToMatch is null || !listToMatch.Any())
+            {
+                return false;
+            }
+
+            return listToMatch.Any(x => hashSet.Contains(x));
+        }
+
+        /// <summary>
+        /// Retrieves items from the provided list that are not present in the specified HashSet.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the lists and the HashSet.</typeparam>
+        /// <param name="listToMatch">The list of items to filter against the HashSet.</param>
+        /// <param name="hashSet">The HashSet to compare the list against.</param>
+        /// <returns>
+        /// An IEnumerable containing items from the list that are not present in the HashSet.
+        /// Returns an empty IEnumerable if the provided list is null.
+        /// </returns>
+        protected static IEnumerable<T> GetItemsNotInHashSet<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
+        {
+            return listToMatch?.Where(x => !hashSet.Contains(x)) ?? Enumerable.Empty<T>();
         }
 
         public RelayCommand<object> OpenGameDetailsCommand

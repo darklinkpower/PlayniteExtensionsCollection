@@ -33,8 +33,21 @@ namespace GameRelations
     {
         private readonly GameRelations plugin;
         private GameRelationsSettings editingClone { get; set; }
-        public ObservableCollection<Tag> SimilarGamesExcludeTags { get; private set; } = new ObservableCollection<Tag>();
-        public ObservableCollection<Tag> SimilarGamesNotExcludeTags { get; private set; } = new ObservableCollection<Tag>();
+        public ObservableCollection<DatabaseObject> SimilarGamesExcludeTags { get; private set; } = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SimilarGamesNotExcludeTags { get; private set; } = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SimilarGamesExcludeGenres { get; private set; } = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SimilarGamesNotExcludeGenres { get; private set; } = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SimilarGamesExcludeCategories { get; private set; } = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SimilarGamesNotExcludeCategories { get; private set; } = new ObservableCollection<DatabaseObject>();
+
+        public ObservableCollection<DatabaseObject> SgNotExcludeTagsSelectedItems = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SgExcludeTagsSelectedItems = new ObservableCollection<DatabaseObject>();
+
+        public ObservableCollection<DatabaseObject> SgNotExcludeGenresSelectedItems = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SgExcludeGenresSelectedItems = new ObservableCollection<DatabaseObject>();
+
+        public ObservableCollection<DatabaseObject> SgNotExcludeCategoriesSelectedItems = new ObservableCollection<DatabaseObject>();
+        public ObservableCollection<DatabaseObject> SgExcludeCategoriesSelectedItems = new ObservableCollection<DatabaseObject>();
 
         private GameRelationsSettings settings;
         public GameRelationsSettings Settings
@@ -44,28 +57,6 @@ namespace GameRelations
             {
                 settings = value;
                 OnPropertyChanged();
-            }
-        }
-
-        private ObservableCollection<Tag> _sgNotExcludeTagsSelectedItems = new ObservableCollection<Tag>();
-        public ObservableCollection<Tag> SgNotExcludeTagsSelectedItems
-        {
-            get { return _sgNotExcludeTagsSelectedItems; }
-            set
-            {
-                _sgNotExcludeTagsSelectedItems = value;
-                OnPropertyChanged(nameof(SgNotExcludeTagsSelectedItems));
-            }
-        }
-
-        private ObservableCollection<Tag> _sgExcludeTagsSelectedItems = new ObservableCollection<Tag>();
-        public ObservableCollection<Tag> SgExcludeTagsSelectedItems
-        {
-            get { return _sgExcludeTagsSelectedItems; }
-            set
-            {
-                _sgExcludeTagsSelectedItems = value;
-                OnPropertyChanged(nameof(SgExcludeTagsSelectedItems));
             }
         }
 
@@ -92,22 +83,32 @@ namespace GameRelations
         {
             // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
-            var excludeTags = new List<Tag>();
-            var notExcludeTags = new List<Tag>();
-            foreach (var tag in plugin.PlayniteApi.Database.Tags)
+
+            AddItemsToExclusionCollections(SimilarGamesExcludeTags, SimilarGamesNotExcludeTags, plugin.PlayniteApi.Database.Tags, Settings.SimilarGamesControlSettings.TagsToIgnore);
+            AddItemsToExclusionCollections(SimilarGamesExcludeGenres, SimilarGamesNotExcludeGenres, plugin.PlayniteApi.Database.Genres, Settings.SimilarGamesControlSettings.GenresToIgnore);
+            AddItemsToExclusionCollections(SimilarGamesExcludeCategories, SimilarGamesNotExcludeCategories, plugin.PlayniteApi.Database.Categories, Settings.SimilarGamesControlSettings.CategoriesToIgnore);
+        }
+
+        private void AddItemsToExclusionCollections<T>(ObservableCollection<DatabaseObject> excludeCollection, ObservableCollection<DatabaseObject> notExcludeCollection, IItemCollection<T> itemCollection, HashSet<Guid> idsToExclude) where T : DatabaseObject
+        {
+            excludeCollection.Clear();
+            notExcludeCollection.Clear();
+            var excludeList = new List<DatabaseObject>();
+            var notExcludeList = new List<DatabaseObject>();
+            foreach (var item in itemCollection)
             {
-                if (Settings.SimilarGamesControlSettings.TagsToIgnore.Contains(tag.Id))
+                if (idsToExclude.Contains(item.Id))
                 {
-                    excludeTags.Add(tag);
+                    excludeList.Add(item);
                 }
                 else
                 {
-                    notExcludeTags.Add(tag);
+                    notExcludeList.Add(item);
                 }
             }
 
-            SimilarGamesNotExcludeTags = notExcludeTags.OrderBy(x => x.Name).ToObservable();
-            SimilarGamesExcludeTags = excludeTags.OrderBy(x => x.Name).ToObservable();
+            excludeList.OrderBy(x => x.Name).ForEach(x => excludeCollection.Add(x));
+            notExcludeList.OrderBy(x => x.Name).ForEach(x => notExcludeCollection.Add(x));
         }
 
         public void CancelEdit()
@@ -119,6 +120,9 @@ namespace GameRelations
         public void EndEdit()
         {
             Settings.SimilarGamesControlSettings.TagsToIgnore = SimilarGamesExcludeTags.Select(x => x.Id).ToHashSet();
+            Settings.SimilarGamesControlSettings.GenresToIgnore = SimilarGamesExcludeGenres.Select(x => x.Id).ToHashSet();
+            Settings.SimilarGamesControlSettings.CategoriesToIgnore = SimilarGamesExcludeCategories.Select(x => x.Id).ToHashSet();
+
             plugin.SavePluginSettings(Settings);
             ClearEditingTags();
         }
@@ -127,8 +131,17 @@ namespace GameRelations
         {
             SimilarGamesExcludeTags.Clear();
             SimilarGamesNotExcludeTags.Clear();
+            SimilarGamesExcludeGenres.Clear();
+            SimilarGamesNotExcludeGenres.Clear();
+            SimilarGamesExcludeCategories.Clear();
+            SimilarGamesNotExcludeCategories.Clear();
+
             SgExcludeTagsSelectedItems.Clear();
             SgNotExcludeTagsSelectedItems.Clear();
+            SgExcludeGenresSelectedItems.Clear();
+            SgNotExcludeGenresSelectedItems.Clear();
+            SgExcludeCategoriesSelectedItems.Clear();
+            SgNotExcludeCategoriesSelectedItems.Clear();
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -144,18 +157,39 @@ namespace GameRelations
         {
             OnPropertyChanged(nameof(AddSelectedTagsToExcludeCommand));
             OnPropertyChanged(nameof(RemoveSelectedTagsFromExcludeCommand));
+
+            OnPropertyChanged(nameof(AddSelectedGenresToExcludeCommand));
+            OnPropertyChanged(nameof(RemoveSelectedGenresFromExcludeCommand));
+
+            OnPropertyChanged(nameof(AddSelectedCategoriesToExcludeCommand));
+            OnPropertyChanged(nameof(RemoveSelectedCategoriesFromExcludeCommand));
+        }
+
+        private void AddSelectedItemsToExclude(ObservableCollection<DatabaseObject> selectedItemsCollection, ObservableCollection<DatabaseObject> excludeCollection, ObservableCollection<DatabaseObject> notExcludeCollection)
+        {
+            foreach (var item in selectedItemsCollection.ToList())
+            {
+                selectedItemsCollection.Remove(item);
+                notExcludeCollection.Remove(item);
+                excludeCollection.Add(item);
+            }
+        }
+
+        private void RemoveSelectedItemsFromExclude(ObservableCollection<DatabaseObject> selectedItemsCollection, ObservableCollection<DatabaseObject> excludeCollection, ObservableCollection<DatabaseObject> notExcludeCollection)
+        {
+            foreach (var item in selectedItemsCollection.ToList())
+            {
+                selectedItemsCollection.Remove(item);
+                excludeCollection.Remove(item);
+                notExcludeCollection.Add(item);
+            }
         }
 
         public RelayCommand AddSelectedTagsToExcludeCommand
         {
             get => new RelayCommand(() =>
             {
-                foreach (var tag in SgNotExcludeTagsSelectedItems.ToList())
-                {
-                    SgNotExcludeTagsSelectedItems.Remove(tag);
-                    SimilarGamesNotExcludeTags.Remove(tag);
-                    SimilarGamesExcludeTags.Add(tag);
-                }
+                AddSelectedItemsToExclude(SgNotExcludeTagsSelectedItems, SimilarGamesExcludeTags, SimilarGamesNotExcludeTags);
             }, () => SgNotExcludeTagsSelectedItems.Count > 0);
         }
 
@@ -163,13 +197,40 @@ namespace GameRelations
         {
             get => new RelayCommand(() =>
             {
-                foreach (var tag in SgExcludeTagsSelectedItems.ToList())
-                {
-                    SgExcludeTagsSelectedItems.Remove(tag);
-                    SimilarGamesExcludeTags.Remove(tag);
-                    SimilarGamesNotExcludeTags.Add(tag);
-                }
+                RemoveSelectedItemsFromExclude(SgExcludeTagsSelectedItems, SimilarGamesExcludeTags, SimilarGamesNotExcludeTags);
             }, () => SgExcludeTagsSelectedItems.Count > 0);
+        }
+
+        public RelayCommand AddSelectedGenresToExcludeCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                AddSelectedItemsToExclude(SgNotExcludeGenresSelectedItems, SimilarGamesExcludeGenres, SimilarGamesNotExcludeGenres);
+            }, () => SgNotExcludeGenresSelectedItems.Count > 0);
+        }
+
+        public RelayCommand RemoveSelectedGenresFromExcludeCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                RemoveSelectedItemsFromExclude(SgExcludeGenresSelectedItems, SimilarGamesExcludeGenres, SimilarGamesNotExcludeGenres);
+            }, () => SgExcludeGenresSelectedItems.Count > 0);
+        }
+
+        public RelayCommand AddSelectedCategoriesToExcludeCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                AddSelectedItemsToExclude(SgNotExcludeCategoriesSelectedItems, SimilarGamesExcludeCategories, SimilarGamesNotExcludeCategories);
+            }, () => SgNotExcludeCategoriesSelectedItems.Count > 0);
+        }
+
+        public RelayCommand RemoveSelectedCategoriesFromExcludeCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                RemoveSelectedItemsFromExclude(SgExcludeCategoriesSelectedItems, SimilarGamesExcludeCategories, SimilarGamesNotExcludeCategories);
+            }, () => SgExcludeCategoriesSelectedItems.Count > 0);
         }
 
 
