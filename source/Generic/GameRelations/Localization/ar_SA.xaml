@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">General settings</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Controls settings</sys:String>
-    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Covers height:</sys:String>
-    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Related games</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Same series</sys:String>
-    <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Tags to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Same developer</sys:String>
-    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Same publisher</sys:String>
-    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Similar games</sys:String>
+    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">إعدادات عامة</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">إعدادات التحكم</sys:String>
+    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">طول الغطاء:</sys:String>
+    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">ألعاب ذات صلة</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">نفس السلسلة</sys:String>
+    <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">العلامات المراد استبعادها أثناء المطابقة</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">نفس المطور</sys:String>
+    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">نفس الناشر</sys:String>
+    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">ألعاب مشابهة</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">تفعيل</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Display game names</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Only show installed</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximum items to display</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">عرض اسم اللعبة</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">إظهار المثبتين فقط</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">أقصى عدد من العناصر للعرض</sys:String>
 </ResourceDictionary>
