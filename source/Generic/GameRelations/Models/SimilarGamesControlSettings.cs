@@ -10,7 +10,8 @@ namespace GameRelations.Models
     {
         private HashSet<Guid> tagsToIgnore = new HashSet<Guid>();
         public HashSet<Guid> TagsToIgnore { get => tagsToIgnore; set => SetValue(ref tagsToIgnore, value); }
-
+        private bool excludeGamesSameSeries = true;
+        public bool ExcludeGamesSameSeries { get => excludeGamesSameSeries; set => SetValue(ref excludeGamesSameSeries, value); }
         public SimilarGamesControlSettings()
         {
 

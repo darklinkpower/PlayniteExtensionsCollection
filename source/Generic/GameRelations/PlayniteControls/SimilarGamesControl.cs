@@ -35,6 +35,7 @@ namespace GameRelations.PlayniteControls
             var tagsSet = game.TagIds?.Where(x => !_controlSettings.TagsToIgnore.Contains(x)).ToHashSet() ?? new HashSet<Guid>();
             var genresSet = game.GenreIds?.ToHashSet() ?? new HashSet<Guid>();
             var categoriesSet = game.CategoryIds?.ToHashSet() ?? new HashSet<Guid>();
+            var seriesHashSet = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
 
             var minScoreThreshold = _propertiesWeights.Count * _minMatchValueFactor;
             var similarityScores = new Dictionary<Game, double>();
@@ -50,6 +51,13 @@ namespace GameRelations.PlayniteControls
                     continue;
                 }
                 
+                if (_controlSettings.ExcludeGamesSameSeries
+                    && otherGame.SeriesIds != null
+                    && otherGame.SeriesIds.Any(x => seriesHashSet.Contains(x)))
+                {
+                    continue;
+                }
+
                 var tagsScore = CalculateListHashSetMatchPercentage(otherGame.TagIds?.Where(x => !_controlSettings.TagsToIgnore.Contains(x)), tagsSet) * _propertiesWeights["tags"];
                 var genresScore = CalculateListHashSetMatchPercentage(otherGame.GenreIds, genresSet) * _propertiesWeights["genres"];
                 var categoriesScore = CalculateListHashSetMatchPercentage(otherGame.CategoryIds, categoriesSet) * _propertiesWeights["categories"];
