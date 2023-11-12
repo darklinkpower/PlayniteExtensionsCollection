@@ -9,7 +9,7 @@
     <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Same developer</sys:String>
     <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Same publisher</sys:String>
     <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Similar games</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Enable</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">تفعيل</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Display game names</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Only show installed</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximum items to display</sys:String>
