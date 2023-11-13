@@ -6,9 +6,9 @@
     <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Пов'язані ігри</sys:String>
     <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Така ж серія</sys:String>
     <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Теги виключені під час зіставлення</sys:String>
-    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Genres to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Categories to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Exclude games from the same series</sys:String>
+    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Жанри виключені під час зіставлення</sys:String>
+    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Категорії виключені під час зіставлення</sys:String>
+    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Виключити ігри з тієї самої серії</sys:String>
     <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Такий же розробник</sys:String>
     <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Такий же видавець</sys:String>
     <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Схожі ігри</sys:String>
