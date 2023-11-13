@@ -28,7 +28,7 @@
                                    Text="{DynamicResource LOCGameRelations_ControlSettingDisplayMaxItemsLabel}" 
                                    Margin="0,0,10,0" />
                         <TextBox VerticalAlignment="Center"
-                                 IsReadOnly="True" MinWidth="30"
+                                 IsReadOnly="True" MinWidth="35"
                                  Margin="0,0,10,0"
                                  Text="{Binding  MaxItems}" />
                         <Slider IsSnapToTickEnabled="True" Minimum="3"
@@ -36,7 +36,7 @@
                                 VerticalAlignment="Center"
                                 TickFrequency="1"
                                 Value="{Binding MaxItems}"
-                                Maximum="40" />
+                                Maximum="100" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
