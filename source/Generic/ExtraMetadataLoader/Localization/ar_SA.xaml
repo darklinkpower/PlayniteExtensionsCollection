@@ -24,13 +24,13 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosHorizontalAlignmentLabel">المحاذاة الأفقية للشعارات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosVerticalAlignmentLabel">المحاذاة العمودية للشعارات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEnableShadowEffectLabel">تفعيل تأثير الظل</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel">Enable white and grayscale effect</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">Depth</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">Direction</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">Blur radius</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">Opacity</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel">Brightness</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel">Maximum luminance</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosSemiWhiteEffectLabel">تمكين تأثير المقياس الأبيض والرمادي</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDepthLabel">العمق</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosShadowDirectionLabel">الإتجاه</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosBlurRadiusLabel">نسبة التمويه</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectOpacityLabel">الشفافيّة</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectBrightnessLabel">السطوع</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_SettingLogosEffectMaxLuminanceLabel">الحد الأدنى للإضاءة</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDownload">إعدادات تحميل الفيديو</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoDetailsView">إعدادات المشغل في وضع عرض التفاصيل</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSectionLabelVideoGridView">إعدادات المشغل في وضع عرض الشبكة</sys:String>
@@ -67,9 +67,9 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">جاري تحميل الشعارات من Steam...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">جاري تحميل الشعارات من SteamGridDB...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">جاري تحميل الفيديو من يوتيوب...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Failed to download video from YouTube.
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">فشل تحميل الفيديو من يوتيوب.
 
-Please verify that your yt-dlp installation is up to date.</sys:String>
+يرجى التحقق أن لديك أحدث إصدار ل yt-dlp.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">فشل تحميل الشعار من Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">جاري تحميل شعارات الألعاب المضافة حديثاً...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">جاري تحميل مقاطع الفيديو للألعاب المضافة حديثاً...</sys:String>
@@ -103,7 +103,7 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">إنشاء مقاطع فيديو صغيرة من فيديوهات...</sys:String>
     
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">معالجة الشعارات بعد التحميل</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Enable opacity animation</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">تفعيل حركة التعتيم</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">تقليم الشعارات</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">إزالة حدود شفافة حول الصورة</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">تغيير إلى جودة أقل</sys:String>
@@ -155,9 +155,9 @@ Please verify that your yt-dlp installation is up to date.</sys:String>
 حدد &quot;نعم&quot; لتحديد الشعارات لتنزيلها تلقائياً بدون أي تفاعل للمستخدم.
 اختر &quot;لا&quot; لإجراء الاختيارات يدوياً عند الضرورة.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
-Failed to get video information: {0}, {1}, {2}.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
-Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
+فشل في الحصول على معلومات الفيديو: {0} و {1} و {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">معمل بيانات التعريف الاضافي
+فشل في معالجة الفيديو في ffmpeg {0} و {1} و {2}</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
-Error during download of video from YouTube: {0}, {1}, {2}</sys:String>
+خطأ أثناء تنزيل الفيديو من اليوتيوب: {0} و {1} و {2}</sys:String>
 </ResourceDictionary>

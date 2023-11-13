@@ -6,6 +6,9 @@
     <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Jogos relacionados</sys:String>
     <sys:String x:Key="LOCGameRelations_SameSeriesLabel">A mesma série</sys:String>
     <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Etiquetas a excluir durante a correspondência</sys:String>
+    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Genres to exclude during matching</sys:String>
+    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Categories to exclude during matching</sys:String>
+    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Exclude games from the same series</sys:String>
     <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">O mesmo developer</sys:String>
     <sys:String x:Key="LOCGameRelations_SamePublisherLabel">A mesma editora</sys:String>
     <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Jogos semelhantes</sys:String>
