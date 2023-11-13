@@ -6,6 +6,9 @@
     <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">ألعاب ذات صلة</sys:String>
     <sys:String x:Key="LOCGameRelations_SameSeriesLabel">نفس السلسلة</sys:String>
     <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">العلامات المراد استبعادها أثناء المطابقة</sys:String>
+    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Genres to exclude during matching</sys:String>
+    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Categories to exclude during matching</sys:String>
+    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Exclude games from the same series</sys:String>
     <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">نفس المطور</sys:String>
     <sys:String x:Key="LOCGameRelations_SamePublisherLabel">نفس الناشر</sys:String>
     <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">ألعاب مشابهة</sys:String>
