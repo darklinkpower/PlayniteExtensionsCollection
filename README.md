@@ -1,24 +1,26 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Crowdin](https://badges.crowdin.net/darklinkpower-playnite-extensi/localized.svg)](https://crowdin.com/project/darklinkpower-playnite-extensi)
+[![Last Commit](https://img.shields.io/github/last-commit/darklinkpower/PlayniteExtensionsCollection)](https://github.com/darklinkpower/PlayniteExtensionsCollection)
+[![Ko-fi Badge](https://img.shields.io/badge/Tip%20on%20Ko--fi-ff5f5f)](https://ko-fi.com/darklinkpower)
+
 # Playnite Extensions Collection
 
 Collection of extensions made for [Playnite](https://github.com/JosefNemec/Playnite).
 
 ## Tips and donations
-All the work I do for Playnite extensions is and will always be free!
+I create Playnite extensions and themes for the love of it—always free for the community.
 
-I make extensions and themes to learn, have fun and to give to the community so donations are not required or requested. If you find the work being done useful and you are and in a position that allows it, you can consider making a tip to support the different Playnite related projects I work on, every little bit helps.
+While donations aren't expected, they're super appreciated! If you've found my work helpful and want to help out, every bit counts and keeps the projects going. Thanks for considering supporting my Playnite-related work!
 
 <a href='https://ko-fi.com/darklinkpower' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 ## Questions, suggestions and Issues
 
-Please open a [new Issue](https://github.com/darklinkpower/PlayniteScriptExtensions/issues) to report issues or request features.
-
-Please also be aware that I don't visit the Playnite forums frequently so if you need help or have a question, I'm more easily found in the [Playnite Discord server](https://discord.gg/BrtABqe "Playnite Discord server")
+Whether it's a question, a suggestion, or an issue you've encountered, please feel free to [open a new Issue](https://github.com/darklinkpower/PlayniteScriptExtensions/issues).
 
 ## Translations
 
-You can help to translate the extensions do different languages via the project [Crowdin page.](https://crowdin.com/project/darklinkpower-playnite-extensi)
+You can help to translate the extensions do different languages in the project's [Crowdin page.](https://crowdin.com/project/darklinkpower-playnite-extensi)
 
 ## Download and installation
 
@@ -43,6 +45,7 @@ Varies depending the extension functionality but in general. Refer to each exten
 | <img src="source/Generic/GameEngineChecker/icon.jpg" width="50" height="50"> | Game Engine Checker | This extension will add a tag with the name of the engine used by the game. It's compatible with PC games that are available on GOG or Steam.  The information is obtained from PCGamingWiki. | [Database](https://playnite.link/addons.html#Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db "Database") | None |
 | <img src="source/Generic/GameMediaTools/icon.png" width="50" height="50"> | Game Media Tools | This extension is intended as a library mantaining tool and to make it easier to handle game media in your library. | [Database](https://playnite.link/addons.html#Game_Media_Tools "Database") | None |
 | <img src="source/Generic/GamePassCatalogBrowser/icon.png" width="50" height="50"> | Game Pass Catalog Browser | Browse the Game Pass catalog in Playnite and add its game to your Playnite library. | [Database](https://playnite.link/addons.html#GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93 "Database") | [Help](../../wiki/Game-Pass-Catalog-Browser "Help") |
+| <img src="source/Generic/GameRelations/icon.png" width="50" height="50"> | Game Relations | This extension detects and displays other games in your library related to the game that is currently displayed using their metadata in supported themes. | [Database](https://playnite.link/addons.html#GameRelations_a4c15d63-9ab4-4d96-9a0c-8f9b35d43a1f "Database") | None |
 | <img src="source/Generic/ImageCacheSizeSaver/icon.png" width="50" height="50"> | Image Cache Size Saver | Extension to process the images in your Playnite images cache directory to save space. | [Database](https://playnite.link/addons.html#Image_Cache_Size_Saver "Database") | None |
 | <img src="source/Generic/InstallationStatusUpdater/icon.ico" width="50" height="50"> | Installation Status Updater | This extension updates the installation status of your games automatically by detecting if the game files are present. | [Database](https://playnite.link/addons.html#Installation_Status_Updater "Database") | [Help](../../wiki/Installation-Status-Updater "Help") |
 | <img src="source/Generic/LibraryExporter/icon.png" width="50" height="50"> | Library Exporter Advanced | Allows to export the Playnite library to a csv file with support to configure what data to export. | [Database](https://playnite.link/addons.html#LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e "Database") | [Help](../../wiki/Library-Exporter-Advanced "Help") |
@@ -54,6 +57,7 @@ Varies depending the extension functionality but in general. Refer to each exten
 | <img src="source/Generic/NvidiaFreestyleChecker/icon.png" width="50" height="50"> | NVIDIA Freestyle checker | This extension will add a feature named "NVIDIA Freestyle" to NVIDIA Freestyle supported games in your library. | [Database](https://playnite.link/addons.html#NVIDIA_Freestyle_Checker "Database") | None |
 | <img src="source/Generic/NVIDIAGEGameStreamExport/icon.png" width="50" height="50"> | NVIDIA GE GameStream Export | This extension will export your selected games to NVIDIA Geforce Experience GameStreaming games database. | [Database](https://playnite.link/addons.html#NVIDIA_GE_GameStream_Export "Database") | None |
 | <img src="source/Generic/PlayniteControlLocker/icon.png" width="50" height="50"> | Playnite Control Locker | This extension provides functionality to help in situations where your Playnite installation is shared with someone else and you want to limit certain functionality for safety reasons. | [Database](https://playnite.link/addons.html#PlayniteControlLocker_e7c39fe7-bec1-4691-a818-b9ba1470ad21 "Database") | None |
+| <img src="source/Generic/PlayNotes/icon.png" width="50" height="50"> | Play Notes | This extension provides an UI element with extensive functionality to create and manage notes, including markdown and multiple notes support. | [Database](https://playnite.link/addons.html#PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1 "Database") | None |
 | <img src="source/Generic/PlayState/icon.png" width="50" height="50"> | PlayState | This extension will let you suspend and resume your game at any moment with the configured hotkey. | [Database](https://playnite.link/addons.html#PlayState "Database") | [Help](../../wiki/PlayState "Help") |
 | <img src="source/Generic/PurchaseDateImporter/icon.jpg" width="50" height="50"> | Purchase Date Importer | This extension will obtain the purchase date from your Epic, GOG and Steam accounts and import them to the games in your library as added dates. | [Database](https://playnite.link/addons.html#Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e "Database") | None |
 | <img src="source/Generic/ResolutionChanger/icon.png" width="50" height="50"> | Display Helper | Offers functionality to configure your displays when starting games | [Database](https://playnite.link/addons.html#ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c "Database") | None |
@@ -96,7 +100,7 @@ Varies depending the extension functionality but in general. Refer to each exten
 
 ## Contributing
 
-If possible, please contact me before working on a new PR to make sure that the changes are something that we can discuss beforehand.
+Please contact me before working on a new PR to make sure that the changes are something that we can discuss beforehand.
 
 ### General rules
 - If your PR contains new strings, they must be properly implemented as localization strings
@@ -121,5 +125,6 @@ Get-Service | Where {$_.Status -eq "Stopped"}
 ```
 
 ### C# extensions rules
-- Private fields and properties should use camelCase (without underscore)
+- Private fields and properties should use camelCase
+- Private fields must use an underscore prefix
 - All methods (private and public) should use PascalCase
