@@ -23,3 +23,9 @@ Packages:
     - 'Improved: Processing of controls data when selecting games'
     - 'Improved: Processing of internet requests'
     - 'Changed: Updated localizations'
+  - Version: 1.4
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.13_97d6d8ad/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_4.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -200,3 +200,9 @@ Packages:
     - 'Improved: Processing of internet requests'
     - 'Changed: Updated localizations'
     - 'Fixed: Failed to obtain wishlist when it contains Advertisement type items'
+  - Version: 1.28
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.13_97d6d8ad/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_28.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -21,3 +21,14 @@ Packages:
     - 'Improved: Performance when displaying a large number of games'
     - 'Fixed: Certain texts in settings not using Playnite styling'
     - 'Fixed: Minor fixes during game matching procedure'
+  - Version: 1.3
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.13_97d6d8ad/GameRelations_a4c15d63-9ab4-4d96-9a0c-8f9b35d43a1f_1_3.pext
+    Changelog:
+    - 'Added: Option to exclude certain genres and categories when matching games in the similarity games list'
+    - 'Added: Option to exclude games from the same series in the similarity games list. Enabled by default.'
+    - 'Improved: Matching algorithm to improve detection of similar games'
+    - 'Changed: Updated localizations'
+    - 'Changed: Increasing maximum value of games to display to 100'
+    - 'Fixed: Fixed error during matching that could prevent certain games from displaying in similar games in rare circumstances'
