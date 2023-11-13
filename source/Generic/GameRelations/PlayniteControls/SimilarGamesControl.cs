@@ -15,7 +15,7 @@ namespace GameRelations.PlayniteControls
     public partial class SimilarGamesControl : GameRelationsBase
     {
         private readonly Dictionary<string, double> _propertiesWeights;
-        private const double _minMatchValueFactor = 0.75;
+        private const double _minMatchValueFactor = 0.73;
         private readonly SimilarGamesControlSettings _controlSettings;
 
         public SimilarGamesControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
@@ -51,15 +51,15 @@ namespace GameRelations.PlayniteControls
                 {
                     continue;
                 }
-                
+
                 if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, seriesHashSet))
                 {
                     continue;
                 }
 
-                var tagsScore = CalculateListHashSetMatchPercentage(GetItemsNotInHashSet(otherGame.TagIds, _controlSettings.TagsToIgnore), tagsSet) * _propertiesWeights["tags"];
-                var genresScore = CalculateListHashSetMatchPercentage(GetItemsNotInHashSet(otherGame.GenreIds, _controlSettings.GenresToIgnore), genresSet) * _propertiesWeights["genres"];
-                var categoriesScore = CalculateListHashSetMatchPercentage(GetItemsNotInHashSet(otherGame.CategoryIds, _controlSettings.CategoriesToIgnore), categoriesSet) * _propertiesWeights["categories"];
+                var tagsScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.TagIds, _controlSettings.TagsToIgnore), tagsSet) * _propertiesWeights["tags"];
+                var genresScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.GenreIds, _controlSettings.GenresToIgnore), genresSet) * _propertiesWeights["genres"];
+                var categoriesScore = CalculateJaccardSimilarity(GetItemsNotInHashSet(otherGame.CategoryIds, _controlSettings.CategoriesToIgnore), categoriesSet) * _propertiesWeights["categories"];
 
                 var finalScore = tagsScore + genresScore + categoriesScore;
                 if (finalScore >= minScoreThreshold)

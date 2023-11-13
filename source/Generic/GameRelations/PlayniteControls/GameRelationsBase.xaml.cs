@@ -187,7 +187,7 @@ namespace GameRelations.PlayniteControls
         /// <param name="listToMatch">The list of items to compare.</param>
         /// <param name="hashSet">The HashSet to compare against.</param>
         /// <returns>A match value between 0 and 1 representing the percentage of common elements.</returns>
-        protected static double CalculateListHashSetMatchPercentage<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
+        protected static decimal CalculateListHashSetMatchPercentage<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
             if (listToMatch is null || !listToMatch.Any())
             {
@@ -212,8 +212,42 @@ namespace GameRelations.PlayniteControls
                 return 0;
             }
 
-            var matchPercent = commonCount / (double)Math.Max(listToMatch.Count(), hashSet.Count);
+            // Rounding is done to prevent errors when doing arithmetic operations
+            var matchPercent = Math.Round(commonCount / (decimal)Math.Max(listToMatch.Count(), hashSet.Count), 3); 
             return matchPercent;
+        }
+
+        /// <summary>
+        /// Calculate the Jaccard similarity between a list of items and a HashSet.
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the collections.</typeparam>
+        /// <param name="listToMatch">The list of items to compare.</param>
+        /// <param name="hashSet">The HashSet to compare against.</param>
+        /// <returns>A match value between 0 and 1 representing the similarity between the elements.</returns>
+        protected static double CalculateJaccardSimilarity<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
+        {
+            if (listToMatch is null || !listToMatch.Any() || hashSet is null || hashSet.Count == 0)
+            {
+                return 0;
+            }
+
+            var uniqueCount = hashSet.Count;
+            var commonCount = 0;
+            foreach (var item in listToMatch)
+            {
+                if (hashSet.Contains(item))
+                {
+                    commonCount++;
+                }
+                else
+                {
+                    uniqueCount++;
+                }
+            }
+
+            // Rounding is done to prevent errors when doing arithmetic operations
+            var similarity = Math.Round((double)commonCount / uniqueCount, 3);
+            return similarity;
         }
 
         /// <summary>
