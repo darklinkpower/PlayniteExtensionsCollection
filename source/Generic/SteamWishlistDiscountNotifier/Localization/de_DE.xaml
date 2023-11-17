@@ -36,7 +36,7 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Preis</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Erscheinungsdatum</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Datum hinzugefügt</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Aufstreigend</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Aufsteigend</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Absteigend</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Suchen:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelOnlyDiscounted">Nur reduzierte Artikel</sys:String>
@@ -55,12 +55,12 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Show if game is owned in other sources</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Ownership:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Any</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Owned</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Not owned</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Im Besitz</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Nicht im Besitz</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Im Web öffnen</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">In Steam öffnen</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Steam Wunschliste auf Rabatte Prüfen</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Remove from wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Failed to remove from wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Removing from wishlist…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Von Wunschliste entfernen</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Fehler beim Entfernen von Wunschliste</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Entferne von Wunschliste…</sys:String>
 </ResourceDictionary>
