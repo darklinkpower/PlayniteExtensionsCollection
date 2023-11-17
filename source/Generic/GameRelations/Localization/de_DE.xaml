@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">General settings</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Controls settings</sys:String>
-    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Covers height:</sys:String>
-    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Related games</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Same series</sys:String>
-    <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Tags to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Genres to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Categories to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Exclude games from the same series</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Same developer</sys:String>
-    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Same publisher</sys:String>
-    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Similar games</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Enable</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Display game names</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Only show installed</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximum items to display</sys:String>
+    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">Allgemeine Einstellungen</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Steuerungseinstellungen</sys:String>
+    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Cover-Höhe:</sys:String>
+    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Zugehörige Spiele</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Gleiche Serie</sys:String>
+    <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Auszuschließende Tags beim Abgleich</sys:String>
+    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Auszuschließende Genres beim Abgleich</sys:String>
+    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Auszuschließende Kategorien beim Abgleich</sys:String>
+    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Spiele derselben Serie ausschließen</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Gleicher Entwickler</sys:String>
+    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Gleicher Publisher</sys:String>
+    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Ähnliche Spiele</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Aktivieren</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Spielnamen anzeigen</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Nur installierte anzeigen</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximale Anzahl anzuzeigender Elemente</sys:String>
 </ResourceDictionary>
