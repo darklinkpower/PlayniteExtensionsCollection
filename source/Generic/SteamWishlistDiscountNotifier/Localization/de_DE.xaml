@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Hilfe</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Mindestrabatt erforderlich, um Benachrichtigungen anzuzeigen:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Erforderlicher Mindestrabatt, um Benachrichtigungen anzuzeigen:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Benachrichtigung für Artikel des Typs anzeigen:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Authentifizieren</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Authentifizierungsstatus wird überprüft …</sys:String>
@@ -19,7 +19,7 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; ist auf Steam im Angebot!</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; ist jetzt auf Steam verfügbar!</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">&quot;{0}&quot; Preis hat sich geändert.</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Rabatt {0}%</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">Rabatt {0} %</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">Spiele</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">Herunterladbare Inhalte</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Musik</sys:String>
@@ -27,8 +27,8 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">Videos</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Hardware</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Steam Wunschliste anzeigen</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Erhalte Steam Wunschlisten Daten…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">Steam-Wunschliste anzeigen</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Lade Steam-Wunschlistendaten…</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Name</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Rang</sys:String>
@@ -51,10 +51,10 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Gesamte Bewertungen:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Erscheinungsdatum:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Tags:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Owned in:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Show if game is owned in other sources</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Ownership:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Any</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Im Besitz auf:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Zeige an, ob das Spiel in anderen Quellen im Besitz ist</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Besitz:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Alle</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Im Besitz</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Nicht im Besitz</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Im Web öffnen</sys:String>
