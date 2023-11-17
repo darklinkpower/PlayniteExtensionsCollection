@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="PlayNotes_NewNoteLabel">New note</sys:String>
-    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notes for {0} saved.</sys:String>
-    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Title:</sys:String>
-    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Note:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam Guide Importer</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importing Steam guide…</sys:String>
-    <sys:String x:Key="PlayNotes_InvalidUrlMessage">Url is invalid.</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Failed to obtain guide.</sys:String>
-    <sys:String x:Key="PlayNotes_ImportLabel">Import</sys:String>
-    <sys:String x:Key="PlayNotes_UrlInputLabel">Url:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Import each section as a separate note</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Clear existing notes</sys:String>
-    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Import Playnite notes</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Enter the title to be used in the imported notes:</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importing notes…</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notes import finished.</sys:String>
+    <sys:String x:Key="PlayNotes_NewNoteLabel">Neue Notiz</sys:String>
+    <sys:String x:Key="PlayNotes_SavedNotesMessage">Notizen für {0} gespeichert.</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Titel:</sys:String>
+    <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Notiz:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam-Guide-Import</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importiere Steam-Guide…</sys:String>
+    <sys:String x:Key="PlayNotes_InvalidUrlMessage">URL ist ungültig.</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Fehler beim Abrufen des Guides.</sys:String>
+    <sys:String x:Key="PlayNotes_ImportLabel">Importieren</sys:String>
+    <sys:String x:Key="PlayNotes_UrlInputLabel">URL:</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Jede Sektion als separate Notiz importieren</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Bestehende Notizen löschen</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Playnite-Notizen importieren</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Titel eingeben, der in den importierten Notizen verwendet werden soll:</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importiere Notizen…</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notizimport abgeschlossen.</sys:String>
 </ResourceDictionary>
