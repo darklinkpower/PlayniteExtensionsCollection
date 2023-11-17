@@ -4,16 +4,16 @@
     <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Steuerungseinstellungen</sys:String>
     <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Cover-Höhe:</sys:String>
     <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Zugehörige Spiele</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Gleiche Serie</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Dieselbe Serie</sys:String>
     <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Auszuschließende Tags beim Abgleich</sys:String>
     <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Auszuschließende Genres beim Abgleich</sys:String>
     <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Auszuschließende Kategorien beim Abgleich</sys:String>
     <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Spiele derselben Serie ausschließen</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Gleicher Entwickler</sys:String>
-    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Gleicher Publisher</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Derselbe Entwickler</sys:String>
+    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Derselbe Publisher</sys:String>
     <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Ähnliche Spiele</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Aktivieren</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Spielnamen anzeigen</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Spieltitel anzeigen</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Nur installierte anzeigen</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximale Anzahl anzuzeigender Elemente</sys:String>
 </ResourceDictionary>
