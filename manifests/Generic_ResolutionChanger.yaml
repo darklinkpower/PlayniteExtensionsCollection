@@ -183,3 +183,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_27.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.28
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.28_0f949552/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_28.pext
+    Changelog:
+    - 'Added: Support to set specific display per game in game menu'
+    - 'Changed: Minor changes to game menu descriptions'
+    - 'Fixed: Previous game display configuration not being removed when selecting a new one'

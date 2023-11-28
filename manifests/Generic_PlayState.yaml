@@ -466,3 +466,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.30_7c3e6b81/PlayState_2_67.pext
     Changelog:
     - 'Improved: Gamepad inputs handling'
+  - Version: 2.68
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2023-11-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.28_0f949552/PlayState_2_68.pext
+    Changelog:
+    - 'Changed: Updated localizations'

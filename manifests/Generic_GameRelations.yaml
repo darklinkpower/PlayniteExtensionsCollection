@@ -32,3 +32,9 @@ Packages:
     - 'Changed: Updated localizations'
     - 'Changed: Increasing maximum value of games to display to 100'
     - 'Fixed: Fixed error during matching that could prevent certain games from displaying in similar games in rare circumstances'
+  - Version: 1.4
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-11-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.28_0f949552/GameRelations_a4c15d63-9ab4-4d96-9a0c-8f9b35d43a1f_1_4.pext
+    Changelog:
+    - 'Changed: Updated localizations'
