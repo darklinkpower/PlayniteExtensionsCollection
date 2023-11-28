@@ -278,6 +278,7 @@ namespace DisplayHelper
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
+                            RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)x(\d+)$");
                             PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Value.Key}x{resolution.Value.Value}");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
@@ -295,6 +296,7 @@ namespace DisplayHelper
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
+                            RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)Hz$");
                             PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {displayFrequency}Hz");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
