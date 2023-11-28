@@ -288,7 +288,7 @@ namespace DisplayHelper
                 gameMenuItems.Add(
                     new GameMenuItem
                     {
-                        Description = string.Format(ResourceProvider.GetString("LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature"), resolution.Value.Key, resolution.Value.Value, resolution.Key),
+                        Description = string.Format("{0}x{1} ({2})", resolution.Value.Key, resolution.Value.Value, resolution.Key),
                         MenuSection = $"{menuSection}|{resolutionSection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
@@ -306,7 +306,7 @@ namespace DisplayHelper
                 gameMenuItems.Add(
                     new GameMenuItem
                     {
-                        Description = string.Format(ResourceProvider.GetString("LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature"), displayFrequency),
+                        Description = string.Format("{0}Hz", displayFrequency),
                         MenuSection = $"{menuSection}|{refreshRateSection}",
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
