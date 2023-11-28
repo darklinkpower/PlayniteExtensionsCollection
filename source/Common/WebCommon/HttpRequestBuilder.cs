@@ -177,7 +177,10 @@ namespace WebCommon
             var result = new StringHttpDownloaderResult();
             foreach (var url in _urls)
             {
+#if DEBUG
                 _logger.Info($"Starting download of url \"{url}\"...");
+#endif
+
                 using (var cts = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken))
                 {
                     if (!(_timeout is null))
@@ -275,7 +278,10 @@ namespace WebCommon
             var result = new FileDownloadHttpDownloaderResult();
             foreach (var url in _urls)
             {
+#if DEBUG
                 _logger.Info($"Starting download of url \"{url}\" to \"{_filePath}\"...");
+#endif
+
                 using (var cts = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken))
                 {
                     if (!(_timeout is null))
@@ -399,7 +405,10 @@ namespace WebCommon
                 }
             }
 
+#if DEBUG
             _logger.Info("Download completed successfully.");
+#endif
+
             return stringBuilder.ToString();
         }
 
@@ -446,7 +455,9 @@ namespace WebCommon
 
             result.FilePath = _filePath;
             result.FileSize = new FileInfo(_filePath).Length;
+#if DEBUG
             _logger.Info("Download completed successfully.");
+#endif
         }
 
         /// <summary>
