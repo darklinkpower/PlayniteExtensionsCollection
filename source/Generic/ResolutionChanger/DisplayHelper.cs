@@ -135,59 +135,73 @@ namespace DisplayHelper
             newHeight = 0;
             newRefreshRate = 0;
             targetDisplayName = string.Empty;
-            var modeDisplayInfo = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ?
-                                  settings.Settings.DesktopModeDisplayInfo : settings.Settings.FullscreenModeDisplayInfo;
-            if (modeDisplayInfo != null)
+
+            if (game.Features.HasItems())
             {
-                if (modeDisplayInfo.ChangeResolution && modeDisplayInfo.Width.HasValue && modeDisplayInfo.Height.HasValue)
+                foreach (var feature in game.Features)
                 {
-                    newWidth = modeDisplayInfo.Width.Value;
-                    newHeight = modeDisplayInfo.Height.Value;
-                }
+                    if (feature.Name.IsNullOrEmpty())
+                    {
+                        continue;
+                    }
 
-                if (modeDisplayInfo.ChangeRefreshRate && modeDisplayInfo.RefreshRate.HasValue)
-                {
-                    newRefreshRate = modeDisplayInfo.RefreshRate.Value;
-                }
+                    if (newWidth == 0 && newHeight == 0)
+                    {
+                        var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
+                        if (resMatch.Success)
+                        {
+                            newWidth = int.Parse(resMatch.Groups[1].Value);
+                            newHeight = int.Parse(resMatch.Groups[2].Value);
+                            continue;
+                        }
+                    }
 
-                if (modeDisplayInfo.TargetSpecificDisplay && !modeDisplayInfo.TargetDisplayName.IsNullOrEmpty())
-                {
-                    targetDisplayName = modeDisplayInfo.TargetDisplayName;
+                    if (newRefreshRate == 0)
+                    {
+                        var refreshMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)Hz$", RegexOptions.IgnoreCase);
+                        if (refreshMatch.Success)
+                        {
+                            newRefreshRate = int.Parse(refreshMatch.Groups[1].Value);
+                            continue;
+                        }
+                    }
+
+                    if (targetDisplayName.IsNullOrEmpty())
+                    {
+                        var displayMatch = Regex.Match(feature.Name, @"^\[RC\] Display: (.+)", RegexOptions.IgnoreCase);
+                        if (displayMatch.Success)
+                        {
+                            targetDisplayName = displayMatch.Groups[1].Value;
+                            continue;
+                        }
+                    }
                 }
             }
 
-            if (!game.Features.HasItems())
+            var modeDisplayInfo = PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ?
+                      settings.Settings.DesktopModeDisplayInfo : settings.Settings.FullscreenModeDisplayInfo;
+            if (modeDisplayInfo is null)
             {
                 return;
             }
 
-            foreach (var feature in game.Features)
+            if (newWidth == 0 && newHeight == 0
+                && modeDisplayInfo.ChangeResolution && modeDisplayInfo.Width.HasValue && modeDisplayInfo.Height.HasValue)
             {
-                if (feature.Name.IsNullOrEmpty())
-                {
-                    continue;
-                }
-                
-                if (newWidth == 0 && newHeight == 0)
-                {
-                    var resMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)x(\d+)$", RegexOptions.IgnoreCase);
-                    if (resMatch.Success)
-                    {
-                        newWidth = int.Parse(resMatch.Groups[1].Value);
-                        newHeight = int.Parse(resMatch.Groups[2].Value);
-                        continue;
-                    }
-                }
+                newWidth = modeDisplayInfo.Width.Value;
+                newHeight = modeDisplayInfo.Height.Value;
+            }
 
-                if (newRefreshRate == 0)
-                {
-                    var refreshMatch = Regex.Match(feature.Name, @"^\[RC\] (\d+)Hz$", RegexOptions.IgnoreCase);
-                    if (refreshMatch.Success)
-                    {
-                        newRefreshRate = int.Parse(refreshMatch.Groups[1].Value);
-                        continue;
-                    }
-                }
+            if (newRefreshRate == 0
+                && modeDisplayInfo.ChangeRefreshRate && modeDisplayInfo.RefreshRate.HasValue)
+            {
+                newRefreshRate = modeDisplayInfo.RefreshRate.Value;
+            }
+
+            if (targetDisplayName.IsNullOrEmpty()
+                && modeDisplayInfo.TargetSpecificDisplay && !modeDisplayInfo.TargetDisplayName.IsNullOrEmpty())
+            {
+                targetDisplayName = modeDisplayInfo.TargetDisplayName;
             }
         }
 
@@ -240,6 +254,7 @@ namespace DisplayHelper
             var menuSection = "Display Helper";
             var resolutionSection = ResourceProvider.GetString("LOCResolutionChanger_MenuSectionDisplayResolution");
             var refreshRateSection = ResourceProvider.GetString("LOCDisplayHelper_MenuSectionDisplayRefreshRate");
+            var displaySection = ResourceProvider.GetString("LOCDisplayHelper_DisplayLabel").TrimEnd(':');
 
             gameMenuItems = new List<GameMenuItem>
             {
@@ -250,7 +265,7 @@ namespace DisplayHelper
                     Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
-                        RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)x(\d+)$");
+                        RemoveGamesRegexMatchingFeatures(@"^\[RC\] (\d+)x(\d+)$", a.Games);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                     }
                 },
@@ -261,7 +276,7 @@ namespace DisplayHelper
                     Icon = menuItemsDeleteIconName,
                     Action = a =>
                     {
-                        RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)Hz$");
+                        RemoveGamesRegexMatchingFeatures(@"^\[RC\] (\d+)Hz$", a.Games);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                     }
                 }
@@ -278,8 +293,8 @@ namespace DisplayHelper
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
-                            RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)x(\d+)$");
-                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {resolution.Value.Key}x{resolution.Value.Value}");
+                            RemoveGamesRegexMatchingFeatures(@"^\[RC\] (\d+)x(\d+)$", a.Games);
+                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games, $"[RC] {resolution.Value.Key}x{resolution.Value.Value}");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
                     }
@@ -296,8 +311,26 @@ namespace DisplayHelper
                         Icon = menuItemsMonitorIconName,
                         Action = a =>
                         {
-                            RemoveResolutionConfigurationSelected(@"^\[RC\] (\d+)Hz$");
-                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), $"[RC] {displayFrequency}Hz");
+                            RemoveGamesRegexMatchingFeatures(@"^\[RC\] (\d+)Hz$", a.Games);
+                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games, $"[RC] {displayFrequency}Hz");
+                            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
+                        }
+                    }
+                );
+            }
+
+            foreach (var displayDevice in DisplayUtilities.GetAvailableDisplayDevices())
+            {
+                gameMenuItems.Add(
+                    new GameMenuItem
+                    {
+                        Description = $"{displayDevice.DeviceName} ({displayDevice.DeviceString})",
+                        MenuSection = $"{menuSection}|{displaySection}",
+                        Icon = menuItemsMonitorIconName,
+                        Action = a =>
+                        {
+                            RemoveGamesRegexMatchingFeatures(@"^\[RC\] Display: .+", a.Games);
+                            PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games, $"[RC] Display: {displayDevice.DeviceName}");
                             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCResolutionChanger_DialogMessageDone"));
                         }
                     }
@@ -312,11 +345,11 @@ namespace DisplayHelper
                 .Distinct();
         }
 
-        private void RemoveResolutionConfigurationSelected(string regexDef)
+        private void RemoveGamesRegexMatchingFeatures(string regexDef, List<Game> games)
         {
             using (PlayniteApi.Database.BufferedUpdate())
             {
-                foreach (var game in PlayniteApi.MainView.SelectedGames.Distinct())
+                foreach (var game in games)
                 {
                     if (!game.FeatureIds.HasItems())
                     {
