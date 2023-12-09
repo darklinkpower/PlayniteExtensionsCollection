@@ -86,25 +86,19 @@ namespace FilterPresetsQuickLauncher
         {
             // Unfortunately Playnite loads its database after requesting items to extensions
             // so it's not possible to use the items in the database in any way
-
-            //var topPanelList = new List<TopPanelItem>();
-            //if (!PlayniteApi.Database.FilterPresets.HasItems())
-            //{
-            //    return topPanelList;
-            //}
-
+            // As a workaround, Filter Presets are obtained during the action activation
             foreach (var displaySettings in settings.Settings.FilterPresetsDisplaySettings)
             {
+                if (!displaySettings.ShowInTopPanel)
+                {
+                    continue;
+                }
+
                 var filterPreset = PlayniteApi.Database.FilterPresets?.FirstOrDefault(x => x.Id == displaySettings.Id);
                 //if (filterPreset is null)
                 //{
                 //    continue;
                 //}
-
-                if (!displaySettings.ShowInTopPanel)
-                {
-                    continue;
-                }
 
                 topPanelList.Add(GetFilterPresetTopPanelItem(filterPreset, displaySettings));
             }
@@ -248,31 +242,25 @@ namespace FilterPresetsQuickLauncher
         {
             // Unfortunately Playnite loads its database after requesting items to extensions
             // so it's not possible to use the items in the database in any way
-            //var sidebarItems = new List<SidebarItem>();
-            //if (!PlayniteApi.Database.FilterPresets.HasItems())
-            //{
-            //    return sidebarItems;
-            //}
 
             // Playnite sorts the sidebar items by Title order. As a hack to sort, it's possible
             // to add a Unicode char prefix in increasing order to manually sort them
             int startCodePoint = 0x1F600; // Start with the code point of the first emoji in the Unicode range
             int numberOfCharacters = settings.Settings.FilterPresetsDisplaySettings.Count(); // Number of characters to generate
-
             for (int i = 0; i < numberOfCharacters; i++)
             {
-                char unicodeCharPrefix = (char)(startCodePoint + i);
                 var displaySettings = settings.Settings.FilterPresetsDisplaySettings[i];
+                if (!displaySettings.ShowInSidebar)
+                {
+                    continue;
+                }
+
+                char unicodeCharPrefix = (char)(startCodePoint + i);
                 var filterPreset = PlayniteApi.Database.FilterPresets?.FirstOrDefault(x => x.Id == displaySettings.Id);
                 //if (filterPreset is null)
                 //{
                 //    continue;
                 //}
-
-                if (!displaySettings.ShowInSidebar)
-                {
-                    continue;
-                }
 
                 sidebarItems.Add(GetFilterPresetSidebarItem(unicodeCharPrefix, filterPreset, displaySettings));
             }
