@@ -101,7 +101,7 @@ namespace ImporterforAnilist.Models
         public Season? Season { get; set; }
 
         [SerializationPropertyName("status")]
-        public MediaStatus Status { get; set; }
+        public MediaStatus? Status { get; set; }
 
         [SerializationPropertyName("studios")]
         public Studios Studios { get; set; }

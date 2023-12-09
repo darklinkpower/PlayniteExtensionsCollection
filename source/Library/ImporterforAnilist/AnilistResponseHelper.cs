@@ -68,7 +68,12 @@ namespace ImporterforAnilist
                 .Where(s => !s.IsMediaSpoiler && !s.IsGeneralSpoiler)?
                 .Select(a => new MetadataNameProperty(a.Name))
                 .Cast<MetadataProperty>().ToHashSet() ?? new HashSet<MetadataProperty>();
-            tags.Add(new MetadataNameProperty($"{propertiesPrefix}Status: {media.Status}"));
+
+            if (media.Status.HasValue)
+            {
+                tags.Add(new MetadataNameProperty($"{propertiesPrefix}Status: {media.Status}"));
+            }
+            
             if (media.Season != null)
             {
                 tags.Add(new MetadataNameProperty($"{propertiesPrefix}Season: {media.Season}"));

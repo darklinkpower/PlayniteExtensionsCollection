@@ -284,25 +284,30 @@ namespace ImporterforAnilist
                 }
             }
 
-            var progressTagName = $"{settings.PropertiesPrefix}Status: {entry.Media.Status}";
-            if (existingEntry.TagIds is null)
+            if (entry.Media.Status.HasValue)
             {
-                existingEntry.TagIds = new List<Guid>() { playniteApi.Database.Tags.Add(progressTagName).Id };
-                shouldUpdateGame = true;
-            }
-
-            var tagStartStr = $"{settings.PropertiesPrefix}Status: ";
-            var progressTag = existingEntry.Tags.FirstOrDefault(x => x.Name.StartsWith(tagStartStr));
-            if (progressTag is null)
-            {
-                existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
-                shouldUpdateGame = true;
-            }
-            else if (progressTag.Name != progressTagName)
-            {
-                existingEntry.TagIds.Remove(progressTag.Id);
-                existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
-                shouldUpdateGame = true;
+                var progressTagName = $"{settings.PropertiesPrefix}Status: {entry.Media.Status}";
+                if (existingEntry.TagIds is null)
+                {
+                    existingEntry.TagIds = new List<Guid>() { playniteApi.Database.Tags.Add(progressTagName).Id };
+                    shouldUpdateGame = true;
+                }
+                else
+                {
+                    var tagStartStr = $"{settings.PropertiesPrefix}Status: ";
+                    var existingProgressTag = existingEntry.Tags.FirstOrDefault(x => x.Name.StartsWith(tagStartStr));
+                    if (existingProgressTag is null)
+                    {
+                        existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
+                        shouldUpdateGame = true;
+                    }
+                    else if (existingProgressTag.Name != progressTagName)
+                    {
+                        existingEntry.TagIds.Remove(existingProgressTag.Id);
+                        existingEntry.TagIds.Add(playniteApi.Database.Tags.Add(progressTagName).Id);
+                        shouldUpdateGame = true;
+                    }
+                }
             }
 
             if (entry.Media.Season != null)
