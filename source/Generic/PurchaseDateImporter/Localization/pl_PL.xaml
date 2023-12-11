@@ -8,9 +8,9 @@ Sprawdź, czy jesteś zalogowany</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportMessage">Licencje dla biblioteki {0} zostały wyeksportowane do &quot;{1}&quot;</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage">Nie udało się wyeksportować biblioteki do &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnName">Nazwa</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate">Date</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLibraryLabel">Library:</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLoginLabel">Login</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowImportDatesButtonLabel">Import purchase dates as added dates</sys:String>
-    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowExportLicensesButtonLabel">Export licenses</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLicenseExportColumnDate">Data</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLibraryLabel">Biblioteka:</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowLoginLabel">Zaloguj</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowImportDatesButtonLabel">Importuj daty zakupu jako daty dodania</sys:String>
+    <sys:String x:Key="LOC_PurchaseDateImporter_ImporterWindowExportLicensesButtonLabel">Wyeksportuj licencje</sys:String>
 </ResourceDictionary>
