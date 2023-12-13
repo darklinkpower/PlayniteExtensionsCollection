@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Minimum discount required to display notifications:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Display notification for items of type:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">User is authenticated</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requires authentication</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">No connection</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsHelpLabel">Ajuda</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsNotifMinDiscount">Desconto mínimo necessário para exibir as notificações:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNotificationsType">Mostrar notificações para itens do tipo:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_AuthenticateLabel">Autenticar</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoginChecking">Verificando o estado da autenticação…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Usuário autenticado</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requer autenticação</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Sem conexão</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Enable wishlist discount notifications</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notify when the price of an item has changed</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
