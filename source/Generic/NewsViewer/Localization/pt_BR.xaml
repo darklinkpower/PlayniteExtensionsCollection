@@ -14,5 +14,5 @@
     <sys:String x:Key="LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel">Ative o controle para exibir os jogadores em jogo</sys:String>
     <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">Em Jogo</sys:String>
     <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_OnlineNowCountLabel">Online agora</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">Also show data for games that are not from Steam</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">Mostrar dados também para os jogos que não são do Steam</sys:String>
 </ResourceDictionary>
