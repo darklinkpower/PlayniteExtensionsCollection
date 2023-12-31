@@ -274,3 +274,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.12.30_242d6d8c/Installation_Status_Updater_2_41.pext
     Changelog:
     - 'Improved: Minor improvements to detection process'
+  - Version: 2.42
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-12-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.12.31_5bc47234/Installation_Status_Updater_2_42.pext
+    Changelog:
+    - 'Fixed: Setting incorrect installation status during scan'
