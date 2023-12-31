@@ -25,7 +25,6 @@ namespace InstallationStatusUpdater
     public class InstallationStatusUpdater : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly Regex driveRegex = new Regex(@"^\w+:\\", RegexOptions.Compiled | RegexOptions.CultureInvariant);
         private const string driveTagPrefix = "[Install Drive]";
         private const string scanSkipFeatureName = "[Status Updater] Ignore";
         private const char backslash = '\\';
@@ -69,10 +68,10 @@ namespace InstallationStatusUpdater
             }
             else
             {
-                logger.Error("Could not find Playnite main window.");
+                logger.Debug("Could not find Playnite main window.");
             }
 
-            if (settings.Settings.UpdateOnStartup == true)
+            if (settings.Settings.UpdateOnStartup)
             {
                 DetectInstallationStatus(false);
             }
@@ -126,7 +125,7 @@ namespace InstallationStatusUpdater
             DetectInstallationStatus(false);
         }
 
-        public void SetDirWatchers()
+        private void SetDirWatchers()
         {
             if (dirWatchers.Count > 0)
             {
@@ -198,7 +197,7 @@ namespace InstallationStatusUpdater
             WatcherEventHandler(e.FullPath);
         }
 
-        public void WatcherEventHandler(string invokerPath)
+        private void WatcherEventHandler(string invokerPath)
         {
             logger.Info(string.Format("Watcher invoked by path {0}", invokerPath));
             timer.Stop();
@@ -271,7 +270,7 @@ namespace InstallationStatusUpdater
 
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
         {
-            if (!settings.Settings.EnableInstallButtonAction || SkipGame(args.Game))
+            if (!settings.Settings.EnableInstallButtonAction || ShouldGameBeScanned(args.Game))
             {
                 yield break;
             }
@@ -279,7 +278,7 @@ namespace InstallationStatusUpdater
             yield return new StatusUpdaterInstallController(args.Game, IsGameInstalled(args.Game));
         }
 
-        public bool DetectIsRomInstalled(Game game, GameRom rom, string installDirectory)
+        private bool DetectIsRomInstalled(Game game, GameRom rom, string installDirectory)
         {
             if (rom.Path.IsNullOrEmpty())
             {
@@ -293,18 +292,18 @@ namespace InstallationStatusUpdater
             if (romPath.Contains("{EmulatorDir}"))
             {
                 var emulator = GetGameEmulator(game);
-                if (emulator != null)
+                if (emulator != null && !emulator.InstallDir.IsNullOrEmpty())
                 {
                     romPath = romPath.Replace("{EmulatorDir}", emulator.InstallDir);
                 }
             }
 
-            if (romPath.Contains("{"))
+            if (romPath.Contains('{'))
             {
                 romPath = PlayniteApi.ExpandGameVariables(game, romPath);
             }
 
-            if (driveRegex.IsMatch(romPath))
+            if (Path.IsPathRooted(romPath))
             {
                 return FileSystem.FileExists(romPath);
             }
@@ -341,14 +340,18 @@ namespace InstallationStatusUpdater
             return null;
         }
 
-        public bool IsRomInstalled(Game game, string installDirectory)
+        private bool IsRomInstalled(Game game, string installDirectory)
         {
             if (!game.Roms.HasItems())
             {
                 return false;
             }
 
-            if (game.Roms.Count > 1 && settings.Settings.UseOnlyFirstRomDetection == false)
+            if (settings.Settings.UseOnlyFirstRomDetection)
+            {
+                return DetectIsRomInstalled(game, game.Roms[0], installDirectory);
+            }
+            else
             {
                 foreach (GameRom rom in game.Roms)
                 {
@@ -358,15 +361,11 @@ namespace InstallationStatusUpdater
                     }
                 }
             }
-            else
-            {
-                return DetectIsRomInstalled(game, game.Roms[0], installDirectory);
-            }
 
             return false;
         }
 
-        public bool DetectIsFileActionInstalled(Game game, GameAction gameAction, string installDirectory)
+        private bool DetectIsFileActionInstalled(Game game, GameAction gameAction, string installDirectory)
         {
             if (gameAction.Path.IsNullOrEmpty())
             {
@@ -388,12 +387,12 @@ namespace InstallationStatusUpdater
             }
 
             var actionPath = gameAction.Path;
-            if (gameAction.Path.Contains("{"))
+            if (gameAction.Path.Contains('{'))
             {
                 actionPath = PlayniteApi.ExpandGameVariables(game, actionPath);
             }
 
-            if (driveRegex.IsMatch(actionPath))
+            if (Path.IsPathRooted(actionPath))
             {
                 return FileSystem.FileExists(actionPath);
             }
@@ -406,25 +405,25 @@ namespace InstallationStatusUpdater
             return FileSystem.FileExists(actionPath);
         }
 
-        public bool IsAnyActionInstalled(Game game, string installDirectory)
+        private bool IsAnyActionInstalled(Game game, string installDirectory)
         {
             foreach (GameAction gameAction in game.GameActions)
             {
-                if (gameAction.IsPlayAction == false && settings.Settings.OnlyUsePlayActionGameActions == true)
+                if (!gameAction.IsPlayAction && settings.Settings.OnlyUsePlayActionGameActions)
                 {
                     continue;
                 }
                 
                 if (gameAction.Type == GameActionType.URL)
                 {
-                    if (settings.Settings.UrlActionIsInstalled == true)
+                    if (settings.Settings.UrlActionIsInstalled)
                     {
                         return true;
                     }
                 }
                 else if (gameAction.Type == GameActionType.Script)
                 {
-                    if (settings.Settings.ScriptActionIsInstalled == true)
+                    if (settings.Settings.ScriptActionIsInstalled)
                     {
                         return true;
                     }
@@ -438,33 +437,35 @@ namespace InstallationStatusUpdater
             return false;
         }
 
-        public void DetectInstallationStatus(bool showResultsDialog)
+        private void DetectInstallationStatus(bool showResultsDialog)
         {
             var markedInstalled = 0;
             var markedUninstalled = 0;
             var updateResults = new StatusUpdateResults();
             using (PlayniteApi.Database.BufferedUpdate())
-            foreach (var game in PlayniteApi.Database.Games)
             {
-                if (SkipGame(game))
+                foreach (var game in PlayniteApi.Database.Games)
                 {
-                    continue;
-                }
+                    if (!ShouldGameBeScanned(game))
+                    {
+                        continue;
+                    }
 
-                var isInstalled = IsGameInstalled(game);
-                if (game.IsInstalled == true && isInstalled == false)
-                {
-                    game.IsInstalled = false;
-                    PlayniteApi.Database.Games.Update(game);
-                    markedUninstalled++;
-                    updateResults.AddSetAsUninstalledGame(game);
-                }
-                else if (game.IsInstalled == false && isInstalled == true)
-                {
-                    game.IsInstalled = true;
-                    PlayniteApi.Database.Games.Update(game);
-                    markedInstalled++;
-                    updateResults.AddSetAsInstalledGame(game);
+                    var detectedAsInstalled = IsGameInstalled(game);
+                    if (game.IsInstalled && detectedAsInstalled)
+                    {
+                        game.IsInstalled = false;
+                        PlayniteApi.Database.Games.Update(game);
+                        markedUninstalled++;
+                        updateResults.AddSetAsUninstalledGame(game);
+                    }
+                    else if (game.IsInstalled && detectedAsInstalled)
+                    {
+                        game.IsInstalled = true;
+                        PlayniteApi.Database.Games.Update(game);
+                        markedInstalled++;
+                        updateResults.AddSetAsInstalledGame(game);
+                    }
                 }
             }
 
@@ -542,22 +543,23 @@ namespace InstallationStatusUpdater
             window.ShowDialog();
         }
 
-        public bool SkipGame(Game game)
+        private bool ShouldGameBeScanned(Game game)
         {
-            if (game.IncludeLibraryPluginAction == true && settings.Settings.SkipHandledByPlugin == true && game.PluginId != Guid.Empty)
+            if (game.IncludeLibraryPluginAction
+                && settings.Settings.SkipHandledByPlugin && game.PluginId != Guid.Empty)
             {
-                return true;
+                return false;
             }
 
             if (game.Features != null && game.Features.Any(x => x.Name == scanSkipFeatureName))
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
-        public static string RemoveInvalidPathChars(string str)
+        private static string RemoveInvalidPathChars(string str)
         {
             if (!str.Any(c => invalidFileChars.Contains(c) && c != backslash && c != fordwslash && c != doubleDot))
             {
@@ -567,7 +569,7 @@ namespace InstallationStatusUpdater
             return new string(str.Where(c => !invalidFileChars.Contains(c) || c == backslash || c == fordwslash || c == doubleDot).ToArray());
         }
 
-        public bool IsGameInstalled(Game game)
+        private bool IsGameInstalled(Game game)
         {
             var installDirectory = GetInstallDirForDetection(game);
             if (game.GameActions.HasItems() && IsAnyActionInstalled(game, installDirectory))
@@ -587,17 +589,16 @@ namespace InstallationStatusUpdater
 
             if (game.InstallDirectory.IndexOf('{') != 0)
             {
-                return RemoveInvalidPathChars(PlayniteApi.ExpandGameVariables(game, game.InstallDirectory))
-                    .ToLower();
+                var expandedDirectory = PlayniteApi.ExpandGameVariables(game, game.InstallDirectory);
+                return RemoveInvalidPathChars(expandedDirectory).ToLower();
             }
             else
             {
-                return RemoveInvalidPathChars(game.InstallDirectory)
-                    .ToLower();
+                return RemoveInvalidPathChars(game.InstallDirectory).ToLower();
             }
         }
 
-        public void AddIgnoreFeature()
+        private void AddIgnoreFeature()
         {
             var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), scanSkipFeatureName); ;
             PlayniteApi.Dialogs.ShowMessage(
@@ -606,7 +607,7 @@ namespace InstallationStatusUpdater
             );
         }
 
-        public void RemoveIgnoreFeature()
+        private void RemoveIgnoreFeature()
         {
             var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), scanSkipFeatureName);
             PlayniteApi.Dialogs.ShowMessage(
@@ -615,7 +616,7 @@ namespace InstallationStatusUpdater
             );
         }
 
-        public void UpdateInstallDirTags()
+        private void UpdateInstallDirTags()
         {
             var progRes = PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
