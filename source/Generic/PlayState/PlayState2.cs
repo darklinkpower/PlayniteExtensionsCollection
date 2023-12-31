@@ -260,7 +260,7 @@ namespace PlayState
 
         private async Task<bool> ScanGameSourceAction(Game game, GameAction sourceAction)
         {
-            if (sourceAction == null || sourceAction.Type != GameActionType.Emulator)
+            if (sourceAction is null || sourceAction.Type != GameActionType.Emulator || sourceAction.EmulatorProfileId.IsNullOrEmpty())
             {
                 return false;
             }
@@ -299,7 +299,7 @@ namespace PlayState
             }
 
             var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
-            if (profile == null)
+            if (profile is null)
             {
                 logger.Debug($"Failed to get Custom emulator profile");
                 return true;
