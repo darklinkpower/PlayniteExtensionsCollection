@@ -472,3 +472,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.28_0f949552/PlayState_2_68.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.69
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2023-12-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.12.30_242d6d8c/PlayState_2_69.pext
+    Changelog:
+    - 'Fixed: Error on startup in new Playnite installations'
+    - 'Fixed: Error when starting emulated game that does not have an emulator profile configured'
