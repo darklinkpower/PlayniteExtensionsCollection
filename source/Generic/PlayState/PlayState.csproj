@@ -149,6 +149,14 @@
     <None Include="Resources\playstateiconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="..\..\..\references\XInputInterface.dll">
+      <Link>Dependencies\XInputInterface.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>XInputInterface.dll</TargetPath>
+    </ContentWithTargetPath>
   </ItemGroup>
   <ItemGroup>
     <Page Include="app.xaml">
