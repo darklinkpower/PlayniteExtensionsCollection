@@ -452,14 +452,14 @@ namespace InstallationStatusUpdater
                     }
 
                     var detectedAsInstalled = IsGameInstalled(game);
-                    if (game.IsInstalled && detectedAsInstalled)
+                    if (game.IsInstalled && !detectedAsInstalled)
                     {
                         game.IsInstalled = false;
                         PlayniteApi.Database.Games.Update(game);
                         markedUninstalled++;
                         updateResults.AddSetAsUninstalledGame(game);
                     }
-                    else if (game.IsInstalled && detectedAsInstalled)
+                    else if (!game.IsInstalled && detectedAsInstalled)
                     {
                         game.IsInstalled = true;
                         PlayniteApi.Database.Games.Update(game);
