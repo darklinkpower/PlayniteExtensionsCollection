@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Search_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Use specific country for the Steam Store searches</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">Indicate if a game is in the library in search results</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Steam Store</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">Enter the search term</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SearcherHint">Search for games in the Steam Store</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Open on web</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Open on Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">{0}% off</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Current Price: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Original Price: {0} {1:N2}</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SearchNameSearchOnSteam">Search on Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionIndicateGameInLibrary">In library</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Free</sys:String>
-    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Not released</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsHelpLabel">Ajuda</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsUseCountryStoreLabel">Usar país específico para as buscas na loja Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">Indicar se um jogo está na biblioteca nos resultados da busca</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Loja Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">Digite o termo de pesquisa</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearcherHint">Procurar por jogos na Loja Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Abrir no navegador</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Abrir no Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">{0}% de desconto</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionCurrentPriceDescription">Preço atual: {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionOriginalPriceDescription">Preço original: {0} {1:N2}</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearchNameSearchOnSteam">Procurar no Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionIndicateGameInLibrary">Na biblioteca</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionFreeGame">Gratuito</sys:String>
+    <sys:String x:Key="LOCSteam_Search_ItemActionDescriptionNotReleasedGame">Não foi lançado</sys:String>
 </ResourceDictionary>
