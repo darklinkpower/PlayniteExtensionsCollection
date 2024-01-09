@@ -42,38 +42,38 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsUseAlternativeVideoPlayerLabel">Alternatif video oynatıcıyı kullan (Kişisel temanın desteklemesi ve yeniden başlatma gerektirir)</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsSgdbKeyLabel">SteamGridDB API Anahtarı:</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsGetApiKeyLabel">API Anahtarı Al</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Include assets marked as &quot;Humor&quot; in searches</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Include assets marked as &quot;Adult Content&quot; in searches</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Download videos of newly added games on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Download Micro videos of newly added games on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Download logos of newly added games on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Select logos to download automatically</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeHumorLabel">Aramalarda &quot;Mizah&quot; olarak işaretli varlıkları da içer</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsLogosIncludeNsfwLabel">Aramalarda &quot;Yetişkin İçerik&quot; olarak işaretli varlıkları da içer</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosOnLibUpdateLabel">Kütüphane güncellemesinde yeni eklenen oyunların da videolarını indir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadVideosMicroOnLibUpdateLabel">Kütüphane güncellemesinde yeni eklenen oyunların da mikro videolarını indir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateLabel">Kütüphane güncellemesinde yeni eklenen oyunların da logolarını indir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingsDownloadLogosOnLibUpdateSelectLogosAutomaticallyLabel">Kendiliğinden indirilecek logoları seç</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_VideoLabel">Video</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Left</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Center</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Right</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">Top</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">Center</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Bottom</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentLeft">Sol</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentCenter">Orta</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionHorizontalAlignmentRight">Sağ</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentTop">Üst</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentCenter">Orta</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_Browser_OptionVerticalAlignmentBottom">Alt</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">Select logo to download for {0}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Select game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Select option</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Overwrite logos of games that already have them?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">Overwrite videos of games that already have them?</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Downloading videos from Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Downloading Micro videos from Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Downloading logos from Steam...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">Downloading logos from SteamGridDB...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Downloading video from YouTube...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Failed to download video from YouTube.
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectLogo">{0} için indirilecek logoyu seçin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectGame">Oyun seç</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogCaptionSelectOption">Seçenek seç</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteLogosChoice">Oyunların mevcut logolarının üzerine yazılsın mı?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice">Oyunların mevcut videolarının üzerine yazılsın mı?</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosSteam">Steam üzerinden videolar indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideosMicroSteam">Steam üzerinden mikro videolar indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSteam">Steam üzerinden logolar indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingLogosSgdb">SteamGridDB üzerinden logolar indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Youtube üzerinden video indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">YouTube üzerinden video indirilemedi.
 
-Please verify that your yt-dlp installation is up to date.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Failed to download logo from Google.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Downloading logos of newly added games...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Downloading videos of newly added games...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Done.</sys:String>
+Lütfen yt-dlp kurulumunuzun güncel olup olmadığını denetleyin.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Google üzerinden logo indirilemedi.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Yeni eklenen oyunların logoları indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Yeni eklenen oyunların videoları indiriliyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDone">Tamamlandı.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing">Extra Metadata: SteamGridDB API key has not been configured in settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured">Extra Metadata: ffmpeg executable path has not been configured in the extension settings</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Extra Metadata: ffmpeg executable was not found in the configured location</sys:String>
