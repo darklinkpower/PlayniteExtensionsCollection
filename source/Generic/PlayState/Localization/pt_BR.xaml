@@ -74,9 +74,9 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
     <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Trocar para o Modo Tela Cheia do Playnite se um controle estiver conectado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Trocar para o Modo Desktop do Playnite se nenhum controle estiver conectado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Trocar modos do Playnite apenas se não houver jogos em execução no momento</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignorar o estado dos controles para a troca de modo por segundos na inicialização:</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Mudando para o Modo Desktop do Playnite…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Mudando para o Modo Tela Cheia do Playnite…</sys:String>
     <sys:String x:Key="LOCPlayState_Playtime">Tempo de jogo:</sys:String>
     <sys:String x:Key="LOCPlayState_TotalPlaytime">Tempo total de jogo:</sys:String>
     <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hora(s) {1} minuto(s)</sys:String>
@@ -88,9 +88,9 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
 
     <sys:String x:Key="LOCPlayStateYesLabel">Sim</sys:String>
     <sys:String x:Key="LOCPlayStateNoLabel">Não</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Modo de processamento</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Modo do tempo de jogo</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Desabilitado</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Jogo</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Foi suspenso</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Mudar estado do jogo</sys:String>
@@ -101,33 +101,33 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Continuar jogo</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspender jogo</sys:String>
 
-    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Teclas de atalho</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Atalhos do teclado</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Atalhos do Controle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Permitir que todos os controles ativem os atalhos</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Se habilitado, todos os controles poderão ativar os atalhos.
 
-If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
+Se desabilitado, apenas o primeiro controle poderá ativar os atalhos.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspender/Retomar:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Informação:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Fechar jogo:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Atualizando atalho do GamePad em {0} segundos…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Botões: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remove controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Keyboard input:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Set keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Game running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Game not running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Always</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Gatilhos: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Já existe um atalho do controle com a mesma combinação!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Atalho do controle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Atalho do controle:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modo</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modo:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Adicionar atalho do controle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remover atalho do controle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Entrada do teclado:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Entrada do teclado</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Definir entrada do teclado</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">Nenhum</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Desabilitado</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Jogo em execução</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Jogo não está em execução</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Sempre</sys:String>
 </ResourceDictionary>
