@@ -8,8 +8,8 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_LoggedIn">Usuário autenticado</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">Requer autenticação</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Sem conexão</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Enable wishlist discount notifications</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notify when the price of an item has changed</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Ativar notificações de desconto da lista de desejos</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notificar quando o preço de um item for alterado</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Interval in minutes to check updates in wishlist:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Open store pages in web browser instead of the Steam client</sys:String>
@@ -60,7 +60,7 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Open on web</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Open on Steam</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Check Steam wishlist for discounts</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Remove from wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Failed to remove from wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Removing from wishlist…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Remover da lista de desejos</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Falha ao remover da lista de desejos</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Removendo da lista de desejos…</sys:String>
 </ResourceDictionary>
