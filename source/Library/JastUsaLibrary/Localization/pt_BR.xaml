@@ -48,8 +48,8 @@ Erro: {0}</sys:String>
     <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Ocorreu um erro ao obter o link de download.
 
 Erro: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Could not obtain authentication tokens</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">Previously selected executable for the game has been unlinked.
-        
-Due to technical limitations, it's not possible for the plugin to uninstall or remove the game files by itself, so please do that manually.</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Não foi possível obter tokens de autenticação</sys:String>
+    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">O executável previamente selecionado para o jogo foi desvinculado.
+
+Devido a limitações técnicas, não é possível para o plugin desinstalar ou remover os arquivos do jogo por si só, então faça isso manualmente, por favor.</sys:String>
 </ResourceDictionary>
