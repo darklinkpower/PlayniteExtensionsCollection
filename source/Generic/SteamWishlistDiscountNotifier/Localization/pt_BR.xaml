@@ -10,8 +10,8 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">Sem conexão</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">Ativar notificações de desconto da lista de desejos</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notificar quando o preço de um item for alterado</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Interval in minutes to check updates in wishlist:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notificar quando um item estiver disponível no Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Intervalo em minutos para verificar atualizações na lista de desejos:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Open store pages in web browser instead of the Steam client</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam Wishlist Notifier
 
