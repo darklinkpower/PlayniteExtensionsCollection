@@ -30,6 +30,7 @@ namespace LibraryExporter.ViewModels
                 return;
             }
 
+            games = games.OrderBy(x => x.Name);
             var selectedPath = playniteApi.Dialogs.SaveFile(@"Csv|*.csv", true);
             if (selectedPath.IsNullOrEmpty())
             {
