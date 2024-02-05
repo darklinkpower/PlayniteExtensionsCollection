@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using VNDBMetadata.QueryConstants;
+using VNDBMetadata.ApiConstants;
 using WebCommon;
 
 namespace VNDBMetadata

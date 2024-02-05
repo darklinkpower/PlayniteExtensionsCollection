@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNDBMetadata
 {
-    public interface FilterDefinition
+    public interface IFilterDefinition
     {
         string op { get; }
         string name { get; }

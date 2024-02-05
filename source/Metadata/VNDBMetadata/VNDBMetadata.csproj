@@ -192,16 +192,17 @@
     <Compile Include="Models\Trait.cs" />
     <Compile Include="Models\VisualNovelFieldsSettings.cs" />
     <Compile Include="Models\VndbQuery.cs" />
-    <Compile Include="QueryConstants\DatabaseDumps.cs" />
-    <Compile Include="QueryConstants\ExtLinks.cs" />
-    <Compile Include="QueryConstants\QueryEnums.cs" />
-    <Compile Include="QueryConstants\Operators.cs" />
-    <Compile Include="QueryConstants\Trait.cs" />
-    <Compile Include="QueryConstants\Tag.cs" />
-    <Compile Include="QueryConstants\Character.cs" />
-    <Compile Include="QueryConstants\Producer.cs" />
-    <Compile Include="QueryConstants\Release.cs" />
-    <Compile Include="QueryConstants\Vn.cs" />
+    <Compile Include="VNDB\ApiConstants\DatabaseDumps.cs" />
+    <Compile Include="VNDB\ApiConstants\ExtLinks.cs" />
+    <Compile Include="VNDB\ApiConstants\OperatorFlags.cs" />
+    <Compile Include="VNDB\ApiConstants\QueryEnums.cs" />
+    <Compile Include="VNDB\ApiConstants\Operators.cs" />
+    <Compile Include="VNDB\ApiConstants\Trait.cs" />
+    <Compile Include="VNDB\ApiConstants\Tag.cs" />
+    <Compile Include="VNDB\ApiConstants\Character.cs" />
+    <Compile Include="VNDB\ApiConstants\Producer.cs" />
+    <Compile Include="VNDB\ApiConstants\Release.cs" />
+    <Compile Include="VNDB\ApiConstants\Vn.cs" />
     <Compile Include="Services\VndbService.cs" />
     <Compile Include="VndbCacheManager.cs" />
     <Compile Include="VNDBMetadata.cs" />
@@ -211,6 +212,14 @@
       <DependentUpon>VNDBMetadataSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VNDB\Enums\ExtLinks.cs" />
+    <Compile Include="VNDB\Enums\Language.cs" />
+    <Compile Include="VNDB\Enums\Medium.cs" />
+    <Compile Include="VNDB\Enums\Platform.cs" />
+    <Compile Include="VNDB\Enums\Spoiler.cs" />
+    <Compile Include="VNDB\Models\PredicateBuilders.cs" />
+    <Compile Include="VNDB\Models\Predicates.cs" />
+    <Compile Include="VNDB\Requests\Post\VnRequests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

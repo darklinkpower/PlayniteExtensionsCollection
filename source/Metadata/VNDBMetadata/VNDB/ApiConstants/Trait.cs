@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VNDBMetadata.QueryConstants
+namespace VNDB.ApiConstants
 {
     public static class Trait
     {
