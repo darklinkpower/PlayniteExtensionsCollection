@@ -23,22 +23,6 @@ namespace LibraryExporter.ViewModels
             Settings = settings;
         }
 
-        public RelayCommand ExportAllGamesCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                ExportGamesToCsv(playniteApi.Database.Games);
-            });
-        }
-
-        public RelayCommand ExportSelectedGamesCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                ExportGamesToCsv(playniteApi.MainView.SelectedGames.Distinct());
-            });
-        }
-
         public void ExportGamesToCsv(IEnumerable<Game> games)
         {
             if (!games.HasItems())
@@ -363,6 +347,30 @@ namespace LibraryExporter.ViewModels
             }
 
             return properties;
+        }
+
+        public RelayCommand ExportAllGamesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ExportGamesToCsv(playniteApi.Database.Games);
+            });
+        }
+
+        public RelayCommand ExportFilteredGamesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ExportGamesToCsv(playniteApi.MainView.FilteredGames.Distinct());
+            });
+        }
+
+        public RelayCommand ExportSelectedGamesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ExportGamesToCsv(playniteApi.MainView.SelectedGames.Distinct());
+            });
         }
 
     }
