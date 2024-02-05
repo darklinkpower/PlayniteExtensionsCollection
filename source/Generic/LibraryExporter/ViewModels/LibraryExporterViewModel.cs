@@ -75,62 +75,77 @@ namespace LibraryExporter.ViewModels
 
         private List<string> GetColumnsList()
         {
-            var columnNames = new List<string>
-            {
-                GetLocalizationString("LOCNameLabel")
-            };
+            var columns = new List<string>();
 
-            if (Settings.Settings.ExportSettings.AgeRatings) { columnNames.Add(GetLocalizationString("LOCAgeRatingLabel")); }
-            if (Settings.Settings.ExportSettings.Categories) { columnNames.Add(GetLocalizationString("LOCCategoriesLabel")); }
-            if (Settings.Settings.ExportSettings.Description) { columnNames.Add(GetLocalizationString("LOCGameDescriptionTitle")); }
-            if (Settings.Settings.ExportSettings.Developers) { columnNames.Add(GetLocalizationString("LOCDevelopersLabel")); }
-            if (Settings.Settings.ExportSettings.Publishers) { columnNames.Add(GetLocalizationString("LOCPublishersLabel")); }
-            if (Settings.Settings.ExportSettings.Favorite) { columnNames.Add(GetLocalizationString("LOCGameFavoriteTitle")); }
-            if (Settings.Settings.ExportSettings.Hidden) { columnNames.Add(GetLocalizationString("LOCGameHiddenTitle")); }
-            if (Settings.Settings.ExportSettings.Features) { columnNames.Add(GetLocalizationString("LOCFeaturesLabel")); }
-            if (Settings.Settings.ExportSettings.GameId) { columnNames.Add(GetLocalizationString("LOCGameId")); }
-            if (Settings.Settings.ExportSettings.Genres) { columnNames.Add(GetLocalizationString("LOCGenresLabel")); }
-            if (Settings.Settings.ExportSettings.InstallDirectory) { columnNames.Add(GetLocalizationString("LOCGameInstallDirTitle")); }
-            if (Settings.Settings.ExportSettings.InstallSize) { columnNames.Add(GetLocalizationString("LOCInstallSizeMenuLabel")); }
-            if (Settings.Settings.ExportSettings.IsInstalled) { columnNames.Add(GetLocalizationString("LOCGameIsGameInstalledTitle")); }
-            if (Settings.Settings.ExportSettings.ReleaseDate) { columnNames.Add(GetLocalizationString("LOCGameReleaseDateTitle")); }
-            if (Settings.Settings.ExportSettings.Added) { columnNames.Add(GetLocalizationString("LOCAddedLabel")); }
-            if (Settings.Settings.ExportSettings.LastActivity) { columnNames.Add(GetLocalizationString("LOCGameLastActivityTitle")); }
-            if (Settings.Settings.ExportSettings.Modified) { columnNames.Add(GetLocalizationString("LOCDateModifiedLabel")); }
-            if (Settings.Settings.ExportSettings.RecentActivity) { columnNames.Add(GetLocalizationString("LOCRecentActivityLabel")); }
-            if (Settings.Settings.ExportSettings.Roms) { columnNames.Add("Roms"); }
-            if (Settings.Settings.ExportSettings.CompletionStatus) { columnNames.Add(GetLocalizationString("LOCCompletionStatus")); }
-            if (Settings.Settings.ExportSettings.Links) { columnNames.Add(GetLocalizationString("LOCLinksLabel")); }
-            if (Settings.Settings.ExportSettings.Manual) { columnNames.Add(GetLocalizationString("LOCGameManualTitle")); }
-            if (Settings.Settings.ExportSettings.Notes) { columnNames.Add(GetLocalizationString("LOCNotesLabel")); }
-            if (Settings.Settings.ExportSettings.Platforms) { columnNames.Add(GetLocalizationString("LOCPlatformsTitle")); }
-            if (Settings.Settings.ExportSettings.PlayCount) { columnNames.Add(GetLocalizationString("LOCPlayCountLabel")); }
-            if (Settings.Settings.ExportSettings.Playtime) { columnNames.Add(GetLocalizationString("LOCTimePlayed")); }
-            if (Settings.Settings.ExportSettings.PluginId) { columnNames.Add(GetLocalizationString("PluginId")); }
-            if (Settings.Settings.ExportSettings.Source) { columnNames.Add(GetLocalizationString("LOCSourcesLabel")); }
-            if (Settings.Settings.ExportSettings.Regions) { columnNames.Add(GetLocalizationString("LOCRegionsLabel")); }
-            if (Settings.Settings.ExportSettings.Series) { columnNames.Add(GetLocalizationString("LOCSeriesLabel")); }
-            if (Settings.Settings.ExportSettings.Tags) { columnNames.Add(GetLocalizationString("LOCTagsLabel")); }
-            if (Settings.Settings.ExportSettings.CommunityScore) { columnNames.Add(GetLocalizationString("LOCCommunityScore")); }
-            if (Settings.Settings.ExportSettings.CriticScore) { columnNames.Add(GetLocalizationString("LOCCriticScore")); }
-            if (Settings.Settings.ExportSettings.UserScore) { columnNames.Add(GetLocalizationString("LOCUserScore")); }
-            if (Settings.Settings.ExportSettings.Version) { columnNames.Add(GetLocalizationString("LOCVersionLabel")); }
-            if (Settings.Settings.ExportSettings.Id) { columnNames.Add("Id"); }
+            GenerateColumn(columns, true, "LOCNameLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.SortingName, "LOCGameSortingNameTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.AgeRatings, "LOCAgeRatingLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Categories, "LOCCategoriesLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Description, "LOCGameDescriptionTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Developers, "LOCDevelopersLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Publishers, "LOCPublishersLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Favorite, "LOCGameFavoriteTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Hidden, "LOCGameHiddenTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Features, "LOCFeaturesLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.GameId, "LOCGameId");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Genres, "LOCGenresLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.InstallDirectory, "LOCGameInstallDirTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.InstallSize, "LOCInstallSizeMenuLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.IsInstalled, "LOCGameIsGameInstalledTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.ReleaseDate, "LOCGameReleaseDateTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Added, "LOCAddedLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.LastActivity, "LOCGameLastActivityTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Modified, "LOCDateModifiedLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.RecentActivity, "LOCRecentActivityLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Roms, "Roms", false);
+            GenerateColumn(columns, Settings.Settings.ExportSettings.CompletionStatus, "LOCCompletionStatus");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Links, "LOCLinksLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Manual, "LOCGameManualTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Notes, "LOCNotesLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Platforms, "LOCPlatformsTitle");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.PlayCount, "LOCPlayCountLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Playtime, "LOCTimePlayed");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.PluginId, "PluginId", false);
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Source, "LOCSourcesLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Regions, "LOCRegionsLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Series, "LOCSeriesLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Tags, "LOCTagsLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.CommunityScore, "LOCCommunityScore");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.CriticScore, "LOCCriticScore");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.UserScore, "LOCUserScore");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Version, "LOCVersionLabel");
+            GenerateColumn(columns, Settings.Settings.ExportSettings.Id, "Id", false);
 
-            return columnNames;
+            return columns;
         }
 
-        private string GetLocalizationString(string locKey)
+        private void GenerateColumn(List<string> columns, bool addColumn, string columnName, bool getLocalizedString = true)
         {
-            return ResourceProvider.GetString(locKey);
-        }
+            if (!addColumn)
+            {
+                return;
+            }
+            
+            if (getLocalizedString)
+            {
+                columnName = ResourceProvider.GetString(columnName);
+            }
 
+            columns.Add(columnName);
+        }
+        
         private string[] GenerateGameColumns(int columnCount, Game game)
         {
             var properties = new string[columnCount];
             properties[0] = game.Name;
 
             var currentInsertColumn = 1;
+            if (Settings.Settings.ExportSettings.SortingName)
+            {
+                properties[currentInsertColumn] = !string.IsNullOrEmpty(game.SortingName) ? game.SortingName : string.Empty;
+                currentInsertColumn++;
+            }
+
             if (Settings.Settings.ExportSettings.AgeRatings)
             {
                 properties[currentInsertColumn] = game.AgeRatings.HasItems() ? string.Join(Settings.Settings.ListsSeparator, game.AgeRatings.Select(x => x.Name)) : string.Empty;

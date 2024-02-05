@@ -10,6 +10,10 @@ namespace LibraryExporter
 {
     public class ExportSettings : ObservableObject
     {
+        // Sorting Name
+        private bool sortingName = false;
+        public bool SortingName { get => sortingName; set => SetValue(ref sortingName, value); }
+
         // Added
         private bool added = false;
         public bool Added { get => added; set => SetValue(ref added, value); }
