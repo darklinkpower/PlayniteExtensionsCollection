@@ -37,3 +37,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.12.09_996632ce/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_5.pext
     Changelog:
     - 'Changed: The view will be changed to the library view when applying a filter preset from the sidebar'
+  - Version: 1.6
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950_1_6.pext
+    Changelog:
+    - 'Changed: Updated localizations'

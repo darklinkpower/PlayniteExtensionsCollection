@@ -479,3 +479,9 @@ Packages:
     Changelog:
     - 'Fixed: Error on startup in new Playnite installations'
     - 'Fixed: Error when starting emulated game that does not have an emulator profile configured'
+  - Version: 2.70
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/PlayState_2_70.pext
+    Changelog:
+    - 'Changed: Updated localizations'

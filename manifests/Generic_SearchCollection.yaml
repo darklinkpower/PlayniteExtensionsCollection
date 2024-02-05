@@ -169,3 +169,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/Search_Collection_2_25.pext
     Changelog:
     - 'Improved: Processing of internet requests'
+  - Version: 2.26
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Search_Collection_2_26.pext
+    Changelog:
+    - 'Changed: Updated localizations'

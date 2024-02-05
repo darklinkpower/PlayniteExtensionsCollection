@@ -69,3 +69,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.09.03_e4bd8de7/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_10.pext
     Changelog:
     - 'Added support to export Completion Status (By luskynavy)'
+  - Version: 1.11
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_11.pext
+    Changelog:
+    - 'Added: Support to export Sorting name'
+    - 'Added: Support to export games filtered in view'
+    - 'Fixed: Games not being sorted when exporting selected games'
+    - 'Changed: Updated localizations'

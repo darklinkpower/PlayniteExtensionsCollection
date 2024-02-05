@@ -257,3 +257,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_38.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.39
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_39.pext
+    Changelog:
+    - 'Changed: Updated localizations'

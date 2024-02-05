@@ -67,3 +67,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_23.pext
     Changelog:
     - 'Improved: Processing of internet requests'
+  - Version: 2.24
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_24.pext
+    Changelog:
+    - 'Changed: Updated localizations'

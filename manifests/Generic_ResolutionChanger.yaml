@@ -191,3 +191,9 @@ Packages:
     - 'Added: Support to set specific display per game in game menu'
     - 'Changed: Minor changes to game menu descriptions'
     - 'Fixed: Previous game display configuration not being removed when selecting a new one'
+  - Version: 1.29
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/ResolutionChanger_32b6a5c7-be17-4852-b4f7-f059a7321f4c_1_29.pext
+    Changelog:
+    - 'Changed: Updated localizations'

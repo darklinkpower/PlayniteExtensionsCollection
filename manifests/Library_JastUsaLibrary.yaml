@@ -87,3 +87,9 @@ Packages:
     Changelog:
     - 'Changed: Updated localizations'
     - 'Improved: Processing of internet requests'
+  - Version: 1.14
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_14.pext
+    Changelog:
+    - 'Changed: Updated localizations'

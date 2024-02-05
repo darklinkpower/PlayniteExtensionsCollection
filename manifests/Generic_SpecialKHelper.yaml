@@ -190,3 +190,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.11.11_3bf6575c/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_29.pext
     Changelog:
     - 'Improved: Processing of internet requests'
+  - Version: 1.30
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_30.pext
+    Changelog:
+    - 'Changed: Updated localizations'

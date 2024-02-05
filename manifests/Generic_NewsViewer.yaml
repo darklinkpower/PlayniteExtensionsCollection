@@ -208,3 +208,9 @@ Packages:
     Changelog:
     - 'Improved: Processing of controls data when selecting games'
     - 'Improved: Processing of internet requests'
+  - Version: 1.33
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_33.pext
+    Changelog:
+    - 'Changed: Updated localizations'

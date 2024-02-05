@@ -79,3 +79,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/Game_Media_Tools_2_12.pext
     Changelog:
     - 'Fixed: Not opening correct metadata folder when opened from keyboard launcher'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Game_Media_Tools_2_13.pext
+    Changelog:
+    - 'Changed: Updated localizations'

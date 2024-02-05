@@ -280,3 +280,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.12.31_5bc47234/Installation_Status_Updater_2_42.pext
     Changelog:
     - 'Fixed: Setting incorrect installation status during scan'
+  - Version: 2.43
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Installation_Status_Updater_2_43.pext
+    Changelog:
+    - 'Changed: Updated localizations'
