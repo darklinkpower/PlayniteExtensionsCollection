@@ -6,6 +6,7 @@
     <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Fields to export:</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">すべてのゲームをエクスポート</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">選択したゲームをエクスポート</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFilteredGamesLabel">Export filtered games</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Library exported successfully to {0}</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Failed to export library to {0}</sys:String>
 </ResourceDictionary>
