@@ -6,6 +6,7 @@
     <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Zu exportierende Felder:</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Alle Spiele exportieren</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Ausgewählte Spiele exportieren</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFilteredGamesLabel">Export filtered games</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Bibliothek erfolgreich exportiert nach {0}</sys:String>
     <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Fehler beim Exportieren der Bibliothek nach {0}</sys:String>
 </ResourceDictionary>
