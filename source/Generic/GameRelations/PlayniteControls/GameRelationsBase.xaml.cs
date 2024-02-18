@@ -9,19 +9,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using TemporaryCache;
 
 namespace GameRelations.PlayniteControls
 {
@@ -213,7 +204,7 @@ namespace GameRelations.PlayniteControls
             }
 
             // Rounding is done to prevent errors when doing arithmetic operations
-            var matchPercent = Math.Round(commonCount / (decimal)Math.Max(listToMatch.Count(), hashSet.Count), 3); 
+            var matchPercent = Math.Round(commonCount / (decimal)Math.Max(listToMatch.Count(), hashSet.Count), 3);
             return matchPercent;
         }
 
@@ -226,8 +217,14 @@ namespace GameRelations.PlayniteControls
         /// <returns>A match value between 0 and 1 representing the similarity between the elements.</returns>
         protected static double CalculateJaccardSimilarity<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
-            if (listToMatch is null || !listToMatch.Any() || hashSet is null || hashSet.Count == 0)
+            if (listToMatch is null || !listToMatch.Any())
             {
+                //If both games have 0 items in this collection, give some pity similarity
+                if (hashSet is null || hashSet.Count == 0)
+                {
+                    return 0.9D;
+                }
+
                 return 0;
             }
 
