@@ -213,6 +213,18 @@ namespace SplashScreen
             return modeSplashSettings.EnableBackgroundImage;
         }
 
+        private void ActivateSplashWindow(Window currentSplashWindow)
+        {
+            // activate splash window from UI thread
+            Application.Current.Dispatcher.Invoke(
+                () =>
+                {
+                    currentSplashWindow.Activate();
+                    currentSplashWindow.CaptureMouse();
+                }
+            );
+        }
+
         private void CreateSplashVideoWindow(bool showSplashImage, string videoPath, string splashImagePath, string logoPath, GeneralSplashSettings generalSplashSettings, ModeSplashSettings modeSplashSettings)
         {
             // Mutes Playnite Background music to make sure its not playing when video or splash screen image
@@ -228,12 +240,25 @@ namespace SplashScreen
                 ResizeMode = ResizeMode.NoResize,
                 WindowState = WindowState.Maximized,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                Focusable = false,
                 Content = content,
                 // Window is set to topmost to make sure another window won't show over it
                 Topmost = true
             };
 
+            void SkipVideoSplash(object sender, EventArgs e)
+            {
+                if (currentSplashWindow.Content is SplashScreenVideo)
+                {
+                    videoWaitHandle.Set();
+                }
+                else
+                {
+                    currentSplashWindow.Close();
+                }
+            };
+            currentSplashWindow.KeyDown += SkipVideoSplash;
+            currentSplashWindow.MouseDown += SkipVideoSplash;
+            
             currentSplashWindow.Closed += SplashWindowClosed;
             content.VideoPlayer.MediaEnded += VideoPlayer_MediaEnded;
             content.VideoPlayer.MediaFailed += VideoPlayer_MediaFailed;
@@ -246,6 +271,7 @@ namespace SplashScreen
             videoWaitHandle.Reset();
             PlayniteApi.Dialogs.ActivateGlobalProgress((_) =>
             {
+                ActivateSplashWindow(currentSplashWindow);
                 videoWaitHandle.WaitOne();
                 content.VideoPlayer.MediaEnded -= VideoPlayer_MediaEnded;
                 content.VideoPlayer.MediaFailed -= VideoPlayer_MediaFailed;
@@ -257,6 +283,7 @@ namespace SplashScreen
                 currentSplashWindow.Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(generalSplashSettings, splashImagePath, logoPath) };
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
+                    ActivateSplashWindow(currentSplashWindow);
                     Thread.Sleep(3000);
                 }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false });
 
@@ -299,16 +326,22 @@ namespace SplashScreen
                 ResizeMode = ResizeMode.NoResize,
                 WindowState = WindowState.Maximized,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                Focusable = false,
                 Content = new SplashScreenImage { DataContext = new SplashScreenImageViewModel(generalSplashSettings, splashImagePath, logoPath) },
                 // Window is set to topmost to make sure another window won't show over it
                 Topmost = true
             };
 
+            void SkipImageSplash(object sender, EventArgs e)
+            {
+                currentSplashWindow.Close();
+            };
+            currentSplashWindow.KeyDown += SkipImageSplash;
+            currentSplashWindow.MouseDown += SkipImageSplash;
             currentSplashWindow.Closed += SplashWindowClosed;
             currentSplashWindow.Show();
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
+                ActivateSplashWindow(currentSplashWindow);
                 Thread.Sleep(3000);
             }, new GlobalProgressOptions(string.Empty) { IsIndeterminate = false});
 
