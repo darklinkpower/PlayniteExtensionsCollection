@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription">Launch utility window</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_Utility_SettingsHelpLabel">Súgó</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_MenuItemLaunchWindowDescription">A segédprogram ablakának elindítása</sys:String>
 
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Restart Steam after processing games to reflect changes on Steam if necessary</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">Delete source game after copying game or if game is detected in target library</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Target Library:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Open</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam games:</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Copy selected Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Copy all Steam games</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">There are no installed Steam games selected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Game: {0}. Error: Steam library on drive {1} not detected</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Game: {0}. Error: Source manifest doesn't exist in &quot;{1}&quot;
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowRestartSteamLabel">Indítsa újra a Steamet a játékok feldolgozása után, hogy szükség esetén tükrözze a változásokat a Steamen</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowDeleteSourceGameLabel">A forrásjáték törlése a játék másolása után, vagy ha a játék megtalálható a célkönyvtárban</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowTargetLibraryLabel">Célkönyvtár:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowOpenLibraryDirectoryLabel">Megnyit</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowSteamGamesLabel">Steam-játékok:</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionLabel">Kiválasztott Steam játékok másolása</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_WindowProcessActionAllLabel">Minden Steam játék másolása</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_DialogMessageNoSteamGamesSel">Nincsenek telepített Steam játékok kiválasztva</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_SteamLibNotDetected">Játék: {0}. Hiba: Meghajtón {1} lévő Steam könyvtárat nem észleltük</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceManifestNotDetected" xml:space="preserve">Játék: {0}. Hiba: Nem létezik a forrás manifesztum a {1}&quot;. 
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Game: {0}. Error: Source directory doesn't exist in &quot;{1}&quot;
+Ez a probléma akkor fordulhat elő, ha ezt a segédprogramot használtad a játékon, és nem indítottad újra a Steamet, és nem frissítetted a Playnite könyvtáradat a változásoknak megfelelően</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ErrorMessageSourceDirectoryNotDetected" xml:space="preserve">Játék: {0}. Hiba: Nem létezik a &quot;{1}&quot; könyvtárban. 
 
-This issue can be happen if you used this utility on this game and you have not restarted Steam and updated your Playnite library to reflect the changes</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Processing game: {0}
+Ez a probléma akkor fordulhat elő, ha ezt a segédprogramot használtad a játékon, és nem indítottad újra a Steamet, és nem frissítetted a Playnite könyvtáradat a változásoknak megfelelően</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ProgressDialogProcessingGame" xml:space="preserve">Játék feldolgozása: {0} 
 
-Game size: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Finished.
+Játékméret: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Game_Transfer_Utility_ResultsDialogMessage" xml:space="preserve">Befejezve. 
 
-Copied games: {0}
-Skipped games: {1}
+Másolt játékok: {0} 
+Kihagyott játékok: {1} 
 
-Deleted source games: {2}
+Törölt forrásjátékok: {2} 
 
-Update your Playnite library after restarting Steam to reflect the changes</sys:String>
+A Steam újraindítása után frissítse a Playnite könyvtárát, hogy tükrözze a változásokat</sys:String>
 </ResourceDictionary>
