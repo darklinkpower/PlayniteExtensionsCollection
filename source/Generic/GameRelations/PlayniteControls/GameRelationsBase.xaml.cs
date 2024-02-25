@@ -217,14 +217,8 @@ namespace GameRelations.PlayniteControls
         /// <returns>A match value between 0 and 1 representing the similarity between the elements.</returns>
         protected static double CalculateJaccardSimilarity<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
-            if (listToMatch is null || !listToMatch.Any())
+            if (listToMatch is null || !listToMatch.Any() || hashSet is null || hashSet.Count == 0)
             {
-                //If both games have 0 items in this collection, give some pity similarity
-                if (hashSet is null || hashSet.Count == 0)
-                {
-                    return 0.9D;
-                }
-
                 return 0;
             }
 
@@ -281,7 +275,7 @@ namespace GameRelations.PlayniteControls
         /// Returns false if the list is null or empty.</returns>
         protected static bool HashSetContainsAnyItem<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
-            if (listToMatch is null || !listToMatch.Any())
+            if (listToMatch is null)
             {
                 return false;
             }
