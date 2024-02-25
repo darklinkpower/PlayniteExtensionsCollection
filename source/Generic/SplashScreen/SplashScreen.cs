@@ -224,6 +224,18 @@ namespace SplashScreen
                 }
             );
         }
+        
+        private void SkipSplash(object sender, EventArgs e)
+        {
+            if (currentSplashWindow.Content is SplashScreenVideo)
+            {
+                videoWaitHandle.Set();
+            }
+            else
+            {
+                currentSplashWindow.Close();
+            }
+        }
 
         private void CreateSplashVideoWindow(bool showSplashImage, string videoPath, string splashImagePath, string logoPath, GeneralSplashSettings generalSplashSettings, ModeSplashSettings modeSplashSettings)
         {
@@ -245,23 +257,11 @@ namespace SplashScreen
                 Topmost = true
             };
 
-            void SkipVideoSplash(object sender, EventArgs e)
-            {
-                if (currentSplashWindow.Content is SplashScreenVideo)
-                {
-                    videoWaitHandle.Set();
-                }
-                else
-                {
-                    currentSplashWindow.Close();
-                }
-            };
-            currentSplashWindow.KeyDown += SkipVideoSplash;
-            currentSplashWindow.MouseDown += SkipVideoSplash;
-            
             currentSplashWindow.Closed += SplashWindowClosed;
             content.VideoPlayer.MediaEnded += VideoPlayer_MediaEnded;
             content.VideoPlayer.MediaFailed += VideoPlayer_MediaFailed;
+            currentSplashWindow.KeyDown += SkipSplash;
+            currentSplashWindow.MouseDown += SkipSplash;
 
             currentSplashWindow.Show();
 
@@ -331,14 +331,12 @@ namespace SplashScreen
                 Topmost = true
             };
 
-            void SkipImageSplash(object sender, EventArgs e)
-            {
-                currentSplashWindow.Close();
-            };
-            currentSplashWindow.KeyDown += SkipImageSplash;
-            currentSplashWindow.MouseDown += SkipImageSplash;
             currentSplashWindow.Closed += SplashWindowClosed;
+            currentSplashWindow.KeyDown += SkipSplash;
+            currentSplashWindow.MouseDown += SkipSplash;
+            
             currentSplashWindow.Show();
+            
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
                 ActivateSplashWindow(currentSplashWindow);
@@ -363,6 +361,8 @@ namespace SplashScreen
             timerCloseWindow.Stop();
             videoWaitHandle.Set();
             currentSplashWindow.Closed -= SplashWindowClosed;
+            currentSplashWindow.KeyDown -= SkipSplash;
+            currentSplashWindow.MouseDown -= SkipSplash;
             currentSplashWindow = null;
         }
 
