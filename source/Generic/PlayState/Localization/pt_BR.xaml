@@ -104,6 +104,7 @@ Tempo de jogo: Os jogos serão suspensos e retomados automaticamente quando a ja
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Teclas de atalho</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Atalhos do teclado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Atalhos do Controle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Permitir que todos os controles ativem os atalhos</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Se habilitado, todos os controles poderão ativar os atalhos.
 
