@@ -17,7 +17,7 @@ namespace SteamCommon
     class SteamWeb
     {
         private static ILogger logger = LogManager.GetLogger();
-        private const string steamGameSearchUrl = @"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998";
+        private const string steamGameSearchUrl = @"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998&ndl=1";
 
         public static List<GenericItemOption> GetSteamSearchGenericItemOptions(string searchTerm)
         {
