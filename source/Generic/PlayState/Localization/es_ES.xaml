@@ -104,6 +104,7 @@ Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán aut
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Atajos</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Atajos de teclado</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Atajos de control</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Permitir a todos los controles activar atajos</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Si está activado, todos los controles podrán activar los atajos..
 
