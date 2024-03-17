@@ -104,7 +104,7 @@ Spilletidsuspendering: Spill vil bli suspendert og gjenopptatt automatisk når s
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hurtigtaster</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Tastaturhurtigtaster</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Kontroller-hurtigtaster</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Aktiver kontroller-hurtigtaster</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Tillat alle kontrollere å aktivere hurtigtaster</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Hvis aktivert vil alle kontrollere kunne aktivere hurtigtastene.
 
