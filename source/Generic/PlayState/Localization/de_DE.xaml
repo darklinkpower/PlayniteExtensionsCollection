@@ -104,7 +104,7 @@ Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufge
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Tastenkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Tastatur Tastenkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller Tastaturkürzel</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Gamepad-Tastenkürzel aktivieren</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Erlaube allen Controllern Tastenkürzel zu aktivieren</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Wenn aktiviert, können alle Controller die Tastenkürzel aktivieren.
 
