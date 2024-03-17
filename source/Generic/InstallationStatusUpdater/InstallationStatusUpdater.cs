@@ -242,27 +242,34 @@ namespace InstallationStatusUpdater
                 },
                 new MainMenuItem
                 {
-                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription"),
-                    MenuSection = "@Installation Status Updater",
-                    Action = a => {
-                        AddIgnoreFeature();
-                    }
-                },
-                new MainMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
-                    MenuSection = "@Installation Status Updater",
-                    Action = a => {
-                        RemoveIgnoreFeature();
-                    }
-                },
-                new MainMenuItem
-                {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuUpdateDriveInstallTagDescription"),
                     MenuSection = "@Installation Status Updater",
                     Action = a => {
                         UpdateInstallDirTags();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage"), "Installation Status Updater");
+                    }
+                }
+            };
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            return new List<GameMenuItem>
+            {
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription"),
+                    MenuSection = "@Installation Status Updater",
+                    Action = a => {
+                        AddIgnoreFeature(a.Games.Distinct());
+                    }
+                },
+                new GameMenuItem
+                {
+                    Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
+                    MenuSection = "@Installation Status Updater",
+                    Action = a => {
+                        RemoveIgnoreFeature(a.Games.Distinct());
                     }
                 }
             };
@@ -606,18 +613,18 @@ namespace InstallationStatusUpdater
             }
         }
 
-        private void AddIgnoreFeature()
+        private void AddIgnoreFeature(IEnumerable<Game> games)
         {
-            var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), scanSkipFeatureName); ;
+            var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, games, scanSkipFeatureName); ;
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage"),
                 featureAddedCount.ToString()), "Installation Status Updater"
             );
         }
 
-        private void RemoveIgnoreFeature()
+        private void RemoveIgnoreFeature(IEnumerable<Game> games)
         {
-            var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), scanSkipFeatureName);
+            var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, games, scanSkipFeatureName);
             PlayniteApi.Dialogs.ShowMessage(
                 string.Format(ResourceProvider.GetString("LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage"), 
                 featureRemovedCount.ToString()), "Installation Status Updater"
