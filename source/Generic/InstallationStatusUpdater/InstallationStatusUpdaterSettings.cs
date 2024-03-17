@@ -14,7 +14,7 @@ namespace InstallationStatusUpdater
         public bool UrlActionIsInstalled { get; set; } = true;
         public bool ScriptActionIsInstalled { get; set; } = true;
         public bool UseOnlyFirstRomDetection { get; set; } = false;
-        public bool SkipHandledByPlugin { get; set; } = true;
+        public bool ScanGamesHandledByLibPlugins { get; set; } = false;
         public bool OnlyUsePlayActionGameActions { get; set; } = false;
         public bool UpdateOnStartup { get; set; } = true;
         public bool UpdateOnLibraryUpdate { get; set; } = true;
@@ -22,7 +22,6 @@ namespace InstallationStatusUpdater
         public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
         public bool EnableInstallButtonAction { get; set; } = true;
-        [DontSerialize]
         private List<SelectableDirectory> detectionDirectories { get; set; } = new List<SelectableDirectory>();
         public List<SelectableDirectory> DetectionDirectories
         {

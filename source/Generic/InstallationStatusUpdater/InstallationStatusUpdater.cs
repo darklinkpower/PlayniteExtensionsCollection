@@ -545,8 +545,8 @@ namespace InstallationStatusUpdater
 
         private bool ShouldGameBeScanned(Game game)
         {
-            if (game.IncludeLibraryPluginAction
-                && settings.Settings.SkipHandledByPlugin && game.PluginId != Guid.Empty)
+            if (game.PluginId != Guid.Empty && game.IncludeLibraryPluginAction
+                && !settings.Settings.ScanGamesHandledByLibPlugins)
             {
                 return false;
             }
@@ -572,6 +572,14 @@ namespace InstallationStatusUpdater
         private bool IsGameInstalled(Game game)
         {
             var installDirectory = GetInstallDirForDetection(game);
+            if (game.IncludeLibraryPluginAction && !game.InstallDirectory.IsNullOrEmpty())
+            {
+                if (FileSystem.DirectoryExists(game.InstallDirectory))
+                {
+                    return true;
+                }
+            }
+
             if (game.GameActions.HasItems() && IsAnyActionInstalled(game, installDirectory))
             {
                 return true;
