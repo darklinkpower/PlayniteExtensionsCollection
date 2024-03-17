@@ -106,6 +106,10 @@ namespace PlayState
         [DontSerialize]
         private int switchModeIgnoreCtrlStateOnStartupSeconds = 20;
         public int SwitchModeIgnoreCtrlStateOnStartupSeconds { get => switchModeIgnoreCtrlStateOnStartupSeconds; set => SetValue(ref switchModeIgnoreCtrlStateOnStartupSeconds, value); }
+
+        private bool enableControllersHotkeys = true;
+        [DontSerialize]
+        public bool EnableControllersHotkeys { get => enableControllersHotkeys; set => SetValue(ref enableControllersHotkeys, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings

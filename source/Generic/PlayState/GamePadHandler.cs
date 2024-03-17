@@ -45,7 +45,7 @@ namespace PlayState
 
         private async void OnControllerTimerElapsed(object state)
         {
-            if (_isCheckRunning)
+            if (_isCheckRunning || !_settings.EnableControllersHotkeys)
             {
                 return;
             }
