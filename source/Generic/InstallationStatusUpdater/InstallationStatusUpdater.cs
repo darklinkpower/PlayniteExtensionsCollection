@@ -259,7 +259,7 @@ namespace InstallationStatusUpdater
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuAddIgnoreFeatureDescription"),
-                    MenuSection = "@Installation Status Updater",
+                    MenuSection = "Installation Status Updater",
                     Action = a => {
                         AddIgnoreFeature(a.Games.Distinct());
                     }
@@ -267,7 +267,7 @@ namespace InstallationStatusUpdater
                 new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription"),
-                    MenuSection = "@Installation Status Updater",
+                    MenuSection = "Installation Status Updater",
                     Action = a => {
                         RemoveIgnoreFeature(a.Games.Distinct());
                     }
