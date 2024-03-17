@@ -104,7 +104,7 @@
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Гарячі клавіші</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Гарячі клавіші клавіатури</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Гарячі клавіші контролера</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Увімкнути гарячі клавіші контролера</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Дозволити всім контролерам активувати гарячі клавіші</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Якщо увімкнено, всім контролерам буде дозволено активувати гарячі клавіші.
 
