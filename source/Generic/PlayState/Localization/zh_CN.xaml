@@ -104,6 +104,7 @@ This mode can also be changed individually per game by using the extensions func
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
 

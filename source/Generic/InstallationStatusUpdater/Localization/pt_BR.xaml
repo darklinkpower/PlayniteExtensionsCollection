@@ -16,7 +16,7 @@ Os jogos anteriormente desinstalados foram definidos como instalados: {1}</sys:S
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Detecta jogos com uma ação do tipo &quot;Link&quot; como instalados</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Detecta jogos com uma ação do tipo &quot;Script&quot; como instalados</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Usar apenas a primeira ROM listada ao detectar através de ROMs</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Pular jogos que incluem a ação de jogar de suas bibliotecas</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">Scan games from library plugins using their installation directory</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Usar apenas ações marcadas como &quot;ação de jogar&quot; para detecção</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Atualizar status de instalação na inicialização</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Atualizar o status de instalação ao atualizar a biblioteca</sys:String>

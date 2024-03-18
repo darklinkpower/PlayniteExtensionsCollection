@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Videos</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Trailer</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Videók</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Előzetes</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Előzetes</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; is not a PC Game. 
-The extension is only compatible with PC Games&quot;</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video not available.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; is not a Steam game and Steam AppId was not found to obtain video data.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Error connecting to server. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Error downloading headers. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; nem PC játék. 
+A bővítmény csak PC-s játékokkal kompatibilis.&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Hiba a &quot;{0}&quot; alkalmazásazonosítóhoz tartozó játékinformációk letöltése. Hiba: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">A videó nem elérhető.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">A &quot;{0}&quot; nem Steam-játék, és a Steam AppId-t nem találtuk meg a videóadatok megszerzéséhez.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Hiba a szerverhez való csatlakozásban. Hiba: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Hiba a fejlécek letöltésében. Hiba: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Hiba a fájl letöltése a &quot;{0}&quot; url-ről. Hiba: {1}</sys:String>
 </ResourceDictionary>

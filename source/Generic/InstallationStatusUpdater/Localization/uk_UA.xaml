@@ -16,7 +16,7 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Визначати ігри з дією типу &quot;Посилання&quot; як встановлені</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Визначати ігри з дією типу &quot;Сценарій&quot; як встановлені</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">Використовувати лише перший ром у списку при виявленні через роми</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingSkipHandledByPlugin">Пропустити ігри які включають дію &quot;Грати&quot; їх бібліотеки</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">Сканувати ігри з бібліотечних плагінів за допомогою їх теки встановлення</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">Використовувати лише дії, відмічені як &quot;Дія Грати&quot; для виявлення</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">Оновити статус встановлення при запуску</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">Оновити статус встановлення при оновленні бібліотеки</sys:String>

@@ -104,6 +104,7 @@
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Горячие клавиши</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Горячие клавиши клавиатуры</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Горячие клавиши контроллера</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Разрешить всем контроллерам активировать горячие клавиши</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Если включено, всем контроллерам будет разрешено активировать горячие клавиши.
 
