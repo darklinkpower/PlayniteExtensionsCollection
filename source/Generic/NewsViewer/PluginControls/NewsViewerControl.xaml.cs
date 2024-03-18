@@ -50,7 +50,7 @@ namespace NewsViewer.PluginControls
         private readonly CacheManager<Guid, SteamNewsRssFeed> newsCacheManager;
         private static readonly ILogger logger = LogManager.GetLogger();
         public NewsViewerSettingsViewModel SettingsModel { get; set; }
-        private readonly Dictionary<string, string>  headers = new Dictionary<string, string> {["Accept"] = "text/xml", ["Accept-Encoding"] = "utf-8"};
+       private readonly Dictionary<string, string>  headers = new Dictionary<string, string> {["Accept"] = "text/xml", ["Accept-Encoding"] = "utf-8", ["User-Agent"] = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3" };
         private readonly DispatcherTimer updateContextTimer;
         const string steamRssTemplate = @"https://store.steampowered.com/feeds/news/app/{0}/l={1}";
         private readonly string steamLanguage;
