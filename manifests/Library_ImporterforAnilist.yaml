@@ -259,3 +259,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.12.09_996632ce/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_41.pext
     Changelog:
     - 'Fixed: Error during library update if entry does not have an status'
+  - Version: 2.42
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_42.pext
+    Changelog:
+    - 'Changed: Updated localizations'

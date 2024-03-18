@@ -286,3 +286,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Installation_Status_Updater_2_43.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.44
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/Installation_Status_Updater_2_44.pext
+    Changelog:
+    - 'Added: : Support to detect games from library plugins by detecting their installation directory (Disabled by default)'
+    - 'Changed: Moved menu items related to skipping functionality from the main menu to the right click game menu'
+    - 'Changed: Updated localizations'

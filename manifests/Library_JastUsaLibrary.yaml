@@ -93,3 +93,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_14.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.15
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_15.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -74,3 +74,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.08.18_ceff63a9/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_11.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.12
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/Game_Engine_Checker_7a21243e-c7cc-4ca7-85bd-f6f96f22e9db_2_12.pext
+    Changelog:
+    - 'Changed: Updated localizations'

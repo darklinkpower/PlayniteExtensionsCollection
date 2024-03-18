@@ -485,3 +485,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/PlayState_2_70.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.71
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/PlayState_2_71.pext
+    Changelog:
+    - 'Added: Option to disable game controller hotkeys to settings and sidebar view'
+    - 'Changed: Updated localizations'

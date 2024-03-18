@@ -78,3 +78,9 @@ Packages:
     - 'Added: Support to export games filtered in view'
     - 'Fixed: Games not being sorted when exporting selected games'
     - 'Changed: Updated localizations'
+  - Version: 1.12
+    RequiredApiVersion: 6.5.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/LibraryExporter_54bf64c6-c453-4cbc-92f8-4960b56f930e_1_12.pext
+    Changelog:
+    - 'Changed: Updated localizations'

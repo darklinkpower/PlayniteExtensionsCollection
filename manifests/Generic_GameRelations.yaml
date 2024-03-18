@@ -44,3 +44,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/GameRelations_a4c15d63-9ab4-4d96-9a0c-8f9b35d43a1f_1_5.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.6
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/GameRelations_a4c15d63-9ab4-4d96-9a0c-8f9b35d43a1f_1_6.pext
+    Changelog:
+    - 'Changed: Updated localizations'

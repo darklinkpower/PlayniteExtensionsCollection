@@ -80,3 +80,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_2_12.pext
     Changelog:
     - 'Improved: Improvements to how Steam calls are handled'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-03-17
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_2_13.pext
+    Changelog:
+    - 'Changed: Updated localizations'
