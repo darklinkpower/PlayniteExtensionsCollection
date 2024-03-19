@@ -1,4 +1,5 @@
-﻿using InstallationStatusUpdater.Models;
+﻿using InstallationStatusUpdater.Enums;
+using InstallationStatusUpdater.Models;
 using InstallationStatusUpdater.ViewModels;
 using InstallationStatusUpdater.Views;
 using Playnite.SDK;
@@ -275,16 +276,6 @@ namespace InstallationStatusUpdater
             };
         }
 
-        public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
-        {
-            if (!settings.Settings.EnableInstallButtonAction || ShouldGameBeScanned(args.Game))
-            {
-                yield break;
-            }
-
-            yield return new StatusUpdaterInstallController(args.Game, IsGameInstalled(args.Game));
-        }
-
         private bool DetectIsRomInstalled(Game game, GameRom rom, string installDirectory)
         {
             if (rom.Path.IsNullOrEmpty())
@@ -453,20 +444,15 @@ namespace InstallationStatusUpdater
             {
                 foreach (var game in PlayniteApi.Database.Games)
                 {
-                    if (!ShouldGameBeScanned(game))
-                    {
-                        continue;
-                    }
-
-                    var detectedAsInstalled = IsGameInstalled(game);
-                    if (game.IsInstalled && !detectedAsInstalled)
+                    var detectedStatus = DetectGameInstallationStatus(game);
+                    if (game.IsInstalled && detectedStatus == DetectedInstallationStatus.Uninstalled)
                     {
                         game.IsInstalled = false;
                         PlayniteApi.Database.Games.Update(game);
                         markedUninstalled++;
                         updateResults.AddSetAsUninstalledGame(game);
                     }
-                    else if (!game.IsInstalled && detectedAsInstalled)
+                    else if (!game.IsInstalled && detectedStatus == DetectedInstallationStatus.Installed)
                     {
                         game.IsInstalled = true;
                         PlayniteApi.Database.Games.Update(game);
@@ -550,22 +536,6 @@ namespace InstallationStatusUpdater
             window.ShowDialog();
         }
 
-        private bool ShouldGameBeScanned(Game game)
-        {
-            if (game.PluginId != Guid.Empty && game.IncludeLibraryPluginAction
-                && !settings.Settings.ScanGamesHandledByLibPlugins)
-            {
-                return false;
-            }
-
-            if (game.Features != null && game.Features.Any(x => x.Name == scanSkipFeatureName))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         private static string RemoveInvalidPathChars(string str)
         {
             if (!str.Any(c => invalidFileChars.Contains(c) && c != backslash && c != fordwslash && c != doubleDot))
@@ -576,23 +546,41 @@ namespace InstallationStatusUpdater
             return new string(str.Where(c => !invalidFileChars.Contains(c) || c == backslash || c == fordwslash || c == doubleDot).ToArray());
         }
 
-        private bool IsGameInstalled(Game game)
+        private DetectedInstallationStatus DetectGameInstallationStatus(Game game)
         {
+            if (game.Features != null && game.Features.Any(x => x.Name == scanSkipFeatureName))
+            {
+                return DetectedInstallationStatus.Skipped;
+            }
+
             var installDirectory = GetInstallDirForDetection(game);
-            if (game.IncludeLibraryPluginAction && !game.InstallDirectory.IsNullOrEmpty())
+            var isLibraryPluginGame = game.PluginId != Guid.Empty;
+            if (isLibraryPluginGame && settings.Settings.ScanGamesHandledByLibPlugins && !game.InstallDirectory.IsNullOrEmpty())
             {
                 if (FileSystem.DirectoryExists(game.InstallDirectory))
                 {
-                    return true;
+                    return DetectedInstallationStatus.Installed;
                 }
             }
 
             if (game.GameActions.HasItems() && IsAnyActionInstalled(game, installDirectory))
             {
-                return true;
+                return DetectedInstallationStatus.Installed;
             }
 
-            return IsRomInstalled(game, installDirectory);
+            var isRomInstalled = IsRomInstalled(game, installDirectory);
+            if (isRomInstalled)
+            {
+                return DetectedInstallationStatus.Installed;
+            }
+
+            // In case of library plugins that weren't detected as installed, don't modify their installation status to prevent issues
+            if (isLibraryPluginGame)
+            {
+                return DetectedInstallationStatus.Skipped;
+            }
+
+            return DetectedInstallationStatus.Uninstalled;
         }
 
         public string GetInstallDirForDetection(Game game)

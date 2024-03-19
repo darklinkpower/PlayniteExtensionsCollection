@@ -35,8 +35,8 @@
                               CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeRows="True" CanUserSortColumns="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel}" Binding="{Binding Name}" IsReadOnly="True" />
-                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel}" Binding="{Binding Source}" IsReadOnly="False" />
-                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel}" Binding="{Binding Platforms, Converter={StaticResource ListToStringConverter}}" IsReadOnly="False" />
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel}" Binding="{Binding Source}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="{DynamicResource LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel}" Binding="{Binding Platforms, Converter={StaticResource ListToStringConverter}}" IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

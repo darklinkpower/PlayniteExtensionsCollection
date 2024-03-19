@@ -21,7 +21,6 @@ namespace InstallationStatusUpdater
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
         public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
-        public bool EnableInstallButtonAction { get; set; } = true;
         private List<SelectableDirectory> detectionDirectories { get; set; } = new List<SelectableDirectory>();
         public List<SelectableDirectory> DetectionDirectories
         {

@@ -102,7 +102,7 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="GameController.cs" />
+    <Compile Include="Enums\DetectedInstallationStatus.cs" />
     <Compile Include="InstallationStatusUpdater.cs" />
     <Compile Include="InstallationStatusUpdaterSettings.cs" />
     <Compile Include="InstallationStatusUpdaterSettingsView.xaml.cs">
