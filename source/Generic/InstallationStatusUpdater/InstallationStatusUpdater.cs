@@ -554,15 +554,6 @@ namespace InstallationStatusUpdater
             }
 
             var installDirectory = GetInstallDirForDetection(game);
-            var isLibraryPluginGame = game.PluginId != Guid.Empty;
-            if (isLibraryPluginGame && settings.Settings.ScanGamesHandledByLibPlugins && !game.InstallDirectory.IsNullOrEmpty())
-            {
-                if (FileSystem.DirectoryExists(game.InstallDirectory))
-                {
-                    return DetectedInstallationStatus.Installed;
-                }
-            }
-
             if (game.GameActions.HasItems() && IsAnyActionInstalled(game, installDirectory))
             {
                 return DetectedInstallationStatus.Installed;
@@ -574,10 +565,24 @@ namespace InstallationStatusUpdater
                 return DetectedInstallationStatus.Installed;
             }
 
-            // In case of library plugins that weren't detected as installed, don't modify their installation status to prevent issues
+            var isLibraryPluginGame = game.PluginId != Guid.Empty;
             if (isLibraryPluginGame)
             {
-                return DetectedInstallationStatus.Skipped;
+                if (settings.Settings.ScanGamesHandledByLibPlugins && !game.InstallDirectory.IsNullOrEmpty())
+                {
+                    if (FileSystem.DirectoryExists(game.InstallDirectory))
+                    {
+                        return DetectedInstallationStatus.Installed;
+                    }
+                    else
+                    {
+                        return DetectedInstallationStatus.Uninstalled;
+                    }
+                }
+                else
+                {
+                    return DetectedInstallationStatus.Skipped;
+                }
             }
 
             return DetectedInstallationStatus.Uninstalled;
