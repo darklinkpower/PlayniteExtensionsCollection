@@ -307,3 +307,9 @@ Packages:
     Changelog:
     - 'Changed: Updated localizations'
     - 'Improved: Small improvement to detection of games from library plugins'
+  - Version: 2.47
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.20_3f7181b3/Installation_Status_Updater_2_47.pext
+    Changelog:
+    - 'Changed: Enabled option to only use actions marked as Play Actions for game install status detection by default'
