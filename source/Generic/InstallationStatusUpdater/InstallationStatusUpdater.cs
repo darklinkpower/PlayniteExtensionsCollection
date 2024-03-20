@@ -407,7 +407,7 @@ namespace InstallationStatusUpdater
         {
             foreach (GameAction gameAction in game.GameActions)
             {
-                if (!gameAction.IsPlayAction && settings.Settings.OnlyUsePlayActionGameActions)
+                if (!gameAction.IsPlayAction && settings.Settings.OnlyUsePlayActionsForDetection)
                 {
                     continue;
                 }
