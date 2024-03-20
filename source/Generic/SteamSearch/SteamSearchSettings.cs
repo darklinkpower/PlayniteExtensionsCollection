@@ -58,7 +58,13 @@ namespace SteamSearch
             {
                 Settings = new SteamSearchSettings();
             }
-            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(x => new RegionInfo(x.LCID));
+
+            // To obtain only countries, it's possible to only pick regions with 2 characters length and only letters
+            // Regions like Europe use three digits in the TwoLetterISORegionName property
+            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                            .Select(x => new RegionInfo(x.Name))
+                            .Where(region => region.TwoLetterISORegionName.Length == 2 && region.TwoLetterISORegionName.All(char.IsLetter))
+                            .OrderBy(x => x.TwoLetterISORegionName);
             foreach (var region in regions)
             {
                 SteamCountriesDictionary[region.TwoLetterISORegionName] = region.NativeName;
