@@ -265,3 +265,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_42.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.43
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.20_449a50a2/ImporterforAnilist_2366fb38-bf25-45ea-9a78-dcc797ee83c3_2_43.pext
+    Changelog:
+    - 'Fixed: Updating multiple entries status no longer working'

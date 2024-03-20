@@ -300,3 +300,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.18_9107fafe/Installation_Status_Updater_2_45.pext
     Changelog:
     - 'Fixed: Incorrect detection of games installation statuts in some circumstances'
+  - Version: 2.46
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-03-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.20_449a50a2/Installation_Status_Updater_2_46.pext
+    Changelog:
+    - 'Changed: Updated localizations'
+    . 'Improved: Small improvement to detection of games from library plugins'
