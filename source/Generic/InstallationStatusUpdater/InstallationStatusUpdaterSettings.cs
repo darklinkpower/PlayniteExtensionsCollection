@@ -15,7 +15,7 @@ namespace InstallationStatusUpdater
         public bool ScriptActionIsInstalled { get; set; } = true;
         public bool UseOnlyFirstRomDetection { get; set; } = false;
         public bool ScanGamesHandledByLibPlugins { get; set; } = false;
-        public bool OnlyUsePlayActionGameActions { get; set; } = false;
+        public bool OnlyUsePlayActionGameActions { get; set; } = true;
         public bool UpdateOnStartup { get; set; } = true;
         public bool UpdateOnLibraryUpdate { get; set; } = true;
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
