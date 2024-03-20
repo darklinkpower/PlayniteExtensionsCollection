@@ -306,4 +306,4 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.20_449a50a2/Installation_Status_Updater_2_46.pext
     Changelog:
     - 'Changed: Updated localizations'
-    . 'Improved: Small improvement to detection of games from library plugins'
+    - 'Improved: Small improvement to detection of games from library plugins'
