@@ -211,9 +211,9 @@ namespace ImporterforAnilist.Services
 
         public UpdateMediaListEntriesResponse UpdateEntriesStatuses(List<int> Ids, EntryStatus newStatus)
         {
-            var variables = new Dictionary<string, string>
+            var variables = new Dictionary<string, object>
             {
-                { "ids", string.Join(", ", Ids) },
+                { "ids", Ids },
                 { "status", newStatus.ToString().ToUpperInvariant() }
             };
 

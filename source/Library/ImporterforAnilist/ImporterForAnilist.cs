@@ -71,7 +71,7 @@ namespace ImporterforAnilist
         {
             if (!args.Games.Any(x => x.PluginId == Id))
             {
-                return null;
+                return Enumerable.Empty<GameMenuItem>();
             }
 
             var menuSection = ResourceProvider.GetString("LOCImporter_For_Anilist_GameMenuItemDescriptionAniListEntriesStatus");
