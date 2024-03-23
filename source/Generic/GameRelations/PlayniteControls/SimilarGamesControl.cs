@@ -9,20 +9,26 @@ namespace GameRelations.PlayniteControls
 {
     public partial class SimilarGamesControl : GameRelationsBase
     {
-        private readonly Dictionary<GameField, double> _propertiesWeights;
-        private const double _minMatchValueFactor = 0.69;
+        private class GameToMatchInfo
+        {
+            public Game Game { get; set; }
+            public Dictionary<GameField, HashSet<Guid>> FilteredValues { get; set; }
+            public HashSet<Guid> SeriesIds { get; set; }
+
+            public GameToMatchInfo(Game game)
+            {
+                Game = game;
+                SeriesIds = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
+                FilteredValues = new Dictionary<GameField, HashSet<Guid>>();
+            }
+        }
+
         private readonly SimilarGamesControlSettings _controlSettings;
 
         public SimilarGamesControl(IPlayniteAPI playniteApi, GameRelationsSettings settings, SimilarGamesControlSettings controlSettings)
             : base(playniteApi, settings, controlSettings)
         {
             _controlSettings = controlSettings;
-            _propertiesWeights = new Dictionary<GameField, double>
-            {
-                { GameField.TagIds, 1 },
-                { GameField.GenreIds, 1.2 },
-                { GameField.CategoryIds, 1.3 }
-            };
         }
 
         public override IEnumerable<Game> GetMatchingGames(Game game)
@@ -47,7 +53,7 @@ namespace GameRelations.PlayniteControls
                     continue;
                 }
 
-                if (IsSimilar(gtm, otherGame, out double similarity))
+                if (GamesAreSimilar(gtm, otherGame, out double similarity))
                 {
                     similarityScores.Add(otherGame, similarity);
                 }
@@ -59,26 +65,15 @@ namespace GameRelations.PlayniteControls
             return similarGames;
         }
 
-        private class GameToMatchInfo
-        {
-            public Game Game { get; set; }
-            public Dictionary<GameField, HashSet<Guid>> FilteredValues { get; set; }
-            public HashSet<Guid> SeriesIds { get; set; }
-
-            public GameToMatchInfo(Game game)
-            {
-                Game = game;
-                SeriesIds = game.SeriesIds?.ToHashSet() ?? new HashSet<Guid>();
-                FilteredValues = new Dictionary<GameField, HashSet<Guid>>();
-            }
-        }
-
         private GameToMatchInfo GetGameToMatchInfo(Game game)
         {
             var gtm = new GameToMatchInfo(game);
-            foreach (var field in _propertiesWeights.Keys)
+            foreach (var field in _controlSettings.FieldSettings)
             {
-                gtm.FilteredValues[field] = GetFilteredValue(game, field).ToHashSet();
+                if (field.Enabled)
+                {
+                    gtm.FilteredValues[field.Field] = GetFilteredValue(game, field.Field).ToHashSet();
+                }
             }
             return gtm;
         }
@@ -107,24 +102,29 @@ namespace GameRelations.PlayniteControls
 
         private IEnumerable<Guid> GetFilteredValue(Game game, GameField field)
         {
-            return GetItemsNotInHashSet(GetFieldValue(game, field) ?? new List<Guid>(), GetItemsToIgnore(field));
+            return GetItemsNotInHashSet(GetFieldValue(game, field), GetItemsToIgnore(field));
         }
 
-        private bool IsSimilar(GameToMatchInfo gtm, Game otherGame, out double similarity)
+        private bool GamesAreSimilar(GameToMatchInfo gameToMatch, Game otherGame, out double similarity)
         {
             double matchThreshold = 0;
             similarity = 0;
 
-            foreach (var property in gtm.FilteredValues)
+            foreach (var field in _controlSettings.FieldSettings)
             {
-                var otherValues = GetFilteredValue(otherGame, property.Key);
-                if (!property.Value.Any() && !otherValues.Any())
+                if (!field.Enabled || !gameToMatch.FilteredValues.TryGetValue(field.Field, out var propertyValues))
                 {
                     continue;
                 }
 
-                matchThreshold += _minMatchValueFactor;
-                similarity += CalculateJaccardSimilarity(otherValues, property.Value) * _propertiesWeights[property.Key];
+                var otherValues = GetFilteredValue(otherGame, field.Field);
+                if (!propertyValues.Any() && !otherValues.Any())
+                {
+                    continue;
+                }
+
+                matchThreshold += _controlSettings.JacardSimilarityPerField;
+                similarity += CalculateJaccardSimilarity(otherValues, propertyValues) * field.Weight;
             }
 
             return matchThreshold > 0 && similarity > matchThreshold;
