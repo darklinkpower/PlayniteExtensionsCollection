@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Update enabled status of games</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">Open NVIDIA GeForce NOW Database browser</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsHelpLabel">Yardım</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemUpdateStatusDescription">Oyunların etkin durumunu güncelle</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_MenuItemOpenDatabaseBrowserDescription">NVIDIA GeForce NOW veri tabanı tarayıcısını açın</sys:String>
     
-    <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">Updating NVIDIA GeForce NOW Enabled games...</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">Downloading NVIDIA GeForce NOW database...</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW enabled games in library: {0}
+    <sys:String x:Key="LOCNgfn_Enabler_UpdatingProgressMessage">NVIDIA GeForce NOW etkinleştirilmiş oyunlar güncelleniyor...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DownloadingDatabaseProgressMessage">NVIDIA GeForce NOW veri tabanı indiriliyor...</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_UpdateResults1Message" xml:space="preserve">NVIDIA GeForce NOW kitaplıktaki oyunları etkinleştirdi: {0}
 
-Added &quot;{1}&quot; feature to {2} games.
-Removed &quot;{3}&quot; feature from {4} games.</sys:String>
+{2} oyuna &quot;{1}&quot; özelliği eklendi.
+&quot;{3}&quot; özelliği {4} oyundan kaldırıldı.</sys:String>
     <sys:String x:Key="LOCNgfn_Enabler_UpdateResults3Message" xml:space="preserve">
 
-Marked {0} games as Installed.</sys:String>
+{0} oyun yüklendi olarak işaretlendi.</sys:String>
 
-    <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Update enabled status of games on Playnite startup</sys:String>
-	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Update enabled status of games on library update</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Show action to launch compatible games in NVIDIA GeForce NOW</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Only show action for games that are not already installed by their libraries</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Enabled games will always be marked as installed when this option is enabled.</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Games without a installation directory set are detected as not installed by their libraries</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Import games that are owned to game library as a separate entry</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Ownership of games is detected from games that have been already imported by other libraries into Playnite</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">Launch in Nvidia GeForce NOW</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW Enabler: Marked {0} games as installed.</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW executable not found in {0}.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ExecuteOnStartupSetting">Playnite başlangıcında oyunların etkin durumunu güncelleyin</sys:String>
+	<sys:String x:Key="LOCNgfn_Enabler_ExecuteOnLibraryUpdateSetting">Kitaplık güncellemesinde oyunların etkin durumunu güncelleyin</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSetting">Uyumlu oyunları NVIDIA GeForce NOW'da başlatmak için eylemi gösterin</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowActionForAlreadyInstalledGamesSetting">Yalnızca kütüphaneleri tarafından henüz yüklenmemiş oyunlar için eylemi göster</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_EnabledAlwaysAsInstalledLabel">Bu seçenek etkinleştirildiğinde etkin oyunlar her zaman yüklü olarak işaretlenecektir.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ShowPlayActionsOnLaunchSettingTooltip">Kurulum dizini seti olmayan oyunların kütüphaneleri tarafından kurulmadığı algılanıyor</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibrary">Oyun kütüphanesine ait olan oyunları ayrı bir giriş olarak içe aktarın</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsImportDatabaseToLibraryNote">Oyunların sahipliği, diğer kütüphaneler tarafından Playnite'a zaten aktarılmış olan oyunlardan tespit edilir</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_ControllerLaunchInNgfn">ŞİMDİ Nvidia GeForce'da Başlat</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessageMarkedInstalledResults">NVIDIA GeForce NOW etkinleştirici: {0} oyun yüklü olarak işaretlendi.</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_NotificationMessage">NVIDIA GeForce NOW çalıştırılabilir dosyası {0}'da bulunamadı.</sys:String>
     
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce Now Database browser</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Copy name to clipboard</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Search:</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Store:</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Id</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Store</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Store Id</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserWindowTitle">NVIDIA GeForce Now veri tabanı tarayıcısı</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserContextMenuItemCopyVariantTitle">Adı panoya kopyala</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserSearchLabel">Arama:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreSearchLabel">Mağaza:</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserNameLabel">Ad</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserGeForceIdLabel">GeForce Now Kimliği</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreLabel">Magaza</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_DatabaseBrowserStoreIdLabel">Mağaza Kimliği</sys:String>
 
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Library</sys:String>
-    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Other libraries</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsLibraryHeaderLabel">Kütüphane</sys:String>
+    <sys:String x:Key="LOCNgfn_Enabler_SettingsOtherLibrariesHeaderLabel">Diğer kütüphaneler</sys:String>
 </ResourceDictionary>
