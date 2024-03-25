@@ -2,63 +2,61 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCPlayState_SettingsHelpLabel">Yardım</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemAddToBlacklistDescription">Seçilen oyunları PlayState Kara Listesine ekle</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Remove selected games from Playstate Blacklist</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Configure selected games to force to only suspend playtime</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromBlacklistDescription">Seçilen oyunları Playstate Kara Listesinden kaldır</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemAddToPlaytimeSuspendDescription">Seçilen oyunları yalnızca oyun süresini askıya almaya zorlayacak şekilde yapılandırın</sys:String>
     <sys:String x:Key="LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription">Remove configuration to force to only suspend playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Configure selected games to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Remove configuration to force to suspend processes</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">Suspend {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">Resume {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Failed to register configured Hotkey {0}
+    <sys:String x:Key="LOCPlayState_MenuItemAddToProcessesSuspendDescription">Seçilen oyunları, süreçleri askıya almaya zorlayacak şekilde yapılandırın</sys:String>
+    <sys:String x:Key="LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription">Süreçleri askıya almaya zorlamak için yapılandırmayı kaldırın</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemSuspendGameDescription">{0} askıya alındı</sys:String>
+    <sys:String x:Key="LOCPlayState_GameMenuItemResumeGameDescription">{0}'ı devam ettirildi</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationMessageHotkeyRegisterFailed" xml:space="preserve">Yapılandırılmış kısayol tuşu {0} kaydedilemedi
 
-You can try using a diferent HotKey combination to possibly fix the issue</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">Added {0} game(s) to the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">Removed {0} game(s) from the PlayState blacklist.</sys:String>
-    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">Configured {0} game(s) to force to only suspend playtime when using the configured hotkey.</sys:String>
+Sorunu muhtemelen çözmek için farklı bir kısayol tuşu kombinasyonu kullanmayı deneyebilirsiniz</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistAddedResultsMessage">{0} oyun PlayState kara listesine eklendi.</sys:String>
+    <sys:String x:Key="LOCPlayState_BlacklistRemovedResultsMessage">{0} oyun PlayState kara listesinden kaldırıldı.</sys:String>
+    <sys:String x:Key="LOCPlayState_PlaytimeSuspendAddedResultsMessage">{0} oyun, yalnızca yapılandırılmış kısayol tuşu kullanıldığında oyun süresinin askıya alınmasını zorunlu kılacak şekilde yapılandırıldı.</sys:String>
     <sys:String x:Key="LOCPlayState_PlaytimeSuspendRemovedResultsMessage">Removed configuration to force to only suspend playtime when using the configured hotkey from {0} game(s).</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendAddedResultsMessage">Configured {0} game(s) to force to suspend playtime and processes when using the configured hotkey.</sys:String>
     <sys:String x:Key="LOCPlayState_ProcessesSuspendRemovedResultsMessage">Removed configuration to force to suspend playtime and processes when using the configured hotkey from {0} game(s).</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Game suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Game resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Playtime suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Playtime resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Information:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusActionMessage">Action:</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Game has been added to PlayState!</sys:String>
-    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">You can start using the game with the extension</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">General</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Notification messages</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Shows a notification that displays the current pause state and other information of the active game</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Change Hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Press Hotkey now</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Enable notification messages</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notes:
+    <sys:String x:Key="LOCPlayState_StatusSuspendedMessage">Oyun askıya alındı</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusResumedMessage">Oyun devam ettirildi</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeSuspendedMessage">Oyun süresi askıya alındı</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlaytimeResumedMessage">Oyun süresi devam ettirildi</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusInformationMessage">Bilgi:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusActionMessage">Aksiyon:</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Oyun PlayState'e eklendi!</sys:String>
+    <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Uzantı ile oyunu kullanmaya başlayabilirsiniz</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Genel</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Bildirim mesajları</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Geçerli duraklatma durumunu ve etkin oyunun diğer bilgilerini görüntüleyen bir bildirimi gösterir</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Kısayol tuşunu değiştir</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Şimdi kısayol tuşuna basın</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Bildirim mesajlarını etkinleştir</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notlar:
 
-The configured hotkeys won't be able to be used in other applications.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">If you have Focus Assist enabled when playing a game and fullscreen mode, you have to add Playnite to priority list in order to receive Windows notifications and configure them to allow to display them.
-
-This feature is only supported on Windows 10 and Windows 11</sys:String>
+Yapılandırılmış kısayol tuşları diğer uygulamalarda kullanılamaz.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsWinNotificationNote" xml:space="preserve">Oyun oynarken ve tam ekran modunda odaklanma yardımını etkinleştirdiyseniz, Windows bildirimlerini almak ve bunları görüntülemeye izin verecek şekilde yapılandırmak için Playnite'ı öncelik listesine eklemeniz gerekir. Bu özellik yalnızca Windows 10 ve Windows 11'de desteklenir</sys:String>
     <sys:String x:Key="LOCPlayState_MessageWinStyleNotificationsFirstSetup" xml:space="preserve">PlayState has added support to display notifications as native windows notifications. This is enabled by default and can be changed from the extension settings.
 
 For better compatibility with games, some adjustments to your Windows configuration is required. A link that contains the the instructions for this will be opened after closing this dialog.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Substract the time the game was suspended from the game playtime when it is stopped</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Helps to keep a more accurate playtime value in games by only keeping the time the game was not suspended count towards the game playtime</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Only execute for games that are not managed by library plugins</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Notification style:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingHelpLabel">Yardım</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Oyunun durdurulduğu andaki oyun süresinden oyunun askıya alındığı süreyi çıkarın</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Yalnızca oyunun askıya alınmadığı sürenin oyun süresine dahil edilmesini sağlayarak oyunlarda oyun süresi değerinin daha doğru tutulmasına yardımcı olur</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Yalnızca kitaplık eklentileri tarafından yönetilmeyen oyunlar için yürütün</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Bildirim stili:</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleWindowsToast">Windows toast</sys:String>
-    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Splash window</sys:String>
-    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Session playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Global suspend mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Status:</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Not suspended</sys:String>
+    <sys:String x:Key="LOCPlayState_NotificationStyleSplashWindow">Açılış penceresi</sys:String>
+    <sys:String x:Key="LOCPlayState_SessionPlaytimeLabel">Oturum oynatma süresi:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeLabel">Genel askıya alma modu:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusLabel">Durum:</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusSuspendedLabel">Askıya alındı</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendStatusNotSuspendedLabel">Askıya alınmadı</sys:String>
     <sys:String x:Key="LOCPlayState_Setting_GlobalSuspendModeTooltp" xml:space="preserve">Indicates which suspend mode should be applied to games.
 
 This mode can also be changed individually per game by using the extensions functions available in the extensions menu.</sys:String>
-    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Suspend mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Display session playtime in notification message</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Display total playtime in notification message</sys:String>
+    <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Askıya alma modu:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Oturum oynatma süresini bildirim mesajında görüntüle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Toplam oynatma süresini bildirim mesajında ​​göster</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
 
@@ -66,69 +64,69 @@ Game suspend: Games will be suspended automatically when they are not the active
 
 Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
-    <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState manager</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Show PlayState manager sidebar item</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Show PlayState game status switcher button in views</sys:String>
+    <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState yöneticisi</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Diğer</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState yöneticisi kenar çubuğu öğesini göster</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControl">Görünümlerde PlayState oyun durumu değiştirici düğmesini göster</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowGameStateSwitchControlTooltip">Allows to pause and resume the currently selected game by pressing a button. Requires support in custom theme.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingFsModeSwitchOnControlConnect">Switch to Playnite Fullscreen Mode if a controller is connected</sys:String>
     <sys:String x:Key="LOCPlayState_SettingDesktopModeSwitchOnControlConnect">Switch to Playnite Desktop Mode if there isn't any controller connected</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning">Only switch Playnite Modes if games are not currently running</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds">Ignore controllers state for mode switching for seconds on startup:</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Swtiching to Playnite Desktop Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Switching to Playnite Fullscreen Mode…</sys:String>
-    <sys:String x:Key="LOCPlayState_Playtime">Playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_TotalPlaytime">Total playtime:</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} hours {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} hour {1} minutes</sys:String>
-    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} hour {1} minute</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} seconds</sys:String>
-    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} second</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToDesktopModeMessage">Playnite Masaüstü Moduna geçiliyor…</sys:String>
+    <sys:String x:Key="LOCPlayState_SwitchingToFullscreenModeMessage">Playnite Tam Ekran Moduna geçiliyor…</sys:String>
+    <sys:String x:Key="LOCPlayState_Playtime">Oynama süresi:</sys:String>
+    <sys:String x:Key="LOCPlayState_TotalPlaytime">Toplam oynama süresi:</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutesPlayed">{0} saat {1} dakika</sys:String>
+    <sys:String x:Key="LOCPlayState_HoursMinutePlayed">{0} saat {1} dakika</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutesPlayed">{0} saat {1} dakika</sys:String>
+    <sys:String x:Key="LOCPlayState_HourMinutePlayed">{0} saat {1} dakika</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondsPlayed">{0} saniye</sys:String>
+    <sys:String x:Key="LOCPlayState_SecondPlayed">{0} saniye</sys:String>
 
-    <sys:String x:Key="LOCPlayStateYesLabel">Yes</sys:String>
-    <sys:String x:Key="LOCPlayStateNoLabel">No</sys:String>
+    <sys:String x:Key="LOCPlayStateYesLabel">Evet</sys:String>
+    <sys:String x:Key="LOCPlayStateNoLabel">Hayır</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Playtime mode</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Oynama zamanı modu</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameLabel">Game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Is suspended</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Switch game state</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Set as active game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Suspend Mode</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameLabel">Oyun</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Askıya alındı</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Oyun durumunu değiştir</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Etkin oyun olarak ayarla</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Askıya alma modu</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Resume game</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Suspend game</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Oyuna devam et</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Oyunu askıya al</sys:String>
 
-    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Keyboard hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Allow all controllers to activate hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">If enabled, all controllers will be allowed to activate the hotkeys.
+    <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Kısayol tuşları</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Klavye kısayol tuşları</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Denetleyici kısayol tuşları</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Denetleyicilerin kısayol tuşlarını etkinleştirin</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Tüm denetleyicilerin kısayol tuşlarını etkinleştirmesine izin ver</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Etkinleştirilirse tüm denetleyicilerin kısayol tuşlarını etkinleştirmesine izin verilir.
 
-If disabled, only the first controller will be allowed to activate the hotkeys</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspend/Resume:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
+Devre dışı bırakılırsa yalnızca ilk denetleyicinin kısayol tuşlarını etkinleştirmesine izin verilir</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Askıya al/Devam et:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Bilgi:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Updating GamePad hotkey in {0} seconds…</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Buttons: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">GamePad kısayol tuşu {0} saniye içinde güncelleniyor…</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Tuşlar: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Triggers: {0}</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Remove controller hotkey</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Keyboard input:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Keyboard Input</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Set keyboard Input</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyTriggersLabel">Tetikleyiciler: {0}</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Aynı kombinasyona sahip bir denetleyici kısayol tuşu zaten mevcut!</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Denetleyici kısayol tuşu</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Denetleyici kısayol tuşu:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mod</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mod:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Denetleyici kısayol tuşu ekle</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsRemoveControllerHotkeyLabel">Denetleyici kısayol tuşunu kaldır</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Klavye girişi:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Klavye Girişi</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Klavye girişini ayarla</sys:String>
     <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Game running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Game not running</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Always</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Oyun çalışıyor</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Oyun çalışmıyor</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Her zaman</sys:String>
 </ResourceDictionary>
