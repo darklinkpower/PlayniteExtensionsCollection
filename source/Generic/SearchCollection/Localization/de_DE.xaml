@@ -16,9 +16,9 @@
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelNewDefinitionAddDefinition">Neue Suchdefinition hinzufügen</sys:String>
 
     <sys:String x:Key="LOCSearch_Collection_SettingsNewDefinitionExplanation">Verwenden Sie %s, wenn der Name des Spiels ersetzt werden soll. Zum Beispiel: &quot;https://duckduckgo.com/?q=%s&quot; wird in &quot;https://duckduckgo.com/?q=Braid&quot; umgewandelt. Bei der Suche mit einem Spiel namens &quot;Braid&quot;</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Suche bei Playnite</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchOnPlayniteActionLabel">Suche auf Playnite</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SearchOnSiteActionLabel">Suche auf {0}</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SearchActionLabel">Suchen</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SearchContextDescription">Suchbegriff eingeben</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Suche in den im Search-Collection-Plugin konfigurierten Seiten</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SearchContextHint">Suche in den im Plugin &quot;Search Collection&quot; konfigurierten Internetseiten</sys:String>
 </ResourceDictionary>
