@@ -69,7 +69,7 @@
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutube">Video von YouTube herunterladen...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingVideoYoutubeErrorMessage" xml:space="preserve">Download des Videos von YouTube fehlgeschlagen.
 
-Bitte stellen Sie sicher, dass Ihre yt-dlp Installation aktuell ist.</sys:String>
+Bitte überprüfe, ob die Installatierte yt-dlp auf dem neuesten Stand ist.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageDownloadingGoogleLogoError">Fehler beim Herunterladen des Logos von Google.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload">Lade Logos neu hinzugefügter Spiele herunter...</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos">Videos von neu hinzugefügten Spielen herunterladen...</sys:String>
