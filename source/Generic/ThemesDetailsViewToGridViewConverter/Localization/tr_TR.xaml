@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Themes to convert Details View to Grid View:</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">Details View layout of theme &quot;{0}&quot; has been applied to Grid View.
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemesToConvertLabel">Ayrıntılar görünümünü ızgara görünümüne dönüştürmek için temalar:</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">&quot;{0}&quot; temasının ayrıntılar görünümü düzeni ızgara görünümüne uygulandı.
 
-Please restart to apply the changes.</sys:String>
+Değişiklikleri uygulamak için lütfen yeniden başlatın.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Grid View details layout for theme &quot;{0}&quot; has been restored.
 
 Please restart to apply the changes.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Version {0} of theme &quot;{1}&quot; is not supported.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">&quot;{1}&quot; temasının {0} sürümü desteklenmiyor.</sys:String>
 </ResourceDictionary>
