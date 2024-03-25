@@ -4,16 +4,16 @@
     <sys:String x:Key="PlayNotes_SavedNotesMessage">Notizen für {0} gespeichert.</sys:String>
     <sys:String x:Key="PlayNotes_EditorNoteTitleLabel">Titel:</sys:String>
     <sys:String x:Key="PlayNotes_EditorNoteNoteLabel">Notiz:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam-Guide-Import</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importiere Steam-Guide…</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterLabel">Steam Guide Importeur</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importiere Steam Guide…</sys:String>
     <sys:String x:Key="PlayNotes_InvalidUrlMessage">URL ist ungültig.</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Fehler beim Abrufen des Guides.</sys:String>
     <sys:String x:Key="PlayNotes_ImportLabel">Importieren</sys:String>
     <sys:String x:Key="PlayNotes_UrlInputLabel">URL:</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Jede Sektion als separate Notiz importieren</sys:String>
-    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Bestehende Notizen löschen</sys:String>
-    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Playnite-Notizen importieren</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Importiere jeden Abschnitt als separate Notiz</sys:String>
+    <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Vorhandene Notizen löschen</sys:String>
+    <sys:String x:Key="PlayNotes_MainMenuItemImportPlayniteNotesLabel">Playnite Notizen importieren</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesEnterNotesTitlesMessage">Titel eingeben, der in den importierten Notizen verwendet werden soll:</sys:String>
     <sys:String x:Key="PlayNotes_ImportNotesImportingMessage">Importiere Notizen…</sys:String>
-    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notizimport abgeschlossen.</sys:String>
+    <sys:String x:Key="PlayNotes_ImportNotesImportFinishedMessage">Notizen Import abgeschlossen.</sys:String>
 </ResourceDictionary>
