@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">General settings</sys:String>
+    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">Genel ayarlar</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Controls settings</sys:String>
-    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Covers height:</sys:String>
-    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Related games</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Same series</sys:String>
-    <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Tags to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Genres to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Categories to exclude during matching</sys:String>
-    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Exclude games from the same series</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Same developer</sys:String>
-    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Same publisher</sys:String>
-    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Similar games</sys:String>
+    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Kapak görüntüsü yüksekliği:</sys:String>
+    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">İlgili oyunlar</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Aynı seri</sys:String>
+    <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Eşleştirme sırasında hariç tutulacak etiketler</sys:String>
+    <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Eşleştirme sırasında hariç tutulacak türler</sys:String>
+    <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Eşleştirme sırasında hariç tutulacak kategoriler</sys:String>
+    <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Aynı serideki oyunları hariç tut</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Aynı geliştirici</sys:String>
+    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Aynı yayıncı</sys:String>
+    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Benzer oyunlar</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">Enable</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Display game names</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Only show installed</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximum items to display</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Oyun adlarını görüntüle</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Yalnızca yüklü olanı göster</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Görüntülenecek en fazla öğe</sys:String>
 </ResourceDictionary>
