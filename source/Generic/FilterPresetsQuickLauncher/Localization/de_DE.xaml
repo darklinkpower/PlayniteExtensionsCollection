@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCFiltersPresetsQL_SearchHelperDescription">Suche und aktiviere Filter-Voreinstellungen</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchLabel">Filter-Voreinstellungen</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchDescription">Geben Sie den Suchtext ein</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchHint">Suche nach Filter-Voreinstellungen in der Playnite-Datenbank</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SearchHelperDescription">Suche und aktiviere Filter Voreinstellungen</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchLabel">Filter Voreinstellungen</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchDescription">Den Suchtext eingeben</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetSearchHint">Mit Filter Voreinstellungen in der Playnite Datenbank Suchen</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_ActivateActionLabel">Aktivieren</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_ClearFiltersLabel">Filter zurücksetzen</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Filter-Voreinstellung &quot;{0}&quot; nicht gefunden</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filter-Voreinstellung: {0}</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Änderungen erfordern Neustart</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Filter Voreinstellung &quot;{0}&quot; nicht gefunden</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filter Voreinstellung: {0}</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Änderungen erfordern einen Neustart</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Bild</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Bild hinzufügen</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Bild entfernen</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Name der Voreinstellung</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Name anzeigen</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Anzuzeigender Text anstelle des Namens-Akronyms, wenn kein Bild konfiguriert wurde.</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Im Top-Panel anzeigen</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">In Seitenleiste anzeigen</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameTooltip">Text, der anstelle des Namenskürzels angezeigt wird, wenn kein Bild konfiguriert wurde.</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInTopPanelLabel">Im oberen Bereich anzeigen</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsShowInSidebarLabel">In der Seitenleiste anzeigen</sys:String>
 </ResourceDictionary>
