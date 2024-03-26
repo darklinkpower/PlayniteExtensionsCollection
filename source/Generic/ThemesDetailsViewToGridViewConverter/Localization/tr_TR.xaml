@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ConvertSuccessMessage" xml:space="preserve">&quot;{0}&quot; temasının ayrıntılar görünümü düzeni ızgara görünümüne uygulandı.
 
 Değişiklikleri uygulamak için lütfen yeniden başlatın.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">Grid View details layout for theme &quot;{0}&quot; has been restored.
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_RestoreSuccessMessage" xml:space="preserve">&quot;{0}&quot; temasına ilişkin ızgara görünüm ayrıntıları düzeni geri yüklendi.
 
-Please restart to apply the changes.</sys:String>
+Değişiklikleri uygulamak için lütfen yeniden başlatın.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">&quot;{1}&quot; temasının {0} sürümü desteklenmiyor.</sys:String>
 </ResourceDictionary>
