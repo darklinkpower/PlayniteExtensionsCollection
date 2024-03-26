@@ -57,7 +57,7 @@ This mode can also be changed individually per game by using the extensions func
     <sys:String x:Key="LOCPlayState_Setting_SuspendModeLabel">Askıya alma modu:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowSessionPlaytime">Oturum oynatma süresini bildirim mesajında görüntüle</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotificationShowTotalPlaytime">Toplam oynatma süresini bildirim mesajında ​​göster</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Automatically suspend games if they are not the active window</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspend">Etkin pencere değilse oyunları otomatik olarak askıya al</sys:String>
     <sys:String x:Key="LOCPlayState_SettingUseForegroundAutomaticSuspendNote" xml:space="preserve">This functionality will work differently depending on the suspend mode of the running game.
 
 Game suspend: Games will be suspended automatically when they are not the active window but they need to be manually resumed to get back into the game.
@@ -88,13 +88,13 @@ Playtime suspend: Games will be suspended and resumed automatically when the gam
     <sys:String x:Key="LOCPlayStateNoLabel">Hayır</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModeProcesses">Processes mode</sys:String>
     <sys:String x:Key="LOCPlayState_SuspendModePlaytime">Oynama zamanı modu</sys:String>
-    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_SuspendModeDisabled">Devre dışı</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameLabel">Oyun</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerIsSuspendedLabel">Askıya alındı</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSwitchGameStateLabel">Oyun durumunu değiştir</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSetActiveGameLabel">Etkin oyun olarak ayarla</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerSuspendModeLabel">Askıya alma modu</sys:String>
-    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Active game:</sys:String>
+    <sys:String x:Key="LOCPlayState_ManagerActiveGameLabel">Aktif oyun:</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGridHeaderActionsLabel">Actions</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameResumeLabel">Oyuna devam et</sys:String>
     <sys:String x:Key="LOCPlayState_ManagerGameSuspendLabel">Oyunu askıya al</sys:String>
@@ -125,7 +125,7 @@ Devre dışı bırakılırsa yalnızca ilk denetleyicinin kısayol tuşlarını 
     <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Klavye Girişi</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Klavye girişini ayarla</sys:String>
     <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
-    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Disabled</sys:String>
+    <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Devre dışı</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Oyun çalışıyor</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Oyun çalışmıyor</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeAlwaysLabel">Her zaman</sys:String>
