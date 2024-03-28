@@ -4,6 +4,6 @@
     <sys:String x:Key="LOCTwitch_Add_Link_MenuItemAddLinkSelectedGamesSemiAutomaticDescription">Seçilen oyunlara Twitch bağlantıları ekleyin (Yarı Otomatik)</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_GenericGameInformationDownloadFailMessage">&quot;{0}&quot; oyununun oyun bilgileri indirilirken hata oluştu.</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_InvalidUrlMessage">Geçersiz URL.</sys:String>
-    <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">Do you want to continue the extension execution for the remaining games?</sys:String>
+    <sys:String x:Key="LOCTwitch_Add_Link_AskContinueMessage">Kalan oyunlar için uzantının çalıştırılmasını istiyor musunuz?</sys:String>
     <sys:String x:Key="LOCTwitch_Add_Link_ResultsMessage">{0} oyuna Twitch bağlantısı eklendi.</sys:String>
 </ResourceDictionary>
