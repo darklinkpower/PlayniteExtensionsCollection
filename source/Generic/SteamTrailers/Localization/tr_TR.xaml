@@ -3,7 +3,7 @@
     <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Videolar</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Fragmanı</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Fragmanı</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Küçük Fragman</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; bir PC Oyunu değildir.
 Uzantı yalnızca PC oyunları ile uyumludur&quot;</sys:String>
     <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">&quot;{0}&quot; Uygulama Kimliği için oyun bilgileri indirilirken hata oluştu. Hata: {1}</sys:String>
