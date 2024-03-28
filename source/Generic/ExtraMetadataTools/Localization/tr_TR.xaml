@@ -5,6 +5,6 @@
     <sys:String x:Key="LOCExtra_Metadata_tools_ThemeConstantsUpdatedMessage" xml:space="preserve">&quot;{0}&quot; teması için Ekstra Meta Veri yapılandırması güncellendi.
 Değişikliklerin etkili olması için lütfen Playnite'ı yeniden başlatın.</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_tools_ImageConversionErrorMessage">Görüntü dosyası png'ye dönüştürülürken hata oluştu. Hata: &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Profile Picture set.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Background video set.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetProfilePictureResultsMessage">Profil Görüntüsü seti.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_tools_SetBackgroundVideoResultsMessage">Arka plan video seti.</sys:String>
 </ResourceDictionary>
