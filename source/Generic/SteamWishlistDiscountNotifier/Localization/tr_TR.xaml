@@ -11,7 +11,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">İstek listesi indirim bildirimlerini etkinleştir</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Bir ürünün fiyatı değiştiğinde bildirim gönder</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Bir öğe Steam'de mevcut olduğunda bilgilendir</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">Interval in minutes to check updates in wishlist:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">İstek listesindeki güncellemeleri kontrol etmek için dakika cinsinden aralık:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">Mağaza sayfalarını Steam istemcisi yerine web tarayıcısında açın</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam İstek Listesi Bildiricisi
 
@@ -31,11 +31,11 @@ Steam istek listesi kontrol edilemedi. Kimlik doğrulama gerekli.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Steam İstek Listesi verileri alınıyor…</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Cüzdanı</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">Ad</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Rank</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Derece</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">İndirim</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">Fiyat</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Çıkış tarihi</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date Added</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Ekleme Tarihi</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">Artan</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">Azalan</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelSearch">Arama:</sys:String>
@@ -47,16 +47,16 @@ Steam istek listesi kontrol edilemedi. Kimlik doğrulama gerekli.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Fiyat:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Mevcut</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Mevcut değil</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Total items:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Tüm nesneler:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Genel İncelemeler:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Çıkış tarihi:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Etiketler:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Owned in:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Sahip olunan:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Oyunun başka kaynaklara ait olup olmadığını göster</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Ownership:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Any</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Owned</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Not owned</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Sahibi:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Herhangi</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Sahip olunan</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Sahip olunmayan</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Web'de aç</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Steam'de aç</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">İndirimler için Steam istek listesini kontrol edin</sys:String>
