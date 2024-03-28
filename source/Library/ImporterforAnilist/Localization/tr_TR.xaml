@@ -10,7 +10,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_UpdaterUserscoreSetting">Kitaplık güncellemesi sırasında AniList hesabından kullanıcı puanını güncelleyin</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateCompletionStatusSetting">Kitaplık güncellemesi sırasında AniList hesabından tamamlanma durumunu güncelleyin</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_UpdateProgressSetting">Kitaplık güncellemesi sırasında AniList hesabındaki ilerlemeyi güncelleyin (&quot;Sürüm&quot; alanı kullanılır)</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">If configured, the links opened by the Play Action will be opened in the configured browser.</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_BrowserExecutableTooltip">Yapılandırılmışsa Oynat Eylemi tarafından açılan bağlantılar, yapılandırılan tarayıcıda açılacaktır.</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserPathLabel">Tarayıcı yolu:</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserSelectExecutableLabel">Tarayıcı seçin</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingBrowserRemoveBrowserLabel">Kaldır</sys:String>
@@ -21,7 +21,7 @@
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPlanWatchLabel">İzlemeyi/okumayı planlayın</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusWatchingLabel">İzleme/Okuma</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusPausedLabel">Duraklat</sys:String>
-    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Dropped</sys:String>
+    <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusDroppedLabel">Bırakıldı</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusCompletedLabel">Tamamlandı</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingStatusRewatchingLabel">Yeniden izleme/Yeniden okuma</sys:String>
     <sys:String x:Key="LOCImporter_For_Anilist_SettingUpdateLastActivityOnLibUpdateLabel">Kitaplık güncellemesi sırasında AniList'teki son güncelleme tarihini son etkinlik olarak içe aktar</sys:String>
