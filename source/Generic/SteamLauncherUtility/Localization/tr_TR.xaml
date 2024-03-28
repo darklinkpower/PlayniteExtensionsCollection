@@ -16,5 +16,5 @@ Seçici Mod: Eylemler yalnızca izin verilen oyunlarda gerçekleştirilir. Süzm
     <sys:String x:Key="LOCSteam_Launcher_UtilityDialogMessageSteamIsRunningCorrectArgs">Steam zaten &quot;{0}&quot; başlatma yapılandırmasıyla çalışıyor</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityDesktopModeLabel">Masaüstü Modu</sys:String>
     <sys:String x:Key="LOCSteam_Launcher_UtilityFullscreenModeLabel">Tam Ekran Modu</sys:String>
-    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Additional arguments:</sys:String>
+    <sys:String x:Key="LOCSteam_Launcher_UtilityAdditionalArgumentsLabel">Ek argümanlar:</sys:String>
 </ResourceDictionary>
