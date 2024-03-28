@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentsSection">Bileşenler</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Activate product</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentActivateProductDescription">Ürün etkinleştir</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentDownloadsDescription">İndirilenler</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentFriendsDescription">Arkadaşlar</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemComponentNewsDescription">Yenilikler</sys:String>
@@ -13,6 +13,6 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameGuidesDescription">Rehberler</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameNewsDescription">Yenilikler</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Başarılar</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">PointsShop</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Puan Mağazası</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Steam Kütüphanesinde görüntüle</sys:String>
 </ResourceDictionary>
