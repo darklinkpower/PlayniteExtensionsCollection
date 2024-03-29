@@ -4,12 +4,12 @@
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor">Special K Profilleri Düzenleyicisini Aç</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptionOpenSteamControllerConfig">&quot;{0}&quot; için Steam Kontrolcüsü yapılandırmasını açın</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Steam Id for game &quot;{0}&quot; needed to open the configuration was not found.
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlIdNotFound" xml:space="preserve">Yapılandırmayı açmak için gereken &quot;{0}&quot; oyununa ait Steam Kimliği bulunamadı.
 
-Please launch the game once so this Id can be automatically configured.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">Steam Controller Configuration for game &quot;{0}&quot; with Steam Id &quot;{1}&quot; will be opened.
+Bu kimliğin otomatik olarak yapılandırılabilmesi için lütfen oyunu bir kez başlatın.</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DialogMessageSteamControlNotice" xml:space="preserve">&quot;{1}&quot; Steam Kimliğine sahip &quot;{0}&quot; oyunu için Steam Kontrolcüsü Yapılandırması açılacaktır.
 
-Be aware that a controller needs to be currently connected and enabled for Steam Controller for the configuration window to open.</sys:String>
+Yapılandırma penceresinin açılabilmesi için bir kontrolcünün Steam Kontrolcüsü'ne bağlı ve etkinleştirilmiş olması gerektiğini unutmayın.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeAddFeature">Genel Modda yürütmeyi devre dışı bırakma özelliği ekleyin</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongGlobalModeRemoveFeature">Genel Modda yürütmeyi devre dışı bırakmak için özelliği kaldırın</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_MenuItemDescriptiongSelectiveModeAddFeature">Seçici Modda yürütmeyi etkinleştirmek için özellik ekleyin</sys:String>
@@ -24,21 +24,21 @@ Be aware that a controller needs to be currently connected and enabled for Steam
     <sys:String x:Key="LOCSpecial_K_Helper_WindowTitleSkProfileEditor">Special K Profil Düzenleyicisi</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_HelpLabel">Yardım</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Done</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_DoneMessage">Tamam</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionMode">Special K yürütme modu:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingSkExecutionModeNote" xml:space="preserve">Genel Mod: Uzantı tarafından eklenen &quot;[SK] Genel Modu Devre Dışı Bırak&quot; hariç tutma özelliğine sahip olanlar dışındaki tüm oyunlar başlatılırken Special K hizmetleri başlatılır.
 
 Seçici Mod: Special K hizmetleri yalnızca uzantı tarafından eklenen &quot;[SK] Seçici Modu Etkinleştir&quot; özelliğinin bulunduğu oyunlar için başlatılır</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Stop start of services if game has &quot;Valve Anti-Cheat Enabled&quot; feature</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Stop start of services if it is detected that the game uses EasyAntiCheat</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Only start Special K services when starting PC games</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfVac">Oyunda &quot;Valve Anti-Hile Etkinleştirme&quot; özelliği varsa hizmetlerin başlatılmasını durdurun</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingStopIfEac">Oyunun EasyAntiCheat kullandığı tespit edilirse hizmetlerin başlatılması durdurulur</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingRunOnlyPcGames">Special K hizmetlerini yalnızca PC oyunlarını başlatırken kullanın</sys:String>
 
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Default settings for new profiles created by Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileSettingsLabel">Special K tarafından oluşturulan yeni profiller için varsayılan ayarlar</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSteamOverlay">Steam kaplamasını etkinleştir</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam overlay to use if Steam Big Picture mode is running:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingSteamOverlayChoiceIfBpmRunning">Steam Geniş Ekran modu çalışıyorsa kullanılacak Steam katmanı:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableReshade">Yeniden Gölgelendirmeyi Etkinleştir</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Enable Flip Model Presentation</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Makes games run the same or better while running in windowed mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModel">Çevirmeli Model Sunumunu Etkinleştir</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableFlipModelTooltip">Oyunların pencereli modda çalışırken aynı veya daha iyi çalışmasını sağlar</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileDisableNvidiaBloatware">Nvidia bloatware'i devre dışı bırakın</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileEnableSetFpsLimit">Kare hızı sınırını ayarla</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFps">Hedef FPS:</sys:String>
@@ -48,7 +48,7 @@ Doğru değeri elde ettikten sonra bunu metin kutusuna yapıştırabilirsiniz.</
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Küresel mod</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Seçici mod</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">Masaüstü</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Geniş Ekran Modu</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSearch">Arama:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Bulanık aramayı kullan</sys:String>
