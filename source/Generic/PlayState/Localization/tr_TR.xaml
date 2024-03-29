@@ -109,7 +109,7 @@ Oyun süresinin askıya alınması: Oyun penceresi aktif durumu değiştirdiğin
 Devre dışı bırakılırsa yalnızca ilk denetleyicinin kısayol tuşlarını etkinleştirmesine izin verilir</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Askıya al/Devam et:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Bilgi:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Close game:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Kapalı oyun:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">GamePad kısayol tuşu {0} saniye içinde güncelleniyor…</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyButtonsLabel">Tuşlar: {0}</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyDpadLabel">DPad: {0}</sys:String>
@@ -124,7 +124,7 @@ Devre dışı bırakılırsa yalnızca ilk denetleyicinin kısayol tuşlarını 
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyKeyboardInputEnterLabel">Klavye girişi:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCtrlHotkeyKeyboardInputLabel">Klavye Girişi</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSetKeyboardInputLabel">Klavye girişini ayarla</sys:String>
-    <sys:String x:Key="LOCPlayState_NoneLabel">None</sys:String>
+    <sys:String x:Key="LOCPlayState_NoneLabel">Hiçbiri</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeDisabledLabel">Devre dışı</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameRunningLabel">Oyun çalışıyor</sys:String>
     <sys:String x:Key="LOCPlayState_ControllerHotkeyModeGameNotRunningLabel">Oyun çalışmıyor</sys:String>
