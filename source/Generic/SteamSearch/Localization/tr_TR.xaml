@@ -5,7 +5,7 @@
     <sys:String x:Key="LOCSteam_Search_SettingsIndicateIfGameIsInLibraryLabel">Arama sonuçlarında bir oyunun kütüphanede olup olmadığını belirtin</sys:String>
     <sys:String x:Key="LOCSteam_Search_SteamStoreLabel">Steam Mağazası</sys:String>
     <sys:String x:Key="LOCSteam_Search_SearcherDescriptionLabel">Arama terimini girin</sys:String>
-    <sys:String x:Key="LOCSteam_Search_SearcherHint">Steam Mağazasında oyun arayın</sys:String>
+    <sys:String x:Key="LOCSteam_Search_SearcherHint">Steam Mağazasından bir oyun ara</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnWeb">Web'de aç</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionLabelOpenOnSteam">Steam'de aç</sys:String>
     <sys:String x:Key="LOCSteam_Search_ItemActionDiscountPercentDescription">%{0} indirim</sys:String>
