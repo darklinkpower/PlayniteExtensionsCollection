@@ -12,15 +12,15 @@
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">İnceleme verileri eksikse indirin</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">Veriler belirtilen günden daha eskiyse:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Açıklama yüksekliği</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription"></sys:String>
+    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">İnceleme yararlılığını göster</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">İnceleme tarihini göster</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Toplam incelemeler:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Olumlu incelemeler:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Olumsuz incelemeler:</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Toplam inceleme:</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Olumlu inceleme:</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Olumsuz inceleme:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_AverageUserScore">Puan ortalaması:</sys:String>
 
     <sys:String x:Key="LOCReview_Viewer_ReviewsTypeLabel">İnceleme türü:</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTypeAll">Tümü</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTypeAll">Hepsi</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewTypePositive">Olumlu</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewTypeNegative">Olumsuz</sys:String>
     <sys:String x:Key="LOCReview_Viewer_Review">İnceleme:</sys:String>
@@ -28,9 +28,9 @@
     <sys:String x:Key="LOCReview_Viewer_ReviewsLabel">İncelemeler</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewPostedDateLabel">Gönderildi: {0}</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewRecommendedLabel">Önerilen</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Önerilmez</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">{0} saat {1} dakika inceleme zamanında</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">{0} saat {1} dakika toplam oynama süresi</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} kişi bu incelemeyi faydalı buldu</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewNotRecommendedLabel">Tavsiye Edilmiyor</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewPlaytimeFormat">İnceleme gönderildiğinde: {0}.{1} saat</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewTotalPlaytimeFormat">Toplam oynama süresi: {0}.{1} saat</sys:String>
+    <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessHelpfulFormat">{0} kişi bu incelemeyi yararlı buldu</sys:String>
     <sys:String x:Key="LOCReview_Viewer_ReviewHelpfulnessFunnyFormat">{0} kişi bu incelemeyi komik buldu</sys:String>
 </ResourceDictionary>
