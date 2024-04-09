@@ -2,9 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCSearch_Collection_MenuItemSearchSection">Ara</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultHelp">Yardım</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultSearches">Varsayılan Aramalar</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelCustomSearches">Özel Aramalar</sys:String>
-    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionEnabled">Etkinleştirildi</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefaultSearches">Varsayılan Arama</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelCustomSearches">Özel Arama</sys:String>
+    <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionEnabled">Etkin</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionName">Ad</sys:String>
     <sys:String x:Key="LOCSearch_Collection_SettingsLabelDefinitionSearchTemplate">Arama kalıbı</sys:String>
 
