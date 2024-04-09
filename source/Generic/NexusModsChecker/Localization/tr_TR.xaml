@@ -4,8 +4,8 @@
     <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Nexus Modları özelliği ve tüm oyunlara bağlantılar ekleyin</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">&quot;{0}&quot; adresinden dosya indirilirken hata oluştu. Hata: {1}</sys:String>
     <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">Seçimde oyun yok.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Nexus Mods'ta oyun bulunamadı.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Nexus Mods'ta modları bulunan oyunlar: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Nexus Mods'da oyun bulunamadı.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Nexus Mods'da modları bulunan oyunlar: {0}
 
 {2} oyuna `&quot;{1}`&quot; özelliği eklendi.
 {3} oyuna Nexus Mod bağlantıları eklendi.</sys:String>
