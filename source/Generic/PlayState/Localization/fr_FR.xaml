@@ -104,7 +104,7 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Raccourcis</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Raccourcis clavier</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Raccourcis du contrôleur</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Enable controllers hotkeys</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Activer les raccourcis clavier du contrôleur</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Autoriser tous les contrôleurs à activer les raccourcis</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Si activé, tous les contrôleurs seront autorisés à activer les raccourcis.
 
