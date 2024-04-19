@@ -26,12 +26,17 @@ Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le pro
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Action :</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Le jeu a été ajouté à PlayState !</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Vous pouvez commencer à utiliser le jeu avec l'extension</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Reset</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Général</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messages de notification</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scan exclusions</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">During PlayState scanning to detect game executables, any executables containing any text from the following list will be excluded. Each entry should be separated by a new line.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Affiche une notification qui affiche l'état de pause en cours et les autres informations de la jeu actif</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Changer le raccourci clavier</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Appuyez sur le raccourci clavier maintenant</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Activer les notifications</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Notifications to display:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">When game is added to PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">On game status changes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Remarque :
 
 Les raccourcis clavier configurés ne pourront pas être utilisés dans d'autres applications.</sys:String>
@@ -43,6 +48,9 @@ Cette fonctionnalité n'est prise en charge que sur Windows 10 et Windows 11</sy
 Pour une meilleure compatibilité avec les jeux, certains ajustements à votre configuration Windows sont nécessaires. Un lien contenant les instructions à suivre sera ouvert après la fermeture de cette boîte de dialogue.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Aide</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Soustraire la durée de suspension du temps de jeu quand la partie est arrêtée</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Exclude game sessions that are less than a minimum duration</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">If game playtime or session data falls below the configured duration, it will revert to its previous state, restoring playtime, play count, and last played date.</sys:String>
+    <sys:String x:Key="LOCPlayState_MinutesLabel">Minutes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aide à conserver un temps de jeu plus précis en comptant seulement le temps de jeu hors pause</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Exécuter uniquement pour les jeux qui ne sont pas gérés par les extensions de clients de jeu</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Style de notification :</sys:String>
@@ -66,6 +74,7 @@ Suspension du jeu : Les jeux seront automatiquement suspendus lorsqu'ils ne sont
 
 Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiquement lorsque la fenêtre de jeu change l'état actif.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Remettre les fenêtres des jeux au premier plan quand ils sont relancés</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestionnaire de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Autre</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Afficher l'élément de la barre latérale du gestionnaire de PlayState</sys:String>
@@ -110,6 +119,7 @@ Suspension du temps de jeu : Les jeux seront suspendus et reprendront automatiqu
 
 Si désactivé, seul le premier contrôleur sera autorisé à activer les raccourcis</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspendre/Reprendre :</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Minimize/Maximize window:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information :</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Fermer le jeu :</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Mise à jour du raccourci GamePad dans {0} secondes…</sys:String>
@@ -119,6 +129,8 @@ Si désactivé, seul le premier contrôleur sera autorisé à activer les raccou
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Un raccourci du contrôleur avec la même combinaison existe déjà!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Raccourci du contrôleur</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Raccourci du contrôleur :</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Suspend settings</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Playtime settings</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode :</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Ajouter un raccourci de contrôleur</sys:String>
