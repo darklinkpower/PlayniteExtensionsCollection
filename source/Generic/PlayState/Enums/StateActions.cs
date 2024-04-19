@@ -1,6 +1,6 @@
 ﻿namespace PlayState.Enums
 {
-    public enum NotificationTypes
+    public enum StateActions
     {
         None = 0,
         Resumed = 1,

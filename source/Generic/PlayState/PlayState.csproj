@@ -104,7 +104,7 @@
     <Compile Include="Enums\AutomaticStateSwitchStatus.cs" />
     <Compile Include="Enums\GameStateSwitchControlState.cs" />
     <Compile Include="Enums\NotificationStyles.cs" />
-    <Compile Include="Enums\NotificationTypes.cs" />
+    <Compile Include="Enums\StateActions.cs" />
     <Compile Include="Enums\SuspendModes.cs" />
     <Compile Include="Events\OnGameStatusSwitchedArgs.cs" />
     <Compile Include="GamePadHandler.cs" />
@@ -149,7 +149,6 @@
     <None Include="Resources\playstateiconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-
   </ItemGroup>
   <ItemGroup>
     <ContentWithTargetPath Include="..\..\..\references\XInputInterface.dll">

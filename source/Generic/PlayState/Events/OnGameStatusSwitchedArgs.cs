@@ -18,6 +18,6 @@ namespace PlayState.Events
         /// <summary>
         /// Gets the Notification Type initiating the event.
         /// </summary>
-        public NotificationTypes NotificationType { get; internal set; }
+        public StateActions NotificationType { get; internal set; }
     }
 }

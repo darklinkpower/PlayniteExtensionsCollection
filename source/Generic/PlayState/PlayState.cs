@@ -257,19 +257,19 @@ namespace PlayState
                 return;
             }
 
-            var suspendedTime = gameData.Stopwatch.Elapsed;
-            if (suspendedTime.Ticks == 0)
+            var suspendedTime = gameData.SuspendedTime;
+            if (suspendedTime == 0)
             {
                 logger.Debug($"PlayState data for {game.Name} didn't ellapse time");
                 return;
             }
 
-            var elapsedSeconds = Convert.ToUInt64(suspendedTime.TotalSeconds);
+            var elapsedSeconds = Convert.ToUInt64(suspendedTime);
             logger.Debug($"Suspend elapsed seconds for game {game.Name} was {elapsedSeconds}");
             ExportPausedTimeInfo(game, elapsedSeconds); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-            if (elapsedSeconds != 0)
+            if (elapsedSeconds != 0 && game.Playtime >= elapsedSeconds)
             {
-                var newPlaytime = game.Playtime > elapsedSeconds ? game.Playtime - elapsedSeconds : elapsedSeconds - game.Playtime;
+                var newPlaytime = game.Playtime - elapsedSeconds;
                 logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
                 game.Playtime = newPlaytime;
                 PlayniteApi.Database.Games.Update(game);

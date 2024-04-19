@@ -56,7 +56,7 @@ namespace PlayState
 
             foreach (PlayStateData newData in e.NewItems)
             {
-                ShowGameStatusNotification(NotificationTypes.DataAdded, newData);
+                ShowGameStatusNotification(StateActions.DataAdded, newData);
             }
         }
 
@@ -75,17 +75,17 @@ namespace PlayState
         /// - "information" for showing the actual status<br/>
         /// </param>
         /// </summary>
-        public void ShowGameStatusNotification(NotificationTypes status, PlayStateData gameData)
+        public void ShowGameStatusNotification(StateActions status, PlayStateData gameData)
         {
             // Used for cases where it makes sense to always show the notification,
             // like manually calling the information hotkey
             var ignoreEnableNotificationSetting = false;
             switch (status)
             {
-                case NotificationTypes.DataAdded:
+                case StateActions.DataAdded:
                     ignoreEnableNotificationSetting = true;
                     break;
-                case NotificationTypes.Information:
+                case StateActions.Information:
                     ignoreEnableNotificationSetting = true;
                     break;
                 default:
@@ -101,23 +101,23 @@ namespace PlayState
             var canAddCurrentPlaytimeLine = true;
             switch (status)
             {
-                case NotificationTypes.Resumed: // for resuming process and playtime
+                case StateActions.Resumed: // for resuming process and playtime
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
                     sb.Append(ResourceProvider.GetString("LOCPlayState_StatusResumedMessage"));
                     break;
-                case NotificationTypes.PlaytimeResumed: // for resuming playtime
+                case StateActions.PlaytimeResumed: // for resuming playtime
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
                     sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeResumedMessage"));
                     break;
-                case NotificationTypes.Suspended: // for suspend process and playtime
+                case StateActions.Suspended: // for suspend process and playtime
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
                     sb.Append(ResourceProvider.GetString("LOCPlayState_StatusSuspendedMessage"));
                     break;
-                case NotificationTypes.PlaytimeSuspended: // for suspend playtime
+                case StateActions.PlaytimeSuspended: // for suspend playtime
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_StatusActionMessage")} ");
                     sb.Append(ResourceProvider.GetString("LOCPlayState_StatusPlaytimeSuspendedMessage"));
                     break;
-                case NotificationTypes.Information:
+                case StateActions.Information:
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_Setting_SuspendModeLabel")} ");
                     if (gameData.SuspendMode == SuspendModes.Processes)
                     {
@@ -138,7 +138,7 @@ namespace PlayState
                         sb.Append(ResourceProvider.GetString("LOCPlayState_Setting_SuspendStatusNotSuspendedLabel"));
                     }
                     break;
-                case NotificationTypes.DataAdded: // When game is added to PlayState data
+                case StateActions.DataAdded: // When game is added to PlayState data
                     sb.AppendLine(ResourceProvider.GetString("LOCPlayState_StatusPlayStateDataAddedMessage"));
                     sb.Append($"{ResourceProvider.GetString("LOCPlayState_Setting_SuspendModeLabel")} ");
                     if (gameData.SuspendMode == SuspendModes.Processes)
@@ -266,11 +266,11 @@ namespace PlayState
         /// </summary>
         private ulong GetRealPlaytime(PlayStateData gameData)
         {
-            var suspendedTime = gameData.Stopwatch.Elapsed;
+            var suspendedTime = gameData.SuspendedTime;
             ulong elapsedSeconds = 0;
-            if (suspendedTime != null)
+            if (suspendedTime > 0)
             {
-                elapsedSeconds = Convert.ToUInt64(suspendedTime.TotalSeconds);
+                elapsedSeconds = Convert.ToUInt64(suspendedTime);
             }
 
             return Convert.ToUInt64(DateTime.Now.Subtract(gameData.StartDate).TotalSeconds) - elapsedSeconds;
