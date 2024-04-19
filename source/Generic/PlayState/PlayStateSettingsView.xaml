@@ -56,8 +56,9 @@
                               IsChecked="{Binding Settings.EnableGameStateSwitchControl}"
                               Margin="0,10,0,0"/>
 
-                    <Separator Margin="0,10,0,0" />
-                    <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingsSuspendSettingsLabel}" Margin="0,20,0,0" />
+                    <Separator Margin="0,5,0,5" />
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
                         <TextBlock Text="{DynamicResource LOCPlayState_Setting_GlobalSuspendModeLabel}"
                                    ToolTip="{DynamicResource LOCPlayState_Setting_GlobalSuspendModeTooltp}"
                                    VerticalAlignment="Center" />
@@ -93,21 +94,23 @@
                                   Content="{DynamicResource LOCPlayState_SuspendModePlaytime}" />
                     </StackPanel>
 
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingsPlaytimeSettingsLabel}" Margin="0,20,0,0" />
+                    <Separator Margin="0,5,0,5" />
                     <CheckBox x:Name="CbSubstractOnSuspended" Content="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel}"
                               IsChecked="{Binding Settings.SubstractSuspendedPlaytimeOnStopped}"
                               ToolTip="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip}"
-                              Margin="0,20,0,10"/>
-                    <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="20,0,0,0">
+                              Margin="0,0,0,0"/>
+                    <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="20,10,0,0">
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
-                                  IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
+                                  IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" />
                     </StackPanel>
 
                     <CheckBox x:Name="CbExcludeShortPlaytimeSessions" Content="{DynamicResource LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel}"
                               IsChecked="{Binding Settings.ExcludeShortPlaytimeSessions}"
                               ToolTip="{DynamicResource LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip}"
-                              Margin="0,20,0,10"/>
+                              Margin="0,10,0,0"/>
                     <DockPanel IsEnabled="{Binding ElementName=CbExcludeShortPlaytimeSessions, Path=IsChecked}"
-                              Margin="20,0,0,0">
+                              Margin="20,10,0,0">
                         <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" VerticalAlignment="Center"
                                    Text="{DynamicResource LOCPlayState_MinutesLabel}" />
                         <TextBox DockPanel.Dock="Right" Margin="5,0,0,0" VerticalAlignment="Center"
@@ -116,8 +119,8 @@
                         <Slider DockPanel.Dock="Left" VerticalAlignment="Center"
                                 Minimum="1" Maximum="30" Value="{Binding Settings.MinimumPlaytimeThreshold}" />
                     </DockPanel>
-                    <TextBlock Text="{DynamicResource LOCPlayState_SettingsOtherSectionLabel}" />
-                    <Separator Margin="0,0,0,5" />
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingsOtherSectionLabel}" Margin="0,20,0,0" />
+                    <Separator Margin="0,5,0,5" />
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingDesktopModeSwitchOnControlConnect}"
                                   IsChecked="{Binding Settings.SwitchToDesktopModeOnControllerStatus}" Margin="0,0,0,10"/>
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingFsModeSwitchOnControlConnect}"

@@ -128,6 +128,8 @@ If disabled, only the first controller will be allowed to activate the hotkeys</
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">A controller hotkey with the same combination already exists!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller hotkey</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller hotkey:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Suspend settings</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Playtime settings</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mode</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mode:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Add controller hotkey</sys:String>
