@@ -881,7 +881,7 @@ namespace ExtraMetadataLoader
                 // Age restricted videos can only be seen in the full version while logged in
                 // so it's needed to redirect to the full YouTube site to view them
                 var embedLoaded = false;
-                webView.LoadingChanged += async (s, e) =>
+                webView.LoadingChanged += async (_, __) =>
                 {
                     if (!embedLoaded && webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
                     {

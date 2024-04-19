@@ -32,7 +32,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
-                            <Image Margin="3" Height="80" Source="{Binding ThumbnailUrl, IsAsync=True}"/>
+                            <Image Margin="3" Height="80" Source="{Binding ThumbnailUrl, IsAsync=True}"
+                                   RenderOptions.BitmapScalingMode="Fant" />
                             <StackPanel Margin="5,0,0,0">
                                 <TextBlock x:Name="VideoName" Margin="3" Text="{Binding VideoTitle}"/>
                                 <DockPanel Margin="3">

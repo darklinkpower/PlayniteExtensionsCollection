@@ -186,30 +186,31 @@ namespace ExtraMetadataLoader.ViewModels
                     </head>
                     <body style='margin:0'>
                     </body>", youtubeLink);
-            var webView = PlayniteApi.WebViews.CreateView(1280, 750);
-
-            // Age restricted videos can only be seen in the full version while logged in
-            // so it's needed to redirect to the full YouTube site to view them
-            var embedLoaded = false;
-            webView.LoadingChanged += async (s, e) =>
+            using (var webView = PlayniteApi.WebViews.CreateView(1280, 750))
             {
-                if (!embedLoaded)
+                // Age restricted videos can only be seen in the full version while logged in
+                // so it's needed to redirect to the full YouTube site to view them
+                var embedLoaded = false;
+                webView.LoadingChanged += async (_, __) =>
                 {
-                    if (webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
+                    if (!embedLoaded)
                     {
-                        var source = await webView.GetPageSourceAsync();
-                        if (source.Contains("<div class=\"ytp-error-content-wrap\"><div class=\"ytp-error-content-wrap-reason\">"))
+                        if (webView.GetCurrentAddress().StartsWith(@"https://www.youtube.com/embed/"))
                         {
-                            webView.Navigate($"https://www.youtube.com/watch?v={selectedItem.VideoId}");
-                        }
-                        embedLoaded = true;
-                    }
-                }
-            };
+                            var source = await webView.GetPageSourceAsync();
+                            if (source.Contains("<div class=\"ytp-error-content-wrap\"><div class=\"ytp-error-content-wrap-reason\">"))
+                            {
+                                webView.Navigate($"https://www.youtube.com/watch?v={selectedItem.VideoId}");
+                            }
 
-            webView.Navigate("data:text/html," + html);
-            webView.OpenDialog();
-            webView.Dispose();
+                            embedLoaded = true;
+                        }
+                    }
+                };
+
+                webView.Navigate("data:text/html," + html);
+                webView.OpenDialog();
+            }
         }
 
     }
