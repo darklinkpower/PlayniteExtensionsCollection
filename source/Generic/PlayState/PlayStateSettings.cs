@@ -30,13 +30,11 @@ namespace PlayState
         public HotKey InformationHotkey { get => informationHotkey; set => SetValue(ref informationHotkey, value); }
 
         // GamePad Hotkeys
-        [DontSerialize]
         private GamePadStateHotkey gamePadSuspendHotkey;
         public GamePadStateHotkey GamePadSuspendHotkey { get => gamePadSuspendHotkey; set => SetValue(ref gamePadSuspendHotkey, value); }
         private bool gamePadSuspendHotkeyEnable = true;
         public bool GamePadSuspendHotkeyEnable { get => gamePadSuspendHotkeyEnable; set => SetValue(ref gamePadSuspendHotkeyEnable, value); }
 
-        [DontSerialize]
         private GamePadStateHotkey gamePadInformationHotkey;
         public GamePadStateHotkey GamePadInformationHotkey { get => gamePadInformationHotkey; set => SetValue(ref gamePadInformationHotkey, value); }
 
@@ -45,42 +43,40 @@ namespace PlayState
 
         private bool gamePadHotkeysEnableAllControllers = false;
         public bool GamePadHotkeysEnableAllControllers { get => gamePadHotkeysEnableAllControllers; set => SetValue(ref gamePadHotkeysEnableAllControllers, value); }
-        [DontSerialize]
         private bool substractSuspendedPlaytimeOnStopped = false;
         public bool SubstractSuspendedPlaytimeOnStopped { get => substractSuspendedPlaytimeOnStopped; set => SetValue(ref substractSuspendedPlaytimeOnStopped, value); }
-        [DontSerialize]
         private bool substractOnlyNonLibraryGames = true;
         public bool SubstractOnlyNonLibraryGames { get => substractOnlyNonLibraryGames; set => SetValue(ref substractOnlyNonLibraryGames, value); }
 
-        [DontSerialize]
         private bool notificationShowSessionPlaytime = true;
         public bool NotificationShowSessionPlaytime { get => notificationShowSessionPlaytime; set => SetValue(ref notificationShowSessionPlaytime, value); }
-        [DontSerialize]
         private bool notificationShowTotalPlaytime = true;
         public bool NotificationShowTotalPlaytime { get => notificationShowTotalPlaytime; set => SetValue(ref notificationShowTotalPlaytime, value); }
+
         public bool WindowsNotificationStyleFirstSetupDone = false;
 
-        [DontSerialize]
         private bool showManagerSidebarItem = true;
         public bool ShowManagerSidebarItem { get => showManagerSidebarItem; set => SetValue(ref showManagerSidebarItem, value); }
-        [DontSerialize]
         private bool useForegroundAutomaticSuspend = false;
         public bool UseForegroundAutomaticSuspend { get => useForegroundAutomaticSuspend; set => SetValue(ref useForegroundAutomaticSuspend, value); }
 
         private bool useForegroundAutomaticSuspendPlaytimeMode = false;
         public bool UseForegroundAutomaticSuspendPlaytimeMode { get => useForegroundAutomaticSuspendPlaytimeMode; set => SetValue(ref useForegroundAutomaticSuspendPlaytimeMode, value); }
 
-        [DontSerialize]
         private bool bringResumedToForeground = false;
         public bool BringResumedToForeground { get => bringResumedToForeground; set => SetValue(ref bringResumedToForeground, value); }
-        [DontSerialize]
-        private bool enableNotificationMessages = true;
-        public bool EnableNotificationMessages { get => enableNotificationMessages; set => SetValue(ref enableNotificationMessages, value); }
+
+
+        private bool _showNotificationOnGameStatusChange = true;
+        public bool ShowNotificationOnGameStatusChange { get => _showNotificationOnGameStatusChange; set => SetValue(ref _showNotificationOnGameStatusChange, value); }
+
+        private bool _showNotificationGameAdded = true;
+        public bool ShowNotificationOnGameAdded { get => _showNotificationGameAdded; set => SetValue(ref _showNotificationGameAdded, value); }
+
 
         private bool enableGameStateSwitchControl = true;
         public bool EnableGameStateSwitchControl { get => enableGameStateSwitchControl; set => SetValue(ref enableGameStateSwitchControl, value); }
 
-        [DontSerialize]
         private bool isControlVisible = false;
         [DontSerialize]
         public bool IsControlVisible { get => isControlVisible; set => SetValue(ref isControlVisible, value); }

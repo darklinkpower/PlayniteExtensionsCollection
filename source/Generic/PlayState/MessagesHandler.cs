@@ -65,6 +65,29 @@ namespace PlayState
             ShowGameStatusNotification(e.NotificationType, e.PlayStateData);
         }
 
+        private bool ShouldDisplayNotification(StateActions status)
+        {
+            if (status == StateActions.DataAdded && !settings.Settings.ShowNotificationOnGameAdded)
+            {
+                return false;
+            }
+
+            var gameStatusChangeActions = new StateActions[]
+            {
+                StateActions.PlaytimeResumed,
+                StateActions.PlaytimeSuspended,
+                StateActions.Resumed,
+                StateActions.Suspended
+            };
+
+            if (gameStatusChangeActions.Contains(status) && !settings.Settings.ShowNotificationOnGameStatusChange)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Method for showing notifications. It will respect the style (Playnite / Windows) notification settings.<br/><br/>
         /// <param name="status">Status of the game to be notified:<br/>
@@ -77,26 +100,11 @@ namespace PlayState
         /// </summary>
         public void ShowGameStatusNotification(StateActions status, PlayStateData gameData)
         {
-            // Used for cases where it makes sense to always show the notification,
-            // like manually calling the information hotkey
-            var ignoreEnableNotificationSetting = false;
-            switch (status)
-            {
-                case StateActions.DataAdded:
-                    ignoreEnableNotificationSetting = true;
-                    break;
-                case StateActions.Information:
-                    ignoreEnableNotificationSetting = true;
-                    break;
-                default:
-                    break;
-            }
-
-            if (!ignoreEnableNotificationSetting && !settings.Settings.EnableNotificationMessages)
+            if (!ShouldDisplayNotification(status))
             {
                 return;
             }
-            
+
             var sb = new StringBuilder();
             var canAddCurrentPlaytimeLine = true;
             switch (status)
@@ -200,11 +208,6 @@ namespace PlayState
 
         public void ShowGenericNotification(string message)
         {
-            if (!settings.Settings.EnableNotificationMessages)
-            {
-                return;
-            }
-
             if (settings.Settings.NotificationStyle == NotificationStyles.Toast && settings.IsWindows10Or11)
             {
                 new ToastContentBuilder()

@@ -330,11 +330,24 @@
         <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderGNotificationMessages}">
             <ScrollViewer>
                 <StackPanel Margin="0,20,0,0">
-                    <CheckBox Content="{DynamicResource LOCPlayState_SettingEnableNotificationMessagesLabel}"
-                              IsChecked="{Binding Settings.EnableNotificationMessages}"
-                              Margin="0,0,0,0"/>
+                    <TextBlock Text="{DynamicResource LOCPlayState_SettingsNotificationToDisplayLabel}" />
+                    <StackPanel Margin="20,0,0,0">
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel}"
+                              IsChecked="{Binding Settings.ShowNotificationOnGameAdded}"
+                              Margin="0,10,0,0"/>
+                        <CheckBox Content="{DynamicResource LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel}"
+                              IsChecked="{Binding Settings.ShowNotificationOnGameStatusChange}"
+                              Margin="0,10,0,0"/>
+                    </StackPanel>
 
-                    <StackPanel IsEnabled="{Binding Settings.EnableNotificationMessages}">
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
+                              IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
+                              Margin="0,10,0,0"/>
+                    <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
+                              IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
+                              Margin="0,10,0,0"/>
+                    
+                    <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                             <TextBlock Text="{DynamicResource LOCPlayState_NotificationStyleLabel}" VerticalAlignment="Center" />
                             <ComboBox SelectedValue="{Binding Settings.NotificationStyle, Mode=TwoWay}"
@@ -349,7 +362,7 @@
                             </ComboBox>
                         </StackPanel>
 
-                        <StackPanel Margin="40,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
+                        <StackPanel Margin="20,10,0,0" IsEnabled="{Binding IsWindows10Or11}">
                             <TextBlock Text="{DynamicResource LOCPlayState_SettingsWinNotificationNote}" TextWrapping="Wrap"
                                    Margin="0,10,0,0" />
 
@@ -362,14 +375,6 @@
                             </TextBlock>
 
                         </StackPanel>
-
-                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowSessionPlaytime}"
-                              IsChecked="{Binding Settings.NotificationShowSessionPlaytime}"
-                              Margin="0,10,0,0"/>
-                        <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
-                              IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
-                              Margin="0,10,0,0"/>
-
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
