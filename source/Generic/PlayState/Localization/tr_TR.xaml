@@ -26,12 +26,17 @@ Sorunu muhtemelen çözmek için farklı bir kısayol tuşu kombinasyonu kullanm
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Aksiyon:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Oyun PlayState'e eklendi!</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Uzantı ile oyunu kullanmaya başlayabilirsiniz</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Reset</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Genel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Bildirim mesajları</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scan exclusions</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">During PlayState scanning to detect game executables, any executables containing any text from the following list will be excluded. Each entry should be separated by a new line.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Geçerli duraklatma durumunu ve etkin oyunun diğer bilgilerini görüntüleyen bir bildirimi gösterir</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Kısayol tuşunu değiştir</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Şimdi kısayol tuşuna basın</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Bildirim mesajlarını etkinleştir</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Notifications to display:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">When game is added to PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">On game status changes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Notlar:
 
 Yapılandırılmış kısayol tuşları diğer uygulamalarda kullanılamaz.</sys:String>
@@ -41,6 +46,9 @@ Yapılandırılmış kısayol tuşları diğer uygulamalarda kullanılamaz.</sys
 Oyunlarla daha iyi uyumluluk için Windows yapılandırmanızda bazı ayarlamalar yapılması gerekir. Bu iletişim kutusu kapatıldıktan sonra buna ilişkin talimatları içeren bir bağlantı açılacaktır.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Yardım</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Oyunun durdurulduğu andaki oyun süresinden oyunun askıya alındığı süreyi çıkarın</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Exclude game sessions that are less than a minimum duration</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">If game playtime or session data falls below the configured duration, it will revert to its previous state, restoring playtime, play count, and last played date.</sys:String>
+    <sys:String x:Key="LOCPlayState_MinutesLabel">Minutes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Yalnızca oyunun askıya alınmadığı sürenin oyun süresine dahil edilmesini sağlayarak oyunlarda oyun süresi değerinin daha doğru tutulmasına yardımcı olur</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Yalnızca kitaplık eklentileri tarafından yönetilmeyen oyunlar için yürütün</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Bildirim stili:</sys:String>
@@ -64,6 +72,7 @@ Oyunun askıya alınması: Oyunlar, etkin pencere olmadığında otomatik olarak
 
 Oyun süresinin askıya alınması: Oyun penceresi aktif durumu değiştirdiğinde oyunlar otomatik olarak askıya alınacak ve devam ettirilecektir.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Devam ettirildiğinde oyun pencerelerini ön plana getir</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState yöneticisi</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Diğer</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState yöneticisi kenar çubuğu öğesini göster</sys:String>
@@ -108,6 +117,7 @@ Oyun süresinin askıya alınması: Oyun penceresi aktif durumu değiştirdiğin
 
 Devre dışı bırakılırsa yalnızca ilk denetleyicinin kısayol tuşlarını etkinleştirmesine izin verilir</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Askıya al/Devam et:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Minimize/Maximize window:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Bilgi:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Kapalı oyun:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">GamePad kısayol tuşu {0} saniye içinde güncelleniyor…</sys:String>
@@ -117,6 +127,8 @@ Devre dışı bırakılırsa yalnızca ilk denetleyicinin kısayol tuşlarını 
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Aynı kombinasyona sahip bir denetleyici kısayol tuşu zaten mevcut!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Denetleyici kısayol tuşu</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Denetleyici kısayol tuşu:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Suspend settings</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Playtime settings</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Mod</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Mod:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Denetleyici kısayol tuşu ekle</sys:String>
