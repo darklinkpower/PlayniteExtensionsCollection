@@ -170,7 +170,7 @@ namespace PlayState
                 return true;
             }
 
-            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir);
+            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir, Settings.Settings.ExecutablesScanExclusionList);
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
@@ -209,7 +209,7 @@ namespace PlayState
                     filterPaths = false;
                 }
 
-                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir);
+                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir, Settings.Settings.ExecutablesScanExclusionList);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
@@ -284,7 +284,7 @@ namespace PlayState
 
                 // Executable names for builtin profiles are not accesible so the only way is to scan
                 // the directory for running executables
-                var emuProcesses = ProcessesHandler.GetProcessesWmiQuery(false, emulator.InstallDir);
+                var emuProcesses = ProcessesHandler.GetProcessesWmiQuery(false, emulator.InstallDir, Settings.Settings.ExecutablesScanExclusionList);
                 if (emuProcesses.HasItems() && emuProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {emuProcesses.Count} processes for BuiltIn emulator {emulator.Name}");
@@ -306,7 +306,7 @@ namespace PlayState
             }
 
             logger.Debug($"Custom emulator profile executable is {profile.Executable}");
-            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
+            var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, Settings.Settings.ExecutablesScanExclusionList, profile.Executable);
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
                 _playStateManager.AddPlayStateData(game, gameProcesses);
@@ -317,7 +317,7 @@ namespace PlayState
                 await Task.Delay(20000);
                 logger.Debug($"Delay finished");
 
-                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
+                gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, Settings.Settings.ExecutablesScanExclusionList, profile.Executable);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     _playStateManager.AddPlayStateData(game, gameProcesses);

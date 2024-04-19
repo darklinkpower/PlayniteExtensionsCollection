@@ -18,87 +18,7 @@ namespace PlayState
 
         private const string wmiQueryString = "SELECT ProcessId, ExecutablePath FROM Win32_Process";
 
-        private static readonly List<string> exclusionList = new List<string>
-        {
-            "7z.exe",
-            "7za.exe",
-            "archive.exe",
-            "asset_.exe",
-            "anetdrop.exe",
-            "bat_to_exe_convertor.exe",
-            "bssndrpt.exe",
-            "bootboost.exe",
-            "bootstrap.exe",
-            "cabarc.exe",
-            "cdkey.exe",
-            "cheat engine.exe",
-            "cheatengine",
-            "civ2map.exe",
-            "config",
-            "closepw.exe",
-            "crashdump",
-            "crashreport",
-            "crc32.exe",
-            "creationkit.exe",
-            "creatureupload.exe",
-            "easyhook.exe",
-            "dgvoodoocpl.exe",
-            "dotnet",
-            "doc.exe",
-            "dxsetup",
-            "dw.exe",
-            "enbinjector.exe",
-            "havokbehaviorpostprocess.exe",
-            "help",
-            "install",
-            "launch_game.exe",
-            "langselect.exe",
-            "language.exe",
-            "launch",
-            "loader",
-            "mapcreator.exe",
-            "master_dat_fix_up.exe",
-            "md5sum.exe",
-            "mgexegui.exe",
-            "modman.exe",
-            "modorganizer.exe",
-            "notepad++.exe",
-            "notification_helper.exe",
-            "oalinst.exe",
-            "palettestealersuspender.exe",
-            "pak",
-            "patch",
-            "planet_mapgen.exe",
-            "papyrus",
-            "radtools.exe",
-            "readspr.exe",
-            "register.exe",
-            "sekirofpsunlocker",
-            "settings",
-            "setup",
-            "scuex64.exe",
-            "synchronicity.exe",
-            "syscheck.exe",
-            "systemsurvey.exe",
-            "tes construction set.exe",
-            "texmod.exe",
-            "unins",
-            "unitycrashhandler",
-            "x360ce",
-            "unpack",
-            "unx_calibrate",
-            "update",
-            "unrealcefsubprocess.exe",
-            "url.exe",
-            "versioned_json.exe",
-            "vcredist",
-            "xtexconv.exe",
-            "xwmaencode.exe",
-            "website.exe",
-            "wide_on.exe"
-        };
-
-        public static List<ProcessItem> GetProcessesWmiQuery(bool useExclusionList, string gameInstallDir, string exactPath = null)
+        public static List<ProcessItem> GetProcessesWmiQuery(bool useExclusionList, string gameInstallDir, List<string> scanExclusionList, string exactPath = null)
         {
             logger.Debug($"Starting GetProcessesWmiQuery. \"{useExclusionList}\", \"{gameInstallDir}\", \"{exactPath}\"");
             using (var searcher = new ManagementObjectSearcher(wmiQueryString))
@@ -120,7 +40,7 @@ namespace PlayState
                 }
                 else
                 {
-                    AddGameProcessesThatStartWithPath(useExclusionList, gameInstallDir, query, gameProcesses);
+                    AddGameProcessesThatStartWithPath(useExclusionList, gameInstallDir, query, gameProcesses, scanExclusionList);
                 }
 
                 logger.Debug($"Returning {gameProcesses.Count} items: {string.Join(", ", gameProcesses.Select(x => $"({x.ExecutablePath}|{x.Process.MainWindowHandle})"))}");
@@ -142,7 +62,7 @@ namespace PlayState
             }
         }
 
-        private static void AddGameProcessesThatStartWithPath(bool useExclusionList, string startPath, IEnumerable<ProcessItem> query, List<ProcessItem> gameProcesses)
+        private static void AddGameProcessesThatStartWithPath(bool useExclusionList, string startPath, IEnumerable<ProcessItem> query, List<ProcessItem> gameProcesses, List<string> exclusionList)
         {
             foreach (var queryItem in query)
             {

@@ -346,7 +346,7 @@
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingNotificationShowTotalPlaytime}"
                               IsChecked="{Binding Settings.NotificationShowTotalPlaytime}"
                               Margin="0,10,0,0"/>
-                    
+
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                             <TextBlock Text="{DynamicResource LOCPlayState_NotificationStyleLabel}" VerticalAlignment="Center" />
@@ -380,7 +380,22 @@
             </ScrollViewer>
 
         </TabItem>
+        <TabItem Header="{DynamicResource LOCPlayState_SettingsTabHeaderScanExclusions}">
+            <DockPanel Margin="0,10,0,0">
+                <TextBlock Text="{DynamicResource LOCPlayState_SettingsTabHeaderScanExclusionsDescription}" TextWrapping="Wrap" DockPanel.Dock="Top" />
+                <DockPanel Margin="0,10,0,0">
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal" DockPanel.Dock="Bottom">
+                        <Button VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Content="{DynamicResource LOCPlayState_ResetLabel}"
+                                Command="{Binding ResetExecutablesScanExclusionListCommand}"/>
+                    </StackPanel>
+                    <TextBox Text="{Binding EditingExclusionList}" DockPanel.Dock="Top"
+                             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                             AcceptsReturn="True" />
+                </DockPanel>
+            </DockPanel>
+        </TabItem>
 
     </TabControl>
-
 </UserControl>
