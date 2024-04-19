@@ -241,6 +241,13 @@ namespace PlayState.Models
             }
         }
 
+        public bool IsWindowMinimized()
+        {
+            List<IntPtr> windowHandles = GetWindowHandles();
+            var anyWindowMinimized = windowHandles.Any(x => WindowsHelper.IsWindowMinimized(x));
+            return anyWindowMinimized;
+        }
+
         public void MinimizeWindows()
         {
             if (!GameProcesses.HasItems() || IsSuspended)
@@ -248,6 +255,22 @@ namespace PlayState.Models
                 return;
             }
 
+            List<IntPtr> windowHandles = GetWindowHandles();
+            foreach (var windowHandle in windowHandles)
+            {
+                try
+                {
+                    WindowsHelper.MinimizeWindow(windowHandle);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, $"Error while minimizing window of {Game.Name}, handlle {windowHandle}");
+                }
+            }
+        }
+
+        private List<IntPtr> GetWindowHandles()
+        {
             var windowHandles = new List<IntPtr>();
             foreach (var gameProcess in GameProcesses)
             {
@@ -262,17 +285,7 @@ namespace PlayState.Models
                 }
             }
 
-            foreach (var windowHandle in windowHandles)
-            {
-                try
-                {
-                    WindowsHelper.MinimizeWindow(windowHandle);
-                }
-                catch (Exception e)
-                {
-                    _logger.Error(e, $"Error while minimizing window of {Game.Name}, handlle {windowHandle}");
-                }
-            }
+            return windowHandles;
         }
 
         public void Dispose()

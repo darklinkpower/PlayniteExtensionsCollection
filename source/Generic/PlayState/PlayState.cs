@@ -28,7 +28,7 @@ namespace PlayState
     public partial class PlayState : GenericPlugin, IStartPageExtension
     {
 
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly Dictionary<Guid, Game> _gameCloneDictionary = new Dictionary<Guid, Game>();
 
         private IntPtr mainWindowHandle;
@@ -79,7 +79,8 @@ namespace PlayState
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlayStateSettings.InformationHotkey) ||
-                e.PropertyName == nameof(PlayStateSettings.SuspendHotKey))
+                e.PropertyName == nameof(PlayStateSettings.SuspendHotKey) ||
+                e.PropertyName == nameof(PlayStateSettings.MinimizeMaximizeGameHotKey))
             {
                 RegisterHotkey();
             }
@@ -190,7 +191,7 @@ namespace PlayState
             var mainWindow = Application.Current.MainWindow;
             if (mainWindow is null)
             {
-                logger.Error("Could not find main window. Shortcuts could not be registered.");
+                _logger.Error("Could not find main window. Shortcuts could not be registered.");
                 return;
             }
 
@@ -228,7 +229,7 @@ namespace PlayState
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
             if (PlayniteUtilities.GetGameHasFeature(game, featureBlacklist, true))
             {
-                logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
+                _logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
                 return;
             }
 
@@ -255,7 +256,7 @@ namespace PlayState
                 var sessionTimeMinutes = TimeSpan.FromSeconds(args.ElapsedSeconds);
                 if (sessionTimeMinutes.TotalMinutes < Settings.Settings.MinimumPlaytimeThreshold)
                 {
-                    logger.Debug($"Session time of {sessionTimeMinutes.TotalMinutes} did not reach minimum threshold of {Settings.Settings.MinimumPlaytimeThreshold}");
+                    _logger.Debug($"Session time of {sessionTimeMinutes.TotalMinutes} did not reach minimum threshold of {Settings.Settings.MinimumPlaytimeThreshold}");
                     RestoreGameData(game);
                     return;
                 }
@@ -292,7 +293,7 @@ namespace PlayState
             }
 
             var suspendedTime = Convert.ToUInt64(gameData.SuspendedTime);
-            logger.Debug($"Suspend elapsed seconds for game {game.Name} was {suspendedTime}");
+            _logger.Debug($"Suspend elapsed seconds for game {game.Name} was {suspendedTime}");
             if (suspendedTime > 0 && game.Playtime >= suspendedTime)
             {
                 var suspendExportValue = suspendedTime; // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
@@ -304,7 +305,7 @@ namespace PlayState
                     var sessionTimeMinutes = TimeSpan.FromSeconds(sessionTimeSeconds);
                     if (sessionTimeMinutes.TotalMinutes < Settings.Settings.MinimumPlaytimeThreshold)
                     {
-                        logger.Debug($"Session time of {sessionTimeMinutes.TotalMinutes} did not reach minimum threshold of {Settings.Settings.MinimumPlaytimeThreshold}");
+                        _logger.Debug($"Session time of {sessionTimeMinutes.TotalMinutes} did not reach minimum threshold of {Settings.Settings.MinimumPlaytimeThreshold}");
                         newPlaytime = originalGame.Playtime;
                         game.PlayCount = originalGame.PlayCount;
                         game.LastActivity = originalGame.LastActivity;
@@ -312,7 +313,7 @@ namespace PlayState
                     }
                 }
 
-                logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
+                _logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
                 game.Playtime = newPlaytime;
                 PlayniteApi.Database.Games.Update(game);
                 ExportPausedTimeInfo(game, suspendExportValue); 

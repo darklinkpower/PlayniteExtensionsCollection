@@ -44,6 +44,10 @@ namespace PlayState
                     {
                         SendInformationSignal();
                     }
+                    else if (vkey == (uint)KeyInterop.VirtualKeyFromKey(Settings.Settings.MinimizeMaximizeGameHotKey.Key))
+                    {
+                        SendMinimizeMaximizeSignal();
+                    }
 
                     handled = true;
                 }
@@ -61,37 +65,33 @@ namespace PlayState
 
             try
             {
-                if (RegisterHotKey(Settings.Settings.InformationHotkey))
-                {
-                    globalHotkeyRegistered = true;
-                    logger.Debug($"Information Hotkey registered with hotkey {Settings.Settings.InformationHotkey}.");
-                }
-                else
-                {
-                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
-                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), Settings.Settings.InformationHotkey),
-                        NotificationType.Error));
-                    logger.Error($"Failed to register configured information Hotkey {Settings.Settings.InformationHotkey}.");
-                }
-
-                if (RegisterHotKey(Settings.Settings.SuspendHotKey))
-                {
-                    globalHotkeyRegistered = true;
-                    logger.Debug($"Pause/resume Hotkey registered with hotkey {Settings.Settings.SuspendHotKey}.");
-                }
-                else
-                {
-                    PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
-                        "PlayState: " + string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), Settings.Settings.SuspendHotKey),
-                        NotificationType.Error));
-                    logger.Error($"Failed to register configured pause/resume Hotkey {Settings.Settings.SuspendHotKey}.");
-                }
-
+                var informationHkRegisterSuccess = RegisterAndLogHotkey("Information", Settings.Settings.InformationHotkey);
+                var suspendHkRegisterSuccess = RegisterAndLogHotkey("Pause/resume", Settings.Settings.SuspendHotKey);
+                var minimizeHkRegisterSuccess = RegisterAndLogHotkey("Minimize/Maximize", Settings.Settings.MinimizeMaximizeGameHotKey);
             }
             catch (Exception e)
             {
-                logger.Error(e, "Failed to register hotkeys.");
+                _logger.Error(e, "Failed to register hotkeys.");
             }
+        }
+
+        private bool RegisterAndLogHotkey(string hotkeyName, HotKey hotkey)
+        {
+            var registerSuccess = RegisterHotKey(hotkey);
+            if (registerSuccess)
+            {
+                globalHotkeyRegistered = true;
+                _logger.Debug($"{hotkeyName} Hotkey registered with hotkey {hotkey}.");
+            }
+            else
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage(Guid.NewGuid().ToString(),
+                    $"PlayState: {string.Format(ResourceProvider.GetString("LOCPlayState_NotificationMessageHotkeyRegisterFailed"), hotkey)}",
+                    NotificationType.Error));
+                _logger.Error($"Failed to register configured {hotkeyName} Hotkey {hotkey}.");
+            }
+
+            return registerSuccess;
         }
 
         public bool RegisterHotKey(HotKey hotKey)
@@ -113,7 +113,7 @@ namespace PlayState
             }
             else
             {
-                logger.Error($"Failed to unregister hotkey handler");
+                _logger.Error($"Failed to unregister hotkey handler");
             }
 
             return success;
@@ -133,6 +133,11 @@ namespace PlayState
         private void SendSuspendSignal()
         {
             _playStateManager.SwitchCurrentGameState();
+        }
+
+        private void SendMinimizeMaximizeSignal()
+        {
+            _playStateManager.SwitchMinimizeMaximizeCurrentGame();
         }
 
         private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
@@ -166,14 +171,14 @@ namespace PlayState
             await Task.Delay(20000);
             if (!_playStateManager.IsGameBeingDetected(game))
             {
-                logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
+                _logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                 return true;
             }
 
             var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(true, gameInstallDir, Settings.Settings.ExecutablesScanExclusionList);
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
-                logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
+                _logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
                 _playStateManager.AddPlayStateData(game, gameProcesses);
                 return true;
             }
@@ -195,24 +200,24 @@ namespace PlayState
                 // or the launched game was closed
                 if (!_playStateManager.IsGameBeingDetected(game))
                 {
-                    logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
+                    _logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                     return true;
                 }
 
                 // Try a few times with filters.
                 // If nothing is found, try without filters. This helps in cases
                 // where the active process is being filtered out by filters
-                logger.Debug($"Starting WMI loop number {i}");
+                _logger.Debug($"Starting WMI loop number {i}");
                 if (i == 4)
                 {
-                    logger.Debug("FilterPaths set to false for WMI Query");
+                    _logger.Debug("FilterPaths set to false for WMI Query");
                     filterPaths = false;
                 }
 
                 gameProcesses = ProcessesHandler.GetProcessesWmiQuery(filterPaths, gameInstallDir, Settings.Settings.ExecutablesScanExclusionList);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
-                    logger.Debug($"Found {gameProcesses.Count} game processes");
+                    _logger.Debug($"Found {gameProcesses.Count} game processes");
                     _playStateManager.AddPlayStateData(game, gameProcesses);
                     return true;
                 }
@@ -222,7 +227,7 @@ namespace PlayState
                 }
             }
 
-            logger.Debug("Couldn't find any game process");
+            _logger.Debug("Couldn't find any game process");
             if (suspendPlaytimeOnly)
             {
                 return true;
@@ -265,7 +270,7 @@ namespace PlayState
                 return false;
             }
 
-            logger.Debug("Source action is emulator.");
+            _logger.Debug("Source action is emulator.");
             var emulatorProfileId = sourceAction.EmulatorProfileId;
             var emulator = PlayniteApi.Database.Emulators[sourceAction.EmulatorId];
             if (emulatorProfileId.StartsWith("#builtin_"))
@@ -278,7 +283,7 @@ namespace PlayState
                 await Task.Delay(15000);
                 if (!_playStateManager.IsGameBeingDetected(game))
                 {
-                    logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
+                    _logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                     return true;
                 }
 
@@ -287,13 +292,13 @@ namespace PlayState
                 var emuProcesses = ProcessesHandler.GetProcessesWmiQuery(false, emulator.InstallDir, Settings.Settings.ExecutablesScanExclusionList);
                 if (emuProcesses.HasItems() && emuProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
-                    logger.Debug($"Found {emuProcesses.Count} processes for BuiltIn emulator {emulator.Name}");
+                    _logger.Debug($"Found {emuProcesses.Count} processes for BuiltIn emulator {emulator.Name}");
                     _playStateManager.AddPlayStateData(game, emuProcesses);
                     return true;
                 }
                 else
                 {
-                    logger.Debug($"Failed to get processes for BuiltIn emulator {emulator.Name}");
+                    _logger.Debug($"Failed to get processes for BuiltIn emulator {emulator.Name}");
                     return true;
                 }
             }
@@ -301,11 +306,11 @@ namespace PlayState
             var profile = emulator?.CustomProfiles.FirstOrDefault(p => p.Id == emulatorProfileId);
             if (profile is null)
             {
-                logger.Debug($"Failed to get Custom emulator profile");
+                _logger.Debug($"Failed to get Custom emulator profile");
                 return true;
             }
 
-            logger.Debug($"Custom emulator profile executable is {profile.Executable}");
+            _logger.Debug($"Custom emulator profile executable is {profile.Executable}");
             var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, Settings.Settings.ExecutablesScanExclusionList, profile.Executable);
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
@@ -313,9 +318,9 @@ namespace PlayState
             }
             else
             {
-                logger.Debug($"Failed to get valid Custom emulator profile executables process items. Starting delay...");
+                _logger.Debug($"Failed to get valid Custom emulator profile executables process items. Starting delay...");
                 await Task.Delay(20000);
-                logger.Debug($"Delay finished");
+                _logger.Debug($"Delay finished");
 
                 gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, Settings.Settings.ExecutablesScanExclusionList, profile.Executable);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))

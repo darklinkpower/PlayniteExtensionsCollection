@@ -320,10 +320,34 @@ namespace PlayState.ViewModels
             }
         }
 
+        public void SwitchMinimizeMaximizeCurrentGame()
+        {
+            var gameData = GetCurrentGameData();
+            if (gameData is null)
+            {
+                return;
+            }
+
+            if (gameData.SuspendMode == SuspendModes.Processes && gameData.IsSuspended)
+            {
+                return;
+            }
+
+            var isMinimized = gameData.IsWindowMinimized();
+            if (isMinimized)
+            {
+                gameData.BringToForeground();
+            }
+            else
+            {
+                gameData.MinimizeWindows();
+            }
+        }
+
         public void ShowCurrentGameStatusNotification()
         {
             var gameData = GetCurrentGameData();
-            if (gameData == null)
+            if (gameData is null)
             {
                 return;
             }

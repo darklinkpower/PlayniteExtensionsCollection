@@ -23,6 +23,9 @@ namespace PlayState
         [DllImport("USER32.DLL")]
         private static extern bool IsWindowVisible(IntPtr hWnd);
 
+        [DllImport("user32.dll")]
+        public static extern bool IsIconic(IntPtr hWnd);
+
         [DllImport("USER32.DLL")]
         private static extern IntPtr GetShellWindow();
 
@@ -81,6 +84,11 @@ namespace PlayState
         public static IntPtr GetForegroundWindowHandle()
         {
             return GetForegroundWindow();
+        }
+
+        public static bool IsWindowMinimized(IntPtr windowHandle)
+        {
+            return IsIconic(windowHandle);
         }
 
         public static void RestoreAndFocusWindow(IntPtr windowHandle)

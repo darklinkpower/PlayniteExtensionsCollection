@@ -27,6 +27,8 @@ namespace PlayState
         public HotKey SuspendHotKey { get => suspendHotKey; set => SetValue(ref suspendHotKey, value); }
         private HotKey informationHotkey = new HotKey(Key.I, ModifierKeys.Shift | ModifierKeys.Alt);
         public HotKey InformationHotkey { get => informationHotkey; set => SetValue(ref informationHotkey, value); }
+        private HotKey _minimizeMaximizeGameHotKey = new HotKey(Key.Z, ModifierKeys.Shift | ModifierKeys.Alt);
+        public HotKey MinimizeMaximizeGameHotKey { get => _minimizeMaximizeGameHotKey; set => SetValue(ref _minimizeMaximizeGameHotKey, value); }
 
         // GamePad Hotkeys
         private GamePadStateHotkey gamePadSuspendHotkey;
