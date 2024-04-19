@@ -29,6 +29,7 @@ namespace PlayState
     {
 
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly Dictionary<Guid, Game> _gameCloneDictionary = new Dictionary<Guid, Game>();
 
         private IntPtr mainWindowHandle;
         private bool globalHotkeyRegistered = false;
@@ -38,10 +39,10 @@ namespace PlayState
 
         public override Guid Id { get; } = Guid.Parse("26375941-d460-4d32-925f-ad11e2facd8f");
 
-        private readonly PlayStateManagerViewModel playStateManager;
+        private readonly PlayStateManagerViewModel _playStateManager;
         private readonly string playstateIconImagePath;
         private readonly GamePadHandler _gamePadHandler;
-        private readonly MessagesHandler messagesHandler;
+        private readonly MessagesHandler _messagesHandler;
         private readonly bool isWindows10Or11;
         private const string featureBlacklist = "[PlayState] Blacklist";
         private const string featureSuspendPlaytime = "[PlayState] Suspend Playtime only";
@@ -68,11 +69,11 @@ namespace PlayState
                 SourceName = "PlayState",
             });
 
-            playStateManager = new PlayStateManagerViewModel(PlayniteApi, Settings);
-            messagesHandler = new MessagesHandler(PlayniteApi, Settings, playStateManager);
+            _playStateManager = new PlayStateManagerViewModel(PlayniteApi, Settings);
+            _messagesHandler = new MessagesHandler(PlayniteApi, Settings, _playStateManager);
             playstateIconImagePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateIcon.png");
 
-            _gamePadHandler = new GamePadHandler(this, Settings.Settings, playStateManager);
+            _gamePadHandler = new GamePadHandler(this, Settings.Settings, _playStateManager);
         }
 
         private void Settings_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -136,7 +137,7 @@ namespace PlayState
             var playniteExecutable = Path.Combine(PlayniteApi.Paths.ApplicationPath, modeToSwitch);
             if (FileSystem.FileExists(playniteExecutable))
             {
-                messagesHandler.ShowGenericNotification(ResourceProvider.GetString(message));
+                _messagesHandler.ShowGenericNotification(ResourceProvider.GetString(message));
                 ProcessStarter.StartProcess(playniteExecutable);
                 switchPlayniteModeStarted = true;
             }
@@ -146,7 +147,7 @@ namespace PlayState
         {
             if (args.Name == "GameStateSwitchControl")
             {
-                return new GameStateSwitchControl(playStateManager, PlayniteApi, Settings);
+                return new GameStateSwitchControl(_playStateManager, PlayniteApi, Settings);
             }
 
             return null;
@@ -166,7 +167,7 @@ namespace PlayState
                         FontFamily = new FontFamily(new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "playstateiconfont.ttf")), "./#playstateiconfont")
                     },
                     Opened = () => {
-                        return new PlayStateManagerView { DataContext = playStateManager };
+                        return new PlayStateManagerView { DataContext = _playStateManager };
                     }
                 };
             }
@@ -182,7 +183,7 @@ namespace PlayState
 
                 // A notification is shown so Playnite is added to the list
                 // to add Playnite to the priority list
-                messagesHandler.ShowGenericNotification("PlayState");
+                _messagesHandler.ShowGenericNotification("PlayState");
                 ProcessStarter.StartUrl(@"https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/PlayState#window-notification-style-configuration");
             }
 
@@ -202,22 +203,29 @@ namespace PlayState
             SetSwitchModesOnControlCheck();
         }
 
+        public override void OnGameStarting(OnGameStartingEventArgs args)
+        {
+            var game = args.Game;
+
+            // Game clone needs to be stored here because OnGameStarted the game has already changed the PlayCount and LastActivity
+            _gameCloneDictionary[game.Id] = game.GetCopy();
+        }
+
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
+            var game = args.Game;
             _isAnyGameRunning = true;
             if (Settings.Settings.GlobalSuspendMode == SuspendModes.Disabled)
             {
                 return;
             }
 
-            if (playStateManager.IsGameBeingDetected(args.Game))
+            if (_playStateManager.IsGameBeingDetected(game))
             {
                 return;
             }
             
             InitializePlaytimeInfoFile(); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-
-            var game = args.Game;
             if (PlayniteUtilities.GetGameHasFeature(game, featureBlacklist, true))
             {
                 logger.Info($"{game.Name} is in PlayState blacklist. Extension execution stopped");
@@ -229,25 +237,51 @@ namespace PlayState
 
         public override void OnGameStopped(OnGameStoppedEventArgs args)
         {
-            _isAnyGameRunning = PlayniteApi.Database.Games.Any(x => x.IsRunning);
             var game = args.Game;
-            messagesHandler.HideWindow();
+            _isAnyGameRunning = PlayniteApi.Database.Games.Any(x => x.IsRunning);
+            _messagesHandler.HideWindow();
+            _playStateManager.RemoveGameFromDetection(game);
+            ExecuteOnGameStoppedProcedure(args);
 
-            playStateManager.RemoveGameFromDetection(game);
-            var gameData = playStateManager.GetDataOfGame(game);
-            if (gameData == null)
+            _playStateManager.RemovePlayStateData(game);
+            _gameCloneDictionary.Remove(game.Id);
+        }
+
+        private void ExecuteOnGameStoppedProcedure(OnGameStoppedEventArgs args)
+        {
+            var game = args.Game;
+            if (Settings.Settings.ExcludeShortPlaytimeSessions)
             {
-                logger.Debug($"PlayState data for {game.Name} was not found on game stopped");
-                return;
+                var sessionTimeMinutes = TimeSpan.FromSeconds(args.ElapsedSeconds);
+                if (sessionTimeMinutes.TotalMinutes < Settings.Settings.MinimumPlaytimeThreshold)
+                {
+                    logger.Debug($"Session time of {sessionTimeMinutes.TotalMinutes} did not reach minimum threshold of {Settings.Settings.MinimumPlaytimeThreshold}");
+                    RestoreGameData(game);
+                    return;
+                }
             }
 
-            gameData.GameProcesses = null;
-            if (Settings.Settings.SubstractSuspendedPlaytimeOnStopped)
+            var gameData = _playStateManager.GetDataOfGame(game);
+            if (gameData != null)
             {
-                SubstractPlaytimeFromPlayStateData(game, gameData);
+                gameData.GameProcesses = null;
+                if (Settings.Settings.SubstractSuspendedPlaytimeOnStopped)
+                {
+                    SubstractPlaytimeFromPlayStateData(game, gameData);
+                }
             }
+        }
 
-            playStateManager.RemovePlayStateData(gameData);
+        private void RestoreGameData(Game game)
+        {
+            var originalGame = _gameCloneDictionary[game.Id];
+            if (originalGame != null)
+            {
+                game.Playtime = originalGame.Playtime;
+                game.PlayCount = originalGame.PlayCount;
+                game.LastActivity = originalGame.LastActivity;
+                PlayniteApi.Database.Games.Update(game);
+            }
         }
 
         private void SubstractPlaytimeFromPlayStateData(Game game, PlayStateData gameData)
@@ -257,22 +291,31 @@ namespace PlayState
                 return;
             }
 
-            var suspendedTime = gameData.SuspendedTime;
-            if (suspendedTime == 0)
+            var suspendedTime = Convert.ToUInt64(gameData.SuspendedTime);
+            logger.Debug($"Suspend elapsed seconds for game {game.Name} was {suspendedTime}");
+            if (suspendedTime > 0 && game.Playtime >= suspendedTime)
             {
-                logger.Debug($"PlayState data for {game.Name} didn't ellapse time");
-                return;
-            }
+                var suspendExportValue = suspendedTime; // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
+                var newPlaytime = game.Playtime - suspendedTime;
+                var originalGame = _gameCloneDictionary[game.Id];
+                if (Settings.Settings.ExcludeShortPlaytimeSessions && originalGame != null)
+                { 
+                    var sessionTimeSeconds = newPlaytime - originalGame.Playtime;
+                    var sessionTimeMinutes = TimeSpan.FromSeconds(sessionTimeSeconds);
+                    if (sessionTimeMinutes.TotalMinutes < Settings.Settings.MinimumPlaytimeThreshold)
+                    {
+                        logger.Debug($"Session time of {sessionTimeMinutes.TotalMinutes} did not reach minimum threshold of {Settings.Settings.MinimumPlaytimeThreshold}");
+                        newPlaytime = originalGame.Playtime;
+                        game.PlayCount = originalGame.PlayCount;
+                        game.LastActivity = originalGame.LastActivity;
+                        suspendExportValue = game.Playtime - originalGame.Playtime;
+                    }
+                }
 
-            var elapsedSeconds = Convert.ToUInt64(suspendedTime);
-            logger.Debug($"Suspend elapsed seconds for game {game.Name} was {elapsedSeconds}");
-            ExportPausedTimeInfo(game, elapsedSeconds); // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
-            if (elapsedSeconds != 0 && game.Playtime >= elapsedSeconds)
-            {
-                var newPlaytime = game.Playtime - elapsedSeconds;
                 logger.Debug($"Old playtime {game.Playtime}, new playtime {newPlaytime}");
                 game.Playtime = newPlaytime;
                 PlayniteApi.Database.Games.Update(game);
+                ExportPausedTimeInfo(game, suspendExportValue); 
             }
         }
 
@@ -280,7 +323,8 @@ namespace PlayState
         {
             // This method will remove the info of the txt file in order to avoid reusing the previous play information.
             string[] info = { " ", " " };
-            File.WriteAllLines(Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt"), info);
+            var exportPath = Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt");
+            File.WriteAllLines(exportPath, info);
         }
 
         private void ExportPausedTimeInfo(Game game, ulong elapsedSeconds) // Temporary workaround for sharing PlayState paused time until Playnite allows to share data among extensions
@@ -362,7 +406,7 @@ namespace PlayState
                 return menuList;
             }
 
-            var isGameSuspended = playStateManager.GetIsGameSuspended(game);
+            var isGameSuspended = _playStateManager.GetIsGameSuspended(game);
             if (isGameSuspended is null)
             {
                 return menuList;
@@ -374,7 +418,7 @@ namespace PlayState
                 Icon = playstateIconImagePath,
                 Action = a =>
                 {
-                    playStateManager.SwitchGameState(game);
+                    _playStateManager.SwitchGameState(game);
                 }
             });
 
@@ -423,7 +467,7 @@ namespace PlayState
         {
             if (viewId == "PlayStateManager")
             {
-                return new PlayStateManagerStartPageView() { DataContext = playStateManager };
+                return new PlayStateManagerStartPageView() { DataContext = _playStateManager };
             }
 
             return null;

@@ -80,7 +80,7 @@
                     <TextBlock Text="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspend}"
                                ToolTip="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}"
                                Margin="0,10,0,0"/>
-                    <StackPanel Margin="40,0,0,0">
+                    <StackPanel Margin="20,0,0,0">
                         <CheckBox IsChecked="{Binding Settings.UseForegroundAutomaticSuspend}"
                                   Margin="0,10,0,0"
                                   Content="{DynamicResource LOCPlayState_SuspendModeProcesses}" />
@@ -93,11 +93,25 @@
                               IsChecked="{Binding Settings.SubstractSuspendedPlaytimeOnStopped}"
                               ToolTip="{DynamicResource LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip}"
                               Margin="0,20,0,10"/>
-                    <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="40,0,0,0">
+                    <StackPanel IsEnabled="{Binding ElementName=CbSubstractOnSuspended, Path=IsChecked}" Margin="20,0,0,0">
                         <CheckBox Content="{DynamicResource LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel}"
                                   IsChecked="{Binding Settings.SubstractOnlyNonLibraryGames}" Margin="0,0,0,10"/>
                     </StackPanel>
 
+                    <CheckBox x:Name="CbExcludeShortPlaytimeSessions" Content="{DynamicResource LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel}"
+                              IsChecked="{Binding Settings.ExcludeShortPlaytimeSessions}"
+                              ToolTip="{DynamicResource LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip}"
+                              Margin="0,20,0,10"/>
+                    <DockPanel IsEnabled="{Binding ElementName=CbExcludeShortPlaytimeSessions, Path=IsChecked}"
+                              Margin="20,0,0,0">
+                        <TextBlock DockPanel.Dock="Right" Margin="5,0,0,0" VerticalAlignment="Center"
+                                   Text="{DynamicResource LOCPlayState_MinutesLabel}" />
+                        <TextBox DockPanel.Dock="Right" Margin="5,0,0,0" VerticalAlignment="Center"
+                                 MinWidth="20"
+                                 IsReadOnly="True" Text="{Binding Settings.MinimumPlaytimeThreshold}" />
+                        <Slider DockPanel.Dock="Left" VerticalAlignment="Center"
+                                Minimum="1" Maximum="30" Value="{Binding Settings.MinimumPlaytimeThreshold}" />
+                    </DockPanel>
                     <TextBlock Text="{DynamicResource LOCPlayState_SettingsOtherSectionLabel}" />
                     <Separator Margin="0,0,0,5" />
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingDesktopModeSwitchOnControlConnect}"
@@ -105,8 +119,8 @@
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingFsModeSwitchOnControlConnect}"
                                   IsChecked="{Binding Settings.SwitchToFullscreenModeOnControllerStatus}" Margin="0,0,0,10"/>
                     <CheckBox Content="{DynamicResource LOCPlayState_SettingSwitchModeOnlyIfNoGamesRunning}"
-                                  IsChecked="{Binding Settings.SwitchModesOnlyIfNoRunningGames}" Margin="40,0,0,10"/>
-                    <StackPanel Margin="40,0,0,10">
+                                  IsChecked="{Binding Settings.SwitchModesOnlyIfNoRunningGames}" Margin="20,0,0,10"/>
+                    <StackPanel Margin="20,0,0,10">
                         <TextBlock Text="{DynamicResource LOCPlayState_SettingSwitchModeIgnoreControllerOnStartupSeconds}" Margin="0,0,0,10" />
                         <DockPanel>
                             <Slider Value="{Binding Settings.SwitchModeIgnoreCtrlStateOnStartupSeconds}"

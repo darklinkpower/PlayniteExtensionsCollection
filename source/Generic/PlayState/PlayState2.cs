@@ -127,18 +127,18 @@ namespace PlayState
 
         private void SendInformationSignal()
         {
-            playStateManager.ShowCurrentGameStatusNotification();
+            _playStateManager.ShowCurrentGameStatusNotification();
         }
 
         private void SendSuspendSignal()
         {
-            playStateManager.SwitchCurrentGameState();
+            _playStateManager.SwitchCurrentGameState();
         }
 
         private async void InvokeGameProcessesDetection(OnGameStartedEventArgs args)
         {
             var game = args.Game;
-            playStateManager.AddGameToDetection(game);
+            _playStateManager.AddGameToDetection(game);
             var sourceActionHandled = await ScanGameSourceAction(args.Game, args.SourceAction);
             if (sourceActionHandled)
             {
@@ -155,7 +155,7 @@ namespace PlayState
                 }
             }
 
-            playStateManager.AddPlayStateData(game, new List<ProcessItem>());
+            _playStateManager.AddPlayStateData(game, new List<ProcessItem>());
         }
 
         private async Task<bool> ScanGameProcessesFromDirectoryAsync(Game game, string gameInstallDir)
@@ -164,7 +164,7 @@ namespace PlayState
 
             // Fix for some games that take longer to start, even when already detected as running
             await Task.Delay(20000);
-            if (!playStateManager.IsGameBeingDetected(game))
+            if (!_playStateManager.IsGameBeingDetected(game))
             {
                 logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                 return true;
@@ -174,15 +174,15 @@ namespace PlayState
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
                 logger.Debug($"Found {gameProcesses.Count} game processes in initial WMI query");
-                playStateManager.AddPlayStateData(game, gameProcesses);
+                _playStateManager.AddPlayStateData(game, gameProcesses);
                 return true;
             }
 
             // No need to wait for the loop if we don't want to suspend processes
             if (suspendPlaytimeOnly)
             {
-                playStateManager.AddPlayStateData(game, new List<ProcessItem>());
-                playStateManager.AddGameToDetection(game);
+                _playStateManager.AddPlayStateData(game, new List<ProcessItem>());
+                _playStateManager.AddGameToDetection(game);
             }
 
             // Waiting is useful for games that use a startup launcher, since
@@ -193,7 +193,7 @@ namespace PlayState
             {
                 // This is done to stop execution in case a new game was launched
                 // or the launched game was closed
-                if (!playStateManager.IsGameBeingDetected(game))
+                if (!_playStateManager.IsGameBeingDetected(game))
                 {
                     logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                     return true;
@@ -213,7 +213,7 @@ namespace PlayState
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {gameProcesses.Count} game processes");
-                    playStateManager.AddPlayStateData(game, gameProcesses);
+                    _playStateManager.AddPlayStateData(game, gameProcesses);
                     return true;
                 }
                 else
@@ -242,7 +242,7 @@ namespace PlayState
                 var gameInstallDir = Programs.GetUwpWorkdirFromGameId(game.GameId);
                 if (gameInstallDir.IsNullOrEmpty() || !FileSystem.DirectoryExists(gameInstallDir))
                 {
-                    playStateManager.RemoveGameFromDetection(game);
+                    _playStateManager.RemoveGameFromDetection(game);
                     return null;
                 }
                 else
@@ -276,7 +276,7 @@ namespace PlayState
                 }
 
                 await Task.Delay(15000);
-                if (!playStateManager.IsGameBeingDetected(game))
+                if (!_playStateManager.IsGameBeingDetected(game))
                 {
                     logger.Debug($"Detection Id was not detected. Execution of WMI Query task stopped.");
                     return true;
@@ -288,7 +288,7 @@ namespace PlayState
                 if (emuProcesses.HasItems() && emuProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
                     logger.Debug($"Found {emuProcesses.Count} processes for BuiltIn emulator {emulator.Name}");
-                    playStateManager.AddPlayStateData(game, emuProcesses);
+                    _playStateManager.AddPlayStateData(game, emuProcesses);
                     return true;
                 }
                 else
@@ -309,7 +309,7 @@ namespace PlayState
             var gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
             if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
             {
-                playStateManager.AddPlayStateData(game, gameProcesses);
+                _playStateManager.AddPlayStateData(game, gameProcesses);
             }
             else
             {
@@ -320,7 +320,7 @@ namespace PlayState
                 gameProcesses = ProcessesHandler.GetProcessesWmiQuery(false, string.Empty, profile.Executable);
                 if (gameProcesses.Count > 0 && gameProcesses.Any(x => x.Process.MainWindowHandle != IntPtr.Zero))
                 {
-                    playStateManager.AddPlayStateData(game, gameProcesses);
+                    _playStateManager.AddPlayStateData(game, gameProcesses);
                 }
             }
 

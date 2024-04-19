@@ -91,25 +91,26 @@ namespace PlayState
         private NotificationStyles notificationStyle = NotificationStyles.Toast;
         public NotificationStyles NotificationStyle { get => notificationStyle; set => SetValue(ref notificationStyle, value); }
 
-        [DontSerialize]
         private bool switchToDesktopModeOnControllerStatus = false;
         public bool SwitchToDesktopModeOnControllerStatus { get => switchToDesktopModeOnControllerStatus; set => SetValue(ref switchToDesktopModeOnControllerStatus, value); }
 
-        [DontSerialize]
         private bool switchToFullscreenModeOnControllerStatus = false;
         public bool SwitchToFullscreenModeOnControllerStatus { get => switchToFullscreenModeOnControllerStatus; set => SetValue(ref switchToFullscreenModeOnControllerStatus, value); }
 
-        [DontSerialize]
         private bool switchModesOnlyIfNoRunningGames = true;
         public bool SwitchModesOnlyIfNoRunningGames { get => switchModesOnlyIfNoRunningGames; set => SetValue(ref switchModesOnlyIfNoRunningGames, value); }
 
-        [DontSerialize]
         private int switchModeIgnoreCtrlStateOnStartupSeconds = 20;
         public int SwitchModeIgnoreCtrlStateOnStartupSeconds { get => switchModeIgnoreCtrlStateOnStartupSeconds; set => SetValue(ref switchModeIgnoreCtrlStateOnStartupSeconds, value); }
 
         private bool enableControllersHotkeys = true;
-        [DontSerialize]
         public bool EnableControllersHotkeys { get => enableControllersHotkeys; set => SetValue(ref enableControllersHotkeys, value); }
+
+        private bool _excludeShortPlaytimeSessions = false;
+        public bool ExcludeShortPlaytimeSessions { get => _excludeShortPlaytimeSessions; set => SetValue(ref _excludeShortPlaytimeSessions, value); }
+
+        private uint _minimumPlaytimeThreshold = 5;
+        public uint MinimumPlaytimeThreshold { get => _minimumPlaytimeThreshold; set => SetValue(ref _minimumPlaytimeThreshold, value); }
     }
 
     public class PlayStateSettingsViewModel : ObservableObject, ISettings
