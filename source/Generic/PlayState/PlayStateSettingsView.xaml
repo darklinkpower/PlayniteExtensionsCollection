@@ -77,6 +77,10 @@
                               Content="{DynamicResource LOCPlayState_SettingBringResumedToForeground}"
                               IsChecked="{Binding Settings.BringResumedToForeground}"
                               Margin="0,10,0,0"/>
+                    <CheckBox x:Name="CbMinimizeGameWindowOnSuspend"
+                              Content="{DynamicResource LOCPlayState_SettingMinimizeGameWindowOnSuspend}"
+                              IsChecked="{Binding Settings.MinimizeGameWindowOnSuspend}"
+                              Margin="0,10,0,0"/>
                     <TextBlock Text="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspend}"
                                ToolTip="{DynamicResource LOCPlayState_SettingUseForegroundAutomaticSuspendNote}"
                                Margin="0,10,0,0"/>

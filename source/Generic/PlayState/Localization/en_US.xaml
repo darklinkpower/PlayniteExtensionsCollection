@@ -73,6 +73,7 @@ Game suspend: Games will be suspended automatically when they are not the active
 
 Playtime suspend: Games will be suspended and resumed automatically when the game window changes active state.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring games windows to foreground when they are resumed</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Show PlayState manager sidebar item</sys:String>

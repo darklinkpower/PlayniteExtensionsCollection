@@ -25,14 +25,21 @@ namespace PlayState
 
         [DllImport("USER32.DLL")]
         private static extern IntPtr GetShellWindow();
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
+
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool ShowWindowAsync(IntPtr windowHandle, int nCmdShow);
 
         [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool SetForegroundWindow(IntPtr windowHandle);
+
         public const int SW_SHOW = 5;
+        private const int SW_MINIMIZE = 6;
         public const int SW_RESTORE = 9;
         public const int SW_SHOWDEFAULT = 10;
 
@@ -78,9 +85,14 @@ namespace PlayState
 
         public static void RestoreAndFocusWindow(IntPtr windowHandle)
         {
-            ShowWindowAsync(windowHandle, SW_SHOWDEFAULT);
-            ShowWindowAsync(windowHandle, SW_SHOW);
+            ShowWindow(windowHandle, SW_SHOWDEFAULT);
+            ShowWindow(windowHandle, SW_SHOW);
             SetForegroundWindow(windowHandle);
+        }
+
+        public static void MinimizeWindow(IntPtr windowHandle)
+        {
+            ShowWindow(windowHandle, SW_MINIMIZE);
         }
     }
 }

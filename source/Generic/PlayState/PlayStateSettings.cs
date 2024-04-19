@@ -64,6 +64,8 @@ namespace PlayState
         public bool UseForegroundAutomaticSuspendPlaytimeMode { get => useForegroundAutomaticSuspendPlaytimeMode; set => SetValue(ref useForegroundAutomaticSuspendPlaytimeMode, value); }
         private bool bringResumedToForeground = false;
         public bool BringResumedToForeground { get => bringResumedToForeground; set => SetValue(ref bringResumedToForeground, value); }
+        private bool _minimizeGameWindowOnSuspend = false;
+        public bool MinimizeGameWindowOnSuspend { get => _minimizeGameWindowOnSuspend; set => SetValue(ref _minimizeGameWindowOnSuspend, value); }
 
         private bool showNotificationOnGameStatusChange = true;
         public bool ShowNotificationOnGameStatusChange { get => showNotificationOnGameStatusChange; set => SetValue(ref showNotificationOnGameStatusChange, value); }

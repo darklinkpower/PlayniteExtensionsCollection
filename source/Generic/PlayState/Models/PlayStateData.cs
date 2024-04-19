@@ -241,6 +241,40 @@ namespace PlayState.Models
             }
         }
 
+        public void MinimizeWindows()
+        {
+            if (!GameProcesses.HasItems() || IsSuspended)
+            {
+                return;
+            }
+
+            var windowHandles = new List<IntPtr>();
+            foreach (var gameProcess in GameProcesses)
+            {
+                if (gameProcess is null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
+                {
+                    continue;
+                }
+
+                if (gameProcess.Process.MainWindowHandle != IntPtr.Zero)
+                {
+                    windowHandles.AddMissing(gameProcess.Process.MainWindowHandle);
+                }
+            }
+
+            foreach (var windowHandle in windowHandles)
+            {
+                try
+                {
+                    WindowsHelper.MinimizeWindow(windowHandle);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e, $"Error while minimizing window of {Game.Name}, handlle {windowHandle}");
+                }
+            }
+        }
+
         public void Dispose()
         {
             Game.PropertyChanged -= Game_PropertyChanged;

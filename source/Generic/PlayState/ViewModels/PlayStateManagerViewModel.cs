@@ -351,6 +351,11 @@ namespace PlayState.ViewModels
             var handled = false;
             try
             {
+                if (!gameData.IsSuspended && Settings.Settings.MinimizeGameWindowOnSuspend)
+                {
+                    gameData.MinimizeWindows();
+                }
+                
                 var performedAction = gameData.SwitchState();
                 if (performedAction == StateActions.None)
                 {
