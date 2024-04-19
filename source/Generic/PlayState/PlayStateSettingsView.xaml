@@ -230,6 +230,22 @@
                             </DockPanel>
                         </DockPanel>
 
+                        <DockPanel Margin="0,10,0,0">
+                            <CheckBox x:Name="GamePadMinimizeMaximizeCb" VerticalAlignment="Center"
+                                      IsChecked="{Binding Settings.GamePadMinimizeMaximizeHotkeyEnable}"
+                                      Content="{DynamicResource LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel}"/>
+                            <DockPanel IsEnabled="{Binding ElementName=GamePadMinimizeMaximizeCb, Path=IsChecked}"
+                                       LastChildFill="True" Margin="10,0,0,0">
+                                <Button DockPanel.Dock="Right" VerticalAlignment="Center"
+                                        Margin="10,0,0,0"
+                                        Content="{DynamicResource LOCPlayState_SettingChangeHotkeyButtonLabel}"
+                                        Command="{Binding SaveGamepadMinimizeMaximizeHotkeyCommand}"/>
+                                <TextBox VerticalAlignment="Center" TextWrapping="WrapWithOverflow"
+                                         IsReadOnly="True"
+                                         Text="{Binding GamePadMinimizeMaximizeHotkeyClone, Converter={StaticResource GamePadStateHotkeyToStringConverter}}" />
+                            </DockPanel>
+                        </DockPanel>
+                        
                         <Separator Margin="0,5,0,5"/>
                         <TextBlock Margin="0,10,0,0" Text="{DynamicResource LOCPlayState_SettingsCustomHotkeysLabel}"/>
 

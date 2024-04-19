@@ -113,6 +113,12 @@ namespace PlayState
                 return true;
             }
 
+            if (_settings.GamePadMinimizeMaximizeHotkeyEnable && _settings.GamePadMinimizeMaximizeHotkey?.IsGamePadStateEqual(gamePadState) == true)
+            {
+                _playStateManager.SwitchMinimizeMaximizeCurrentGame();
+                return true;
+            }
+
             foreach (var comboHotkey in _settings.GamePadToHotkeyCollection)
             {
                 if (IsValidGamePadHotkeyMode(comboHotkey.Mode, GamePadToKeyboardHotkeyModes.OnGameRunning))

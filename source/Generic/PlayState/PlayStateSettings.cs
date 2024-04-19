@@ -35,10 +35,17 @@ namespace PlayState
         public GamePadStateHotkey GamePadSuspendHotkey { get => gamePadSuspendHotkey; set => SetValue(ref gamePadSuspendHotkey, value); }
         private bool gamePadSuspendHotkeyEnable = true;
         public bool GamePadSuspendHotkeyEnable { get => gamePadSuspendHotkeyEnable; set => SetValue(ref gamePadSuspendHotkeyEnable, value); }
+
+
         private GamePadStateHotkey gamePadInformationHotkey;
         public GamePadStateHotkey GamePadInformationHotkey { get => gamePadInformationHotkey; set => SetValue(ref gamePadInformationHotkey, value); }
         private bool gamePadInformationHotkeyEnable = true;
         public bool GamePadInformationHotkeyEnable { get => gamePadInformationHotkeyEnable; set => SetValue(ref gamePadInformationHotkeyEnable, value); }
+
+        private GamePadStateHotkey _gamePadMinimizeMaximizeHotkey;
+        public GamePadStateHotkey GamePadMinimizeMaximizeHotkey { get => _gamePadMinimizeMaximizeHotkey; set => SetValue(ref _gamePadMinimizeMaximizeHotkey, value); }
+        private bool _gamePadMinimizeMaximizeHotkeyEnable = true;
+        public bool GamePadMinimizeMaximizeHotkeyEnable { get => _gamePadMinimizeMaximizeHotkeyEnable; set => SetValue(ref _gamePadMinimizeMaximizeHotkeyEnable, value); }
 
         // GamePad Hotkey Options
         private bool gamePadHotkeysEnableAllControllers = false;
@@ -260,6 +267,17 @@ namespace PlayState
             }
         }
 
+        private GamePadStateHotkey gamePadMinimizeMaximizeHotkeyClone;
+        public GamePadStateHotkey GamePadMinimizeMaximizeHotkeyClone
+        {
+            get => gamePadMinimizeMaximizeHotkeyClone;
+            set
+            {
+                gamePadMinimizeMaximizeHotkeyClone = value;
+                OnPropertyChanged();
+            }
+        }
+
         public PlayStateSettingsViewModel(PlayState plugin, bool isWindows10Or11)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
@@ -316,6 +334,7 @@ namespace PlayState
 
             GamePadInformationHotkeyClone = Settings.GamePadInformationHotkey;
             GamePadSuspendHotkeyClone = Settings.GamePadSuspendHotkey;
+            GamePadMinimizeMaximizeHotkeyClone = Settings.GamePadMinimizeMaximizeHotkey;
             HotkeySaveCountDownText = string.Empty;
             EditingExclusionList = string.Join("\n", Settings.ExecutablesScanExclusionList);
         }
@@ -333,6 +352,7 @@ namespace PlayState
             // This method should save settings made to Option1 and Option2.
             Settings.GamePadInformationHotkey = GamePadInformationHotkeyClone;
             Settings.GamePadSuspendHotkey = GamePadSuspendHotkeyClone;
+            Settings.GamePadMinimizeMaximizeHotkey = GamePadMinimizeMaximizeHotkeyClone;
             Settings.ExecutablesScanExclusionList = EditingExclusionList.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             plugin.SavePluginSettings(Settings);
         }
@@ -367,6 +387,9 @@ namespace PlayState
                             break;
                         case 2:
                             GamePadSuspendHotkeyClone = new GamePadStateHotkey(gamePadState);
+                            break;
+                        case 3:
+                            GamePadMinimizeMaximizeHotkeyClone = new GamePadStateHotkey(gamePadState);
                             break;
                         default:
                             break;
@@ -466,6 +489,20 @@ namespace PlayState
             }, () => !isCountDownRunning);
         }
 
+        public RelayCommand SaveGamepadMinimizeMaximizeHotkeyCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (isCountDownRunning)
+                {
+                    return;
+                }
+
+                gamepadHotKeyToUpdate = 3;
+                StartCountdownTimer();
+            }, () => !isCountDownRunning);
+        }
+
         public RelayCommand AddComboHotkeyCommand
         {
             get => new RelayCommand(() =>
@@ -478,6 +515,7 @@ namespace PlayState
                 var newComboSer = Serialization.ToJson(ComboHotkeyGamePad);
                 var isComboAlreadyInUse = Serialization.ToJson(gamePadSuspendHotkeyClone) == newComboSer ||
                         Serialization.ToJson(gamePadInformationHotkeyClone) == newComboSer ||
+                        Serialization.ToJson(gamePadMinimizeMaximizeHotkeyClone) == newComboSer ||
                         Settings.GamePadToHotkeyCollection.Any(x => SelectedGpdToKbHotkeyMode != x.Mode && Serialization.ToJson(x.GamePadHotKey) == newComboSer);
                 if (isComboAlreadyInUse)
                 {
