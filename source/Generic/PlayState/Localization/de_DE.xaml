@@ -30,13 +30,13 @@ Sie können versuchen, eine andere HotKey Kombination zu verwenden, um das Probl
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Allgemein</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Benachrichtigungsmeldungen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scanausschlüsse</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">Beim Scannen von PlayState zur Erkennung von Spielausführungen werden alle ausführbaren Programme, die einen beliebigen Text aus der folgenden Liste enthalten, ausgeschlossen. Jeder Eintrag sollte durch eine neue Zeile getrennt werden.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">Während des PlayState Scans zur Erkennung von ausführbaren Dateien von Spielen werden alle ausführbaren Dateien, die einen Text aus der folgenden Liste enthalten, ausgeschlossen. Jeder Eintrag sollte durch eine neue Zeile getrennt werden.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Zeigt eine Benachrichtigung an, die den aktuellen Pausenstatus und andere Informationen des aktiven Spiels anzeigt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Anzuzeigende Benachrichtigungen:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">Wenn das Spiel zu PlayState hinzugefügt wird</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">Bei Änderungen des Spielstatus</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">Bei Spielstatus Änderungen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Hinweise:
 
 Die konfigurierten Tastaturkürzel können nicht in anderen Anwendungen verwendet werden.</sys:String>
@@ -48,7 +48,7 @@ Diese Funktion wird nur von Windows 10 und Windows 11 unterstützt</sys:String>
 Für eine bessere Kompatibilität mit Spielen sind einige Anpassungen an der Windows Konfiguration erforderlich. Ein Link, der die Anweisungen dazu enthält, wird nach dem Schließen dieses Dialogs geöffnet.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Spielesitzungen ausschließen, die weniger als eine minimale Dauer haben</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Spielsitzungen ausschließen, die eine Mindestdauer unterschreiten</sys:String>
     <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">Wenn Spielzeit oder Sitzungsdaten unter die konfigurierte Dauer fallen, es wird zu seinem vorherigen Zustand zurückkehren und Spielzeit, Anzahl und Datum des letzten Spiels wiederherstellen.</sys:String>
     <sys:String x:Key="LOCPlayState_MinutesLabel">Minuten</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
@@ -75,7 +75,7 @@ Spiel unterbrechen: Spiele werden automatisch unterbrochen, wenn sie nicht das a
 Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufgenommen, wenn das Spielfenster seinen aktiven Zustand ändert.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Spielfenster in den Vordergrund bringen, wenn sie wiederaufgenommen werden</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Das Spielfenster automatisch minimieren, wenn es unterbrochen wird.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Nur minimieren, wenn sich das Spielfenster im Vordergrund befindet.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState Manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Andere</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState Manager Seitenleiste anzeigen</sys:String>
