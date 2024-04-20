@@ -397,7 +397,7 @@ namespace PlayState.ViewModels
                 };
 
                 OnGameStatusSwitched?.Invoke(this, statusSwitchedArgs);
-                if (settings.Settings.BringResumedToForeground && (performedAction == StateActions.Resumed || performedAction == StateActions.Resumed))
+                if (settings.Settings.BringResumedToForeground && (performedAction == StateActions.Resumed || performedAction == StateActions.PlaytimeResumed))
                 {
                     gameData.BringToForeground();
                 }
