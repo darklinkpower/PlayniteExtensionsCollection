@@ -246,13 +246,12 @@ namespace PlayState.Models
                 return;
             }
 
-            var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
-            if (GameProcesses.Any(x => x.Process.MainWindowHandle == foregroundWindowHandle))
+            if (IsWindowInForeground())
             {
                 return;
             }
 
-            var processItem = GameProcesses.FirstOrDefault(x => x.Process.MainWindowHandle != null && x.Process.MainWindowHandle != IntPtr.Zero);
+            var processItem = GameProcesses?.FirstOrDefault(x => x.Process.MainWindowHandle != null && x.Process.MainWindowHandle != IntPtr.Zero);
             if (processItem is null)
             {
                 return;
@@ -269,16 +268,9 @@ namespace PlayState.Models
             }
         }
 
-        public bool IsWindowMinimized()
-        {
-            List<IntPtr> windowHandles = GetWindowHandles();
-            var anyWindowMinimized = windowHandles.Any(x => WindowsHelper.IsWindowMinimized(x));
-            return anyWindowMinimized;
-        }
-
         public void MinimizeWindows()
         {
-            if (!GameProcesses.HasItems() || IsSuspended)
+            if (!GameProcesses.HasItems() || (_suspendMode == SuspendModes.Processes && _isSuspended))
             {
                 return;
             }
@@ -288,13 +280,36 @@ namespace PlayState.Models
             {
                 try
                 {
-                    WindowsHelper.MinimizeWindow(windowHandle);
+                    if (!WindowsHelper.IsWindowMinimized(windowHandle))
+                    {
+                        WindowsHelper.MinimizeWindow(windowHandle);
+                    }
                 }
                 catch (Exception e)
                 {
                     _logger.Error(e, $"Error while minimizing window of {Game.Name}, handlle {windowHandle}");
                 }
             }
+        }
+
+        public bool IsWindowInForeground()
+        {
+            if (!GameProcesses.HasItems() || IsSuspended)
+            {
+                return false;
+            }
+
+            var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
+            var isInForeground = GameProcesses?
+                .Any(x => x.Process.MainWindowHandle == foregroundWindowHandle) == true;
+            return isInForeground;
+        }
+
+        public bool IsWindowMinimized()
+        {
+            List<IntPtr> windowHandles = GetWindowHandles();
+            var anyWindowMinimized = windowHandles.Any(x => WindowsHelper.IsWindowMinimized(x));
+            return anyWindowMinimized;
         }
 
         private List<IntPtr> GetWindowHandles()

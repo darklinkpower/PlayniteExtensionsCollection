@@ -381,7 +381,10 @@ namespace PlayState.ViewModels
                 automaticStateUpdateTimer.Stop();
                 if (!gameData.IsSuspended && Settings.Settings.MinimizeGameWindowOnSuspend)
                 {
-                    gameData.MinimizeWindows();
+                    if (!Settings.Settings.MinimizeOnSuspendOnlyIfForeground || gameData.IsWindowInForeground())
+                    {
+                        gameData.MinimizeWindows();
+                    }
                 }
                 
                 var performedAction = gameData.SwitchState();

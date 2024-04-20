@@ -76,6 +76,9 @@ namespace PlayState
         private bool _minimizeGameWindowOnSuspend = false;
         public bool MinimizeGameWindowOnSuspend { get => _minimizeGameWindowOnSuspend; set => SetValue(ref _minimizeGameWindowOnSuspend, value); }
 
+        private bool _minimizeOnSuspendOnlyIfForeground = true;
+        public bool MinimizeOnSuspendOnlyIfForeground { get => _minimizeOnSuspendOnlyIfForeground; set => SetValue(ref _minimizeOnSuspendOnlyIfForeground, value); }
+
         private bool showNotificationOnGameStatusChange = true;
         public bool ShowNotificationOnGameStatusChange { get => showNotificationOnGameStatusChange; set => SetValue(ref showNotificationOnGameStatusChange, value); }
         private bool showNotificationOnGameAdded = true;
