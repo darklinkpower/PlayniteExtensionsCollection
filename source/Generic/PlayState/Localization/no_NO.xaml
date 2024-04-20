@@ -75,6 +75,7 @@ Spillsuspendering: Spill vil bli suspendert automatisk når de ikke er det aktiv
 Spilletidsuspendering: Spill vil bli suspendert og gjenopptatt automatisk når spillvinduet endrer aktiv tilstand.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring spillvinduer til forgrunnen når de gjenopptas</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Minimer spillvinduet automatisk når det settes på pause av Playstate.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState-behandling</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Annen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Vis sidestolpeknapp for PlayState-behandling</sys:String>
