@@ -544,3 +544,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_77.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.78
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-04-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.20_448efde9/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_78.pext
+    Changelog:
+    - 'Improved: Display quality of YouTube thumbnails'
