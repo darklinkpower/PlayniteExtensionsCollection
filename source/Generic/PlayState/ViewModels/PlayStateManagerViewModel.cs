@@ -67,7 +67,6 @@ namespace PlayState.ViewModels
             };
 
             automaticStateUpdateTimer.Tick += UpdateAutomaticStates;
-
             PlayStateDataCollection.CollectionChanged += PlayStateDataCollection_CollectionChanged;
         }
 
@@ -85,8 +84,12 @@ namespace PlayState.ViewModels
 
         private void UpdateAutomaticStates(object sender, EventArgs e)
         {
-            if ((!settings.Settings.UseForegroundAutomaticSuspend && !settings.Settings.UseForegroundAutomaticSuspendPlaytimeMode)
-                || !playStateDataCollection.HasItems())
+            if ((!settings.Settings.UseForegroundAutomaticSuspend && !settings.Settings.UseForegroundAutomaticSuspendPlaytimeMode))
+            {
+                return;
+            }
+
+            if (!playStateDataCollection.HasItems())
             {
                 return;
             }
@@ -138,7 +141,7 @@ namespace PlayState.ViewModels
 
                 if (isForeground == playstateData.IsSuspended)
                 {
-                    //SwitchGameState(playstateData, false);
+                    SwitchGameState(playstateData);
                 }
             }
         }
@@ -375,6 +378,7 @@ namespace PlayState.ViewModels
             var handled = false;
             try
             {
+                automaticStateUpdateTimer.Stop();
                 if (!gameData.IsSuspended && Settings.Settings.MinimizeGameWindowOnSuspend)
                 {
                     gameData.MinimizeWindows();
@@ -404,11 +408,13 @@ namespace PlayState.ViewModels
             {
                 logger.Error(e, $"Error while suspending or resuming game {gameData.Game.Name} in mode {gameData.SuspendMode}");
                 gameData.GameProcesses = null;
-                gameData.StopCountingPauseTime();
+                gameData.StopSuspendTimeCounter();
+            }
+            finally
+            {
+                automaticStateUpdateTimer.Start();
             }
 
-            automaticStateUpdateTimer.Stop();
-            automaticStateUpdateTimer.Start();
             return handled;
         }
 

@@ -133,11 +133,11 @@ namespace PlayState.Models
             {
                 if (IsSuspended)
                 {
-                    return StartCountingPauseTime();
+                    return StopSuspendTimeCounter();
                 }
                 else
                 {
-                    return StopCountingPauseTime();
+                    return StartSuspendTimeCounter();
                 }
             }
 
@@ -157,7 +157,7 @@ namespace PlayState.Models
             }
 
             IsSuspended = true;
-            StartCountingPauseTime();
+            _updatePausingTimer.Start();
             return StateActions.Suspended;
         }
 
@@ -174,21 +174,22 @@ namespace PlayState.Models
             }
 
             IsSuspended = false;
-            StopCountingPauseTime();
+            _updatePausingTimer.Stop();
             return StateActions.Resumed;
         }
 
-        public StateActions StartCountingPauseTime()
+        public StateActions StopSuspendTimeCounter()
         {
-            _updatePausingTimer.Start();
-            IsSuspended = true;
+            
+            _updatePausingTimer.Stop();
+            IsSuspended = false;
             return StateActions.PlaytimeResumed;
         }
 
-        public StateActions StopCountingPauseTime()
+        public StateActions StartSuspendTimeCounter()
         {
-            _updatePausingTimer.Stop();
-            IsSuspended = false;
+            _updatePausingTimer.Start();
+            IsSuspended = true;
             return StateActions.PlaytimeSuspended;
         }
 
