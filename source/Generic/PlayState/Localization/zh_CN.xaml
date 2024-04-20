@@ -75,6 +75,7 @@ This mode can also be changed individually per game by using the extensions func
 游戏时间挂起：游戏将被挂起，并在游戏窗口改变活动状态时自动恢复。</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">恢复游戏时将其窗口带到前景</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState 管理器</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Other</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">显示 PlayState 管理器侧边栏项目</sys:String>
