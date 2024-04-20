@@ -73,6 +73,7 @@ Oyunun askıya alınması: Oyunlar, etkin pencere olmadığında otomatik olarak
 Oyun süresinin askıya alınması: Oyun penceresi aktif durumu değiştirdiğinde oyunlar otomatik olarak askıya alınacak ve devam ettirilecektir.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Devam ettirildiğinde oyun pencerelerini ön plana getir</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState yöneticisi</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Diğer</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState yöneticisi kenar çubuğu öğesini göster</sys:String>
