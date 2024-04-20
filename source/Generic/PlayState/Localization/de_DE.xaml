@@ -75,6 +75,7 @@ Spiel unterbrechen: Spiele werden automatisch unterbrochen, wenn sie nicht das a
 Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufgenommen, wenn das Spielfenster seinen aktiven Zustand ändert.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Spielfenster in den Vordergrund bringen, wenn sie wiederaufgenommen werden</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Das Spielfenster automatisch minimieren, wenn es unterbrochen wird.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState Manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Andere</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState Manager Seitenleiste anzeigen</sys:String>
