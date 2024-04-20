@@ -502,5 +502,5 @@ Packages:
     - 'Added: Support to configure list of executable to exclude during the games executables scan to add to PlayState'
     - 'Added: Option to automatically minimize games when they are suspended, as well as configure if this should only be done if the game is currently in the foreground'
     - 'Added: Options to configure a controller and keyboard hotkey to minimize and maximize the game window.'
-    - 'Changed: Revised the method of calculating suspended time to align more effectively with Playnite's new time tracking system introduced in the latest update.'
+    - 'Changed: Revised the method of calculating suspended time to align more effectively with Playnite new time tracking system introduced in the latest update.'
     - 'Improved: General polish of extension settings'
