@@ -26,17 +26,17 @@ Puoi provare a usare una combinazione di tasti di scelta rapida diversa per riso
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Azione:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Il gioco è stato aggiunto a PlayState!</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">È possibile iniziare a utilizzare il gioco con l'estensione</sys:String>
-    <sys:String x:Key="LOCPlayState_ResetLabel">Reset</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Reimposta</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Generale</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messaggi di notifica</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scan exclusions</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">During PlayState scanning to detect game executables, any executables containing any text from the following list will be excluded. Each entry should be separated by a new line.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Esclusioni dalla scansione</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">Durante la scansione PlayState per rilevare gli eseguibili di gioco, saranno esclusi tutti gli eseguibili contenenti un testo della seguente lista. Ogni voce deve essere separata da una nuova riga.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Mostra una notifica che mostra lo stato di pausa corrente e altre informazioni del gioco attivo</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Cambia scorciatoia</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Premi il tasto di scelta rapida ora</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Notifications to display:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">When game is added to PlayState</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">On game status changes</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Notifiche da visualizzare:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">Quando il gioco viene aggiunto a PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">Sulle modifiche di stato del gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Note:
 
 I tasti di scelta rapida configurati non potranno essere utilizzati in altre applicazioni.</sys:String>
@@ -48,9 +48,9 @@ Questa funzione è supportata solo su Windows 10 e Windows 11</sys:String>
 Per una migliore compatibilità con i giochi, è necessario apportare alcune modifiche alla configurazione di Windows. Un link che contiene le istruzioni per questo verrà aperto dopo la chiusura di questa finestra.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Aiuto</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Sottrai il tempo in cui il gioco è stato sospeso dal tempo di gioco quando è stato interrotto</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Exclude game sessions that are less than a minimum duration</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">If game playtime or session data falls below the configured duration, it will revert to its previous state, restoring playtime, play count, and last played date.</sys:String>
-    <sys:String x:Key="LOCPlayState_MinutesLabel">Minutes</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Escludi sessioni di gioco di durata inferiore a quella minima</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">Se il tempo di gioco o i dati della sessione scendono al di sotto della durata configurata, tornerà allo stato precedente, ripristinando l'ora di riproduzione, il conteggio e l'ultima data di riproduzione.</sys:String>
+    <sys:String x:Key="LOCPlayState_MinutesLabel">Minuti</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Aiuta a mantenere un valore di gioco più preciso nei giochi mantenendo solo il tempo in cui il gioco non è stato sospeso conteggio verso il tempo di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Esegui solo per i giochi che non sono gestiti dai plugin della libreria</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Stile di notifica:</sys:String>
@@ -74,7 +74,7 @@ Sospensione del gioco: i giochi saranno sospesi automaticamente quando non sono 
 
 Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamente quando la finestra di gioco cambierà lo stato attivo.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Porta le finestre dei giochi in primo piano quando vengono riprese</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Minimizza automaticamente la finestra di gioco quando è sospesa.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestore stati di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Altro</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostra l'elemento della barra laterale &quot;Gestore stati di gioco&quot;</sys:String>
@@ -119,7 +119,7 @@ Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamen
 
 Se disabilitato, solo il primo controller sarà autorizzato ad attivare i tasti di scelta rapida</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Sospendi/Riprendi:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Minimize/Maximize window:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Minimizza/Massimizza finestra:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Informazioni:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Chiudi gioco:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Aggiornamento scorciatoia GamePad in {0} secondi…</sys:String>
@@ -129,8 +129,8 @@ Se disabilitato, solo il primo controller sarà autorizzato ad attivare i tasti 
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Esiste già un tasto di scelta rapida del controller con la stessa combinazione!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Scorciatoia del controller</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Scorciatoia del controller:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Suspend settings</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Playtime settings</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Impostazioni di sospensione</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Impostazioni di Playtime</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modalità</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modalità:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Aggiungi tasto di scelta rapida del controller</sys:String>
