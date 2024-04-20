@@ -75,7 +75,7 @@ Suspensión del juego: Los juegos se suspenderán automáticamente cuando no sea
 Suspensión del tiempo de juego: Los juegos se suspenderán y se reanudarán automáticamente cuando la ventana del juego cambie de estado activo.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Llevar las ventanas de juegos al primer plano cuando se reanudan</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Minimiza automáticamente la ventana del juego cuando se suspende.</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Sólo minimizar si la ventana del juego está en primer plano.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Administrador de PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Otro</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostrar la barra lateral del administrador de PlayState</sys:String>
