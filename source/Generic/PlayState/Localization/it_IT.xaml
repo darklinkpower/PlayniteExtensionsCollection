@@ -75,6 +75,7 @@ Sospensione del gioco: i giochi saranno sospesi automaticamente quando non sono 
 Sospensione del tempo di gioco: i giochi saranno sospesi e ripresi automaticamente quando la finestra di gioco cambierà lo stato attivo.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Porta le finestre dei giochi in primo piano quando vengono riprese</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Minimizza automaticamente la finestra di gioco quando è sospesa.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Gestore stati di gioco</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Altro</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Mostra l'elemento della barra laterale &quot;Gestore stati di gioco&quot;</sys:String>
