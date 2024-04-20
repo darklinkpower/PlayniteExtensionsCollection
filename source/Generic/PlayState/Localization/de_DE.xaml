@@ -49,7 +49,7 @@ Für eine bessere Kompatibilität mit Spielen sind einige Anpassungen an der Win
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Spielsitzungen ausschließen, die eine Mindestdauer unterschreiten</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">Wenn Spielzeit oder Sitzungsdaten unter die konfigurierte Dauer fallen, es wird zu seinem vorherigen Zustand zurückkehren und Spielzeit, Anzahl und Datum des letzten Spiels wiederherstellen.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">Wenn die Spielzeit oder die Sitzungsdaten unter die konfigurierte Dauer fallen, wird der vorherige Zustand wiederhergestellt und die Spielzeit, die Anzahl der Spiele und das Datum des letzten Spiels wiederhergestellt.</sys:String>
     <sys:String x:Key="LOCPlayState_MinutesLabel">Minuten</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Nur für Spiele ausführen, die nicht von Bibliothek Plugins verwaltet werden</sys:String>
@@ -130,8 +130,8 @@ Wenn deaktiviert, ist nur der erste Controller berechtigt, die Tastenkürzel zu 
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Ein Controller Tastaturkürzel mit der gleichen Kombination existiert bereits!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller Tastaturkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller Tastaturkürzel:</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Unterbrechungseinstellungen</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Spielzeiteinstellungen</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Einstellungen unterbrechen</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Spielzeit Einstellungen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modus</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modus:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Controller Tastaturkürzel hinzufügen</sys:String>
