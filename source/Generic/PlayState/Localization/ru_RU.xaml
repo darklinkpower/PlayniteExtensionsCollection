@@ -75,6 +75,7 @@
 Приостановка игрового времени: Игры будут приостановлены и возобновлены автоматически при изменении текущего состояния.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Выводить окно игры на передний план после её возобновления</sys:String>
     <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Управление PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Прочие</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Показывать боковую панель менеджера PlayState</sys:String>
