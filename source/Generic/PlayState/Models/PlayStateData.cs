@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using Microsoft.Win32;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteUtilitiesCommon;
 using PlayState.Enums;
@@ -18,12 +19,11 @@ namespace PlayState.Models
         // Constants
         private const string _featureSuspendPlaytime = "[PlayState] Suspend Playtime only";
         private const string _featureSuspendProcesses = "[PlayState] Suspend Processes";
-        private const int _secondsIntervalTimer = 1;
 
         // Fields
         private readonly PlayStateSettingsViewModel _settingsModel;
-        private readonly Timer _updatePausingTimer = new Timer();
-        private int _pausedTime = 0;
+        private readonly Stopwatch _suspendTimeStopwatch = new Stopwatch();
+        private readonly Stopwatch _systemSuspendTimeToDeductSw = new Stopwatch();
         private readonly Game _game;
         private bool _isSuspended = false;
         private SuspendModes _suspendMode;
@@ -31,7 +31,7 @@ namespace PlayState.Models
         private static readonly ILogger _logger = LogManager.GetLogger();
 
         // Properties
-        public int SuspendedTime => _pausedTime;
+        public double SuspendedTime => CalculateEffectiveSuspendTime();
         public bool HasBeenInForeground { get; set; } = false;
 
         public bool IsGameStatusOverrided { get; set; } = false;
@@ -68,15 +68,33 @@ namespace PlayState.Models
             _settingsModel = settings;
             SetSuspendMode();
 
-            _updatePausingTimer.Interval = _secondsIntervalTimer * 1000;
-            _updatePausingTimer.Elapsed += AddPausedTime;
             Game.PropertyChanged += Game_PropertyChanged;
             _settingsModel.Settings.PropertyChanged += Settings_PropertyChanged;
+            SystemEvents.PowerModeChanged += OnPowerModeChanged;
         }
 
-        internal void AddPausedTime(object sender, ElapsedEventArgs e)
+        private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
-            _pausedTime += _secondsIntervalTimer;
+            _logger.Debug($"OnPowerModeChanged callback with mode \"{e.Mode}\"'");
+            switch (e.Mode)
+            {
+                case PowerModes.Suspend:
+                    if (_suspendTimeStopwatch.IsRunning)
+                    {
+                        _systemSuspendTimeToDeductSw.Start();
+                    }
+                    break;
+                case PowerModes.Resume:
+                    if (_systemSuspendTimeToDeductSw.IsRunning)
+                    {
+                        _systemSuspendTimeToDeductSw.Stop();
+                    }
+                    break;
+                case PowerModes.StatusChange:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Game_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -93,6 +111,15 @@ namespace PlayState.Models
             {
                 SetSuspendMode();
             }
+        }
+        
+        private double CalculateEffectiveSuspendTime()
+        {
+            var suspendTime = _suspendTimeStopwatch.Elapsed.TotalSeconds;
+            var deductTime = _systemSuspendTimeToDeductSw.Elapsed.TotalSeconds;
+            var calculatedSuspendTime = _suspendTimeStopwatch.Elapsed.TotalSeconds - _systemSuspendTimeToDeductSw.Elapsed.TotalSeconds;
+            _logger.Debug($"Calculated effective suspend time: {calculatedSuspendTime}. Suspend time: {suspendTime}, System deduct time: {deductTime}");
+            return calculatedSuspendTime;
         }
 
         private void SetSuspendMode()
@@ -157,7 +184,7 @@ namespace PlayState.Models
             }
 
             IsSuspended = true;
-            _updatePausingTimer.Start();
+            _suspendTimeStopwatch.Start();
             return StateActions.Suspended;
         }
 
@@ -174,21 +201,21 @@ namespace PlayState.Models
             }
 
             IsSuspended = false;
-            _updatePausingTimer.Stop();
+            _suspendTimeStopwatch.Stop();
             return StateActions.Resumed;
         }
 
         public StateActions StopSuspendTimeCounter()
         {
             
-            _updatePausingTimer.Stop();
+            _suspendTimeStopwatch.Stop();
             IsSuspended = false;
             return StateActions.PlaytimeResumed;
         }
 
         public StateActions StartSuspendTimeCounter()
         {
-            _updatePausingTimer.Start();
+            _suspendTimeStopwatch.Start();
             IsSuspended = true;
             return StateActions.PlaytimeSuspended;
         }
@@ -293,8 +320,7 @@ namespace PlayState.Models
         {
             Game.PropertyChanged -= Game_PropertyChanged;
             _settingsModel.Settings.PropertyChanged -= Settings_PropertyChanged;
-            _updatePausingTimer.Elapsed -= AddPausedTime;
-            _updatePausingTimer.Dispose();
+            SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
 
     }
