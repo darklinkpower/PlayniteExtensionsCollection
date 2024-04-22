@@ -26,10 +26,10 @@ Vous pouvez essayer d'utiliser une combinaison différente pour résoudre le pro
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Action :</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Le jeu a été ajouté à PlayState !</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Vous pouvez commencer à utiliser le jeu avec l'extension</sys:String>
-    <sys:String x:Key="LOCPlayState_ResetLabel">Reset</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Réinitialiser</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Général</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Messages de notification</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scan exclusions</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Exclusions d'analyse</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">During PlayState scanning to detect game executables, any executables containing any text from the following list will be excluded. Each entry should be separated by a new line.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Affiche une notification qui affiche l'état de pause en cours et les autres informations de la jeu actif</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Changer le raccourci clavier</sys:String>
