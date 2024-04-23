@@ -26,7 +26,7 @@ Sorunu muhtemelen çözmek için farklı bir kısayol tuşu kombinasyonu kullanm
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Aksiyon:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Oyun PlayState'e eklendi!</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Uzantı ile oyunu kullanmaya başlayabilirsiniz</sys:String>
-    <sys:String x:Key="LOCPlayState_ResetLabel">Reset</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Sıfırla</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Genel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Bildirim mesajları</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scan exclusions</sys:String>
