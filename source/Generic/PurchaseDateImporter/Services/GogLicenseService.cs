@@ -52,10 +52,11 @@ namespace PurchaseDateImporter.Services
 
                     foreach (var order in response.Orders)
                     {
-                        var transactionDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local).AddSeconds(order.Date);
+                        var utcDateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(order.Date);
+                        var localDateTime = utcDateTimeOffset.LocalDateTime; 
                         foreach (var product in order.Products)
                         {
-                            licensesList.Add(new LicenseData(product.Title, transactionDate, product.Id));
+                            licensesList.Add(new LicenseData(product.Title, localDateTime, product.Id));
                         }
                     }
                 }

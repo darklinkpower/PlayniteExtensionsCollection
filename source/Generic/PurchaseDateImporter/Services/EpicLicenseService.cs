@@ -62,11 +62,11 @@ namespace PurchaseDateImporter.Services
                     {
                         var orderCreation = order.CreatedAtMillis.ToString();
                         var secondsToAdd = long.Parse(orderCreation.Remove(orderCreation.Length - 3));
-                        var transactionDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(secondsToAdd);
-
+                        var utcDateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(secondsToAdd);
+                        var localDateTime = utcDateTimeOffset.LocalDateTime;
                         foreach (var item in order.Items)
                         {
-                            licensesList.Add(new LicenseData(item.Description.HtmlDecode(), transactionDate.ToLocalTime()));
+                            licensesList.Add(new LicenseData(item.Description.HtmlDecode(), localDateTime));
                         }
                     }
 
