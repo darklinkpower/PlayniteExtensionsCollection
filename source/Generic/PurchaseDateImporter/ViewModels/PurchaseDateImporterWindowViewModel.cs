@@ -44,19 +44,21 @@ namespace PurchaseDateImporter.ViewModels
             {
                 case EaLicenseService.LibraryName:
                     ApplyDatesToLibrary(EaLicenseService.LibraryName,
-                        EaLicenseService.PluginId, EaLicenseService.GetLicensesDict(), false);
+                    EaLicenseService.PluginId, EaLicenseService.GetLicensesDict(), false);
                     break;
                 case EpicLicenseService.LibraryName:
-                    ApplyDatesToLibrary(EpicLicenseService.LibraryName,
-                        EpicLicenseService.PluginId, EpicLicenseService.GetLicensesDict(), true);
+                    var licenses = EpicLicenseService.GetLicensesDict();
+                    ApplyDatesToLibrary(EpicLicenseService.LibraryName, EpicLicenseService.PluginId, licenses, true);
+                    var legendaryPluginId = Guid.Parse("EAD65C3B-2F8F-4E37-B4E6-B3DE6BE540C6");
+                    ApplyDatesToLibrary("Legendary (Epic)", legendaryPluginId, licenses, true);
                     break;
                 case GogLicenseService.LibraryName:
                     ApplyDatesToLibrary(GogLicenseService.LibraryName,
-                        GogLicenseService.PluginId, GogLicenseService.GetLicensesDict(), false);
+                    GogLicenseService.PluginId, GogLicenseService.GetLicensesDict(), false);
                     break;
                 case SteamLicenseService.LibraryName:
                     ApplyDatesToLibrary(SteamLicenseService.LibraryName,
-                        SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict(), true, true);
+                    SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict(), true, true);
                     break;
                 default:
                     break;
