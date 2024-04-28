@@ -335,109 +335,95 @@ namespace PlayState
             File.WriteAllLines(Path.Combine(PlayniteApi.Paths.ExtensionsDataPath, "PlayState.txt"), info);
         }
 
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            return new List<MainMenuItem>
+            var menuItems = new List<GameMenuItem>();
+            var menuSection = "PlayState";
+            if (args.Games.Count == 1)
             {
-                new MainMenuItem
+                var game = args.Games.Last();
+                var isGameSuspended = _playStateManager.GetIsGameSuspended(game);
+                if (isGameSuspended != null)
+                {
+                    var description = isGameSuspended == true
+                        ? string.Format(ResourceProvider.GetString("LOCPlayState_GameMenuItemResumeGameDescription"), game.Name)
+                        : string.Format(ResourceProvider.GetString("LOCPlayState_GameMenuItemSuspendGameDescription"), game.Name);
+                    menuItems.Add(new GameMenuItem
+                    {
+                        Description = description,
+                        MenuSection = menuSection,
+                        Icon = playstateIconImagePath,
+                        Action = a =>
+                        {
+                            _playStateManager.SwitchGameState(game);
+                        }
+                    });
+
+                    menuItems.Add(new GameMenuItem { Description = "-", MenuSection = menuSection });
+                }
+            }
+
+            menuItems.AddRange(new List<GameMenuItem>
+            {
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToBlacklistDescription"),
-                    MenuSection = "@PlayState",
+                    MenuSection = menuSection,
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureBlacklist);
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games.Distinct(), featureBlacklist);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromBlacklistDescription"),
-                    MenuSection = "@PlayState",
+                    MenuSection = menuSection,
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureBlacklist);
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, a.Games.Distinct(), featureBlacklist);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_BlacklistRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 },
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToPlaytimeSuspendDescription"),
-                    MenuSection = "@PlayState",
+                    MenuSection = menuSection,
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendPlaytime);
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games.Distinct(), featureSuspendPlaytime);
                         PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendProcesses);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromPlaytimeSuspendDescription"),
-                    MenuSection = "@PlayState",
+                    MenuSection = menuSection,
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendPlaytime);
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, a.Games.Distinct(), featureSuspendPlaytime);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_PlaytimeSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 },
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemAddToProcessesSuspendDescription"),
-                    MenuSection = "@PlayState",
+                    MenuSection = menuSection,
                     Action = a => {
-                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendProcesses);
+                        var featureAddedCount = PlayniteUtilities.AddFeatureToGames(PlayniteApi, a.Games.Distinct(), featureSuspendProcesses);
                         PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendPlaytime);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_ProcessesSuspendAddedResultsMessage"), featureAddedCount), "PlayState");
                     }
                 },
-                new MainMenuItem
+                new GameMenuItem
                 {
                     Description = ResourceProvider.GetString("LOCPlayState_MenuItemRemoveFromProcessesSuspendDescription"),
-                    MenuSection = "@PlayState",
+                    MenuSection = menuSection,
                     Action = a => {
-                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, PlayniteApi.MainView.SelectedGames.Distinct(), featureSuspendProcesses);
+                        var featureRemovedCount = PlayniteUtilities.RemoveFeatureFromGames(PlayniteApi, a.Games.Distinct(), featureSuspendProcesses);
                         PlayniteApi.Dialogs.ShowMessage(string.Format(ResourceProvider.GetString("LOCPlayState_ProcessesSuspendRemovedResultsMessage"), featureRemovedCount), "PlayState");
                     }
                 }
-            };
-        }
-
-        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
-        {
-            var game = args.Games.LastOrDefault();
-            var menuList = new List<GameMenuItem>();
-            if (game is null)
-            {
-                return menuList;
-            }
-
-            var isGameSuspended = _playStateManager.GetIsGameSuspended(game);
-            if (isGameSuspended is null)
-            {
-                return menuList;
-            }
-
-            menuList.Add(new GameMenuItem
-            {
-                Description = GetGameMenuSwitchStatusDescription(game, isGameSuspended),
-                Icon = playstateIconImagePath,
-                Action = a =>
-                {
-                    _playStateManager.SwitchGameState(game);
-                }
             });
 
-            return menuList;
-        }
-
-        private string GetGameMenuSwitchStatusDescription(Game game, bool? isGameSuspended)
-        {
-            if (isGameSuspended == true)
-            {
-                return string.Format(ResourceProvider.GetString("LOCPlayState_GameMenuItemResumeGameDescription"), game.Name);
-            }
-            else if (isGameSuspended == false)
-            {
-                return string.Format(ResourceProvider.GetString("LOCPlayState_GameMenuItemSuspendGameDescription"), game.Name);
-            }
-
-            return string.Empty;
+            return menuItems;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
