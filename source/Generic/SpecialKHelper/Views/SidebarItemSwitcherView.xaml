@@ -8,8 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Image Source="{Binding IconEnabledPath, Converter={StaticResource ImageStringToImageConverter}}"
+               RenderOptions.BitmapScalingMode="Fant"
                Visibility="{Binding AllowSkUse, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <Image Source="{Binding IconDisabledPath, Converter={StaticResource ImageStringToImageConverter}}"
+               RenderOptions.BitmapScalingMode="Fant"
                Visibility="{Binding AllowSkUse, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
     </Grid>
 </UserControl>
