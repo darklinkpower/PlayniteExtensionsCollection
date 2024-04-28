@@ -504,3 +504,9 @@ Packages:
     - 'Added: Options to configure a controller and keyboard hotkey to minimize and maximize the game window.'
     - 'Changed: Revised the method of calculating suspended time to align more effectively with Playnite new time tracking system introduced in the latest update.'
     - 'Improved: General polish of extension settings'
+  - Version: 2.73
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2024-04-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.28_7baef6c2/PlayState_2_73.pext
+    Changelog:
+    - 'Changed: Moved items from main menu to right click game menu'

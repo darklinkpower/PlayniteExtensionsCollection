@@ -73,3 +73,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_24.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.25
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-04-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.28_7baef6c2/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_25.pext
+    Changelog:
+    - 'Added: Applying Epic purchase dates will now also apply dates to games from the Legendary plugin library'
+    - 'Fixed: Failing to obtain GOG purchases data'
+    - 'Fixed: GOG dates not being converted to the system local time'
