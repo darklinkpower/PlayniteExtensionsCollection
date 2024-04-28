@@ -38,14 +38,13 @@ namespace PurchaseDateImporter.Services
                 {
                     var apiUrl = string.Format(apiTemplate, i);
                     webView.NavigateAndWait(apiUrl);
-                    var pageSource = webView.GetPageSource();
-                    var json = PlayniteUtilities.GetEmbeddedJsonFromWebViewSource(webView.GetPageSource());
-                    if (json.IsNullOrEmpty())
+                    var pageText = webView.GetPageText();
+                    if (pageText.IsNullOrEmpty())
                     {
                         break;
                     }
 
-                    var response = Serialization.FromJson<GogOrderResponse>(json);
+                    var response = Serialization.FromJson<GogOrderResponse>(pageText);
                     if (response.Orders.Count == 0)
                     {
                         break;
