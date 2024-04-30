@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="MetadataFieldsObtainLabel">Metadata fields to obtain:</sys:String>
-    <sys:String x:Key="PreferredCoverFormat">Preferred Cover format:</sys:String>
-    <sys:String x:Key="PreferredMarketLanguageLabel">Preferred market and language:</sys:String>
-    <sys:String x:Key="ImageQualityLabel">Image quality:</sys:String>
+    <sys:String x:Key="MetadataFieldsObtainLabel">Zu erhaltende Metadaten-Felder:</sys:String>
+    <sys:String x:Key="PreferredCoverFormat">Bevorzugtes Cover-Format:</sys:String>
+    <sys:String x:Key="PreferredMarketLanguageLabel">Bevorzugter Markt und Sprache:</sys:String>
+    <sys:String x:Key="ImageQualityLabel">Bildqualität:</sys:String>
     <sys:String x:Key="OriginalImageResolutionLabel">Original</sys:String>
-    <sys:String x:Key="ImageVerticalFormatLabel">Vertical</sys:String>
-    <sys:String x:Key="ImageSquareFormatLabel">Square</sys:String>
-    <sys:String x:Key="ImageLandscapeFormatLabel">Landscape</sys:String>
-    <sys:String x:Key="PreferredVerticalCoverResolution">Preferred vertical cover resolution:</sys:String>
-    <sys:String x:Key="PreferredSquareCoverResolution">Preferred square cover resolution:</sys:String>
-    <sys:String x:Key="PreferredImageResolutionLabel">Preferred resolution:</sys:String>
+    <sys:String x:Key="ImageVerticalFormatLabel">Vertikal</sys:String>
+    <sys:String x:Key="ImageSquareFormatLabel">Quadrat</sys:String>
+    <sys:String x:Key="ImageLandscapeFormatLabel">Querformat</sys:String>
+    <sys:String x:Key="PreferredVerticalCoverResolution">Bevorzugte vertikale Cover-Auflösung:</sys:String>
+    <sys:String x:Key="PreferredSquareCoverResolution">Bevorzugte quadratische Cover-Auflösung:</sys:String>
+    <sys:String x:Key="PreferredImageResolutionLabel">Bevorzugte Auflösung:</sys:String>
 </ResourceDictionary>
