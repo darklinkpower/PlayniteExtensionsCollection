@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="MetadataFieldsObtainLabel">Metadata fields to obtain:</sys:String>
-    <sys:String x:Key="PreferredCoverFormat">Preferred Cover format:</sys:String>
-    <sys:String x:Key="PreferredMarketLanguageLabel">Preferred market and language:</sys:String>
-    <sys:String x:Key="ImageQualityLabel">Image quality:</sys:String>
-    <sys:String x:Key="OriginalImageResolutionLabel">Original</sys:String>
-    <sys:String x:Key="ImageVerticalFormatLabel">Vertical</sys:String>
-    <sys:String x:Key="ImageSquareFormatLabel">Square</sys:String>
-    <sys:String x:Key="ImageLandscapeFormatLabel">Landscape</sys:String>
-    <sys:String x:Key="PreferredVerticalCoverResolution">Preferred vertical cover resolution:</sys:String>
-    <sys:String x:Key="PreferredSquareCoverResolution">Preferred square cover resolution:</sys:String>
-    <sys:String x:Key="PreferredImageResolutionLabel">Preferred resolution:</sys:String>
+    <sys:String x:Key="MetadataFieldsObtainLabel">Campi di metadati da ottenere:</sys:String>
+    <sys:String x:Key="PreferredCoverFormat">Formato di copertina preferito:</sys:String>
+    <sys:String x:Key="PreferredMarketLanguageLabel">Mercato preferito e lingua:</sys:String>
+    <sys:String x:Key="ImageQualityLabel">Qualità dell'immagine:</sys:String>
+    <sys:String x:Key="OriginalImageResolutionLabel">Originale</sys:String>
+    <sys:String x:Key="ImageVerticalFormatLabel">Verticale</sys:String>
+    <sys:String x:Key="ImageSquareFormatLabel">Quadrato</sys:String>
+    <sys:String x:Key="ImageLandscapeFormatLabel">Orizzontale</sys:String>
+    <sys:String x:Key="PreferredVerticalCoverResolution">Risoluzione copertina verticale preferita:</sys:String>
+    <sys:String x:Key="PreferredSquareCoverResolution">Risoluzione copertina quadrata preferita:</sys:String>
+    <sys:String x:Key="PreferredImageResolutionLabel">Risoluzione preferita:</sys:String>
 </ResourceDictionary>
