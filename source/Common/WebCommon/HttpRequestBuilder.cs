@@ -17,7 +17,7 @@ namespace WebCommon
     /// <summary>
     /// A builder class for constructing HTTP requests, including various options and settings.
     /// </summary>
-    internal class HttpRequestBuilder
+    public class HttpRequestBuilder
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly HttpClientFactory _httpClientFactory;

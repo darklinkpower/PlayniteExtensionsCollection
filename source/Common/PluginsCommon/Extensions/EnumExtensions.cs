@@ -46,5 +46,21 @@ namespace System
                 return source.ToString();
             }
         }
+
+        public static string GetStringValue(this Enum value)
+        {
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var attribute = (StringValueAttribute)fieldInfo.GetCustomAttributes(typeof(StringValueAttribute), false).FirstOrDefault();
+            return attribute?.Value ?? value.ToString();
+        }
+
+        public class StringValueAttribute : Attribute
+        {
+            public string Value { get; }
+            public StringValueAttribute(string value)
+            {
+                Value = value;
+            }
+        }
     }
 }
