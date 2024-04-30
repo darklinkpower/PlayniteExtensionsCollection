@@ -9,7 +9,7 @@ namespace WebCommon.Models
     /// <summary>
     /// Represents progress information for an ongoing HTTP download operation.
     /// </summary>
-    internal class DownloadProgressReport
+    public class DownloadProgressReport
     {
         /// <summary>
         /// Gets the number of bytes received during the download.

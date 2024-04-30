@@ -332,7 +332,7 @@ namespace System
             return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
         }
 
-        public static string GetMatchModifiedName(this string str)
+        public static string Normalize(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {

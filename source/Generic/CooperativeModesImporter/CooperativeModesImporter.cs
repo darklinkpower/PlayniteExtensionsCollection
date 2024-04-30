@@ -410,8 +410,7 @@ namespace CooperativeModesImporter
         private static string SatinizeGameName(string str)
         {
             return str.Replace(" & ", " And ")
-                .GetMatchModifiedName()
-                .ToLower()
+                .Normalize()
                 .Replace("gameoftheyearedition", "")
                 .Replace("gameoftheyear", "")
                 .Replace("premiumedition", "");

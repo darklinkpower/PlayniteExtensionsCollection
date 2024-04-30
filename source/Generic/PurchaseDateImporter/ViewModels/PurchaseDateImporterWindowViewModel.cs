@@ -88,7 +88,7 @@ namespace PurchaseDateImporter.ViewModels
 
                 if (useNameToCompare)
                 {
-                    var matchingName = game.Name.GetMatchModifiedName();
+                    var matchingName = game.Name.Normalize();
                     if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
                     {
                         if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
@@ -246,7 +246,7 @@ namespace PurchaseDateImporter.ViewModels
                 
                 if (!matchUsingId)
                 {
-                    var matchingName = game.Name.GetMatchModifiedName();
+                    var matchingName = game.Name.Normalize();
                     if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
                     {
                         if (changeLicenseName)

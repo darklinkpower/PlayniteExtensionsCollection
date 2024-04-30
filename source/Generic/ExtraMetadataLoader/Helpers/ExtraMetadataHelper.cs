@@ -116,8 +116,8 @@ namespace ExtraMetadataLoader.Helpers
             }
 
             // See if there are matches by removing all symbols, spaces, etc
-            var matchingGameName = normalizedName.GetMatchModifiedName();
-            var exactMatches = results.Where(x => x.Name.GetMatchModifiedName() == matchingGameName);
+            var matchingGameName = normalizedName.Normalize();
+            var exactMatches = results.Where(x => x.Name.Normalize() == matchingGameName);
             if (exactMatches.HasItems() && (isBackgroundDownload || exactMatches.Count() == 1))
             {
                 return exactMatches.First().GameId;

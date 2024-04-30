@@ -30,8 +30,8 @@ namespace SteamCommon
             var results = GetSteamSearchResults(normalizedName);
             results.ForEach(a => a.Name = a.Name.NormalizeGameName());
 
-            var matchingGameName = normalizedName.GetMatchModifiedName();
-            var exactMatch = results.FirstOrDefault(x => x.Name.GetMatchModifiedName() == matchingGameName);
+            var matchingGameName = normalizedName.Normalize();
+            var exactMatch = results.FirstOrDefault(x => x.Name.Normalize() == matchingGameName);
             if (!(exactMatch is null))
             {
                 logger.Info($"Found steam id for search {searchTerm} via steam search, Id: {exactMatch.GameId}");

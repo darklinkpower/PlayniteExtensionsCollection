@@ -116,8 +116,8 @@ namespace ExtraMetadataLoader.LogoProviders
             {
                 var gamesList = GetSteamGridDbSearchResults(game.Name);
                 // Try to see if there's an exact match, to not prompt the user unless needed
-                var matchingGameName = game.Name.GetMatchModifiedName();
-                var exactMatches = gamesList.Where(x => x.Name.GetMatchModifiedName() == matchingGameName);
+                var matchingGameName = game.Name.Normalize();
+                var exactMatches = gamesList.Where(x => x.Name.Normalize() == matchingGameName);
                 if (isBackgroundDownload)
                 {
                     if (exactMatches?.ToList().Count > 0)
