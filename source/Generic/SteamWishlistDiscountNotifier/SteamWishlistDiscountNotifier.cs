@@ -193,7 +193,8 @@ namespace SteamWishlistDiscountNotifier
                     var request = HttpDownloader.GetRequestBuilder()
                         .WithUrl(wishlistItem.WishlistItem.Capsule.ToString())
                         .WithDownloadTo(localBannerPath)
-                        .WithCancellationToken(a.CancelToken);
+                        .WithCancellationToken(a.CancelToken)
+                        .Build();
 
                     var result = request.DownloadFile();
                     if (result.IsSuccessful)
@@ -624,7 +625,8 @@ namespace SteamWishlistDiscountNotifier
                     .WithUrl(url)
                     .WithHeaders(headers)
                     .WithCookies(cookies)
-                    .WithCancellationToken(cancelToken);
+                    .WithCancellationToken(cancelToken)
+                    .Build();
                 var downloadResult = request.DownloadString();
                 if (!downloadResult.IsSuccessful)
                 {

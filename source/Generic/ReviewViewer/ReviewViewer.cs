@@ -142,7 +142,7 @@ namespace ReviewViewer
 
                         // To prevent being rate limited
                         Thread.Sleep(200);
-                        HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFile();
+                        HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).Build().DownloadFile();
                     }
                 }
             }, progressOptions);

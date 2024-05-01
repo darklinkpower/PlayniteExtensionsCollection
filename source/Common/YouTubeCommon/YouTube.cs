@@ -28,7 +28,7 @@ namespace YouTubeCommon
                 uri = string.Format(youtubeSearchTemplate, Uri.EscapeDataString(searchTerm));
             }
 
-            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(uri).DownloadString();
+            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(uri).Build().DownloadString();
             if (downloadedString.IsSuccessful)
             {
                 var embeddedJsonMatch = Regex.Match(downloadedString.Response.Content, youtubeResponseRegexStr);

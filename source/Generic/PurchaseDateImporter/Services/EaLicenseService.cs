@@ -87,7 +87,7 @@ namespace PurchaseDateImporter.Services
                 ["accept"] = "application/vnd.origin.v3+json; x-cache/force-write",
             };
 
-            var identityResponse = HttpDownloader.GetRequestBuilder().WithUrl("https://gateway.ea.com/proxy/identity/pids/me").WithHeaders(headers).DownloadString();
+            var identityResponse = HttpDownloader.GetRequestBuilder().WithUrl("https://gateway.ea.com/proxy/identity/pids/me").WithHeaders(headers).Build().DownloadString();
             if (!identityResponse.IsSuccessful)
             {
                 return null;
@@ -101,7 +101,9 @@ namespace PurchaseDateImporter.Services
             headers["authtoken"] = authResponse.AccessToken;
             var url = string.Format("https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", identity.Pid.PidId);
             var entitlementsResponseData = HttpDownloader.GetRequestBuilder().WithUrl(url)
-                .WithHeaders(headers).DownloadString();
+                .WithHeaders(headers)
+                .Build()
+                .DownloadString();
             return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData.Response.Content);
         }
     }

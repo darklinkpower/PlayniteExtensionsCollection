@@ -48,6 +48,7 @@ namespace SteamCommon
             var searchPageSrc = HttpDownloader.GetRequestBuilder()
                 .WithUrl(GetStoreSearchUrl(searchTerm, steamApiCountry))
                 .WithCancellationToken(cancelToken)
+                .Build()
                 .DownloadString();
             if (searchPageSrc.IsSuccessful)
             {
@@ -183,7 +184,7 @@ namespace SteamCommon
         public static SteamAppDetails GetSteamAppDetails(string steamId, CancellationToken cancelToken = default)
         {
             var url = string.Format(steamAppDetailsMask, steamId);
-            var request = HttpDownloader.GetRequestBuilder().WithUrl(url).WithCancellationToken(cancelToken);
+            var request = HttpDownloader.GetRequestBuilder().WithUrl(url).WithCancellationToken(cancelToken).Build();
             var downloadedString = request.DownloadString();
             if (downloadedString.IsSuccessful)
             {

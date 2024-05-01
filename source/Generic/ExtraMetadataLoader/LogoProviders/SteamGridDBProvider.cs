@@ -52,7 +52,7 @@ namespace ExtraMetadataLoader.LogoProviders
                 { "Authorization", $"Bearer {settings.SgdbApiKey}" }
             };
 
-            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(requestString).WithHeaders(headers).DownloadString();
+            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(requestString).WithHeaders(headers).Build().DownloadString();
             if (!downloadedString.IsSuccessful)
             {
                 return null;
@@ -185,7 +185,7 @@ namespace ExtraMetadataLoader.LogoProviders
                 { "Authorization", $"Bearer {settings.SgdbApiKey}" }
             };
 
-            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(searchUrl).WithHeaders(headers).DownloadString();
+            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(searchUrl).WithHeaders(headers).Build().DownloadString();
             if (downloadResult.IsSuccessful)
             {
                 var response = Serialization.FromJson<SteamGridDbGameSearchResponse>(downloadResult.Response.Content);

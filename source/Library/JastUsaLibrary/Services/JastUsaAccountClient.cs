@@ -120,7 +120,8 @@ namespace JastUsaLibrary.Services
             var request = HttpDownloader.GetRequestBuilder().WithUrl(authenticationTokenUrl)
                 .WithPostHttpMethod()
                 .WithContent(Serialization.ToJson(authentication), StandardMediaTypesConstants.Json)
-                .WithHeaders(headers);
+                .WithHeaders(headers)
+                .Build();
 
             var downloadStringResult = request.DownloadString();
             if (downloadStringResult.IsSuccessful)
@@ -162,7 +163,8 @@ namespace JastUsaLibrary.Services
             var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
             var request = HttpDownloader.GetRequestBuilder()
                 .WithUrl(translationsUrl)
-                .WithHeaders(headers);
+                .WithHeaders(headers)
+                .Build();
             var downloadStringResult = request.DownloadString();
             if (!downloadStringResult.IsSuccessful)
             {
@@ -219,7 +221,8 @@ namespace JastUsaLibrary.Services
                 var url = string.Format(getGamesUrlTemplate, currentPage);
                 var request = HttpDownloader.GetRequestBuilder()
                     .WithUrl(url)
-                    .WithHeaders(headers);
+                    .WithHeaders(headers)
+                    .Build();
                 var downloadStringResult = request.DownloadString();
                 if (!downloadStringResult.IsSuccessful)
                 {
@@ -263,7 +266,8 @@ namespace JastUsaLibrary.Services
                 .WithUrl(generateLinkUrl)
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
-                .WithHeaders(headers);
+                .WithHeaders(headers)
+                .Build();
             var downloadStringResult = request.DownloadString();
             if (downloadStringResult.IsSuccessful)
             {

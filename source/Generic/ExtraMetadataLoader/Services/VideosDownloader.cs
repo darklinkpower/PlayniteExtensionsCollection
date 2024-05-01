@@ -90,6 +90,7 @@ namespace ExtraMetadataLoader.Services
 
                 var downloadFileResult = HttpDownloader.GetRequestBuilder()
                     .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath).WithCancellationToken(cancelToken)
+                    .Build()
                     .DownloadFile();
                 if (downloadFileResult.IsSuccessful)
                 {
@@ -102,6 +103,7 @@ namespace ExtraMetadataLoader.Services
                 var videoUrl = string.Format(steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
                 var downloadFileResult = HttpDownloader.GetRequestBuilder()
                     .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath).WithCancellationToken(cancelToken)
+                    .Build()
                     .DownloadFile();
                 if (downloadFileResult.IsSuccessful)
                 {

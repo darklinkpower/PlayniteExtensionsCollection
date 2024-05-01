@@ -31,6 +31,7 @@ namespace OpenCriticMetadata.Services
             return HttpDownloader.GetRequestBuilder()
                 .WithUrl(requestUrl)
                 .WithHeaders(GetSearchHeaders())
+                .Build()
                 .DownloadString();
         }
 

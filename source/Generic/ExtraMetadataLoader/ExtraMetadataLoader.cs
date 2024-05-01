@@ -760,7 +760,7 @@ namespace ExtraMetadataLoader
                 return false;
             }
 
-            var request = HttpDownloader.GetRequestBuilder().WithUrl(logoUrl).WithDownloadTo(logoPath).WithCancellationToken(cancelToken);
+            var request = HttpDownloader.GetRequestBuilder().WithUrl(logoUrl).WithDownloadTo(logoPath).WithCancellationToken(cancelToken).Build();
             var downloadFileResult = request.DownloadFile();
             if (downloadFileResult.IsSuccessful)
             {

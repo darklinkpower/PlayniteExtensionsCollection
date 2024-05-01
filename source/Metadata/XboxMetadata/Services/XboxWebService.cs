@@ -30,13 +30,13 @@ namespace XboxMetadata.Services
             _settingsViewModel = settingsViewModel;
         }
 
-        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(HttpRequestBuilder request)
+        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(HttpRequestClient request)
         {
             await _requestLimiter;
             return request.DownloadString();
         }
 
-        public StringHttpDownloaderResult ExecuteRequest(HttpRequestBuilder request)
+        public StringHttpDownloaderResult ExecuteRequest(HttpRequestClient request)
         {
             return Task.Run(async () => await ExecuteRequestAsync(request)).Result;
         }
@@ -52,7 +52,8 @@ namespace XboxMetadata.Services
             var requestUrl = string.Format(quickSearchTemplate,
                 _settingsViewModel.Settings.MarketLanguagePreference.GetStringValue(), quickSearchNumberOfResults, searchTerm.EscapeDataString());
             var request = HttpDownloader.GetRequestBuilder()
-                .WithUrl(requestUrl);
+                .WithUrl(requestUrl)
+                .Build();
             var result = ExecuteRequest(request);
             if (!result.IsSuccessful)
             {
@@ -101,7 +102,8 @@ namespace XboxMetadata.Services
                 .WithUrl(requestUrl)
                 .WithHeaders(headers)
                 .WithPostHttpMethod()
-                .WithContent(jsonBody, StandardMediaTypesConstants.Json);
+                .WithContent(jsonBody, StandardMediaTypesConstants.Json)
+                .Build();
 
             var results = new List<ProductSummary>();
             var result = ExecuteRequest(request);

@@ -383,7 +383,8 @@ namespace NewsViewer.PluginControls
 
             var request = HttpDownloader.GetRequestBuilder()
                 .WithUrl(string.Format(steamRssTemplate, steamId, steamLanguage))
-                .WithHeaders(headers);
+                .WithHeaders(headers)
+                .Build();
             var result = await request.DownloadStringAsync();
             if (!result.IsSuccessful)
             {

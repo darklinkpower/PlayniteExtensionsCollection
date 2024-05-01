@@ -178,6 +178,7 @@ namespace ImporterforAnilist.Services
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
                 .WithHeaders(headers)
+                .Build()
                 .DownloadString();
 
             if (downloadStringResult.IsSuccessful)
@@ -295,6 +296,7 @@ namespace ImporterforAnilist.Services
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
                 .WithHeaders(headers)
+                .Build()
                 .DownloadString();
 
             if (downloadStringResult.IsSuccessful)

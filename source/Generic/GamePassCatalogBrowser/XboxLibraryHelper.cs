@@ -227,6 +227,7 @@ namespace GamePassCatalogBrowser
                 HttpDownloader.GetRequestBuilder()
                     .WithUrl($"{game.BackgroundImageUrl}?mode=scale&q=90&h=1080&w=1920")
                     .WithDownloadTo(downloadPath)
+                    .Build()
                     .DownloadFile();
                 if (FileSystem.FileExists(downloadPath))
                 {

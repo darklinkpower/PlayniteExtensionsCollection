@@ -42,6 +42,7 @@ namespace MetacriticMetadata.Services
             return HttpDownloader.GetRequestBuilder()
                 .WithUrl(requestUrl)
                 .WithHeaders(defaultApiHeaders)
+                .Build()
                 .DownloadString();
         }
 

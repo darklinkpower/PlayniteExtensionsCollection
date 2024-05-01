@@ -331,7 +331,7 @@ namespace SaveFileView
             var uri = GetPcgwGameIdSearchUri(game);
             if (!uri.IsNullOrEmpty())
             {
-                var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(uri).DownloadString();
+                var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(uri).Build().DownloadString();
                 if (downloadStringResult.IsSuccessful)
                 {
                     var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult.Response.Content);
@@ -351,7 +351,7 @@ namespace SaveFileView
             }
 
             var apiUri = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
-            var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(apiUri).DownloadString();
+            var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(apiUri).Build().DownloadString();
             if (!downloadStringResult.IsSuccessful)
             {
                 return false;
@@ -369,7 +369,7 @@ namespace SaveFileView
                 }
 
                 var apiUri2 = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID%3DPageID&where=Infobox_game._pageName%3D%22{0}%22&format=json", titleMatch.Groups[1].Value.UrlEncode());
-                var downloadStringResult2 = HttpDownloader.GetRequestBuilder().WithUrl(apiUri2).DownloadString();
+                var downloadStringResult2 = HttpDownloader.GetRequestBuilder().WithUrl(apiUri2).Build().DownloadString();
                 if (!downloadStringResult2.IsSuccessful)
                 {
                     return false;
@@ -378,7 +378,7 @@ namespace SaveFileView
                 var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult2.Response.Content);
                 pageId = query.CargoQuery.First().Title.PageId;
                 var apiUri3 = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
-                var downloadStringResult3 = HttpDownloader.GetRequestBuilder().WithUrl(apiUri3).DownloadString();
+                var downloadStringResult3 = HttpDownloader.GetRequestBuilder().WithUrl(apiUri3).Build().DownloadString();
                 if (!downloadStringResult3.IsSuccessful)
                 {
                     return false;
@@ -631,7 +631,7 @@ namespace SaveFileView
         private PcgwTitleSearch GetPcgwSearchQuery(string gameName)
         {
             var searchUri = string.Format(pcgwTitleSearchQuery, gameName.UrlEncode());
-            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(searchUri).DownloadString();
+            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(searchUri).Build().DownloadString();
             if (!downloadedString.IsSuccessful)
             {
                 return null;

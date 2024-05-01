@@ -33,151 +33,54 @@ namespace WebCommon
         }
     }
 
-    /// <summary>
-    /// A builder class for constructing HTTP requests, including various options and settings.
-    /// </summary>
-    public class HttpRequestBuilder
+    public class HttpRequestClient
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly HttpClientFactory _httpClientFactory;
-        private readonly List<string> _urls = new List<string>();
+        private readonly List<string> _urls;
         private string _content;
-        private Encoding _contentEncoding = Encoding.UTF8;
-        private string _contentMediaType = StandardMediaTypesConstants.PlainText;
-        private HttpMethod _httpMethod = HttpMethod.Get;
-        private CancellationToken _cancellationToken = CancellationToken.None;
+        private Encoding _contentEncoding;
+        private string _contentMediaType;
+        private HttpMethod _httpMethod;
+        private CancellationToken _cancellationToken;
         private Dictionary<string, string> _headers;
-        private readonly List<Cookie> _cookies = new List<Cookie>();
+        private readonly List<Cookie> _cookies;
         private string _filePath;
-        private bool _appendToFile = false;
+        private bool _appendToFile;
         private TimeSpan? _timeout;
         private IProgress<DownloadProgressReport> _progressReporter;
-        private TimeSpan _progressReportInterval = TimeSpan.FromMilliseconds(1000);
+        private TimeSpan _progressReportInterval;
 
-        /// <summary>
-        /// Initializes a new instance of the HttpRequestBuilder class with the specified HttpClientFactory.
-        /// </summary>
-        internal HttpRequestBuilder(HttpClientFactory httpClientFactory)
+        internal HttpRequestClient(
+            HttpClientFactory httpClientFactory,
+            List<string> urls,
+            string content,
+            Encoding contentEncoding,
+            string contentMediaType,
+            HttpMethod httpMethod,
+            CancellationToken cancellationToken,
+            Dictionary<string, string> headers,
+            List<Cookie> cookies,
+            string filePath,
+            bool appendToFile,
+            TimeSpan? timeout,
+            IProgress<DownloadProgressReport> progressReporter,
+            TimeSpan progressReportInterval)
         {
             _httpClientFactory = httpClientFactory;
-        }
-
-        public HttpRequestBuilder WithUrls(IEnumerable<string> urls)
-        {
-            _urls.AddRange(urls);
-            return this;
-        }
-
-        public HttpRequestBuilder WithUrl(string url)
-        {
-            _urls.Add(url);
-            return this;
-        }
-
-        public HttpRequestBuilder WithContent(string content, string mediaType = null, Encoding encoding = null)
-        {
+            _urls = urls.ToList();
             _content = content;
-
-            if (!(encoding is null))
-            {
-                _contentEncoding = encoding;
-            }
-
-            if (!(mediaType is null))
-            {
-                _contentMediaType = mediaType;
-            }
-
-            return this;
-        }
-
-        public HttpRequestBuilder WithCancellationToken(CancellationToken cancellationToken)
-        {
+            _contentEncoding = contentEncoding;
+            _contentMediaType = contentMediaType;
+            _httpMethod = httpMethod;
             _cancellationToken = cancellationToken;
-            return this;
-        }
-
-        public HttpRequestBuilder WithHeaders(Dictionary<string, string> headers)
-        {
             _headers = headers;
-            return this;
-        }
-
-        public HttpRequestBuilder WithCookies(List<Cookie> cookies)
-        {
-            _cookies.AddRange(cookies);
-            return this;
-        }
-
-        public HttpRequestBuilder WithCookies(Dictionary<string, string> cookiesDictionary)
-        {
-            _cookies.AddRange(cookiesDictionary.Select(kvp => new Cookie(kvp.Key, kvp.Value)));
-            return this;
-        }
-
-        public HttpRequestBuilder WithHttpMethod(HttpMethod method)
-        {
-            _httpMethod = method;
-            return this;
-        }
-
-        public HttpRequestBuilder WithGetHttpMethod()
-        {
-            _httpMethod = HttpMethod.Get;
-            return this;
-        }
-
-        public HttpRequestBuilder WithPostHttpMethod()
-        {
-            _httpMethod = HttpMethod.Post;
-            return this;
-        }
-
-        public HttpRequestBuilder WithHeadHttpMethod()
-        {
-            _httpMethod = HttpMethod.Head;
-            return this;
-        }
-
-        public HttpRequestBuilder WithDownloadTo(string filePath)
-        {
+            _cookies = cookies.ToList();
             _filePath = filePath;
-            return this;
-        }
-
-        public HttpRequestBuilder WithAppendToFile(bool appendToFile)
-        {
             _appendToFile = appendToFile;
-            return this;
-        }
-
-        /// <summary>
-        /// Sets a progress reporter for tracking and reporting download progress during the HTTP download operation.
-        /// </summary>
-        /// <param name="downloadProgressReporter">An instance of IProgress&lt;DownloadProgressReport&gt; for reporting download progress.</param>
-        /// <returns>The HttpRequestBuilder instance to continue configuring the download operation.</returns>
-        public HttpRequestBuilder WithProgressReporter(IProgress<DownloadProgressReport> downloadProgressReporter)
-        {
-            _progressReporter = downloadProgressReporter;
-            return this;
-        }
-
-        public HttpRequestBuilder WithProgressReportInterval(TimeSpan reportInterval)
-        {
-            _progressReportInterval = reportInterval;
-            return this;
-        }
-
-        public HttpRequestBuilder WithTimeout(double milliseconds)
-        {
-            _timeout = TimeSpan.FromMilliseconds(milliseconds);
-            return this;
-        }
-
-        public HttpRequestBuilder WithTimeout(TimeSpan timeout)
-        {
             _timeout = timeout;
-            return this;
+            _progressReporter = progressReporter;
+            _progressReportInterval = progressReportInterval;
         }
 
         /// <summary>
@@ -349,7 +252,7 @@ namespace WebCommon
                                     {
                                         throw new MissingContentRangeHeaderException();
                                     }
-                                    
+
                                     await SaveFileContent(result, response, cts.Token, appendToFile);
                                     RecordResponseData(result.Response, response);
                                     break;
@@ -604,7 +507,172 @@ namespace WebCommon
 
             return Encoding.UTF8;
         }
+    }
 
+    /// <summary>
+    /// A builder class for constructing HTTP requests, including various options and settings.
+    /// </summary>
+    public class HttpRequestBuilder
+    {
+        private readonly HttpClientFactory _httpClientFactory;
+        private readonly List<string> _urls = new List<string>();
+        private string _content;
+        private Encoding _contentEncoding = Encoding.UTF8;
+        private string _contentMediaType = StandardMediaTypesConstants.PlainText;
+        private HttpMethod _httpMethod = HttpMethod.Get;
+        private CancellationToken _cancellationToken = CancellationToken.None;
+        private Dictionary<string, string> _headers;
+        private readonly List<Cookie> _cookies = new List<Cookie>();
+        private string _filePath;
+        private bool _appendToFile = false;
+        private TimeSpan? _timeout;
+        private IProgress<DownloadProgressReport> _progressReporter;
+        private TimeSpan _progressReportInterval = TimeSpan.FromMilliseconds(1000);
 
+        /// <summary>
+        /// Initializes a new instance of the HttpRequestBuilder class with the specified HttpClientFactory.
+        /// </summary>
+        internal HttpRequestBuilder(HttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
+        public HttpRequestBuilder WithUrls(IEnumerable<string> urls)
+        {
+            _urls.AddRange(urls);
+            return this;
+        }
+
+        public HttpRequestBuilder WithUrl(string url)
+        {
+            _urls.Add(url);
+            return this;
+        }
+
+        public HttpRequestBuilder WithContent(string content, string mediaType = null, Encoding encoding = null)
+        {
+            _content = content;
+
+            if (!(encoding is null))
+            {
+                _contentEncoding = encoding;
+            }
+
+            if (!(mediaType is null))
+            {
+                _contentMediaType = mediaType;
+            }
+
+            return this;
+        }
+
+        public HttpRequestBuilder WithCancellationToken(CancellationToken cancellationToken)
+        {
+            _cancellationToken = cancellationToken;
+            return this;
+        }
+
+        public HttpRequestBuilder WithHeaders(Dictionary<string, string> headers)
+        {
+            _headers = headers;
+            return this;
+        }
+
+        public HttpRequestBuilder WithCookies(List<Cookie> cookies)
+        {
+            _cookies.AddRange(cookies);
+            return this;
+        }
+
+        public HttpRequestBuilder WithCookies(Dictionary<string, string> cookiesDictionary)
+        {
+            _cookies.AddRange(cookiesDictionary.Select(kvp => new Cookie(kvp.Key, kvp.Value)));
+            return this;
+        }
+
+        public HttpRequestBuilder WithHttpMethod(HttpMethod method)
+        {
+            _httpMethod = method;
+            return this;
+        }
+
+        public HttpRequestBuilder WithGetHttpMethod()
+        {
+            _httpMethod = HttpMethod.Get;
+            return this;
+        }
+
+        public HttpRequestBuilder WithPostHttpMethod()
+        {
+            _httpMethod = HttpMethod.Post;
+            return this;
+        }
+
+        public HttpRequestBuilder WithHeadHttpMethod()
+        {
+            _httpMethod = HttpMethod.Head;
+            return this;
+        }
+
+        public HttpRequestBuilder WithDownloadTo(string filePath)
+        {
+            _filePath = filePath;
+            return this;
+        }
+
+        public HttpRequestBuilder WithAppendToFile(bool appendToFile)
+        {
+            _appendToFile = appendToFile;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets a progress reporter for tracking and reporting download progress during the HTTP download operation.
+        /// </summary>
+        /// <param name="downloadProgressReporter">An instance of IProgress&lt;DownloadProgressReport&gt; for reporting download progress.</param>
+        /// <returns>The HttpRequestBuilder instance to continue configuring the download operation.</returns>
+        public HttpRequestBuilder WithProgressReporter(IProgress<DownloadProgressReport> downloadProgressReporter)
+        {
+            _progressReporter = downloadProgressReporter;
+            return this;
+        }
+
+        public HttpRequestBuilder WithProgressReportInterval(TimeSpan reportInterval)
+        {
+            _progressReportInterval = reportInterval;
+            return this;
+        }
+
+        public HttpRequestBuilder WithTimeout(double milliseconds)
+        {
+            _timeout = TimeSpan.FromMilliseconds(milliseconds);
+            return this;
+        }
+
+        public HttpRequestBuilder WithTimeout(TimeSpan timeout)
+        {
+            _timeout = timeout;
+            return this;
+        }
+
+        public HttpRequestClient Build()
+        {
+            return new HttpRequestClient(
+                _httpClientFactory,
+                _urls,
+                _content,
+                _contentEncoding,
+                _contentMediaType,
+                _httpMethod,
+                _cancellationToken,
+                _headers,
+                _cookies,
+                _filePath,
+                _appendToFile,
+                _timeout,
+                _progressReporter,
+                _progressReportInterval
+            );
+        }
     }
 }

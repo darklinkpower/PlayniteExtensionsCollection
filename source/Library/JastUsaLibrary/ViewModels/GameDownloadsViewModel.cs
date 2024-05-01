@@ -202,7 +202,8 @@ namespace JastUsaLibrary.ViewModels
                     .WithUrl(url.ToString())
                     .WithDownloadTo(downloadPath)
                     .WithCancellationToken(a.CancelToken)
-                    .WithProgressReporter(progress);
+                    .WithProgressReporter(progress)
+                    .Build();
 
                 var result = request.DownloadFile();
 

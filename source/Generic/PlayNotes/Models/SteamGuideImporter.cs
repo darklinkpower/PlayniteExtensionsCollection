@@ -76,7 +76,7 @@ namespace PlayNotes.Models
                 return false;
             }
 
-            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(Url).WithCancellationToken(cancelToken).DownloadString();
+            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(Url).WithCancellationToken(cancelToken).Build().DownloadString();
             if (cancelToken.IsCancellationRequested)
             {
                 return false;

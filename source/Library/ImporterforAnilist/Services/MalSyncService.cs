@@ -32,7 +32,7 @@ namespace ImporterforAnilist.Services
             }
 
             malSyncRateLimiter.WaitForSlot();
-            var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(queryUri).DownloadString();
+            var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(queryUri).Build().DownloadString();
             if (!downloadStringResult.IsSuccessful || downloadStringResult.Response.Content.IsNullOrEmpty())
             {
                 return null;

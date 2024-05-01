@@ -524,7 +524,8 @@ namespace SteamWishlistDiscountNotifier.ViewModels
                     .WithCookies(new Dictionary<string, string> { { "sessionid", _steamSessionId }, { "steamLoginSecure", _steamLoginSecure } })
                     .WithPostHttpMethod()
                     .WithCancellationToken(a.CancelToken)
-                    .WithContent($"sessionid={_steamSessionId}&appid={cacheItem.Data.StoreId}", StandardMediaTypesConstants.FormUrlEncoded, Encoding.UTF8);
+                    .WithContent($"sessionid={_steamSessionId}&appid={cacheItem.Data.StoreId}", StandardMediaTypesConstants.FormUrlEncoded, Encoding.UTF8)
+                    .Build();
 
                 var result = await request.DownloadStringAsync();
                 if (!result.IsSuccessful || !Serialization.TryFromJson<WishlistAddRemoveRequestResponse>(result.Response.Content, out var response) || !response.Success)
