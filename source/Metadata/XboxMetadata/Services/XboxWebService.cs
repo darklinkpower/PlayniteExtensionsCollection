@@ -30,14 +30,6 @@ namespace XboxMetadata.Services
             _settingsViewModel = settingsViewModel;
         }
 
-        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(string requestUrl)
-        {
-            await _requestLimiter;
-            return HttpDownloader.GetRequestBuilder()
-                .WithUrl(requestUrl)
-                .DownloadString();
-        }
-
         public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(HttpRequestBuilder request)
         {
             await _requestLimiter;

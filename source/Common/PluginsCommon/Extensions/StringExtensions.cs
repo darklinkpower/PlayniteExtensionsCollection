@@ -149,6 +149,48 @@ namespace System
             return source.Remove(source.LastIndexOf(value, comp));
         }
 
+        public static string TrimStringWithEllipsis(this string input, int maxLength, bool trimToLastFullWord)
+        {
+            if (input.Length <= maxLength)
+            {
+                return input;
+            }
+
+            const string endingEllipsis = "...";
+            var trimmed = input.Substring(0, maxLength);
+            
+            // If the character at maxLength index is whitespace, trim to that point
+            // This means the string was trimmed right after ending a word
+            if (trimToLastFullWord)
+            {
+                // Backtrack until finding a letter and trim the string at that position
+                for (int i = maxLength - 1; i >= 0; i--)
+                {
+                    if (char.IsLetterOrDigit(input[i]) && char.IsWhiteSpace(input[i + 1]))
+                    {
+                        trimmed = input.Substring(0, i + 1);
+                        return trimmed + endingEllipsis;
+                    }
+                }
+
+                return trimmed + endingEllipsis;
+            }
+
+            // Find the index of the last space within the trimmed length
+            var lastSpaceIndex = trimmed.LastIndexOf(' ');
+            // If there's no space within the trimmed length, return trimmed with ellipsis
+            if (lastSpaceIndex == -1)
+            {
+                return trimmed + endingEllipsis;
+            }
+            else
+            {
+                // Trim the string up until the last space within the maxLength
+                trimmed = trimmed.Substring(0, lastSpaceIndex);
+                return trimmed + endingEllipsis;
+            }
+        }
+
         private static string RemoveUnlessThatEmptiesTheString(string input, string pattern)
         {
             string output = Regex.Replace(input, pattern, string.Empty);
@@ -157,6 +199,7 @@ namespace System
             {
                 return input;
             }
+
             return output;
         }
 

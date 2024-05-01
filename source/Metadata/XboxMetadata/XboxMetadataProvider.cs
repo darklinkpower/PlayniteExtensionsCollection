@@ -139,7 +139,7 @@ namespace XboxMetadata
                 return base.GetReleaseDate(args);
             }
 
-            return new ReleaseDate(_matchedProductData.ReleaseDate.Value.LocalDateTime);
+            return new ReleaseDate(_matchedProductData.ReleaseDate.Value.DateTime);
         }
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
@@ -327,7 +327,7 @@ namespace XboxMetadata
         {
             var uriBuilder = new UriBuilder(image.Url);
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-            
+
             // Default quality is 90
             query["q"] = quality.ToString();
             if (targetWidth.HasValue && targetHeight.HasValue)
@@ -413,7 +413,7 @@ namespace XboxMetadata
             var availabilityPlatforms = new List<string>();
             if (productSummary.ReleaseDate.HasValue)
             {
-                descriptionLines.Add(productSummary.ReleaseDate.Value.LocalDateTime.ToString("yyyy-MM-dd"));
+                descriptionLines.Add(productSummary.ReleaseDate.Value.DateTime.ToString("yyyy-MM-dd"));
             }
 
             if (productSummary.AvailableOn.Contains(AvailableOn.Pc))
@@ -434,11 +434,13 @@ namespace XboxMetadata
             descriptionLines.Add(string.Join(", ", availabilityPlatforms));
             if (!productSummary.ShortDescription.IsNullOrEmpty())
             {
-                descriptionLines.Add(productSummary.ShortDescription);
+                var trimmedDescription = productSummary.ShortDescription.TrimStringWithEllipsis(300, true);
+                descriptionLines.Add(trimmedDescription);
             }
             else if (!productSummary.Description.IsNullOrEmpty())
             {
-                descriptionLines.Add(productSummary.Description);
+                var trimmedDescription = productSummary.Description.TrimStringWithEllipsis(300, true);
+                descriptionLines.Add(trimmedDescription);
             }
 
             var description = string.Join("\n\n", descriptionLines);
