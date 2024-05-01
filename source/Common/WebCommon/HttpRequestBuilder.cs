@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,24 @@ using WebCommon.Models;
 
 namespace WebCommon
 {
+    public class MissingContentRangeHeaderException : Exception
+    {
+        public MissingContentRangeHeaderException() { }
+
+        public MissingContentRangeHeaderException(string message) : base(message) { }
+
+        public MissingContentRangeHeaderException(string message, Exception innerException) : base(message, innerException) { }
+
+        protected MissingContentRangeHeaderException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        public override string Message
+        {
+            get
+            {
+                return "File download was set to append, but the server response did not include a Content-Range header indicating the range of the response. " + base.Message;
+            }
+        }
+    }
+
     /// <summary>
     /// A builder class for constructing HTTP requests, including various options and settings.
     /// </summary>
@@ -30,6 +49,7 @@ namespace WebCommon
         private Dictionary<string, string> _headers;
         private readonly List<Cookie> _cookies = new List<Cookie>();
         private string _filePath;
+        private bool _appendToFile = false;
         private TimeSpan? _timeout;
         private IProgress<DownloadProgressReport> _progressReporter;
         private TimeSpan _progressReportInterval = TimeSpan.FromMilliseconds(1000);
@@ -122,6 +142,12 @@ namespace WebCommon
         public HttpRequestBuilder WithDownloadTo(string filePath)
         {
             _filePath = filePath;
+            return this;
+        }
+
+        public HttpRequestBuilder WithAppendToFile(bool appendToFile)
+        {
+            _appendToFile = appendToFile;
             return this;
         }
 
@@ -276,6 +302,18 @@ namespace WebCommon
             }
 
             var result = new FileDownloadHttpDownloaderResult();
+            long resumeOffset = 0;
+            var appendToFile = false;
+            if (_appendToFile && FileSystem.FileExists(_filePath))
+            {
+                var fileInfo = new FileInfo(FileSystem.FixPathLength(_filePath));
+                if (fileInfo.Length > 0)
+                {
+                    resumeOffset = fileInfo.Length;
+                    appendToFile = true;
+                }
+            }
+
             foreach (var url in _urls)
             {
 #if DEBUG
@@ -297,7 +335,7 @@ namespace WebCommon
 
                     try
                     {
-                        using (var request = CreateRequest(url, stringContent))
+                        using (var request = CreateRequest(url, stringContent, resumeOffset))
                         {
                             var httpClient = _httpClientFactory.GetClient(request);
                             using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token))
@@ -307,7 +345,12 @@ namespace WebCommon
 
                                 if (result.IsSuccessful)
                                 {
-                                    await SaveFileContent(result, response, cts.Token);
+                                    if (appendToFile && response.Content.Headers.ContentRange is null)
+                                    {
+                                        throw new MissingContentRangeHeaderException();
+                                    }
+                                    
+                                    await SaveFileContent(result, response, cts.Token, appendToFile);
                                     RecordResponseData(result.Response, response);
                                     break;
                                 }
@@ -317,6 +360,10 @@ namespace WebCommon
                     catch (OperationCanceledException ex)
                     {
                         HandleCancellation(ex, result);
+                    }
+                    catch (MissingContentRangeHeaderException ex)
+                    {
+                        HandleException(ex, result);
                     }
                     catch (Exception ex)
                     {
@@ -337,7 +384,7 @@ namespace WebCommon
         /// </summary>
         /// <param name="url">The URL for the HTTP request.</param>
         /// <returns>An HttpRequestMessage instance representing the HTTP request.</returns>
-        private HttpRequestMessage CreateRequest(string url, StringContent stringContent)
+        private HttpRequestMessage CreateRequest(string url, StringContent stringContent, long resumeOffset = 0)
         {
             var request = new HttpRequestMessage(_httpMethod, url);
             if (_headers != null)
@@ -357,6 +404,15 @@ namespace WebCommon
             if (!(stringContent is null))
             {
                 request.Content = stringContent;
+            }
+
+            if (resumeOffset > 0)
+            {
+                request.Headers.Range = new RangeHeaderValue(resumeOffset, null);
+                // No idea why but this is needed or there will be an error during download if not set to Close
+                // "Unable to read data from the transport connection:An existing connection was forcibly closed by the remote host"
+                // https://stackoverflow.com/a/11326290
+                request.Headers.ConnectionClose = true;
             }
 
             return request;
@@ -386,11 +442,7 @@ namespace WebCommon
 
                     while ((bytesRead = await streamReader.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
-                        if (cancellationToken.IsCancellationRequested)
-                        {
-                            throw new OperationCanceledException();
-                        }
-
+                        cancellationToken.ThrowIfCancellationRequested();
                         stringBuilder.Append(buffer, 0, bytesRead);
                         totalBytesRead += bytesRead;
 
@@ -417,13 +469,16 @@ namespace WebCommon
         /// </summary>
         /// <param name="result">The HttpDownloaderResult to update with file-related information.</param>
         /// <param name="response">The HttpResponseMessage containing the content to save.</param>
-        private async Task SaveFileContent(FileDownloadHttpDownloaderResult result, HttpResponseMessage response, CancellationToken cancellationToken)
+        private async Task SaveFileContent(FileDownloadHttpDownloaderResult result, HttpResponseMessage response, CancellationToken cancellationToken, bool appendToFile)
         {
-            FileSystem.PrepareSaveFile(_filePath);
             var startTime = DateTime.Now;
             var lastReportTime = startTime;
             var totalBytesToReceive = response.Content.Headers.ContentLength ?? 0;
-            using (var fs = new FileStream(_filePath, FileMode.Create))
+
+            var fileMode = appendToFile ? FileMode.Append : FileMode.Create;
+            var deleteExistingFile = fileMode == FileMode.Create;
+            FileSystem.PrepareSaveFile(_filePath, deleteExistingFile);
+            using (var fs = new FileStream(_filePath, fileMode))
             {
                 using (var contentStream = await response.Content.ReadAsStreamAsync())
                 {
@@ -434,11 +489,7 @@ namespace WebCommon
 
                     while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
-                        if (cancellationToken.IsCancellationRequested)
-                        {
-                            throw new OperationCanceledException();
-                        }
-
+                        cancellationToken.ThrowIfCancellationRequested();
                         await fs.WriteAsync(buffer, 0, bytesRead);
                         totalBytesRead += bytesRead;
 

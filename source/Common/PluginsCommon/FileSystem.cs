@@ -60,11 +60,14 @@ namespace PluginsCommon
             Directory.CreateDirectory(directory);
         }
 
-        public static void PrepareSaveFile(string path)
+        public static void PrepareSaveFile(string path, bool deleteFile = true)
         {
             path = FixPathLength(path);
             CreateDirectory(Path.GetDirectoryName(path));
-            DeleteFile(path, true);
+            if (deleteFile)
+            {
+                DeleteFile(path, true);
+            }
         }
 
         public static bool IsDirectoryEmpty(string path)

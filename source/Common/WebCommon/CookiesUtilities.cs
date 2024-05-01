@@ -48,7 +48,7 @@ namespace WebCommon
                             cookie.Expires = expiryDate.ToUniversalTime();
                         }
                         break;
-                    case "Max-Age":
+                    case "max-age":
                         if (int.TryParse(value, out int maxAge))
                         {
                             cookie.Expires = DateTime.Now.AddSeconds(maxAge);
