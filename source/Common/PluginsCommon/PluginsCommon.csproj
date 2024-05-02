@@ -59,6 +59,7 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="GlobalCommands.cs" />
+    <Compile Include="Guard.cs" />
     <Compile Include="Native\Kernel32.cs" />
     <Compile Include="Native\Ntdll.cs" />
     <Compile Include="Native\Processthreadsapi.cs" />
