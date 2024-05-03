@@ -33,13 +33,13 @@ namespace JastUsaLibrary
             }
 
             var url = jastBaseAppUrl + apiUrl;
-            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(url).Build().DownloadString();
-            if (!downloadedString.IsSuccessful)
+            var downloadedString = HttpBuilderFactory.GetStringClientBuilder().WithUrl(url).Build().DownloadString();
+            if (!downloadedString.IsSuccess)
             {
                 return new GameMetadata();
             }
 
-            var productResponse = Serialization.FromJson<ProductResponse>(downloadedString.Response.Content);
+            var productResponse = Serialization.FromJson<ProductResponse>(downloadedString.Content);
             var metadata = new GameMetadata()
             {
                 Name = productResponse.Name,
