@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon.Models
+namespace WebCommon.HttpRequestClient.Events
 {
     /// <summary>
     /// Represents progress information for an ongoing HTTP download operation.
     /// </summary>
-    public class DownloadProgressReport
+    public class DownloadProgressArgs : EventArgs
     {
         /// <summary>
         /// Gets the number of bytes received during the download.
@@ -65,7 +65,7 @@ namespace WebCommon.Models
         /// <param name="timeElapsed">The amount of time elapsed during the download operation.</param>
         /// <param name="timeRemaining">The estimated time remaining for the download operation.</param>
         /// <param name="downloadSpeedBytesPerSecond">The current download speed in bytes per second.</param>
-        public DownloadProgressReport(long bytesReceived, long totalBytesToReceive, TimeSpan timeElapsed, TimeSpan timeRemaining, long downloadSpeedBytesPerSecond)
+        public DownloadProgressArgs(long bytesReceived, long totalBytesToReceive, TimeSpan timeElapsed, TimeSpan timeRemaining, long downloadSpeedBytesPerSecond)
         {
             BytesReceived = bytesReceived;
             TotalBytesToReceive = totalBytesToReceive;

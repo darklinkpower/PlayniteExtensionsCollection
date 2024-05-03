@@ -12,7 +12,7 @@ namespace WebCommon
     /// <summary>
     /// Factory for creating and managing instances of HttpClient for HTTP requests.
     /// </summary>
-    internal class HttpClientFactory
+    public class HttpClientFactory
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _clientForCookiesName = "ClientForCookiesUse";

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon
+namespace WebCommon.Constants
 {
-    public static class StandardMediaTypesConstants
+    internal static class HttpContentTypeConstants
     {
         public const string AtomXml = "application/atom+xml";
         public const string Css = "text/css";
