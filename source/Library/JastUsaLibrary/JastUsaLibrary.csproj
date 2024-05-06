@@ -74,6 +74,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
     </Reference>
@@ -186,6 +187,9 @@
     <Compile Include="..\..\Common\WebCommon\HttpRequestClient\DownloadFileClient.cs">
       <Link>Shared\WebCommon\HttpRequestClient\DownloadFileClient.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\WebCommon\HttpRequestClient\DownloadStateController.cs">
+      <Link>Shared\WebCommon\HttpRequestClient\DownloadStateController.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\WebCommon\HttpRequestClient\DownloadStringClient.cs">
       <Link>Shared\WebCommon\HttpRequestClient\DownloadStringClient.cs</Link>
     </Compile>
@@ -210,6 +214,15 @@
     <Compile Include="..\..\Common\WebCommon\ValueObjects\HttpContentType.cs">
       <Link>Shared\WebCommon\ValueObjects\HttpContentType.cs</Link>
     </Compile>
+    <Compile Include="Converters\FileNameToExtensionGlyphCodeConverter.cs" />
+    <Compile Include="Converters\FileItemToGlyphCodeConverter.cs" />
+    <Compile Include="DownloadManager\Enums\DownloadItemStatus.cs" />
+    <Compile Include="DownloadManager\Enums\JastAssetType.cs" />
+    <Compile Include="DownloadManager\Models\DownloadData.cs" />
+    <Compile Include="DownloadManager\Models\DownloadItem.cs" />
+    <Compile Include="DownloadManager\Models\JastAssetWrapper.cs" />
+    <Compile Include="DownloadManager\Models\JastGameWrapper.cs" />
+    <Compile Include="JastUrls.cs" />
     <Compile Include="Models\GameInstallCache.cs" />
     <Compile Include="Programs\Models\Program.cs" />
     <Compile Include="Programs\Programs.cs" />
@@ -231,9 +244,13 @@
     <Compile Include="Models\UserGamesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JastUsaAccountClient.cs" />
-    <Compile Include="ViewModels\DownloadsManager.cs" />
-    <Compile Include="Views\GameDownloadsView.xaml.cs">
-      <DependentUpon>GameDownloadsView.xaml</DependentUpon>
+    <Compile Include="ViewModels\DirectoryDeleteItemsViewModel.cs" />
+    <Compile Include="DownloadManager\ViewModels\DownloadsManagerViewModel.cs" />
+    <Compile Include="Views\DirectoryDeleteItemsView.xaml.cs">
+      <DependentUpon>DirectoryDeleteItemsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadManager\Views\DownloadsManagerView.xaml.cs">
+      <DependentUpon>DownloadsManagerView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -261,7 +278,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GameDownloadsView.xaml">
+    <Page Include="Views\DirectoryDeleteItemsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DownloadManager\Views\DownloadsManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

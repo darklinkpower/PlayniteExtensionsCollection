@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Net.Http;
 using WebCommon.Constants;
+using JastUsaLibrary.ViewModels;
 
 namespace JastUsaLibrary.Services
 {
@@ -22,13 +23,6 @@ namespace JastUsaLibrary.Services
         private ILogger logger = LogManager.GetLogger();
         private IPlayniteAPI playniteApi;
         private readonly string authenticationPath;
-        private const string loginUrl = @"https://jastusa.com/my-account";
-        private const string jastDomain = @"jastusa.com";
-        private const string baseApiUrl = @"https://app.jastusa.com/api/";
-        private const string getGamesUrlTemplate = @"https://app.jastusa.com/api/v2/shop/account/user-games-dev?localeCode=en_US&phrase=&page={0}&itemsPerPage=1000";
-        private const string tokenRefreshUrl = @"https://app.jastusa.com/api/v2/shop/authentication-refresh?refresh_token={0}";
-        private const string generateLinkUrl = @"https://app.jastusa.com/api/v2/shop/account/user-games/generate-link";
-        private const string authenticationTokenUrl = @"https://app.jastusa.com/api/v2/shop/authentication-token";
 
         public JastUsaAccountClient(IPlayniteAPI api, string authenticationPath)
         {
@@ -118,7 +112,8 @@ namespace JastUsaLibrary.Services
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var request = HttpBuilderFactory.GetStringClientBuilder().WithUrl(authenticationTokenUrl)
+            var request = HttpBuilderFactory.GetStringClientBuilder()
+                .WithUrl(JastUrls.Api.Authentication.AuthenticationToken)
                 .WithPostHttpMethod()
                 .WithContent(Serialization.ToJson(authentication), HttpContentTypes.Json)
                 .WithHeaders(headers)
@@ -150,7 +145,7 @@ namespace JastUsaLibrary.Services
 
         public GameTranslationsResponse GetGameTranslations(AuthenticationToken authenticationToken, int translationId)
         {
-            if (authenticationToken == null)
+            if (authenticationToken is null)
             {
                 return null;
             }
@@ -219,7 +214,7 @@ namespace JastUsaLibrary.Services
             while (true)
             {
                 currentPage++;
-                var url = string.Format(getGamesUrlTemplate, currentPage);
+                var url = string.Format(JastUrls.Api.Account.GetGamesTemplate, currentPage);
                 var request = HttpBuilderFactory.GetStringClientBuilder()
                     .WithUrl(url)
                     .WithHeaders(headers)
@@ -246,10 +241,15 @@ namespace JastUsaLibrary.Services
             return products;
         }
 
-        internal Uri GetAssetDownloadLinkAsync(int gameId, int gameLinkId)
+        internal Task<Uri> GetAssetDownloadLinkAsync(GameLink gameLink)
+        {
+            return Task.Run(() => GetAssetDownloadLink(gameLink));
+        }
+
+        internal Uri GetAssetDownloadLink(GameLink gameLink)
         {
             var tokens = GetAuthenticationToken();
-            if (tokens == null)
+            if (tokens is null)
             {
                 playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens"), "JAST USA Library");
                 return null;
@@ -262,9 +262,10 @@ namespace JastUsaLibrary.Services
                 ["Authorization"] = "Bearer " + tokens.Token.UrlDecode()
             };
 
-            var jsonPostContent = Serialization.ToJson(new GenerateLinkRequest { downloaded = true, gameId = gameId, gameLinkId = gameLinkId });
+            var postBody = new GenerateLinkRequest { downloaded = true, gameId = gameLink.GameId, gameLinkId = gameLink.GameLinkId };
+            var jsonPostContent = Serialization.ToJson(postBody);
             var request = HttpBuilderFactory.GetStringClientBuilder()
-                .WithUrl(generateLinkUrl)
+                .WithUrl(JastUrls.Api.Account.GenerateLink)
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, HttpContentTypes.Json)
                 .WithHeaders(headers)
@@ -277,7 +278,7 @@ namespace JastUsaLibrary.Services
             else
             {
                 playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), downloadStringResult.Error?.Message), "JAST USA Library");
-                logger.Warn(downloadStringResult.Error, $"Error while obtaining downlink link with params gameId {gameId} and gameLinkId {gameLinkId}");
+                logger.Warn(downloadStringResult.Error, $"Error while obtaining download link with params gameId {gameLink.GameId} and gameLinkId {gameLink.GameLinkId}");
             }
 
             return null;

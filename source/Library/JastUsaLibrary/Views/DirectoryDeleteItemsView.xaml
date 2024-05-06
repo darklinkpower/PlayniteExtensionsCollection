@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="JastUsaLibrary.Views.DirectoryDeleteItemsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JastUsaLibrary.Views"
+             xmlns:vms="clr-namespace:JastUsaLibrary.ViewModels"
+             xmlns:jastconv="clr-namespace:JastUsaLibrary.Converters"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vms:DirectoryDeleteItemsViewModel, IsDesignTimeCreatable=True}"
+             d:DesignHeight="600" d:DesignWidth="330">
+    <UserControl.Resources>
+        <jastconv:FileItemToGlyphCodeConverter x:Key="FileItemToGlyphCodeConverter"/>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <DockPanel>
+            <StackPanel Margin="0,10,0,0" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Delete selected items and uninstall" Command="{Binding DeleteItemsAndCloseCommand}" />
+                <Button Content="Cancel" Margin="10,0,0,0" Command="{Binding CancelCommand}" />
+            </StackPanel>
+
+            <TextBlock DockPanel.Dock="Top" Text="Select the game files and directories to delete on game uninstall" Margin="0,0,0,0" TextWrapping="Wrap" />
+            <ListBox Margin="0,10,0,0" DockPanel.Dock="Top" ItemsSource="{Binding FileSystemItems}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+                            <CheckBox IsChecked="{Binding IsChecked}"/>
+                            <TextBlock Margin="5,0,0,0" Text="{Binding IsDirectory, Converter={StaticResource FileItemToGlyphCodeConverter}}" FontFamily="{DynamicResource FontIcoFont}" />
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </Grid>
+</UserControl>

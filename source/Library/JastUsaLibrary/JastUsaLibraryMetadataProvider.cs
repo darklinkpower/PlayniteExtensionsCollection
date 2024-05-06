@@ -14,14 +14,11 @@ namespace JastUsaLibrary
 {
     public class JastUsaLibraryMetadataProvider : LibraryMetadataProvider
     {
-        private ILogger logger = LogManager.GetLogger();
-        private readonly string userGamesCachePath;
-        private const string jastMediaUrlTemplate = @"https://app.jastusa.com/media/image/{0}";
-        private const string jastBaseAppUrl = @"https://app.jastusa.com";
+        private readonly string _userGamesCachePath;
 
         public JastUsaLibraryMetadataProvider(string userGamesCachePath)
         {
-            this.userGamesCachePath = userGamesCachePath;
+            _userGamesCachePath = userGamesCachePath;
         }
 
         public override GameMetadata GetMetadata(Game game)
@@ -32,7 +29,7 @@ namespace JastUsaLibrary
                 return new GameMetadata();
             }
 
-            var url = jastBaseAppUrl + apiUrl;
+            var url = JastUrls.Web.JastBaseAppUrl + apiUrl;
             var downloadedString = HttpBuilderFactory.GetStringClientBuilder().WithUrl(url).Build().DownloadString();
             if (!downloadedString.IsSuccess)
             {
@@ -63,13 +60,13 @@ namespace JastUsaLibrary
             var coverImage = productResponse.Images.FirstOrDefault(x => x.ImageType == "TAIL_PACKAGE_THUMBNAIL_PRODUCT_en_US");
             if (coverImage != null)
             {
-                metadata.CoverImage = new MetadataFile(string.Format(jastMediaUrlTemplate, coverImage.Path));
+                metadata.CoverImage = new MetadataFile(string.Format(JastUrls.Web.JastMediaUrlTemplate, coverImage.Path));
             }
 
             var backgroundImage = productResponse.Images.FirstOrDefault(x => x.ImageType == "BACKGROUND_PRODUCT_en_US");
             if (backgroundImage != null)
             {
-                metadata.BackgroundImage = new MetadataFile(string.Format(jastMediaUrlTemplate, backgroundImage.Path));
+                metadata.BackgroundImage = new MetadataFile(string.Format(JastUrls.Web.JastMediaUrlTemplate, backgroundImage.Path));
             }
 
             metadata.Links = new List<Link> { new Link("Store", @"https://jastusa.com/games/" + productResponse.Code) };
@@ -110,12 +107,12 @@ namespace JastUsaLibrary
 
         private string GetProductApiIdFromGameId(string gameId)
         {
-            if (!FileSystem.FileExists(userGamesCachePath))
+            if (!FileSystem.FileExists(_userGamesCachePath))
             {
                 return null;
             }
 
-            var cache = Serialization.FromJsonFile<List<JastProduct>>(userGamesCachePath);
+            var cache = Serialization.FromJsonFile<List<JastProduct>>(_userGamesCachePath);
             return cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == gameId)?.IdApiEndpoint ?? null;
         }
 

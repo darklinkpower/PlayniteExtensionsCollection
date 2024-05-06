@@ -25,7 +25,7 @@ namespace JastUsaLibrary.ProgramsHelper
                     Path = file.FullName,
                     Icon = file.FullName,
                     WorkDir = Path.GetDirectoryName(file.FullName),
-                    Name = programName
+                    Name = programName.Trim()
                 };
             }
             else if (file.Extension?.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase) == true)
@@ -43,7 +43,7 @@ namespace JastUsaLibrary.ProgramsHelper
                     Path = data.Path,
                     WorkDir = data.WorkDir,
                     Arguments = data.Arguments,
-                    Name = name
+                    Name = name.Trim()
                 };
 
                 if (!data.Icon.IsNullOrEmpty())
@@ -71,7 +71,7 @@ namespace JastUsaLibrary.ProgramsHelper
                 return new Program
                 {
                     Path = file.FullName,
-                    Name = Path.GetFileName(file.FullName),
+                    Name = Path.GetFileName(file.FullName).Trim(),
                     WorkDir = Path.GetDirectoryName(file.FullName)
                 };
             }
@@ -89,7 +89,7 @@ namespace JastUsaLibrary.ProgramsHelper
                 Icon = link.IconLocation == ",0" ? link.TargetPath : link.IconLocation,
                 Arguments = link.Arguments,
                 WorkDir = link.WorkingDirectory,
-                Name = link.FullName
+                Name = link.FullName.Trim()
             };
         }
 

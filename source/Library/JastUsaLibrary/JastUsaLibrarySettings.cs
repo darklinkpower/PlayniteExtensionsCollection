@@ -1,8 +1,16 @@
-﻿using JastUsaLibrary.Services;
+﻿using JastUsaLibrary.DownloadManager.Models;
+using JastUsaLibrary.Models;
+using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services;
+using JastUsaLibrary.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Data;
+using Playnite.SDK.Models;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,14 +19,32 @@ using System.Windows.Media;
 
 namespace JastUsaLibrary
 {
+    public class GameCache
+    {
+        public ObservableCollection<JastAssetWrapper> Assets;
+        public JastProduct Product = null;
+        public Program Program = null;
+        public string GameId;
+    }
+
     public class JastUsaLibrarySettings : ObservableObject
     {
-        private string downloadsPath = string.Empty;
-        public string DownloadsPath { get => downloadsPath; set => SetValue(ref downloadsPath, value); }
+        private int _settingsVersion = 1;
+        public int SettingsVersion { get => _settingsVersion; set => SetValue(ref _settingsVersion, value); }
+        private string _gameDownloadsPath;
+        public string GameDownloadsPath { get => _gameDownloadsPath; set => SetValue(ref _gameDownloadsPath, value); }
+        private string _extrasDownloadsPath;
+        public string ExtrasDownloadsPath { get => _extrasDownloadsPath; set => SetValue(ref _extrasDownloadsPath, value); }
+        private string _patchDownloadsPath;
+        public string PatchDownloadsPath { get => _patchDownloadsPath; set => SetValue(ref _patchDownloadsPath, value); }
         private bool extractDownloadedZips = true;
         public bool ExtractDownloadedZips { get => extractDownloadedZips; set => SetValue(ref extractDownloadedZips, value); }
         private bool deleteDownloadedZips = false;
         public bool DeleteDownloadedZips { get => deleteDownloadedZips; set => SetValue(ref deleteDownloadedZips, value); }
+
+        private Dictionary<string, GameCache> _libraryCache = new Dictionary<string, GameCache>();
+        public Dictionary<string, GameCache> LibraryCache { get => _libraryCache; set => SetValue(ref _libraryCache, value); }
+        public List<DownloadData> DownloadsData { get; set; } = new List<DownloadData>();
     }
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings
@@ -90,6 +116,73 @@ namespace JastUsaLibrary
 
             playniteApi = api;
             this.accountClient = accountClient;
+
+            var defaultBaseDownloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "JAST Downloads");
+            if (settings.GameDownloadsPath.IsNullOrEmpty())
+            {
+                settings.GameDownloadsPath = defaultBaseDownloadsPath;
+            }
+
+            if (settings.ExtrasDownloadsPath.IsNullOrEmpty())
+            {
+                settings.ExtrasDownloadsPath = defaultBaseDownloadsPath;
+            }
+
+            if (settings.PatchDownloadsPath.IsNullOrEmpty())
+            {
+                settings.PatchDownloadsPath = defaultBaseDownloadsPath;
+            }
+        }
+
+        public void UpgradeSettings()
+        {
+            var settingsUpdated = false;
+            if (settings.SettingsVersion < 2)
+            {
+                var libraryGames = playniteApi.Database.Games.Where(g => g.PluginId == plugin.Id);
+                var gamesInstallCache = new List<GameInstallCache>();
+                var gameInstallCachePath = Path.Combine(plugin.GetPluginUserDataPath(), "gameInstallCache.json");
+                if (FileSystem.FileExists(gameInstallCachePath))
+                {
+                    gamesInstallCache = Serialization.FromJsonFile<List<GameInstallCache>>(gameInstallCachePath);
+                }
+
+                var cache = new List<JastProduct>();
+                if (FileSystem.FileExists(plugin.UserGamesCachePath))
+                {
+                    cache = Serialization.FromJsonFile<List<JastProduct>>(plugin.UserGamesCachePath);
+                }
+
+                foreach (var game in libraryGames)
+                {
+                    var gameCache = new GameCache
+                    {
+                        GameId = game.GameId
+                    };
+
+                    var gameVariant = cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == game.GameId);
+                    if (gameVariant != null)
+                    {
+                        gameCache.Product = gameVariant;
+                    }
+
+                    var gameInstallCache = gamesInstallCache.FirstOrDefault(x => x.GameId == game.GameId);
+                    if (gameInstallCache != null)
+                    {
+                        gameCache.Program = gameInstallCache.Program;
+                    }
+
+                    settings.LibraryCache[game.GameId] = gameCache;
+                }
+
+                settings.SettingsVersion = 2;
+                settingsUpdated = true;
+            }
+
+            if (settingsUpdated)
+            {
+                plugin.SavePluginSettings();
+            }
         }
 
         public void BeginEdit()
@@ -147,7 +240,7 @@ namespace JastUsaLibrary
                 var selectedDir = playniteApi.Dialogs.SelectFolder();
                 if (!selectedDir.IsNullOrEmpty())
                 {
-                    settings.DownloadsPath = selectedDir;
+                    settings.GameDownloadsPath = selectedDir;
                 }
             });
         }
