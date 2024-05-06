@@ -22,7 +22,6 @@ namespace WebCommon.Builders
         protected Encoding _contentEncoding = Encoding.UTF8;
         protected string _contentMediaType = HttpContentTypes.PlainText.Value;
         protected HttpMethod _httpMethod = HttpMethod.Get;
-        protected CancellationToken _cancellationToken = CancellationToken.None;
         protected Dictionary<string, string> _headers;
         protected readonly List<Cookie> _cookies = new List<Cookie>();
         protected TimeSpan? _timeout;
@@ -57,12 +56,6 @@ namespace WebCommon.Builders
                 _contentMediaType = httpContentType.Value;
             }
 
-            return (TBuilder)this;
-        }
-
-        public TBuilder WithCancellationToken(CancellationToken cancellationToken)
-        {
-            _cancellationToken = cancellationToken;
             return (TBuilder)this;
         }
 

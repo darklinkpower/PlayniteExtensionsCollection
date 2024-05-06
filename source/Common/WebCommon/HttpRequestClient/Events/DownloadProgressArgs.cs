@@ -7,9 +7,15 @@ using System.Threading.Tasks;
 namespace WebCommon.HttpRequestClient.Events
 {
     /// <summary>
+    /// Represents a callback method that is invoked to report progress during a download operation.
+    /// </summary>
+    /// <param name="args">An instance of <see cref="DownloadProgressArgs"/> containing information about the download progress.</param>
+    public delegate void DownloadProgressChangedCallback(DownloadProgressArgs args);
+
+    /// <summary>
     /// Represents progress information for an ongoing HTTP download operation.
     /// </summary>
-    public class DownloadProgressArgs : EventArgs
+    public class DownloadProgressArgs
     {
         /// <summary>
         /// Gets the number of bytes received during the download.
@@ -55,24 +61,57 @@ namespace WebCommon.HttpRequestClient.Events
         /// <summary>
         /// Gets the download speed in bytes per second in a human-readable format (e.g., "5 MB/s").
         /// </summary>
-        public string FormattedDownloadSpeedPerSecond => $"{FormatBytes(DownloadSpeedBytesPerSecond)}/s";
+        public string FormattedDownloadSpeedPerSecond => !IsComplete ? $"{FormatBytes(DownloadSpeedBytesPerSecond)}/s" : string.Empty;
+
+        public bool IsComplete => TotalBytesToReceive == BytesReceived;
 
         /// <summary>
         /// Initializes a new instance of the DownloadProgressReporter class with the specified values.
         /// </summary>
-        /// <param name="bytesReceived">The number of bytes received during the download.</param>
-        /// <param name="totalBytesToReceive">The total number of bytes to receive for the download.</param>
-        /// <param name="timeElapsed">The amount of time elapsed during the download operation.</param>
-        /// <param name="timeRemaining">The estimated time remaining for the download operation.</param>
-        /// <param name="downloadSpeedBytesPerSecond">The current download speed in bytes per second.</param>
-        public DownloadProgressArgs(long bytesReceived, long totalBytesToReceive, TimeSpan timeElapsed, TimeSpan timeRemaining, long downloadSpeedBytesPerSecond)
+        public DownloadProgressArgs(long bytesReceived, long totalBytesToReceive, TimeSpan totalEllapsedDownloadTime, TimeSpan intervalElapsedTime, long bytesReadThisInterval)
         {
             BytesReceived = bytesReceived;
             TotalBytesToReceive = totalBytesToReceive;
-            TimeElapsed = timeElapsed;
-            TimeRemaining = timeRemaining;
-            DownloadSpeedBytesPerSecond = downloadSpeedBytesPerSecond;
-            ProgressPercentage = TotalBytesToReceive == 0 ? 0.0 : Math.Round(BytesReceived * 100.0 / TotalBytesToReceive, 2);
+            TimeElapsed = totalEllapsedDownloadTime;
+            if (intervalElapsedTime.TotalSeconds > 0)
+            {
+                DownloadSpeedBytesPerSecond = (long)Math.Round(bytesReadThisInterval / intervalElapsedTime.TotalSeconds);
+            }
+            else
+            {
+                DownloadSpeedBytesPerSecond = 0;
+            }
+
+            TimeRemaining = CalculateTimeRemaining(bytesReadThisInterval, totalBytesToReceive);
+            if (TotalBytesToReceive > 0 && BytesReceived > 0)
+            {
+                ProgressPercentage = Math.Round(BytesReceived / (double)TotalBytesToReceive * 100.0, 2);
+            }
+            else
+            {
+                ProgressPercentage = 0;
+            }
+        }
+
+        /// <summary>
+        /// Calculates the estimated time remaining for a download operation based on time elapsed, bytes received, and total bytes to receive.
+        /// </summary>
+        /// <returns>The estimated time remaining for the download operation.</returns>
+        private TimeSpan CalculateTimeRemaining(long bytesReceivedInterval, long totalBytesToReceive)
+        {
+            if (IsComplete)
+            {
+                return TimeSpan.MinValue; // Download is completed
+            }
+            else if (DownloadSpeedBytesPerSecond == 0 || bytesReceivedInterval == 0 || totalBytesToReceive == 0)
+            {
+                return TimeSpan.MinValue; // Unable to calculate time remaining
+            }
+
+            var remainingBytes = TotalBytesToReceive - BytesReceived;
+            double remainingSeconds = remainingBytes / DownloadSpeedBytesPerSecond;
+            var remainingTime = TimeSpan.FromSeconds(remainingSeconds);
+            return remainingTime;
         }
 
         /// <summary>

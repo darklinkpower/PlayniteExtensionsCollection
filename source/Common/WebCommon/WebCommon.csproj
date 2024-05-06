@@ -106,6 +106,7 @@
     <Compile Include="HttpClientFactory.cs" />
     <Compile Include="HttpBuilderFactory.cs" />
     <Compile Include="HttpRequestClient\DownloadFileClient.cs" />
+    <Compile Include="HttpRequestClient\DownloadStateController.cs" />
     <Compile Include="HttpRequestClient\DownloadStringClient.cs" />
     <Compile Include="HttpRequestClient\Events\DownloadStateArgs.cs" />
     <Compile Include="HttpRequestClient\HttpRequestClientBase.cs" />

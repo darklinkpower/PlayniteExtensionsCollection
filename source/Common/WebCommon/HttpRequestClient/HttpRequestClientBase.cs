@@ -17,45 +17,13 @@ namespace WebCommon.HttpRequestClient
 {
     public abstract class HttpRequestClientBase
     {
-        public event EventHandler<DownloadStateArgs> DownloadStateChanged;
-        public event EventHandler<DownloadProgressArgs> DownloadProgressChanged;
-
-        protected virtual void OnDownloadStateChanged(DownloadStateArgs e)
-        {
-            DownloadStateChanged?.Invoke(this, e);
-        }
-
-        protected virtual void OnDownloadProgressChanged(DownloadProgressArgs progressReport)
-        {
-            DownloadProgressChanged?.Invoke(this, progressReport);
-        }
-
-        protected ManualResetEventSlim _pauseEvent;
-        protected bool _isPaused = false;
-        protected HttpRequestClientStatus _state = HttpRequestClientStatus.Idle;
-
-        public HttpRequestClientStatus Status
-        {
-            get { return _state; }
-            protected set
-            {
-                if (_state != value)
-                {
-                    _state = value;
-                    var eventArgs = new DownloadStateArgs(_state);
-                    OnDownloadStateChanged(eventArgs);
-                }
-            }
-        }
-
         protected static readonly ILogger _logger = LogManager.GetLogger();
         protected readonly HttpClientFactory _httpClientFactory;
-        protected readonly string _url;
+        protected string _url;
         protected string _content;
         protected Encoding _contentEncoding;
         protected string _contentMediaType;
         protected HttpMethod _httpMethod;
-        protected CancellationToken _cancellationToken;
         protected Dictionary<string, string> _headers;
         protected readonly IEnumerable<Cookie> _cookies;
         protected TimeSpan? _timeout;
@@ -68,7 +36,6 @@ namespace WebCommon.HttpRequestClient
             Encoding contentEncoding,
             string contentMediaType,
             HttpMethod httpMethod,
-            CancellationToken cancellationToken,
             Dictionary<string, string> headers,
             List<Cookie> cookies,
             TimeSpan? timeout,
@@ -80,41 +47,20 @@ namespace WebCommon.HttpRequestClient
             _contentEncoding = contentEncoding;
             _contentMediaType = contentMediaType;
             _httpMethod = httpMethod;
-            _cancellationToken = cancellationToken;
             _headers = new Dictionary<string, string>(headers ?? new Dictionary<string, string>());
             _cookies = (cookies ?? Enumerable.Empty<Cookie>()).ToList();
             _timeout = timeout;
             _progressReportInterval = progressReportInterval;
         }
 
-        public void Pause()
+        public void SetUrl(string url)
         {
-            if (_state == HttpRequestClientStatus.Downloading && _pauseEvent != null)
-            {
-                _pauseEvent?.Reset(); // Set the event to block the download loop
-                _isPaused = true;
-                Status = HttpRequestClientStatus.Paused;
-            }
+            _url = url;
         }
 
-        public void Resume()
+        public void SetUrl(Uri url)
         {
-            if (_state == HttpRequestClientStatus.Paused && _pauseEvent != null)
-            {
-                _pauseEvent?.Set(); // Allow the download loop to continue
-                _isPaused = false;
-                Status = HttpRequestClientStatus.Downloading;
-            }
-        }
-
-        public bool IsPaused()
-        {
-            return _isPaused;
-        }
-
-        public ManualResetEventSlim GetPauseEvent()
-        {
-            return _pauseEvent;
+            _url = url.ToString();
         }
 
         /// <summary>
@@ -159,67 +105,19 @@ namespace WebCommon.HttpRequestClient
         /// <summary>
         /// Reports download progress to the HttpDownload progress reporter based on bytes received, total bytes to receive, and time measurements.
         /// </summary>
-        /// <param name="bytesRead">The number of bytes received.</param>
-        /// <param name="totalBytesToReceive">The total number of bytes to receive.</param>
+        /// <param name="contentProgressLength">The number of bytes received.</param>
+        /// <param name="totalContentLength">The total number of bytes to receive.</param>
         /// <param name="startTime">The start time of the download operation.</param>
         /// <param name="currentTime">The current time for progress reporting.</param>
         /// <param name="lastReportTime">The time of the last progress report.</param>
         /// <param name="lastTotalBytesRead">The total bytes received at the time of the last report.</param>
-        protected void ReportProgress(long bytesRead, long totalBytesToReceive, DateTime startTime, DateTime currentTime, DateTime lastReportTime, long lastTotalBytesRead)
+        protected void ReportProgress(DownloadProgressChangedCallback progressChangedCallback, long contentProgressLength, long totalContentLength, DateTime startTime, DateTime currentTime, DateTime lastReportTime, long lastTotalBytesRead)
         {
-            var timeElapsed = currentTime - startTime;
-            var timeRemaining = CalculateTimeRemaining(timeElapsed, bytesRead, totalBytesToReceive);
-
-            var bytesReadThisInterval = bytesRead - lastTotalBytesRead;
+            var totalElapsedDownloadTime = currentTime - startTime;
             var intervalElapsedTime = currentTime - lastReportTime;
-            long downloadSpeedBytesPerSecond = 0;
-            if (intervalElapsedTime.TotalSeconds > 0)
-            {
-                downloadSpeedBytesPerSecond = (long)Math.Round(bytesReadThisInterval / intervalElapsedTime.TotalSeconds);
-            }
-
-            var progressReport = new DownloadProgressArgs(bytesRead, totalBytesToReceive, timeElapsed, timeRemaining, downloadSpeedBytesPerSecond);
-            OnDownloadProgressChanged(progressReport);
-        }
-
-        /// <summary>
-        /// Calculates the estimated time remaining for a download operation based on time elapsed, bytes received, and total bytes to receive.
-        /// </summary>
-        /// <param name="timeElapsed">The time elapsed during the download.</param>
-        /// <param name="bytesReceived">The number of bytes received.</param>
-        /// <param name="totalBytesToReceive">The total number of bytes to receive.</param>
-        /// <returns>The estimated time remaining for the download operation.</returns>
-        protected TimeSpan CalculateTimeRemaining(TimeSpan timeElapsed, long bytesReceived, long totalBytesToReceive)
-        {
-            if (bytesReceived == 0 || totalBytesToReceive == 0)
-            {
-                return TimeSpan.MaxValue; // Unable to calculate time remaining
-            }
-
-            var bytesRemaining = totalBytesToReceive - bytesReceived;
-            var bytesPerSecond = bytesReceived / timeElapsed.TotalSeconds;
-
-            return TimeSpan.FromSeconds(bytesRemaining / bytesPerSecond);
-        }
-
-        /// <summary>
-        /// Handles an OperationCanceledException by logging a message.
-        /// </summary>
-        /// <param name="ex">The OperationCanceledException that occurred.</param>
-        protected void HandleCancellation(OperationCanceledException ex)
-        {
-            Status = HttpRequestClientStatus.Canceled;
-            _logger.Info("Operation timed out or was cancelled");
-        }
-
-        /// <summary>
-        /// Handles an exception by logging a message.
-        /// </summary>
-        /// <param name="ex">The exception that occurred.</param>
-        protected void HandleException(Exception ex)
-        {
-            Status = HttpRequestClientStatus.Failed;
-            _logger.Error(ex, "Download failed");
+            var bytesReadThisInterval = contentProgressLength - lastTotalBytesRead;
+            var progressReport = new DownloadProgressArgs(contentProgressLength, totalContentLength, totalElapsedDownloadTime, intervalElapsedTime, bytesReadThisInterval);
+            OnDownloadProgressChanged(progressChangedCallback, progressReport);
         }
 
         /// <summary>
@@ -243,6 +141,16 @@ namespace WebCommon.HttpRequestClient
             }
 
             return Encoding.UTF8;
+        }
+
+        protected void OnDownloadStateChanged(DownloadStateChangedCallback callback, HttpRequestClientStatus status)
+        {
+            callback?.Invoke(new DownloadStateArgs(status));
+        }
+
+        protected void OnDownloadProgressChanged(DownloadProgressChangedCallback callback, DownloadProgressArgs progressArgs)
+        {
+            callback?.Invoke(progressArgs);
         }
     }
 

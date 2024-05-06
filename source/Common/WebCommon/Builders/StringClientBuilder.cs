@@ -23,7 +23,6 @@ namespace WebCommon.Builders
                 _contentEncoding,
                 _contentMediaType,
                 _httpMethod,
-                _cancellationToken,
                 _headers,
                 _cookies,
                 _timeout,

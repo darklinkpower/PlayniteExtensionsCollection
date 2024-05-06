@@ -10,14 +10,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebCommon.Enums;
 using WebCommon.Exceptions;
+using WebCommon.HttpRequestClient.Events;
 using WebCommon.Results;
 
 namespace WebCommon.HttpRequestClient
 {
     public class DownloadFileClient : HttpRequestClientBase
     {
-        private readonly string _filePath;
-        private readonly bool _appendToFile;
+        private string _downloadPath;
+        private bool _appendToFile;
 
         internal DownloadFileClient(
             HttpClientFactory httpClientFactory,
@@ -26,12 +27,11 @@ namespace WebCommon.HttpRequestClient
             Encoding contentEncoding,
             string contentMediaType,
             HttpMethod httpMethod,
-            CancellationToken cancellationToken,
             Dictionary<string, string> headers,
             List<Cookie> cookies,
             TimeSpan? timeout,
             TimeSpan progressReportInterval,
-            string filePath,
+            string downloadPath,
             bool appendToFile
         ) : base(
             httpClientFactory,
@@ -40,48 +40,67 @@ namespace WebCommon.HttpRequestClient
             contentEncoding,
             contentMediaType,
             httpMethod,
-            cancellationToken,
             headers,
             cookies,
             timeout,
             progressReportInterval
         )
         {
-            if (string.IsNullOrEmpty(url))
-            {
-                throw new InvalidOperationException("No URL provided.");
-            }
+            _downloadPath = downloadPath;
+            _appendToFile = appendToFile;
+        }
 
-            if (string.IsNullOrEmpty(filePath))
-            {
-                throw new InvalidOperationException("File path must be provided for downloading a file.");
-            }
+        public void SetDownloadPath(string downloadPath)
+        {
+            _downloadPath = downloadPath;
+        }
 
-            _filePath = filePath;
+        public void SetAppendToFile(bool appendToFile)
+        {
             _appendToFile = appendToFile;
         }
 
         /// <summary>
-        /// Synchronously downloads content from the provided URLs and saves it to the specified file path. Returns an HttpDownloaderResult.
+        /// Synchronously downloads content from the provided URLs and saves it to the specified file path.
         /// </summary>
-        /// <returns>The HttpDownloaderResult representing the result of the download and file-saving operation.</returns>
-        public HttpFileDownloadResult DownloadFile()
+        /// <param name="cancellationToken">The optional cancellation token.</param>
+        /// <param name="downloadStateController">The optional controller for managing download state.</param>
+        /// <param name="stateChangedCallback">The optional callback for reporting changes in download state.</param>
+        /// <param name="progressChangedCallback">The optional callback for reporting download progress.</param>
+        /// <returns>The result of the download and file-saving operation represented by an <see cref="HttpFileDownloadResult"/>.</returns>
+        public HttpFileDownloadResult DownloadFile(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
-            return Task.Run(() => DownloadFileAsync()).GetAwaiter().GetResult();
+            return Task.Run(() => DownloadFileAsync(cancellationToken, downloadStateController, stateChangedCallback, progressChangedCallback)).GetAwaiter().GetResult();
         }
 
         /// <summary>
-        /// Asynchronously downloads content from the provided URLs and saves it to the specified file path. Returns an HttpDownloaderResult.
+        /// Asynchronously downloads content from the provided URLs and saves it to the specified file path.
         /// </summary>
-        /// <returns>An awaitable Task that represents the asynchronous download and file-saving operation. The task's result is the HttpDownloaderResult.</returns>
-        public async Task<HttpFileDownloadResult> DownloadFileAsync()
+        /// <param name="cancellationToken">The optional cancellation token.</param>
+        /// <param name="downloadStateController">The optional controller for managing download state.</param>
+        /// <param name="stateChangedCallback">The optional callback for reporting changes in download state.</param>
+        /// <param name="progressChangedCallback">The optional callback for reporting download progress.</param>
+        /// <returns>An awaitable task representing the asynchronous download and file-saving operation. The task's result is the <see cref="HttpFileDownloadResult"/>.</returns>
+        public async Task<HttpFileDownloadResult> DownloadFileAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
-            Status = HttpRequestClientStatus.Downloading;
+            if (string.IsNullOrEmpty(_url))
+            {
+                var ex = new InvalidOperationException("No URL provided.");
+                return HttpFileDownloadResult.Failure(_url, ex);
+            }
+
+            if (string.IsNullOrEmpty(_downloadPath))
+            {
+                var ex = new InvalidOperationException("No download path provided.");
+                return HttpFileDownloadResult.Failure(_url, ex);
+            }
+
+            OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Downloading);
             long resumeOffset = 0;
             var appendToFile = false;
-            if (_appendToFile && FileSystem.FileExists(_filePath))
+            if (_appendToFile && FileSystem.FileExists(_downloadPath))
             {
-                var fileInfo = new FileInfo(FileSystem.FixPathLength(_filePath));
+                var fileInfo = new FileInfo(FileSystem.FixPathLength(_downloadPath));
                 if (fileInfo.Length > 0)
                 {
                     resumeOffset = fileInfo.Length;
@@ -90,65 +109,68 @@ namespace WebCommon.HttpRequestClient
             }
 
 #if DEBUG
-            _logger.Info($"Starting download of url \"{_url}\" to \"{_filePath}\"...");
+            _logger.Info($"Starting download of url \"{_url}\" to \"{_downloadPath}\"...");
 #endif
             Exception error = null;
             HttpStatusCode? httpStatusCode = null;
-            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken))
+            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, downloadStateController?.CancellationToken ?? CancellationToken.None))
             {
-                if (!(_timeout is null))
+                if (_timeout != null)
                 {
                     cts.CancelAfter(_timeout.Value);
                 }
-
+                
                 StringContent stringContent = null;
-                if (!string.IsNullOrEmpty(_content))
-                {
-                    stringContent = new StringContent(_content, _contentEncoding, _contentMediaType);
-                }
-
                 try
                 {
+                    if (!string.IsNullOrEmpty(_content))
+                    {
+                        stringContent = new StringContent(_content, _contentEncoding, _contentMediaType);
+                    }
+
                     using (var request = CreateRequest(_url, stringContent, resumeOffset))
                     {
                         var httpClient = _httpClientFactory.GetClient(request);
                         using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token))
                         {
                             httpStatusCode = response.StatusCode;
-                            if (response.IsSuccessStatusCode)
-                            {
-                                if (appendToFile && response.Content.Headers.ContentRange is null)
-                                {
-                                    throw new MissingContentRangeHeaderException();
-                                }
+                            response.EnsureSuccessStatusCode();
 
-                                await SaveFileContent(response, cts.Token, appendToFile);
-                                var fileInfo = new FileInfo(_filePath);
-                                return HttpFileDownloadResult.Success(_url, fileInfo, httpStatusCode, response);
+                            if (appendToFile && response.Content.Headers.ContentRange is null)
+                            {
+                                throw new MissingContentRangeHeaderException();
                             }
+
+                            await SaveFileContent(response, cts.Token, appendToFile, downloadStateController, stateChangedCallback, progressChangedCallback);
+                            var fileInfo = new FileInfo(_downloadPath);
+                            var result = HttpFileDownloadResult.Success(_url, fileInfo, httpStatusCode, response);
+                            OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Completed);
+                            return result;
                         }
                     }
                 }
                 catch (MissingContentRangeHeaderException ex)
                 {
-                    HandleException(ex);
                     error = ex;
+                    _logger.Error(ex, "Download failed");
+                    OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Failed);
                 }
                 catch (OperationCanceledException ex)
                 {
-                    HandleCancellation(ex);
                     error = ex;
+                    _logger.Error(ex, "Operation timed out or was cancelled");
+                    OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Canceled);
                 }
                 catch (Exception ex)
                 {
-                    HandleException(ex);
                     error = ex;
+                    _logger.Error(ex, "Download failed");
+                    OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Failed);
+                    
                 }
                 finally
                 {
                     stringContent?.Dispose();
-                    _pauseEvent?.Dispose();
-                    _pauseEvent = null;
                 }
 
                 return HttpFileDownloadResult.Failure(_url, error, httpStatusCode);
@@ -160,49 +182,59 @@ namespace WebCommon.HttpRequestClient
         /// </summary>
         /// <param name="result">The HttpDownloaderResult to update with file-related information.</param>
         /// <param name="response">The HttpResponseMessage containing the content to save.</param>
-        private async Task SaveFileContent(HttpResponseMessage response, CancellationToken cancellationToken, bool appendToFile)
+        private async Task SaveFileContent(HttpResponseMessage response, CancellationToken cancellationToken, bool appendToFile, DownloadStateController downloadStateController, DownloadStateChangedCallback stateChangedCallback, DownloadProgressChangedCallback progressChangedCallback)
         {
             var startTime = DateTime.Now;
             var lastReportTime = startTime;
-            var requestContentLength = response.Content.Headers.ContentLength ?? 0;
+            var totalContentLength = response.Content.Headers.ContentLength ?? 0;
+            long contentProgressLength = 0;
+            if (response.Content.Headers.ContentRange?.HasLength == true)
+            {
+                totalContentLength = response.Content.Headers.ContentRange.Length.Value;
+                contentProgressLength = response.Content.Headers.ContentRange.From.Value;
+            }
 
             var fileMode = appendToFile ? FileMode.Append : FileMode.Create;
             var deleteExistingFile = fileMode == FileMode.Create;
-            FileSystem.PrepareSaveFile(_filePath, deleteExistingFile);
-            using (_pauseEvent = new ManualResetEventSlim(!_isPaused))
+            FileSystem.PrepareSaveFile(_downloadPath, deleteExistingFile);
+            using (var fs = new FileStream(_downloadPath, fileMode))
             {
-                using (var fs = new FileStream(_filePath, fileMode))
+                using (var contentStream = await response.Content.ReadAsStreamAsync())
                 {
-                    using (var contentStream = await response.Content.ReadAsStreamAsync())
+                    byte[] buffer = new byte[8192];
+                    int bytesRead;
+                    
+                    long lastTotalBytesRead = 0;
+                    while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
-                        byte[] buffer = new byte[8192];
-                        int bytesRead;
-                        long totalBytesRead = 0;
-                        long lastTotalBytesRead = 0;
+                        var shouldPause = downloadStateController?.IsPaused() == true;
+                        cancellationToken.ThrowIfCancellationRequested();
 
-                        while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                        if (shouldPause)
                         {
+                            OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Paused);
                             cancellationToken.ThrowIfCancellationRequested();
-                            _pauseEvent.Wait(cancellationToken);
+                            await downloadStateController.PauseAsync();
+                            OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Downloading);
+                        }
 
-                            await fs.WriteAsync(buffer, 0, bytesRead);
-                            totalBytesRead += bytesRead;
-
+                        await fs.WriteAsync(buffer, 0, bytesRead);
+                        if (progressChangedCallback != null && totalContentLength > 0)
+                        {
+                            contentProgressLength += bytesRead;
                             var currentTime = DateTime.Now;
-                            if (currentTime - lastReportTime >= _progressReportInterval)
+                            var isCompleted = contentProgressLength == totalContentLength;
+                            if (isCompleted || currentTime - lastReportTime >= _progressReportInterval)
                             {
-                                ReportProgress(totalBytesRead, requestContentLength, startTime, currentTime, lastReportTime, lastTotalBytesRead);
+                                ReportProgress(progressChangedCallback, contentProgressLength, totalContentLength, startTime, currentTime, lastReportTime, lastTotalBytesRead);
                                 lastReportTime = currentTime;
-                                lastTotalBytesRead = totalBytesRead;
+                                lastTotalBytesRead = contentProgressLength;
                             }
                         }
+
                     }
                 }
             }
-
-#if DEBUG
-            _logger.Info("Download completed successfully.");
-#endif
         }
     }
 }
