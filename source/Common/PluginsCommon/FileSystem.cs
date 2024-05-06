@@ -159,15 +159,6 @@ namespace PluginsCommon
             return true;
         }
 
-        public static void DeleteDirectory(string path)
-        {
-            path = FixPathLength(path);
-            if (Directory.Exists(path))
-            {
-                Directory.Delete(path, true);
-            }
-        }
-
         public static void ClearDirectory(string path)
         {
             path = FixPathLength(path);
@@ -190,7 +181,7 @@ namespace PluginsCommon
             }
         }
 
-        public static void DeleteDirectory(string path, bool includeReadonly)
+        public static void DeleteDirectory(string path, bool includeReadonly = true)
         {
             path = FixPathLength(path);
             if (!Directory.Exists(path))

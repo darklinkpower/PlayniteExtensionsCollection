@@ -95,6 +95,26 @@ namespace PluginsCommon
             }
         }
 
+        /// <summary>
+        /// Removes invalid characters from a file name.
+        /// </summary>
+        /// <param name="filename">The file name to sanitize.</param>
+        /// <returns>The sanitized file name.</returns>
+        public static string RemoveInvalidCharacters(string filename)
+        {
+            return string.Concat(filename.Split(Path.GetInvalidFileNameChars()));
+        }
+
+        /// <summary>
+        /// Replaces invalid characters in a file name with underscores.
+        /// </summary>
+        /// <param name="filename">The file name to sanitize.</param>
+        /// <returns>The sanitized file name with invalid characters replaced by underscores.</returns>
+        public static string ReplaceInvalidCharacters(string filename)
+        {
+            return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
+        }
+
         public static string GetSafePathName(string filename)
         {
             var path = string.Join(" ", filename.Split(Path.GetInvalidFileNameChars()));
