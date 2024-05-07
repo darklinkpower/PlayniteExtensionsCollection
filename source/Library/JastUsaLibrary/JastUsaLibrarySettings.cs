@@ -33,14 +33,23 @@ namespace JastUsaLibrary
         public int SettingsVersion { get => _settingsVersion; set => SetValue(ref _settingsVersion, value); }
         private string _gameDownloadsPath;
         public string GameDownloadsPath { get => _gameDownloadsPath; set => SetValue(ref _gameDownloadsPath, value); }
+
         private string _extrasDownloadsPath;
         public string ExtrasDownloadsPath { get => _extrasDownloadsPath; set => SetValue(ref _extrasDownloadsPath, value); }
+
         private string _patchDownloadsPath;
         public string PatchDownloadsPath { get => _patchDownloadsPath; set => SetValue(ref _patchDownloadsPath, value); }
-        private bool extractDownloadedZips = true;
-        public bool ExtractDownloadedZips { get => extractDownloadedZips; set => SetValue(ref extractDownloadedZips, value); }
-        private bool deleteDownloadedZips = false;
-        public bool DeleteDownloadedZips { get => deleteDownloadedZips; set => SetValue(ref deleteDownloadedZips, value); }
+
+        private bool _extractFilesOnDownload = true;
+        public bool ExtractFilesOnDownload { get => _extractFilesOnDownload; set => SetValue(ref _extractFilesOnDownload, value); }
+        private bool _deleteFilesOnExtract = false;
+        public bool DeleteFilesOnExtract { get => _deleteFilesOnExtract; set => SetValue(ref _deleteFilesOnExtract, value); }
+
+        private uint _maximumConcurrentDownloads = 2;
+        public uint MaximumConcurrentDownloads { get => _maximumConcurrentDownloads; set => SetValue(ref _maximumConcurrentDownloads, value); }
+
+        private bool _startDownloadsOnStartup = true;
+        public bool StartDownloadsOnStartup { get => _startDownloadsOnStartup; set => SetValue(ref _startDownloadsOnStartup, value); }
 
         private Dictionary<string, GameCache> _libraryCache = new Dictionary<string, GameCache>();
         public Dictionary<string, GameCache> LibraryCache { get => _libraryCache; set => SetValue(ref _libraryCache, value); }
@@ -233,7 +242,7 @@ namespace JastUsaLibrary
             }
         }
 
-        public RelayCommand SelectDownloadDirectoryCommand
+        public RelayCommand SelectGamesDownloadDirectoryCommand
         {
             get => new RelayCommand(() =>
             {
@@ -241,6 +250,30 @@ namespace JastUsaLibrary
                 if (!selectedDir.IsNullOrEmpty())
                 {
                     settings.GameDownloadsPath = selectedDir;
+                }
+            });
+        }
+
+        public RelayCommand SelectPatchesDownloadDirectoryCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                var selectedDir = playniteApi.Dialogs.SelectFolder();
+                if (!selectedDir.IsNullOrEmpty())
+                {
+                    settings.PatchDownloadsPath = selectedDir;
+                }
+            });
+        }
+
+        public RelayCommand SelectExtrasDownloadDirectoryCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                var selectedDir = playniteApi.Dialogs.SelectFolder();
+                if (!selectedDir.IsNullOrEmpty())
+                {
+                    settings.ExtrasDownloadsPath = selectedDir;
                 }
             });
         }

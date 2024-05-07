@@ -48,6 +48,19 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         private bool _isDisposed = false;
         private readonly object _disposeLock = new object();
 
+        private bool _canPauseAllDownloads => _downloadsList.Any(x => x.DownloadData.Status == DownloadItemStatus.Downloading);
+        private bool _canCancelAllDownloads => _downloadsList.Any(x => x.DownloadData.Status == DownloadItemStatus.Downloading);
+        private bool _canRemoveCompletedDownloads => _downloadsList
+            .Any(x => x.DownloadData.Status == DownloadItemStatus.Completed ||
+            x.DownloadData.Status == DownloadItemStatus.ExtractionCompleted ||
+            x.DownloadData.Status == DownloadItemStatus.ExtractionFailed);
+
+        private bool _canMoveItemBefore => _selectedDownloadItem != null &&
+            _downloadsList.IndexOf(_selectedDownloadItem) - 1 >= 0;
+        private bool _canMoveItemAfter => _selectedDownloadItem != null &&
+            _downloadsList.IndexOf(_selectedDownloadItem) + 1 < _downloadsList.Count;
+
+        #region Observable Properties
         public ObservableCollection<DownloadItem> DownloadsList
         {
             get { return _downloadsList; }
@@ -129,64 +142,6 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
         }
 
-        private Visibility _activeGameVisibility = Visibility.Hidden;
-        public Visibility ActiveGameVisibility
-        {
-            get => _activeGameVisibility;
-            private set
-            {
-                if (_activeGameVisibility != value)
-                {
-                    _activeGameVisibility = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _activeGameCoverImage = string.Empty;
-        public string ActiveGameCoverImage
-        {
-            get => _activeGameCoverImage;
-            private set
-            {
-                if (_activeGameCoverImage != value)
-                {
-                    _activeGameCoverImage = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _activeGameBackgroundImage = string.Empty;
-        public string ActiveGameBackgroundImage
-        {
-            get => _activeGameBackgroundImage;
-            private set
-            {
-                if (_activeGameBackgroundImage != value)
-                {
-                    _activeGameBackgroundImage = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private ObservableCollection<JastAssetWrapper> _activeGameAssets;
-        public ObservableCollection<JastAssetWrapper> ActiveGameAssets
-        {
-            get => _activeGameAssets;
-            set
-            {
-                if (_activeGameAssets != value)
-                {
-                    _activeGameAssets = value;
-                    OnPropertyChanged();
-                    SelectedGameAsset = ActiveGameAssets?.FirstOrDefault();
-                    NotifyPropertyChangedCommands();
-                }
-            }
-        }
-
         private JastAssetWrapper _selectedGameAsset;
 
         public JastAssetWrapper SelectedGameAsset
@@ -199,6 +154,22 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 NotifyPropertyChangedCommands();
             }
         }
+
+        private DownloadItem _selectedDownloadItem;
+        private int _remainingSlots => (int)(_settingsViewModel.Settings.MaximumConcurrentDownloads -
+            _downloadsList.Count(x => x.DownloadData.Status == DownloadItemStatus.Downloading));
+
+        public DownloadItem SelectedDownloadItem
+        {
+            get { return _selectedDownloadItem; }
+            set
+            {
+                _selectedDownloadItem = value;
+                OnPropertyChanged();
+                NotifyPropertyChangedCommands();
+            }
+        }
+        #endregion
 
         public DownloadsManagerViewModel(JastUsaLibrary plugin, JastUsaAccountClient jastAccountClient, JastUsaLibrarySettingsViewModel settingsViewModel)
         {
@@ -222,18 +193,12 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 }
 
                 var downloadItem = new DownloadItem(_jastAccountClient, downloadData, this);
-                await AddToQueueAsync(downloadItem, false);
+                await AddToDownloadsListAsync(downloadItem, false, false);
             }
-        }
-
-        private void NotifyPropertyChangedCommands()
-        {
-            OnPropertyChanged(nameof(AddSelectedAssetToQueueCommand));
         }
 
         public void RefreshLibraryGames()
         {
-            ActiveGameAssets = null;
             SelectedGameWrapper = null;
             SelectedGameAsset = null;
             LibraryGames = _playniteApi.Database.Games
@@ -253,7 +218,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             var downloadingItems = _downloadsList.Where(item => item.DownloadData.Status == DownloadItemStatus.Downloading).ToList();
             if (downloadingItems.Count > 0)
             {
-                var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("Stopping downloads..."), true)
+                var dialogText = "JAST USA Library" + "\n\n" + ResourceProvider.GetString("LOCJast_Usa_Library_StoppingDownloads");
+                var progressOptions = new GlobalProgressOptions(dialogText, false)
                 {
                     IsIndeterminate = false,
                 };
@@ -309,28 +275,30 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
                 shouldSaveSettings = true;
             }
- 
+
             if (shouldSaveSettings)
             {
                 _plugin.SavePluginSettings();
             }
         }
 
-        public void CreateDownloadItem(JastGameWrapper selectedGameWrapper, JastAssetWrapper jastAsset)
+        public void CreateDownloadItem(JastGameWrapper selectedGameWrapper, JastAssetWrapper jastAsset, bool silent)
         {
             var downloadAsset = jastAsset.Asset;
             var id = $"{downloadAsset.GameId}-{downloadAsset.GameLinkId}";
             var alreadyInQueue = GetExistsById(id);
             if (alreadyInQueue)
             {
-                _playniteApi.Dialogs.ShowErrorMessage($"{downloadAsset.Label} is already in queue.", "JAST USA Download Manager");
+                var errorMessage = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_AssetAlreadyInDlListFormat"), downloadAsset.Label);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"));
                 return;
             }
 
-            var assetUri = GetAssetUri(downloadAsset);
+            var assetUri = GetAssetUri(downloadAsset, silent);
             if (assetUri is null)
             {
-                _playniteApi.Dialogs.ShowErrorMessage($"Could not obtain download link for {downloadAsset.Label}.", "JAST USA Download Manager");
+                var errorMessage = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_ObtainAssetUrlFailFormat"), downloadAsset.Label);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"));
                 return;
             }
 
@@ -357,17 +325,18 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             Paths.ReplaceInvalidCharacters(string.Empty);
             if (FileSystem.FileExists(downloadData.DownloadPath))
             {
-                _playniteApi.Dialogs.ShowErrorMessage($"Download file already exists in {downloadData.DownloadPath}", "JAST USA Library Manager");
+                var errorMessage = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_AssetExistsInPathFormat"), jastAsset.Asset.Label, downloadData.DownloadPath);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"));
                 return;
             }
 
             var downloadItem = new DownloadItem(_jastAccountClient, downloadData, this);
-            _ = AddToQueueAsync(downloadItem, false);
+            _ = AddToDownloadsListAsync(downloadItem, false, true);
         }
 
-        public bool RefreshDownloadItemUri(DownloadItem downloadItem)
+        public bool RefreshDownloadItemUri(DownloadItem downloadItem, bool silent)
         {
-            var uri = GetAssetUri(downloadItem.DownloadData.GameLink);
+            var uri = GetAssetUri(downloadItem.DownloadData.GameLink, silent);
             if (uri != null)
             {
                 downloadItem.DownloadData.SetUrl(uri);
@@ -379,9 +348,26 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
         }
 
-        private Uri GetAssetUri(GameLink downloadAsset)
+        private Uri GetAssetUri(GameLink downloadAsset, bool silent)
         {
-            return  _jastAccountClient.GetAssetDownloadLink(downloadAsset);
+            if (silent)
+            {
+                return _jastAccountClient.GetAssetDownloadLink(downloadAsset);
+            }
+
+            var text = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_ObtainingAssetUrlFormat"), downloadAsset.Label);
+            var progressOptions = new GlobalProgressOptions(text, false)
+            {
+                IsIndeterminate = true,
+            };
+
+            Uri uri = null;
+            _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                uri = _jastAccountClient.GetAssetDownloadLink(downloadAsset);
+            }, progressOptions);
+
+            return uri;
         }
 
         public bool GetExistsById(string Id)
@@ -394,7 +380,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             return DownloadsList.FirstOrDefault(existingItem => existingItem.DownloadData.Id == Id);
         }
 
-        public async Task AddToQueueAsync(DownloadItem item, bool startDownload)
+        public async Task AddToDownloadsListAsync(DownloadItem item, bool startDownload, bool persistData)
         {
             await _downloadsListSemaphore.WaitAsync();
             try
@@ -402,6 +388,11 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 if (!DownloadsList.Any(existingItem => existingItem.DownloadData.Id == item.DownloadData.Id))
                 {
                     DownloadsList.Add(item);
+                    if (persistData)
+                    {
+                        PersistDownloadData();
+                    }
+
                     item.DownloadStatusChanged += DownloadItem_DownloadStatusChanged;
                     PersistDownloadData();
                     if (startDownload)
@@ -418,14 +409,19 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             {
                 _downloadsListSemaphore.Release();
             }
+
+            await StartDownloadsAsync();
         }
 
-        public async Task RemoveFromDownloadsListAsync(DownloadItem item)
+        public async Task RemoveFromDownloadsListAsync(DownloadItem item, bool persistChanges)
         {
             await _downloadsListSemaphore.WaitAsync();
             try
             {
-                DownloadsList.Remove(item);
+                if (DownloadsList.Remove(item) && persistChanges)
+                {
+                    PersistDownloadData();
+                }
             }
             finally
             {
@@ -469,6 +465,89 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
             item.Dispose();
             item.DownloadStatusChanged -= DownloadItem_DownloadStatusChanged;
+            await StartDownloadsAsync();
+        }
+
+        public async Task MoveDownloadItemOnePlaceBeforeAsync(DownloadItem item)
+        {
+            await _downloadsListSemaphore.WaitAsync();
+            try
+            {
+                if (item is null  || !_downloadsList.Contains(item))
+                {
+                    return;
+                }
+
+                var currentIndex = _downloadsList.IndexOf(item);
+                var newIndex = currentIndex - 1;
+                if (newIndex >= 0)
+                {
+                    _downloadsList.Move(currentIndex, newIndex);
+                }
+            }
+            finally
+            {
+                _downloadsListSemaphore.Release();
+            }
+
+            NotifyPropertyChangedCommands();
+        }
+
+        private void ExploreAndSelectGameExecutable(JastGameWrapper gameWrapper)
+        {
+            var selectedProgram = Programs.SelectExecutable();
+            if (selectedProgram is null)
+            {
+                return;
+            }
+
+            ApplyProgramToGameCache(gameWrapper.Game, selectedProgram);
+        }
+
+
+
+        public async Task MoveDownloadItemOnePlaceAfterAsync(DownloadItem item)
+        {
+            await _downloadsListSemaphore.WaitAsync();
+            try
+            {
+                if (item is null || !_downloadsList.Contains(item))
+                {
+                    return;
+                }
+
+                var currentIndex = _downloadsList.IndexOf(item);
+                var newIndex = currentIndex + 1;
+                if (newIndex >= 0 && newIndex < _downloadsList.Count)
+                {
+                    _downloadsList.Move(currentIndex, newIndex);
+                }
+            }
+            finally
+            {
+                _downloadsListSemaphore.Release();
+            }
+
+            NotifyPropertyChangedCommands();
+        }
+
+
+
+        private async Task CancelDownloadsAsync()
+        {
+            foreach (var item in DownloadsList.ToList())
+            {
+                if (item.DownloadData.Status == DownloadItemStatus.Paused)
+                {
+                    await item.CancelDownloadAsync();
+                    await item.ResumeDownloadAsync();
+                }
+
+                if (item.DownloadData.Status == DownloadItemStatus.Downloading)
+                {
+                    await item.CancelDownloadAsync();
+                }
+            }
         }
 
         private async Task PauseDownloadsAsync()
@@ -484,19 +563,30 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
         private async Task RemoveCompletedDownloadsAsync()
         {
+            var persistChanges = false;
             foreach (var item in DownloadsList.ToList())
             {
-                if (item.DownloadData.Status != DownloadItemStatus.Completed &&
-                    item.DownloadData.Status != DownloadItemStatus.ExtractionCompleted &&
-                    item.DownloadData.Status != DownloadItemStatus.ExtractionFailed)
+                if (item.DownloadData.Status == DownloadItemStatus.Completed ||
+                    item.DownloadData.Status == DownloadItemStatus.ExtractionCompleted ||
+                    item.DownloadData.Status == DownloadItemStatus.ExtractionFailed)
                 {
-                    await RemoveFromDownloadsListAsync(item);
+                    await RemoveFromDownloadsListAsync(item, false);
+                    persistChanges = true;
                 }
             }
+
+            await Task.Delay(1500);
+            if (persistChanges)
+            {
+                PersistDownloadData();
+            }
+
+            NotifyPropertyChangedCommands();
         }
 
         private async void DownloadItem_DownloadStatusChanged(object sender, DownloadStatusChangedEventArgs e)
         {
+            NotifyPropertyChangedCommands();
             var downloadStatus = e.NewStatus;
             var downloadItem = sender as DownloadItem;
             if (downloadStatus != DownloadItemStatus.Completed)
@@ -504,7 +594,16 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return;
             }
 
-            if (_settingsViewModel.Settings.ExtractDownloadedZips)
+            _ = StartDownloadsAsync();
+            var isExecutable = Path.GetExtension(downloadItem.DownloadData.FileName)
+                .Equals(".exe", StringComparison.OrdinalIgnoreCase);
+            var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
+            if (isExecutable && databaseGame != null && !databaseGame.IsInstalled)
+            {
+                var program = Programs.GetProgramData(downloadItem.DownloadData.DownloadPath);
+                ApplyProgramToGameCache(databaseGame, program);
+            }
+            else if (_settingsViewModel.Settings.ExtractFilesOnDownload)
             {
                 await Task.Run(() => ExtractZipFile(downloadItem));
             }
@@ -589,7 +688,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return;
             }
 
-            if (_settingsViewModel.Settings.DeleteDownloadedZips)
+            if (_settingsViewModel.Settings.DeleteFilesOnExtract)
             {
                 try
                 {
@@ -619,14 +718,23 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return;
             }
 
-            if (_settingsViewModel.Settings.LibraryCache.TryGetValue(databaseGame.GameId, out var cache)
-                && TryFindExecutable(extractDirectory, out var gameExecutablePath))
+            if (!TryFindExecutable(extractDirectory, out var gameExecutablePath))
             {
-                var program = Programs.GetProgramData(gameExecutablePath);
+                return;
+            }
+
+            var program = Programs.GetProgramData(gameExecutablePath);
+            ApplyProgramToGameCache(databaseGame, program);
+        }
+
+        private void ApplyProgramToGameCache(Game databaseGame, Program program)
+        {
+            if (_settingsViewModel.Settings.LibraryCache.TryGetValue(databaseGame.GameId, out var cache))
+            {
                 cache.Program = program;
                 _plugin.SavePluginSettings();
 
-                databaseGame.InstallDirectory = Path.GetDirectoryName(gameExecutablePath);
+                databaseGame.InstallDirectory = Path.GetDirectoryName(program.Path);
                 databaseGame.IsInstalled = true;
                 _playniteApi.Database.Games.Update(databaseGame);
             }
@@ -698,21 +806,6 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             return true;
         }
 
-        public RelayCommand NavigateBackCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                _playniteApi.MainView.SwitchToLibraryView();
-            });
-        }
-
-        public RelayCommand UpdateSelectedGameAssetsCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                UpdateSelectedGameAssets();
-            });
-        }
 
         private void UpdateSelectedGameAssets()
         {
@@ -745,13 +838,166 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
         private void UpdateActiveGameBindings()
         {
-            ActiveGameBackgroundImage = _selectedGameWrapper?.Game.BackgroundImage;
-            ActiveGameCoverImage = _selectedGameWrapper?.Game.CoverImage;
-            ActiveGameName = _selectedGameWrapper?.Game.Name;
             ActiveGameDevelopers = string.Join(", ", _selectedGameWrapper?.Game.Developers?.Select(x => x.Name) ?? Enumerable.Empty<string>());
             ActiveGamePublishers = string.Join(", ", _selectedGameWrapper?.Game.Publishers?.Select(x => x.Name) ?? Enumerable.Empty<string>());
-            ActiveGameAssets = _selectedGameWrapper?.Assets;
-            ActiveGameVisibility = _selectedGameWrapper != null ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public async Task StartDownloadsAsync()
+        {
+            var remainingSlots = _remainingSlots;
+            if (remainingSlots <= 0)
+            {
+                return;
+            }
+
+            var downloadTasks = new List<Task>();
+            foreach (var item in _downloadsList.ToList())
+            {
+                if (remainingSlots == 0)
+                {
+                    break;
+                }
+
+                var status = item.DownloadData.Status;
+                if (status == DownloadItemStatus.Paused)
+                {
+                    downloadTasks.Add(item.ResumeDownloadAsync());
+                    remainingSlots--;
+                }
+                else if (status == DownloadItemStatus.Idle ||
+                         status == DownloadItemStatus.Canceled ||
+                         status == DownloadItemStatus.Failed)
+                {
+                    downloadTasks.Add(item.StartDownloadAsync());
+                    remainingSlots--;
+                }
+            }
+
+            await Task.WhenAll(downloadTasks);
+        }
+
+        private void OpenDirectoryIfExists(string directoryPath)
+        {
+            if (FileSystem.DirectoryExists(directoryPath))
+            {
+                ProcessStarter.StartProcess(directoryPath);
+            }
+        }
+
+        private void NotifyPropertyChangedCommands()
+        {
+            OnPropertyChanged(nameof(AddSelectedAssetToQueueCommand));
+            OnPropertyChanged(nameof(RemoveCompletedDownloadsAsyncCommand));
+            OnPropertyChanged(nameof(PauseDownloadsAsyncCommand));
+            OnPropertyChanged(nameof(CancelDownloadsAsyncCommand));
+            OnPropertyChanged(nameof(MoveSelectedDownloadOnePlaceBeforeAsyncCommand));
+            OnPropertyChanged(nameof(MoveSelectedDownloadOnePlaceAfterAsyncCommand));
+            OnPropertyChanged(nameof(ExploreAndSelectGameExecutableCommand));
+            OnPropertyChanged(nameof(StartDownloadsAsyncCommand));
+        }
+
+        public RelayCommand PauseDownloadsAsyncCommand
+        {
+            get => new RelayCommand(async () =>
+            {
+                await PauseDownloadsAsync();
+            }, () => _canPauseAllDownloads);
+        }
+
+        public RelayCommand RemoveCompletedDownloadsAsyncCommand
+        {
+            get => new RelayCommand(async () =>
+            {
+                await RemoveCompletedDownloadsAsync();
+            }, () => _canRemoveCompletedDownloads);
+        }
+
+        public RelayCommand ExploreAndSelectGameExecutableCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ExploreAndSelectGameExecutable(_selectedGameWrapper);
+            }, () => _selectedGameWrapper != null);
+        }
+
+        public RelayCommand MoveSelectedDownloadOnePlaceBeforeAsyncCommand
+        {
+            get => new RelayCommand(async () =>
+            {
+                await MoveDownloadItemOnePlaceBeforeAsync(SelectedDownloadItem);
+            }, () => _canMoveItemBefore);
+        }
+
+        public RelayCommand MoveSelectedDownloadOnePlaceAfterAsyncCommand
+        {
+            get => new RelayCommand(async () =>
+            {
+                await MoveDownloadItemOnePlaceAfterAsync(SelectedDownloadItem);
+            }, () => _canMoveItemAfter);
+        }
+
+        public RelayCommand StartDownloadsAsyncCommand
+        {
+            get => new RelayCommand(async () =>
+            {
+                await StartDownloadsAsync();
+            }, () => _remainingSlots > 0);
+        }
+
+        public RelayCommand CancelDownloadsAsyncCommand
+        {
+            get => new RelayCommand(async () =>
+            {
+                await CancelDownloadsAsync();
+            }, () => _canCancelAllDownloads);
+        }
+
+        public RelayCommand NavigateBackCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                _playniteApi.MainView.SwitchToLibraryView();
+            });
+        }
+
+        public RelayCommand UpdateSelectedGameAssetsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                UpdateSelectedGameAssets();
+            });
+        }
+
+        public RelayCommand OpenSettingsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                _plugin.OpenSettingsView();
+            });
+        }
+
+        public RelayCommand OpenGamesDownloadsDirectory
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenDirectoryIfExists(_settingsViewModel.Settings.GameDownloadsPath);
+            });
+        }
+
+        public RelayCommand OpenPatchesDownloadsDirectory
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenDirectoryIfExists(_settingsViewModel.Settings.PatchDownloadsPath);
+            });
+        }
+
+        public RelayCommand OpenExtrasDownloadsDirectory
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenDirectoryIfExists(_settingsViewModel.Settings.ExtrasDownloadsPath);
+            });
         }
 
         public RelayCommand AddSelectedAssetToQueueCommand
@@ -760,7 +1006,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             {
                 if (_selectedGameAsset != null)
                 {
-                    CreateDownloadItem(SelectedGameWrapper, _selectedGameAsset);
+                    CreateDownloadItem(SelectedGameWrapper, _selectedGameAsset, false);
                 }
             }, () => SelectedGameWrapper != null && _selectedGameAsset != null && !GetExistsById($"{SelectedGameAsset.Asset.GameId}-{SelectedGameAsset.Asset.GameLinkId}"));
         }
@@ -779,21 +1025,5 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
         }
 
-        private string GetTimeReadable(TimeSpan timeSpan)
-        {
-            var timeSeconds = Math.Ceiling(timeSpan.TotalSeconds);
-            if (timeSeconds > 3600)
-            {
-                return string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat"), timeSeconds / 3600, timeSeconds % 3600);
-            }
-            if (timeSeconds > 60)
-            {
-                return string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat"), timeSeconds / 60, timeSeconds % 60);
-            }
-            else
-            {
-                return string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat"), timeSeconds);
-            }
-        }
     }
 }

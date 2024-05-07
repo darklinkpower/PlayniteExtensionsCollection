@@ -69,20 +69,64 @@ namespace JastUsaLibrary.DownloadManager.Models
                 if (_progress != value)
                 {
                     _progress = value;
+                    ProgressReadable = $"{value:0.00}%";
                     OnPropertyChanged();
                 }
             }
         }
 
-        private string _size = string.Empty;
-        public string Size
+        private string _progressReadable = "0.00%";
+        [DontSerialize]
+        public string ProgressReadable
         {
-            get => _size;
+            get => _progressReadable;
             set
             {
-                if (_size != value)
+                if (_progressReadable != value)
                 {
-                    _size = value;
+                    _progressReadable = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private long _progressSize = 0;
+        public long ProgressSize
+        {
+            get => _progressSize;
+            set
+            {
+                if (_progressSize != value)
+                {
+                    _progressSize = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private long _totalSize = 0;
+        public long TotalSize
+        {
+            get => _totalSize;
+            set
+            {
+                if (_totalSize != value)
+                {
+                    _progressSize = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _progressAndTotalSize = string.Empty;
+        public string ProgressAndTotalSize
+        {
+            get => _progressAndTotalSize;
+            set
+            {
+                if (_progressAndTotalSize != value)
+                {
+                    _progressAndTotalSize = value;
                     OnPropertyChanged();
                 }
             }
@@ -90,7 +134,7 @@ namespace JastUsaLibrary.DownloadManager.Models
 
         private string _speed = string.Empty;
         [DontSerialize]
-        public string Speed
+        public string FormattedDownloadSpeedPerSecond
         {
             get => _speed;
             set
@@ -103,16 +147,16 @@ namespace JastUsaLibrary.DownloadManager.Models
             }
         }
 
-        private string _timeLeft = string.Empty;
+        private TimeSpan _timeRemaining = TimeSpan.MinValue;
         [DontSerialize]
-        public string TimeLeft
+        public TimeSpan TimeRemaining
         {
-            get => _timeLeft;
+            get => _timeRemaining;
             set
             {
-                if (_timeLeft != value)
+                if (_timeRemaining != value)
                 {
-                    _timeLeft = value;
+                    _timeRemaining = value;
                     OnPropertyChanged();
                 }
             }
@@ -181,24 +225,29 @@ namespace JastUsaLibrary.DownloadManager.Models
             if (downloadProgressArgs is null)
             {
                 Progress = 0;
-                Size = string.Empty;
-                Speed = string.Empty;
-                TimeLeft = string.Empty;
+                ProgressSize = 0;
+                ProgressAndTotalSize = string.Empty;
+                FormattedDownloadSpeedPerSecond = string.Empty;
+                TimeRemaining = TimeSpan.MinValue;
+                return;
             }
             else if (downloadProgressArgs.IsComplete)
             {
                 Progress = downloadProgressArgs.ProgressPercentage;
-                Size = string.Format("{0}/{1}", downloadProgressArgs.FormattedBytesReceived, downloadProgressArgs.FormattedTotalBytesToReceive);
-                Speed = string.Empty;
-                TimeLeft = GetTimeSpanReadable(downloadProgressArgs.TimeRemaining);
+                ProgressAndTotalSize = string.Format("{0}/{1}", downloadProgressArgs.FormattedBytesReceived, downloadProgressArgs.FormattedTotalBytesToReceive);
+                FormattedDownloadSpeedPerSecond = string.Empty;
+                TimeRemaining = downloadProgressArgs.TimeRemaining;
             }
             else
             {
                 Progress = downloadProgressArgs.ProgressPercentage;
-                Size = string.Format("{0}/{1}", downloadProgressArgs.FormattedBytesReceived, downloadProgressArgs.FormattedTotalBytesToReceive);
-                Speed = downloadProgressArgs.FormattedDownloadSpeedPerSecond;
-                TimeLeft = GetTimeSpanReadable(downloadProgressArgs.TimeRemaining);
+                ProgressAndTotalSize = string.Format("{0}/{1}", downloadProgressArgs.FormattedBytesReceived, downloadProgressArgs.FormattedTotalBytesToReceive);
+                FormattedDownloadSpeedPerSecond = downloadProgressArgs.FormattedDownloadSpeedPerSecond;
+                TimeRemaining = downloadProgressArgs.TimeRemaining;
             }
+
+            ProgressSize = downloadProgressArgs.BytesReceived;
+            TotalSize = downloadProgressArgs.TotalBytesToReceive;
         }
 
         public void SetUrl(Uri uri)
@@ -210,30 +259,6 @@ namespace JastUsaLibrary.DownloadManager.Models
                 var queryParameters = HttpUtility.ParseQueryString(uri.Query);
                 var unixExpiresTimeStamp = long.Parse(queryParameters["expires"]);
                 UrlExpiresTimeStamp = unixExpiresTimeStamp;
-            }
-        }
-
-        private static string GetTimeSpanReadable(TimeSpan timeSpan)
-        {
-            if (timeSpan.Equals(TimeSpan.MinValue))
-            {
-                return string.Empty;
-            }
-            else if (timeSpan.TotalDays >= 1)
-            {
-                return $"{timeSpan.Days} d {timeSpan.Hours} h";
-            }
-            else if (timeSpan.TotalHours >= 1)
-            {
-                return $"{timeSpan.Hours} h {timeSpan.Minutes} m";
-            }
-            else if (timeSpan.TotalMinutes >= 1)
-            {
-                return $"{timeSpan.Minutes} m {timeSpan.Seconds} s";
-            }
-            else
-            {
-                return $"{timeSpan.Seconds} s";
             }
         }
 

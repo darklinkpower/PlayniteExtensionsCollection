@@ -14,11 +14,11 @@ using System.Windows;
 
 namespace JastUsaLibrary
 {
-    public class FakeInstallController : InstallController
+    public class JastInstallController : InstallController
     {
         private readonly string _installDir;
 
-        public FakeInstallController(Game game, string installDir) : base(game)
+        public JastInstallController(Game game, string installDir) : base(game)
         {
             _installDir = installDir;
         }
@@ -45,7 +45,7 @@ namespace JastUsaLibrary
 
         public JastUninstallController(Game game) : base(game)
         {
-            Name = "Uninstall JAST game";
+            Name = ResourceProvider.GetString("LOCJast_Usa_Library_UninstallJastLibGame");
         }
 
         public JastUninstallController(Game game, GameCache gameCache, JastUsaLibrary jastUsaLibrary) : this(game)
@@ -112,8 +112,8 @@ namespace JastUsaLibrary
 
             window.Height = 800;
             window.Width = 500;
-            window.Title = ResourceProvider.GetString("JAST USA Library Uninstaller");
-            var dataContext = new DirectoryDeleteItemsViewModel(_game.InstallDirectory, window);
+            window.Title = ResourceProvider.GetString("LOCJast_Usa_Library_WindowTitleJastLibraryUninstaller");
+            var dataContext = new DirectoryDeleteItemsViewModel(_game, window);
             window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             

@@ -179,6 +179,10 @@ namespace JastUsaLibrary
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             settings.UpgradeSettings();
+            if (settings.Settings.StartDownloadsOnStartup)
+            {
+                _ = Task.Run(() => _downloadsManagerViewModel.StartDownloadsAsync());
+            }
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -232,7 +236,7 @@ namespace JastUsaLibrary
             };
 
             var game = args.Game;
-            var selected = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectActionLabel"), "JAST USA Library", System.Windows.MessageBoxImage.None, options);
+            var selected = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectActionLabel"), "JAST USA Library", MessageBoxImage.None, options);
             if (!selected.IsCancel)
             {
                 if (selected == options[0]) // Download option
@@ -241,7 +245,7 @@ namespace JastUsaLibrary
                 }
                 else if (selected == options[1]) // Browse for executable option
                 {
-                    var selectedProgram = SelectExecutable();
+                    var selectedProgram = ProgramsHelper.Programs.SelectExecutable();
                     if (selectedProgram is null)
                     {
                         return null;
@@ -261,17 +265,11 @@ namespace JastUsaLibrary
 
         public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
         {
-            if (args.Game.PluginId != Id)
-            {
-                return null;
-            }
-
             var game = args.Game;
-            if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
+            if (args.Game.PluginId == Id && settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
             {
                 if (gameCache.Product != null && FileSystem.FileExists(gameCache.Program.Path))
                 {
-                    //PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageUninstallNotice"), "JAST USA Library");
                     return new List<UninstallController> { new JastUninstallController(game, gameCache, this) };
                 }
             }
@@ -285,38 +283,9 @@ namespace JastUsaLibrary
             _downloadsManagerViewModel.Dispose();
         }
 
-        public static Program SelectExecutable()
-        {
-            var path = API.Instance.Dialogs.SelectFile("Executable (.exe,.bat,.lnk)|*.exe;*.bat;*.lnk");
-            if (path.IsNullOrEmpty())
-            {
-                return null;
-            }
-
-            if (!path.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) &&
-                !path.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase) &&
-                !path.EndsWith(".bat", StringComparison.OrdinalIgnoreCase))
-            {
-                return null;
-            }
-
-            var program = ProgramsHelper.Programs.GetProgramData(path);
-            // Use shortcut name as game name for .lnk shortcuts
-            if (path.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase))
-            {
-                var shortcutName = Path.GetFileNameWithoutExtension(path);
-                if (!shortcutName.IsNullOrEmpty())
-                {
-                    program.Name = shortcutName;
-                }
-            }
-
-            return program;
-        }
-
         private List<InstallController> GetFakeController(Game game, string installDir)
         {
-            return new List<InstallController> { new FakeInstallController(game, installDir) };
+            return new List<InstallController> { new JastInstallController(game, installDir) };
         }
 
         public GameTranslationsResponse GetGameTranslations(Game game)
@@ -360,7 +329,7 @@ namespace JastUsaLibrary
             var iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             yield return new SidebarItem
             {
-                Title = "JAST Library Manager",
+                Title = ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"),
                 Type = SiderbarItemType.View,
                 Icon = iconPath,
                 Opened = () => {

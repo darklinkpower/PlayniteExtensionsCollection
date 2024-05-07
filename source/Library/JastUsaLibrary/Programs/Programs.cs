@@ -1,4 +1,5 @@
 ﻿using JastUsaLibrary.ProgramsHelper.Models;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -93,6 +94,33 @@ namespace JastUsaLibrary.ProgramsHelper
             };
         }
 
+        public static Program SelectExecutable()
+        {
+            var path = API.Instance.Dialogs.SelectFile("Executable (.exe,.bat,.lnk)|*.exe;*.bat;*.lnk");
+            if (path.IsNullOrEmpty())
+            {
+                return null;
+            }
 
+            if (!path.EndsWith(".exe", StringComparison.OrdinalIgnoreCase) &&
+                !path.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase) &&
+                !path.EndsWith(".bat", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            var program = GetProgramData(path);
+            // Use shortcut name as game name for .lnk shortcuts
+            if (path.EndsWith(".lnk", StringComparison.OrdinalIgnoreCase))
+            {
+                var shortcutName = Path.GetFileNameWithoutExtension(path);
+                if (!shortcutName.IsNullOrEmpty())
+                {
+                    program.Name = shortcutName;
+                }
+            }
+
+            return program;
+        }
     }
 }

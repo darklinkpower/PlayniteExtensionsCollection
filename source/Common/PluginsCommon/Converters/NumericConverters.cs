@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,34 @@ namespace PluginsCommon.Converters
 
     #endregion ulong
 
+    #region uint
+
+    public class UintFieldValidation : ValidationRule
+    {
+        public uint MinValue { get; set; } = uint.MinValue;
+        public uint MaxValue { get; set; } = uint.MaxValue;
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value is string str)
+            {
+                if (uint.TryParse(str, out uint uintValue))
+                {
+                    if (uintValue < MinValue || uintValue > MaxValue)
+                    {
+                        return new ValidationResult(false, $"Value must be between {MinValue} and {MaxValue}.");
+                    }
+
+                    return ValidationResult.ValidResult;
+                }
+            }
+
+            return new ValidationResult(false, "Invalid input.");
+        }
+    }
+
+    #endregion null int
+
     #region null int
 
     public class NullableIntToStringConverter : MarkupExtension, IValueConverter
@@ -126,7 +155,7 @@ namespace PluginsCommon.Converters
 
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
-            if (value == null)
+            if (value is null)
             {
                 return new ValidationResult(true, null);
             }

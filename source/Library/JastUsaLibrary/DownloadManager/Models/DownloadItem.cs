@@ -48,13 +48,14 @@ namespace JastUsaLibrary.DownloadManager.Models
         private bool _isDisposed = false;
         private readonly object _disposeLock = new object();
 
-        public bool CanStartDownloads => !_isDownloadProcessRunning &&
+        public bool CanStartDownload => !_isDownloadProcessRunning &&
             (_downloadData.Status == DownloadItemStatus.Canceled ||
             _downloadData.Status == DownloadItemStatus.Failed ||
             _downloadData.Status == DownloadItemStatus.Idle);
-        public bool CanPause => _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Downloading;
-        public bool CanResume => _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Paused;
-
+        public bool CanPauseDownload => _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Downloading;
+        public bool CanResumeDownload => _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Paused;
+        public bool CanCancelDownload => _stateControllerSemaphore != null &&
+            (_downloadData.Status == DownloadItemStatus.Downloading || _downloadData.Status == DownloadItemStatus.Paused);
 
         public DownloadData DownloadData
         {
@@ -89,28 +90,39 @@ namespace JastUsaLibrary.DownloadManager.Models
             {
                 var httpRequestStatus = args.Status;
                 var newStatus = DownloadItemStatus.Idle;
+                var clearDownloadingValues = true;
                 switch (httpRequestStatus)
                 {
                     case HttpRequestClientStatus.Idle:
                         newStatus = DownloadItemStatus.Idle;
+                        clearDownloadingValues = true;
                         break;
                     case HttpRequestClientStatus.Downloading:
                         newStatus = DownloadItemStatus.Downloading;
                         break;
                     case HttpRequestClientStatus.Paused:
+                        clearDownloadingValues = true;
                         newStatus = DownloadItemStatus.Paused;
                         break;
                     case HttpRequestClientStatus.Completed:
                         newStatus = DownloadItemStatus.Completed;
                         break;
                     case HttpRequestClientStatus.Failed:
+                        clearDownloadingValues = true;
                         newStatus = DownloadItemStatus.Failed;
                         break;
                     case HttpRequestClientStatus.Canceled:
+                        clearDownloadingValues = true;
                         newStatus = DownloadItemStatus.Canceled;
                         break;
                     default:
                         break;
+                }
+
+                if (clearDownloadingValues)
+                {
+                    _downloadData.FormattedDownloadSpeedPerSecond = string.Empty;
+                    _downloadData.TimeRemaining = TimeSpan.MinValue;
                 }
 
                 if (newStatus == DownloadItemStatus.Completed)
@@ -119,8 +131,8 @@ namespace JastUsaLibrary.DownloadManager.Models
                 }
 
                 DownloadData.Status = newStatus;
-                NotifyCommandsPropertyChanged();
                 OnDownloadStatusChanged(newStatus);
+                NotifyCommandsPropertyChanged();
             }
 
             void progressChangedCallback(DownloadProgressArgs args)
@@ -134,7 +146,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             _downloadStateController = null;
 
             var hasDownloadExpired = IsTimeStampExpired(DownloadData.UrlExpiresTimeStamp);
-            if (hasDownloadExpired && !_downloadsManagerViewModel.RefreshDownloadItemUri(this))
+            if (hasDownloadExpired && !_downloadsManagerViewModel.RefreshDownloadItemUri(this, true))
             {
                 return;
             }
@@ -149,6 +161,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             _downloadStateController = null;
 
             _isDownloadProcessRunning = false;
+            NotifyCommandsPropertyChanged();
         }
 
         private static bool IsTimeStampExpired(long unixTimeStamp)
@@ -197,9 +210,18 @@ namespace JastUsaLibrary.DownloadManager.Models
             }
         }
 
+        public void OpenDownloadDirectory()
+        {
+            var downloadDirectory = _downloadData.DownloadDirectory;
+            if (FileSystem.DirectoryExists(downloadDirectory))
+            {
+                ProcessStarter.StartProcess(downloadDirectory);
+            }
+        }
+
         private async Task RemoveFromDownloadsListAsync()
         {
-            await _downloadsManagerViewModel.RemoveFromDownloadsListAsync(this);
+            await _downloadsManagerViewModel.RemoveFromDownloadsListAsync(this, true);
         }
 
         private void NotifyCommandsPropertyChanged()
@@ -208,6 +230,10 @@ namespace JastUsaLibrary.DownloadManager.Models
             OnPropertyChanged(nameof(PauseDownloadAsyncCommand));
             OnPropertyChanged(nameof(ResumeDownloadAsyncCommand));
             OnPropertyChanged(nameof(CancelDownloadAsyncCommand));
+            OnPropertyChanged(nameof(CanStartDownload));
+            OnPropertyChanged(nameof(CanResumeDownload));
+            OnPropertyChanged(nameof(CanPauseDownload));
+            OnPropertyChanged(nameof(CanCancelDownload));
         }
 
         public void Dispose()
@@ -230,7 +256,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             get => new RelayCommand(async () =>
             {
                 await StartDownloadAsync();
-            }, () => CanStartDownloads);
+            }, () => CanStartDownload);
         }
 
         public RelayCommand ResumeDownloadAsyncCommand
@@ -238,7 +264,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             get => new RelayCommand(async () =>
             {
                 await ResumeDownloadAsync();
-            }, () => CanResume);
+            }, () => CanResumeDownload);
         }
 
         public RelayCommand PauseDownloadAsyncCommand
@@ -246,7 +272,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             get => new RelayCommand(async () =>
             {
                 await PauseDownloadAsync();
-            }, () => CanPause);
+            }, () => CanPauseDownload);
         }
 
         public RelayCommand CancelDownloadAsyncCommand
@@ -254,7 +280,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             get => new RelayCommand(async () =>
             {
                 await CancelDownloadAsync();
-            }, () => CanPause);
+            }, () => CanCancelDownload);
         }
 
         public RelayCommand RemoveFromDownloadsListAsyncCommand
@@ -262,6 +288,14 @@ namespace JastUsaLibrary.DownloadManager.Models
             get => new RelayCommand(async () =>
             {
                 await RemoveFromDownloadsListAsync();
+            });
+        }
+
+        public RelayCommand OpenDownloadDirectoryCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenDownloadDirectory();
             });
         }
 

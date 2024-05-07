@@ -13,7 +13,9 @@ namespace WebCommon.HttpRequestClient
     public class DownloadStateController : IDisposable
     {
         private readonly object _lock = new object();
+        private readonly object _disposeLock = new object();
         private bool _isPaused = false;
+        private bool _isDisposed = false;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private TaskCompletionSource<bool> _pauseTaskCompletionSource;
 
@@ -75,7 +77,15 @@ namespace WebCommon.HttpRequestClient
         /// </summary>
         public void Cancel()
         {
-            _cancellationTokenSource.Cancel();
+            lock (_lock)
+            {
+                _cancellationTokenSource.Cancel();
+                if (_isPaused)
+                {
+                    _isPaused = false;
+                    _pauseTaskCompletionSource?.TrySetResult(true);
+                }
+            }
         }
 
         /// <summary>
@@ -97,7 +107,16 @@ namespace WebCommon.HttpRequestClient
         /// </summary>
         public void Dispose()
         {
-            _cancellationTokenSource.Dispose();
+            lock (_disposeLock)
+            {
+                if (_isDisposed)
+                {
+                    return;
+                }
+
+                _cancellationTokenSource?.Dispose();
+                _isDisposed = true;
+            }
         }
     }
 

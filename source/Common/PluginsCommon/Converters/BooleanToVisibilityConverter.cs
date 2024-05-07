@@ -1,26 +1,28 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Markup;
 
 namespace PluginsCommon.Converters
 {
-    public class IEnumerableHasItemsToVisibilityConverter : MarkupExtension, IValueConverter
+    public class BooleanToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IEnumerable enumerable)
+            if (value is bool boolValue)
             {
                 bool invertResult = parameter != null && System.Convert.ToBoolean(parameter);
-                if (enumerable.GetEnumerator().MoveNext())
+                if (invertResult)
                 {
-                    return invertResult ? Visibility.Collapsed : Visibility.Visible;
+                    return boolValue ? Visibility.Collapsed : Visibility.Visible;
                 }
                 else
                 {
-                    return invertResult ? Visibility.Visible : Visibility.Collapsed;
+                    return boolValue ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
 
@@ -30,11 +32,6 @@ namespace PluginsCommon.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
         }
     }
 }

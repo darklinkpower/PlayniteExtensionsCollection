@@ -5,22 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:JastUsaLibrary.Views"
              xmlns:vms="clr-namespace:JastUsaLibrary.ViewModels"
+             xmlns:commonconv="clr-namespace:PluginsCommon.Converters"
              xmlns:jastconv="clr-namespace:JastUsaLibrary.Converters"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=vms:DirectoryDeleteItemsViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="600" d:DesignWidth="330">
     <UserControl.Resources>
         <jastconv:FileItemToGlyphCodeConverter x:Key="FileItemToGlyphCodeConverter"/>
+        <commonconv:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter"/>
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
     </UserControl.Resources>
     <Grid Margin="10">
         <DockPanel>
             <StackPanel Margin="0,10,0,0" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Delete selected items and uninstall" Command="{Binding DeleteItemsAndCloseCommand}" />
-                <Button Content="Cancel" Margin="10,0,0,0" Command="{Binding CancelCommand}" />
+                <Button Content="{DynamicResource LOCJast_Usa_Library_UninstallGameLabel}" Command="{Binding DeleteItemsAndCloseCommand}" />
+                <Button Content="{DynamicResource LOCJast_Usa_Library_DialogMessageCancelOption}" Margin="10,0,0,0" Command="{Binding CancelCommand}" />
             </StackPanel>
 
-            <TextBlock DockPanel.Dock="Top" Text="Select the game files and directories to delete on game uninstall" Margin="0,0,0,0" TextWrapping="Wrap" />
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Image DockPanel.Dock="Left" Source="{Binding Game.Icon, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
+                       Visibility="{Binding Game.Icon, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                       RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" Margin="0,0,10,0"
+                       Height="22"
+                       Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Left"/>
+
+                <TextBlock DockPanel.Dock="Top" VerticalAlignment="Center"
+                           Text="{Binding Game.Name}" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" FontSize="18" />
+            </StackPanel>
+
+            <TextBlock DockPanel.Dock="Top" Text="{Binding InstallDirectory}" Margin="0,10,0,0"
+                       Opacity="0.75" TextTrimming="CharacterEllipsis"/>
+
+            <Separator DockPanel.Dock="Top" Margin="0,15,0,15" Opacity="0.30" />
+            
+            <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOCJast_Usa_Library_SelectItemsToDeleteOnUninstall}" Margin="0,0,0,0" TextWrapping="Wrap" />
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,10,0,0">
+                <Button Content="{DynamicResource LOCJast_Usa_Library_SelectAllLabel}" Command="{Binding SelectAllItemsCommand}" />
+                <Button Content="{DynamicResource LOCJast_Usa_Library_UnselectAllLabel}" Margin="10,0,0,0"  Command="{Binding UnselectAllItemsCommand}" />
+            </StackPanel>
             <ListBox Margin="0,10,0,0" DockPanel.Dock="Top" ItemsSource="{Binding FileSystemItems}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

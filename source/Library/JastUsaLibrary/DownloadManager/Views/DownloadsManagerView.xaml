@@ -4,11 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:JastUsaLibrary.Views"
+             xmlns:commonconv="clr-namespace:PluginsCommon.Converters"
              xmlns:jastconv="clr-namespace:JastUsaLibrary.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
     <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        <jastconv:DownloadItemStatusToStringConverter x:Key="DownloadItemStatusToStringConverter" />
+        <jastconv:TimeSpanToStringReadable x:Key="TimeSpanToStringReadable" />
         <jastconv:FileNameToExtensionGlyphCodeConverter x:Key="FileNameToExtensionGlyphCodeConverter" />
+        <jastconv:JastAssetTypeToLocalizedStringConverter x:Key="JastAssetTypeToLocalizedStringConverter" />
+        <commonconv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <commonconv:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+        <commonconv:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter" />
+        <commonconv:IEnumerableHasItemsToVisibilityConverter x:Key="IEnumerableHasItemsToVisibilityConverter" />
+        <commonconv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <DataTemplate x:Key="FileIconColumnTemplate">
             <TextBlock Margin="0,10,0,10" HorizontalAlignment="Center" VerticalAlignment="Center"
                        FontWeight="UltraLight"
@@ -18,21 +28,46 @@
         <DataTemplate x:Key="NameColumnTemplate">
             <StackPanel VerticalAlignment="Center" Margin="0,10,0,10">
                 <TextBlock Text="{Binding DownloadData.Name}" Margin="0,0,5,0" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
-                <TextBlock Text="{Binding DownloadData.FileName}" Margin="0,10,5,0" TextTrimming="CharacterEllipsis" />
+                <TextBlock Text="{Binding DownloadData.AssetType, Converter={StaticResource JastAssetTypeToLocalizedStringConverter}}"
+                           Margin="0,2,5,0" Opacity="0.75" TextTrimming="CharacterEllipsis" />
+                <TextBlock Text="{Binding DownloadData.FileName}" Opacity="0.75" Margin="0,10,5,0" TextTrimming="CharacterEllipsis" />
                 <ProgressBar Margin="0,5,5,0" Height="5" HorizontalAlignment="Stretch" Value="{Binding DownloadData.Progress}" Minimum="0" Maximum="100" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ButtonsColumnTemplate">
             <StackPanel Orientation="Horizontal">
-                <Button Content="DOWNLOAD" Margin="0,0,5,0" Command="{Binding StartDownloadAsyncCommand}" />
-                <Button Content="RESUME" Margin="0,0,5,0" Command="{Binding ResumeDownloadAsyncCommand}" />
-                <Button Content="PAUSE" Margin="0,0,5,0" Command="{Binding PauseDownloadAsyncCommand}" />
-                <Button Content="STOP" Margin="0,0,5,0" Command="{Binding CancelDownloadAsyncCommand}" />
-                <Button Content="REMOVE" Margin="0,0,5,0" Command="{Binding RemoveFromDownloadsListAsyncCommand}" />
+                <Button ToolTip="{DynamicResource LOCJast_Usa_Library_JastDownloaderDownloadActionLabel}" Content="&#xEF08;"
+                        Visibility="{Binding CanStartDownload, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding StartDownloadAsyncCommand}" />
+                <Button ToolTip="{DynamicResource LOCJast_Usa_Library_JastDownloaderResumeActionLabel}" Content="&#xEF08;"
+                        Visibility="{Binding CanResumeDownload, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding ResumeDownloadAsyncCommand}" />
+                <Button ToolTip="{DynamicResource LOCJast_Usa_Library_JastDownloaderPauseActionLabel}" Content="&#xEC72;"
+                        Visibility="{Binding CanPauseDownload, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding PauseDownloadAsyncCommand}" />
+                <Button ToolTip="{DynamicResource LOCJast_Usa_Library_StopDownloads}" Content="&#xECB1;"
+                        Visibility="{Binding CanCancelDownload, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding CancelDownloadAsyncCommand}" />
+                <Button ToolTip="{DynamicResource LOCJast_Usa_Library_JastDownloaderRemoveActionLabel}" Content="&#xEE09;"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding RemoveFromDownloadsListAsyncCommand}" />
+                <Button ToolTip="{DynamicResource LOCJast_Usa_Library_JastDownloaderOpenDirActionLabel}" Content="&#xEC5B;"
+                        FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding OpenDownloadDirectoryCommand}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ProgressColumnTemplate">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel VerticalAlignment="Center" Margin="0,10,0,10">
+                    <TextBlock Text="{Binding DownloadData.ProgressAndTotalSize}"
+                               Visibility="{Binding DownloadData.ProgressAndTotalSize, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                               Margin="0,0,5,5" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding DownloadData.ProgressReadable}" Opacity="0.75"
+                               Visibility="{Binding DownloadData.ProgressReadable, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                               Margin="0,0,5,0" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="GamesListTemplate">
-            <DockPanel Margin="3">
+            <DockPanel Margin="3" Opacity="{Binding Game.IsInstalled, Converter={StaticResource BooleanToOpacityConverter}, ConverterParameter=0.60}">
                 <Image DockPanel.Dock="Left" Source="{Binding Game.Icon, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
                        VerticalAlignment="Center" RenderOptions.BitmapScalingMode="Fant" Width="20" />
                 <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="{Binding Game.Name}" TextTrimming="CharacterEllipsis" Margin="5,0,0,0" />
@@ -42,7 +77,7 @@
             <Border Padding="5" Margin="0,3,0,3">
                 <StackPanel>
                     <TextBlock Text="{Binding Asset.Label}" FontWeight="Medium" FontSize="16" />
-                    <TextBlock Text="{Binding Type}" FontSize="12" Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding Type, Converter={StaticResource JastAssetTypeToLocalizedStringConverter}}" FontSize="12" Margin="0,5,0,0" />
                     <Separator Margin="0,5,0,5" />
                 </StackPanel>
             </Border>
@@ -52,8 +87,8 @@
         <DockPanel>
             <Grid DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="NavigateBackCommand" Command="{Binding NavigateBackCommand}" />
-                    <Button Margin="20,0,0,0" Content="OpenGameDownloadsWindowCommand" Command="{Binding OpenGameDownloadsWindowCommand}" />
+                    <Button Content="&#xEA9D;" FontSize="22" FontFamily="{DynamicResource FontIcoFont}" Command="{Binding NavigateBackCommand}" VerticalAlignment="Center" />
+                    <TextBlock Text="{DynamicResource LOCJast_Usa_Library_JastLibraryManager}" FontWeight="SemiBold" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
             </Grid>
 
@@ -62,20 +97,50 @@
                 <TabItem>
                     <TabItem.Header>
                         <Border Padding="0,10,20,10">
-                            <DockPanel>
-                                <TextBlock DockPanel.Dock="Left" Text="&#xEA30;" FontSize="25" FontFamily="{DynamicResource FontIcoFont}" VerticalAlignment="Center" />
-                                <TextBlock DockPanel.Dock="Left" Text="My games" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            <DockPanel HorizontalAlignment="Right">
+                                <TextBlock DockPanel.Dock="Right" Text="{DynamicResource LOCJast_Usa_Library_GamesLibrary}" FontWeight="Medium" VerticalAlignment="Center" Margin="10,0,0,0" />
+                                <TextBlock DockPanel.Dock="Left" HorizontalAlignment="Left" Text="&#xEA30;" FontSize="20" FontFamily="{DynamicResource FontIcoFont}" VerticalAlignment="Center" />
                             </DockPanel>
                         </Border>
                     </TabItem.Header>
-                    <DockPanel Margin="10">
+                    <DockPanel Margin="20,10,20,20">
                         <DockPanel DockPanel.Dock="Left">
-                            <TextBlock DockPanel.Dock="Top" Text="Library games" FontSize="16" />
+                            <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOCJast_Usa_Library_LibraryGames}" FontSize="16" />
                             <Separator DockPanel.Dock="Top" Margin="0,10,0,10"/>
-                            <ListBox DockPanel.Dock="Top" Width="300" ItemsSource="{Binding LibraryGames}" SelectedItem="{Binding SelectedGameWrapper}"
+                            <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0,10,0,0">
+                                
+                                <Button DockPanel.Dock="Right" Content="&#xEC83;" FontSize="18" VerticalAlignment="Center"
+                                        FontFamily="{DynamicResource FontIcoFont}"
+                                        Command="{Binding OpenSettingsCommand}" Margin="10,0,0,0" />
+                                
+                                <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding OpenGamesDownloadsDirectory}" Margin="0,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOCJast_Usa_Library_GamesLabel}" Margin="8,0,0,0" />
+                                    </StackPanel>
+                                </Button>
+                                
+
+
+                                <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding OpenPatchesDownloadsDirectory}" Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderPatches}" Margin="8,0,0,0" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding OpenExtrasDownloadsDirectory}" Margin="10,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderExtras}" Margin="8,0,0,0" />
+                                    </StackPanel>
+                                </Button>
+                                
+                            </DockPanel>
+                            <ListBox x:Name="LbListGames" DockPanel.Dock="Top" MinWidth="300" ItemsSource="{Binding LibraryGames}" SelectedItem="{Binding SelectedGameWrapper}"
                                      ItemTemplate="{StaticResource GamesListTemplate}" />
                         </DockPanel>
-                        <DockPanel Margin="15,0,0,0" Visibility="{Binding ActiveGameVisibility}">
+                        <DockPanel Margin="15,0,0,0" Visibility="{Binding SelectedGameWrapper, Converter={StaticResource NullToVisibilityConverter}}">
                             <Grid Height="250" DockPanel.Dock="Top">
                                 <Grid>
                                     <Grid.OpacityMask>
@@ -86,43 +151,73 @@
                                             </RadialGradientBrush.GradientStops>
                                         </RadialGradientBrush>
                                     </Grid.OpacityMask>
-                                    <Image DockPanel.Dock="Left" Source="{Binding ActiveGameBackgroundImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
+                                    <Image DockPanel.Dock="Left" Source="{Binding SelectedGameWrapper.Game.BackgroundImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={x:Null}}"
                                            RenderOptions.BitmapScalingMode="Fant"
                                            Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Left"/>
                                     <Border Background="#4D000000" />
                                 </Grid>
 
-                                <DockPanel Margin="10">
-                                    <Image DockPanel.Dock="Left" Source="{Binding ActiveGameCoverImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
+                                <DockPanel Margin="10" LastChildFill="False">
+                                    <Image DockPanel.Dock="Left" Source="{Binding SelectedGameWrapper.Game.CoverImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={x:Null}}"
                                            RenderOptions.BitmapScalingMode="Fant"
                                            Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Left"/>
                                     <DockPanel DockPanel.Dock="Left" Margin="10,0,0,0">
-                                        <TextBlock DockPanel.Dock="Top" Text="{Binding ActiveGameName}" TextTrimming="CharacterEllipsis" Foreground="White" FontWeight="SemiBold" FontSize="30" />
-                                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,15,0,0">
-                                            <TextBlock Text="Developer:" FontWeight="Medium" />
+                                        <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedGameWrapper.Game.Name, FallbackValue=''}" TextTrimming="CharacterEllipsis" Foreground="White" FontWeight="SemiBold" FontSize="30" />
+                                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,15,0,0"
+                                                    Visibility="{Binding SelectedGameWrapper.Game.Developers, Converter={StaticResource IEnumerableHasItemsToVisibilityConverter}}">
+                                            <TextBlock FontWeight="Medium" Text="{DynamicResource LOCJast_Usa_Library_DeveloperIs}" />
                                             <TextBlock Text="{Binding ActiveGameDevelopers}" Margin="5,0,0,0" />
                                         </StackPanel>
-                                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5,0,0">
-                                            <TextBlock Text="Publisher:" FontWeight="Medium" />
+                                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,5,0,0"
+                                                    Visibility="{Binding SelectedGameWrapper.Game.Publishers, Converter={StaticResource IEnumerableHasItemsToVisibilityConverter}}">
+                                            <TextBlock FontWeight="Medium" Text="{DynamicResource LOCJast_Usa_Library_PublisherIs}" />
                                             <TextBlock Text="{Binding ActiveGamePublishers}" Margin="5,0,0,0" />
                                         </StackPanel>
 
-                                        <Button DockPanel.Dock="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Update Downloads" Command="{Binding UpdateSelectedGameAssetsCommand}" />
+                                        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" VerticalAlignment="Bottom" Margin="0,10,0,0">
+                                            <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding UpdateSelectedGameAssetsCommand}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock VerticalAlignment="Center" Text="&#xEFD1;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOCJast_Usa_Library_UpdateGameDownloads}" Margin="8,0,0,0" />
+                                                </StackPanel>
+                                            </Button>
+
+                                            <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding ExploreAndSelectGameExecutableCommand}" Margin="10,0,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOCJast_Usa_Library_DialogMessageBrowseForGameOption}"
+                                                               Margin="8,0,0,0" />
+                                                </StackPanel>
+                                            </Button>
+
+                                        </DockPanel>
+
+                                        <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                                            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_GameStatusInstalled}"
+                                                       Visibility="{Binding SelectedGameWrapper.Game.IsInstalled, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
+                                                       TextTrimming="CharacterEllipsis" Foreground="White"
+                                                       FontWeight="Medium" FontSize="16" />
+                                            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_GameStatusNotInstalled}"
+                                                       Visibility="{Binding SelectedGameWrapper.Game.IsInstalled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True, FallbackValue=Collapsed}"
+                                                       TextTrimming="CharacterEllipsis" Foreground="White"
+                                                       FontWeight="Medium" FontSize="16" />
+                                        </StackPanel>
+                                        
                                     </DockPanel>
                                 </DockPanel>
                             </Grid>
 
                             <Grid HorizontalAlignment="Center" DockPanel.Dock="Bottom">
                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Button Content="Add to downloads" Command="{Binding AddSelectedAssetToQueueCommand}" />
+                                    <Button Content="{DynamicResource LOCJast_Usa_Library_AddToDownloads}" Command="{Binding AddSelectedAssetToQueueCommand}" />
                                 </StackPanel>
                             </Grid>
 
                             <Separator DockPanel.Dock="Top" Margin="0,5,0,5" />
 
-                            <TextBlock DockPanel.Dock="Top" Text="Downloads:" FontWeight="Medium" FontSize="16" Margin="0,10,0,10" />
-                            
-                            <ListBox DockPanel.Dock="Top" ItemsSource="{Binding ActiveGameAssets}"
+                            <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOCJast_Usa_Library_SettingsDownloadsLabel}" FontWeight="Medium" FontSize="16" Margin="0,10,0,10" />
+
+                            <ListBox DockPanel.Dock="Top" ItemsSource="{Binding ElementName=LbListGames, Path=SelectedItem.Assets,FallbackValue={x:Null}}"
                                      SelectedItem="{Binding SelectedGameAsset}" ItemTemplate="{StaticResource ListBoxGameWrapperTemplate}" >
                                 <ListBox.Template>
                                     <ControlTemplate>
@@ -141,26 +236,93 @@
                 <TabItem>
                     <TabItem.Header>
                         <Border Padding="0,10,20,10">
-                            <DockPanel>
-                                <TextBlock DockPanel.Dock="Left" Text="&#xEF08;" FontSize="25" FontFamily="{DynamicResource FontIcoFont}" VerticalAlignment="Center" />
-                                <TextBlock DockPanel.Dock="Left" Text="Downloads" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            <DockPanel HorizontalAlignment="Right">
+                                <TextBlock DockPanel.Dock="Right" Text="{DynamicResource LOCJast_Usa_Library_SettingsDownloadsLabel}" FontWeight="Medium" VerticalAlignment="Center" Margin="10,0,0,0" />
+                                <TextBlock DockPanel.Dock="Left" Text="&#xEF07;" FontSize="20" FontFamily="{DynamicResource FontIcoFont}" VerticalAlignment="Center" />
                             </DockPanel>
                         </Border>
                     </TabItem.Header>
-                    <DockPanel Margin="10">
+                    <DockPanel Margin="20,10,20,20">
                         <Grid DockPanel.Dock="Top" MinHeight="100">
-                            
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                <Button Margin="0,0,25,0" Command="{Binding StartDownloadsAsyncCommand}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEC74;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_StartDownloads}" />
+                                    </DockPanel>
+                                </Button>
+                                <Button Margin="0,0,25,0" Command="{Binding CancelDownloadsAsyncCommand}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xECB1;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_StopDownloads}" />
+                                    </DockPanel>
+                                </Button>
+                                <Button Margin="0,0,25,0" Command="{Binding RemoveCompletedDownloadsAsyncCommand}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEEE1;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_ClearCompletedDownloads}" />
+                                    </DockPanel>
+                                </Button>
+
+                                <Separator x:Name="ProxySeparator" Visibility="Collapsed" Width="2" />
+                                <Border Width="1" BorderThickness="0.5" BorderBrush="{Binding ElementName=ProxySeparator, Path=Foreground}" Opacity="0.10" Margin="0,10,25,10" />
+
+                                <Button Margin="0,0,25,0" Command="{Binding MoveSelectedDownloadOnePlaceBeforeAsyncCommand}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEAA1;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_MoveUp}" />
+                                    </DockPanel>
+                                </Button>
+                                <Button Margin="0,0,25,0" Command="{Binding MoveSelectedDownloadOnePlaceAfterAsyncCommand}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEA99;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_MoveDown}" />
+                                    </DockPanel>
+                                </Button>
+
+                                <Border Width="1" BorderThickness="0.5" BorderBrush="{Binding ElementName=ProxySeparator, Path=Foreground}" Opacity="0.10" Margin="0,10,25,10" />
+
+                                <Button Margin="0,0,25,0" Command="{Binding OpenSettingsCommand}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEC83;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_Options}" />
+                                    </DockPanel>
+                                </Button>
+
+                                <Border Width="1" BorderThickness="0.5" BorderBrush="{Binding ElementName=ProxySeparator, Path=Foreground}" Opacity="0.10" Margin="0,10,25,10" />
+
+                                <Button Margin="0,0,25,0" Command="{Binding OpenGamesDownloadsDirectory}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEC5B;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_GamesLabel}" />
+                                    </DockPanel>
+                                </Button>
+
+                                <Button Margin="0,0,25,0" Command="{Binding OpenPatchesDownloadsDirectory}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEC5B;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderPatches}" />
+                                    </DockPanel>
+                                </Button>
+
+                                <Button Margin="0,0,0,0" Command="{Binding OpenExtrasDownloadsDirectory}" Background="Transparent">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="30" Text="&#xEC5B;" FontFamily="{DynamicResource FontIcoFont}" />
+                                        <TextBlock DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,15,0,0" Text="{DynamicResource LOCJast_Usa_Library_JastDownloaderTabHeaderExtras}" />
+                                    </DockPanel>
+                                </Button>
+                            </StackPanel>
                         </Grid>
-                        <ListView DockPanel.Dock="Bottom" ItemsSource="{Binding DownloadsList}" Margin="0,15,0,0">
+                        <ListView DockPanel.Dock="Bottom" ItemsSource="{Binding DownloadsList}" Margin="0,15,0,0" SelectedItem="{Binding SelectedDownloadItem}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="" Width="50" CellTemplate="{StaticResource FileIconColumnTemplate}" />
-                                    <GridViewColumn Header="Name" Width="350" CellTemplate="{StaticResource NameColumnTemplate}" />
-                                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding DownloadData.Size}" Width="100" />
-                                    <GridViewColumn Header="Speed" DisplayMemberBinding="{Binding DownloadData.Speed}" Width="100" />
-                                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding DownloadData.Status}" Width="100" />
-                                    <GridViewColumn Header="Time Left" DisplayMemberBinding="{Binding DownloadData.TimeLeft}" Width="100" />
-                                    <GridViewColumn Header="Buttons" Width="100" CellTemplate="{StaticResource ButtonsColumnTemplate}" />
+                                    <GridViewColumn Header="{DynamicResource LOCJast_Usa_Library_DownloadsColumName}" Width="350" CellTemplate="{StaticResource NameColumnTemplate}" />
+                                    <GridViewColumn Header="{DynamicResource LOCJast_Usa_Library_DownloadsColumProgress}" CellTemplate="{StaticResource ProgressColumnTemplate}" Width="Auto" />
+                                    <GridViewColumn Header="{DynamicResource LOCJast_Usa_Library_DownloadsColumSpeed}" DisplayMemberBinding="{Binding DownloadData.FormattedDownloadSpeedPerSecond}" Width="100" />
+                                    <GridViewColumn Header="{DynamicResource LOCJast_Usa_Library_DownloadsColumTimeLeft}" DisplayMemberBinding="{Binding DownloadData.TimeRemaining, Converter={StaticResource TimeSpanToStringReadable}}" Width="Auto" />
+                                    <GridViewColumn Header="{DynamicResource LOCJast_Usa_Library_DownloadsColumDownloadStatus}" DisplayMemberBinding="{Binding DownloadData.Status, Converter={StaticResource DownloadItemStatusToStringConverter}}" Width="150" />
+                                    <GridViewColumn Header="" Width="Auto" CellTemplate="{StaticResource ButtonsColumnTemplate}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

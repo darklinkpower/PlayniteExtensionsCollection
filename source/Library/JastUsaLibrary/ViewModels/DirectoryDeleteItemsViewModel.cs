@@ -1,5 +1,6 @@
 ﻿using JastUsaLibrary.Views;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
@@ -13,26 +14,34 @@ using System.Windows;
 
 namespace JastUsaLibrary.ViewModels
 {
-    public class DirectoryDeleteItemsViewModel
+    public class DirectoryDeleteItemsViewModel : ObservableObject
     {
         private readonly Window _window;
-        private readonly string _directoryPath;
 
-        public class FileSystemItem
+        public Game Game { get; }
+        public string InstallDirectory { get; }
+
+        private readonly HashSet<string> nonSavesExtensions;
+
+        public class FileSystemItem : ObservableObject
         {
             public string Name { get; set; }
             public string FullPath { get; set; }
             public bool IsDirectory { get; set; }
-            public bool IsChecked { get; set; }
+
+            private bool _isChecked;
+            public bool IsChecked { get => _isChecked; set => SetValue(ref _isChecked, value); }
         }
 
         public bool FilesDeleted { get; private set; } = false;
 
         public ObservableCollection<FileSystemItem> FileSystemItems { get; } = new ObservableCollection<FileSystemItem>();
 
-        public DirectoryDeleteItemsViewModel(string directoryPath, Window window)
+        public DirectoryDeleteItemsViewModel(Game game, Window window)
         {
-            _directoryPath = directoryPath;
+            Game = game;
+            InstallDirectory = game.InstallDirectory;
+            nonSavesExtensions = new HashSet<string>() { ".bat", ".exe", ".url" };
             LoadItems();
             _window = window;
         }
@@ -40,12 +49,12 @@ namespace JastUsaLibrary.ViewModels
         public void LoadItems()
         {
             FileSystemItems.Clear();
-            var rootItems = Directory.GetFileSystemEntries(_directoryPath)
+            var rootItems = Directory.GetFileSystemEntries(InstallDirectory)
                 .Select(path =>
                 {
                     var isDirectory = IsDirectory(path);
                     var name = isDirectory ? Path.GetFileName(path) + "\\" : Path.GetFileName(path);
-                    var isSaveItem = name.Contains("sav", StringComparison.InvariantCultureIgnoreCase);
+                    var isSaveItem = IsFileNameSaveItem(name);
                     return new FileSystemItem
                     {
                         Name = name,
@@ -61,6 +70,27 @@ namespace JastUsaLibrary.ViewModels
             {
                 FileSystemItems.Add(item);
             }
+        }
+
+        private bool IsFileNameSaveItem(string fileName)
+        {
+            if (!fileName.Contains("sav", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return false;
+            }
+
+            var extension = Path.GetExtension(fileName);
+            if (extension.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            if (nonSavesExtensions.Contains(extension.ToLower()))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool IsDirectory(string path)
@@ -95,7 +125,7 @@ namespace JastUsaLibrary.ViewModels
 
             if (FileSystemItems.Count == itemsToDelete.Count)
             {
-                FileSystem.DeleteDirectory(_directoryPath);
+                FileSystem.DeleteDirectory(InstallDirectory);
             }
 
             return finishedDeleting;
@@ -121,12 +151,60 @@ namespace JastUsaLibrary.ViewModels
             });
         }
 
+        private void SelectAllItems()
+        {
+            foreach (var item in FileSystemItems)
+            {
+                if (!item.IsChecked)
+                {
+                    item.IsChecked = true;
+                }
+            }
+
+            NotifyCommandsPropertyChanged();
+        }
+
+        private void UnselectAllItems()
+        {
+            foreach (var item in FileSystemItems)
+            {
+                if (item.IsChecked)
+                {
+                    item.IsChecked = false;
+                }
+            }
+
+            NotifyCommandsPropertyChanged();
+        }
+
+        private void NotifyCommandsPropertyChanged()
+        {
+            OnPropertyChanged(nameof(SelectAllItemsCommand));
+            OnPropertyChanged(nameof(UnselectAllItemsCommand));
+        }
+
         public RelayCommand CancelCommand
         {
             get => new RelayCommand(() =>
             {
                 _window?.Close();
             });
+        }
+
+        public RelayCommand SelectAllItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                SelectAllItems();
+            }, () => FileSystemItems.Any(x => !x.IsChecked));
+        }
+
+        public RelayCommand UnselectAllItemsCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                UnselectAllItems();
+            }, () => FileSystemItems.Any(x => x.IsChecked));
         }
     }
 }

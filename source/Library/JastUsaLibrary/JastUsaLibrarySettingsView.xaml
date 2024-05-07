@@ -4,58 +4,105 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:commonconv="clr-namespace:PluginsCommon.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
-        <sys:Boolean x:Key="True">True</sys:Boolean>
-        <sys:Boolean x:Key="False">False</sys:Boolean>
+        <commonconv:UintFieldValidation x:Key="UintFieldValidation" />
     </UserControl.Resources>
-    <StackPanel Margin="20">
-        <StackPanel Orientation="Horizontal">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsEmailLabel}" Margin="0,0,10,0"/>
-                    <TextBox MinWidth="250" Text="{Binding LoginEmail}"/>
-                </StackPanel>
-                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                    <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsPasswordLabel}" Margin="0,0,10,0"/>
-                    <PasswordBox x:Name="PasswordBox" MinWidth="250" />
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsAuthenticationLabel}" FontWeight="Medium" />
+            <Separator Margin="0,10,0,10" />
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsEmailLabel}" Margin="0,0,10,0"/>
+                        <TextBox MinWidth="250" Text="{Binding LoginEmail}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsPasswordLabel}" Margin="0,0,10,0"/>
+                        <PasswordBox x:Name="PasswordBox" MinWidth="250" />
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
-        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-            <Button HorizontalAlignment="Left" Content="{DynamicResource LOCJast_Usa_Library_SettingsAuthenticateLabel}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}" />
-            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock.Tag>
-                    <PriorityBinding>
-                        <Binding Path="IsUserLoggedIn" IsAsync="True" />
-                        <Binding Source="{x:Null}" />
-                    </PriorityBinding>
-                </TextBlock.Tag>
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-                        <Style.Triggers>
-                            <Trigger Property="Tag" Value="{StaticResource True}">
-                                <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel}" />
-                            </Trigger>
-                            <Trigger Property="Tag" Value="{StaticResource False}">
-                                <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel}" />
-                            </Trigger>
-                            <Trigger Property="Tag" Value="{x:Null}">
-                                <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </StackPanel>
+            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <Button HorizontalAlignment="Left" Content="{DynamicResource LOCJast_Usa_Library_SettingsAuthenticateLabel}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}" />
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
+                    <TextBlock.Tag>
+                        <PriorityBinding>
+                            <Binding Path="IsUserLoggedIn" IsAsync="True" />
+                            <Binding Source="{x:Null}" />
+                        </PriorityBinding>
+                    </TextBlock.Tag>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="Tag" Value="{StaticResource True}">
+                                    <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel}" />
+                                </Trigger>
+                                <Trigger Property="Tag" Value="{StaticResource False}">
+                                    <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel}" />
+                                </Trigger>
+                                <Trigger Property="Tag" Value="{x:Null}">
+                                    <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
 
-        <DockPanel Margin="0,15,0,0">
-            <Button DockPanel.Dock="Right" VerticalAlignment="Center"
-                    Margin="10,0,0,0" Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectDownloadDirectoryCommand}" />
-            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel}" VerticalAlignment="Center" />
-            <TextBox Margin="10,0,0,0" VerticalAlignment="Center"
-                     Text="{Binding Settings.DownloadsPath}" IsReadOnly="True" />
-        </DockPanel>
-    </StackPanel>
+            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsDownloadsLabel}" FontWeight="Medium" Margin="0,30,0,0" />
+            <Separator Margin="0,10,0,10" />
+            <CheckBox Content="{DynamicResource LOCJast_Usa_Library_SettingsStartDownloadsOnStartup}" IsChecked="{Binding Settings.StartDownloadsOnStartup}" />
+            <CheckBox x:Name="CbDeleteZipOnExtract" Content="{DynamicResource LOCJast_Usa_Library_SettingsExtractDownloadedFiles}" Margin="0,10,0,0"
+                      IsChecked="{Binding Settings.ExtractFilesOnDownload}" />
+            <CheckBox IsEnabled="{Binding ElementName=CbDeleteZipOnExtract, Path=IsChecked}"
+                      IsChecked="{Binding Settings.DeleteFilesOnExtract}"
+                      Content="{DynamicResource LOCJast_Usa_Library_SettingsDeleteAfterExtraction}" Margin="20,10,0,0" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsMaxConcurrentDownloads}" VerticalAlignment="Center" />
+                <TextBox Margin="5,0,0,0" VerticalAlignment="Center" MinWidth="20">
+                    <TextBox.Text>
+                        <Binding Path="Settings.MaximumConcurrentDownloads" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <commonconv:UintFieldValidation MinValue="0" MaxValue="4"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+            <Grid Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCJast_Usa_Library_SettingsGamesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.GameDownloadsPath}" IsReadOnly="True" />
+                <Button Grid.Row="0" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+                        Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectGamesDownloadDirectoryCommand}" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOCJast_Usa_Library_SettingsPatchesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.PatchDownloadsPath}" IsReadOnly="True" />
+                <Button Grid.Row="2" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+                        Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectPatchesDownloadDirectoryCommand}" />
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource LOCJast_Usa_Library_SettingsExtrasDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+                <TextBox Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.ExtrasDownloadsPath}" IsReadOnly="True" />
+                <Button Grid.Row="4" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+                        Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectExtrasDownloadDirectoryCommand}" />
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
