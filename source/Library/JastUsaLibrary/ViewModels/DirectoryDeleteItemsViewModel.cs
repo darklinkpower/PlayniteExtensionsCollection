@@ -54,7 +54,7 @@ namespace JastUsaLibrary.ViewModels
                 {
                     var isDirectory = IsDirectory(path);
                     var name = isDirectory ? Path.GetFileName(path) + "\\" : Path.GetFileName(path);
-                    var isSaveItem = IsFileNameSaveItem(name);
+                    var isSaveItem = IsFileNameSaveItem(name, isDirectory);
                     return new FileSystemItem
                     {
                         Name = name,
@@ -72,20 +72,20 @@ namespace JastUsaLibrary.ViewModels
             }
         }
 
-        private bool IsFileNameSaveItem(string fileName)
+        private bool IsFileNameSaveItem(string fileName, bool isDirectory)
         {
             if (!fileName.Contains("sav", StringComparison.InvariantCultureIgnoreCase))
             {
                 return false;
             }
-
-            var extension = Path.GetExtension(fileName);
-            if (extension.IsNullOrEmpty())
+            
+            if (isDirectory)
             {
-                return false;
+                return true;
             }
 
-            if (nonSavesExtensions.Contains(extension.ToLower()))
+            var extension = Path.GetExtension(fileName);
+            if (!extension.IsNullOrEmpty() && nonSavesExtensions.Contains(extension.ToLower()))
             {
                 return false;
             }

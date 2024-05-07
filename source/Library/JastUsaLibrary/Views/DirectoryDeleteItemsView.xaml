@@ -21,16 +21,16 @@
                 <Button Content="{DynamicResource LOC_JUL_DialogMessageCancelOption}" Margin="10,0,0,0" Command="{Binding CancelCommand}" />
             </StackPanel>
 
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <DockPanel DockPanel.Dock="Top">
                 <Image DockPanel.Dock="Left" Source="{Binding Game.Icon, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
                        Visibility="{Binding Game.Icon, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
                        RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" Margin="0,0,10,0"
                        Height="22"
                        Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Left"/>
 
-                <TextBlock DockPanel.Dock="Top" VerticalAlignment="Center"
+                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
                            Text="{Binding Game.Name}" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" FontSize="18" />
-            </StackPanel>
+            </DockPanel>
 
             <TextBlock DockPanel.Dock="Top" Text="{Binding InstallDirectory}" Margin="0,10,0,0"
                        Opacity="0.75" TextTrimming="CharacterEllipsis"/>
@@ -49,7 +49,7 @@
                         <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
                             <CheckBox IsChecked="{Binding IsChecked}"/>
                             <TextBlock Margin="5,0,0,0" Text="{Binding IsDirectory, Converter={StaticResource FileItemToGlyphCodeConverter}}" FontFamily="{DynamicResource FontIcoFont}" />
-                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}"/>
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
