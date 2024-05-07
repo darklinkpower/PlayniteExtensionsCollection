@@ -12,22 +12,22 @@
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel Margin="20">
-            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsAuthenticationLabel}" FontWeight="Medium" />
+            <TextBlock Text="{DynamicResource LOC_JUL_SettingsAuthenticationLabel}" FontWeight="Medium" />
             <Separator Margin="0,10,0,10" />
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsEmailLabel}" Margin="0,0,10,0"/>
+                        <TextBlock Text="{DynamicResource LOC_JUL_SettingsEmailLabel}" Margin="0,0,10,0"/>
                         <TextBox MinWidth="250" Text="{Binding LoginEmail}"/>
                     </StackPanel>
                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsPasswordLabel}" Margin="0,0,10,0"/>
+                        <TextBlock Text="{DynamicResource LOC_JUL_SettingsPasswordLabel}" Margin="0,0,10,0"/>
                         <PasswordBox x:Name="PasswordBox" MinWidth="250" />
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
             <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                <Button HorizontalAlignment="Left" Content="{DynamicResource LOCJast_Usa_Library_SettingsAuthenticateLabel}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}" />
+                <Button HorizontalAlignment="Left" Content="{DynamicResource LOC_JUL_SettingsAuthenticateLabel}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}" />
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
                     <TextBlock.Tag>
                         <PriorityBinding>
@@ -39,13 +39,13 @@
                         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
                             <Style.Triggers>
                                 <Trigger Property="Tag" Value="{StaticResource True}">
-                                    <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel}" />
+                                    <Setter Property="Text" Value="{DynamicResource LOC_JUL_SettingsUserIsAuthenticatedLabel}" />
                                 </Trigger>
                                 <Trigger Property="Tag" Value="{StaticResource False}">
-                                    <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel}" />
+                                    <Setter Property="Text" Value="{DynamicResource LOC_JUL_SettingsUserNotAuthenticatedLabel}" />
                                 </Trigger>
                                 <Trigger Property="Tag" Value="{x:Null}">
-                                    <Setter Property="Text" Value="{DynamicResource LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel}" />
+                                    <Setter Property="Text" Value="{DynamicResource LOC_JUL_SettingsCheckingAuthenticationLabel}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -53,16 +53,16 @@
                 </TextBlock>
             </StackPanel>
 
-            <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsDownloadsLabel}" FontWeight="Medium" Margin="0,30,0,0" />
+            <TextBlock Text="{DynamicResource LOC_JUL_SettingsDownloadsLabel}" FontWeight="Medium" Margin="0,30,0,0" />
             <Separator Margin="0,10,0,10" />
-            <CheckBox Content="{DynamicResource LOCJast_Usa_Library_SettingsStartDownloadsOnStartup}" IsChecked="{Binding Settings.StartDownloadsOnStartup}" />
-            <CheckBox x:Name="CbDeleteZipOnExtract" Content="{DynamicResource LOCJast_Usa_Library_SettingsExtractDownloadedFiles}" Margin="0,10,0,0"
+            <CheckBox Content="{DynamicResource LOC_JUL_SettingsStartDownloadsOnStartup}" IsChecked="{Binding Settings.StartDownloadsOnStartup}" />
+            <CheckBox x:Name="CbDeleteZipOnExtract" Content="{DynamicResource LOC_JUL_SettingsExtractDownloadedFiles}" Margin="0,10,0,0"
                       IsChecked="{Binding Settings.ExtractFilesOnDownload}" />
             <CheckBox IsEnabled="{Binding ElementName=CbDeleteZipOnExtract, Path=IsChecked}"
                       IsChecked="{Binding Settings.DeleteFilesOnExtract}"
-                      Content="{DynamicResource LOCJast_Usa_Library_SettingsDeleteAfterExtraction}" Margin="20,10,0,0" />
+                      Content="{DynamicResource LOC_JUL_SettingsDeleteAfterExtraction}" Margin="20,10,0,0" />
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <TextBlock Text="{DynamicResource LOCJast_Usa_Library_SettingsMaxConcurrentDownloads}" VerticalAlignment="Center" />
+                <TextBlock Text="{DynamicResource LOC_JUL_SettingsMaxConcurrentDownloads}" VerticalAlignment="Center" />
                 <TextBox Margin="5,0,0,0" VerticalAlignment="Center" MinWidth="20">
                     <TextBox.Text>
                         <Binding Path="Settings.MaximumConcurrentDownloads" UpdateSourceTrigger="PropertyChanged">
@@ -88,20 +88,20 @@
                 </Grid.ColumnDefinitions>
 
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCJast_Usa_Library_SettingsGamesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOC_JUL_SettingsGamesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.GameDownloadsPath}" IsReadOnly="True" />
                 <Button Grid.Row="0" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectGamesDownloadDirectoryCommand}" />
+                        Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}" Command="{Binding SelectGamesDownloadDirectoryCommand}" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOCJast_Usa_Library_SettingsPatchesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOC_JUL_SettingsPatchesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
                 <TextBox Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.PatchDownloadsPath}" IsReadOnly="True" />
                 <Button Grid.Row="2" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectPatchesDownloadDirectoryCommand}" />
+                        Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}" Command="{Binding SelectPatchesDownloadDirectoryCommand}" />
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource LOCJast_Usa_Library_SettingsExtrasDownloadsDirectoryLabel}" VerticalAlignment="Center" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource LOC_JUL_SettingsExtrasDownloadsDirectoryLabel}" VerticalAlignment="Center" />
                 <TextBox Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.ExtrasDownloadsPath}" IsReadOnly="True" />
                 <Button Grid.Row="4" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Content="{DynamicResource LOCJast_Usa_Library_SettingsBrowseLabel}" Command="{Binding SelectExtrasDownloadDirectoryCommand}" />
+                        Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}" Command="{Binding SelectExtrasDownloadDirectoryCommand}" />
             </Grid>
         </StackPanel>
     </ScrollViewer>

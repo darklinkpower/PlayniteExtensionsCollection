@@ -130,11 +130,11 @@ namespace JastUsaLibrary.Services
                 {
                     if (downloadStringResult.HttpStatusCode is HttpStatusCode.Unauthorized)
                     {
-                        playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials"), "JAST USA Library");
+                        playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOC_JUL_DialogMessageAuthenticateIncorrectCredentials"), "JAST USA Library");
                     }
                     else
                     {
-                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageAuthenticateError"), downloadStringResult.Error?.Message), "JAST USA Library");
+                        playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOC_JUL_DialogMessageAuthenticateError"), downloadStringResult.Error?.Message), "JAST USA Library");
                     }
                 }
 
@@ -251,7 +251,7 @@ namespace JastUsaLibrary.Services
             var tokens = GetAuthenticationToken();
             if (tokens is null)
             {
-                playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens"), "JAST USA Library");
+                playniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOC_JUL_DialogMessageCouldNotObtainAuthTokens"), "JAST USA Library");
                 return null;
             }
 
@@ -277,7 +277,7 @@ namespace JastUsaLibrary.Services
             }
             else
             {
-                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageGenerateLinkError"), downloadStringResult.Error?.Message), "JAST USA Library");
+                playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOC_JUL_DialogMessageGenerateLinkError"), downloadStringResult.Error?.Message), "JAST USA Library");
                 logger.Warn(downloadStringResult.Error, $"Error while obtaining download link with params gameId {gameLink.GameId} and gameLinkId {gameLink.GameLinkId}");
             }
 

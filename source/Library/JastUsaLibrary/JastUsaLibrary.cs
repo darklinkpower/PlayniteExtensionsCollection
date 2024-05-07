@@ -64,7 +64,7 @@ namespace JastUsaLibrary
             var authenticationToken = _accountClient.GetAuthenticationToken();
             if (authenticationToken is null) // User is not logged in
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOC_JUL_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
                 return games;
             }
 
@@ -229,14 +229,14 @@ namespace JastUsaLibrary
 
             var options = new List<MessageBoxOption>
             {
-                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageDownloadOption")),
-                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageBrowseForGameOption")),
-                //new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectInstalledOption")),
-                new MessageBoxOption(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageCancelOption"), false, true)
+                new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageDownloadOption")),
+                new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageBrowseForGameOption")),
+                //new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageSelectInstalledOption")),
+                new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageCancelOption"), false, true)
             };
 
             var game = args.Game;
-            var selected = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageSelectActionLabel"), "JAST USA Library", MessageBoxImage.None, options);
+            var selected = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOC_JUL_DialogMessageSelectActionLabel"), "JAST USA Library", MessageBoxImage.None, options);
             if (!selected.IsCancel)
             {
                 if (selected == options[0]) // Download option
@@ -299,7 +299,7 @@ namespace JastUsaLibrary
             PlayniteApi.Notifications.Remove("JastNotLoggedIn");
             if (authenticationToken is null) // User is not logged in
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOCJast_Usa_Library_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
+                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOC_JUL_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
                 return null;
             }
 
@@ -329,7 +329,7 @@ namespace JastUsaLibrary
             var iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
             yield return new SidebarItem
             {
-                Title = ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"),
+                Title = ResourceProvider.GetString("LOC_JUL_JastLibraryManager"),
                 Type = SiderbarItemType.View,
                 Icon = iconPath,
                 Opened = () => {

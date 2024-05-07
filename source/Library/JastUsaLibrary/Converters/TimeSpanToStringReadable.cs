@@ -11,9 +11,9 @@ namespace JastUsaLibrary.Converters
 {
     public class TimeSpanToStringReadable : IValueConverter
     {
-        private static readonly string HoursFormat = ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat");
-        private static readonly string MinutesFormat = ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat");
-        private static readonly string SecondsFormat = ResourceProvider.GetString("LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat");
+        private static readonly string HoursFormat = ResourceProvider.GetString("LOC_JUL_JastDownloaderTimeHoursMinsFormat");
+        private static readonly string MinutesFormat = ResourceProvider.GetString("LOC_JUL_JastDownloaderTimeMinsSecondsFormat");
+        private static readonly string SecondsFormat = ResourceProvider.GetString("LOC_JUL_JastDownloaderTimeSecondsFormat");
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

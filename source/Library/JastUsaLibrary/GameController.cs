@@ -45,7 +45,7 @@ namespace JastUsaLibrary
 
         public JastUninstallController(Game game) : base(game)
         {
-            Name = ResourceProvider.GetString("LOCJast_Usa_Library_UninstallJastLibGame");
+            Name = ResourceProvider.GetString("LOC_JUL_UninstallJastLibGame");
         }
 
         public JastUninstallController(Game game, GameCache gameCache, JastUsaLibrary jastUsaLibrary) : this(game)
@@ -112,7 +112,7 @@ namespace JastUsaLibrary
 
             window.Height = 800;
             window.Width = 500;
-            window.Title = ResourceProvider.GetString("LOCJast_Usa_Library_WindowTitleJastLibraryUninstaller");
+            window.Title = ResourceProvider.GetString("LOC_JUL_WindowTitleJastLibraryUninstaller");
             var dataContext = new DirectoryDeleteItemsViewModel(_game, window);
             window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;

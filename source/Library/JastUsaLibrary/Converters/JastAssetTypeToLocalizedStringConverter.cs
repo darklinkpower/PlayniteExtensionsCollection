@@ -12,9 +12,9 @@ namespace JastUsaLibrary.Converters
 {
     public class JastAssetTypeToLocalizedStringConverter : IValueConverter
     {
-        private static readonly string GameString = ResourceProvider.GetString("LOCJast_Usa_Library_AssetTypeGame");
-        private static readonly string ExtraString = ResourceProvider.GetString("LOCJast_Usa_Library_AssetTypeExtra");
-        private static readonly string PatchString = ResourceProvider.GetString("LOCJast_Usa_Library_AssetTypePatch");
+        private static readonly string GameString = ResourceProvider.GetString("LOC_JUL_AssetTypeGame");
+        private static readonly string ExtraString = ResourceProvider.GetString("LOC_JUL_AssetTypeExtra");
+        private static readonly string PatchString = ResourceProvider.GetString("LOC_JUL_AssetTypePatch");
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

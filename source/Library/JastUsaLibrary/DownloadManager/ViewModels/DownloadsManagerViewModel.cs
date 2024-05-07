@@ -218,7 +218,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             var downloadingItems = _downloadsList.Where(item => item.DownloadData.Status == DownloadItemStatus.Downloading).ToList();
             if (downloadingItems.Count > 0)
             {
-                var dialogText = "JAST USA Library" + "\n\n" + ResourceProvider.GetString("LOCJast_Usa_Library_StoppingDownloads");
+                var dialogText = "JAST USA Library" + "\n\n" + ResourceProvider.GetString("LOC_JUL_StoppingDownloads");
                 var progressOptions = new GlobalProgressOptions(dialogText, false)
                 {
                     IsIndeterminate = false,
@@ -289,16 +289,16 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             var alreadyInQueue = GetExistsById(id);
             if (alreadyInQueue)
             {
-                var errorMessage = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_AssetAlreadyInDlListFormat"), downloadAsset.Label);
-                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"));
+                var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_AssetAlreadyInDlListFormat"), downloadAsset.Label);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
                 return;
             }
 
             var assetUri = GetAssetUri(downloadAsset, silent);
             if (assetUri is null)
             {
-                var errorMessage = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_ObtainAssetUrlFailFormat"), downloadAsset.Label);
-                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"));
+                var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainAssetUrlFailFormat"), downloadAsset.Label);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
                 return;
             }
 
@@ -325,8 +325,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             Paths.ReplaceInvalidCharacters(string.Empty);
             if (FileSystem.FileExists(downloadData.DownloadPath))
             {
-                var errorMessage = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_AssetExistsInPathFormat"), jastAsset.Asset.Label, downloadData.DownloadPath);
-                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOCJast_Usa_Library_JastLibraryManager"));
+                var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_AssetExistsInPathFormat"), jastAsset.Asset.Label, downloadData.DownloadPath);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
                 return;
             }
 
@@ -355,7 +355,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return _jastAccountClient.GetAssetDownloadLink(downloadAsset);
             }
 
-            var text = string.Format(ResourceProvider.GetString("LOCJast_Usa_Library_ObtainingAssetUrlFormat"), downloadAsset.Label);
+            var text = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainingAssetUrlFormat"), downloadAsset.Label);
             var progressOptions = new GlobalProgressOptions(text, false)
             {
                 IsIndeterminate = true,
