@@ -864,33 +864,46 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         }
 
 
-        private void UpdateSelectedGameAssets()
+        private void UpdateSelectedGameAssets(JastGameWrapper gameWrapper)
         {
-            if (SelectedGameWrapper != null)
+            if (gameWrapper is null)
             {
                 return;
             }
 
-            var gameTranslations = _plugin.GetGameTranslations(SelectedGameWrapper.Game);
-            if (gameTranslations is null)
+            var dialogText = "JAST USA Library" + "\n\n" + ResourceProvider.GetString("LOC_JUL_UpdatingGameDownloads");
+            var progressOptions = new GlobalProgressOptions(dialogText, false)
             {
-                return;
-            }
+                IsIndeterminate = true
+            };
 
-            var assetsWrappers = (
-                gameTranslations.GamePathLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Game)) ?? Enumerable.Empty<JastAssetWrapper>())
-                .Concat(gameTranslations.GameExtraLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Extra)) ?? Enumerable.Empty<JastAssetWrapper>())
-                .Concat(gameTranslations.GamePatchLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Patch)) ?? Enumerable.Empty<JastAssetWrapper>())
-                .ToObservable();
-
-            SelectedGameWrapper.Assets.Clear();
-            foreach (var assetWrapper in assetsWrappers)
+            ObservableCollection<JastAssetWrapper> assetsWrappers = null;
+            _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                SelectedGameWrapper.Assets.Add(assetWrapper);
-            }
+                var gameTranslations = _plugin.GetGameTranslations(SelectedGameWrapper.Game);
+                if (gameTranslations is null)
+                {
+                    return;
+                }
 
-            _settingsViewModel.Settings.LibraryCache[SelectedGameWrapper.Game.GameId].Assets = assetsWrappers;
-            _plugin.SavePluginSettings();
+                assetsWrappers = (gameTranslations.GamePathLinks?
+                    .Select(x => new JastAssetWrapper(x, JastAssetType.Game)) ?? Enumerable.Empty<JastAssetWrapper>())
+                    .Concat(gameTranslations.GameExtraLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Extra)) ?? Enumerable.Empty<JastAssetWrapper>())
+                    .Concat(gameTranslations.GamePatchLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Patch)) ?? Enumerable.Empty<JastAssetWrapper>())
+                    .ToObservable();
+            }, progressOptions);
+
+            if (assetsWrappers.HasItems())
+            {
+                gameWrapper.Assets.Clear();
+                foreach (var assetWrapper in assetsWrappers)
+                {
+                    gameWrapper.Assets.Add(assetWrapper);
+                }
+
+                _settingsViewModel.Settings.LibraryCache[gameWrapper.Game.GameId].Assets = assetsWrappers;
+                _plugin.SavePluginSettings();
+            }
         }
 
         private void UpdateActiveGameBindings()
@@ -1021,7 +1034,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                UpdateSelectedGameAssets();
+                UpdateSelectedGameAssets(SelectedGameWrapper);
             });
         }
 
