@@ -142,7 +142,7 @@
                         </DockPanel>
                         <DockPanel Margin="15,0,0,0" Visibility="{Binding SelectedGameWrapper, Converter={StaticResource NullToVisibilityConverter}}">
                             <Grid Height="250" DockPanel.Dock="Top">
-                                <Grid>
+                                <Grid Visibility="{Binding ElementName=BackgroundImage, Path=Source, Converter={StaticResource NullToVisibilityConverter}}">
                                     <Grid.OpacityMask>
                                         <RadialGradientBrush GradientOrigin="0.5,0" Center="0.5,0" RadiusX="2" RadiusY="0.9">
                                             <RadialGradientBrush.GradientStops>
@@ -151,7 +151,7 @@
                                             </RadialGradientBrush.GradientStops>
                                         </RadialGradientBrush>
                                     </Grid.OpacityMask>
-                                    <Image DockPanel.Dock="Left" Source="{Binding SelectedGameWrapper.Game.BackgroundImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={x:Null}}"
+                                    <Image x:Name="BackgroundImage"  DockPanel.Dock="Left" Source="{Binding SelectedGameWrapper.Game.BackgroundImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={x:Null}}"
                                            RenderOptions.BitmapScalingMode="Fant"
                                            Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Left"/>
                                     <Border Background="#4D000000" />
@@ -159,9 +159,10 @@
 
                                 <DockPanel Margin="10" LastChildFill="False">
                                     <Image DockPanel.Dock="Left" Source="{Binding SelectedGameWrapper.Game.CoverImage, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}, FallbackValue={x:Null}}"
-                                           RenderOptions.BitmapScalingMode="Fant"
+                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,10,0"
+                                           Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Source, Converter={StaticResource NullToVisibilityConverter}}"
                                            Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Left"/>
-                                    <DockPanel DockPanel.Dock="Left" Margin="10,0,0,0">
+                                    <DockPanel DockPanel.Dock="Left" Margin="0,0,0,0">
                                         <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedGameWrapper.Game.Name, FallbackValue=''}" TextTrimming="CharacterEllipsis" Foreground="White" FontWeight="SemiBold" FontSize="30" />
                                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,15,0,0"
                                                     Visibility="{Binding SelectedGameWrapper.Game.Developers, Converter={StaticResource IEnumerableHasItemsToVisibilityConverter}}">
@@ -174,15 +175,15 @@
                                             <TextBlock Text="{Binding ActiveGamePublishers}" Margin="5,0,0,0" />
                                         </StackPanel>
 
-                                        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" VerticalAlignment="Bottom" Margin="0,10,0,0">
-                                            <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding UpdateSelectedGameAssetsCommand}">
+                                        <WrapPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,0,0,0">
+                                            <Button Margin="0,10,10,0" VerticalAlignment="Center" Command="{Binding UpdateSelectedGameAssetsCommand}">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock VerticalAlignment="Center" Text="&#xEFD1;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
                                                     <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_UpdateGameDownloads}" Margin="8,0,0,0" />
                                                 </StackPanel>
                                             </Button>
 
-                                            <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding ExploreAndSelectGameExecutableCommand}" Margin="10,0,0,0">
+                                            <Button Margin="0,10,10,0" VerticalAlignment="Center" Command="{Binding ExploreAndSelectGameExecutableCommand}">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
                                                     <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_DialogMessageBrowseForGameOption}"
@@ -190,7 +191,15 @@
                                                 </StackPanel>
                                             </Button>
 
-                                        </DockPanel>
+                                            <Button Margin="0,10,0,0" VerticalAlignment="Center" Command="{Binding ShowSelectedGameOnLibraryCommand}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock VerticalAlignment="Center" Text="&#xEF65;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_ShowGameOnLibrary}"
+                                                               Margin="8,0,0,0" />
+                                                </StackPanel>
+                                            </Button>
+                                            
+                                        </WrapPanel>
 
                                         <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
                                             <TextBlock Text="{DynamicResource LOC_JUL_GameStatusInstalled}"
@@ -201,6 +210,14 @@
                                                        Visibility="{Binding SelectedGameWrapper.Game.IsInstalled, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True, FallbackValue=Collapsed}"
                                                        TextTrimming="CharacterEllipsis" Foreground="White"
                                                        FontWeight="Medium" FontSize="16" />
+                                            <Button HorizontalContentAlignment="Left" Command="{Binding OpenSelectedGameInstallDirectoryCommand}"
+                                                    Margin="0,0,0,0" Padding="0" Background="Transparent"
+                                                    Visibility="{Binding SelectedGameWrapper.Game.IsInstalled, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
+                                                <TextBlock Text="{Binding SelectedGameWrapper.Game.InstallDirectory, FallbackValue='', TargetNullValue=''}" Margin="0,5,0,0" Opacity="0.70"
+                                                           Visibility="{Binding SelectedGameWrapper.Game.InstallDirectory, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}, FallbackValue=Collapsed}"
+                                                           TextTrimming="CharacterEllipsis" Foreground="White"
+                                                           FontWeight="Medium" FontSize="14" />
+                                            </Button>
                                         </StackPanel>
                                         
                                     </DockPanel>

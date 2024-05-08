@@ -983,6 +983,27 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }, () => _selectedGameWrapper != null);
         }
 
+        public RelayCommand ShowSelectedGameOnLibraryCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                _playniteApi.MainView.SelectGame(_selectedGameWrapper.Game.Id);
+                _playniteApi.MainView.SwitchToLibraryView();
+            }, () => _selectedGameWrapper != null);
+        }
+
+        public RelayCommand OpenSelectedGameInstallDirectoryCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                var installDirPath = _selectedGameWrapper.Game.InstallDirectory;
+                if (FileSystem.DirectoryExists(installDirPath))
+                {
+                    ProcessStarter.StartProcess(installDirPath);
+                }
+            }, () => _selectedGameWrapper != null);
+        }
+
         public RelayCommand MoveSelectedDownloadOnePlaceBeforeAsyncCommand
         {
             get => new RelayCommand(async () =>
