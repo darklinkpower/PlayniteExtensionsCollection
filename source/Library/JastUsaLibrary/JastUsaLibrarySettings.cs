@@ -127,19 +127,25 @@ namespace JastUsaLibrary
             this.accountClient = accountClient;
 
             var defaultBaseDownloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "JAST Downloads");
+            var downloadsFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+            if (FileSystem.DirectoryExists(downloadsFolderPath))
+            {
+                defaultBaseDownloadsPath = Path.Combine(downloadsFolderPath, "JAST Downloads");
+            }
+
             if (settings.GameDownloadsPath.IsNullOrEmpty())
             {
-                settings.GameDownloadsPath = defaultBaseDownloadsPath;
+                settings.GameDownloadsPath = Path.Combine(defaultBaseDownloadsPath, "Games");
             }
 
             if (settings.ExtrasDownloadsPath.IsNullOrEmpty())
             {
-                settings.ExtrasDownloadsPath = defaultBaseDownloadsPath;
+                settings.ExtrasDownloadsPath = Path.Combine(defaultBaseDownloadsPath, "Extras");
             }
 
             if (settings.PatchDownloadsPath.IsNullOrEmpty())
             {
-                settings.PatchDownloadsPath = defaultBaseDownloadsPath;
+                settings.PatchDownloadsPath = Path.Combine(defaultBaseDownloadsPath, "Patches");
             }
         }
 
