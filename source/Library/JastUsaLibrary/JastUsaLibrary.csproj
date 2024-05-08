@@ -65,6 +65,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SharpCompress, Version=0.26.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpCompress.0.26.0\lib\net46\SharpCompress.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -93,9 +96,6 @@
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -232,6 +232,7 @@
     <Compile Include="..\..\Common\WebCommon\ValueObjects\HttpContentType.cs">
       <Link>Shared\WebCommon\ValueObjects\HttpContentType.cs</Link>
     </Compile>
+    <Compile Include="Compression.cs" />
     <Compile Include="Converters\DownloadItemStatusToStringConverter.cs" />
     <Compile Include="Converters\FileNameToExtensionGlyphCodeConverter.cs" />
     <Compile Include="Converters\FileItemToGlyphCodeConverter.cs" />

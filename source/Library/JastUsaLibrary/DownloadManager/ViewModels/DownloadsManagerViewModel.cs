@@ -5,7 +5,6 @@ using JastUsaLibrary.ProgramsHelper;
 using JastUsaLibrary.ProgramsHelper.Models;
 using JastUsaLibrary.Services;
 using Playnite.SDK;
-using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
 using System;
@@ -14,19 +13,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
-using System.Windows;
-using WebCommon;
-using WebCommon.Builders;
-using WebCommon.Enums;
-using WebCommon.HttpRequestClient;
-using WebCommon.HttpRequestClient.Events;
 
 namespace JastUsaLibrary.DownloadManager.ViewModels
 {
@@ -701,113 +692,73 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
             else if (_settingsViewModel.Settings.ExtractFilesOnDownload)
             {
-                await Task.Run(() => ExtractZipFile(downloadItem));
+                await Task.Run(() => ExtractCompressedFile(downloadItem));
             }
         }
 
-        private void ExtractZipFile(DownloadItem downloadItem)
+        private void ExtractCompressedFile(DownloadItem downloadItem)
         {
-            var downloadPath = downloadItem.DownloadData.DownloadPath;
+            var filePath = downloadItem.DownloadData.DownloadPath;
+            var fileName = Path.GetFileName(filePath);
+            var isZipFile = Path.GetExtension(fileName).Equals(".zip", StringComparison.OrdinalIgnoreCase);
+            var isRarFile = Path.GetExtension(fileName).Equals(".rar", StringComparison.OrdinalIgnoreCase);
+            var isCompressedFile = isZipFile || isRarFile;
+            if (!isCompressedFile)
+            {
+                return;
+            }
+
             var extractDirectory = string.Empty;
-            var extractionFinished = true;
+            var extractSuccess = true;
             try
             {
-                if (!FileSystem.FileExists(downloadPath))
+                if (!FileSystem.FileExists(filePath))
                 {
-                    _logger.Warn($"File not found: {downloadPath}");
-                    return;
-                }
-
-                var fileName = Path.GetFileName(downloadPath);
-                var isZipFile = Path.GetExtension(fileName).Equals(".zip", StringComparison.OrdinalIgnoreCase);
-                if (!isZipFile)
-                {
-                    _logger.Warn($"Not a zip file: {downloadPath}");
+                    _logger.Warn($"File not found: {filePath}");
                     return;
                 }
 
                 var downloadedFilePath = downloadItem.DownloadData.DownloadDirectory;
                 var satinizedDirectory = Paths.ReplaceInvalidCharacters(downloadItem.DownloadData.Name);
                 extractDirectory = Path.Combine(downloadedFilePath, satinizedDirectory);
-
                 if (!FileSystem.DirectoryExists(extractDirectory))
                 {
                     FileSystem.CreateDirectory(extractDirectory);
                 }
 
-                _logger.Info($"Decompressing database zip file {downloadPath} to {extractDirectory}...");
                 downloadItem.DownloadData.Status = DownloadItemStatus.Extracting;
-
-                var cancelToken = _extractionCancellationToken.Token;
-                using (ZipArchive archive = ZipFile.OpenRead(downloadPath))
+                if (isZipFile)
                 {
-                    foreach (var entry in archive.Entries)
-                    {
-                        if (cancelToken.IsCancellationRequested)
-                        {
-                            downloadItem.DownloadData.Status = DownloadItemStatus.ExtractionFailed;
-                            extractionFinished = false;
-                            break;
-                        }
-                        
-                        // For some reason I found a zip that uses UNIX slash '/' separator character in directories
-                        var entryFullName = entry.FullName
-                            .Replace('/', Path.DirectorySeparatorChar)
-                            .Replace('\\', Path.DirectorySeparatorChar);
-                        var destinationFilePath = Path.Combine(extractDirectory, entryFullName);
-
-                        var isDirectory = entry.FullName.EndsWith("/");
-                        if (isDirectory)
-                        {
-                            // No idea why but there's an error when extracting directories
-                            // using ExtractToFile so it's needed to create them manually instead
-                            if (!FileSystem.DirectoryExists(destinationFilePath))
-                            {
-                                FileSystem.CreateDirectory(destinationFilePath);
-                            }
-                        }
-                        else
-                        {
-                            if (FileSystem.FileExists(destinationFilePath))
-                            {
-                                continue;
-                            }
-
-                            var destinationDirectory = Path.GetDirectoryName(destinationFilePath);
-                            if (!FileSystem.DirectoryExists(destinationDirectory))
-                            {
-                                FileSystem.CreateDirectory(destinationDirectory);
-                            }
-
-                            entry.ExtractToFile(destinationFilePath);
-                        }
-                    }
+                    extractSuccess = Compression.ExtractZipFile(filePath, extractDirectory, _extractionCancellationToken.Token);
+                }
+                else if (isRarFile)
+                {
+                    extractSuccess = Compression.ExtractRarFile(filePath, extractDirectory, _extractionCancellationToken.Token);
                 }
 
-                downloadItem.DownloadData.Status = DownloadItemStatus.ExtractionCompleted;
-                _logger.Info("Finish decompressing database zip file");
+                downloadItem.DownloadData.Status = extractSuccess ? DownloadItemStatus.ExtractionCompleted : DownloadItemStatus.ExtractionFailed;
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Error while extracting zip file: {ex.Message}");
+                _logger.Error(ex, $"Error while extracting compressed file: {ex.Message}");
                 downloadItem.DownloadData.Status = DownloadItemStatus.ExtractionFailed;
                 return;
             }
 
-            if (extractionFinished && _settingsViewModel.Settings.DeleteFilesOnExtract)
+            if (extractSuccess && _settingsViewModel.Settings.DeleteFilesOnExtract)
             {
                 try
                 {
-                    _logger.Info($"Deleting zip file {downloadPath} after extraction.");
-                    FileSystem.DeleteFileSafe(downloadPath);
+                    _logger.Info($"Deleting compressed file {filePath} after extraction.");
+                    FileSystem.DeleteFileSafe(filePath);
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, $"Failed to delete zip file {ex.Message}");
+                    _logger.Error(ex, $"Failed to delete compressed file {ex.Message}");
                 }
             }
 
-            if (extractionFinished && downloadItem.DownloadData.AssetType == JastAssetType.Game)
+            if (extractSuccess && downloadItem.DownloadData.AssetType == JastAssetType.Game)
             {
                 _playniteApi.MainView.UIDispatcher.Invoke(() =>
                 {
@@ -978,15 +929,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     break;
                 }
 
-                var status = item.DownloadData.Status;
-                if (status == DownloadItemStatus.Paused)
-                {
-                    downloadTasks.Add(item.ResumeDownloadAsync());
-                    remainingSlots--;
-                }
-                else if (status == DownloadItemStatus.Idle ||
-                         status == DownloadItemStatus.Canceled ||
-                         status == DownloadItemStatus.Failed)
+                if (item.DownloadData.Status == DownloadItemStatus.Idle)
                 {
                     downloadTasks.Add(item.StartDownloadAsync());
                     remainingSlots--;
