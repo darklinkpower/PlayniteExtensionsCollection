@@ -18,9 +18,10 @@
     <sys:String x:Key="LOC_JUL_SettingsDeleteAfterExtraction">Удалить файлы после извлечения</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsMaxConcurrentDownloads">Максимальное количество одновременных загрузок:</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageNotAuthenticated">Пользователь не аутентифицирован</sys:String>
-
+    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">Installation and uninstallation functionality is not available in Playnite Fullscreen Mode. Please switch to Desktop Mode to perform these actions.</sys:String>
     <sys:String x:Key="LOC_JUL_LibraryGames">Библиотека игр</sys:String>
     <sys:String x:Key="LOC_JUL_UpdateGameDownloads">Обновление загружено</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">Updating entry downloads…</sys:String>
     <sys:String x:Key="LOC_JUL_AddToDownloads">Добавить в загрузки</sys:String>
     <sys:String x:Key="LOC_JUL_DeveloperIs">Разработчик:</sys:String>
     <sys:String x:Key="LOC_JUL_PublisherIs">Издатель:</sys:String>
@@ -54,7 +55,7 @@
     <sys:String x:Key="LOC_JUL_UnselectAllLabel">Снять выделение</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Загрузить</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Select installed game</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and choose game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
     <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Browse and select the game executable file, or choose the game download to begin installation.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Download and install</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Cancel</sys:String>
@@ -90,6 +91,7 @@
     <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Unable to retrieve download link for {0}. Please ensure you are logged in via the extension settings.</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Retrieving download for {0}…</sys:String>
     <sys:String x:Key="LOC_JUL_StoppingDownloads">Stopping downloads…</sys:String>
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Please wait while ongoing compressed file extractions are completed…</sys:String>
     <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} is already in the downloads list.</sys:String>
     <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">The download file &quot;{0}&quot; already exists in &quot;{1}&quot;.</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
