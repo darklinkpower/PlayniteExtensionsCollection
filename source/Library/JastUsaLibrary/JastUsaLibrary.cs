@@ -23,6 +23,7 @@ using JastUsaLibrary.DownloadManager.Models;
 using JastUsaLibrary.DownloadManager.Enums;
 using System.IO.Compression;
 using JastUsaLibrary.DownloadManager.Views;
+using System.Collections.ObjectModel;
 
 namespace JastUsaLibrary
 {
@@ -131,7 +132,7 @@ namespace JastUsaLibrary
                     continue;
                 }
 
-                var assets = new List<JastAssetWrapper>().ToObservable();
+                var assets = new ObservableCollection<JastAssetWrapper>();
                 var gameTranslations = cache.Product.ProductVariant.Game.Translations.Where(x => x.Key == Locale.En_Us);
                 if (gameTranslations.HasItems())
                 {

@@ -92,6 +92,7 @@
     <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Unable to retrieve download link for {0}. Please ensure you are logged in via the extension settings.</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Retrieving download for {0}…</sys:String>
     <sys:String x:Key="LOC_JUL_StoppingDownloads">Stopping downloads…</sys:String>
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Please wait while ongoing compressed file extractions are completed…</sys:String>
     <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} is already in the downloads list.</sys:String>
     <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">The download file "{0}" already exists in "{1}".</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file "{0}" detected in "{1}".

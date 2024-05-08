@@ -65,6 +65,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         private readonly JastUsaLibrarySettingsViewModel _settingsViewModel;
         private ObservableCollection<DownloadItem> _downloadsList;
         private readonly SemaphoreSlim _downloadsListSemaphore = new SemaphoreSlim(1);
+        private readonly CancellationTokenSource _extractionCancellationToken = new CancellationTokenSource();
         private bool _isDisposed = false;
         private readonly object _disposeLock = new object();
 
@@ -284,6 +285,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     {
                         if (downloadingItems.Count == 0)
                         {
+                            await Task.Delay(150);
                             break;
                         }
 
@@ -301,6 +303,44 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                         }
 
                         await Task.Delay(150);
+                    }
+                }, progressOptions);
+            }
+
+            var extractingItems = _downloadsList.Where(item => item.DownloadData.Status == DownloadItemStatus.Extracting).ToList();
+            if (extractingItems.Count > 0)
+            {
+                var dialogText = "JAST USA Library" + "\n\n" + ResourceProvider.GetString("LOC_JUL_WaitingForExtractions");
+                var progressOptions = new GlobalProgressOptions(dialogText, true)
+                {
+                    IsIndeterminate = false
+                };
+
+                _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                {
+                    a.ProgressMaxValue = downloadingItems.Count + 1;
+                    while (true)
+                    {
+                        if (a.CancelToken.IsCancellationRequested)
+                        {
+                            _extractionCancellationToken.Cancel();
+                        }
+
+                        if (extractingItems.Count == 0)
+                        {
+                            break;
+                        }
+
+                        foreach (var item in extractingItems.ToList())
+                        {
+                            if (item.DownloadData.Status != DownloadItemStatus.Extracting)
+                            {
+                                extractingItems.Remove(item);
+                                a.CurrentProgressValue++;
+                            }
+                        }
+
+                        await Task.Delay(250);
                     }
                 }, progressOptions);
             }
@@ -669,6 +709,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             var downloadPath = downloadItem.DownloadData.DownloadPath;
             var extractDirectory = string.Empty;
+            var extractionFinished = true;
             try
             {
                 if (!FileSystem.FileExists(downloadPath))
@@ -697,10 +738,18 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 _logger.Info($"Decompressing database zip file {downloadPath} to {extractDirectory}...");
                 downloadItem.DownloadData.Status = DownloadItemStatus.Extracting;
 
+                var cancelToken = _extractionCancellationToken.Token;
                 using (ZipArchive archive = ZipFile.OpenRead(downloadPath))
                 {
                     foreach (var entry in archive.Entries)
                     {
+                        if (cancelToken.IsCancellationRequested)
+                        {
+                            downloadItem.DownloadData.Status = DownloadItemStatus.ExtractionFailed;
+                            extractionFinished = false;
+                            break;
+                        }
+                        
                         // For some reason I found a zip that uses UNIX slash '/' separator character in directories
                         var entryFullName = entry.FullName
                             .Replace('/', Path.DirectorySeparatorChar)
@@ -734,6 +783,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                         }
                     }
                 }
+
                 downloadItem.DownloadData.Status = DownloadItemStatus.ExtractionCompleted;
                 _logger.Info("Finish decompressing database zip file");
             }
@@ -744,7 +794,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return;
             }
 
-            if (_settingsViewModel.Settings.DeleteFilesOnExtract)
+            if (extractionFinished && _settingsViewModel.Settings.DeleteFilesOnExtract)
             {
                 try
                 {
@@ -757,7 +807,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 }
             }
 
-            if (downloadItem.DownloadData.AssetType == JastAssetType.Game)
+            if (extractionFinished && downloadItem.DownloadData.AssetType == JastAssetType.Game)
             {
                 _playniteApi.MainView.UIDispatcher.Invoke(() =>
                 {
