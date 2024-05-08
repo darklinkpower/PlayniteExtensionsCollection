@@ -224,9 +224,15 @@ namespace JastUsaLibrary
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
         {
             var game = args.Game;
-            if (args.Game.PluginId == Id && settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
+            if (args.Game.PluginId == Id)
             {
-                if (gameCache.Product != null)
+                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOC_JUL_MessageInstallUnavailableFsMode"), "JAST USA Library");
+                    return base.GetInstallActions(args);
+                }
+
+                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) && gameCache.Product != null)
                 {
                     return new List<InstallController> { new JastInstallController(game, gameCache, _downloadsManagerViewModel, this) };
                 }
@@ -238,9 +244,16 @@ namespace JastUsaLibrary
         public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
         {
             var game = args.Game;
-            if (args.Game.PluginId == Id && settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
+            if (args.Game.PluginId == Id)
             {
-                if (gameCache.Product != null && FileSystem.FileExists(gameCache.Program.Path))
+                if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOC_JUL_MessageInstallUnavailableFsMode"), "JAST USA Library");
+                    return base.GetUninstallActions(args);
+                }
+
+                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) &&
+                    gameCache.Product != null && FileSystem.FileExists(gameCache.Program.Path))
                 {
                     return new List<UninstallController> { new JastUninstallController(game, gameCache, this) };
                 }

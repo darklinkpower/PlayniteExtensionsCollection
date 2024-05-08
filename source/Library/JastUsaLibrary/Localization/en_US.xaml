@@ -19,7 +19,7 @@
     <sys:String x:Key="LOC_JUL_SettingsDeleteAfterExtraction">Delete the files after extraction</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsMaxConcurrentDownloads">Maximum concurrent downloads:</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageNotAuthenticated">User is not authenticated</sys:String>
-
+    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">Installation and uninstallation functionality is not available in Playnite Fullscreen Mode. Please switch to Desktop Mode to perform these actions.</sys:String>
     <sys:String x:Key="LOC_JUL_LibraryGames">Library games</sys:String>
     <sys:String x:Key="LOC_JUL_UpdateGameDownloads">Update downloads</sys:String>
     <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">Updating entry downloads…</sys:String>
