@@ -56,6 +56,7 @@
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Scarica</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Show game on library</sys:String>
     <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Sfoglia e seleziona il file eseguibile del gioco, o scegli il download del gioco per iniziare l'installazione.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Scarica e installa</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Annulla</sys:String>
