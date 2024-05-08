@@ -18,9 +18,10 @@
     <sys:String x:Key="LOC_JUL_SettingsDeleteAfterExtraction">Elimina i file dopo l'estrazione</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsMaxConcurrentDownloads">Download simultanei massimi:</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
-
+    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">Installation and uninstallation functionality is not available in Playnite Fullscreen Mode. Please switch to Desktop Mode to perform these actions.</sys:String>
     <sys:String x:Key="LOC_JUL_LibraryGames">Libreria di giochi</sys:String>
     <sys:String x:Key="LOC_JUL_UpdateGameDownloads">Aggiorna download</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">Updating entry downloads…</sys:String>
     <sys:String x:Key="LOC_JUL_AddToDownloads">Aggiungi ai download</sys:String>
     <sys:String x:Key="LOC_JUL_DeveloperIs">Sviluppatore:</sys:String>
     <sys:String x:Key="LOC_JUL_PublisherIs">Editore:</sys:String>
@@ -54,7 +55,7 @@
     <sys:String x:Key="LOC_JUL_UnselectAllLabel">Deseleziona tutto</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Scarica</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Sfoglia e scegli eseguibile del gioco…</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
     <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Sfoglia e seleziona il file eseguibile del gioco, o scegli il download del gioco per iniziare l'installazione.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Scarica e installa</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Annulla</sys:String>
@@ -90,6 +91,7 @@
     <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Impossibile recuperare il link di download per {0}. Assicurarsi di aver effettuato l'accesso tramite le impostazioni di estensione.</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Recupero download per {0}…</sys:String>
     <sys:String x:Key="LOC_JUL_StoppingDownloads">Interruzione dei download…</sys:String>
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Please wait while ongoing compressed file extractions are completed…</sys:String>
     <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} è già nell'elenco dei download.</sys:String>
     <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">Il file di download &quot;{0}&quot; esiste già in &quot;{1}&quot;.</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">File estratti per il file &quot;{0}&quot; rilevati in &quot;{1}&quot;.
