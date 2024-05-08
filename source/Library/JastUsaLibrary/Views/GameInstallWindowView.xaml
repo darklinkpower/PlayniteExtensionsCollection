@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="JastUsaLibrary.Views.GameInstallWindowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JastUsaLibrary.Views"
+             xmlns:commonconv="clr-namespace:PluginsCommon.Converters"
+             xmlns:jastconv="clr-namespace:JastUsaLibrary.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="330">
+    <UserControl.Resources>
+        <commonconv:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter"/>
+        <jastconv:JastAssetTypeToLocalizedStringConverter x:Key="JastAssetTypeToLocalizedStringConverter" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        <DataTemplate x:Key="ListBoxGameAssetTemplate">
+            <Border Padding="5" Margin="0,3,0,3">
+                <StackPanel>
+                    <TextBlock Text="{Binding Asset.Label}" FontWeight="Medium" FontSize="16" />
+                    <TextBlock Text="{Binding Type, Converter={StaticResource JastAssetTypeToLocalizedStringConverter}}" FontSize="12" Margin="0,5,0,0" />
+                    <Separator Margin="0,5,0,5" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <DockPanel>
+            <StackPanel Margin="0,10,0,0" DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Command="{Binding AddSelectedAssetToDownloadsAndClose}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="&#xEF08;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_ActionDownloadSelected}" Margin="8,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <DockPanel DockPanel.Dock="Top">
+                <Image DockPanel.Dock="Left" Source="{Binding Game.Icon, IsAsync=False, Converter={StaticResource ImageStringToImageConverter}}"
+                       Visibility="{Binding Game.Icon, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                       RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" Margin="0,0,10,0"
+                       Height="22"
+                       Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Left"/>
+
+                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                           Text="{Binding Game.Name}" Margin="0,0,0,0" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" FontSize="18" />
+            </DockPanel>
+            
+            <Separator DockPanel.Dock="Top" Margin="0,15,0,15" Opacity="0.30" />
+
+            <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOC_JUL_InstallExploreOrSelectDownload}" Margin="0,0,0,0" TextWrapping="Wrap" />
+
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,10,0,0">
+                <Button DockPanel.Dock="Left" VerticalAlignment="Center" Command="{Binding BrowseAndSelectProgramCommand}" Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                        <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_DialogMessageBrowseForGameOption}" Margin="8,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <ListBox DockPanel.Dock="Top" Margin="0,10,0,0" ItemsSource="{Binding GameAssets}"
+                     SelectedItem="{Binding SelectedGameAsset}" ItemTemplate="{StaticResource ListBoxGameAssetTemplate}" />
+        </DockPanel>
+    </Grid>
+</UserControl>

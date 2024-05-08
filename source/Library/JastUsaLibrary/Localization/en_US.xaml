@@ -55,7 +55,7 @@
     <sys:String x:Key="LOC_JUL_UnselectAllLabel">Unselect all</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Download</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Select installed game</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and choose game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
     <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Browse and select the game executable file, or choose the game download to begin installation.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Download and install</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Cancel</sys:String>

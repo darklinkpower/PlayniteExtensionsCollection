@@ -265,13 +265,17 @@
     <Compile Include="Models\UserGamesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JastUsaAccountClient.cs" />
-    <Compile Include="ViewModels\DirectoryDeleteItemsViewModel.cs" />
+    <Compile Include="ViewModels\GameUninstallWindowViewModel.cs" />
     <Compile Include="DownloadManager\ViewModels\DownloadsManagerViewModel.cs" />
-    <Compile Include="Views\DirectoryDeleteItemsView.xaml.cs">
-      <DependentUpon>DirectoryDeleteItemsView.xaml</DependentUpon>
+    <Compile Include="ViewModels\GameInstallWindowViewModel.cs" />
+    <Compile Include="Views\GameUninstallWindowView.xaml.cs">
+      <DependentUpon>GameUninstallWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DownloadManager\Views\DownloadsManagerView.xaml.cs">
       <DependentUpon>DownloadsManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameInstallWindowView.xaml.cs">
+      <DependentUpon>GameInstallWindowView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -299,11 +303,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DirectoryDeleteItemsView.xaml">
+    <Page Include="Views\GameUninstallWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DownloadManager\Views\DownloadsManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameInstallWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

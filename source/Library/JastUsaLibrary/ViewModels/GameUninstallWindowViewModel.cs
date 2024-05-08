@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace JastUsaLibrary.ViewModels
 {
-    public class DirectoryDeleteItemsViewModel : ObservableObject
+    public class GameUninstallWindowViewModel : ObservableObject
     {
         private readonly Window _window;
 
@@ -37,7 +37,7 @@ namespace JastUsaLibrary.ViewModels
 
         public ObservableCollection<FileSystemItem> FileSystemItems { get; } = new ObservableCollection<FileSystemItem>();
 
-        public DirectoryDeleteItemsViewModel(Game game, Window window)
+        public GameUninstallWindowViewModel(Game game, Window window)
         {
             Game = game;
             InstallDirectory = game.InstallDirectory;

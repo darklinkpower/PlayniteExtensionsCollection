@@ -222,43 +222,14 @@ namespace JastUsaLibrary
 
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
         {
-            if (args.Game.PluginId != Id)
-            {
-                return base.GetInstallActions(args);
-            }
-
-            var options = new List<MessageBoxOption>
-            {
-                new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageDownloadOption")),
-                new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageBrowseForGameOption")),
-                //new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageSelectInstalledOption")),
-                new MessageBoxOption(ResourceProvider.GetString("LOC_JUL_DialogMessageCancelOption"), false, true)
-            };
-
             var game = args.Game;
-            var selected = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOC_JUL_DialogMessageSelectActionLabel"), "JAST USA Library", MessageBoxImage.None, options);
-            if (!selected.IsCancel)
+            if (args.Game.PluginId == Id && settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
             {
-                if (selected == options[0]) // Download option
+                if (gameCache.Product != null)
                 {
-                    // OpenGameDownloadsWindow(game);
+                    return new List<InstallController> { new JastInstallController(game, gameCache, _downloadsManagerViewModel, this) };
                 }
-                else if (selected == options[1]) // Browse for executable option
-                {
-                    var selectedProgram = ProgramsHelper.Programs.SelectExecutable();
-                    if (selectedProgram is null)
-                    {
-                        return null;
-                    }
-
-                    //return AddGameToCache(game, selectedProgram);
-                }
-                //else if (selected == options[2]) // Select install option
-                //{
-
-                //}
             }
-
 
             return base.GetInstallActions(args);
         }
@@ -281,11 +252,6 @@ namespace JastUsaLibrary
         {
             _downloadsManagerViewModel.StopDownloadsAndPersistDownloadData();
             _downloadsManagerViewModel.Dispose();
-        }
-
-        private List<InstallController> GetFakeController(Game game, string installDir)
-        {
-            return new List<InstallController> { new JastInstallController(game, installDir) };
         }
 
         public GameTranslationsResponse GetGameTranslations(Game game)

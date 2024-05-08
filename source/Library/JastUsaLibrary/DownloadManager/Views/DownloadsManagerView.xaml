@@ -218,7 +218,7 @@
                             <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOC_JUL_SettingsDownloadsLabel}" FontWeight="Medium" FontSize="16" Margin="0,10,0,10" />
 
                             <ListBox DockPanel.Dock="Top" ItemsSource="{Binding ElementName=LbListGames, Path=SelectedItem.Assets,FallbackValue={x:Null}}"
-                                     SelectedItem="{Binding SelectedGameAsset}" ItemTemplate="{StaticResource ListBoxGameWrapperTemplate}" >
+                                     SelectedItem="{Binding SelectedGameAssetWrapper}" ItemTemplate="{StaticResource ListBoxGameWrapperTemplate}" >
                                 <ListBox.Template>
                                     <ControlTemplate>
                                         <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" 

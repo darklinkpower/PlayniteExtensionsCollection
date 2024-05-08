@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace JastUsaLibrary.Views
 {
     /// <summary>
-    /// Interaction logic for DirectoryDeleteItemsView.xaml
+    /// Interaction logic for GameInstallWindowView.xaml
     /// </summary>
-    public partial class DirectoryDeleteItemsView : UserControl
+    public partial class GameInstallWindowView : UserControl
     {
-        public DirectoryDeleteItemsView()
+        public GameInstallWindowView()
         {
             InitializeComponent();
         }
