@@ -19,6 +19,7 @@ namespace PlayniteUtilitiesCommon
         private const string pcWinPlatformName = "PC (Windows)";
         private const string pcPlatformName = "PC";
         private const string pcSpecId = "pc_windows";
+        private static HashSet<string> _addedIcoFontResources = new HashSet<string>();
 
         public static bool AddFeatureToGame(IPlayniteAPI PlayniteApi, Game game, string featureName)
         {
@@ -366,14 +367,36 @@ namespace PlayniteUtilitiesCommon
             return filterApplied;
         }
 
+        public static void AddTextIcoFontResource(string key, char character)
+        {
+            AddTextIcoFontResource(key, character.ToString());
+        }
+
         public static void AddTextIcoFontResource(string key, string text)
         {
+            if (Application.Current.Resources.Contains(key))
+            {
+                return;
+            }
+
             Application.Current.Resources.Add(key, new TextBlock
             {
                 Text = text,
                 FontSize = 16,
                 FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
             });
+        }
+
+        public static string GetIcoFontGlyphResource(char character)
+        {
+            var key = $"IcoFontResource - {character}";
+            if (!_addedIcoFontResources.Contains(key))
+            {
+                AddTextIcoFontResource(key, character);
+                _addedIcoFontResources.Add(key);
+            }
+
+            return key;
         }
 
         public static void OpenUrlOnWebView(string url, int width = 1900, int height = 1000, double dpiScalingFactor = 1.25)

@@ -24,6 +24,8 @@ using JastUsaLibrary.DownloadManager.Enums;
 using System.IO.Compression;
 using JastUsaLibrary.DownloadManager.Views;
 using System.Collections.ObjectModel;
+using JastUsaLibrary.ProgramsHelper;
+using PlayniteUtilitiesCommon;
 
 namespace JastUsaLibrary
 {
@@ -189,9 +191,30 @@ namespace JastUsaLibrary
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var game = args.Games.Last();
-            if (game.PluginId == Id)
+            if (args.Games.Count == 1 && game.PluginId == Id && settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
             {
-
+                const string menuSection = "JAST USA Library";
+                return new List<GameMenuItem>
+                {
+                    new GameMenuItem
+                    {
+                        Description = ResourceProvider.GetString("LOC_JUL_DialogMessageBrowseForGameOption"),
+                        MenuSection = menuSection,
+                        Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEC5B'),
+                        Action = a =>
+                        {
+                            var selectedProgram = Programs.SelectExecutable();
+                            if (selectedProgram != null)
+                            {
+                                gameCache.Program = selectedProgram;
+                                SavePluginSettings();
+                                game.IsInstalled = true;
+                                game.InstallDirectory = Path.GetDirectoryName(gameCache.Program.Path);
+                                PlayniteApi.Database.Games.Update(game);
+                            }
+                        }
+                    }
+                };
             }
 
             return base.GetGameMenuItems(args);
