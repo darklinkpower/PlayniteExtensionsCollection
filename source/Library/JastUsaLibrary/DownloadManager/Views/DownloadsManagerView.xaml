@@ -39,7 +39,7 @@
                 <Button ToolTip="{DynamicResource LOC_JUL_JastDownloaderDownloadActionLabel}" Content="&#xEF08;"
                         Visibility="{Binding CanStartDownload, Converter={StaticResource BooleanToVisibilityConverter}}"
                         FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding StartDownloadAsyncCommand}" />
-                <Button ToolTip="{DynamicResource LOC_JUL_JastDownloaderResumeActionLabel}" Content="&#xEF08;"
+                <Button ToolTip="{DynamicResource LOC_JUL_JastDownloaderResumeActionLabel}" Content="&#xEC74;"
                         Visibility="{Binding CanResumeDownload, Converter={StaticResource BooleanToVisibilityConverter}}"
                         FontFamily="{DynamicResource FontIcoFont}" Margin="0,0,5,0" Command="{Binding ResumeDownloadAsyncCommand}" />
                 <Button ToolTip="{DynamicResource LOC_JUL_JastDownloaderPauseActionLabel}" Content="&#xEC72;"
@@ -349,7 +349,7 @@
                                     <GridViewColumn Header="{DynamicResource LOC_JUL_DownloadsColumSpeed}" DisplayMemberBinding="{Binding DownloadData.FormattedDownloadSpeedPerSecond}" Width="100" />
                                     <GridViewColumn Header="{DynamicResource LOC_JUL_DownloadsColumTimeLeft}" DisplayMemberBinding="{Binding DownloadData.TimeRemaining, Converter={StaticResource TimeSpanToStringReadable}}" Width="Auto" />
                                     <GridViewColumn Header="{DynamicResource LOC_JUL_DownloadsColumDownloadStatus}" DisplayMemberBinding="{Binding DownloadData.Status, Converter={StaticResource DownloadItemStatusToStringConverter}}" Width="150" />
-                                    <GridViewColumn Header="" Width="Auto" CellTemplate="{StaticResource ButtonsColumnTemplate}" />
+                                    <GridViewColumn Header="" Width="165" CellTemplate="{StaticResource ButtonsColumnTemplate}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

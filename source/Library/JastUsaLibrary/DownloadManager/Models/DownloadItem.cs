@@ -37,6 +37,13 @@ namespace JastUsaLibrary.DownloadManager.Models
             DownloadStatusChanged?.Invoke(this, new DownloadStatusChangedEventArgs(newStatus));
         }
 
+        public event EventHandler<DownloadProgressArgs> DownloadProgressChanged;
+
+        private void OnDownloadProgressChanged(DownloadProgressArgs downloadProgressArgs)
+        {
+            DownloadProgressChanged?.Invoke(this, downloadProgressArgs);
+        }
+
         private readonly JastUsaAccountClient _jastAccountClient;
         private readonly DownloadsManagerViewModel _downloadsManagerViewModel;
         private DownloadData _downloadData;
@@ -134,6 +141,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             void progressChangedCallback(DownloadProgressArgs args)
             {
                 DownloadData.UpdateProperties(args);
+                OnDownloadProgressChanged(args);
             }
 
             _isDownloadProcessRunning = true;

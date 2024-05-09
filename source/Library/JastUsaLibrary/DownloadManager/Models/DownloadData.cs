@@ -112,7 +112,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             {
                 if (_totalSize != value)
                 {
-                    _progressSize = value;
+                    _totalSize = value;
                     OnPropertyChanged();
                 }
             }

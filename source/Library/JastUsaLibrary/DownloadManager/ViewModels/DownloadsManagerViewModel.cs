@@ -1,4 +1,5 @@
-﻿using JastUsaLibrary.DownloadManager.Enums;
+﻿using FlowHttp.Events;
+using JastUsaLibrary.DownloadManager.Enums;
 using JastUsaLibrary.DownloadManager.Models;
 using JastUsaLibrary.Models;
 using JastUsaLibrary.ProgramsHelper;
@@ -33,6 +34,24 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         }
     }
 
+    public class GlobalProgressChangedEventArgs : EventArgs
+    {
+        public int TotalItems { get; }
+        public double? AverageProgressPercentage { get; }
+        public long? TotalBytesToDownload { get; }
+        public long? TotalBytesDownloaded { get; }
+        public double? TotalDownloadProgress { get; }
+
+        public GlobalProgressChangedEventArgs(int totalItems, double? averageProgressPercentage, long? totalBytesToDownload, long? totalBytesDownloaded, double? totalDownloadProgress)
+        {
+            TotalItems = totalItems;
+            AverageProgressPercentage = averageProgressPercentage;
+            TotalBytesToDownload = totalBytesToDownload;
+            TotalBytesDownloaded = totalBytesDownloaded;
+            TotalDownloadProgress = totalDownloadProgress;
+        }
+    }
+
     public class DownloadsManagerViewModel : INotifyPropertyChanged, IDisposable
     {
         public event EventHandler<GameInstallationAppliedEventArgs> GameInstallationApplied;
@@ -40,6 +59,14 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         private void OnGameInstallationApplied(Game game, GameCache cache)
         {
             GameInstallationApplied?.Invoke(this, new GameInstallationAppliedEventArgs(game, cache));
+        }
+
+        public event EventHandler<GlobalProgressChangedEventArgs> GlobalProgressChanged;
+
+        private void OnGlobalProgressChanged(
+            int totalItems, double? averageProgressPercentage, long? totalBytesToDownload, long? totalBytesDownloaded, double? totalDownloadProgress)
+        {
+            GlobalProgressChanged?.Invoke(this, new GlobalProgressChangedEventArgs(totalItems, averageProgressPercentage, totalBytesToDownload, totalBytesDownloaded, totalDownloadProgress));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,6 +85,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         private readonly SemaphoreSlim _downloadsListSemaphore = new SemaphoreSlim(1);
         private readonly CancellationTokenSource _extractionCancellationToken = new CancellationTokenSource();
         private bool _isDisposed = false;
+        private bool _persistOnListChanges = false;
+        private bool _enableDownloadsOnAdd = false;
         private readonly object _disposeLock = new object();
 
         private bool _canPauseAllDownloads => _downloadsList.Any(x => x.DownloadData.Status == DownloadItemStatus.Downloading);
@@ -190,21 +219,75 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             _jastAccountClient = jastAccountClient;
             _settingsViewModel = settingsViewModel;
             DownloadsList = new ObservableCollection<DownloadItem>();
-            _ = RestorePersistingDownloads();
             DownloadsList.CollectionChanged += DownloadsList_CollectionChanged;
+            Task.Run(async () => await RestorePersistingDownloads()).Wait();
+            _persistOnListChanges = true;
+            _enableDownloadsOnAdd = true;
         }
 
         private async void DownloadsList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                PersistDownloadData();
-                await StartDownloadsAsync();
+                foreach (var item in e.NewItems)
+                {
+                    if (item is DownloadItem downloadItem)
+                    {
+                        downloadItem.DownloadStatusChanged += DownloadItem_DownloadStatusChanged;
+                        downloadItem.DownloadProgressChanged += DownloadItem_DownloadProgressChanged;
+                    }
+                }
+                
+                if (_persistOnListChanges)
+                {
+                    PersistDownloadData();
+                }
+                
+                if (_enableDownloadsOnAdd)
+                {
+                    await StartDownloadsAsync(false);
+                }
+
+                NotifyGlobalProgress();
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
             {
-                PersistDownloadData();
+                foreach (var item in e.OldItems)
+                {
+                    if (item is DownloadItem downloadItem)
+                    {
+                        downloadItem.DownloadStatusChanged -= DownloadItem_DownloadStatusChanged;
+                        downloadItem.DownloadProgressChanged -= DownloadItem_DownloadProgressChanged;
+                    }
+                }
+
+                if (_persistOnListChanges)
+                {
+                    PersistDownloadData();
+                }
+
+                NotifyGlobalProgress();
             }
+        }
+
+        private void NotifyGlobalProgress()
+        {
+            double? averageProgress = 0;
+            long? totalBytesDownloaded = null;
+            long? totalBytesToDownload = null;
+            double? totalDownloadProgress = null;
+            var totalItems = _downloadsList.Count;
+            if (totalItems > 0)
+            {
+                var totalProgress = _downloadsList.Sum(x => x.DownloadData.Progress);
+                averageProgress = totalProgress / totalItems;
+
+                totalBytesDownloaded = _downloadsList.Sum(x => x.DownloadData.ProgressSize);
+                totalBytesToDownload = _downloadsList.Sum(x => x.DownloadData.TotalSize);
+                totalDownloadProgress = totalBytesDownloaded.Value * 100 / totalBytesToDownload.Value;
+            }
+
+            OnGlobalProgressChanged(totalItems, averageProgress, totalBytesToDownload, totalBytesDownloaded, totalDownloadProgress);
         }
 
         private async Task RestorePersistingDownloads()
@@ -485,7 +568,6 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 {
                     DownloadsList.Add(item);
                     added = true;
-                    item.DownloadStatusChanged += DownloadItem_DownloadStatusChanged;
                 }
                 else
                 {
@@ -498,6 +580,11 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
 
             return added;
+        }
+
+        private void DownloadItem_DownloadProgressChanged(object sender, DownloadProgressArgs e)
+        {
+            NotifyGlobalProgress();
         }
 
         public async Task RemoveFromDownloadsListAsync(DownloadItem item, bool persistChanges)
@@ -551,8 +638,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
 
             item.Dispose();
-            item.DownloadStatusChanged -= DownloadItem_DownloadStatusChanged;
-            await StartDownloadsAsync();
+            await StartDownloadsAsync(false);
         }
 
         public async Task MoveDownloadItemOnePlaceBeforeAsync(DownloadItem item)
@@ -681,7 +767,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return;
             }
 
-            _ = StartDownloadsAsync();
+            _ = StartDownloadsAsync(false);
             var isExecutable = Path.GetExtension(downloadItem.DownloadData.FileName)
                 .Equals(".exe", StringComparison.OrdinalIgnoreCase);
             var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
@@ -913,7 +999,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             ActiveGamePublishers = string.Join(", ", _selectedGameWrapper?.Game.Publishers?.Select(x => x.Name) ?? Enumerable.Empty<string>());
         }
 
-        public async Task StartDownloadsAsync()
+        public async Task StartDownloadsAsync(bool startPaused)
         {
             var remainingSlots = _remainingSlots;
             if (remainingSlots <= 0)
@@ -929,7 +1015,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     break;
                 }
 
-                if (item.DownloadData.Status == DownloadItemStatus.Idle)
+                if (item.DownloadData.Status == DownloadItemStatus.Idle ||
+                    (startPaused && item.DownloadData.Status == DownloadItemStatus.Paused))
                 {
                     downloadTasks.Add(item.StartDownloadAsync());
                     remainingSlots--;
@@ -1024,8 +1111,9 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             get => new RelayCommand(async () =>
             {
-                await StartDownloadsAsync();
-            }, () => _remainingSlots > 0);
+                await StartDownloadsAsync(true);
+            }, () => _remainingSlots > 0 &&
+            _downloadsList.Any(x => x.DownloadData.Status == DownloadItemStatus.Idle || x.DownloadData.Status == DownloadItemStatus.Paused));
         }
 
         public RelayCommand CancelDownloadsAsyncCommand
@@ -1110,6 +1198,12 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
                 _downloadsListSemaphore?.Dispose();
                 DownloadsList.CollectionChanged -= DownloadsList_CollectionChanged;
+                foreach (var downloadItem in DownloadsList)
+                {
+                    downloadItem.DownloadStatusChanged -= DownloadItem_DownloadStatusChanged;
+                    downloadItem.DownloadProgressChanged -= DownloadItem_DownloadProgressChanged;
+                }
+
                 _isDisposed = true;
             }
         }

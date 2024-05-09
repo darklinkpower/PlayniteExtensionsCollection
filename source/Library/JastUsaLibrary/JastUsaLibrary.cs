@@ -37,6 +37,9 @@ namespace JastUsaLibrary
 
         public override Guid Id { get; } = Guid.Parse("d407a620-5953-4ca4-a25c-8194c8559381");
         public override string LibraryIcon { get; }
+
+        private readonly SidebarItem _sidebarLibraryManagerView;
+
         public override string Name => "JAST USA";
         public override LibraryClient Client { get; } = new JastUsaLibraryClient();
         private readonly JastUsaAccountClient _accountClient;
@@ -58,8 +61,36 @@ namespace JastUsaLibrary
             };
 
             LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
+            _sidebarLibraryManagerView = new SidebarItem
+            {
+                Title = ResourceProvider.GetString("LOC_JUL_JastLibraryManager"),
+                Type = SiderbarItemType.View,
+                Icon = LibraryIcon,
+                ProgressValue = 0,
+                ProgressMaximum = 100,
+                Opened = () => {
+                    _downloadsManagerViewModel.RefreshLibraryGames();
+                    return new DownloadsManagerView { DataContext = _downloadsManagerViewModel };
+                },
+                Closed = () => {
+
+                }
+            };
+
+            _downloadsManagerViewModel.GlobalProgressChanged += DownloadsManagerViewModel_GlobalProgressChanged;
         }
 
+        private void DownloadsManagerViewModel_GlobalProgressChanged(object sender, GlobalProgressChangedEventArgs e)
+        {
+            if (e.TotalItems == 0 || !e.TotalDownloadProgress.HasValue)
+            {
+                _sidebarLibraryManagerView.ProgressValue = 0;
+            }
+            else
+            {
+                _sidebarLibraryManagerView.ProgressValue = e.TotalDownloadProgress.Value;
+            }
+        }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
@@ -184,7 +215,7 @@ namespace JastUsaLibrary
             settings.UpgradeSettings();
             if (settings.Settings.StartDownloadsOnStartup)
             {
-                _ = Task.Run(() => _downloadsManagerViewModel.StartDownloadsAsync());
+                _ = Task.Run(() => _downloadsManagerViewModel.StartDownloadsAsync(false));
             }
         }
 
@@ -329,25 +360,8 @@ namespace JastUsaLibrary
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
         {
-            var iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
-            yield return new SidebarItem
-            {
-                Title = ResourceProvider.GetString("LOC_JUL_JastLibraryManager"),
-                Type = SiderbarItemType.View,
-                Icon = iconPath,
-                Opened = () => {
-                    _downloadsManagerViewModel.RefreshLibraryGames();
-                    return new DownloadsManagerView { DataContext = _downloadsManagerViewModel };
-                },
-                Closed = () => {
-
-                }
-            };
+            yield return _sidebarLibraryManagerView;
         }
 
-
-
     }
-
-
 }
