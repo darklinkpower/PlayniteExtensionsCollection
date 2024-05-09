@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon.Exceptions
+namespace FlowHttp.Exceptions
 {
     public class MissingContentRangeHeaderException : Exception
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon.HttpRequestClient.Events
+namespace FlowHttp.Events
 {
     /// <summary>
     /// Represents a callback method that is invoked to report progress during a download operation.

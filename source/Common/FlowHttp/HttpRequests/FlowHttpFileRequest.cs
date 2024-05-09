@@ -1,5 +1,4 @@
-﻿using PluginsCommon;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,56 +7,34 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebCommon.Enums;
-using WebCommon.Exceptions;
-using WebCommon.HttpRequestClient.Events;
-using WebCommon.Results;
+using FlowHttp.Enums;
+using FlowHttp.Exceptions;
+using FlowHttp.Events;
+using FlowHttp.Results;
+using PluginsCommon;
 
-namespace WebCommon.HttpRequestClient
+namespace FlowHttp.Requests
 {
-    public class DownloadFileClient : HttpRequestClientBase
+    internal class FlowHttpFileRequest : FlowHttpRequestBase<FlowHttpFileRequest>
     {
         private string _downloadPath;
-        private bool _appendToFile;
+        private bool _appendToFile = false;
 
-        internal DownloadFileClient(
-            HttpClientFactory httpClientFactory,
-            string url,
-            string content,
-            Encoding contentEncoding,
-            string contentMediaType,
-            HttpMethod httpMethod,
-            Dictionary<string, string> headers,
-            List<Cookie> cookies,
-            TimeSpan? timeout,
-            TimeSpan progressReportInterval,
-            string downloadPath,
-            bool appendToFile
-        ) : base(
-            httpClientFactory,
-            url,
-            content,
-            contentEncoding,
-            contentMediaType,
-            httpMethod,
-            headers,
-            cookies,
-            timeout,
-            progressReportInterval
-        )
+        internal FlowHttpFileRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
-            _downloadPath = downloadPath;
-            _appendToFile = appendToFile;
+
         }
 
-        public void SetDownloadPath(string downloadPath)
+        public FlowHttpFileRequest WithDownloadTo(string filePath)
         {
-            _downloadPath = downloadPath;
+            _downloadPath = filePath;
+            return this;
         }
 
-        public void SetAppendToFile(bool appendToFile)
+        public FlowHttpFileRequest WithAppendToFile(bool appendToFile)
         {
             _appendToFile = appendToFile;
+            return this;
         }
 
         /// <summary>
@@ -119,7 +96,7 @@ namespace WebCommon.HttpRequestClient
                 {
                     cts.CancelAfter(_timeout.Value);
                 }
-                
+
                 StringContent stringContent = null;
                 try
                 {
@@ -166,7 +143,7 @@ namespace WebCommon.HttpRequestClient
                     error = ex;
                     _logger.Error(ex, "Download failed");
                     OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Failed);
-                    
+
                 }
                 finally
                 {
@@ -203,7 +180,7 @@ namespace WebCommon.HttpRequestClient
                 {
                     byte[] buffer = new byte[8192];
                     int bytesRead;
-                    
+
                     long lastTotalBytesRead = 0;
                     while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
@@ -236,5 +213,7 @@ namespace WebCommon.HttpRequestClient
                 }
             }
         }
+
+
     }
 }

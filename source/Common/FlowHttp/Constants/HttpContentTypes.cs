@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebCommon.ValueObjects;
+using FlowHttp.ValueObjects;
 
-namespace WebCommon.Constants
+namespace FlowHttp.Constants
 {
     public static class HttpContentTypes
     {

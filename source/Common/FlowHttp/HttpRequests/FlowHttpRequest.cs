@@ -7,37 +7,15 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebCommon.Enums;
-using WebCommon.HttpRequestClient.Events;
-using WebCommon.Results;
+using FlowHttp.Enums;
+using FlowHttp.Events;
+using FlowHttp.Results;
 
-namespace WebCommon.HttpRequestClient
+namespace FlowHttp.Requests
 {
-    public class DownloadStringClient : HttpRequestClientBase
+    internal class FlowHttpRequest : FlowHttpRequestBase<FlowHttpRequest>
     {
-        internal DownloadStringClient(
-            HttpClientFactory httpClientFactory,
-            string url,
-            string content,
-            Encoding contentEncoding,
-            string contentMediaType,
-            HttpMethod httpMethod,
-            Dictionary<string, string> headers,
-            List<Cookie> cookies,
-            TimeSpan? timeout,
-            TimeSpan progressReportInterval
-        ) : base(
-            httpClientFactory,
-            url,
-            content,
-            contentEncoding,
-            contentMediaType,
-            httpMethod,
-            headers,
-            cookies,
-            timeout,
-            progressReportInterval
-        )
+        internal FlowHttpRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
 
         }
@@ -164,7 +142,5 @@ namespace WebCommon.HttpRequestClient
 
             return stringBuilder.ToString();
         }
-
-
     }
 }

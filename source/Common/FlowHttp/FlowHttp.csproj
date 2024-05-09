@@ -7,8 +7,8 @@
     <ProjectGuid>{871CD6E7-1343-4FFB-9D28-CC09E5639E38}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebCommon</RootNamespace>
-    <AssemblyName>WebCommon</AssemblyName>
+    <RootNamespace>FlowHttp</RootNamespace>
+    <AssemblyName>FlowHttp</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -93,9 +93,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\FileClientBuilder.cs" />
-    <Compile Include="Builders\StringClientBuilder.cs" />
-    <Compile Include="Builders\HttpRequestClientBuilderBase.cs" />
+    <Compile Include="HttpRequests\FlowHttpFileRequest.cs" />
+    <Compile Include="HttpRequests\FlowHttpRequest.cs" />
+    <Compile Include="HttpRequests\FlotHttpRequestBase.cs" />
     <Compile Include="Constants\HttpContentTypeConstants.cs" />
     <Compile Include="Constants\HttpContentTypes.cs" />
     <Compile Include="CookiesUtilities.cs" />
@@ -104,13 +104,10 @@
     <Compile Include="Enums\HttpRequestClientStatus.cs" />
     <Compile Include="Exceptions\MissingContentRangeHeaderException.cs" />
     <Compile Include="HttpClientFactory.cs" />
-    <Compile Include="HttpBuilderFactory.cs" />
-    <Compile Include="HttpRequestClient\DownloadFileClient.cs" />
-    <Compile Include="HttpRequestClient\DownloadStateController.cs" />
-    <Compile Include="HttpRequestClient\DownloadStringClient.cs" />
-    <Compile Include="HttpRequestClient\Events\DownloadStateArgs.cs" />
-    <Compile Include="HttpRequestClient\HttpRequestClientBase.cs" />
-    <Compile Include="HttpRequestClient\Events\DownloadProgressArgs.cs" />
+    <Compile Include="HttpRequestFactory.cs" />
+    <Compile Include="DownloadStateController.cs" />
+    <Compile Include="Events\DownloadStateArgs.cs" />
+    <Compile Include="Events\DownloadProgressArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\HttpFileDownloadResult.cs" />
     <Compile Include="Results\HttpResultBase.cs" />

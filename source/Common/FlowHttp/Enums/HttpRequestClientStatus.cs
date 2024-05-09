@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon.Enums
+namespace FlowHttp.Enums
 {
     public enum HttpRequestClientStatus
     {

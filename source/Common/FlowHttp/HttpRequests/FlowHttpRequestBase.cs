@@ -1,8 +1,5 @@
-﻿using Playnite.SDK;
-using PluginsCommon;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,57 +7,138 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebCommon.Enums;
-using WebCommon.HttpRequestClient.Events;
+using FlowHttp.Constants;
+using FlowHttp.Enums;
+using FlowHttp.Events;
+using FlowHttp.ValueObjects;
+using Playnite.SDK;
 
-namespace WebCommon.HttpRequestClient
+namespace FlowHttp.Requests
 {
-    public abstract class HttpRequestClientBase
+    internal abstract class FlowHttpRequestBase<T> where T : FlowHttpRequestBase<T>
     {
         protected static readonly ILogger _logger = LogManager.GetLogger();
+
         protected readonly HttpClientFactory _httpClientFactory;
         protected string _url;
         protected string _content;
-        protected Encoding _contentEncoding;
-        protected string _contentMediaType;
-        protected HttpMethod _httpMethod;
-        protected Dictionary<string, string> _headers;
-        protected readonly IEnumerable<Cookie> _cookies;
+        protected Encoding _contentEncoding = Encoding.UTF8;
+        protected string _contentMediaType = HttpContentTypes.PlainText.Value;
+        protected HttpMethod _httpMethod = HttpMethod.Get;
+        protected readonly Dictionary<string, string> _headers = new Dictionary<string, string>();
+        protected readonly List<Cookie> _cookies = new List<Cookie>();
         protected TimeSpan? _timeout;
-        protected TimeSpan _progressReportInterval;
+        protected TimeSpan _progressReportInterval = TimeSpan.FromMilliseconds(1000);
 
-        internal HttpRequestClientBase(
-            HttpClientFactory httpClientFactory,
-            string url,
-            string content,
-            Encoding contentEncoding,
-            string contentMediaType,
-            HttpMethod httpMethod,
-            Dictionary<string, string> headers,
-            List<Cookie> cookies,
-            TimeSpan? timeout,
-            TimeSpan progressReportInterval)
+        /// <summary>
+        /// Initializes a new instance of the HttpRequesT class with the specified HttpClientFactory.
+        /// </summary>
+        internal FlowHttpRequestBase(HttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
+        }
+
+        public T WithUrl(string url)
+        {
             _url = url;
+            return (T)this;
+        }
+
+        public T WithContent(string content, HttpContentType httpContentType = null, Encoding encoding = null)
+        {
             _content = content;
-            _contentEncoding = contentEncoding;
-            _contentMediaType = contentMediaType;
-            _httpMethod = httpMethod;
-            _headers = new Dictionary<string, string>(headers ?? new Dictionary<string, string>());
-            _cookies = (cookies ?? Enumerable.Empty<Cookie>()).ToList();
+            if (encoding != null)
+            {
+                _contentEncoding = encoding;
+            }
+
+            if (httpContentType != null)
+            {
+                _contentMediaType = httpContentType.Value;
+            }
+
+            return (T)this;
+        }
+
+        public T WithHeaders(Dictionary<string, string> headers)
+        {
+            _headers.Clear();
+            headers.ForEach(kv => _headers[kv.Key] = kv.Value);
+            return (T)this;
+        }
+
+        public T AddHeader(string name, string value)
+        {
+            _headers[name] = value;
+            return (T)this;
+        }
+
+        public T WithCookies(List<Cookie> cookies)
+        {
+            var cookiesClone = cookies.Select(x => new Cookie(x.Name, x.Value));
+            _cookies.Clear();
+            _cookies.AddRange(cookiesClone);
+            return (T)this;
+        }
+
+        public T WithCookies(Dictionary<string, string> cookiesDictionary)
+        {
+            var cookiesClone = cookiesDictionary.Select(kvp => new Cookie(kvp.Key, kvp.Value));
+            _cookies.Clear();
+            _cookies.AddRange(cookiesClone);
+            return (T)this;
+        }
+
+        public T WithHttpMethod(HttpMethod method)
+        {
+            _httpMethod = method;
+            return (T)this;
+        }
+
+        public T WithGetHttpMethod()
+        {
+            _httpMethod = HttpMethod.Get;
+            return (T)this;
+        }
+
+        public T WithPostHttpMethod()
+        {
+            _httpMethod = HttpMethod.Post;
+            return (T)this;
+        }
+
+        public T WithHeadHttpMethod()
+        {
+            _httpMethod = HttpMethod.Head;
+            return (T)this;
+        }
+
+        public T WithProgressReportInterval(TimeSpan reportInterval)
+        {
+            _progressReportInterval = reportInterval;
+            return (T)this;
+        }
+
+        public T WithTimeout(double milliseconds)
+        {
+            _timeout = TimeSpan.FromMilliseconds(milliseconds);
+            return (T)this;
+        }
+
+        public T WithTimeout(TimeSpan timeout)
+        {
             _timeout = timeout;
-            _progressReportInterval = progressReportInterval;
+            return (T)this;
         }
 
-        public void SetUrl(string url)
+        protected void OnDownloadStateChanged(DownloadStateChangedCallback callback, HttpRequestClientStatus status)
         {
-            _url = url;
+            callback?.Invoke(new DownloadStateArgs(status));
         }
 
-        public void SetUrl(Uri url)
+        protected void OnDownloadProgressChanged(DownloadProgressChangedCallback callback, DownloadProgressArgs progressArgs)
         {
-            _url = url.ToString();
+            callback?.Invoke(progressArgs);
         }
 
         /// <summary>
@@ -143,15 +221,5 @@ namespace WebCommon.HttpRequestClient
             return Encoding.UTF8;
         }
 
-        protected void OnDownloadStateChanged(DownloadStateChangedCallback callback, HttpRequestClientStatus status)
-        {
-            callback?.Invoke(new DownloadStateArgs(status));
-        }
-
-        protected void OnDownloadProgressChanged(DownloadProgressChangedCallback callback, DownloadProgressArgs progressArgs)
-        {
-            callback?.Invoke(progressArgs);
-        }
     }
-
 }

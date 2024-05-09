@@ -63,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurchaseDateImporter", "Gen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamGameStatusDetector", "Generic\SteamGameStatusDetector\SteamGameStatusDetector.csproj", "{BD635425-A77A-452D-84A2-94965FFB6229}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCommon", "Common\WebCommon\WebCommon.csproj", "{871CD6E7-1343-4FFB-9D28-CC09E5639E38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlowHttp", "Common\FlowHttp\FlowHttp.csproj", "{871CD6E7-1343-4FFB-9D28-CC09E5639E38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryExporter", "Generic\LibraryExporter\LibraryExporter.csproj", "{A84836B3-7800-48BC-837D-13F237E2C508}"
 EndProject

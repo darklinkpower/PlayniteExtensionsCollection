@@ -6,9 +6,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon
+namespace FlowHttp
 {
-    public static class CookiesUtilities
+    internal static class CookiesUtilities
     {
         /// <summary>
         /// Converts the specified string representation of an HTTP cookie to Cookie
@@ -16,7 +16,7 @@ namespace WebCommon
         /// <param name="cookieString"></param>
         /// <param name="cookie"></param>
         /// <returns></returns>
-        public static bool TryParseCookieFromString(string cookieString, out Cookie cookie)
+        internal static bool TryParseCookieFromString(string cookieString, out Cookie cookie)
         {
             cookie = new Cookie();
             if (string.IsNullOrEmpty(cookieString))

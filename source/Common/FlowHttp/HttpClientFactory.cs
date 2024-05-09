@@ -7,12 +7,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebCommon
+namespace FlowHttp
 {
     /// <summary>
     /// Factory for creating and managing instances of HttpClient for HTTP requests.
     /// </summary>
-    public class HttpClientFactory
+    internal class HttpClientFactory
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _clientForCookiesName = "ClientForCookiesUse";

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebCommon.HttpRequestClient
+namespace FlowHttp
 {
     /// <summary>
     /// Controls the state of a download operation, allowing pausing, resuming, and cancelling.
