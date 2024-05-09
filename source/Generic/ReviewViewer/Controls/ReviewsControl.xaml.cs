@@ -599,7 +599,7 @@ namespace ReviewViewer.Controls
             }
 
             var uri = string.Format(reviewsApiMask, CurrentSteamId, steamApiLanguage, reviewSearchType);
-            await HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFileAsync();
+            await HttpRequestFactory.GetHttpFileRequest().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFileAsync();
         }
 
         private void CalculateUserScore()

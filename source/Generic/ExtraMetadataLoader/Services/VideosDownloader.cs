@@ -88,7 +88,7 @@ namespace ExtraMetadataLoader.Services
                     videoUrl = steamAppDetails.data.Movies[0].Mp4.Max;
                 }
 
-                var downloadFileResult = HttpRequestFactory.GetFlowHttpFileRequest()
+                var downloadFileResult = HttpRequestFactory.GetHttpFileRequest()
                     .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath)
                     .DownloadFile(cancelToken);
                 if (downloadFileResult.IsSuccess)
@@ -101,7 +101,7 @@ namespace ExtraMetadataLoader.Services
             {
                 var videoUrl = string.Format(steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
                 var downloadFileResult = HttpRequestFactory
-                    .GetFlowHttpFileRequest()
+                    .GetHttpFileRequest()
                     .WithUrl(videoUrl.ToString())
                     .WithDownloadTo(tempDownloadPath)
                     .DownloadFile(cancelToken);

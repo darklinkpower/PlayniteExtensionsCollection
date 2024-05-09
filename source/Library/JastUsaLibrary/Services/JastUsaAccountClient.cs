@@ -112,7 +112,7 @@ namespace JastUsaLibrary.Services
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var request = HttpRequestFactory.GetFlowHttpRequest()
+            var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(JastUrls.Api.Authentication.AuthenticationToken)
                 .WithPostHttpMethod()
                 .WithContent(Serialization.ToJson(authentication), HttpContentTypes.Json)
@@ -156,7 +156,7 @@ namespace JastUsaLibrary.Services
             };
             
             var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
-            var request = HttpRequestFactory.GetFlowHttpRequest()
+            var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(translationsUrl)
                 .WithHeaders(headers);
             var downloadStringResult = request.DownloadString();
@@ -213,7 +213,7 @@ namespace JastUsaLibrary.Services
             {
                 currentPage++;
                 var url = string.Format(JastUrls.Api.Account.GetGamesTemplate, currentPage);
-                var request = HttpRequestFactory.GetFlowHttpRequest()
+                var request = HttpRequestFactory.GetHttpRequest()
                     .WithUrl(url)
                     .WithHeaders(headers);
                 var downloadStringResult = request.DownloadString();
@@ -261,7 +261,7 @@ namespace JastUsaLibrary.Services
 
             var postBody = new GenerateLinkRequest { downloaded = true, gameId = gameLink.GameId, gameLinkId = gameLink.GameLinkId };
             var jsonPostContent = Serialization.ToJson(postBody);
-            var request = HttpRequestFactory.GetFlowHttpRequest()
+            var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(JastUrls.Api.Account.GenerateLink)
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, HttpContentTypes.Json)

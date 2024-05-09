@@ -190,7 +190,7 @@ namespace SteamWishlistDiscountNotifier
                 }
                 else
                 {
-                    var request = HttpRequestFactory.GetFlowHttpFileRequest()
+                    var request = HttpRequestFactory.GetHttpFileRequest()
                         .WithUrl(wishlistItem.WishlistItem.Capsule.ToString())
                         .WithDownloadTo(localBannerPath);
 
@@ -619,7 +619,7 @@ namespace SteamWishlistDiscountNotifier
                 }
 
                 var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
-                var request = HttpRequestFactory.GetFlowHttpRequest()
+                var request = HttpRequestFactory.GetHttpRequest()
                     .WithUrl(url)
                     .WithHeaders(headers)
                     .WithCookies(cookies);

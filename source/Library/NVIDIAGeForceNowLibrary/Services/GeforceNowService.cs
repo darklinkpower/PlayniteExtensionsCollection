@@ -57,7 +57,7 @@ namespace NVIDIAGeForceNowEnabler.Services
                     .Replace(" ", "")
                     .UrlEncode();
                 var uri = graphQlEndpoint + queryString;
-                var downloadedString = HttpRequestFactory.GetFlowHttpRequest().WithUrl(uri).DownloadString();
+                var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(uri).DownloadString();
                 if (!downloadedString.IsSuccess)
                 {
                     break;

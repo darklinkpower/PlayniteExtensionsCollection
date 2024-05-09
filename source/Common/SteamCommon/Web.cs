@@ -45,7 +45,7 @@ namespace SteamCommon
         public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null, CancellationToken cancelToken = default)
         {
             var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpRequestFactory.GetFlowHttpRequest()
+            var searchPageSrc = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(GetStoreSearchUrl(searchTerm, steamApiCountry))
                 .DownloadString(cancelToken);
             if (searchPageSrc.IsSuccess)
@@ -182,7 +182,7 @@ namespace SteamCommon
         public static SteamAppDetails GetSteamAppDetails(string steamId, CancellationToken cancelToken = default)
         {
             var url = string.Format(steamAppDetailsMask, steamId);
-            var request = HttpRequestFactory.GetFlowHttpRequest().WithUrl(url);
+            var request = HttpRequestFactory.GetHttpRequest().WithUrl(url);
             var downloadedString = request.DownloadString(cancelToken);
             if (downloadedString.IsSuccess)
             {

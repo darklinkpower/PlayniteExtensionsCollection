@@ -66,7 +66,7 @@ namespace GamePassCatalogBrowser.Services
             var gamePassGames = new List<GamePassCatalogProduct>();
             try
             {
-                var downloadResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(catalogUrl).DownloadString();
+                var downloadResult = HttpRequestFactory.GetHttpRequest().WithUrl(catalogUrl).DownloadString();
                 if (!downloadResult.IsSuccess)
                 {
                     return null;
@@ -237,7 +237,7 @@ namespace GamePassCatalogBrowser.Services
             var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
             try
             {
-                var downloadResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(catalogDataApiUrl).DownloadString();
+                var downloadResult = HttpRequestFactory.GetHttpRequest().WithUrl(catalogDataApiUrl).DownloadString();
                 if (downloadResult.IsSuccess)
                 {
                     AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Content), false, gameProductType, true, product.ProductId);
@@ -470,7 +470,7 @@ namespace GamePassCatalogBrowser.Services
             var catalogDataApiUrl = string.Format(catalogDataApiBaseUrl, bigIdsParam, countryCode, languageCode);
             try
             {
-                var downloadResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(catalogDataApiUrl).DownloadString();
+                var downloadResult = HttpRequestFactory.GetHttpRequest().WithUrl(catalogDataApiUrl).DownloadString();
                 if (downloadResult.IsSuccess)
                 {
                     AddGamesFromCatalogData(JsonConvert.DeserializeObject<CatalogData>(downloadResult.Content), true, gameProductType, false, string.Empty);
@@ -490,13 +490,13 @@ namespace GamePassCatalogBrowser.Services
         public void DownloadGamePassGameCache(GamePassGame game)
         {
             game.CoverImageLowRes = Path.Combine(imageCachePath, game.CoverImageLowRes);
-            HttpRequestFactory.GetFlowHttpFileRequest()
+            HttpRequestFactory.GetHttpFileRequest()
                 .WithUrl(string.Format("{0}?mode=scale&q=90&h=300&w=200", game.CoverImageUrl))
                 .WithDownloadTo(game.CoverImageLowRes)
                 .DownloadFile();
             
             game.CoverImage = Path.Combine(imageCachePath, game.CoverImage);
-            HttpRequestFactory.GetFlowHttpFileRequest()
+            HttpRequestFactory.GetHttpFileRequest()
                 .WithUrl(string.Format("{0}?mode=scale&q=90&h=900&w=600", game.CoverImageUrl))
                 .WithDownloadTo(game.CoverImage)
                 .DownloadFile();
@@ -504,7 +504,7 @@ namespace GamePassCatalogBrowser.Services
             if (game.Icon != null)
             {
                 game.Icon = Path.Combine(imageCachePath, game.Icon);
-                HttpRequestFactory.GetFlowHttpFileRequest()
+                HttpRequestFactory.GetHttpFileRequest()
                     .WithUrl(string.Format("{0}?mode=scale&q=90&h=128&w=128", game.IconUrl))
                     .WithDownloadTo(game.Icon)
                     .DownloadFile();

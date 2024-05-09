@@ -241,7 +241,7 @@ namespace SearchCollection
             var iconDownloadUrl = string.Format(@"http://www.google.com/s2/favicons?domain={0}", domain);
             var iconName = Guid.NewGuid().ToString() + ".png";
             var iconPath = Path.Combine(userIconsDirectory, iconName);
-            HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(iconDownloadUrl).WithDownloadTo(iconPath).DownloadFile();
+            HttpRequestFactory.GetHttpFileRequest().WithUrl(iconDownloadUrl).WithDownloadTo(iconPath).DownloadFile();
             if (FileSystem.FileExists(iconPath))
             {
                 return iconName;

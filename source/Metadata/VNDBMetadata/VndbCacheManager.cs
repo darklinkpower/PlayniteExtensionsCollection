@@ -67,7 +67,7 @@ namespace VNDBMetadata
 
         private bool DownloadAndDecompress(string sourceUrl, string compressedPath, string outputPath)
         {
-            var downloadResult = HttpRequestFactory.GetFlowHttpRequest()
+            var downloadResult = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(sourceUrl).WithDownloadTo(compressedPath)
                 .DownloadFile();
             if (downloadResult.IsSuccess)

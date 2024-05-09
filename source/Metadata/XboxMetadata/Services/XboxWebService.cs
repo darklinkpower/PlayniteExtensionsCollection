@@ -53,7 +53,7 @@ namespace XboxMetadata.Services
             var results = new List<Suggest>();
             var requestUrl = string.Format(quickSearchTemplate,
                 _settingsViewModel.Settings.MarketLanguagePreference.GetStringValue(), quickSearchNumberOfResults, searchTerm.EscapeDataString());
-            var request = HttpRequestFactory.GetFlowHttpRequest()
+            var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl);
             var result = ExecuteRequest(request);
             if (!result.IsSuccess)
@@ -99,7 +99,7 @@ namespace XboxMetadata.Services
             };
 
             var jsonBody = Serialization.ToJson(requestBody);
-            var request = HttpRequestFactory.GetFlowHttpRequest()
+            var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl)
                 .WithHeaders(headers)
                 .WithPostHttpMethod()

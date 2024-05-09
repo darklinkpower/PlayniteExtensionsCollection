@@ -30,7 +30,7 @@ namespace JastUsaLibrary
             }
 
             var url = JastUrls.Web.JastBaseAppUrl + apiUrl;
-            var downloadedString = HttpRequestFactory.GetFlowHttpRequest().WithUrl(url).DownloadString();
+            var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(url).DownloadString();
             if (!downloadedString.IsSuccess)
             {
                 return new GameMetadata();

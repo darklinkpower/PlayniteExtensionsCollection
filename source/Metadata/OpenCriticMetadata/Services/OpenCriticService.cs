@@ -28,7 +28,7 @@ namespace OpenCriticMetadata.Services
         public async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl)
         {
             await timeConstraint;
-            return HttpRequestFactory.GetFlowHttpRequest()
+            return HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl)
                 .WithHeaders(GetSearchHeaders())
                 .DownloadString();

@@ -174,7 +174,7 @@ namespace ImporterforAnilist.Services
             };
 
             var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest()
+            var downloadStringResult = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(graphQLEndpoint)
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, HttpContentTypes.Json)
@@ -291,7 +291,7 @@ namespace ImporterforAnilist.Services
             };
 
             var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest()
+            var downloadStringResult = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(graphQLEndpoint)
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, HttpContentTypes.Json)

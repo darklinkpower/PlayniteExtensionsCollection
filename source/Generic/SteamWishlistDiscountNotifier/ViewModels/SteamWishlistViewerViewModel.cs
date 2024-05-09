@@ -520,7 +520,7 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             var success = false;
             _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
             {
-                var request = HttpRequestFactory.GetFlowHttpRequest()
+                var request = HttpRequestFactory.GetHttpRequest()
                     .WithUrl("https://store.steampowered.com/api/removefromwishlist")
                     .WithCookies(new Dictionary<string, string> { { "sessionid", _steamSessionId }, { "steamLoginSecure", _steamLoginSecure } })
                     .WithPostHttpMethod()

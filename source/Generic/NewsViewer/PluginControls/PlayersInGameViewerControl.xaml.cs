@@ -156,7 +156,7 @@ namespace NewsViewer.PluginControls
             var contextGameId = currentGame.Id;
             currentGameId = contextGameId;
             var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
-            var downloadStringResult = await HttpRequestFactory.GetFlowHttpRequest().WithUrl(url).DownloadStringAsync();
+            var downloadStringResult = await HttpRequestFactory.GetHttpRequest().WithUrl(url).DownloadStringAsync();
             if (!downloadStringResult.IsSuccess)
             {
                 return;

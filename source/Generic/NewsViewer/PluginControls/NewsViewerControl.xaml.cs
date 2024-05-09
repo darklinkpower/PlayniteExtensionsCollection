@@ -381,7 +381,7 @@ namespace NewsViewer.PluginControls
                 return;
             }
 
-            var request = HttpRequestFactory.GetFlowHttpRequest()
+            var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(string.Format(steamRssTemplate, steamId, steamLanguage))
                 .WithHeaders(headers);
             var result = await request.DownloadStringAsync();

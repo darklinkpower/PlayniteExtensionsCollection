@@ -147,7 +147,7 @@ namespace JastUsaLibrary.DownloadManager.Models
                 return;
             }
 
-            var request = HttpRequestFactory.GetFlowHttpFileRequest()
+            var request = HttpRequestFactory.GetHttpFileRequest()
                 .WithAppendToFile(true)
                 .WithDownloadTo(_downloadData.TemporaryDownloadPath)
                 .WithUrl(_downloadData.Url);
