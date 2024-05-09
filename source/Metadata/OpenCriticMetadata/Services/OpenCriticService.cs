@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebCommon;
+using FlowHttp;
 using System.Windows.Threading;
 using System.Threading;
 using RateLimiter;
 using ComposableAsync;
-using WebCommon.Models;
+using FlowHttp.Results;
 
 namespace OpenCriticMetadata.Services
 {
@@ -25,13 +25,12 @@ namespace OpenCriticMetadata.Services
             timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
         }
 
-        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(string requestUrl)
+        public async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl)
         {
             await timeConstraint;
-            return HttpDownloader.GetRequestBuilder()
+            return HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(requestUrl)
                 .WithHeaders(GetSearchHeaders())
-                .Build()
                 .DownloadString();
         }
 
@@ -39,9 +38,9 @@ namespace OpenCriticMetadata.Services
         {
             var requestUrl = string.Format(searchGameTemplate, searchTerm.EscapeDataString());
             var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
-            if (result.IsSuccessful)
+            if (result.IsSuccess)
             {
-                return Serialization.FromJson<List<OpenCriticGameResult>>(result.Response.Content);
+                return Serialization.FromJson<List<OpenCriticGameResult>>(result.Content);
             }
             else
             {
@@ -58,9 +57,9 @@ namespace OpenCriticMetadata.Services
         {
             var requestUrl = string.Format(getGameDataTemplate, gameId);
             var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
-            if (result.IsSuccessful)
+            if (result.IsSuccess)
             {
-                return Serialization.FromJson<OpenCriticGameData>(result.Response.Content);
+                return Serialization.FromJson<OpenCriticGameData>(result.Content);
             }
             else
             {

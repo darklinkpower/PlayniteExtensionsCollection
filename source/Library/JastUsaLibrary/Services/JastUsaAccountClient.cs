@@ -3,7 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Net.Http;
-using WebCommon.Constants;
+using FlowHttp.Constants;
 using JastUsaLibrary.ViewModels;
 
 namespace JastUsaLibrary.Services
@@ -112,12 +112,11 @@ namespace JastUsaLibrary.Services
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var request = HttpBuilderFactory.GetStringClientBuilder()
+            var request = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(JastUrls.Api.Authentication.AuthenticationToken)
                 .WithPostHttpMethod()
                 .WithContent(Serialization.ToJson(authentication), HttpContentTypes.Json)
-                .WithHeaders(headers)
-                .Build();
+                .WithHeaders(headers);
 
             var downloadStringResult = request.DownloadString();
             if (downloadStringResult.IsSuccess)
@@ -157,10 +156,9 @@ namespace JastUsaLibrary.Services
             };
             
             var translationsUrl = string.Format(@"https://app.jastusa.com/api/v2/shop/account/game-translations/{0}", translationId);
-            var request = HttpBuilderFactory.GetStringClientBuilder()
+            var request = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(translationsUrl)
-                .WithHeaders(headers)
-                .Build();
+                .WithHeaders(headers);
             var downloadStringResult = request.DownloadString();
             if (!downloadStringResult.IsSuccess)
             {
@@ -215,10 +213,9 @@ namespace JastUsaLibrary.Services
             {
                 currentPage++;
                 var url = string.Format(JastUrls.Api.Account.GetGamesTemplate, currentPage);
-                var request = HttpBuilderFactory.GetStringClientBuilder()
+                var request = HttpRequestFactory.GetFlowHttpRequest()
                     .WithUrl(url)
-                    .WithHeaders(headers)
-                    .Build();
+                    .WithHeaders(headers);
                 var downloadStringResult = request.DownloadString();
                 if (!downloadStringResult.IsSuccess)
                 {
@@ -264,12 +261,11 @@ namespace JastUsaLibrary.Services
 
             var postBody = new GenerateLinkRequest { downloaded = true, gameId = gameLink.GameId, gameLinkId = gameLink.GameLinkId };
             var jsonPostContent = Serialization.ToJson(postBody);
-            var request = HttpBuilderFactory.GetStringClientBuilder()
+            var request = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(JastUrls.Api.Account.GenerateLink)
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, HttpContentTypes.Json)
-                .WithHeaders(headers)
-                .Build();
+                .WithHeaders(headers);
             var downloadStringResult = request.DownloadString();
             if (downloadStringResult.IsSuccess)
             {

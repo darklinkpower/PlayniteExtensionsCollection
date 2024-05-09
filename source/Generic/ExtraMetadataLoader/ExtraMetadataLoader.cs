@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WebCommon;
+using FlowHttp;
 using YouTubeCommon;
 
 namespace ExtraMetadataLoader
@@ -760,9 +760,9 @@ namespace ExtraMetadataLoader
                 return false;
             }
 
-            var request = HttpDownloader.GetRequestBuilder().WithUrl(logoUrl).WithDownloadTo(logoPath).WithCancellationToken(cancelToken).Build();
-            var downloadFileResult = request.DownloadFile();
-            if (downloadFileResult.IsSuccessful)
+            var request = HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(logoUrl).WithDownloadTo(logoPath);
+            var downloadFileResult = request.DownloadFile(cancelToken);
+            if (downloadFileResult.IsSuccess)
             {
                 if (settings.Settings.ProcessLogosOnDownload)
                 {
@@ -772,7 +772,7 @@ namespace ExtraMetadataLoader
                 OnLogoUpdated(game);
             }
 
-            return downloadFileResult.IsSuccessful;
+            return downloadFileResult.IsSuccess;
         }
 
         private bool ProcessLogoImage(string logoPath)

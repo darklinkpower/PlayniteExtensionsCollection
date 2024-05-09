@@ -12,8 +12,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using WebCommon.Enums;
-using WebCommon.HttpRequestClient.Events;
+using FlowHttp.Enums;
+using FlowHttp.Events;
 
 namespace JastUsaLibrary.DownloadManager.Models
 {

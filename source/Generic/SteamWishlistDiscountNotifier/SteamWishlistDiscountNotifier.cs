@@ -4,7 +4,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using SteamWishlistDiscountNotifier.Enums;
 using SteamWishlistDiscountNotifier.Models;
 using SteamWishlistDiscountNotifier.ViewModels;
@@ -190,14 +190,12 @@ namespace SteamWishlistDiscountNotifier
                 }
                 else
                 {
-                    var request = HttpDownloader.GetRequestBuilder()
+                    var request = HttpRequestFactory.GetFlowHttpFileRequest()
                         .WithUrl(wishlistItem.WishlistItem.Capsule.ToString())
-                        .WithDownloadTo(localBannerPath)
-                        .WithCancellationToken(a.CancelToken)
-                        .Build();
+                        .WithDownloadTo(localBannerPath);
 
-                    var result = request.DownloadFile();
-                    if (result.IsSuccessful)
+                    var result = request.DownloadFile(a.CancelToken);
+                    if (result.IsSuccess)
                     {
                         bannerImagePath = localBannerPath;
                     }
@@ -621,25 +619,23 @@ namespace SteamWishlistDiscountNotifier
                 }
 
                 var url = string.Format(steamWishlistUrlMask, steamId, currentPage);
-                var request = HttpDownloader.GetRequestBuilder()
+                var request = HttpRequestFactory.GetFlowHttpRequest()
                     .WithUrl(url)
                     .WithHeaders(headers)
-                    .WithCookies(cookies)
-                    .WithCancellationToken(cancelToken)
-                    .Build();
-                var downloadResult = request.DownloadString();
-                if (!downloadResult.IsSuccessful)
+                    .WithCookies(cookies);
+                var downloadResult = request.DownloadString(cancelToken);
+                if (!downloadResult.IsSuccess)
                 {
                     return null;
                 }
 
                 // Page yielded no items
-                if (downloadResult.Response.Content == "[]")
+                if (downloadResult.Content == "[]")
                 {
                     break;
                 }
 
-                if (!Serialization.TryFromJson<Dictionary<string, SteamWishlistItem>>(downloadResult.Response.Content, out var response))
+                if (!Serialization.TryFromJson<Dictionary<string, SteamWishlistItem>>(downloadResult.Content, out var response))
                 {
                     break;
                 }

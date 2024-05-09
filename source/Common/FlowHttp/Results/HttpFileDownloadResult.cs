@@ -22,7 +22,7 @@ namespace FlowHttp.Results
         /// </summary>
         public long FileSize { get; }
 
-        private HttpFileDownloadResult(string url, bool isSuccess, FileInfo fileInfo, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
+        private HttpFileDownloadResult(Uri url, bool isSuccess, FileInfo fileInfo, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
             : base(url, isSuccess, error, httpStatusCode, httpResponseMessage)
         {
             if (fileInfo != null)
@@ -32,12 +32,12 @@ namespace FlowHttp.Results
             }
         }
 
-        internal static HttpFileDownloadResult Success(string url, FileInfo fileInfo, HttpStatusCode? statusCode, HttpResponseMessage httpResponseMessage)
+        internal static HttpFileDownloadResult Success(Uri url, FileInfo fileInfo, HttpStatusCode? statusCode, HttpResponseMessage httpResponseMessage)
         {
             return new HttpFileDownloadResult(url, true, fileInfo, null, statusCode, httpResponseMessage);
         }
 
-        internal static HttpFileDownloadResult Failure(string url, Exception error, HttpStatusCode? statusCode = null, HttpResponseMessage httpResponseMessage = default)
+        internal static HttpFileDownloadResult Failure(Uri url, Exception error, HttpStatusCode? statusCode = null, HttpResponseMessage httpResponseMessage = default)
         {
             return new HttpFileDownloadResult(url, false, null, error, statusCode, httpResponseMessage);
         }

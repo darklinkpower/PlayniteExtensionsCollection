@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using VNDBMetadata.Models;
 using VNDB.ApiConstants;
-using WebCommon;
+using FlowHttp;
 using VNDBMetadata.VNDB.Requests.Post;
 
 namespace VNDBMetadata

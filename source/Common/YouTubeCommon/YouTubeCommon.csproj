@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebCommon\WebCommon.csproj">
+    <ProjectReference Include="..\FlowHttp\FlowHttp.csproj">
       <Project>{871cd6e7-1343-4ffb-9d28-cc09e5639e38}</Project>
-      <Name>WebCommon</Name>
+      <Name>FlowHttp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

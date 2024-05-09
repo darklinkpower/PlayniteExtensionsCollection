@@ -4,7 +4,7 @@ using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using SteamCommon.Models;
 using System;
 using System.Collections.Generic;
@@ -497,7 +497,7 @@ namespace ExtraMetadataLoader
                     if (steamId != null)
                     {
                         var url = string.Format(@"https://store.steampowered.com/api/appdetails?appids={0}", steamId);
-                        HttpDownloader.GetRequestBuilder().WithUrl(url).WithDownloadTo(gameDataPath).Build().DownloadFile();
+                        HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(url).WithDownloadTo(gameDataPath).DownloadFile();
                     }
                 }
 

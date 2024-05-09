@@ -14,7 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using WebCommon;
+using FlowHttp;
+using FlowHttp.Constants;
 
 namespace SteamWishlistDiscountNotifier.ViewModels
 {
@@ -519,16 +520,14 @@ namespace SteamWishlistDiscountNotifier.ViewModels
             var success = false;
             _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
             {
-                var request = HttpDownloader.GetRequestBuilder()
+                var request = HttpRequestFactory.GetFlowHttpRequest()
                     .WithUrl("https://store.steampowered.com/api/removefromwishlist")
                     .WithCookies(new Dictionary<string, string> { { "sessionid", _steamSessionId }, { "steamLoginSecure", _steamLoginSecure } })
                     .WithPostHttpMethod()
-                    .WithCancellationToken(a.CancelToken)
-                    .WithContent($"sessionid={_steamSessionId}&appid={cacheItem.Data.StoreId}", StandardMediaTypesConstants.FormUrlEncoded, Encoding.UTF8)
-                    .Build();
-
-                var result = await request.DownloadStringAsync();
-                if (!result.IsSuccessful || !Serialization.TryFromJson<WishlistAddRemoveRequestResponse>(result.Response.Content, out var response) || !response.Success)
+                    .WithContent($"sessionid={_steamSessionId}&appid={cacheItem.Data.StoreId}", HttpContentTypes.FormUrlEncoded, Encoding.UTF8);
+                
+                var result = await request.DownloadStringAsync(a.CancelToken);
+                if (!result.IsSuccess || !Serialization.TryFromJson<WishlistAddRemoveRequestResponse>(result.Content, out var response) || !response.Success)
                 {
                     _playniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_RemoveFromWishlistFail"), "Steam Wishlist Discount Notifier");
                     return;

@@ -31,7 +31,7 @@ using System.Windows.Threading;
 using System.Xml;
 using TemporaryCache;
 using TemporaryCache.Models;
-using WebCommon;
+using FlowHttp;
 
 namespace NewsViewer.PluginControls
 {
@@ -381,17 +381,16 @@ namespace NewsViewer.PluginControls
                 return;
             }
 
-            var request = HttpDownloader.GetRequestBuilder()
+            var request = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(string.Format(steamRssTemplate, steamId, steamLanguage))
-                .WithHeaders(headers)
-                .Build();
+                .WithHeaders(headers);
             var result = await request.DownloadStringAsync();
-            if (!result.IsSuccessful)
+            if (!result.IsSuccess)
             {
                 return;
             }
 
-            var newsFeed = ParseRssResponse(result.Response.Content);
+            var newsFeed = ParseRssResponse(result.Content);
             if (newsFeed is null)
             {
                 return;

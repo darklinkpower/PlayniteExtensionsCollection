@@ -3,7 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace JastUsaLibrary
             }
 
             var url = JastUrls.Web.JastBaseAppUrl + apiUrl;
-            var downloadedString = HttpBuilderFactory.GetStringClientBuilder().WithUrl(url).Build().DownloadString();
+            var downloadedString = HttpRequestFactory.GetFlowHttpRequest().WithUrl(url).DownloadString();
             if (!downloadedString.IsSuccess)
             {
                 return new GameMetadata();

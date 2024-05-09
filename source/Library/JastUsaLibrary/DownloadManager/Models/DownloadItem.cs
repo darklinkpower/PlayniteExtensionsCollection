@@ -12,10 +12,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebCommon;
-using WebCommon.Enums;
-using WebCommon.HttpRequestClient;
-using WebCommon.HttpRequestClient.Events;
+using FlowHttp;
+using FlowHttp.Enums;
+using FlowHttp.Events;
 
 namespace JastUsaLibrary.DownloadManager.Models
 {
@@ -38,7 +37,6 @@ namespace JastUsaLibrary.DownloadManager.Models
             DownloadStatusChanged?.Invoke(this, new DownloadStatusChangedEventArgs(newStatus));
         }
 
-        private readonly DownloadFileClient _client;
         private readonly JastUsaAccountClient _jastAccountClient;
         private readonly DownloadsManagerViewModel _downloadsManagerViewModel;
         private DownloadData _downloadData;
@@ -74,8 +72,6 @@ namespace JastUsaLibrary.DownloadManager.Models
         {
             _jastAccountClient = jastAccountClient;
             _downloadsManagerViewModel = downloadsManagerViewModel;
-            var clientBuilder = HttpBuilderFactory.GetFileClientBuilder().WithAppendToFile(true);
-            _client = clientBuilder.Build();
             DownloadData = downloadData;
         }
 
@@ -151,11 +147,13 @@ namespace JastUsaLibrary.DownloadManager.Models
                 return;
             }
 
-            _client.SetDownloadPath(_downloadData.TemporaryDownloadPath);
-            _client.SetUrl(_downloadData.Url);
+            var request = HttpRequestFactory.GetFlowHttpFileRequest()
+                .WithAppendToFile(true)
+                .WithDownloadTo(_downloadData.TemporaryDownloadPath)
+                .WithUrl(_downloadData.Url);
             _downloadStateController = new DownloadStateController();
 
-            var downloadResult = await _client.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: stateChangedCallback, progressChangedCallback: progressChangedCallback);
+            var downloadResult = await request.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: stateChangedCallback, progressChangedCallback: progressChangedCallback);
             _downloadStateController?.Reset();
             _downloadStateController?.Dispose();
             _downloadStateController = null;

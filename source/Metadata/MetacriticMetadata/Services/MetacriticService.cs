@@ -10,8 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using WebCommon;
-using WebCommon.Models;
+using FlowHttp;
+using FlowHttp.Results;
 
 namespace MetacriticMetadata.Services
 {
@@ -36,13 +36,12 @@ namespace MetacriticMetadata.Services
             this.settings = settings;
         }
 
-        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(string requestUrl)
+        public async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl)
         {
             await timeConstraint;
-            return HttpDownloader.GetRequestBuilder()
+            return HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(requestUrl)
                 .WithHeaders(defaultApiHeaders)
-                .Build()
                 .DownloadString();
         }
 
@@ -76,12 +75,12 @@ namespace MetacriticMetadata.Services
             }
 
             var searchRequest = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
-            if (!searchRequest.IsSuccessful)
+            if (!searchRequest.IsSuccess)
             {
                 return results;
             }
 
-            var response = Serialization.FromJson<MetacriticSearchResponse>(searchRequest.Response.Content);
+            var response = Serialization.FromJson<MetacriticSearchResponse>(searchRequest.Content);
             foreach (var searchResult in response.Data.Items)
             {
                 if (searchResult.Type != "game-title")

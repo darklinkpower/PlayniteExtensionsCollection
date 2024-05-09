@@ -10,7 +10,7 @@ using ImporterforAnilist.Models;
 using System.Net.Http;
 using System.Threading;
 using Playnite.SDK.Data;
-using WebCommon;
+using FlowHttp;
 using ImporterforAnilist.Services;
 
 namespace ImporterforAnilist

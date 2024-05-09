@@ -95,12 +95,10 @@
   <ItemGroup>
     <Compile Include="HttpRequests\FlowHttpFileRequest.cs" />
     <Compile Include="HttpRequests\FlowHttpRequest.cs" />
-    <Compile Include="HttpRequests\FlotHttpRequestBase.cs" />
+    <Compile Include="HttpRequests\FlowHttpRequestBase.cs" />
     <Compile Include="Constants\HttpContentTypeConstants.cs" />
     <Compile Include="Constants\HttpContentTypes.cs" />
     <Compile Include="CookiesUtilities.cs" />
-    <Compile Include="DownloadManager\DownloadItem.cs" />
-    <Compile Include="DownloadManager\DownloadManager.cs" />
     <Compile Include="Enums\HttpRequestClientStatus.cs" />
     <Compile Include="Exceptions\MissingContentRangeHeaderException.cs" />
     <Compile Include="HttpClientFactory.cs" />

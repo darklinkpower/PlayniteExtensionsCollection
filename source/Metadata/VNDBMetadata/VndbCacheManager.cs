@@ -6,7 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using VNDBMetadata.ApiConstants;
-using WebCommon;
+using FlowHttp;
 
 namespace VNDBMetadata
 {
@@ -67,10 +67,10 @@ namespace VNDBMetadata
 
         private bool DownloadAndDecompress(string sourceUrl, string compressedPath, string outputPath)
         {
-            var downloadResult = HttpDownloader.GetRequestBuilder()
+            var downloadResult = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(sourceUrl).WithDownloadTo(compressedPath)
                 .DownloadFile();
-            if (downloadResult.IsSuccessful)
+            if (downloadResult.IsSuccess)
             {
                 DecompressGZipFile(compressedPath, outputPath);
                 FileSystem.DeleteFile(compressedPath);

@@ -1,7 +1,7 @@
 ﻿using AngleSharp.Parser.Html;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using WebCommon;
+using FlowHttp;
 using SteamCommon.Models;
 using System;
 using System.Collections.Generic;
@@ -45,15 +45,13 @@ namespace SteamCommon
         public static List<StoreSearchResult> GetSteamSearchResults(string searchTerm, string steamApiCountry = null, CancellationToken cancelToken = default)
         {
             var results = new List<StoreSearchResult>();
-            var searchPageSrc = HttpDownloader.GetRequestBuilder()
+            var searchPageSrc = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(GetStoreSearchUrl(searchTerm, steamApiCountry))
-                .WithCancellationToken(cancelToken)
-                .Build()
-                .DownloadString();
-            if (searchPageSrc.IsSuccessful)
+                .DownloadString(cancelToken);
+            if (searchPageSrc.IsSuccess)
             {
                 var parser = new HtmlParser();
-                var searchPage = parser.Parse(searchPageSrc.Response.Content);
+                var searchPage = parser.Parse(searchPageSrc.Content);
                 foreach (var gameElem in searchPage.QuerySelectorAll(".search_result_row"))
                 {
                     if (gameElem.HasAttribute("data-ds-packageid"))
@@ -184,11 +182,11 @@ namespace SteamCommon
         public static SteamAppDetails GetSteamAppDetails(string steamId, CancellationToken cancelToken = default)
         {
             var url = string.Format(steamAppDetailsMask, steamId);
-            var request = HttpDownloader.GetRequestBuilder().WithUrl(url).WithCancellationToken(cancelToken).Build();
-            var downloadedString = request.DownloadString();
-            if (downloadedString.IsSuccessful)
+            var request = HttpRequestFactory.GetFlowHttpRequest().WithUrl(url);
+            var downloadedString = request.DownloadString(cancelToken);
+            if (downloadedString.IsSuccess)
             {
-                var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString.Response.Content);
+                var parsedData = Serialization.FromJson<Dictionary<string, SteamAppDetails>>(downloadedString.Content);
                 if (parsedData.Keys?.Any() == true)
                 {
                     var response = parsedData[parsedData.Keys.First()];

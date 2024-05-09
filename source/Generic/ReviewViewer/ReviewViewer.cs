@@ -3,7 +3,7 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using ReviewViewer.Controls;
 using SteamCommon;
 using System;
@@ -142,7 +142,7 @@ namespace ReviewViewer
 
                         // To prevent being rate limited
                         Thread.Sleep(200);
-                        HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).Build().DownloadFile();
+                        HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFile();
                     }
                 }
             }, progressOptions);

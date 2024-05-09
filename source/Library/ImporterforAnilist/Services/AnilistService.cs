@@ -7,7 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Playnite.SDK.Data;
-using WebCommon;
+using FlowHttp;
+using FlowHttp.Constants;
 
 namespace ImporterforAnilist.Services
 {
@@ -173,21 +174,20 @@ namespace ImporterforAnilist.Services
             };
 
             var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpDownloader.GetRequestBuilder()
+            var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(graphQLEndpoint)
                 .WithPostHttpMethod()
-                .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
+                .WithContent(jsonPostContent, HttpContentTypes.Json)
                 .WithHeaders(headers)
-                .Build()
                 .DownloadString();
 
-            if (downloadStringResult.IsSuccessful)
+            if (downloadStringResult.IsSuccess)
             {
-                return downloadStringResult.Response.Content;
+                return downloadStringResult.Content;
             }
             else
             {
-                logger.Error(downloadStringResult.Exception, "Failed to process post request.");
+                logger.Error(downloadStringResult.Error, "Failed to process post request.");
                 return string.Empty;
             }
         }
@@ -291,17 +291,16 @@ namespace ImporterforAnilist.Services
             };
 
             var jsonPostContent = Serialization.ToJson(postParams);
-            var downloadStringResult = HttpDownloader.GetRequestBuilder()
+            var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(graphQLEndpoint)
                 .WithPostHttpMethod()
-                .WithContent(jsonPostContent, StandardMediaTypesConstants.Json)
+                .WithContent(jsonPostContent, HttpContentTypes.Json)
                 .WithHeaders(headers)
-                .Build()
                 .DownloadString();
 
-            if (downloadStringResult.IsSuccessful)
+            if (downloadStringResult.IsSuccess)
             {
-                return Serialization.FromJson<MediaEntryData>(downloadStringResult.Response.Content);
+                return Serialization.FromJson<MediaEntryData>(downloadStringResult.Content);
             }
 
             return null;

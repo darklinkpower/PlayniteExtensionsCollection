@@ -60,7 +60,7 @@ namespace FlowHttp.Requests
         /// <returns>An awaitable task representing the asynchronous download and file-saving operation. The task's result is the <see cref="HttpFileDownloadResult"/>.</returns>
         public async Task<HttpFileDownloadResult> DownloadFileAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
-            if (string.IsNullOrEmpty(_url))
+            if (_url is null)
             {
                 var ex = new InvalidOperationException("No URL provided.");
                 return HttpFileDownloadResult.Failure(_url, ex);
@@ -157,7 +157,7 @@ namespace FlowHttp.Requests
         /// <summary>
         /// Saves the content of the HttpResponseMessage to a file, while reporting progress if applicable.
         /// </summary>
-        /// <param name="result">The HttpDownloaderResult to update with file-related information.</param>
+        /// <param name="result">The HttpRequestFactoryResult to update with file-related information.</param>
         /// <param name="response">The HttpResponseMessage containing the content to save.</param>
         private async Task SaveFileContent(HttpResponseMessage response, CancellationToken cancellationToken, bool appendToFile, DownloadStateController downloadStateController, DownloadStateChangedCallback stateChangedCallback, DownloadProgressChangedCallback progressChangedCallback)
         {

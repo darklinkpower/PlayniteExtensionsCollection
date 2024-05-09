@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using WebCommon;
+using FlowHttp;
 
 namespace PurchaseDateImporter.Services
 {
@@ -87,24 +87,24 @@ namespace PurchaseDateImporter.Services
                 ["accept"] = "application/vnd.origin.v3+json; x-cache/force-write",
             };
 
-            var identityResponse = HttpDownloader.GetRequestBuilder().WithUrl("https://gateway.ea.com/proxy/identity/pids/me").WithHeaders(headers).Build().DownloadString();
-            if (!identityResponse.IsSuccessful)
+            var identityResponse = HttpRequestFactory.GetFlowHttpRequest().WithUrl("https://gateway.ea.com/proxy/identity/pids/me").WithHeaders(headers).DownloadString();
+            if (!identityResponse.IsSuccess)
             {
                 return null;
             }
 
-            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse.Response.Content);
+            var identity = Serialization.FromJson<EaIdentityResponse>(identityResponse.Content);
             // For some reason somtimes the response is in XML format when the Headers contain the
             // Authorization header
             headers.Clear();
             headers["accept"] = "application/vnd.origin.v3+json; x-cache/force-write";
             headers["authtoken"] = authResponse.AccessToken;
             var url = string.Format("https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", identity.Pid.PidId);
-            var entitlementsResponseData = HttpDownloader.GetRequestBuilder().WithUrl(url)
+            var entitlementsResponseData = HttpRequestFactory.GetFlowHttpRequest()
+                .WithUrl(url)
                 .WithHeaders(headers)
-                .Build()
                 .DownloadString();
-            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData.Response.Content);
+            return Serialization.FromJson<EaEntitlementsResponse>(entitlementsResponseData.Content);
         }
     }
 }

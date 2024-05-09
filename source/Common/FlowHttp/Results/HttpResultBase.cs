@@ -13,14 +13,14 @@ namespace FlowHttp.Results
         public bool IsSuccess { get; }
         public bool IsFailure => !IsSuccess;
         public bool IsCancelled => Error is OperationCanceledException;
-        public string Url { get; }
+        public Uri Url { get; }
         public Exception Error { get; }
         public HttpStatusCode? HttpStatusCode { get; }
         public Dictionary<string, string> ResponseHeaders { get; }
         public Dictionary<string, string> ContentHeaders { get; }
         public List<Cookie> ResponseCookies { get; }
 
-        protected HttpResultBase(string url, bool isSuccess, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
+        protected HttpResultBase(Uri url, bool isSuccess, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
         {
             Url = url;
             IsSuccess = isSuccess;

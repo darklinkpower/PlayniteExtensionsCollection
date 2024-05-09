@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using SearchCollection.Models;
 using System;
 using System.Collections.Generic;
@@ -241,7 +241,7 @@ namespace SearchCollection
             var iconDownloadUrl = string.Format(@"http://www.google.com/s2/favicons?domain={0}", domain);
             var iconName = Guid.NewGuid().ToString() + ".png";
             var iconPath = Path.Combine(userIconsDirectory, iconName);
-            HttpDownloader.GetRequestBuilder().WithUrl(iconDownloadUrl).WithDownloadTo(iconPath).Build().DownloadFile();
+            HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(iconDownloadUrl).WithDownloadTo(iconPath).DownloadFile();
             if (FileSystem.FileExists(iconPath))
             {
                 return iconName;

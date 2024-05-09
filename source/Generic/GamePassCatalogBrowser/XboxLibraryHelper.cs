@@ -3,7 +3,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -224,10 +224,9 @@ namespace GamePassCatalogBrowser
             {
                 var fileName = string.Format("{0}.jpg", Guid.NewGuid().ToString());
                 var downloadPath = Path.Combine(PlayniteApi.Database.GetFileStoragePath(newGame.Id), fileName);
-                HttpDownloader.GetRequestBuilder()
+                HttpRequestFactory.GetFlowHttpFileRequest()
                     .WithUrl($"{game.BackgroundImageUrl}?mode=scale&q=90&h=1080&w=1920")
                     .WithDownloadTo(downloadPath)
-                    .Build()
                     .DownloadFile();
                 if (FileSystem.FileExists(downloadPath))
                 {

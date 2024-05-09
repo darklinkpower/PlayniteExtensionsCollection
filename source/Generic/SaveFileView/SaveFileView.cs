@@ -14,7 +14,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using WebCommon;
+using FlowHttp;
 using SaveFileView.Models;
 using Playnite.SDK.Data;
 using PluginsCommon;
@@ -331,10 +331,10 @@ namespace SaveFileView
             var uri = GetPcgwGameIdSearchUri(game);
             if (!uri.IsNullOrEmpty())
             {
-                var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(uri).Build().DownloadString();
-                if (downloadStringResult.IsSuccessful)
+                var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(uri).DownloadString();
+                if (downloadStringResult.IsSuccess)
                 {
-                    var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult.Response.Content);
+                    var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult.Content);
                     return query.CargoQuery.FirstOrDefault()?.Title.PageId;
                 }
             }
@@ -351,13 +351,13 @@ namespace SaveFileView
             }
 
             var apiUri = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
-            var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(apiUri).Build().DownloadString();
-            if (!downloadStringResult.IsSuccessful)
+            var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(apiUri).DownloadString();
+            if (!downloadStringResult.IsSuccess)
             {
                 return false;
             }
 
-            var wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(downloadStringResult.Response.Content);
+            var wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(downloadStringResult.Content);
             if (wikiTextQuery.Parse.Wikitext.TextDump.StartsWith("#REDIRECT [["))
             {
                 // Pages that redirect don't have any data so we have to obtain them
@@ -369,22 +369,22 @@ namespace SaveFileView
                 }
 
                 var apiUri2 = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=cargoquery&tables=Infobox_game&fields=Infobox_game._pageID%3DPageID&where=Infobox_game._pageName%3D%22{0}%22&format=json", titleMatch.Groups[1].Value.UrlEncode());
-                var downloadStringResult2 = HttpDownloader.GetRequestBuilder().WithUrl(apiUri2).Build().DownloadString();
-                if (!downloadStringResult2.IsSuccessful)
+                var downloadStringResult2 = HttpRequestFactory.GetFlowHttpRequest().WithUrl(apiUri2).DownloadString();
+                if (!downloadStringResult2.IsSuccess)
                 {
                     return false;
                 }
 
-                var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult2.Response.Content);
+                var query = Serialization.FromJson<PcgwGameIdCargoQuery>(downloadStringResult2.Content);
                 pageId = query.CargoQuery.First().Title.PageId;
                 var apiUri3 = string.Format(@"https://www.pcgamingwiki.com/w/api.php?action=parse&format=json&pageid={0}&prop=wikitext", pageId);
-                var downloadStringResult3 = HttpDownloader.GetRequestBuilder().WithUrl(apiUri3).Build().DownloadString();
-                if (!downloadStringResult3.IsSuccessful)
+                var downloadStringResult3 = HttpRequestFactory.GetFlowHttpRequest().WithUrl(apiUri3).DownloadString();
+                if (!downloadStringResult3.IsSuccess)
                 {
                     return false;
                 }
 
-                wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(downloadStringResult3.Response.Content);
+                wikiTextQuery = Serialization.FromJson<PcgwWikiTextQuery>(downloadStringResult3.Content);
                 if (wikiTextQuery.Parse.Wikitext.TextDump.StartsWith("#REDIRECT [["))
                 {
                     return false;
@@ -631,13 +631,13 @@ namespace SaveFileView
         private PcgwTitleSearch GetPcgwSearchQuery(string gameName)
         {
             var searchUri = string.Format(pcgwTitleSearchQuery, gameName.UrlEncode());
-            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(searchUri).Build().DownloadString();
-            if (!downloadedString.IsSuccessful)
+            var downloadedString = HttpRequestFactory.GetFlowHttpRequest().WithUrl(searchUri).DownloadString();
+            if (!downloadedString.IsSuccess)
             {
                 return null;
             }
 
-            return Serialization.FromJson<PcgwTitleSearch>(downloadedString.Response.Content);
+            return Serialization.FromJson<PcgwTitleSearch>(downloadedString.Content);
         }
 
         private List<GenericItemOption> GetPcgwSearchOptions(string gameName)

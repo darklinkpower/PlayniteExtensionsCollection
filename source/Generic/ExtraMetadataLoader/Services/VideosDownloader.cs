@@ -5,7 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -88,11 +88,10 @@ namespace ExtraMetadataLoader.Services
                     videoUrl = steamAppDetails.data.Movies[0].Mp4.Max;
                 }
 
-                var downloadFileResult = HttpDownloader.GetRequestBuilder()
-                    .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath).WithCancellationToken(cancelToken)
-                    .Build()
-                    .DownloadFile();
-                if (downloadFileResult.IsSuccessful)
+                var downloadFileResult = HttpRequestFactory.GetFlowHttpFileRequest()
+                    .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath)
+                    .DownloadFile(cancelToken);
+                if (downloadFileResult.IsSuccess)
                 {
                     GetVideoInformation(tempDownloadPath);
                     ProcessVideo(tempDownloadPath, videoPath, false, true);
@@ -101,11 +100,12 @@ namespace ExtraMetadataLoader.Services
             if (downloadVideoMicro)
             {
                 var videoUrl = string.Format(steamMicrotrailerUrlTemplate, steamAppDetails.data.Movies[0].Id);
-                var downloadFileResult = HttpDownloader.GetRequestBuilder()
-                    .WithUrl(videoUrl.ToString()).WithDownloadTo(tempDownloadPath).WithCancellationToken(cancelToken)
-                    .Build()
-                    .DownloadFile();
-                if (downloadFileResult.IsSuccessful)
+                var downloadFileResult = HttpRequestFactory
+                    .GetFlowHttpFileRequest()
+                    .WithUrl(videoUrl.ToString())
+                    .WithDownloadTo(tempDownloadPath)
+                    .DownloadFile(cancelToken);
+                if (downloadFileResult.IsSuccess)
                 {
                     ProcessVideo(tempDownloadPath, videoMicroPath, false, true);
                 }

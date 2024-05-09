@@ -152,7 +152,6 @@ namespace JastUsaLibrary
         private readonly string _gameExecutablePath;
         private readonly GameCache _gameCache;
         private readonly JastUsaLibrary _plugin;
-        private CancellationTokenSource _watcherToken;
 
         public JastUninstallController(Game game) : base(game)
         {
@@ -221,11 +220,6 @@ namespace JastUsaLibrary
             return dataContext.FilesDeleted;
         }
 
-        public override void Dispose()
-        {
-            _watcherToken?.Cancel();
-            _watcherToken?.Dispose();
-        }
     }
 
 }

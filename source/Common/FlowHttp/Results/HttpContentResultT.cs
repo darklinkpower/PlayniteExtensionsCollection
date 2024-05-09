@@ -12,18 +12,18 @@ namespace FlowHttp.Results
     {
         public T Content { get; }
 
-        private HttpContentResult(string url, bool isSuccess, T content, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
+        private HttpContentResult(Uri url, bool isSuccess, T content, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
             : base(url, isSuccess, error, httpStatusCode, httpResponseMessage)
         {
             Content = content;
         }
 
-        internal static HttpContentResult<T> Success(string url, T content, HttpStatusCode? statusCode, HttpResponseMessage httpResponseMessage)
+        internal static HttpContentResult<T> Success(Uri url, T content, HttpStatusCode? statusCode, HttpResponseMessage httpResponseMessage)
         {
             return new HttpContentResult<T>(url, true, content, null, statusCode, httpResponseMessage);
         }
 
-        internal static HttpContentResult<T> Failure(string url, Exception error, HttpStatusCode? statusCode = null, HttpResponseMessage httpResponseMessage = default)
+        internal static HttpContentResult<T> Failure(Uri url, Exception error, HttpStatusCode? statusCode = null, HttpResponseMessage httpResponseMessage = default)
         {
             return new HttpContentResult<T>(url, false, default, error, statusCode, httpResponseMessage);
         }

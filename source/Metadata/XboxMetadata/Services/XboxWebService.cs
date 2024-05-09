@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebCommon;
+using FlowHttp;
 using System.Windows.Threading;
 using System.Threading;
 using RateLimiter;
 using ComposableAsync;
-using WebCommon.Models;
 using System.Text.RegularExpressions;
+using FlowHttp.Results;
+using FlowHttp.Requests;
+using FlowHttp.Constants;
 
 namespace XboxMetadata.Services
 {
@@ -30,13 +32,13 @@ namespace XboxMetadata.Services
             _settingsViewModel = settingsViewModel;
         }
 
-        public async Task<StringHttpDownloaderResult> ExecuteRequestAsync(HttpRequestClient request)
+        public async Task<HttpContentResult<string>> ExecuteRequestAsync(FlowHttpRequest request)
         {
             await _requestLimiter;
             return request.DownloadString();
         }
 
-        public StringHttpDownloaderResult ExecuteRequest(HttpRequestClient request)
+        public HttpContentResult<string> ExecuteRequest(FlowHttpRequest request)
         {
             return Task.Run(async () => await ExecuteRequestAsync(request)).Result;
         }
@@ -51,16 +53,15 @@ namespace XboxMetadata.Services
             var results = new List<Suggest>();
             var requestUrl = string.Format(quickSearchTemplate,
                 _settingsViewModel.Settings.MarketLanguagePreference.GetStringValue(), quickSearchNumberOfResults, searchTerm.EscapeDataString());
-            var request = HttpDownloader.GetRequestBuilder()
-                .WithUrl(requestUrl)
-                .Build();
+            var request = HttpRequestFactory.GetFlowHttpRequest()
+                .WithUrl(requestUrl);
             var result = ExecuteRequest(request);
-            if (!result.IsSuccessful)
+            if (!result.IsSuccess)
             {
                 return results;
             }
 
-            var response = Serialization.FromJson<QuickSearchResult>(result.Response.Content);
+            var response = Serialization.FromJson<QuickSearchResult>(result.Content);
             foreach (var resultSet in response.ResultSets)
             {
                 foreach (var item in resultSet.Suggests)
@@ -98,21 +99,20 @@ namespace XboxMetadata.Services
             };
 
             var jsonBody = Serialization.ToJson(requestBody);
-            var request = HttpDownloader.GetRequestBuilder()
+            var request = HttpRequestFactory.GetFlowHttpRequest()
                 .WithUrl(requestUrl)
                 .WithHeaders(headers)
                 .WithPostHttpMethod()
-                .WithContent(jsonBody, StandardMediaTypesConstants.Json)
-                .Build();
+                .WithContent(jsonBody, HttpContentTypes.Json);
 
             var results = new List<ProductSummary>();
             var result = ExecuteRequest(request);
-            if (!result.IsSuccessful)
+            if (!result.IsSuccess)
             {
                 return results;
             }
 
-            var response = Serialization.FromJson<SearchResponse>(result.Response.Content);
+            var response = Serialization.FromJson<SearchResponse>(result.Content);
             results.AddRange(response.ProductSummaries);
             return results;
         }

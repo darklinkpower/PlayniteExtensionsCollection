@@ -4,7 +4,7 @@ using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -156,13 +156,13 @@ namespace NewsViewer.PluginControls
             var contextGameId = currentGame.Id;
             currentGameId = contextGameId;
             var url = string.Format(steamApiGetCurrentPlayersMask, steamId);
-            var downloadStringResult = await HttpDownloader.GetRequestBuilder().WithUrl(url).Build().DownloadStringAsync();
-            if (!downloadStringResult.IsSuccessful)
+            var downloadStringResult = await HttpRequestFactory.GetFlowHttpRequest().WithUrl(url).DownloadStringAsync();
+            if (!downloadStringResult.IsSuccess)
             {
                 return;
             }
 
-            if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Response.Content, out var data))
+            if (Serialization.TryFromJson<NumberOfPlayersResponse>(downloadStringResult.Content, out var data))
             {
                 if (data.Response.Result != 1)
                 {

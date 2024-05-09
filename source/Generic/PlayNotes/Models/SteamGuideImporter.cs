@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using WebCommon;
+using FlowHttp;
 
 namespace PlayNotes.Models
 {
@@ -76,13 +76,13 @@ namespace PlayNotes.Models
                 return false;
             }
 
-            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(Url).WithCancellationToken(cancelToken).Build().DownloadString();
-            if (cancelToken.IsCancellationRequested)
+            var downloadResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(Url).DownloadString(cancelToken);
+            if (downloadResult.IsCancelled)
             {
                 return false;
             }
 
-            if (!downloadResult.IsSuccessful)
+            if (!downloadResult.IsSuccess)
             {
                 ShowFailedMessage();
                 return false;
@@ -90,7 +90,7 @@ namespace PlayNotes.Models
 
             logger.Debug($"Steam guide url: {Url}");
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(downloadResult.Response.Content);
+            doc.LoadHtml(downloadResult.Content);
             var guideTitleDiv = doc.DocumentNode.SelectSingleNode("//div[@class='workshopItemTitle']");
             if (guideTitleDiv is null)
             {

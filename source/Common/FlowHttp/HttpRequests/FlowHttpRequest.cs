@@ -13,9 +13,9 @@ using FlowHttp.Results;
 
 namespace FlowHttp.Requests
 {
-    internal class FlowHttpRequest : FlowHttpRequestBase<FlowHttpRequest>
+    public class FlowHttpRequest : FlowHttpRequestBase<FlowHttpRequest>
     {
-        internal FlowHttpRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
+        public FlowHttpRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
 
         }

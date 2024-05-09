@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebCommon;
+using FlowHttp;
 
 namespace ImporterforAnilist.Services
 {
@@ -32,13 +32,13 @@ namespace ImporterforAnilist.Services
             }
 
             malSyncRateLimiter.WaitForSlot();
-            var downloadStringResult = HttpDownloader.GetRequestBuilder().WithUrl(queryUri).Build().DownloadString();
-            if (!downloadStringResult.IsSuccessful || downloadStringResult.Response.Content.IsNullOrEmpty())
+            var downloadStringResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(queryUri).DownloadString();
+            if (!downloadStringResult.IsSuccess || downloadStringResult.Content.IsNullOrEmpty())
             {
                 return null;
             }
 
-            if (Serialization.TryFromJson<MalSyncResponse>(downloadStringResult.Response.Content, out var malSyncResponse))
+            if (Serialization.TryFromJson<MalSyncResponse>(downloadStringResult.Content, out var malSyncResponse))
             {
                 return malSyncResponse;
             }

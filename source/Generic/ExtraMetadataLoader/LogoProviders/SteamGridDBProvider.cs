@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using WebCommon;
+using FlowHttp;
 
 namespace ExtraMetadataLoader.LogoProviders
 {
@@ -52,13 +52,13 @@ namespace ExtraMetadataLoader.LogoProviders
                 { "Authorization", $"Bearer {settings.SgdbApiKey}" }
             };
 
-            var downloadedString = HttpDownloader.GetRequestBuilder().WithUrl(requestString).WithHeaders(headers).Build().DownloadString();
-            if (!downloadedString.IsSuccessful)
+            var downloadedString = HttpRequestFactory.GetFlowHttpRequest().WithUrl(requestString).WithHeaders(headers).DownloadString();
+            if (!downloadedString.IsSuccess)
             {
                 return null;
             }
 
-            var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString.Response.Content);
+            var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString.Content);
             if (!response.Success)
             {
                 logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
@@ -185,17 +185,17 @@ namespace ExtraMetadataLoader.LogoProviders
                 { "Authorization", $"Bearer {settings.SgdbApiKey}" }
             };
 
-            var downloadResult = HttpDownloader.GetRequestBuilder().WithUrl(searchUrl).WithHeaders(headers).Build().DownloadString();
-            if (downloadResult.IsSuccessful)
+            var downloadResult = HttpRequestFactory.GetFlowHttpRequest().WithUrl(searchUrl).WithHeaders(headers).DownloadString();
+            if (downloadResult.IsSuccess)
             {
-                var response = Serialization.FromJson<SteamGridDbGameSearchResponse>(downloadResult.Response.Content);
+                var response = Serialization.FromJson<SteamGridDbGameSearchResponse>(downloadResult.Content);
                 if (response.Success)
                 {
                     return response.Data;
                 }
                 else
                 {
-                    logger.Debug($"SteamGridDB request failed. Response string: {downloadResult.Response.Content}");
+                    logger.Debug($"SteamGridDB request failed. Response string: {downloadResult.Content}");
                 }
             }
 

@@ -15,12 +15,12 @@ using Playnite.SDK;
 
 namespace FlowHttp.Requests
 {
-    internal abstract class FlowHttpRequestBase<T> where T : FlowHttpRequestBase<T>
+    public abstract class FlowHttpRequestBase<T> where T : FlowHttpRequestBase<T>
     {
         protected static readonly ILogger _logger = LogManager.GetLogger();
 
         protected readonly HttpClientFactory _httpClientFactory;
-        protected string _url;
+        protected Uri _url;
         protected string _content;
         protected Encoding _contentEncoding = Encoding.UTF8;
         protected string _contentMediaType = HttpContentTypes.PlainText.Value;
@@ -33,14 +33,20 @@ namespace FlowHttp.Requests
         /// <summary>
         /// Initializes a new instance of the HttpRequesT class with the specified HttpClientFactory.
         /// </summary>
-        internal FlowHttpRequestBase(HttpClientFactory httpClientFactory)
+        public FlowHttpRequestBase(HttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
         public T WithUrl(string url)
         {
-            _url = url;
+            _url = new Uri(url);
+            return (T)this;
+        }
+
+        public T WithUrl(Uri url)
+        {
+            _url = new Uri(url.AbsoluteUri);
             return (T)this;
         }
 
@@ -146,7 +152,7 @@ namespace FlowHttp.Requests
         /// </summary>
         /// <param name="url">The URL for the HTTP request.</param>
         /// <returns>An HttpRequestMessage instance representing the HTTP request.</returns>
-        protected HttpRequestMessage CreateRequest(string url, StringContent stringContent, long resumeOffset = 0)
+        protected HttpRequestMessage CreateRequest(Uri url, StringContent stringContent, long resumeOffset = 0)
         {
             var request = new HttpRequestMessage(_httpMethod, url);
             if (_headers != null)

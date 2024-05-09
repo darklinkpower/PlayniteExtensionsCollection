@@ -4,7 +4,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using WebCommon;
+using FlowHttp;
 using ReviewViewer.Models;
 using SteamCommon;
 using System;
@@ -599,7 +599,7 @@ namespace ReviewViewer.Controls
             }
 
             var uri = string.Format(reviewsApiMask, CurrentSteamId, steamApiLanguage, reviewSearchType);
-            await HttpDownloader.GetRequestBuilder().WithUrl(uri).WithDownloadTo(gameDataPath).Build().DownloadFileAsync();
+            await HttpRequestFactory.GetFlowHttpFileRequest().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFileAsync();
         }
 
         private void CalculateUserScore()
