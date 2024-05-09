@@ -17,6 +17,7 @@ namespace FlowHttp.Results
         public Exception Error { get; }
         public HttpStatusCode? HttpStatusCode { get; }
         public Dictionary<string, string> ResponseHeaders { get; }
+        public string ResponseReaderPhrase { get; }
         public Dictionary<string, string> ContentHeaders { get; }
         public List<Cookie> ResponseCookies { get; }
 
@@ -25,12 +26,17 @@ namespace FlowHttp.Results
             Url = url;
             IsSuccess = isSuccess;
             Error = error;
-            HttpStatusCode = httpStatusCode;
+            if (httpStatusCode != null && httpStatusCode.HasValue)
+            {
+                HttpStatusCode = httpStatusCode;
+            }
 
             if (httpResponseMessage != default)
             {
                 ResponseHeaders = httpResponseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.FirstOrDefault());
+                ResponseReaderPhrase = httpResponseMessage.ReasonPhrase;
                 ContentHeaders = httpResponseMessage.Content?.Headers?.ToDictionary(h => h.Key, h => h.Value.FirstOrDefault());
+                var ssss = httpResponseMessage.ReasonPhrase;
                 var responseCookies = new List<Cookie>();
                 if (httpResponseMessage.Headers.TryGetValues("Set-Cookie", out var setCookieHeaders))
                 {

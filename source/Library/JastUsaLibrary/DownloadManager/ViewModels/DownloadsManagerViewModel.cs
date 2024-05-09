@@ -762,23 +762,28 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             NotifyPropertyChangedCommands();
             var downloadStatus = e.NewStatus;
             var downloadItem = sender as DownloadItem;
-            if (downloadStatus != DownloadItemStatus.Completed)
+            await Task.Delay(300);
+            if (downloadStatus == DownloadItemStatus.Completed)
             {
-                return;
+                _ = StartDownloadsAsync(false);
+                var isExecutable = Path.GetExtension(downloadItem.DownloadData.FileName)
+                    .Equals(".exe", StringComparison.OrdinalIgnoreCase);
+                var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
+                if (isExecutable && databaseGame != null && !databaseGame.IsInstalled)
+                {
+                    var program = Programs.GetProgramData(downloadItem.DownloadData.DownloadPath);
+                    ApplyProgramToGameCache(databaseGame, program);
+                }
+                else if (_settingsViewModel.Settings.ExtractFilesOnDownload)
+                {
+                    await Task.Run(() => ExtractCompressedFile(downloadItem));
+                }
             }
-
-            _ = StartDownloadsAsync(false);
-            var isExecutable = Path.GetExtension(downloadItem.DownloadData.FileName)
-                .Equals(".exe", StringComparison.OrdinalIgnoreCase);
-            var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
-            if (isExecutable && databaseGame != null && !databaseGame.IsInstalled)
+            else if (downloadStatus == DownloadItemStatus.Canceled ||
+                     downloadStatus == DownloadItemStatus.Paused ||
+                     downloadStatus == DownloadItemStatus.Failed)
             {
-                var program = Programs.GetProgramData(downloadItem.DownloadData.DownloadPath);
-                ApplyProgramToGameCache(databaseGame, program);
-            }
-            else if (_settingsViewModel.Settings.ExtractFilesOnDownload)
-            {
-                await Task.Run(() => ExtractCompressedFile(downloadItem));
+                _ = StartDownloadsAsync(false);
             }
         }
 
@@ -1015,15 +1020,22 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     break;
                 }
 
-                if (item.DownloadData.Status == DownloadItemStatus.Idle ||
-                    (startPaused && item.DownloadData.Status == DownloadItemStatus.Paused))
+                if (item.DownloadData.Status == DownloadItemStatus.Idle)
                 {
                     downloadTasks.Add(item.StartDownloadAsync());
                     remainingSlots--;
                 }
+                else if (startPaused && item.DownloadData.Status == DownloadItemStatus.Paused)
+                {
+                    downloadTasks.Add(item.ResumeDownloadAsync());
+                    remainingSlots--;
+                }
             }
 
-            await Task.WhenAll(downloadTasks);
+            if (downloadTasks.Count > 0)
+            {
+                await Task.WhenAll(downloadTasks);
+            }
         }
 
         private void OpenDirectoryIfExists(string directoryPath)

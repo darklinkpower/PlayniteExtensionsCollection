@@ -163,9 +163,14 @@ namespace JastUsaLibrary.DownloadManager.Models
 
             var downloadResult = await request.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: stateChangedCallback, progressChangedCallback: progressChangedCallback);
             _downloadStateController?.Reset();
+            if (downloadResult.IsFailure && !downloadResult.IsCancelled)
+            {
+                var retryResult = await request.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: stateChangedCallback, progressChangedCallback: progressChangedCallback);
+            }
+
+            _downloadStateController?.Reset();
             _downloadStateController?.Dispose();
             _downloadStateController = null;
-
             _isDownloadProcessRunning = false;
             NotifyCommandsPropertyChanged();
         }

@@ -169,7 +169,7 @@ namespace FlowHttp.Requests
                 request.Headers.Add("Cookie", cookieString);
             }
 
-            if (!(stringContent is null))
+            if (stringContent != null)
             {
                 request.Content = stringContent;
             }
@@ -177,10 +177,6 @@ namespace FlowHttp.Requests
             if (resumeOffset > 0)
             {
                 request.Headers.Range = new RangeHeaderValue(resumeOffset, null);
-                // No idea why but this is needed or there will be an error during download if not set to Close
-                // "Unable to read data from the transport connection:An existing connection was forcibly closed by the remote host"
-                // https://stackoverflow.com/a/11326290
-                request.Headers.ConnectionClose = true;
             }
 
             return request;
