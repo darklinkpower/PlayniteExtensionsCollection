@@ -14,6 +14,7 @@
         <jastconv:TimeSpanToStringReadable x:Key="TimeSpanToStringReadable" />
         <jastconv:FileNameToExtensionGlyphCodeConverter x:Key="FileNameToExtensionGlyphCodeConverter" />
         <jastconv:JastAssetTypeToLocalizedStringConverter x:Key="JastAssetTypeToLocalizedStringConverter" />
+        <jastconv:JastAssetTypeToIcoFontCharConverter x:Key="JastAssetTypeToIcoFontCharConverter" />
         <commonconv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <commonconv:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
         <commonconv:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter" />
@@ -75,7 +76,7 @@
         </DataTemplate>
         <DataTemplate x:Key="ListBoxGameWrapperTemplate">
             <Border Padding="5" Margin="0,3,0,3">
-                <StackPanel>
+                <StackPanel Margin="0,0,0,0">
                     <TextBlock Text="{Binding Asset.Label}" FontWeight="Medium" FontSize="16" />
                     <TextBlock Text="{Binding Type, Converter={StaticResource JastAssetTypeToLocalizedStringConverter}}" FontSize="12" Margin="0,5,0,0" />
                     <Separator Margin="0,5,0,5" />
@@ -176,13 +177,6 @@
                                         </StackPanel>
 
                                         <WrapPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="0,0,0,0">
-                                            <Button Margin="0,10,10,0" VerticalAlignment="Center" Command="{Binding UpdateSelectedGameAssetsCommand}">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock VerticalAlignment="Center" Text="&#xEFD1;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
-                                                    <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_UpdateGameDownloads}" Margin="8,0,0,0" />
-                                                </StackPanel>
-                                            </Button>
-
                                             <Button Margin="0,10,10,0" VerticalAlignment="Center" Command="{Binding ExploreAndSelectGameExecutableCommand}">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock VerticalAlignment="Center" Text="&#xEC5B;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
@@ -226,15 +220,32 @@
 
                             <Grid HorizontalAlignment="Center" DockPanel.Dock="Bottom">
                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                                    <Button Content="{DynamicResource LOC_JUL_AddToDownloads}" Command="{Binding AddSelectedAssetToQueueCommand}" />
+                                    <Button Command="{Binding AddSelectedAssetToQueueCommand}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="&#xEF08;" FontSize="18" FontFamily="{DynamicResource FontIcoFont}" />
+                                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource LOC_JUL_AddToDownloads}" Margin="8,0,0,0" />
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
                             </Grid>
 
                             <Separator DockPanel.Dock="Top" Margin="0,5,0,5" />
 
-                            <TextBlock DockPanel.Dock="Top" Text="{DynamicResource LOC_JUL_SettingsDownloadsLabel}" FontWeight="Medium" FontSize="16" Margin="0,10,0,10" />
+                            <DockPanel DockPanel.Dock="Top" Margin="10,10,0,0" LastChildFill="False">
+                                <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" Text="&#xEF08;"
+                                           FontSize="20" FontFamily="{DynamicResource FontIcoFont}" />
 
-                            <ListBox DockPanel.Dock="Top" ItemsSource="{Binding ElementName=LbListGames, Path=SelectedItem.Assets,FallbackValue={x:Null}}"
+                                <TextBlock DockPanel.Dock="Left" Text="{DynamicResource LOC_JUL_SettingsDownloadsLabel}"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Medium" FontSize="16" Margin="10,0,0,0" />
+
+                                <Button DockPanel.Dock="Right" Margin="10,0,0,0" VerticalAlignment="Center"
+                                        Command="{Binding UpdateSelectedGameAssetsCommand}"
+                                        Content="&#xEFD1;" FontSize="14" FontFamily="{DynamicResource FontIcoFont}"
+                                        ToolTip="{DynamicResource LOC_JUL_UpdateGameDownloads}" />
+                            </DockPanel>
+                            
+                            <ListBox Margin="0,10,0,0" DockPanel.Dock="Top" ItemsSource="{Binding ElementName=LbListGames, Path=SelectedItem.Assets,FallbackValue={x:Null}}"
                                      SelectedItem="{Binding SelectedGameAssetWrapper}" ItemTemplate="{StaticResource ListBoxGameWrapperTemplate}" >
                                 <ListBox.Template>
                                     <ControlTemplate>
