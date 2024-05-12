@@ -82,7 +82,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         private readonly JastUsaAccountClient _jastAccountClient;
         private readonly JastUsaLibrarySettingsViewModel _settingsViewModel;
         private ObservableCollection<DownloadItem> _downloadsList;
-        private readonly SemaphoreSlim _downloadsListSemaphore = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim _downloadsListAddRemoveSemaphore = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim _bulkStartDownloadsSemaphore = new SemaphoreSlim(1);
         private readonly CancellationTokenSource _extractionCancellationToken = new CancellationTokenSource();
         private bool _isDisposed = false;
         private bool _persistOnListChanges = false;
@@ -245,7 +246,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 
                 if (_enableDownloadsOnAdd)
                 {
-                    await StartDownloadsAsync(false);
+                    await StartDownloadsAsync(false, false);
                 }
 
                 NotifyGlobalProgress();
@@ -277,7 +278,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             long? totalBytesToDownload = null;
             double? totalDownloadProgress = null;
             var totalItems = _downloadsList.Count;
-            if (totalItems > 0)
+            if (totalItems > 0 && _downloadsList.Any(x => x.DownloadData.TotalSize > 0))
             {
                 var totalProgress = _downloadsList.Sum(x => x.DownloadData.Progress);
                 averageProgress = totalProgress / totalItems;
@@ -560,7 +561,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
         public async Task<bool> AddToDownloadsListAsync(DownloadItem item)
         {
-            await _downloadsListSemaphore.WaitAsync();
+            await _downloadsListAddRemoveSemaphore.WaitAsync();
             var added = false;
             try
             {
@@ -576,7 +577,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
             finally
             {
-                _downloadsListSemaphore.Release();
+                _downloadsListAddRemoveSemaphore.Release();
             }
 
             return added;
@@ -587,19 +588,16 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             NotifyGlobalProgress();
         }
 
-        public async Task RemoveFromDownloadsListAsync(DownloadItem item, bool persistChanges)
+        public async Task RemoveFromDownloadsListAsync(DownloadItem item)
         {
-            await _downloadsListSemaphore.WaitAsync();
+            await _downloadsListAddRemoveSemaphore.WaitAsync();
             try
             {
-                if (DownloadsList.Remove(item) && persistChanges)
-                {
-                    PersistDownloadData();
-                }
+                DownloadsList.Remove(item);
             }
             finally
             {
-                _downloadsListSemaphore.Release();
+                _downloadsListAddRemoveSemaphore.Release();
             }
 
             var waitForCancellation = false;
@@ -638,12 +636,11 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
 
             item.Dispose();
-            await StartDownloadsAsync(false);
         }
 
         public async Task MoveDownloadItemOnePlaceBeforeAsync(DownloadItem item)
         {
-            await _downloadsListSemaphore.WaitAsync();
+            await _downloadsListAddRemoveSemaphore.WaitAsync();
             try
             {
                 if (item is null  || !_downloadsList.Contains(item))
@@ -660,7 +657,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
             finally
             {
-                _downloadsListSemaphore.Release();
+                _downloadsListAddRemoveSemaphore.Release();
             }
 
             NotifyPropertyChangedCommands();
@@ -677,11 +674,9 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             ApplyProgramToGameCache(gameWrapper.Game, selectedProgram);
         }
 
-
-
         public async Task MoveDownloadItemOnePlaceAfterAsync(DownloadItem item)
         {
-            await _downloadsListSemaphore.WaitAsync();
+            await _downloadsListAddRemoveSemaphore.WaitAsync();
             try
             {
                 if (item is null || !_downloadsList.Contains(item))
@@ -698,7 +693,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
             finally
             {
-                _downloadsListSemaphore.Release();
+                _downloadsListAddRemoveSemaphore.Release();
             }
 
             NotifyPropertyChangedCommands();
@@ -736,24 +731,26 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
         private async Task RemoveCompletedDownloadsAsync()
         {
-            var persistChanges = false;
-            foreach (var item in DownloadsList.ToList())
+            _persistOnListChanges = false;
+            try
             {
-                if (item.DownloadData.Status == DownloadItemStatus.Completed ||
-                    item.DownloadData.Status == DownloadItemStatus.ExtractionCompleted ||
-                    item.DownloadData.Status == DownloadItemStatus.ExtractionFailed)
+                foreach (var item in DownloadsList.ToList())
                 {
-                    await RemoveFromDownloadsListAsync(item, false);
-                    persistChanges = true;
+                    if (item.DownloadData.Status == DownloadItemStatus.Completed ||
+                        item.DownloadData.Status == DownloadItemStatus.ExtractionCompleted ||
+                        item.DownloadData.Status == DownloadItemStatus.ExtractionFailed)
+                    {
+                        await RemoveFromDownloadsListAsync(item);
+                    }
                 }
             }
-
-            await Task.Delay(1500);
-            if (persistChanges)
+            finally
             {
-                PersistDownloadData();
+                _persistOnListChanges = true;
             }
 
+
+            PersistDownloadData();
             NotifyPropertyChangedCommands();
         }
 
@@ -762,10 +759,9 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             NotifyPropertyChangedCommands();
             var downloadStatus = e.NewStatus;
             var downloadItem = sender as DownloadItem;
-            await Task.Delay(300);
             if (downloadStatus == DownloadItemStatus.Completed)
             {
-                _ = StartDownloadsAsync(false);
+                _ = StartDownloadsAsync(false, false);
                 var isExecutable = Path.GetExtension(downloadItem.DownloadData.FileName)
                     .Equals(".exe", StringComparison.OrdinalIgnoreCase);
                 var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
@@ -783,7 +779,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                      downloadStatus == DownloadItemStatus.Paused ||
                      downloadStatus == DownloadItemStatus.Failed)
             {
-                _ = StartDownloadsAsync(false);
+                _ = StartDownloadsAsync(false, false);
             }
         }
 
@@ -1004,37 +1000,53 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             ActiveGamePublishers = string.Join(", ", _selectedGameWrapper?.Game.Publishers?.Select(x => x.Name) ?? Enumerable.Empty<string>());
         }
 
-        public async Task StartDownloadsAsync(bool startPaused)
+        public async Task StartDownloadsAsync(bool startPaused, bool startCancelled)
         {
-            var remainingSlots = _remainingSlots;
-            if (remainingSlots <= 0)
+            await _bulkStartDownloadsSemaphore.WaitAsync();
+            try
             {
-                return;
+                var remainingSlots = _remainingSlots;
+                if (remainingSlots <= 0)
+                {
+                    return;
+                }
+
+                var itermsStarted = false;
+                foreach (var item in _downloadsList.ToList())
+                {
+                    if (remainingSlots == 0)
+                    {
+                        break;
+                    }
+
+                    if (item.DownloadData.Status == DownloadItemStatus.Idle)
+                    {
+                        _ = item.StartDownloadAsync();
+                        remainingSlots--;
+                        itermsStarted = true;
+                    }
+                    else if (startPaused && item.DownloadData.Status == DownloadItemStatus.Paused)
+                    {
+                        _ = item.ResumeDownloadAsync();
+                        remainingSlots--;
+                        itermsStarted = true;
+                    }
+                    else if (startCancelled && item.DownloadData.Status == DownloadItemStatus.Canceled)
+                    {
+                        _ = item.ResumeDownloadAsync();
+                        remainingSlots--;
+                        itermsStarted = true;
+                    }
+                }
+
+                if (itermsStarted)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(50));
+                }
             }
-
-            var downloadTasks = new List<Task>();
-            foreach (var item in _downloadsList.ToList())
+            finally
             {
-                if (remainingSlots == 0)
-                {
-                    break;
-                }
-
-                if (item.DownloadData.Status == DownloadItemStatus.Idle)
-                {
-                    downloadTasks.Add(item.StartDownloadAsync());
-                    remainingSlots--;
-                }
-                else if (startPaused && item.DownloadData.Status == DownloadItemStatus.Paused)
-                {
-                    downloadTasks.Add(item.ResumeDownloadAsync());
-                    remainingSlots--;
-                }
-            }
-
-            if (downloadTasks.Count > 0)
-            {
-                await Task.WhenAll(downloadTasks);
+                _bulkStartDownloadsSemaphore.Release();
             }
         }
 
@@ -1123,7 +1135,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             get => new RelayCommand(async () =>
             {
-                await StartDownloadsAsync(true);
+                await StartDownloadsAsync(true, true);
             }, () => _remainingSlots > 0 &&
             _downloadsList.Any(x => x.DownloadData.Status == DownloadItemStatus.Idle || x.DownloadData.Status == DownloadItemStatus.Paused));
         }
@@ -1208,7 +1220,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     return;
                 }
 
-                _downloadsListSemaphore?.Dispose();
+                _downloadsListAddRemoveSemaphore?.Dispose();
                 DownloadsList.CollectionChanged -= DownloadsList_CollectionChanged;
                 foreach (var downloadItem in DownloadsList)
                 {

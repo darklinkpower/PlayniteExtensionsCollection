@@ -47,18 +47,21 @@ namespace JastUsaLibrary.DownloadManager.Models
         private readonly JastUsaAccountClient _jastAccountClient;
         private readonly DownloadsManagerViewModel _downloadsManagerViewModel;
         private DownloadData _downloadData;
-        private DownloadStateController _downloadStateController;
+        private DownloadStateController _downloadStateController = new DownloadStateController();
         private bool _isDownloadProcessRunning = false;
         private readonly SemaphoreSlim _stateControllerSemaphore = new SemaphoreSlim(1);
         private bool _isDisposed = false;
+        private readonly bool _isPauseSupportEnabled = false;
         private readonly object _disposeLock = new object();
 
         public bool CanStartDownload => !_isDownloadProcessRunning &&
             (_downloadData.Status == DownloadItemStatus.Canceled ||
             _downloadData.Status == DownloadItemStatus.Failed ||
             _downloadData.Status == DownloadItemStatus.Idle);
-        public bool CanPauseDownload => _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Downloading;
-        public bool CanResumeDownload => _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Paused;
+        public bool CanPauseDownload => _isPauseSupportEnabled &&
+            _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Downloading;
+        public bool CanResumeDownload => _isPauseSupportEnabled &&
+            _stateControllerSemaphore != null && _downloadData.Status == DownloadItemStatus.Paused;
         public bool CanCancelDownload => _stateControllerSemaphore != null &&
             (_downloadData.Status == DownloadItemStatus.Downloading || _downloadData.Status == DownloadItemStatus.Paused);
 
@@ -88,90 +91,84 @@ namespace JastUsaLibrary.DownloadManager.Models
             {
                 return;
             }
-            
-            void stateChangedCallback(DownloadStateArgs args)
-            {
-                var httpRequestStatus = args.Status;
-                var newStatus = DownloadItemStatus.Idle;
-                var clearDownloadingValues = true;
-                switch (httpRequestStatus)
-                {
-                    case HttpRequestClientStatus.Idle:
-                        newStatus = DownloadItemStatus.Idle;
-                        clearDownloadingValues = true;
-                        break;
-                    case HttpRequestClientStatus.Downloading:
-                        newStatus = DownloadItemStatus.Downloading;
-                        break;
-                    case HttpRequestClientStatus.Paused:
-                        clearDownloadingValues = true;
-                        newStatus = DownloadItemStatus.Paused;
-                        break;
-                    case HttpRequestClientStatus.Completed:
-                        newStatus = DownloadItemStatus.Completed;
-                        break;
-                    case HttpRequestClientStatus.Failed:
-                        clearDownloadingValues = true;
-                        newStatus = DownloadItemStatus.Failed;
-                        break;
-                    case HttpRequestClientStatus.Canceled:
-                        clearDownloadingValues = true;
-                        newStatus = DownloadItemStatus.Canceled;
-                        break;
-                    default:
-                        break;
-                }
-
-                if (clearDownloadingValues)
-                {
-                    _downloadData.FormattedDownloadSpeedPerSecond = string.Empty;
-                    _downloadData.TimeRemaining = TimeSpan.MinValue;
-                }
-
-                if (newStatus == DownloadItemStatus.Completed)
-                {
-                    FileSystem.MoveFile(_downloadData.TemporaryDownloadPath, _downloadData.DownloadPath);
-                }
-
-                DownloadData.Status = newStatus;
-                OnDownloadStatusChanged(newStatus);
-                NotifyCommandsPropertyChanged();
-            }
-
-            void progressChangedCallback(DownloadProgressArgs args)
-            {
-                DownloadData.UpdateProperties(args);
-                OnDownloadProgressChanged(args);
-            }
 
             _isDownloadProcessRunning = true;
-            _downloadStateController?.Reset();
-            _downloadStateController?.Dispose();
-            _downloadStateController = null;
-
-            var hasDownloadExpired = IsTimeStampExpired(DownloadData.UrlExpiresTimeStamp);
-            if (hasDownloadExpired && !_downloadsManagerViewModel.RefreshDownloadItemUri(this, true))
+            try
             {
-                return;
+                var hasDownloadExpired = IsTimeStampExpired(DownloadData.UrlExpiresTimeStamp);
+                if (hasDownloadExpired && !_downloadsManagerViewModel.RefreshDownloadItemUri(this, true))
+                {
+                    return;
+                }
+
+                var request = HttpRequestFactory.GetHttpFileRequest()
+                    .WithAppendToFile(true)
+                    .WithDownloadTo(_downloadData.TemporaryDownloadPath)
+                    .WithUrl(_downloadData.Url);
+                _downloadStateController?.Reset();
+                var downloadResult = await request.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: StateChangedCallback, progressChangedCallback: ProgressChangedCallback);
+            }
+            finally
+            {
+                _isDownloadProcessRunning = false;
+                _downloadStateController?.Reset();
+                NotifyCommandsPropertyChanged();
+            }
+        }
+
+        private void StateChangedCallback(DownloadStateArgs args)
+        {
+            var httpRequestStatus = args.Status;
+            var newStatus = DownloadItemStatus.Idle;
+            var clearDownloadingValues = true;
+            switch (httpRequestStatus)
+            {
+                case HttpRequestClientStatus.Idle:
+                    newStatus = DownloadItemStatus.Idle;
+                    clearDownloadingValues = true;
+                    break;
+                case HttpRequestClientStatus.Downloading:
+                    newStatus = DownloadItemStatus.Downloading;
+                    break;
+                case HttpRequestClientStatus.Paused:
+                    clearDownloadingValues = true;
+                    newStatus = DownloadItemStatus.Paused;
+                    break;
+                case HttpRequestClientStatus.Completed:
+                    newStatus = DownloadItemStatus.Completed;
+                    break;
+                case HttpRequestClientStatus.Failed:
+                    clearDownloadingValues = true;
+                    newStatus = DownloadItemStatus.Failed;
+                    break;
+                case HttpRequestClientStatus.Canceled:
+                    clearDownloadingValues = true;
+                    newStatus = DownloadItemStatus.Canceled;
+                    break;
+                default:
+                    break;
             }
 
-            var request = HttpRequestFactory.GetHttpFileRequest()
-                .WithAppendToFile(true)
-                .WithDownloadTo(_downloadData.TemporaryDownloadPath)
-                .WithUrl(_downloadData.Url);
-            _downloadStateController = new DownloadStateController();
-
-            var downloadResult = await request.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: stateChangedCallback, progressChangedCallback: progressChangedCallback);
-            _downloadStateController?.Reset();
-            if (downloadResult.IsFailure && !downloadResult.IsCancelled)
+            if (clearDownloadingValues)
             {
-                var retryResult = await request.DownloadFileAsync(downloadStateController: _downloadStateController, stateChangedCallback: stateChangedCallback, progressChangedCallback: progressChangedCallback);
+                _downloadData.FormattedDownloadSpeedPerSecond = string.Empty;
+                _downloadData.TimeRemaining = TimeSpan.MinValue;
             }
 
-            _downloadStateController?.Reset();
-            _downloadStateController?.Dispose();
-            _downloadStateController = null;
-            _isDownloadProcessRunning = false;
+            if (newStatus == DownloadItemStatus.Completed)
+            {
+                FileSystem.MoveFile(_downloadData.TemporaryDownloadPath, _downloadData.DownloadPath);
+            }
+
+            DownloadData.Status = newStatus;
+            OnDownloadStatusChanged(newStatus);
+            NotifyCommandsPropertyChanged();
+        }
+
+        private void ProgressChangedCallback(DownloadProgressArgs args)
+        {
+            DownloadData.UpdateProperties(args);
+            OnDownloadProgressChanged(args);
             NotifyCommandsPropertyChanged();
         }
 
@@ -232,7 +229,7 @@ namespace JastUsaLibrary.DownloadManager.Models
 
         private async Task RemoveFromDownloadsListAsync()
         {
-            await _downloadsManagerViewModel.RemoveFromDownloadsListAsync(this, true);
+            await _downloadsManagerViewModel.RemoveFromDownloadsListAsync(this);
         }
 
         private void NotifyCommandsPropertyChanged()

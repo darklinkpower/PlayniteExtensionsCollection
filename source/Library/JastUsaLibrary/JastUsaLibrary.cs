@@ -215,7 +215,7 @@ namespace JastUsaLibrary
             settings.UpgradeSettings();
             if (settings.Settings.StartDownloadsOnStartup)
             {
-                _ = Task.Run(() => _downloadsManagerViewModel.StartDownloadsAsync(false));
+                _ = Task.Run(() => _downloadsManagerViewModel.StartDownloadsAsync(false, false));
             }
         }
 
