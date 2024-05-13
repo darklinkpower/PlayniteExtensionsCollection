@@ -78,86 +78,86 @@ Lütfen yt-dlp kurulumunuzun güncel olup olmadığını denetleyin.</sys:String
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotConfigured">Ek Meta Verisi: ffmpeg yürütülebilir konumu eklenti ayarlarında yapılandırılmamış</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfmpegNotFound">Ek Meta Verisi: ffmpeg yürütülebilir dosyası ayarlanan konumda bulunamadı</sys:String>
     <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotConfigured">Ek Meta Verisi: ffprobe yürütülebilir dosyası konumu eklenti ayarlarında yapılandırılmamış</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Extra Metadata: ffprobe executable was not found in the configured location</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: yt-dlp executable path has not been configured in the extension settings</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp executable was not found in the configured location</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: Error deleting file in {0}. Error: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: Error deleting directory in {0}. Error: {1}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Download videos from Steam for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Download Micro videos from Steam for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Download logos from Steam for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Download logos from SteamGridDB for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Open Extra Metadata directory</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Delete logos of selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">Delete videos of selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">Delete Micro videos of selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">Select video file to set as video for the selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">Download video from YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Download videos from YouTube for all selected games automatically</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">Downloading videos from YouTube…</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Setting game video from selected video file...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Videos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">Micro videos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">Generate Micro video from downloaded video for selected games</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Generating Micro videos from videos...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageFfprobeNotFound">Extra Metadata: yapılandırılmış konumda ffprobe yürütülebilir dosyası bulunamadı</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotConfigured">Extra Metadata: yt-dlp yürütülebilir yolu, uzantı ayarlarında yapılandırılmamış</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageYoutubeDlNotFound">Extra Metadata: yt-dlp yürütülebilir dosyası, yapılandırılan konumda bulunamadı</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile">Extra Metadata: {0} içindeki dosya silinirken hata oluştu. Hata: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory">Extra Metadata: {0} içindeki dizin silinirken hata oluştu. Hata: {1}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosSelectedGames">Seçilen oyunlar için Steam'den videolar indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamVideosMicroSelectedGames">Seçilen oyunlar için Steam'den mikro videolar indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSteamLogosSelectedGames">Seçilen oyunlar için Steam'den logo indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadSgdbLogosSelectedGames">Seçilen oyunlar için logoları SteamGridDB'den indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionOpenExtraMetadataDirectory">Extra Metadata dizinini aç</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteLogosSelectedGames">Seçilen oyunların logolarını sil</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosSelectedGames">Seçilen oyunların videolarını sil</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDeleteVideosMicroSelectedGames">Seçilen oyunların mikro videolarını silin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetVideoFromSelectionToSelGame">Seçilen oyun için oynatılacak video dosyasını seçin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutube">YouTube'dan video indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadVideoFromYoutubeBatch">Seçilen tüm oyunlar için YouTube'dan videoları otomatik olarak indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProgressMessageDownloadingYouTubeVideosAutomatic">YouTube'dan videolar indiriliyor…</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogProcessSettingVideoFromSelFile">Oyun videosu seçilen video dosyasından ayarlanıyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionLogos">Logolar</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionVideos">Videolar</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemSectionMicrovideos">Mikro videolar</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionGenerateMicroFromVideo">Seçilen oyunlar için indirilen videodan mikro video oluşturun</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageGeneratingMicroVideosFromVideos">Videolardan mikro videolar oluşturuluyor...</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">Process logos after downloading</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Enable opacity animation</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Trim Logos</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Removes transparent border around image</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Resize down</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Resize down image preserving the aspect ratio if it exceeds any of the configured dimensions.
-Resizing down is recommended because large images can cause Playnite to slowdown.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">Max width:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">Max height:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessAfterDownloadLabel">İndirdikten sonra logoları işleyin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_EnableOpacityAnimationLabel">Opaklık animasyonunu etkinleştir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimLabel">Logoları kırp</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoProcessTrimTooltip">Görüntünün etrafındaki şeffaf kenarlığı kaldırır</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownLabel">Yeniden boyutlandır</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownTooltip" xml:space="preserve">Yapılandırılmış boyutlardan herhangi birini aşarsa, en boy oranını koruyarak görüntüyü yeniden boyutlandırın.
+Büyük görüntüler Playnite'ın yavaşlamasına neden olabileceği için yeniden boyutlandırmanın küçültülmesi önerilir.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxWidthLabel">En fazla genişlik:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoResizeDownMaxHeightLabel">En fazla yükseklik:</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Updating tags of Extra Metadata assets status...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">A tag will be added to all games in database that are missing the specific asset</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Update tag that indicates if a game is missing logo on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Update tag that indicates if a game is missing video on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Update tag that indicates if a game is missing micro video on library update</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">ffmpeg path:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">ffprobe path:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">yt-dlp path:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">Path to YouTube cookies.txt file:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Configuring it allows to download videos that are age restricted</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">Browse...</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">Download ffmpeg package</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Download yt-dlp</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">Login to YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Login in allows to view age restricted videos in the full version site</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_ProgressMessageUpdatingAssetsTags">Ekstra Meta Veri öğeleri durumunun etiketleri güncelleniyor...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingUpdateTagAssetsTooltip">Veri tabanındaki belirli varlığın eksik olduğu tüm oyunlara bir etiket eklenecek</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLogoAddTagOnLibUpdate">Kitaplık güncellemesinde bir oyunun logosunun eksik olup olmadığını belirten güncelleme etiketi</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoAddTagOnLibUpdate">Kitaplık güncellemesinde bir oyunun videosunun eksik olup olmadığını belirten güncelleme etiketi</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingVideoMicroAddTagOnLibUpdate">Kitaplık güncellemesinde bir oyunda mikro videonun eksik olup olmadığını belirten güncelleme etiketi</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfmpegPathLabel">ffmpeg yolu:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingFfprobePathLabel">ffprobe yolu:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeDlPathLabel">yt-dlp yolu:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathLabel">YouTube cookie.txt dosyasının yolu:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingYoutubeCookiesPathTooltip">Bunu yapılandırmak, yaş kısıtlamalı videoların indirilmesine izin verir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingHelpLabel">Yardım</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingBrowseLabel">Göz at...</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadFfmpegLabel">Ffmpeg paketini indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadYoutubeDlLabel">Yt-dlp'yi indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeLabel">YouTube'a giriş yapın</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingLoginToYoutubeTooltip">Giriş yapmak, yaş kısıtlamalı videoları tam sürüm sitede görüntülemenize olanak tanır</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Download videos from Steam in High Definition quality</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Only process games from Steam or that are PC games when obtaining metadata from Steam</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingDownloadSteamVideosInHdLabel">Steam'den videoları yüksek çözünürlükte indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingSteamDlOnlyProcessPcGamesLabel">Yalnızca Steam'den gelen oyunları veya Steam'den meta verileri alınan PC oyunlarını işleyin</sys:String>
     
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">Select video to download or view</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Videos list:</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Search</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">Download selected video</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">View selected video</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeWindowDownloadTitle">İndirilecek veya görüntülenecek videoyu seçin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeVideosListLabel">Video listesi:</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeSearchLabel">Ara</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeDownloadSelectedVideoLabel">Seçilen videoyu indir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_YoutubeViewSelectedVideoLabel">Seçilen videoyu görüntüle</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">Download logo from Google for the selected game</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">Download selected logo</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Search only transparent</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionDownloadGoogleLogoSelectedGame">Seçilen oyun için Google'dan logo indirin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleDownloadSelectedLogoLabel">Seçilen logoyu indir</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_GoogleSearchOnlyTransparentLabel">Yalnızca şeffaf ara</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">Set logo from file for the selected game</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemDescriptionSetLogoFromFile">Seçilen oyun için dosyadan logo ayarla</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">Show menu items to view videos on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">View review video on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">View gameplay video on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">Search video on YouTube</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video not found</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_SettingEnableYoutubeMenuItems">YouTube'daki videoları görüntülemek için menü öğelerini göster</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeReview">İnceleme videosunu YouTube'da görüntüleyin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeGameplay">YouTube'da oynanış videosunu izleyin</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_MenuItemViewYoutubeSearch">YouTube'da video arayın</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogMessageVideoNotFound">Video bulunamadı</sys:String>
 
-    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Select logos to download automatically?
-    
-Select &quot;Yes&quot; to automatically select the logos to download without any user interaction.
-Select &quot;No&quot; to manually make selections when necessary.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Extra Metadata Loader
-Failed to get video information: {0}, {1}, {2}.</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Extra Metadata Loader
-Failed to process video in ffmpeg: {0}, {1}, {2}</sys:String>
-    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Extra Metadata Loader
-Error during download of video from YouTube: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_DialogAskSelectLogosAutomatically" xml:space="preserve">Otomatik olarak indirilecek logolar seçilsin mi?
+
+İndirilecek logoları herhangi bir kullanıcı etkileşimi olmadan otomatik olarak seçmek için &quot;Evet&quot;i seçin.
+Gerektiğinde manuel olarak seçim yapmak için &quot;Hayır&quot;ı seçin.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfprobeGetInfoFail" xml:space="preserve">Ekstra Meta Veri Yükleyici
+Video bilgileri alınamadı: {0}, {1}, {2}.</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorFfmpegProcessingFail" xml:space="preserve">Ekstra Meta Veri Yükleyici
+Ffmpeg'deki video işlenemedi: {0}, {1}, {2}</sys:String>
+    <sys:String x:Key="LOCExtra_Metadata_Loader_NotificationErrorYtdlpDownloadFail" xml:space="preserve">Ekstra Meta Veri Yükleyici
+YouTube'dan video indirilirken hata oluştu: {0}, {1}, {2}</sys:String>
 </ResourceDictionary>

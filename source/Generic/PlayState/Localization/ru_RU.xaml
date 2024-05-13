@@ -26,12 +26,17 @@
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Действие:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Игра была добавлена в PlayState!</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Вы можете начать использовать игру с PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Reset</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Основное</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Уведомления</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scan exclusions</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">During PlayState scanning to detect game executables, any executables containing any text from the following list will be excluded. Each entry should be separated by a new line.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Показывает уведомление, отображающее текущее состояние паузы и другую информацию об активной игре</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Изменить горячую клавишу</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Нажмите горячую клавишу</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Включить уведомления</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Notifications to display:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">When game is added to PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">On game status changes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Примечания:
 
 Настроенные горячие клавиши не смогут использоваться в других приложениях.</sys:String>
@@ -43,6 +48,9 @@
 Для лучшей совместимости с играми необходимо внести некоторые изменения в конфигурацию Windows. Ссылка, содержащая инструкции для этого, будет открыта после закрытия этого диалогового окна.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Справка</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Вычесть время, на которое игра была приостановлена, из общего времени игры</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Exclude game sessions that are less than a minimum duration</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">If game playtime or session data falls below the configured duration, it will revert to its previous state, restoring playtime, play count, and last played date.</sys:String>
+    <sys:String x:Key="LOCPlayState_MinutesLabel">Minutes</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Вычисляет более точное значение игрового времени в играх, сохраняя только время, в которое игра не была приостановлена</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Работает только для игр, которые не управляются плагинами библиотеки</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Стиль уведомлений:</sys:String>
@@ -66,6 +74,8 @@
 
 Приостановка игрового времени: Игры будут приостановлены и возобновлены автоматически при изменении текущего состояния.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Выводить окно игры на передний план после её возобновления</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Automatically minimize the game window when it is suspended.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">Управление PlayState</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Прочие</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Показывать боковую панель менеджера PlayState</sys:String>
@@ -110,6 +120,7 @@
 
 Если отключено, только первый контроллер будет разрешен для активации горячих клавиш</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Приостановка/Возобновление:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Minimize/Maximize window:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Информация:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Закрыть игру:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Обновление горячей клавиши GamePad через {0} секунд…</sys:String>
@@ -119,6 +130,8 @@
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Горячая клавиша контроллера с такой же комбинацией уже существует!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Горячие клавиши контроллера</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Горячие клавиши контроллера:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Suspend settings</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Playtime settings</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Режим</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Режим:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Добавить горячую клавишу контроллера</sys:String>

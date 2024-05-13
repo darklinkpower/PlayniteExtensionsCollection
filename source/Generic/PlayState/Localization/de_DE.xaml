@@ -26,12 +26,17 @@ Sie können versuchen, eine andere HotKey Kombination zu verwenden, um das Probl
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Aktion:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Das Spiel wurde zu PlayState hinzugefügt!</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Du kannst das Spiel mit der Erweiterung nutzen</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Zurücksetzen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Allgemein</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Benachrichtigungsmeldungen</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Scanausschlüsse</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">Während des PlayState Scans zur Erkennung von ausführbaren Dateien von Spielen werden alle ausführbaren Dateien, die einen Text aus der folgenden Liste enthalten, ausgeschlossen. Jeder Eintrag sollte durch eine neue Zeile getrennt werden.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Zeigt eine Benachrichtigung an, die den aktuellen Pausenstatus und andere Informationen des aktiven Spiels anzeigt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Tastenkürzel ändern</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Tastenkombination jetzt drücken</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Benachrichtigungen aktivieren</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Anzuzeigende Benachrichtigungen:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">Wenn das Spiel zu PlayState hinzugefügt wird</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">Bei Spielstatus Änderungen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Hinweise:
 
 Die konfigurierten Tastaturkürzel können nicht in anderen Anwendungen verwendet werden.</sys:String>
@@ -43,6 +48,9 @@ Diese Funktion wird nur von Windows 10 und Windows 11 unterstützt</sys:String>
 Für eine bessere Kompatibilität mit Spielen sind einige Anpassungen an der Windows Konfiguration erforderlich. Ein Link, der die Anweisungen dazu enthält, wird nach dem Schließen dieses Dialogs geöffnet.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Subtrahiere die Zeit die das Spiel von der Spielzeit unterbrochen wurde, wenn es gestoppt wird</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Spielsitzungen ausschließen, die eine Mindestdauer unterschreiten</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">Wenn die Spielzeit oder die Sitzungsdaten unter die konfigurierte Dauer fallen, wird der vorherige Zustand wiederhergestellt und die Spielzeit, die Anzahl der Spiele und das Datum des letzten Spiels wiederhergestellt.</sys:String>
+    <sys:String x:Key="LOCPlayState_MinutesLabel">Minuten</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hilft dabei, eine genauere Spielzeitangabe in Spielen zu erhalten, indem nur die Zeit, in der das Spiel nicht unterbrochen wurde, zur Spielzeit gezählt wird</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Nur für Spiele ausführen, die nicht von Bibliothek Plugins verwaltet werden</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Benachrichtigungsstil:</sys:String>
@@ -66,6 +74,8 @@ Spiel unterbrechen: Spiele werden automatisch unterbrochen, wenn sie nicht das a
 
 Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufgenommen, wenn das Spielfenster seinen aktiven Zustand ändert.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Spielfenster in den Vordergrund bringen, wenn sie wiederaufgenommen werden</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Das Spielfenster automatisch minimieren, wenn es unterbrochen wird.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Nur minimieren, wenn sich das Spielfenster im Vordergrund befindet.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState Manager</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Andere</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">PlayState Manager Seitenleiste anzeigen</sys:String>
@@ -104,12 +114,13 @@ Spielzeit aussetzen: Die Spiele werden automatisch unterbrochen und wieder aufge
     <sys:String x:Key="LOCPlayState_SettingsHotkeysTabHeaderLabel">Tastenkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsKeyboardHotkeysLabel">Tastatur Tastenkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeysLabel">Controller Tastaturkürzel</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Gamepad-Tastenkürzel aktivieren</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsEnableControllersHotkeysLabel">Aktiviere Tastenkürzel für Controller</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersLabel">Erlaube allen Controllern Tastenkürzel zu aktivieren</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsEnableAllControllersTooltip" xml:space="preserve">Wenn aktiviert, können alle Controller die Tastenkürzel aktivieren.
 
 Wenn deaktiviert, ist nur der erste Controller berechtigt, die Tastenkürzel zu aktivieren</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Unterbrechen/Fortsetzen:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Fenster minimieren/maximieren:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Information:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Spiel schließen:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Aktualisiere GamePad Tastenkürzel in {0} Sekunden…</sys:String>
@@ -119,6 +130,8 @@ Wenn deaktiviert, ist nur der erste Controller berechtigt, die Tastenkürzel zu 
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Ein Controller Tastaturkürzel mit der gleichen Kombination existiert bereits!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Controller Tastaturkürzel</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Controller Tastaturkürzel:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Einstellungen unterbrechen</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Spielzeit Einstellungen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modus</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modus:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Controller Tastaturkürzel hinzufügen</sys:String>

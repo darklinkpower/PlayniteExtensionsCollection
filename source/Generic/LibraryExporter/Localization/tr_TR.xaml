@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Open export window</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorLabel">Lists separator:</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorTooltip">Used to separate items in fields when there are multiple items</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Fields to export:</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Export all games</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Export selected games</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportFilteredGamesLabel">Export filtered games</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Library exported successfully to {0}</sys:String>
-    <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Failed to export library to {0}</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_MenuItemDescriptionOpenExportWindow">Dışa aktarma penceresini aç</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorLabel">Liste ayırıcısı:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ListsSeparatorTooltip">Birden fazla öğe olduğunda alanlardaki öğeleri ayırmak için kullanılır</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_FieldsToExportLabel">Dışa aktarılacak alanlar:</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportAllGamesLabel">Tüm oyunları dışa aktar</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSelectedGamesLabel">Seçilen oyunları dışa aktar</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFilteredGamesLabel">Süzülmüş oyunları dışa aktar</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportSuccessMessage">Kitaplık başarıyla {0} hedefine aktarıldı</sys:String>
+    <sys:String x:Key="LibraryExporterAdvanced_ExportFailedMessage">Kitaplık {0} hedefine aktarılamadı</sys:String>
 </ResourceDictionary>

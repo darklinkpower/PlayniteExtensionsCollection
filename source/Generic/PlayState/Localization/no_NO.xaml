@@ -26,12 +26,17 @@ Du kan prøve å bruke en annen hurtigtastkombinasjon for å løse problemet</sy
     <sys:String x:Key="LOCPlayState_StatusActionMessage">Handling:</sys:String>
     <sys:String x:Key="LOCPlayState_StatusPlayStateDataAddedMessage">Spillet er lagt til PlayState!</sys:String>
     <sys:String x:Key="LOCPlayState_StatusExtensionUsageAvailableMessage">Du kan begynne å bruke spillet med utvidelsen</sys:String>
+    <sys:String x:Key="LOCPlayState_ResetLabel">Tilbakestill</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGeneral">Generelt</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsTabHeaderGNotificationMessages">Varslinger</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusions">Skann ekskluderinger</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsTabHeaderScanExclusionsDescription">NårPlayState skanner etter kjørbare filer, vil alle kjørbare filer som inneholder tekst fra følgende liste utelates. Hver oppføring må skilles ved hjelp av en ny linje.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingConfiguredInformationHotkeyTooltip">Viser et varsel som gir deg gjeldende pausestatus og annen informasjon om det aktive spillet</sys:String>
     <sys:String x:Key="LOCPlayState_SettingChangeHotkeyButtonLabel">Endre hurtigtast</sys:String>
     <sys:String x:Key="LOCPlayState_SettingPressHotkeyPromtButtonLabel">Trykk hurtigtast nå</sys:String>
-    <sys:String x:Key="LOCPlayState_SettingEnableNotificationMessagesLabel">Aktiver varslinger</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsNotificationToDisplayLabel">Varsler som skal vises:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationShowOnNotificationGameAddedLabel">Når et spill er lagt til i PlayState</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingShowOnNotificationOnGameStatusChangeLabel">Ved endringer i spillstatus</sys:String>
     <sys:String x:Key="LOCPlayState_SettingNotes" xml:space="preserve">Merk:
 
 De konfigurerte hurtigtastene vil ikke kunne brukes i andre programmer.</sys:String>
@@ -43,6 +48,9 @@ Denne funksjonen støttes bare i Windows 10 og Windows 11</sys:String>
 For bedre kompatibilitet med spill, trengs noen justeringer i Windows-konfigurasjonen. En lenke som inneholder instruksjonene for dette vil åpnes etter at denne dialogboksen er lukket.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingHelpLabel">Hjelp</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedLabel">Trekk fra tiden spillet var på pause fra spilletiden ved avslutning</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsLabel">Ekskluder spilløkter som er kortere enn en minimum varighet</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingExcludeShortPlaytimeSessionsTooltip">Hvis spilletid eller øktdata faller under valgt varighet, vil spilletid, øktantall og siste spilte dato gjenopprettes til sin forrige tilstand.</sys:String>
+    <sys:String x:Key="LOCPlayState_MinutesLabel">Minutter</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractSuspendedPlaytimeOnStoppedTooltip">Hjelper til med å holde en mer nøyaktig spilltidsverdi i spill, ved å bare la tiden spillet ikke var på pause telle inn i spilletiden</sys:String>
     <sys:String x:Key="LOCPlayState_SettingSubstractOnlyNonLibraryGamesLabel">Bare kjør for spill som ikke administreres av bibliotekutvidelser</sys:String>
     <sys:String x:Key="LOCPlayState_NotificationStyleLabel">Varslingsstil:</sys:String>
@@ -66,6 +74,8 @@ Spillsuspendering: Spill vil bli suspendert automatisk når de ikke er det aktiv
 
 Spilletidsuspendering: Spill vil bli suspendert og gjenopptatt automatisk når spillvinduet endrer aktiv tilstand.</sys:String>
     <sys:String x:Key="LOCPlayState_SettingBringResumedToForeground">Bring spillvinduer til forgrunnen når de gjenopptas</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeGameWindowOnSuspend">Minimer spillvinduet automatisk når det settes på pause av Playstate.</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingMinimizeOnSuspendOnlyIfForeground">Only minimize if the game window is in the foreground.</sys:String>
     <sys:String x:Key="LOCPlayState_PlayStateManagerViewHeaderLabel">PlayState-behandling</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsOtherSectionLabel">Annen</sys:String>
     <sys:String x:Key="LOCPlayState_SettingShowManagerSidebarItem">Vis sidestolpeknapp for PlayState-behandling</sys:String>
@@ -110,6 +120,7 @@ Spilletidsuspendering: Spill vil bli suspendert og gjenopptatt automatisk når s
 
 Hvis deaktivert, vil bare første kontroller kunne aktivere hurtigtastene</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsSuspendResumeHotkeyLabel">Suspender/Gjenoppta:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsMinimizeMaximizeGameHotkeyLabel">Minimer/maksimer vindu:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsInformationHotkeyLabel">Informasjon:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsCloseGameHotkeyLabel">Lukk spill:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsGamePadHotkeyUpdateCountdown">Oppdaterer kontrollerhurtigtast om {0} sekunder…</sys:String>
@@ -119,6 +130,8 @@ Hvis deaktivert, vil bare første kontroller kunne aktivere hurtigtastene</sys:S
     <sys:String x:Key="LOCPlayState_SettingsDuplicateGamepadHotkeyMessage">Det finnes allerede en hurtigtast med samme kombinasjon!</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyLabel">Kontroller-hurtigtast</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsControllerHotkeyEnterLabel">Kontroller-hurtigtast:</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsSuspendSettingsLabel">Pauseinnstillinger</sys:String>
+    <sys:String x:Key="LOCPlayState_SettingsPlaytimeSettingsLabel">Spilletidinnstillinger</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeLabel">Modus</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsModeEnterLabel">Modus:</sys:String>
     <sys:String x:Key="LOCPlayState_SettingsAddControllerHotkeyLabel">Legg til kontroller-hurtigtast</sys:String>

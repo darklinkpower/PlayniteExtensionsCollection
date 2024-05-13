@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Videos</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Trailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Microtrailer</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; is not a PC Game. 
-The extension is only compatible with PC Games&quot;</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">Error downloading game information for AppId &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video not available.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; is not a Steam game and Steam AppId was not found to obtain video data.</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Error connecting to server. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Error downloading headers. Error: {0}</sys:String>
-    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuSectionDescriptionVideos">Videolar</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamSdTrailerDescription">Steam SD Fragmanı</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamHDTrailerDescription">Steam HD Fragmanı</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_MenuItemSteamMicroTrailerDescription">Steam Küçük Fragman</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_PcGameNotSelectedMessage" xml:space="preserve">&quot;{0}&quot; bir PC Oyunu değildir.
+Uzantı yalnızca PC oyunları ile uyumludur&quot;</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GameInformationDownloadFailMessage">&quot;{0}&quot; Uygulama Kimliği için oyun bilgileri indirilirken hata oluştu. Hata: {1}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoVideoAvailableMessage">Video kullanılamıyor.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_NoAppIdFoundMessage">&quot;{0}&quot; bir Steam oyunu değil ve video verilerini alacak Steam Uygulama Kimliği bulunamadı.</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericConnectionErrorMessage">Sunucuya bağlanırken hata oluştu. Hata: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericGetHeadersErrorMessage">Başlıklar indirilirken hata oluştu. Hata: {0}</sys:String>
+    <sys:String x:Key="LOCSteam_Trailers_GenericFileDownloadErrorMessage">&quot;{0}&quot; adresinden dosya indirilirken hata oluştu. Hata: {1}</sys:String>
 </ResourceDictionary>

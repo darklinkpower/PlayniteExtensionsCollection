@@ -1,55 +1,112 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">Email:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Password:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">User is authenticated</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Requires authentication</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Downloads directory:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Browse…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">User is not authenticated</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">View downloads for {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Download</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Select installed game</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Browse and select game</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Cancel</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Select an action</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">JAST USA Downloader</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Open downloads directory</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Download</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Game downloads</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patches</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extras</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Downloading…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Downloaded {0} of {1}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Time remaining: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">File &quot;{0}&quot; has already been downloaded</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">File successfully downloaded to &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">There was an error while downloading the file</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} hours {1:00} minutes</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat">{0:0#} minutes {1:00} seconds</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat">{0} seconds</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
+    <sys:String x:Key="LOC_JUL_SettingsHelpLabel">Yardım</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsEmailLabel">E-posta:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsPasswordLabel">Şifre:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsAuthenticateLabel">Kimlik doğrulaması</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">Kullanıcının kimliği doğrulandı</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Kimlik doğrulama gerektirir</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Kimlik doğrulama durumu kontrol ediliyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsGamesDownloadsDirectoryLabel">Oyun indirme dizini:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsPatchesDownloadsDirectoryLabel">Yama indirme dizini:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsExtrasDownloadsDirectoryLabel">Ekstra indirme dizini:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Kimlik Doğrulaması</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">İndirilenler</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Göz at…</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Başlangıçta indirmeleri otomatik olarak başlat</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">İndirme işlemi bittiğinde sıkıştırılmış dosyaları otomatik olarak çıkart</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsDeleteAfterExtraction">Çıkarma işleminden sonra dosyaları sil</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsMaxConcurrentDownloads">Eş zamanlı indirme sayısı:</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageNotAuthenticated">Kullanıcı kimliği doğrulanmadı</sys:String>
+    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">Yükleme ve kaldırma işlevleri Playnite'ın Tam Ekran Modunda kullanılamaz. Bu işlemleri gerçekleştirebilmek için lütfen Masaüstü Moduna geçin.</sys:String>
+    <sys:String x:Key="LOC_JUL_LibraryGames">Kütüphane oyunları</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdateGameDownloads">İndirilenleri güncelle</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">İndirilenler güncelleniyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_AddToDownloads">İndirilenlere ekle</sys:String>
+    <sys:String x:Key="LOC_JUL_DeveloperIs">Geliştirici:</sys:String>
+    <sys:String x:Key="LOC_JUL_PublisherIs">Yayıncı:</sys:String>
+    <sys:String x:Key="LOC_JUL_GamesLibrary">Kütüphane</sys:String>
+    <sys:String x:Key="LOC_JUL_StartDownloads">Başla</sys:String>
+    <sys:String x:Key="LOC_JUL_StopDownloads">Durdur</sys:String>
+    <sys:String x:Key="LOC_JUL_ClearCompletedDownloads">Temizleme tamamlandı</sys:String>
+    <sys:String x:Key="LOC_JUL_MoveUp">Yukarı taşı</sys:String>
+    <sys:String x:Key="LOC_JUL_MoveDown">Aşağı taşı</sys:String>
+    <sys:String x:Key="LOC_JUL_Options">Ayarlar</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetTypeGame">Oyun</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetTypeExtra">Ekstra</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetTypePatch">Yama</sys:String>
+
+    <sys:String x:Key="LOC_JUL_JastLibraryManager">JAST USA Library Manager</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusIdle">Boşta</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusDownloading">İndiriliyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusPaused">Duraklatıldı</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusCompleted">Tamamlandı</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusFailed">Başarısız oldu</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusCanceled">İptal edildi</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusExtracting">Çıkartılıyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusExtractionCompleted">Çıkarma işlemi tamamlandı</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusExtractionExtractionFailed">Çıkarma işlemi başarısız oldu</sys:String>
+
+    <sys:String x:Key="LOC_JUL_WindowTitleJastLibraryUninstaller">JAST USA Library Uninstaller</sys:String>
+    <sys:String x:Key="LOC_JUL_UninstallJastLibGame">JAST USA Library oyununu kaldır</sys:String>
+    <sys:String x:Key="LOC_JUL_UninstallGameLabel">Kaldır</sys:String>
+    <sys:String x:Key="LOC_JUL_SelectItemsToDeleteOnUninstall">Oyunu kaldırırken kaldırmak istediğiniz dosya ve dizinleri seçin</sys:String>
+    <sys:String x:Key="LOC_JUL_SelectAllLabel">Tümünü seç</sys:String>
+    <sys:String x:Key="LOC_JUL_UnselectAllLabel">Tüm seçimi kaldır</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">İndir</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Yüklü oyunu seç</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Oyunu kütüphanede göster</sys:String>
+    <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Browse and select the game executable file, or choose the game download to begin installation.</sys:String>
+    <sys:String x:Key="LOC_JUL_ActionDownloadSelected">İndir ve yükle</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">İptal</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageSelectActionLabel">Bir eylem seçin</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderNameLabel">Ad</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadLabel">İndir</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadActionLabel">İndir</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderResumeActionLabel">Devam Et</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderPauseActionLabel">Duraklat</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderRemoveActionLabel">Kaldır</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">İndirilenler dizinini aç</sys:String>
+
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Oyun indirmeleri</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Yamalar</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Ekstralar</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumName">Ad</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumProgress">İlerleme Durumu</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumSpeed">Hız</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumTimeLeft">Kalan Süre</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumDownloadStatus">Durum</sys:String>
+    <sys:String x:Key="LOC_JUL_GameStatusInstalled">Yüklendi</sys:String>
+    <sys:String x:Key="LOC_JUL_GameStatusNotInstalled">Yüklü değil</sys:String>
+    <sys:String x:Key="LOC_JUL_GamesLabel">Oyunlar</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingLabel">İndiriliyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadSizeProgress">İndirilen {0}/{1}</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadTimeRemaining">Kalan süre: {0}</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingFileAlreadyDl">&quot;{0}&quot; dosyası zaten indirildi</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderFileDownloadSuccessMessage">Dosya &quot;{0}&quot; klasörüne başarıyla indirildi</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderFileDownloadError">Dosya indirilirken bir hata oluştu</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeHoursMinsFormat">{0} saat {1} dakika</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeMinsSecondsFormat">{0} dakika {1} saniye</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeSecondsFormat">{0} saniye</sys:String>
+    <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">{0} için indirme bağlantısı alınamıyor Lütfen uzantı ayarları üzerinden giriş yaptığınızdan emin olun.</sys:String>
+    <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">{0} için indirme işlemi alınıyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_StoppingDownloads">İndirme işlemi durduruluyor…</sys:String>
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Devam eden sıkıştırılmış dosyaları çıkartma işlemi için lütfen bekleyin…</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} zaten indirilenler arasında.</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">The download file &quot;{0}&quot; already exists in &quot;{1}&quot;.</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
 
 Download the file anyway?</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractingZip">Extracting zip file &quot;{0}&quot; to &quot;{1}&quot;…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipError" xml:space="preserve">Error during &quot;{0}&quot; zip file extraction.
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractFileError" xml:space="preserve">Error during the extraction of file &quot;{0}&quot;.
     
 Error: {1}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipOnDownload">Extract zips after downloading</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDeleteZipsOnExtract">Delete zips after extraction</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Authentication credentials are incorrect</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Error occurred during Login.
+    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateIncorrectCredentials">Kimlik doğrulama bilgileri yanlış</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateError" xml:space="preserve">Giriş sırasında bir hata oluştu.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Error occurred when obtaining download link.
+Hata: {0}</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageGenerateLinkError" xml:space="preserve">İndirme bağlantısı alınırken bir hata oluştu.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Could not obtain authentication tokens</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">Previously selected executable for the game has been unlinked.
-        
-Due to technical limitations, it's not possible for the plugin to uninstall or remove the game files by itself, so please do that manually.</sys:String>
+Hata: {0}</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageCouldNotObtainAuthTokens">Kimlik doğrulama tokeni alamadı</sys:String>
 </ResourceDictionary>

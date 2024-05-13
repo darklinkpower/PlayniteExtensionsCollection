@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Add Nexus Mods feature and links to selected games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Add Nexus Mods feature and links to all games</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">Error downloading file from url &quot;{0}&quot;. Error: {1}</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">There are no games in selection.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">No games were found on Nexus Mods.</sys:String>
-    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Games with mods available on Nexus Mods: {0}
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkSelectedGamesDescription">Nexus Modları özelliği ve seçilen oyunlara bağlantılar ekleyin</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_MenuItemAddLinkAllGamesDescription">Nexus Modları özelliği ve tüm oyunlara bağlantılar ekleyin</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_GenericFileDownloadErrorMessage">&quot;{0}&quot; adresinden dosya indirilirken hata oluştu. Hata: {1}</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesInSelectionMessage">Seçimde oyun yok.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_NoGamesFoundInNexusErrorMessage">Nexus Mod'da oyun bulunamadı.</sys:String>
+    <sys:String x:Key="LOCNexus_Mods_Checker_ResultsMessage" xml:space="preserve">Nexus Mod'da modları bulunan oyunlar: {0}
 
-Added `&quot;{1}`&quot; feature to {2} game(s).
-Added Nexus Mods links to {3} game(s).</sys:String>
+{2} oyuna `&quot;{1}`&quot; özelliği eklendi.
+{3} oyuna Nexus Mod bağlantıları eklendi.</sys:String>
 </ResourceDictionary>

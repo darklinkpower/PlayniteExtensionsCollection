@@ -3,10 +3,10 @@
     <sys:String x:Key="LOCResolutionChanger_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOCResolutionChanger_MenuSectionDisplayResolution">Auflösung</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuSectionDisplayRefreshRate">Aktualisierungsrate</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Auflösungs-Konfiguration löschen</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearResolutionFeature">Konfiguration der Auflösung löschen</sys:String>
     <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionClearFrequencyFeature">Konfiguration der Aktualisierungsrate löschen</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Setze die Startauflösung auf {0}x{1} ({2})</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Setze die Start-Anzeigefrequenz auf {0}Hz</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchResolutionFeature">Startauflösung auf {0}x{1} ({2}) setzen</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_MenuItemDescriptionSetLaunchRefreshRateFeature">Die Startanzeigefrequenz auf {0}Hz setzen</sys:String>
     <sys:String x:Key="LOCResolutionChanger_SettingDescriptionOnlyChangeResOnlyGamesNotRunning">Auflösung nur ändern, wenn keine Spiele laufen</sys:String>
     <sys:String x:Key="LOCResolutionChanger_DialogMessageDone">Fertig</sys:String>
     <sys:String x:Key="LOCDisplayHelper_DisplayLabel">Anzeige:</sys:String>
@@ -14,12 +14,11 @@
     <sys:String x:Key="LOCDisplayHelper_RefreshRateLabel">Aktualisierungsrate:</sys:String>
     <sys:String x:Key="LOCDisplayHelper_DisplayModesLabel">Anzeigemodus:</sys:String>
     <sys:String x:Key="LOCDisplayHelper_GlobalSettingsLabel">Allgemeine Einstellungen</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Playnite-Modus:</sys:String>
+    <sys:String x:Key="LOCDisplayHelper_PlayniteModeLabel">Playnite Modus:</sys:String>
     <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayLabel">Konfigurierte Anzeige verwenden:</sys:String>
-    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Wenn Sie diese Option aktivieren und eine Anzeige wählen, wird sichergestellt, dass die Erweiterung die konfigurierten Änderungen ausschließlich auf das gewählte Display anwendet, wenn ein Spiel gestartet wird.
-Zusätzlich wird die ausgewählte Anzeige als primäre Anzeige gesetzt.
+    <sys:String x:Key="LOCDisplayHelper_UseConfiguredDisplayTooltip" xml:space="preserve">Wenn diese Option aktiviert und eine Anzeige auswählen ist, wird sichergestellt, dass die Erweiterung die konfigurierten Änderungen nur auf die ausgewählte Anzeige anwendet, wenn ein Spiel gestartet wird. Darüber hinaus wird die ausgewählte Anzeige als primäre Anzeige festgelegt.
 
-Andererseits, wenn diese Option deaktiviert ist, die Erweiterung wird die konfigurierten Einstellungen auf die aktuelle primäre Anzeige anwenden, sobald ein Spiel gestartet wird.</sys:String>
+Wenn diese Option hingegen deaktiviert ist, wendet die Erweiterung die konfigurierten Einstellungen auf die aktuelle primäre Anzeige an, sobald ein Spiel gestartet wird.</sys:String>
     <sys:String x:Key="LOCDisplayHelper_SetSettingValueLabel">Setzen</sys:String>
     <sys:String x:Key="LOCDisplayHelper_ClearSettingValueLabel">Leeren</sys:String>
 </ResourceDictionary>

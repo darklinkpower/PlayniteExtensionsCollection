@@ -1,55 +1,112 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsHelpLabel">Aiuto</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsEmailLabel">Email:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsPasswordLabel">Password:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsAuthenticateLabel">Autenticati</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsDownloadsDirectoryLabel">Cartella dei download:</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_SettingsBrowseLabel">Sfoglia…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_GameMenuItemDescriptionViewGameDownloads">Visualizza i download per {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageDownloadOption">Scarica</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageBrowseForGameOption">Sfoglia e seleziona il gioco</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCancelOption">Annulla</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageSelectActionLabel">Seleziona un'azione</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderWindowTitle">Scaricatore JAST USA</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderOpenDownloadsDirLabel">Apri cartella dei download</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderNameLabel">Nome</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadLabel">Scarica</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderPatches">Patch</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTabHeaderExtras">Extra</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingLabel">Download in corso…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadSizeProgress">Scaricati {0} di {1}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadTimeRemaining">Tempo rimanente: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDownloadingFileAlreadyDl">Il file &quot;{0}&quot; è già stato scaricato</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadSuccessMessage">File scaricato correttamente in &quot;{0}&quot;</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderFileDownloadError">Si è verificato un errore durante il download del file</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeHoursMinsFormat">{0} ore {1:00} minuti</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeMinsSecondsFormat">{0:0#} minuti {1:00} secondi</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderTimeSecondsFormat">{0} secondi</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">File estratti per il file &quot;{0}&quot; rilevati in &quot;{1}&quot;.
+    <sys:String x:Key="LOC_JUL_SettingsHelpLabel">Aiuto</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsEmailLabel">Email:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsPasswordLabel">Password:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsAuthenticateLabel">Autenticati</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsGamesDownloadsDirectoryLabel">Cartella di download dei giochi:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsPatchesDownloadsDirectoryLabel">Cartella di download delle patch:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsExtrasDownloadsDirectoryLabel">Cartella di download degli extra:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Autenticazione</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Downloads</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Sfoglia…</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Avvia automaticamente i download all'avvio</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">Estrai automaticamente i file compressi quando finiscono di scaricare</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsDeleteAfterExtraction">Elimina i file dopo l'estrazione</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsMaxConcurrentDownloads">Download simultanei massimi:</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
+    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">Installation and uninstallation functionality is not available in Playnite Fullscreen Mode. Please switch to Desktop Mode to perform these actions.</sys:String>
+    <sys:String x:Key="LOC_JUL_LibraryGames">Libreria di giochi</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdateGameDownloads">Aggiorna download</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">Updating entry downloads…</sys:String>
+    <sys:String x:Key="LOC_JUL_AddToDownloads">Aggiungi ai download</sys:String>
+    <sys:String x:Key="LOC_JUL_DeveloperIs">Sviluppatore:</sys:String>
+    <sys:String x:Key="LOC_JUL_PublisherIs">Editore:</sys:String>
+    <sys:String x:Key="LOC_JUL_GamesLibrary">Libreria</sys:String>
+    <sys:String x:Key="LOC_JUL_StartDownloads">Inizia</sys:String>
+    <sys:String x:Key="LOC_JUL_StopDownloads">Interrompi</sys:String>
+    <sys:String x:Key="LOC_JUL_ClearCompletedDownloads">Rimuovi completate</sys:String>
+    <sys:String x:Key="LOC_JUL_MoveUp">Sposta in alto</sys:String>
+    <sys:String x:Key="LOC_JUL_MoveDown">Sposta in basso</sys:String>
+    <sys:String x:Key="LOC_JUL_Options">Opzioni</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetTypeGame">Gioco</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetTypeExtra">Extra</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetTypePatch">Patch</sys:String>
+
+    <sys:String x:Key="LOC_JUL_JastLibraryManager">Gestione della libreria JAST USA</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusIdle">Inattivo</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusDownloading">Download in corso…</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusPaused">In pausa</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusCompleted">Completato</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusFailed">Fallito</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusCanceled">Annullato</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusExtracting">Estrazione…</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusExtractionCompleted">Estrazione terminata</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusExtractionExtractionFailed">Estrazione fallita</sys:String>
+
+    <sys:String x:Key="LOC_JUL_WindowTitleJastLibraryUninstaller">Disinstallatore della libreria JAST USA</sys:String>
+    <sys:String x:Key="LOC_JUL_UninstallJastLibGame">Disinstalla gioco della libreria JAST USA</sys:String>
+    <sys:String x:Key="LOC_JUL_UninstallGameLabel">Disinstalla</sys:String>
+    <sys:String x:Key="LOC_JUL_SelectItemsToDeleteOnUninstall">Scegli i file e le directory che si desidera rimuovere durante la disinstallazione del gioco</sys:String>
+    <sys:String x:Key="LOC_JUL_SelectAllLabel">Seleziona tutto</sys:String>
+    <sys:String x:Key="LOC_JUL_UnselectAllLabel">Deseleziona tutto</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Scarica</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Mostra gioco nella libreria</sys:String>
+    <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Sfoglia e seleziona il file eseguibile del gioco, o scegli il download del gioco per iniziare l'installazione.</sys:String>
+    <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Scarica e installa</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Annulla</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageSelectActionLabel">Seleziona un'azione</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderNameLabel">Nome</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadLabel">Scarica</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadActionLabel">Scarica</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderResumeActionLabel">Riprendi</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderPauseActionLabel">Pausa</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderRemoveActionLabel">Rimuovi</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">Apri cartella di download</sys:String>
+
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Patch</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Extra</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumName">Nome</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumProgress">Avanzamento</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumSpeed">Velocità</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumTimeLeft">Tempo rimanente</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsColumDownloadStatus">Stato</sys:String>
+    <sys:String x:Key="LOC_JUL_GameStatusInstalled">Installato</sys:String>
+    <sys:String x:Key="LOC_JUL_GameStatusNotInstalled">Non installato</sys:String>
+    <sys:String x:Key="LOC_JUL_GamesLabel">Giochi</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingLabel">Download in corso…</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadSizeProgress">Scaricati {0} di {1}</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadTimeRemaining">Tempo rimanente: {0}</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingFileAlreadyDl">Il file &quot;{0}&quot; è già stato scaricato</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderFileDownloadSuccessMessage">File scaricato correttamente in &quot;{0}&quot;</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderFileDownloadError">Si è verificato un errore durante il download del file</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeHoursMinsFormat">{0} ore {1} minuti</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeMinsSecondsFormat">{0} minuti {1} secondi</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeSecondsFormat">{0} secondi</sys:String>
+    <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Impossibile recuperare il link di download per {0}. Assicurarsi di aver effettuato l'accesso tramite le impostazioni di estensione.</sys:String>
+    <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Recupero download per {0}…</sys:String>
+    <sys:String x:Key="LOC_JUL_StoppingDownloads">Interruzione dei download…</sys:String>
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Please wait while ongoing compressed file extractions are completed…</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} è già nell'elenco dei download.</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">Il file di download &quot;{0}&quot; esiste già in &quot;{1}&quot;.</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">File estratti per il file &quot;{0}&quot; rilevati in &quot;{1}&quot;.
 
 Scaricare il file comunque?</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractingZip">Estrazione del file zip &quot;{0}&quot; in &quot;{1}&quot;…</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipError" xml:space="preserve">Errore durante l'estrazione del file zip &quot;{0}.
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractFileError" xml:space="preserve">Errore durante l'estrazione del file &quot;{0}&quot;.
     
 Errore: {1}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderExtractZipOnDownload">Estrai gli zip dopo il download</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_JastDownloaderDeleteZipsOnExtract">Elimina zip dopo l'estrazione</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateIncorrectCredentials">Le credenziali di autenticazione non sono valide</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageAuthenticateError" xml:space="preserve">Errore durante l'accesso.
+    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateIncorrectCredentials">Le credenziali di autenticazione non sono valide</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateError" xml:space="preserve">Errore durante l'accesso.
 
 Errore: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageGenerateLinkError" xml:space="preserve">Errore durante l'ottenimento del link di download.
+    <sys:String x:Key="LOC_JUL_DialogMessageGenerateLinkError" xml:space="preserve">Errore durante l'ottenimento del link di download.
 
 Errore: {0}</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageCouldNotObtainAuthTokens">Impossibile ottenere i token di autenticazione</sys:String>
-    <sys:String x:Key="LOCJast_Usa_Library_DialogMessageUninstallNotice" xml:space="preserve">L'eseguibile precedentemente selezionato per il gioco è stato scollegato.
-        
-A causa di limitazioni tecniche, non è possibile per il plugin disinstallare o rimuovere i file di gioco di per sé, quindi si prega di farlo manualmente.</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageCouldNotObtainAuthTokens">Impossibile ottenere i token di autenticazione</sys:String>
 </ResourceDictionary>
