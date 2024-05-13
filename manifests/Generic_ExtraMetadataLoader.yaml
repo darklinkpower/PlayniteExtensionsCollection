@@ -550,3 +550,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.20_448efde9/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_78.pext
     Changelog:
     - 'Improved: Display quality of YouTube thumbnails'
+  - Version: 1.79
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429_1_79.pext
+    Changelog:
+    - 'Changed: Updated localizations'

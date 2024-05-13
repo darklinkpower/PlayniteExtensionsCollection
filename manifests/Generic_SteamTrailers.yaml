@@ -104,3 +104,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/Steam_Trailers_2_16.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.17
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Steam_Trailers_2_17.pext
+    Changelog:
+    - 'Changed: Updated localizations'

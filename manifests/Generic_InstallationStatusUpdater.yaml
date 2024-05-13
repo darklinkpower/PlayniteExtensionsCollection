@@ -313,3 +313,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.20_3f7181b3/Installation_Status_Updater_2_47.pext
     Changelog:
     - 'Changed: Enabled option to only use actions marked as Play Actions for game install status detection by default'
+  - Version: 2.48
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Installation_Status_Updater_2_48.pext
+    Changelog:
+    - 'Changed: Updated localizations'

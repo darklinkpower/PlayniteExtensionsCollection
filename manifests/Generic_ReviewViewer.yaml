@@ -313,3 +313,9 @@ Packages:
     Changelog:
     - 'Improved: Processing of controls data when selecting games'
     - 'Improved: Processing of internet requests'
+  - Version: 2.48
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_48.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -269,3 +269,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_40.pext
     Changelog:
     - 'Added: Support to skip image and video using keyboard or mouse (By  veksha)'
+  - Version: 2.41
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/SplashScreen_d8c4f435-2bd2-49d8-98f6-87b1d415934a_2_41.pext
+    Changelog:
+    - 'Changed: Updated localizations'

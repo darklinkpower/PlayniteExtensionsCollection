@@ -175,3 +175,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.02.04_c8608bd5/Search_Collection_2_26.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.27
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Search_Collection_2_27.pext
+    Changelog:
+    - 'Changed: Updated localizations'

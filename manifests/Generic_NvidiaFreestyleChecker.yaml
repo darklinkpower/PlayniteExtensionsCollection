@@ -80,3 +80,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2022.06.18_251f0687/NVIDIA_Freestyle_Checker_2_12.pext
     Changelog:
     - 'Updated localizations'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/NVIDIA_Freestyle_Checker_2_13.pext
+    Changelog:
+    - 'Changed: Updated localizations'

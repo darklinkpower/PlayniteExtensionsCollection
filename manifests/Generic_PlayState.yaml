@@ -510,3 +510,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.28_7baef6c2/PlayState_2_73.pext
     Changelog:
     - 'Changed: Moved items from main menu to right click game menu'
+  - Version: 2.74
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/PlayState_2_74.pext
+    Changelog:
+    - 'Changed: Updated localizations'

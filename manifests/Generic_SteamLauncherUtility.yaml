@@ -214,3 +214,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_33.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.34
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/SteamLauncherUtility_31a65402-5b0c-44f0-9fc2-44b22ca4263c_2_34.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -202,3 +202,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.28_7baef6c2/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_31.pext
     Changelog:
     - 'Improved: Sidebar icon display quality'
+  - Version: 1.32
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_32.pext
+    Changelog:
+    - 'Changed: Updated localizations'

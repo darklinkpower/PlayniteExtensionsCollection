@@ -67,3 +67,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2023.10.10_141fd33d/MameRenamer_be989711-a433-428f-932e-207860c94fc9_2_10.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/MameRenamer_be989711-a433-428f-932e-207860c94fc9_2_11.pext
+    Changelog:
+    - 'Changed: Updated localizations'

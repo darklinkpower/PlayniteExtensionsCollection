@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.04.30_f564ee5e/XboxMetadata_7a663fbb-99b9-4291-a5e1-3ce7f2442b59_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/XboxMetadata_7a663fbb-99b9-4291-a5e1-3ce7f2442b59_1_1.pext
+    Changelog:
+    - ''

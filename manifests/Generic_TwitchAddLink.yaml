@@ -79,3 +79,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/Twitch_Add_Link_2_12.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Twitch_Add_Link_2_13.pext
+    Changelog:
+    - 'Changed: Updated localizations'

@@ -81,3 +81,9 @@ Packages:
     - 'Added: Applying Epic purchase dates will now also apply dates to games from the Legendary plugin library'
     - 'Fixed: Failing to obtain GOG purchases data'
     - 'Fixed: GOG dates not being converted to the system local time'
+  - Version: 2.26
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_26.pext
+    Changelog:
+    - 'Changed: Updated localizations'

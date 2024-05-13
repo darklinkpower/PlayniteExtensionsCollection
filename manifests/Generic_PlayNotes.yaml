@@ -47,3 +47,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_7.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.8
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-12
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_8.pext
+    Changelog:
+    - 'Changed: Updated localizations'
