@@ -27,23 +27,26 @@ namespace JastUsaLibrary
         public string GameId;
     }
 
+    public class DownloadSettings : ObservableObject
+    {
+
+        private bool _extractOnDownload = true;
+        public bool ExtractOnDownload { get => _extractOnDownload; set => SetValue(ref _extractOnDownload, value); }
+
+        private bool _deleteOnExtract = true;
+        public bool DeleteOnExtract { get => _deleteOnExtract; set => SetValue(ref _deleteOnExtract, value); }
+
+        private string _downloadDirectory;
+        public string DownloadDirectory { get => _downloadDirectory; set => SetValue(ref _downloadDirectory, value); }
+
+        private string _extractDirectory;
+        public string ExtractDirectory { get => _extractDirectory; set => SetValue(ref _extractDirectory, value); }
+    }
+
     public class JastUsaLibrarySettings : ObservableObject
     {
         private int _settingsVersion = 1;
         public int SettingsVersion { get => _settingsVersion; set => SetValue(ref _settingsVersion, value); }
-        private string _gameDownloadsPath;
-        public string GameDownloadsPath { get => _gameDownloadsPath; set => SetValue(ref _gameDownloadsPath, value); }
-
-        private string _extrasDownloadsPath;
-        public string ExtrasDownloadsPath { get => _extrasDownloadsPath; set => SetValue(ref _extrasDownloadsPath, value); }
-
-        private string _patchDownloadsPath;
-        public string PatchDownloadsPath { get => _patchDownloadsPath; set => SetValue(ref _patchDownloadsPath, value); }
-
-        private bool _extractFilesOnDownload = true;
-        public bool ExtractFilesOnDownload { get => _extractFilesOnDownload; set => SetValue(ref _extractFilesOnDownload, value); }
-        private bool _deleteFilesOnExtract = false;
-        public bool DeleteFilesOnExtract { get => _deleteFilesOnExtract; set => SetValue(ref _deleteFilesOnExtract, value); }
 
         private uint _maximumConcurrentDownloads = 2;
         public uint MaximumConcurrentDownloads { get => _maximumConcurrentDownloads; set => SetValue(ref _maximumConcurrentDownloads, value); }
@@ -54,6 +57,15 @@ namespace JastUsaLibrary
         private Dictionary<string, GameCache> _libraryCache = new Dictionary<string, GameCache>();
         public Dictionary<string, GameCache> LibraryCache { get => _libraryCache; set => SetValue(ref _libraryCache, value); }
         public List<DownloadData> DownloadsData { get; set; } = new List<DownloadData>();
+
+        private DownloadSettings _gamesDownloadSettings;
+        public DownloadSettings GamesDownloadSettings { get => _gamesDownloadSettings; set => SetValue(ref _gamesDownloadSettings, value); }
+
+        private DownloadSettings _patchesDownloadSettings;
+        public DownloadSettings PatchesDownloadSettings { get => _patchesDownloadSettings; set => SetValue(ref _patchesDownloadSettings, value); }
+
+        private DownloadSettings _extrasDownloadSettings;
+        public DownloadSettings ExtrasDownloadSettings { get => _extrasDownloadSettings; set => SetValue(ref _extrasDownloadSettings, value); }
     }
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings
@@ -125,7 +137,11 @@ namespace JastUsaLibrary
 
             playniteApi = api;
             this.accountClient = accountClient;
+            InitializeSettings();
+        }
 
+        private void InitializeSettings()
+        {
             var defaultBaseDownloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "JAST Downloads");
             var downloadsFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
             if (FileSystem.DirectoryExists(downloadsFolderPath))
@@ -133,19 +149,34 @@ namespace JastUsaLibrary
                 defaultBaseDownloadsPath = Path.Combine(downloadsFolderPath, "JAST Downloads");
             }
 
-            if (settings.GameDownloadsPath.IsNullOrEmpty())
+            if (settings.GamesDownloadSettings is null)
             {
-                settings.GameDownloadsPath = Path.Combine(defaultBaseDownloadsPath, "Games");
+                var downloadsPath = Path.Combine(defaultBaseDownloadsPath, "Games");
+                settings.GamesDownloadSettings = new DownloadSettings
+                {
+                    DownloadDirectory = downloadsPath,
+                    ExtractDirectory = downloadsPath
+                };
             }
 
-            if (settings.ExtrasDownloadsPath.IsNullOrEmpty())
+            if (settings.PatchesDownloadSettings is null)
             {
-                settings.ExtrasDownloadsPath = Path.Combine(defaultBaseDownloadsPath, "Extras");
+                var downloadsPath = Path.Combine(defaultBaseDownloadsPath, "Patches");
+                settings.PatchesDownloadSettings = new DownloadSettings
+                {
+                    DownloadDirectory = downloadsPath,
+                    ExtractDirectory = downloadsPath
+                };
             }
 
-            if (settings.PatchDownloadsPath.IsNullOrEmpty())
+            if (settings.ExtrasDownloadSettings is null)
             {
-                settings.PatchDownloadsPath = Path.Combine(defaultBaseDownloadsPath, "Patches");
+                var downloadsPath = Path.Combine(defaultBaseDownloadsPath, "Extras");
+                settings.ExtrasDownloadSettings = new DownloadSettings
+                {
+                    DownloadDirectory = downloadsPath,
+                    ExtractDirectory = downloadsPath
+                };
             }
         }
 
@@ -248,38 +279,26 @@ namespace JastUsaLibrary
             }
         }
 
-        public RelayCommand SelectGamesDownloadDirectoryCommand
+        public RelayCommand<DownloadSettings> SelectDownloadDirectoryCommand
         {
-            get => new RelayCommand(() =>
+            get => new RelayCommand<DownloadSettings>((DownloadSettings downloadSettings) =>
             {
                 var selectedDir = playniteApi.Dialogs.SelectFolder();
                 if (!selectedDir.IsNullOrEmpty())
                 {
-                    settings.GameDownloadsPath = selectedDir;
+                    downloadSettings.DownloadDirectory = selectedDir;
                 }
             });
         }
 
-        public RelayCommand SelectPatchesDownloadDirectoryCommand
+        public RelayCommand<DownloadSettings> SelectExtractDirectoryCommand
         {
-            get => new RelayCommand(() =>
+            get => new RelayCommand<DownloadSettings>((DownloadSettings downloadSettings) =>
             {
                 var selectedDir = playniteApi.Dialogs.SelectFolder();
                 if (!selectedDir.IsNullOrEmpty())
                 {
-                    settings.PatchDownloadsPath = selectedDir;
-                }
-            });
-        }
-
-        public RelayCommand SelectExtrasDownloadDirectoryCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                var selectedDir = playniteApi.Dialogs.SelectFolder();
-                if (!selectedDir.IsNullOrEmpty())
-                {
-                    settings.ExtrasDownloadsPath = selectedDir;
+                    downloadSettings.ExtractDirectory = selectedDir;
                 }
             });
         }

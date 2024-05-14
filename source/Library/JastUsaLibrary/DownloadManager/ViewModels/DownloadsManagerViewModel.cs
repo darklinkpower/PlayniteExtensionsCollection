@@ -478,23 +478,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return null;
             }
 
-            string baseDownloadDirectory;
-            switch (jastAsset.Type)
-            {
-                case JastAssetType.Game:
-                    baseDownloadDirectory = _settingsViewModel.Settings.GameDownloadsPath;
-                    break;
-                case JastAssetType.Extra:
-                    baseDownloadDirectory = _settingsViewModel.Settings.ExtrasDownloadsPath;
-                    break;
-                case JastAssetType.Patch:
-                    baseDownloadDirectory = _settingsViewModel.Settings.PatchDownloadsPath;;
-                    break;
-                default:
-                    baseDownloadDirectory = _settingsViewModel.Settings.GameDownloadsPath;
-                    break;
-            }
-
+            var downloadSettings = GetItemDownloadSettings(jastAsset.Type);
+            var baseDownloadDirectory = downloadSettings.DownloadDirectory;
             var satinizedGameDirectoryName = Paths.ReplaceInvalidCharacters(selectedGameWrapper.Game.Name);
             var gameDownloadDirectory = Path.Combine(baseDownloadDirectory, satinizedGameDirectoryName);
             var downloadData = new DownloadData(selectedGameWrapper.Game, id, jastAsset, assetUri, gameDownloadDirectory);
@@ -762,6 +747,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             if (downloadStatus == DownloadItemStatus.Completed)
             {
                 _ = StartDownloadsAsync(false, false);
+
+                var downloadSettings = GetItemDownloadSettings(downloadItem.DownloadData.AssetType);
                 var isExecutable = Path.GetExtension(downloadItem.DownloadData.FileName)
                     .Equals(".exe", StringComparison.OrdinalIgnoreCase);
                 var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
@@ -770,9 +757,9 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     var program = Programs.GetProgramData(downloadItem.DownloadData.DownloadPath);
                     ApplyProgramToGameCache(databaseGame, program);
                 }
-                else if (_settingsViewModel.Settings.ExtractFilesOnDownload)
+                else if (downloadSettings.ExtractOnDownload)
                 {
-                    await Task.Run(() => ExtractCompressedFile(downloadItem));
+                    await Task.Run(() => ExtractCompressedFile(downloadItem, downloadSettings));
                 }
             }
             else if (downloadStatus == DownloadItemStatus.Canceled ||
@@ -783,7 +770,21 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
         }
 
-        private void ExtractCompressedFile(DownloadItem downloadItem)
+        private DownloadSettings GetItemDownloadSettings(JastAssetType assetType)
+        {
+            if (assetType == JastAssetType.Game)
+            {
+                return _settingsViewModel.Settings.GamesDownloadSettings;
+            }
+            else if (assetType == JastAssetType.Patch)
+            {
+                return _settingsViewModel.Settings.PatchesDownloadSettings;
+            }
+
+            return _settingsViewModel.Settings.ExtrasDownloadSettings;
+        }
+
+        private void ExtractCompressedFile(DownloadItem downloadItem, DownloadSettings downloadSettings)
         {
             var filePath = downloadItem.DownloadData.DownloadPath;
             var fileName = Path.GetFileName(filePath);
@@ -807,7 +808,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
                 var downloadedFilePath = downloadItem.DownloadData.DownloadDirectory;
                 var satinizedDirectory = Paths.ReplaceInvalidCharacters(downloadItem.DownloadData.Name);
-                extractDirectory = Path.Combine(downloadedFilePath, satinizedDirectory);
+                extractDirectory = Path.Combine(downloadSettings.ExtractDirectory, satinizedDirectory);
                 if (!FileSystem.DirectoryExists(extractDirectory))
                 {
                     FileSystem.CreateDirectory(extractDirectory);
@@ -832,7 +833,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                 return;
             }
 
-            if (extractSuccess && _settingsViewModel.Settings.DeleteFilesOnExtract)
+            if (extractSuccess && downloadSettings.DeleteOnExtract)
             {
                 try
                 {
@@ -1176,7 +1177,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                OpenDirectoryIfExists(_settingsViewModel.Settings.GameDownloadsPath);
+                OpenDirectoryIfExists(_settingsViewModel.Settings.GamesDownloadSettings.DownloadDirectory);
             });
         }
 
@@ -1184,7 +1185,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                OpenDirectoryIfExists(_settingsViewModel.Settings.PatchDownloadsPath);
+                OpenDirectoryIfExists(_settingsViewModel.Settings.PatchesDownloadSettings.DownloadDirectory);
             });
         }
 
@@ -1192,7 +1193,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
         {
             get => new RelayCommand(() =>
             {
-                OpenDirectoryIfExists(_settingsViewModel.Settings.ExtrasDownloadsPath);
+                OpenDirectoryIfExists(_settingsViewModel.Settings.ExtrasDownloadSettings.DownloadDirectory);
             });
         }
 

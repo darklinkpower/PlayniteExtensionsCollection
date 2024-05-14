@@ -6,9 +6,44 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:commonconv="clr-namespace:PluginsCommon.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="800" d:DesignWidth="600">
     <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
         <commonconv:UintFieldValidation x:Key="UintFieldValidation" />
+        <DataTemplate x:Key="DownloadSettingsItemTemplate">
+            <DataTemplate.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+            </DataTemplate.Resources>
+            <StackPanel VerticalAlignment="Center" Margin="0,0,0,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Left" Text="{DynamicResource LOC_JUL_DownloadsDirectoryIs}" VerticalAlignment="Center" />
+                    <Button DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+                            Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}"
+                            Command="{Binding DataContext.SelectDownloadDirectoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding}" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding DownloadDirectory}" IsReadOnly="True" />
+                </DockPanel>
+
+                <CheckBox x:Name="CbExtractOnDownload" Content="{DynamicResource LOC_JUL_SettingsExtractDownloadedFiles}" Margin="0,10,0,0"
+                      IsChecked="{Binding ExtractOnDownload}" />
+
+                <StackPanel Margin="0,0,0,0" IsEnabled="{Binding ElementName=CbExtractOnDownload, Path=IsChecked}">
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock DockPanel.Dock="Left" Text="{DynamicResource LOC_JUL_ExtractDirectoryIs}" VerticalAlignment="Center" />
+                        <Button DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+                            Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}"
+                            Command="{Binding DataContext.SelectExtractDirectoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            CommandParameter="{Binding}" />
+                        <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding ExtractDirectory}" IsReadOnly="True" />
+                    </DockPanel>
+
+                    <CheckBox IsChecked="{Binding DeleteOnExtract}"
+                              Content="{DynamicResource LOC_JUL_SettingsDeleteAfterExtraction}"
+                              Margin="0,10,0,0" />
+                </StackPanel>
+
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel Margin="20">
@@ -38,10 +73,10 @@
                     <TextBlock.Style>
                         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
                             <Style.Triggers>
-                                <Trigger Property="Tag" Value="{StaticResource True}">
+                                <Trigger Property="Tag" Value="True">
                                     <Setter Property="Text" Value="{DynamicResource LOC_JUL_SettingsUserIsAuthenticatedLabel}" />
                                 </Trigger>
-                                <Trigger Property="Tag" Value="{StaticResource False}">
+                                <Trigger Property="Tag" Value="False">
                                     <Setter Property="Text" Value="{DynamicResource LOC_JUL_SettingsUserNotAuthenticatedLabel}" />
                                 </Trigger>
                                 <Trigger Property="Tag" Value="{x:Null}">
@@ -56,11 +91,7 @@
             <TextBlock Text="{DynamicResource LOC_JUL_SettingsDownloadsLabel}" FontWeight="Medium" Margin="0,30,0,0" />
             <Separator Margin="0,10,0,10" />
             <CheckBox Content="{DynamicResource LOC_JUL_SettingsStartDownloadsOnStartup}" IsChecked="{Binding Settings.StartDownloadsOnStartup}" />
-            <CheckBox x:Name="CbDeleteZipOnExtract" Content="{DynamicResource LOC_JUL_SettingsExtractDownloadedFiles}" Margin="0,10,0,0"
-                      IsChecked="{Binding Settings.ExtractFilesOnDownload}" />
-            <CheckBox IsEnabled="{Binding ElementName=CbDeleteZipOnExtract, Path=IsChecked}"
-                      IsChecked="{Binding Settings.DeleteFilesOnExtract}"
-                      Content="{DynamicResource LOC_JUL_SettingsDeleteAfterExtraction}" Margin="20,10,0,0" />
+
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <TextBlock Text="{DynamicResource LOC_JUL_SettingsMaxConcurrentDownloads}" VerticalAlignment="Center" />
                 <TextBox Margin="5,0,0,0" VerticalAlignment="Center" MinWidth="20">
@@ -73,36 +104,18 @@
                     </TextBox.Text>
                 </TextBox>
             </StackPanel>
-            <Grid Margin="0,10,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
 
+            <Expander Header="{DynamicResource LOC_JUL_JastDownloaderTabHeaderGames}" Margin="0,10,0,0" IsExpanded="True">
+                <ContentControl Margin="20,10,0,0" Content="{Binding Settings.GamesDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
+            </Expander>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOC_JUL_SettingsGamesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.GameDownloadsPath}" IsReadOnly="True" />
-                <Button Grid.Row="0" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}" Command="{Binding SelectGamesDownloadDirectoryCommand}" />
+            <Expander Header="{DynamicResource LOC_JUL_JastDownloaderTabHeaderPatches}" Margin="0,10,0,0" IsExpanded="True">
+                <ContentControl Margin="20,10,0,0" Content="{Binding Settings.PatchesDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
+            </Expander>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOC_JUL_SettingsPatchesDownloadsDirectoryLabel}" VerticalAlignment="Center" />
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.PatchDownloadsPath}" IsReadOnly="True" />
-                <Button Grid.Row="2" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}" Command="{Binding SelectPatchesDownloadDirectoryCommand}" />
-
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource LOC_JUL_SettingsExtrasDownloadsDirectoryLabel}" VerticalAlignment="Center" />
-                <TextBox Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" Text="{Binding Settings.ExtrasDownloadsPath}" IsReadOnly="True" />
-                <Button Grid.Row="4" Grid.Column="2" DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
-                        Content="{DynamicResource LOC_JUL_SettingsBrowseLabel}" Command="{Binding SelectExtrasDownloadDirectoryCommand}" />
-            </Grid>
+            <Expander Header="{DynamicResource LOC_JUL_JastDownloaderTabHeaderExtras}" Margin="0,10,0,0" IsExpanded="True">
+                <ContentControl Margin="20,10,0,0" Content="{Binding Settings.ExtrasDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
+            </Expander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
