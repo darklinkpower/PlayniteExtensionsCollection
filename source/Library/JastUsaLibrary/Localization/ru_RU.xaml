@@ -7,11 +7,10 @@
     <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">Пользователь аутентифицирован</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Требуется аутентификация</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Проверка статуса аутентификации…</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsGamesDownloadsDirectoryLabel">Директория загрузки игр:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsPatchesDownloadsDirectoryLabel">Директория загрузки патчей:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsExtrasDownloadsDirectoryLabel">Директория дополнительных загрузок:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Аутентификация</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Загрузки</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Downloads directory:</sys:String>
+    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Extract directory:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Обзор…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Автоматически запускать загрузки при запуске</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">Автоматически извлекать сжатые файлы при завершении загрузки</sys:String>
@@ -70,6 +69,7 @@
     <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">Open download directory</sys:String>
 
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Game downloads</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Games</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Patches</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Extras</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsColumName">Name</sys:String>
