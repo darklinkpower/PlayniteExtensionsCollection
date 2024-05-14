@@ -7,11 +7,10 @@
     <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsGamesDownloadsDirectoryLabel">Cartella di download dei giochi:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsPatchesDownloadsDirectoryLabel">Cartella di download delle patch:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsExtrasDownloadsDirectoryLabel">Cartella di download degli extra:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Autenticazione</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Downloads</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Downloads directory:</sys:String>
+    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Extract directory:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Sfoglia…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Avvia automaticamente i download all'avvio</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">Estrai automaticamente i file compressi quando finiscono di scaricare</sys:String>
@@ -70,6 +69,7 @@
     <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">Apri cartella di download</sys:String>
 
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Games</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Patch</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Extra</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsColumName">Nome</sys:String>
