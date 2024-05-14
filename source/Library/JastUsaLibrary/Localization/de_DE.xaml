@@ -9,8 +9,8 @@
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Authentication</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Downloads</sys:String>
-    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Downloads directory:</sys:String>
-    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Extract directory:</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Download-Verzeichnis:</sys:String>
+    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Entpackverzeichnis:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Browse…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Automatically start downloads on startup</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">Automatically extract compressed files when they finish downloading</sys:String>
@@ -69,7 +69,7 @@
     <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">Open download directory</sys:String>
 
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Game downloads</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Games</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Spiele</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Patches</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Extras</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsColumName">Name</sys:String>
