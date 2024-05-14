@@ -14,8 +14,13 @@ namespace JastUsaLibrary
 {
     public static class Compression
     {
-        public static bool ExtractZipFile(string filePath, string extractionPath, CancellationToken cancellationToken = default)
+        public static bool ExtractZipFile(string filePath, string extractDirectory, CancellationToken cancellationToken = default)
         {
+            if (!FileSystem.DirectoryExists(extractDirectory))
+            {
+                FileSystem.CreateDirectory(extractDirectory);
+            }
+            
             var extractionFinished = true;
             using (var archive = ZipArchive.Open(filePath))
             {
@@ -29,7 +34,7 @@ namespace JastUsaLibrary
 
                     if (!entry.IsDirectory)
                     {
-                        var destinationPath = Path.Combine(extractionPath, entry.Key);
+                        var destinationPath = Path.Combine(extractDirectory, entry.Key);
                         var parentDirectory = Path.GetDirectoryName(destinationPath);
                         if (!FileSystem.DirectoryExists(parentDirectory))
                         {
@@ -40,7 +45,7 @@ namespace JastUsaLibrary
                     }
                     else
                     {
-                        var directoryPath = Path.Combine(extractionPath, entry.Key);
+                        var directoryPath = Path.Combine(extractDirectory, entry.Key);
                         if (!FileSystem.DirectoryExists(directoryPath))
                         {
                             FileSystem.CreateDirectory(directoryPath);
@@ -54,6 +59,11 @@ namespace JastUsaLibrary
 
         public static bool ExtractRarFile(string downloadPath, string extractDirectory, CancellationToken cancellationToken = default)
         {
+            if (!FileSystem.DirectoryExists(extractDirectory))
+            {
+                FileSystem.CreateDirectory(extractDirectory);
+            }
+
             var extractionFinished = true;
             using (var archive = RarArchive.Open(downloadPath))
             {
