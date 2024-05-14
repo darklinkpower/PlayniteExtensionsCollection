@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_JUL_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsHelpLabel">Hilfe</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsEmailLabel">Email:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsPasswordLabel">Password:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsAuthenticateLabel">Authenticate</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">User is authenticated</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Requires authentication</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsPasswordLabel">Passwort:</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsAuthenticateLabel">Authentifizieren</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">Nutzer ist authentifiziert</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Authentifizierung erforderlich</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Authentication</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Downloads</sys:String>
@@ -55,7 +55,7 @@
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Download</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Select installed game</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
-    <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Show game on library</sys:String>
+    <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Spiel in Bibliothek anzeigen</sys:String>
     <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Browse and select the game executable file, or choose the game download to begin installation.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Download and install</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Cancel</sys:String>
