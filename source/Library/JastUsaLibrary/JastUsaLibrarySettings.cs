@@ -87,14 +87,14 @@ namespace JastUsaLibrary
             }
         }
 
-        private bool? isUserLoggedIn = null;
-        public bool? IsUserLoggedIn
+        private string isUserLoggedIn = null;
+        public string IsUserLoggedIn
         {
             get
             {
-                if (isUserLoggedIn == null)
+                if (isUserLoggedIn is null)
                 {
-                    isUserLoggedIn = accountClient.GetIsUserLoggedIn();
+                    isUserLoggedIn = accountClient.GetIsUserLoggedIn().ToString();
                 }
 
                 return isUserLoggedIn;
@@ -275,7 +275,7 @@ namespace JastUsaLibrary
             if (!LoginEmail.IsNullOrEmpty() && !passwordBox.Password.IsNullOrEmpty())
             {
                 isUserLoggedIn = null;
-                IsUserLoggedIn = accountClient.Login(LoginEmail, passwordBox.Password);
+                IsUserLoggedIn = accountClient.Login(LoginEmail, passwordBox.Password).ToString();
             }
         }
 
