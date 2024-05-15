@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Net.Http;
 using FlowHttp.Constants;
 using JastUsaLibrary.ViewModels;
+using System.Threading;
 
 namespace JastUsaLibrary.Services
 {
@@ -93,18 +94,18 @@ namespace JastUsaLibrary.Services
             return false;
         }
 
-        public AuthenticationToken GetAuthenticationToken()
+        public AuthenticationToken GetAuthenticationToken(CancellationToken cancellationToken = default)
         {
             var authentication = LoadAuthentication();
             if (authentication != null)
             {
-                return GetAuthenticationToken(authentication);
+                return GetAuthenticationToken(authentication, false, cancellationToken);
             }
 
             return null;
         }
 
-        public AuthenticationToken GetAuthenticationToken(AuthenticationTokenRequest authentication, bool showErrors = false)
+        public AuthenticationToken GetAuthenticationToken(AuthenticationTokenRequest authentication, bool showErrors = false, CancellationToken cancellationToken = default)
         {
             var headers = new Dictionary<string, string>
             {
@@ -118,7 +119,7 @@ namespace JastUsaLibrary.Services
                 .WithContent(Serialization.ToJson(authentication), HttpContentTypes.Json)
                 .WithHeaders(headers);
 
-            var downloadStringResult = request.DownloadString();
+            var downloadStringResult = request.DownloadString(cancellationToken);
             if (downloadStringResult.IsSuccess)
             {
                 return Serialization.FromJson<AuthenticationToken>(downloadStringResult.Content);
@@ -142,7 +143,7 @@ namespace JastUsaLibrary.Services
             }
         }
 
-        public GameTranslationsResponse GetGameTranslations(AuthenticationToken authenticationToken, int translationId)
+        public GameTranslationsResponse GetGameTranslations(AuthenticationToken authenticationToken, int translationId, CancellationToken cancellationToken = default)
         {
             if (authenticationToken is null)
             {
@@ -159,7 +160,7 @@ namespace JastUsaLibrary.Services
             var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(translationsUrl)
                 .WithHeaders(headers);
-            var downloadStringResult = request.DownloadString();
+            var downloadStringResult = request.DownloadString(cancellationToken);
             if (!downloadStringResult.IsSuccess)
             {
                 return null;
@@ -194,10 +195,10 @@ namespace JastUsaLibrary.Services
             return response;
         }
 
-        internal List<JastProduct> GetGames(AuthenticationToken authenticationToken)
+        internal List<JastProduct> GetGames(AuthenticationToken authenticationToken, CancellationToken cancellationToken = default)
         {
             var products = new List<JastProduct>();
-            if (authenticationToken == null)
+            if (authenticationToken is null)
             {
                 return products;
             }
@@ -216,10 +217,10 @@ namespace JastUsaLibrary.Services
                 var request = HttpRequestFactory.GetHttpRequest()
                     .WithUrl(url)
                     .WithHeaders(headers);
-                var downloadStringResult = request.DownloadString();
+                var downloadStringResult = request.DownloadString(cancellationToken);
                 if (!downloadStringResult.IsSuccess)
                 {
-                    return null;
+                    return new List<JastProduct>();
                 }
 
                 var response = Serialization.FromJson<UserGamesResponse>(downloadStringResult.Content);
@@ -238,12 +239,12 @@ namespace JastUsaLibrary.Services
             return products;
         }
 
-        internal Task<Uri> GetAssetDownloadLinkAsync(GameLink gameLink)
+        internal Task<Uri> GetAssetDownloadLinkAsync(GameLink gameLink, CancellationToken cancellationToken = default)
         {
-            return Task.Run(() => GetAssetDownloadLink(gameLink));
+            return Task.Run(() => GetAssetDownloadLink(gameLink, cancellationToken));
         }
 
-        internal Uri GetAssetDownloadLink(GameLink gameLink)
+        internal Uri GetAssetDownloadLink(GameLink gameLink, CancellationToken cancellationToken = default)
         {
             var tokens = GetAuthenticationToken();
             if (tokens is null)
@@ -266,12 +267,12 @@ namespace JastUsaLibrary.Services
                 .WithPostHttpMethod()
                 .WithContent(jsonPostContent, HttpContentTypes.Json)
                 .WithHeaders(headers);
-            var downloadStringResult = request.DownloadString();
+            var downloadStringResult = request.DownloadString(cancellationToken);
             if (downloadStringResult.IsSuccess)
             {
                 return Serialization.FromJson<GenerateLinkResponse>(downloadStringResult.Content).Url;
             }
-            else
+            else if (!downloadStringResult.IsCancelled)
             {
                 playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOC_JUL_DialogMessageGenerateLinkError"), downloadStringResult.Error?.Message), "JAST USA Library");
                 logger.Warn(downloadStringResult.Error, $"Error while obtaining download link with params gameId {gameLink.GameId} and gameLinkId {gameLink.GameLinkId}");

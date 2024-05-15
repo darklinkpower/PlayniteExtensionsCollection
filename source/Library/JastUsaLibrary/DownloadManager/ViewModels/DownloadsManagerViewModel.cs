@@ -469,12 +469,6 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             var assetUri = GetAssetUri(downloadAsset, silent);
             if (assetUri is null)
             {
-                if (!silent)
-                {
-                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainAssetUrlFailFormat"), downloadAsset.Label);
-                    _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
-                }
-
                 return null;
             }
 
@@ -520,16 +514,24 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
 
             var text = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainingAssetUrlFormat"), downloadAsset.Label);
-            var progressOptions = new GlobalProgressOptions(text, false)
+            var progressOptions = new GlobalProgressOptions(text, true)
             {
-                IsIndeterminate = true,
+                IsIndeterminate = true
             };
 
             Uri uri = null;
+            var cancelled = false;
             _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                uri = _jastAccountClient.GetAssetDownloadLink(downloadAsset);
+                uri = _jastAccountClient.GetAssetDownloadLink(downloadAsset, a.CancelToken);
+                cancelled = a.CancelToken.IsCancellationRequested;
             }, progressOptions);
+
+            if (uri is null && !cancelled)
+            {
+                var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainAssetUrlFailFormat"), downloadAsset.Label);
+                _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
+            }
 
             return uri;
         }
@@ -961,7 +963,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             }
 
             var dialogText = "JAST USA Library" + "\n\n" + ResourceProvider.GetString("LOC_JUL_UpdatingGameDownloads");
-            var progressOptions = new GlobalProgressOptions(dialogText, false)
+            var progressOptions = new GlobalProgressOptions(dialogText, true)
             {
                 IsIndeterminate = true
             };
@@ -969,7 +971,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             ObservableCollection<JastAssetWrapper> assetsWrappers = null;
             _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var gameTranslations = _plugin.GetGameTranslations(SelectedGameWrapper.Game);
+                var gameTranslations = _plugin.GetGameTranslations(SelectedGameWrapper.Game, a.CancelToken);
                 if (gameTranslations is null)
                 {
                     return;

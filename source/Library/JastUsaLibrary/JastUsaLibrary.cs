@@ -26,6 +26,7 @@ using JastUsaLibrary.DownloadManager.Views;
 using System.Collections.ObjectModel;
 using JastUsaLibrary.ProgramsHelper;
 using PlayniteUtilitiesCommon;
+using System.Threading;
 
 namespace JastUsaLibrary
 {
@@ -322,14 +323,14 @@ namespace JastUsaLibrary
             _downloadsManagerViewModel.Dispose();
         }
 
-        public GameTranslationsResponse GetGameTranslations(Game game)
+        public GameTranslationsResponse GetGameTranslations(Game game, CancellationToken cancellationToken)
         {
             if (!FileSystem.FileExists(_userGamesCachePath))
             {
                 return null;
             }
 
-            var authenticationToken = _accountClient.GetAuthenticationToken();
+            var authenticationToken = _accountClient.GetAuthenticationToken(cancellationToken);
             PlayniteApi.Notifications.Remove("JastNotLoggedIn");
             if (authenticationToken is null) // User is not logged in
             {
