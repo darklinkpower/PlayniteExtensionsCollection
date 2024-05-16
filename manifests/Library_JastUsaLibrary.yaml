@@ -112,3 +112,12 @@ Packages:
     - 'Added: Extraction of compressed files now also supports RAR  files.'
     - 'Other: General fixes and improvements to the plugin functionality.'
     - 'Changed: Updated localizations for improved language support.'
+  - Version: 1.17
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.16_bb51b353/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_17.pext
+    Changelog:
+    - 'Changed: Pre-order suffix in not yet released titles will now be removed during game import and metadata download.'
+    - 'Changed: A store page screenshot will now be used as fallback when a background image is not available.'
+    - 'Fixed: Error during metadata download when the game does not have a release date available.'
+    - 'Fixed: Failing to obtain cover and background images during metadata download.'
