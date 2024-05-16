@@ -71,8 +71,17 @@ namespace JastUsaLibrary
                 metadata.CoverImage = new MetadataFile(string.Format(JastUrls.Web.JastMediaUrlTemplate, coverImage.Path));
             }
 
+            var nonStoreScreenshotsImageType = new List<string>
+            {
+                "TAIL_PACKAGE_THUMBNAIL_PRODUCT",
+                "TALL_SEARCH_CATALOG",
+                "PRODUCT_MINIATURE"
+            };
+
             var backgroundImage = productResponse.Images
-                .FirstOrDefault(x => x.ImageType.StartsWith("BACKGROUND_PRODUCT", StringComparison.InvariantCultureIgnoreCase));
+                .FirstOrDefault(x => x.ImageType.StartsWith("BACKGROUND_PRODUCT", StringComparison.InvariantCultureIgnoreCase))
+                               ?? productResponse.Images
+                .FirstOrDefault(x => !nonStoreScreenshotsImageType.Any(imgType => x.ImageType.StartsWith(imgType, StringComparison.InvariantCultureIgnoreCase)));
             if (backgroundImage != null)
             {
                 metadata.BackgroundImage = new MetadataFile(string.Format(JastUrls.Web.JastMediaUrlTemplate, backgroundImage.Path));
