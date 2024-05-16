@@ -32,30 +32,30 @@ namespace XboxMetadata.Services
             _settingsViewModel = settingsViewModel;
         }
 
-        public async Task<HttpContentResult<string>> ExecuteRequestAsync(FlowHttpRequest request)
+        private async Task<HttpContentResult<string>> ExecuteRequestAsync(FlowHttpRequest request, CancellationToken cancelToken)
         {
             await _requestLimiter;
-            return request.DownloadString();
+            return request.DownloadString(cancelToken);
         }
 
-        public HttpContentResult<string> ExecuteRequest(FlowHttpRequest request)
+        private HttpContentResult<string> ExecuteRequest(FlowHttpRequest request, CancellationToken cancelToken)
         {
-            return Task.Run(async () => await ExecuteRequestAsync(request)).Result;
+            return Task.Run(async () => await ExecuteRequestAsync(request, cancelToken)).Result;
         }
 
-        public List<Suggest> GetQuickGameSearchResults(string searchTerm)
+        public List<Suggest> GetQuickGameSearchResults(string searchTerm, CancellationToken cancelToken = default)
         {
-            return GetQuickSearchResults(searchTerm).Where(x => x.Source == "Game").ToList();
+            return GetQuickSearchResults(searchTerm, cancelToken).Where(x => x.Source == "Game").ToList();
         }
 
-        public List<Suggest> GetQuickSearchResults(string searchTerm)
+        public List<Suggest> GetQuickSearchResults(string searchTerm, CancellationToken cancelToken = default)
         {
             var results = new List<Suggest>();
             var requestUrl = string.Format(quickSearchTemplate,
                 _settingsViewModel.Settings.MarketLanguagePreference.GetStringValue(), quickSearchNumberOfResults, searchTerm.EscapeDataString());
             var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl);
-            var result = ExecuteRequest(request);
+            var result = ExecuteRequest(request, cancelToken);
             if (!result.IsSuccess)
             {
                 return results;
@@ -75,12 +75,12 @@ namespace XboxMetadata.Services
             return results;
         }
 
-        public List<ProductSummary> GetGameSearchResults(string searchTerm)
+        public List<ProductSummary> GetGameSearchResults(string searchTerm, CancellationToken cancelToken = default)
         {
-            return GetSearchResults(searchTerm, searchGameTypeParameter);
+            return GetSearchResults(searchTerm, searchGameTypeParameter, cancelToken);
         }
 
-        private List<ProductSummary> GetSearchResults(string searchTerm, string searchType)
+        private List<ProductSummary> GetSearchResults(string searchTerm, string searchType, CancellationToken cancelToken = default)
         {
             var requestUrl = string.Format(searchResultsUrlTemplate, searchType, _settingsViewModel.Settings.MarketLanguagePreference.GetStringValue());
             var headers = new Dictionary<string, string>
@@ -106,7 +106,7 @@ namespace XboxMetadata.Services
                 .WithContent(jsonBody, HttpContentTypes.Json);
 
             var results = new List<ProductSummary>();
-            var result = ExecuteRequest(request);
+            var result = ExecuteRequest(request, cancelToken);
             if (!result.IsSuccess)
             {
                 return results;

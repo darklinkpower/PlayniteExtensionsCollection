@@ -36,7 +36,7 @@ namespace MetacriticMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                var gameResults = metacriticService.GetGameSearchResults(options.GameData);
+                var gameResults = metacriticService.GetGameSearchResults(options.GameData, args.CancelToken);
                 if (!gameResults.HasItems())
                 {
                     return base.GetCriticScore(args);

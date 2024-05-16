@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using FlowHttp;
 using FlowHttp.Results;
+using System.Threading;
 
 namespace MetacriticMetadata.Services
 {
@@ -20,7 +21,7 @@ namespace MetacriticMetadata.Services
         private static readonly Playnite.SDK.ILogger logger = Playnite.SDK.LogManager.GetLogger();
         private const string searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
         private const string searchGameTemplate = @"https://www.metacritic.com/search/{0}/?category=13&page=1";
-        private const string searchGameApiTemplate = @"https://fandom-prod.apigee.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
+        private const string searchGameApiTemplate = @"https://internal-prod.apigee.fandom.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
         private static readonly Dictionary<string, string> defaultApiHeaders = new Dictionary<string, string>
         {
             {"Referer", @"https://www.metacritic.com"},
@@ -36,36 +37,36 @@ namespace MetacriticMetadata.Services
             this.settings = settings;
         }
 
-        public async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl)
+        private async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl, CancellationToken cancelToken)
         {
             await timeConstraint;
             return HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl)
                 .WithHeaders(defaultApiHeaders)
-                .DownloadString();
+                .DownloadString(cancelToken);
         }
 
-        public List<MetacriticSearchResult> GetGameSearchResults(Game game)
+        public List<MetacriticSearchResult> GetGameSearchResults(Game game, CancellationToken cancelToken = default)
         {
             var metacriticPlatformId = GetGamePlatformMetacriticId(game);
             if (metacriticPlatformId.IsNullOrEmpty() || true)
             {
-                return GetGameSearchResults(game.Name); //Fallback to search by name only
+                return GetGameSearchResults(game.Name, cancelToken); //Fallback to search by name only
             }
             else
             {
                 var requestUrl = string.Format(searchGameWithPlatformTemplate, game.Name.EscapeDataString(), metacriticPlatformId);
-                return GetSearchResults(requestUrl);
+                return GetSearchResults(requestUrl, cancelToken);
             }
         }
 
-        public List<MetacriticSearchResult> GetGameSearchResults(string gameName)
+        public List<MetacriticSearchResult> GetGameSearchResults(string gameName, CancellationToken cancelToken = default)
         {
             var requestUrl = string.Format(searchGameApiTemplate, gameName.EscapeDataString(), settings.ApiKey);
-            return GetSearchResults(requestUrl);
+            return GetSearchResults(requestUrl, cancelToken);
         }
 
-        private List<MetacriticSearchResult> GetSearchResults(string requestUrl)
+        private List<MetacriticSearchResult> GetSearchResults(string requestUrl, CancellationToken cancelToken)
         {
             var results = new List<MetacriticSearchResult>();
             if (settings.ApiKey.IsNullOrEmpty())
@@ -74,7 +75,7 @@ namespace MetacriticMetadata.Services
                 return results;
             }
 
-            var searchRequest = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
+            var searchRequest = Task.Run(async () => await ExecuteRequestAsync(requestUrl, cancelToken)).Result;
             if (!searchRequest.IsSuccess)
             {
                 return results;

@@ -35,7 +35,7 @@ namespace OpenCriticMetadata
         {
             if (options.IsBackgroundDownload)
             {
-                var gameResults = openCriticService.GetGameSearchResults(options.GameData.Name);
+                var gameResults = openCriticService.GetGameSearchResults(options.GameData.Name, args.CancelToken);
                 if (!gameResults.HasItems())
                 {
                     return base.GetCriticScore(args);
@@ -45,7 +45,7 @@ namespace OpenCriticMetadata
                 var resultMatch = gameResults.FirstOrDefault(x => x.Name.Normalize() == normalizedGameName);
                 if (resultMatch != null)
                 {
-                    var data = openCriticService.GetGameData(resultMatch);
+                    var data = openCriticService.GetGameData(resultMatch, args.CancelToken);
                     if (data != null)
                     {
                         return GetCriticScore(data);
@@ -78,7 +78,6 @@ namespace OpenCriticMetadata
             return openCriticService.GetGameSearchResults(gameName)
                 .Select(x => new GenericItemOption(x.Name, x.Id.ToString()))
                 .ToList();
-
         }
 
         private int? GetCriticScore(OpenCriticGameData data)

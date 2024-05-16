@@ -25,19 +25,19 @@ namespace OpenCriticMetadata.Services
             timeConstraint = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromMilliseconds(600));
         }
 
-        public async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl)
+        private async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl, CancellationToken cancelToken)
         {
             await timeConstraint;
             return HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl)
-                .WithHeaders(GetSearchHeaders())
-                .DownloadString();
+                .AddHeader("Referer", @"https://opencritic.com")
+                .DownloadString(cancelToken);
         }
 
-        public List<OpenCriticGameResult> GetGameSearchResults(string searchTerm)
+        public List<OpenCriticGameResult> GetGameSearchResults(string searchTerm, CancellationToken cancelToken = default)
         {
             var requestUrl = string.Format(searchGameTemplate, searchTerm.EscapeDataString());
-            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
+            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl, cancelToken)).Result;
             if (result.IsSuccess)
             {
                 return Serialization.FromJson<List<OpenCriticGameResult>>(result.Content);
@@ -48,15 +48,15 @@ namespace OpenCriticMetadata.Services
             }
         }
 
-        public OpenCriticGameData GetGameData(OpenCriticGameResult gameData)
+        public OpenCriticGameData GetGameData(OpenCriticGameResult gameData, CancellationToken cancelToken = default)
         {
-            return GetGameData(gameData.Id.ToString());
+            return GetGameData(gameData.Id.ToString(), cancelToken);
         }
 
-        public OpenCriticGameData GetGameData(string gameId)
+        public OpenCriticGameData GetGameData(string gameId, CancellationToken cancelToken = default)
         {
             var requestUrl = string.Format(getGameDataTemplate, gameId);
-            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl)).Result;
+            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl, cancelToken)).Result;
             if (result.IsSuccess)
             {
                 return Serialization.FromJson<OpenCriticGameData>(result.Content);
@@ -67,13 +67,5 @@ namespace OpenCriticMetadata.Services
             }
         }
 
-        private static Dictionary<string, string> GetSearchHeaders()
-        {
-            return new Dictionary<string, string> {
-                {
-                    "Referer", @"https://opencritic.com"
-                }
-            };
-        }
     }
 }
