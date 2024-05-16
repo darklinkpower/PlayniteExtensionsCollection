@@ -15,6 +15,7 @@
                 <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             </DataTemplate.Resources>
             <StackPanel VerticalAlignment="Center" Margin="0,0,0,0">
+                <Separator Margin="0,5,0,5" />
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Left" Text="{DynamicResource LOC_JUL_DownloadsDirectoryIs}" VerticalAlignment="Center" />
                     <Button DockPanel.Dock="Right" VerticalAlignment="Center" Margin="10,0,0,0"
@@ -106,15 +107,15 @@
             </StackPanel>
 
             <Expander Header="{DynamicResource LOC_JUL_JastDownloaderTabHeaderGames}" Margin="0,10,0,0" IsExpanded="True">
-                <ContentControl Margin="20,10,0,0" Content="{Binding Settings.GamesDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
+                <ContentControl Margin="20,0,0,0" Content="{Binding Settings.GamesDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
             </Expander>
 
             <Expander Header="{DynamicResource LOC_JUL_JastDownloaderTabHeaderPatches}" Margin="0,10,0,0" IsExpanded="True">
-                <ContentControl Margin="20,10,0,0" Content="{Binding Settings.PatchesDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
+                <ContentControl Margin="20,0,0,0" Content="{Binding Settings.PatchesDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
             </Expander>
 
             <Expander Header="{DynamicResource LOC_JUL_JastDownloaderTabHeaderExtras}" Margin="0,10,0,0" IsExpanded="True">
-                <ContentControl Margin="20,10,0,0" Content="{Binding Settings.ExtrasDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
+                <ContentControl Margin="20,0,0,0" Content="{Binding Settings.ExtrasDownloadSettings}" ContentTemplate="{StaticResource DownloadSettingsItemTemplate}"/>
             </Expander>
         </StackPanel>
     </ScrollViewer>
