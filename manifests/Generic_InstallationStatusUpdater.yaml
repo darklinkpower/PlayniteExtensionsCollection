@@ -319,3 +319,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Installation_Status_Updater_2_48.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.49
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.16_5924b15b/Installation_Status_Updater_2_49.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support.'

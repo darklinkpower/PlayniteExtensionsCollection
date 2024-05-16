@@ -99,3 +99,16 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.03.17_527a9df9/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_15.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.16
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.16_5924b15b/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_16.pext
+    Changelog:
+    - 'Added: New library manager view accessible from the sidebar, allowing you to view your games and their available downloads.'
+    - 'Added: Robust download manager enabling game, patch, and extra downloads with full support for queues, pausing, and resuming.'
+    - 'Added: Automatic installation of games in Playnite upon download completion.'
+    - 'Added: New installer that allows to select the game executable manually or to start the game download to install.'
+    - 'Added: New uninstaller with options to select which game files to delete during uninstallation.'
+    - 'Added: Extraction of compressed files now also supports RAR  files.'
+    - 'Other: General fixes and improvements to the plugin functionality.'
+    - 'Changed: Updated localizations for improved language support.'
