@@ -32,7 +32,7 @@ namespace JastUsaLibrary.Models
         public DateTime ReleaseDate { get; set; }
 
         [SerializationPropertyName("originalReleaseDate")]
-        public DateTime OriginalReleaseDate { get; set; }
+        public DateTime? OriginalReleaseDate { get; set; }
 
         [SerializationPropertyName("productTaxons")]
         public string[] ProductTaxons { get; set; }

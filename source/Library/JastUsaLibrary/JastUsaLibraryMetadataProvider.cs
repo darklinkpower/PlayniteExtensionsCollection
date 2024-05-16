@@ -41,9 +41,13 @@ namespace JastUsaLibrary
             {
                 Name = productResponse.Name,
                 Description = productResponse.Description,
-                ReleaseDate = new ReleaseDate(productResponse.OriginalReleaseDate),
                 Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
             };
+
+            if (productResponse.OriginalReleaseDate.HasValue)
+            {
+                metadata.ReleaseDate = new ReleaseDate(productResponse.OriginalReleaseDate.Value);
+            }
 
             var developer = GetSingleAttributeMatch(productResponse, "studio");
             if (!developer.IsNullOrEmpty())
