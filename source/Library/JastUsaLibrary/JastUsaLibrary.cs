@@ -128,9 +128,13 @@ namespace JastUsaLibrary
                     continue;
                 }
 
+                var gameName = jastProduct.ProductVariant.ProductName
+                    .RemoveTrademarks()
+                    .Replace("[PRE-ORDER]", string.Empty, StringComparison.InvariantCultureIgnoreCase)
+                    .Trim();
                 var game = new GameMetadata
                 {
-                    Name = jastProduct.ProductVariant.ProductName.RemoveTrademarks(),
+                    Name = gameName,
                     GameId = jastProduct.ProductVariant.GameId.ToString(),
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                     Source = new MetadataNameProperty("JAST USA")
