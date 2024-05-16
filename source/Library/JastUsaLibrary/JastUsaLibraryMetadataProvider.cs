@@ -39,7 +39,10 @@ namespace JastUsaLibrary
             var productResponse = Serialization.FromJson<ProductResponse>(downloadedString.Content);
             var metadata = new GameMetadata()
             {
-                Name = productResponse.Name,
+                Name = productResponse.Name
+                    .RemoveTrademarks()
+                    .Replace("[PRE-ORDER]", string.Empty, StringComparison.InvariantCultureIgnoreCase)
+                    .Trim(),
                 Description = productResponse.Description,
                 Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
             };
@@ -61,13 +64,15 @@ namespace JastUsaLibrary
                 metadata.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(publisher) };
             }
 
-            var coverImage = productResponse.Images.FirstOrDefault(x => x.ImageType == "TAIL_PACKAGE_THUMBNAIL_PRODUCT_en_US");
+            var coverImage = productResponse.Images
+                .FirstOrDefault(x => x.ImageType.StartsWith("TAIL_PACKAGE_THUMBNAIL_PRODUCT", StringComparison.InvariantCultureIgnoreCase));
             if (coverImage != null)
             {
                 metadata.CoverImage = new MetadataFile(string.Format(JastUrls.Web.JastMediaUrlTemplate, coverImage.Path));
             }
 
-            var backgroundImage = productResponse.Images.FirstOrDefault(x => x.ImageType == "BACKGROUND_PRODUCT_en_US");
+            var backgroundImage = productResponse.Images
+                .FirstOrDefault(x => x.ImageType.StartsWith("BACKGROUND_PRODUCT", StringComparison.InvariantCultureIgnoreCase));
             if (backgroundImage != null)
             {
                 metadata.BackgroundImage = new MetadataFile(string.Format(JastUrls.Web.JastMediaUrlTemplate, backgroundImage.Path));
