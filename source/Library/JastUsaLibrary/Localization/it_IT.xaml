@@ -7,21 +7,20 @@
     <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">L'utente è autenticato</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Richiede autenticazione</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Controllo dello stato di autenticazione…</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsGamesDownloadsDirectoryLabel">Cartella di download dei giochi:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsPatchesDownloadsDirectoryLabel">Cartella di download delle patch:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsExtrasDownloadsDirectoryLabel">Cartella di download degli extra:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Autenticazione</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Downloads</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Cartella dei download:</sys:String>
+    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Cartella di estrazione:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Sfoglia…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Avvia automaticamente i download all'avvio</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">Estrai automaticamente i file compressi quando finiscono di scaricare</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDeleteAfterExtraction">Elimina i file dopo l'estrazione</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsMaxConcurrentDownloads">Download simultanei massimi:</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageNotAuthenticated">L'utente non è autenticato</sys:String>
-    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">Installation and uninstallation functionality is not available in Playnite Fullscreen Mode. Please switch to Desktop Mode to perform these actions.</sys:String>
+    <sys:String x:Key="LOC_JUL_MessageInstallUnavailableFsMode">La funzionalità di installazione e disinstallazione non è disponibile nella modalità schermo intero di Playnite. Passa alla modalità desktop per eseguire queste azioni.</sys:String>
     <sys:String x:Key="LOC_JUL_LibraryGames">Libreria di giochi</sys:String>
     <sys:String x:Key="LOC_JUL_UpdateGameDownloads">Aggiorna download</sys:String>
-    <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">Updating entry downloads…</sys:String>
+    <sys:String x:Key="LOC_JUL_UpdatingGameDownloads">Sto aggiornando le voci scaricate…</sys:String>
     <sys:String x:Key="LOC_JUL_AddToDownloads">Aggiungi ai download</sys:String>
     <sys:String x:Key="LOC_JUL_DeveloperIs">Sviluppatore:</sys:String>
     <sys:String x:Key="LOC_JUL_PublisherIs">Editore:</sys:String>
@@ -55,7 +54,7 @@
     <sys:String x:Key="LOC_JUL_UnselectAllLabel">Deseleziona tutto</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Scarica</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Seleziona gioco installato</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Sfoglia e scegli l'eseguibile del gioco…</sys:String>
     <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Mostra gioco nella libreria</sys:String>
     <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Sfoglia e seleziona il file eseguibile del gioco, o scegli il download del gioco per iniziare l'installazione.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">Scarica e installa</sys:String>
@@ -70,6 +69,7 @@
     <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">Apri cartella di download</sys:String>
 
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Download del gioco</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Giochi</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Patch</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Extra</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsColumName">Nome</sys:String>
@@ -92,7 +92,7 @@
     <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Impossibile recuperare il link di download per {0}. Assicurarsi di aver effettuato l'accesso tramite le impostazioni di estensione.</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Recupero download per {0}…</sys:String>
     <sys:String x:Key="LOC_JUL_StoppingDownloads">Interruzione dei download…</sys:String>
-    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Please wait while ongoing compressed file extractions are completed…</sys:String>
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Attendi mentre le estrazioni dei file compressi in corso sono completate…</sys:String>
     <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} è già nell'elenco dei download.</sys:String>
     <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">Il file di download &quot;{0}&quot; esiste già in &quot;{1}&quot;.</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">File estratti per il file &quot;{0}&quot; rilevati in &quot;{1}&quot;.

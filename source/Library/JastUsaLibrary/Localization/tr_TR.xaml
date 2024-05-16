@@ -7,11 +7,10 @@
     <sys:String x:Key="LOC_JUL_SettingsUserIsAuthenticatedLabel">Kullanıcının kimliği doğrulandı</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Kimlik doğrulama gerektirir</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Kimlik doğrulama durumu kontrol ediliyor…</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsGamesDownloadsDirectoryLabel">Oyun indirme dizini:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsPatchesDownloadsDirectoryLabel">Yama indirme dizini:</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsExtrasDownloadsDirectoryLabel">Ekstra indirme dizini:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Kimlik Doğrulaması</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">İndirilenler</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Downloads directory:</sys:String>
+    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Extract directory:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Göz at…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Başlangıçta indirmeleri otomatik olarak başlat</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">İndirme işlemi bittiğinde sıkıştırılmış dosyaları otomatik olarak çıkart</sys:String>
@@ -70,6 +69,7 @@
     <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">İndirilenler dizinini aç</sys:String>
 
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Oyun indirmeleri</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Games</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Yamalar</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Ekstralar</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsColumName">Ad</sys:String>
