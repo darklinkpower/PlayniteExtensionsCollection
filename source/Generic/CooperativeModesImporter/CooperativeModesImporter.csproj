@@ -59,8 +59,14 @@
     <Compile Include="..\..\Common\PluginsCommon\Encryption.cs">
       <Link>Shared\PluginsCommon\Encryption.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\CharExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Extensions\EnumExtensions.cs">
       <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\LongExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\LongExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Extensions\StringExtensions.cs">
       <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
