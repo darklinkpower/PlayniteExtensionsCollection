@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using JastUsaLibrary.ProgramsHelper;
 using PlayniteUtilitiesCommon;
 using System.Threading;
+using PluginsCommon.Extensions;
 
 namespace JastUsaLibrary
 {
@@ -39,6 +40,7 @@ namespace JastUsaLibrary
         public override Guid Id { get; } = Guid.Parse("d407a620-5953-4ca4-a25c-8194c8559381");
         public override string LibraryIcon { get; }
 
+        private readonly string _sidebarBaseItemTitle;
         private readonly SidebarItem _sidebarLibraryManagerView;
 
         public override string Name => "JAST USA";
@@ -62,9 +64,10 @@ namespace JastUsaLibrary
             };
 
             LibraryIcon = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"icon.png");
+            _sidebarBaseItemTitle = ResourceProvider.GetString("LOC_JUL_JastLibraryManager");
             _sidebarLibraryManagerView = new SidebarItem
             {
-                Title = ResourceProvider.GetString("LOC_JUL_JastLibraryManager"),
+                Title = _sidebarBaseItemTitle,
                 Type = SiderbarItemType.View,
                 Icon = LibraryIcon,
                 ProgressValue = 0,
@@ -90,6 +93,15 @@ namespace JastUsaLibrary
             else
             {
                 _sidebarLibraryManagerView.ProgressValue = e.TotalDownloadProgress.Value;
+                _sidebarLibraryManagerView.Title = _sidebarBaseItemTitle
+                    + Environment.NewLine + Environment.NewLine
+                    + $"{e.TotalBytesDownloaded.Value.ToReadableSize()}/{e.TotalBytesToDownload.Value.ToReadableSize()}"
+                    + $" ({e.TotalDownloadProgress.Value:F2}%)";
+            }
+
+            if (_sidebarLibraryManagerView.ProgressValue == 0 || _sidebarLibraryManagerView.ProgressValue == 100)
+            {
+                _sidebarLibraryManagerView.Title = _sidebarBaseItemTitle;
             }
         }
 

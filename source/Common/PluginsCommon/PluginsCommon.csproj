@@ -61,6 +61,7 @@
     <Compile Include="Encryption.cs" />
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="FileSystem.cs" />
     <Compile Include="GlobalCommands.cs" />
     <Compile Include="Guard.cs" />

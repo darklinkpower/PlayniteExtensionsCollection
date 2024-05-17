@@ -285,7 +285,7 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
 
                 totalBytesDownloaded = _downloadsList.Sum(x => x.DownloadData.ProgressSize);
                 totalBytesToDownload = _downloadsList.Sum(x => x.DownloadData.TotalSize);
-                totalDownloadProgress = totalBytesDownloaded.Value * 100 / totalBytesToDownload.Value;
+                totalDownloadProgress = (double)totalBytesDownloaded.Value * 100 / totalBytesToDownload.Value;
             }
 
             OnGlobalProgressChanged(totalItems, averageProgress, totalBytesToDownload, totalBytesDownloaded, totalDownloadProgress);

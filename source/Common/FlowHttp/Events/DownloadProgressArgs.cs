@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PluginsCommon.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,17 +52,17 @@ namespace FlowHttp.Events
         /// <summary>
         /// Gets the number of bytes received during the download in a human-readable format (e.g., "2.5 GB").
         /// </summary>
-        public string FormattedBytesReceived => FormatBytes(BytesReceived);
+        public string FormattedBytesReceived => BytesReceived.ToReadableSize();
 
         /// <summary>
         /// Gets the total number of bytes to receive for the download in a human-readable format (e.g., "5 MB").
         /// </summary>
-        public string FormattedTotalBytesToReceive => FormatBytes(TotalBytesToReceive);
+        public string FormattedTotalBytesToReceive => TotalBytesToReceive.ToReadableSize();
 
         /// <summary>
         /// Gets the download speed in bytes per second in a human-readable format (e.g., "5 MB/s").
         /// </summary>
-        public string FormattedDownloadSpeedPerSecond => !IsComplete ? $"{FormatBytes(DownloadSpeedBytesPerSecond)}/s" : string.Empty;
+        public string FormattedDownloadSpeedPerSecond => !IsComplete ? $"{DownloadSpeedBytesPerSecond.ToReadableSize()}/s" : string.Empty;
 
         public bool IsComplete => TotalBytesToReceive == BytesReceived;
 
@@ -112,45 +113,6 @@ namespace FlowHttp.Events
             double remainingSeconds = remainingBytes / DownloadSpeedBytesPerSecond;
             var remainingTime = TimeSpan.FromSeconds(remainingSeconds);
             return remainingTime;
-        }
-
-        /// <summary>
-        /// Formats a byte value into a human-readable format (e.g., "2.5 GB").
-        /// </summary>
-        /// <param name="bytes">The number of bytes to format.</param>
-        /// <returns>The formatted byte value as a string.</returns>
-        private static string FormatBytes(long bytes)
-        {
-            long absolute_i = (bytes < 0 ? -bytes : bytes);
-            string suffix;
-            double readable;
-            if (absolute_i >= 0x10000000000) // Terabyte
-            {
-                suffix = "TB";
-                readable = (bytes >> 30);
-            }
-            else if (absolute_i >= 0x40000000) // Gigabyte
-            {
-                suffix = "GB";
-                readable = (bytes >> 20);
-            }
-            else if (absolute_i >= 0x100000) // Megabyte
-            {
-                suffix = "MB";
-                readable = (bytes >> 10);
-            }
-            else if (absolute_i >= 0x400) // Kilobyte
-            {
-                suffix = "KB";
-                readable = bytes;
-            }
-            else
-            {
-                return bytes.ToString("0 B"); // Byte
-            }
-
-            readable /= 1024;
-            return readable.ToString("0.## ") + suffix;
         }
     }
 }
