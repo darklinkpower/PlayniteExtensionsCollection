@@ -27,7 +27,6 @@ using System.Collections.ObjectModel;
 using JastUsaLibrary.ProgramsHelper;
 using PlayniteUtilitiesCommon;
 using System.Threading;
-using PluginsCommon.Extensions;
 
 namespace JastUsaLibrary
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PluginsCommon.Extensions
+namespace System
 {
     public static class LongExtensions
     {
