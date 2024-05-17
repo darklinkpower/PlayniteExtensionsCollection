@@ -297,7 +297,8 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
             {
                 if (downloadData.Status == DownloadItemStatus.Paused ||
                     downloadData.Status == DownloadItemStatus.Failed ||
-                    downloadData.Status == DownloadItemStatus.Canceled)
+                    downloadData.Status == DownloadItemStatus.Canceled ||
+                    downloadData.Status == DownloadItemStatus.Downloading)
                 {
                     downloadData.Status = DownloadItemStatus.Idle;
                 }
