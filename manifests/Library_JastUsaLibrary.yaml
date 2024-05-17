@@ -121,3 +121,10 @@ Packages:
     - 'Changed: A store page screenshot will now be used as fallback when a background image is not available.'
     - 'Fixed: Error during metadata download when the game does not have a release date available.'
     - 'Fixed: Failing to obtain cover and background images during metadata download.'
+  - Version: 1.18
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.16_4ca69c92/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_18.pext
+    Changelog:
+    - 'Added: The tooltip shown when hovering the library manager icon in the sidebar will now display the global download progress.'
+    - 'Fixed: Being unable to start downloads if they were not properly stopped during the previous Playnite execution.'
