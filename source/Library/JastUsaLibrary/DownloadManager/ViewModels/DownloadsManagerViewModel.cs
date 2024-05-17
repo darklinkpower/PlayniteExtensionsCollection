@@ -809,14 +809,9 @@ namespace JastUsaLibrary.DownloadManager.ViewModels
                     return;
                 }
 
-                var downloadedFilePath = downloadItem.DownloadData.DownloadDirectory;
-                var satinizedDirectory = Paths.ReplaceInvalidCharacters(downloadItem.DownloadData.Name);
-                extractDirectory = Path.Combine(downloadSettings.ExtractDirectory, satinizedDirectory);
-                if (!FileSystem.DirectoryExists(extractDirectory))
-                {
-                    FileSystem.CreateDirectory(extractDirectory);
-                }
-
+                var gameCommonDirectory = Path.GetFileName(Path.GetDirectoryName(filePath));
+                var satinizedItemDirectory = Paths.ReplaceInvalidCharacters(downloadItem.DownloadData.Name);
+                extractDirectory = Path.Combine(downloadSettings.ExtractDirectory, gameCommonDirectory, satinizedItemDirectory);
                 downloadItem.DownloadData.Status = DownloadItemStatus.Extracting;
                 if (isZipFile)
                 {
