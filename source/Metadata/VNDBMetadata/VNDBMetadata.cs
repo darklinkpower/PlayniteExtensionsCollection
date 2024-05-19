@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
 using VNDBMetadata.VndbDomain.Common.Enums;
 using VNDBMetadata.VndbDomain.Services;
 
@@ -72,10 +73,14 @@ namespace VNDBMetadata
             //var producerQueryResult = vndbService.ExecutePostRequestAsync(producerQuery).GetAwaiter().GetResult();
 
             // Staff
-            var staffFilter = StaffFilterFactory.Search.EqualTo("Hira");
-            var staffQuery = new StaffRequestQuery(staffFilter);
-            var staffQueryResult = vndbService.ExecutePostRequestAsync(staffQuery).GetAwaiter().GetResult();
+            //var staffFilter = StaffFilterFactory.Search.EqualTo("Hira");
+            //var staffQuery = new StaffRequestQuery(staffFilter);
+            //var staffQueryResult = vndbService.ExecutePostRequestAsync(staffQuery).GetAwaiter().GetResult();
 
+            // Trait
+            var traitFilter = TraitFilterFactory.Search.EqualTo("a");
+            var traitQuery = new TraitRequestQuery(traitFilter);
+            var traitQueryResult = vndbService.ExecutePostRequestAsync(traitQuery).GetAwaiter().GetResult();
             var sss = "";
 
 

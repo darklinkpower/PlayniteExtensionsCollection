@@ -225,9 +225,12 @@
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffFilterFactory.cs" />
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffRequestSortEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffConstants.cs" />
-    <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffRoleConstants.cs" />
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffRoleEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\TagAggregate\TagLevelEnum.cs" />
+    <Compile Include="VndbDomain\Aggregates\TraitAggregate\Trait.cs" />
+    <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitRequestSortEnum.cs" />
+    <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitRequestQuery.cs" />
+    <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitFilterFactory.cs" />
     <Compile Include="VndbDomain\Common\Attributes\StringRepresentationAttribute.cs" />
     <Compile Include="VndbDomain\Common\Constants\Aliases.cs" />
     <Compile Include="VndbDomain\Common\Converters\StringRepresentationEnumConverter.cs" />

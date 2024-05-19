@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
 using VNDBMetadata.VndbDomain.Common.Models;
 
 namespace VNDBMetadata.VndbDomain.Services
@@ -103,5 +104,16 @@ namespace VNDBMetadata.VndbDomain.Services
             return deserializedObject;
         }
 
+        public async Task<VndbDatabaseQueryReponse<Trait>> ExecutePostRequestAsync(TraitRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteRequestAsync(postTraitEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            if (result is null)
+            {
+                return null;
+            }
+
+            var deserializedObject = JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Trait>>(result);
+            return deserializedObject;
+        }
     }
 }

@@ -71,5 +71,14 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
             /// </summary>
             public const string CharCount = "char_count";
         }
+
+        public static class RequestSort
+        {
+            public const string Id = "id";
+            public const string Name = "name";
+            public const string CharCount = "char_count";
+            public const string SearchRank = "searchrank";
+        }
+
     }
 }
