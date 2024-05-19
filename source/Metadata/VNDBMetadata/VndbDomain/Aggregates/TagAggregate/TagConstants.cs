@@ -8,7 +8,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 {
     public static class TagConstants
     {
-        public static class Sorting
+        public static class RequestSort
         {
             /// <summary>
             /// Id
@@ -94,20 +94,20 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
             public const string VnCount = "vn_count";
         }
 
-        public static class Category
+        public static class TagCategory
         {
             /// <summary>
-            /// Content
+            /// Represents the content category.
             /// </summary>
             public const string Content = "cont";
 
             /// <summary>
-            /// Sexual Content
+            /// Represents the sexual content category.
             /// </summary>
             public const string SexualContent = "ero";
 
             /// <summary>
-            /// Technical
+            /// Represents the technical tags category.
             /// </summary>
             public const string Technical = "tech";
         }
