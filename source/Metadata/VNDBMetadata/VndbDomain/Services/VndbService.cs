@@ -11,6 +11,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
@@ -123,6 +124,17 @@ namespace VNDBMetadata.VndbDomain.Services
             }
 
             return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Tag>>(result);
+        }
+
+        public async Task<VndbDatabaseQueryReponse<Character>> ExecutePostRequestAsync(CharacterRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteRequestAsync(postCharacterEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            if (result is null)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Character>>(result);
         }
     }
 }

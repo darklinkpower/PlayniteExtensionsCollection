@@ -67,7 +67,8 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
             var stringValue = reader.Value?.ToString();
             if (string.IsNullOrEmpty(stringValue))
             {
-                throw new JsonSerializationException($"Invalid value for {typeof(TEnum).Name}.");
+                //throw new JsonSerializationException($"Invalid value for {typeof(TEnum).Name}.");
+                return null;
             }
 
             if (StringToEnumMap.TryGetValue(stringValue, out var enumValue))

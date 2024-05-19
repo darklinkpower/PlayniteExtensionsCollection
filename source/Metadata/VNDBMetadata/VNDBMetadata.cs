@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
@@ -83,11 +84,15 @@ namespace VNDBMetadata
             //var traitQuery = new TraitRequestQuery(traitFilter);
             //var traitQueryResult = vndbService.ExecutePostRequestAsync(traitQuery).GetAwaiter().GetResult();
 
-            // Tag
-            var tagFilter = TagFilterFactory.Category.EqualTo(TagCategoryEnum.Technical);
-            var tagQuery = new TagRequestQuery(tagFilter);
-            var tagQueryResult = vndbService.ExecutePostRequestAsync(tagQuery).GetAwaiter().GetResult();
+            //// Tag
+            //var tagFilter = TagFilterFactory.Category.EqualTo(TagCategoryEnum.Technical);
+            //var tagQuery = new TagRequestQuery(tagFilter);
+            //var tagQueryResult = vndbService.ExecutePostRequestAsync(tagQuery).GetAwaiter().GetResult();
 
+            // Character
+            //var characterFilter = CharacterFilterFactory.Cup.EqualTo(CharacterCupSizeEnum.AAA);
+            //var characterQuery = new CharacterRequestQuery(characterFilter);
+            //var characterQueryResult = vndbService.ExecutePostRequestAsync(characterQuery).GetAwaiter().GetResult();
 
             var sss = "";
 
