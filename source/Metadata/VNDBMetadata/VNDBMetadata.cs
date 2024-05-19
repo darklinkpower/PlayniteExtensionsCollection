@@ -14,14 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using VNDBMetadata.Models;
-using VNDB.ApiConstants;
-using FlowHttp;
-using VNDBMetadata.VNDB.Requests.Post;
-using VNDBMetadata.Filters;
-using VNDBMetadata.VNDB.Enums;
-using VNDBMetadata.Queries;
-using VNDBMetadata.Services;
+using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Common.Enums;
+using VNDBMetadata.VndbDomain.Services;
 
 namespace VNDBMetadata
 {
@@ -68,15 +63,15 @@ namespace VNDBMetadata
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             var filterOne = ProducerFilterFactory.Search.EqualTo("Hira");
-            var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnums.English);
+            var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);
             var complexFilter = ProducerFilterFactory.And(filterOne, filterTwo);
 
             var filterOneJson = filterOne.ToJsonString();
             var filterTwoJson = filterTwo.ToJsonString();
             var complexFilterJson = complexFilter.ToJsonString();
 
-            var simpleQuery = new PostProducerQuery(filterOne);
-            var complexQuery = new PostProducerQuery(complexFilter);
+            var simpleQuery = new ProducerRequestQuery(filterOne);
+            var complexQuery = new ProducerRequestQuery(complexFilter);
 
             var simpleQuerySerialized = Serialization.ToJson(simpleQuery);
             var complexQuerySerialized = Serialization.ToJson(complexQuery);

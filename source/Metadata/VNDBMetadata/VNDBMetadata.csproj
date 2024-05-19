@@ -218,43 +218,40 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="Constants.cs" />
-    <Compile Include="DeserializationCommonConverters\StringRepresentationEnumConverter.cs" />
-    <Compile Include="Fields\CharacterFields.cs" />
-    <Compile Include="Fields\ProducerFields.cs" />
-    <Compile Include="Fields\ReleaseFields.cs" />
-    <Compile Include="Fields\StaffFields.cs" />
-    <Compile Include="Fields\TagFields.cs" />
-    <Compile Include="Fields\TraitFields.cs" />
-    <Compile Include="Fields\UListFields.cs" />
-    <Compile Include="Fields\VisualNovelFields.cs" />
-    <Compile Include="Fields\VnFields.cs" />
-    <Compile Include="FiltersExpression.cs" />
-    <Compile Include="Filters\FiltersFactoryBase.cs" />
-    <Compile Include="Filters\ProducerFilterFactory.cs" />
-    <Compile Include="Filters\Vn.cs" />
-    <Compile Include="Interfaces\IFilter.cs" />
-    <Compile Include="Filters\ComplexFilterBase.cs" />
-    <Compile Include="Filters\SimpleFilterBase.cs" />
-    <Compile Include="Models\TagVndb.cs" />
-    <Compile Include="Models\Trait.cs" />
-    <Compile Include="Models\VisualNovelFieldsSettings.cs" />
-    <Compile Include="Queries\PostProducerQuery.cs" />
-    <Compile Include="Queries\PostQueryBase.cs" />
-    <Compile Include="Requests\PostProducer\ProducerResponse.cs" />
-    <Compile Include="Sort\ProducerSort.cs" />
-    <Compile Include="VNDB\ApiConstants\DatabaseDumps.cs" />
-    <Compile Include="VNDB\ApiConstants\ExtLinks.cs" />
-    <Compile Include="VNDB\ApiConstants\OperatorFlags.cs" />
-    <Compile Include="VNDB\ApiConstants\QueryEnums.cs" />
-    <Compile Include="VNDB\ApiConstants\Operators.cs" />
-    <Compile Include="VNDB\ApiConstants\TraitConstants.cs" />
-    <Compile Include="VNDB\ApiConstants\TagConstants.cs" />
-    <Compile Include="VNDB\ApiConstants\CharacterConstants.cs" />
-    <Compile Include="VNDB\ApiConstants\ProducerConstants.cs" />
-    <Compile Include="VNDB\ApiConstants\ReleaseConstants.cs" />
-    <Compile Include="VNDB\ApiConstants\VnConstants.cs" />
-    <Compile Include="Services\VndbService.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerRequestSortEnum.cs" />
+    <Compile Include="VndbDomain\Aggregates\TagAggregate\TagLevelEnum.cs" />
+    <Compile Include="VndbDomain\Common\Attributes\StringRepresentationAttribute.cs" />
+    <Compile Include="VndbDomain\Common\Converters\StringRepresentationEnumConverter.cs" />
+    <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterRequestsFieldsFlags.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerRequestFieldsFlags.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseRequestFieldsFlags.cs" />
+    <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffFields.cs" />
+    <Compile Include="VndbDomain\Aggregates\TagAggregate\TagRequestFieldsFlags.cs" />
+    <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitRequestFieldsFlags.cs" />
+    <Compile Include="VndbDomain\Aggregates\UList\UListFields.cs" />
+    <Compile Include="VndbDomain\Aggregates\VnAggregate\VnRequestFieldsFlags.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerFilterFactory.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerResponseDto.cs" />
+    <Compile Include="VndbDomain\Common\Enums\ExtLinkEnum.cs" />
+    <Compile Include="VndbDomain\Common\Enums\SpoilerLevel.cs" />
+    <Compile Include="VndbDomain\Common\Interfaces\IFilter.cs" />
+    <Compile Include="VndbDomain\Common\Filters\ComplexFilterBase.cs" />
+    <Compile Include="VndbDomain\Common\Filters\SimpleFilterBase.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerRequestQuery.cs" />
+    <Compile Include="VndbDomain\Common\Queries\RequestQueryBase.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\Producer.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerConstants.cs" />
+    <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerType.cs" />
+    <Compile Include="VndbDomain\Common\Constants\DatabaseDumps.cs" />
+    <Compile Include="VndbDomain\Common\Constants\ExtLinks.cs" />
+    <Compile Include="VndbDomain\Common\Constants\QueryEnums.cs" />
+    <Compile Include="VndbDomain\Common\Constants\Operators.cs" />
+    <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitConstants.cs" />
+    <Compile Include="VndbDomain\Aggregates\TagAggregate\TagConstants.cs" />
+    <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterConstants.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseConstants.cs" />
+    <Compile Include="VndbDomain\Aggregates\VnAggregate\VnConstants.cs" />
+    <Compile Include="VndbDomain\Services\VndbService.cs" />
     <Compile Include="VndbCacheManager.cs" />
     <Compile Include="VNDBMetadata.cs" />
     <Compile Include="VNDBMetadataProvider.cs" />
@@ -263,16 +260,10 @@
       <DependentUpon>VNDBMetadataSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VNDB\Enums\EnumUtils.cs" />
-    <Compile Include="VNDB\Enums\ExtLinks.cs" />
-    <Compile Include="VNDB\Enums\LanguageEnums.cs" />
-    <Compile Include="VNDB\Enums\Medium.cs" />
-    <Compile Include="VNDB\Enums\PlatformEnums.cs" />
-    <Compile Include="VNDB\Enums\ProducerEnums.cs" />
-    <Compile Include="VNDB\Enums\Spoiler.cs" />
-    <Compile Include="VNDB\Models\PredicateBuilders.cs" />
-    <Compile Include="VNDB\Models\Predicates.cs" />
-    <Compile Include="VNDB\Requests\Post\VnRequests.cs" />
+    <Compile Include="VndbDomain\Common\Utilities\EnumUtils.cs" />
+    <Compile Include="VndbDomain\Common\Enums\LanguageEnum.cs" />
+    <Compile Include="VndbDomain\Common\Enums\MediumEnum.cs" />
+    <Compile Include="VndbDomain\Common\Enums\PlatformEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -301,7 +292,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="VndbDomain\Common\Exceptions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -95,14 +95,14 @@ namespace VNDBMetadata
 
         private void InitializeCaches()
         {
-            var tagsFilePath = Path.Combine(pluginDataPath, TagsFileName);
-            var traitsFilePath = Path.Combine(pluginDataPath, TraitsFileName);
+            //var tagsFilePath = Path.Combine(pluginDataPath, TagsFileName);
+            //var traitsFilePath = Path.Combine(pluginDataPath, TraitsFileName);
 
-            var tagsList = FileSystem.FileExists(tagsFilePath) ? Serialization.FromJsonFile<List<Models.Tag>>(tagsFilePath) : new List<Models.Tag>();
-            var traitsList = FileSystem.FileExists(traitsFilePath) ? Serialization.FromJsonFile<List<Models.Trait>>(traitsFilePath) : new List<Models.Trait>();
+            //var tagsList = FileSystem.FileExists(tagsFilePath) ? Serialization.FromJsonFile<List<Models.Tag>>(tagsFilePath) : new List<Models.Tag>();
+            //var traitsList = FileSystem.FileExists(traitsFilePath) ? Serialization.FromJsonFile<List<Models.Trait>>(traitsFilePath) : new List<Models.Trait>();
 
-            tagsCache = tagsList.ToDictionary(x => x.Id, x => x.Name);
-            traitsCache = traitsList.ToDictionary(x => x.Id, x => x.Name);
+            //tagsCache = tagsList.ToDictionary(x => x.Id, x => x.Name);
+            //traitsCache = traitsList.ToDictionary(x => x.Id, x => x.Name);
         }
 
         public string GetTagNameById(int id)
