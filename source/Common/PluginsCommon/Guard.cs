@@ -36,6 +36,24 @@ namespace PluginsCommon
             }
 
             /// <summary>
+            /// Ensures that the specified argument value is not null for nullable value types.
+            /// </summary>
+            /// <typeparam name="T">The type of the argument.</typeparam>
+            /// <param name="argumentValue">The argument value to check.</param>
+            /// <param name="message">The error message to include in the exception if the argument is null (optional).</param>
+            /// <param name="argumentName">The name of the argument (automatically populated).</param>
+            /// <returns>The validated argument value.</returns>
+            public static T Null<T>(T? argumentValue, string message = null, [CallerMemberName] string argumentName = null) where T : struct
+            {
+                if (argumentValue is null)
+                {
+                    throw new ArgumentNullException(message ?? "Argument cannot be null.", argumentName);
+                }
+
+                return argumentValue.Value;
+            }
+
+            /// <summary>
             /// Ensures that the specified string argument is not null or empty.
             /// </summary>
             /// <param name="argumentValue">The string argument to check.</param>

@@ -1,40 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.Interfaces;
+using VNDBMetadata.VNDB.Enums;
 
-namespace VNDBMetadata.Models
+namespace VNDBMetadata.Filters
 {
-    public class SimplePredicate : IPredicate
+    public abstract class SimpleFilterBase : IFilter
     {
         public readonly string Name;
         public readonly string Operator;
         public readonly object Value;
 
-        public SimplePredicate(string name, string op, string value)
+        public SimpleFilterBase(string name, string op, string value)
         {
             Name = name;
             Operator = op;
             Value = value;
         }
 
-        public SimplePredicate(string name, string op, SimplePredicate value)
+        public SimpleFilterBase(string name, string op, object value)
         {
             Name = name;
             Operator = op;
             Value = value;
         }
 
-        public SimplePredicate(string name, string op, ComplexPredicate value)
+        public SimpleFilterBase(string name, string op, SimpleFilterBase value)
         {
             Name = name;
             Operator = op;
             Value = value;
         }
 
-        public SimplePredicate(string name, string op, params object[] parameters)
+        public SimpleFilterBase(string name, string op, ComplexFilterBase value)
+        {
+            Name = name;
+            Operator = op;
+            Value = value;
+        }
+
+        public SimpleFilterBase(string name, string op, params object[] parameters)
         {
             Name = name;
             Operator = op;
@@ -77,23 +86,49 @@ namespace VNDBMetadata.Models
 
         private void AppendValueToBuilder(StringBuilder sb, object item)
         {
+            if (item is null)
+            {
+                sb.Append("null");
+            }
             if (item is string str)
             {
                 sb.Append($"\"{str}\"");
             }
-            else if (item is int numValue)
+            else if (item is int intValue)
             {
-                sb.Append($"{numValue}");
+                sb.Append($"{intValue}");
             }
-            else if (item is SimplePredicate simplePredicate)
+            else if (item is uint uintValue)
             {
-                var predStr = simplePredicate.ToString();
+                sb.Append($"{uintValue}");
+            }
+            else if (item is double doubleValue)
+            {
+                sb.Append($"{doubleValue}");
+            }
+            else if (item is SimpleFilterBase simplePredicate)
+            {
+                var predStr = simplePredicate.ToJsonString();
                 sb.Append(predStr);
             }
-            else if (item is ComplexPredicate complexPredicate)
+            else if (item is ComplexFilterBase complexPredicate)
             {
-                var predStr = complexPredicate.ToString();
+                var predStr = complexPredicate.ToJsonString();
                 sb.Append(predStr);
+            }
+            else if (item.GetType().IsEnum)
+            {
+                var enumValue = (Enum)item;
+                var enumType = enumValue.GetType();
+                var memberInfo = enumType.GetMember(enumValue.ToString());
+                if (memberInfo.Length > 0)
+                {
+                    var stringRepresentationAttribute = memberInfo[0].GetCustomAttribute<StringRepresentationAttribute>();
+                    if (stringRepresentationAttribute != null)
+                    {
+                        sb.Append($"\"{stringRepresentationAttribute.Value}\"");
+                    }
+                }
             }
         }
     }

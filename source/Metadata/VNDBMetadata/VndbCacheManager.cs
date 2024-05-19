@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using VNDBMetadata.ApiConstants;
 using FlowHttp;
 
 namespace VNDBMetadata
@@ -55,27 +54,27 @@ namespace VNDBMetadata
             var tagsCompressedPath = Path.Combine(pluginDataPath, TagsCompressedFileName);
             var traitsCompressedPath = Path.Combine(pluginDataPath, TraitsCompressedFileName);
 
-            var tagsDownloadSuccess = DownloadAndDecompress(DatabaseDumps.TagsUrl, tagsCompressedPath, TagsFileName);
-            var traitsDownloadSuccess = DownloadAndDecompress(DatabaseDumps.TraitsUrl, traitsCompressedPath, TraitsFileName);
+            //var tagsDownloadSuccess = DownloadAndDecompress(DatabaseDumps.TagsUrl, tagsCompressedPath, TagsFileName);
+            //var traitsDownloadSuccess = DownloadAndDecompress(DatabaseDumps.TraitsUrl, traitsCompressedPath, TraitsFileName);
 
-            if (tagsDownloadSuccess && traitsDownloadSuccess)
-            {
-                settings.LastDatabaseUpdate = DateTime.Now;
-                plugin.SavePluginSettings(settings);
-            }
+            //if (tagsDownloadSuccess && traitsDownloadSuccess)
+            //{
+            //    settings.LastDatabaseUpdate = DateTime.Now;
+            //    plugin.SavePluginSettings(settings);
+            //}
         }
 
         private bool DownloadAndDecompress(string sourceUrl, string compressedPath, string outputPath)
         {
-            var downloadResult = HttpRequestFactory.GetHttpRequest()
-                .WithUrl(sourceUrl).WithDownloadTo(compressedPath)
-                .DownloadFile();
-            if (downloadResult.IsSuccess)
-            {
-                DecompressGZipFile(compressedPath, outputPath);
-                FileSystem.DeleteFile(compressedPath);
-                return true;
-            }
+            //var downloadResult = HttpRequestFactory.GetHttpRequest()
+            //    .WithUrl(sourceUrl).WithDownloadTo(compressedPath)
+            //    .DownloadFile();
+            //if (downloadResult.IsSuccess)
+            //{
+            //    DecompressGZipFile(compressedPath, outputPath);
+            //    FileSystem.DeleteFile(compressedPath);
+            //    return true;
+            //}
 
             return false;
         }

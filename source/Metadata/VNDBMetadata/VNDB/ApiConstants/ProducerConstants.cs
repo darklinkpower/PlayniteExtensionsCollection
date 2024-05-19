@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNDB.ApiConstants
 {
-    public static class Producer
+    public static class ProducerConstants
     {
         public static class Filters
         {
@@ -69,6 +69,42 @@ namespace VNDB.ApiConstants
             /// String, possibly null, may contain formatting codes.
             /// </summary>
             public const string Description = "description";
+        }
+
+        public static class ProducerType
+        {
+            /// <summary>
+            /// Producer type: Company
+            /// </summary>
+            public const string Company = "co";
+
+            /// <summary>
+            /// Producer type: Individual
+            /// </summary>
+            public const string Individual = "in";
+
+            /// <summary>
+            /// Producer type: Amateur Group
+            /// </summary>
+            public const string AmateurGroup = "ng";
+        }
+
+        public static class ProducerSort
+        {
+            /// <summary>
+            /// Sort type: Id
+            /// </summary>
+            public const string Id = "id";
+
+            /// <summary>
+            /// Sort type: Name
+            /// </summary>
+            public const string Name = "name";
+
+            /// <summary>
+            /// Sort type: Search Rank
+            /// </summary>
+            public const string SearchRank = "searchrank";
         }
     }
 }

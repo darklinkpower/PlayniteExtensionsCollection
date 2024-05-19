@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNDBMetadata.Interfaces
 {
-    public interface IPredicate
+    public interface IFilter
     {
         string ToJsonString();
     }

@@ -7,7 +7,7 @@ using VNDB.ApiConstants;
 
 namespace VNDBMetadata.VNDB.Enums
 {
-    public enum Language
+    public enum LanguageEnums
     {
         [StringRepresentation(QueryEnums.Language.Arabic)]
         Arabic,

@@ -5,27 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.Interfaces;
 
-namespace VNDBMetadata.Models
+namespace VNDBMetadata.Filters
 {
-    public class ComplexPredicate : IPredicate
+    public abstract class ComplexFilterBase : IFilter
     {
-        public readonly string Operator;
-        public IPredicate[] Predicates;
+        public readonly string Predicate;
+        public IFilter[] Filters;
 
-        public ComplexPredicate(string op, params IPredicate[] predicates)
+        public ComplexFilterBase(string predicate, params IFilter[] filters)
         {
-            Operator = op;
-            Predicates = predicates;
+            Predicate = predicate;
+            Filters = filters;
         }
 
         public string ToJsonString()
         {
             var sb = new StringBuilder();
             sb.Append("[ ");
-            sb.Append($"\"{Operator}\", ");
+            sb.Append($"\"{Predicate}\", ");
 
             var predicatesStrings = new List<string>();
-            foreach (var predicate in Predicates)
+            foreach (var predicate in Filters)
             {
                 predicatesStrings.Add(predicate.ToJsonString());
             }

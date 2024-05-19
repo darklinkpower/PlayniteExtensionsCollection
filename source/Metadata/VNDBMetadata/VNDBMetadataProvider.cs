@@ -27,7 +27,7 @@ namespace VNDBMetadata
         public override string GetDescription(GetMetadataFieldArgs args)
         {
             var cts = args.CancelToken;
-            DownloadExtensions.DownloadFileAsync(ApiConstants.DatabaseDumps.TagsUrl, "somefolder");
+            //DownloadExtensions.DownloadFileAsync(ApiConstants.DatabaseDumps.TagsUrl, "somefolder");
             
 
             //args.CancelToken
@@ -54,8 +54,8 @@ namespace VNDBMetadata
 
             var text = await "http://site.com/readme.txt".GetStringAsync(cts);
             var text2 = await "http://api.com/endpoint".GetJsonAsync<MetadataField>(cts);
-            var ss = text.DownloadFileAsync(ApiConstants.DatabaseDumps.TagsUrl, "somefolder");
-            var sws = DownloadExtensions.DownloadFileAsync(ApiConstants.DatabaseDumps.TagsUrl, "somefolder");
+            //var ss = text.DownloadFileAsync(ApiConstants.DatabaseDumps.TagsUrl, "somefolder");
+            //var sws = DownloadExtensions.DownloadFileAsync(ApiConstants.DatabaseDumps.TagsUrl, "somefolder");
         }
 
     }

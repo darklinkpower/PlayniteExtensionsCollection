@@ -7,7 +7,7 @@ using VNDB.ApiConstants;
 
 namespace VNDBMetadata.VNDB.Enums
 {
-    public enum Platform
+    public enum PlatformEnums
     {
         [StringRepresentation(QueryEnums.Platform.Windows)]
         Windows,

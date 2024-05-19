@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNDB.ApiConstants
 {
-    public static class Character
+    public static class CharacterConstants
     {
         public static class Filters
         {

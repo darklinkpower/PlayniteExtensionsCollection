@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VNDBMetadata.Enums
+namespace VNDBMetadata.Fields
 {
     [Flags]
     public enum VisualNovelFields

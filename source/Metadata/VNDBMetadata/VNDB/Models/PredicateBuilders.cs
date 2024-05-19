@@ -32,7 +32,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate NotEqualTo(T value)
         {
-            var predicateOperator = Operators.Inverting.NotEqual;
+            var predicateOperator = Operators.Matching.NotEqual;
             return new SimplePredicate(_name, predicateOperator, value);
         }
     }
@@ -53,7 +53,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate GreaterOrEqual(T value)
         {
-            var predicateOperator = Operators.Ordering.GreaterOrEqual;
+            var predicateOperator = Operators.Ordering.GreaterThanOrEqual;
             return new SimplePredicate(_name, predicateOperator, value);
         }
 
@@ -65,7 +65,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate LessThanOrEqual(T value)
         {
-            var predicateOperator = Operators.Inverting.LessThanOrEqual;
+            var predicateOperator = Operators.Ordering.LessThanOrEqual;
             return new SimplePredicate(_name, predicateOperator, value);
         }
     }
@@ -86,7 +86,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate NotEqualTo(TFirst first, TSecond second)
         {
-            var predicateOperator = Operators.Inverting.NotEqual;
+            var predicateOperator = Operators.Matching.NotEqual;
             return new SimplePredicate(_name, predicateOperator, new object[] { first, second });
         }
     }
@@ -106,7 +106,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate GreaterOrEqual(TFirst first, TSecond second)
         {
-            var predicateOperator = Operators.Ordering.GreaterOrEqual;
+            var predicateOperator = Operators.Ordering.GreaterThanOrEqual;
             return new SimplePredicate(_name, predicateOperator, new object[] { first, second });
         }
 
@@ -118,7 +118,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate LessThanOrEqual(TFirst first, TSecond second)
         {
-            var predicateOperator = Operators.Inverting.LessThanOrEqual;
+            var predicateOperator = Operators.Ordering.LessThanOrEqual;
             return new SimplePredicate(_name, predicateOperator, new object[] { first, second });
         }
     }
@@ -141,7 +141,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate NotEqualTo(TFirst first, TSecond second, TThird third)
         {
-            var predicateOperator = Operators.Inverting.NotEqual;
+            var predicateOperator = Operators.Matching.NotEqual;
             return new SimplePredicate(_name, predicateOperator, new object[] { first, second, third });
         }
     }
@@ -161,7 +161,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate GreaterOrEqual(TFirst first, TSecond second, TThird third)
         {
-            var predicateOperator = Operators.Ordering.GreaterOrEqual;
+            var predicateOperator = Operators.Ordering.GreaterThanOrEqual;
             return new SimplePredicate(_name, predicateOperator, new object[] { first, second, third });
         }
 
@@ -173,7 +173,7 @@ namespace VNDBMetadata.VNDB.Models
 
         public SimplePredicate LessThanOrEqual(TFirst first, TSecond second, TThird third)
         {
-            var predicateOperator = Operators.Inverting.LessThanOrEqual;
+            var predicateOperator = Operators.Ordering.LessThanOrEqual;
             return new SimplePredicate(_name, predicateOperator, new object[] { first, second, third });
         }
     }

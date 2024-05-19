@@ -31,19 +31,15 @@ namespace VNDB.ApiConstants
         public static class Ordering
         {
             public const string GreaterThan = ">";
-            public const string GreaterOrEqual = ">=";
+            public const string GreaterThanOrEqual = ">=";
             public const string LessThan = "<";
+            public const string LessThanOrEqual = "<=";
         }
 
         public static class Matching
         {
             public const string IsEqual = "=";
-        }
-
-        public static class Inverting
-        {
             public const string NotEqual = "!=";
-            public const string LessThanOrEqual = "<=";
         }
 
         public static class Predicates
