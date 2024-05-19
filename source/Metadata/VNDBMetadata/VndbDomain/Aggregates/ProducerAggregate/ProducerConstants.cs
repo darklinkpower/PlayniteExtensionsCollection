@@ -89,7 +89,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
             public const string AmateurGroup = "ng";
         }
 
-        public static class ProducerSort
+        public static class RequestSort
         {
             /// <summary>
             /// Sort type: Id

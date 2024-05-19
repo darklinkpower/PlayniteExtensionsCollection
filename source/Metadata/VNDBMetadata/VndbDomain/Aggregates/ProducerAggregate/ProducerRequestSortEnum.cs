@@ -9,11 +9,11 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
 {
     public enum ProducerRequestSortEnum
     {
-        [StringRepresentation(ProducerConstants.ProducerSort.Id)]
+        [StringRepresentation(ProducerConstants.RequestSort.Id)]
         Id,
-        [StringRepresentation(ProducerConstants.ProducerSort.Name)]
+        [StringRepresentation(ProducerConstants.RequestSort.Name)]
         Name,
-        [StringRepresentation(ProducerConstants.ProducerSort.SearchRank)]
+        [StringRepresentation(ProducerConstants.RequestSort.SearchRank)]
         SearchRank
     }
 }

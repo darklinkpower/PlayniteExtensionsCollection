@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
+using VNDBMetadata.VndbDomain.Common.Models;
 
 namespace VNDBMetadata.VndbDomain.Services
 {
@@ -77,7 +79,7 @@ namespace VNDBMetadata.VndbDomain.Services
             return null;
         }
 
-        public async Task<ProducerResponseDto> ExecutePostRequestAsync(ProducerRequestQuery query, CancellationToken cancellationToken = default)
+        public async Task<VndbDatabaseQueryReponse<Producer>> ExecutePostRequestAsync(ProducerRequestQuery query, CancellationToken cancellationToken = default)
         {
             var result = await ExecuteRequestAsync(postProducerEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
@@ -85,7 +87,19 @@ namespace VNDBMetadata.VndbDomain.Services
                 return null;
             }
 
-            var deserializedObject = JsonConvert.DeserializeObject<ProducerResponseDto>(result);
+            var deserializedObject = JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Producer>>(result);
+            return deserializedObject;
+        }
+
+        public async Task<VndbDatabaseQueryReponse<Staff>> ExecutePostRequestAsync(StaffRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteRequestAsync(postStaffEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            if (result is null)
+            {
+                return null;
+            }
+
+            var deserializedObject = JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Staff>>(result);
             return deserializedObject;
         }
 

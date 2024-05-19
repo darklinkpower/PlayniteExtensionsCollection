@@ -7,16 +7,6 @@ using VNDBMetadata.VndbDomain.Common.Attributes;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
 {
-    public enum ProducerType
-    {
-        [StringRepresentation(ProducerConstants.ProducerSort.Id)]
-        Id,
-        [StringRepresentation(ProducerConstants.ProducerSort.Name)]
-        Name,
-        [StringRepresentation(ProducerConstants.ProducerSort.SearchRank)]
-        SearchRank
-    }
-
     public enum ProducerTypeEnum
     {
         [StringRepresentation(ProducerConstants.ProducerType.Company)]

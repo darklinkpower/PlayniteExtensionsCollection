@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
+namespace VNDBMetadata.VndbDomain.Common.Models
 {
-    public class ProducerResponseDto
+    public class VndbDatabaseQueryReponse<T>
     {
         [JsonProperty("more")]
         public bool More { get; set; }
 
         [JsonProperty("results")]
-        public Producer[] Results { get; set; }
+        public List<T> Results { get; set; }
     }
 }

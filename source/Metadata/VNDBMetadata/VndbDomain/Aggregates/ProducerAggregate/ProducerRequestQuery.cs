@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VNDBMetadata.Fields;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
@@ -17,7 +16,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
         [JsonIgnore]
         public ProducerRequestFieldsFlags Fields;
         [JsonIgnore]
-        public ProducerRequestSortEnum Sort = ProducerRequestSortEnum.SearchRank;
+        public ProducerRequestSortEnum Sort = ProducerRequestSortEnum.Id;
 
         public ProducerRequestQuery(ProducerFilter filter) : base(filter)
         {

@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Common.Enums;
 using VNDBMetadata.VndbDomain.Services;
 
@@ -62,25 +63,35 @@ namespace VNDBMetadata
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            var filterOne = ProducerFilterFactory.Search.EqualTo("Hira");
-            var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);
-            var complexFilter = ProducerFilterFactory.And(filterOne, filterTwo);
-
-            var filterOneJson = filterOne.ToJsonString();
-            var filterTwoJson = filterTwo.ToJsonString();
-            var complexFilterJson = complexFilter.ToJsonString();
-
-            var simpleQuery = new ProducerRequestQuery(filterOne);
-            var complexQuery = new ProducerRequestQuery(complexFilter);
-
-            var simpleQuerySerialized = Serialization.ToJson(simpleQuery);
-            var complexQuerySerialized = Serialization.ToJson(complexQuery);
-
             var vndbService = new VndbService();
-            var simpleQueryResult = vndbService.ExecutePostRequestAsync(simpleQuery).GetAwaiter().GetResult();
-            //var complexQueryResult = vndbService.ExecutePostRequestAsync(complexQuery).GetAwaiter().GetResult();
+
+
+            // Producer
+            //var producerFilter = ProducerFilterFactory.Search.EqualTo("Hira");
+            //var producerQuery = new ProducerRequestQuery(producerFilter);
+            //var producerQueryResult = vndbService.ExecutePostRequestAsync(producerQuery).GetAwaiter().GetResult();
+
+            // Staff
+            var staffFilter = StaffFilterFactory.Search.EqualTo("Hira");
+            var staffQuery = new StaffRequestQuery(staffFilter);
+            var staffQueryResult = vndbService.ExecutePostRequestAsync(staffQuery).GetAwaiter().GetResult();
+
             var sss = "";
-            
+
+
+            //var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);
+            //var complexFilter = ProducerFilterFactory.And(filterOne, filterTwo);
+
+            //var filterOneJson = filterOne.ToJsonString();
+            //var filterTwoJson = filterTwo.ToJsonString();
+            //var complexFilterJson = complexFilter.ToJsonString();
+            //var complexQuery = new ProducerRequestQuery(complexFilter);
+
+            //var simpleQuerySerialized = Serialization.ToJson(producerQuery);
+            //var complexQuerySerialized = Serialization.ToJson(complexQuery);
+
+            //var complexQueryResult = vndbService.ExecutePostRequestAsync(complexQuery).GetAwaiter().GetResult();
+
             //var requestSettings = new VisualNovelFieldsSettings();
             //var request = requestSettings.ToString();
 

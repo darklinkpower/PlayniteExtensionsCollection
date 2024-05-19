@@ -22,7 +22,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
         public LanguageEnum Lang { get; set; }
 
         [JsonProperty("aliases")]
-        public string[] Aliases { get; set; }
+        public List<string> Aliases { get; set; }
 
         [JsonProperty("original")]
         public string Original { get; set; }
