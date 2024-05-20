@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Common.Attributes;
 using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Common.Filters
 {
-    public abstract class SimpleFilterBase : IFilter
+    public class SimpleFilterBase<T> : IFilter
     {
         public readonly string Name;
         public readonly string Operator;
@@ -29,14 +30,14 @@ namespace VNDBMetadata.VndbDomain.Common.Filters
             Value = value;
         }
 
-        public SimpleFilterBase(string name, string op, SimpleFilterBase value)
+        public SimpleFilterBase(string name, string op, SimpleFilterBase<T> value)
         {
             Name = name;
             Operator = op;
             Value = value;
         }
 
-        public SimpleFilterBase(string name, string op, ComplexFilterBase value)
+        public SimpleFilterBase(string name, string op, ComplexFilterBase<T> value)
         {
             Name = name;
             Operator = op;
@@ -106,27 +107,31 @@ namespace VNDBMetadata.VndbDomain.Common.Filters
             {
                 sb.Append($"{doubleValue}");
             }
-            else if (item is SimpleFilterBase simplePredicate)
+            else if (item is IFilter filter)
             {
-                var predStr = simplePredicate.ToJsonString();
+                var predStr = filter.ToJsonString();
                 sb.Append(predStr);
             }
-            else if (item is ComplexFilterBase complexPredicate)
+            else if (item is Enum enumValue)
             {
-                var predStr = complexPredicate.ToJsonString();
-                sb.Append(predStr);
-            }
-            else if (item.GetType().IsEnum)
-            {
-                var enumValue = (Enum)item;
-                var enumType = enumValue.GetType();
-                var memberInfo = enumType.GetMember(enumValue.ToString());
-                if (memberInfo.Length > 0)
+                //var enumValue = (Enum)item;
+                //var enumType = enumValue.GetType();
+                //var memberInfo = enumType.GetMember(enumValue.ToString());
+                //if (memberInfo.Length > 0)
+
+                var memberInfo = EnumUtilities.GetEnumMemberInfo(enumValue);
+                if (memberInfo != null)
                 {
-                    var stringRepresentationAttribute = memberInfo[0].GetCustomAttribute<StringRepresentationAttribute>();
+                    var stringRepresentationAttribute = memberInfo.GetCustomAttribute<StringRepresentationAttribute>();
                     if (stringRepresentationAttribute != null)
                     {
                         sb.Append($"\"{stringRepresentationAttribute.Value}\"");
+                    }
+
+                    var intRepresentationAttribute = memberInfo.GetCustomAttribute<IntRepresentationAttribute>();
+                    if (intRepresentationAttribute != null)
+                    {
+                        sb.Append($"{intRepresentationAttribute.Value}");
                     }
                 }
             }

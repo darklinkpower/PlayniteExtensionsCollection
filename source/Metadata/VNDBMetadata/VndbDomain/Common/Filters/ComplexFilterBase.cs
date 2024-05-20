@@ -6,7 +6,7 @@ using VNDBMetadata.VndbDomain.Common.Interfaces;
 
 namespace VNDBMetadata.VndbDomain.Common.Filters
 {
-    public abstract class ComplexFilterBase : IFilter
+    public class ComplexFilterBase<T> : IFilter
     {
         public readonly string Predicate;
         public IFilter[] Filters;

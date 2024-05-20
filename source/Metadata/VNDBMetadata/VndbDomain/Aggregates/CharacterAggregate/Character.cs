@@ -134,8 +134,8 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             if (value is CharacterSex characterSex)
             {
                 writer.WriteStartArray();
-                writer.WriteValue(EnumUtils.GetStringRepresentation(characterSex.Apparent));
-                writer.WriteValue(EnumUtils.GetStringRepresentation(characterSex.Real));
+                writer.WriteValue(EnumUtilities.GetEnumStringRepresentation(characterSex.Apparent));
+                writer.WriteValue(EnumUtilities.GetEnumStringRepresentation(characterSex.Real));
                 writer.WriteEndArray();
             }
 
@@ -154,8 +154,8 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 JArray array = JArray.Load(reader);
                 if (array.Count == 2 && array[0].Type == JTokenType.String && array[1].Type == JTokenType.String)
                 {
-                    var apparent = EnumUtils.GetEnumRepresentation<CharacterSexEnum>(array[0].ToString());
-                    var real = EnumUtils.GetEnumRepresentation<CharacterSexEnum>(array[1].ToString());
+                    var apparent = EnumUtilities.GetStringEnumRepresentation<CharacterSexEnum>(array[0].ToString());
+                    var real = EnumUtilities.GetStringEnumRepresentation<CharacterSexEnum>(array[1].ToString());
                     return new CharacterSex { Apparent = apparent, Real = real };
                 }
             }

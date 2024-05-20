@@ -18,12 +18,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
         [JsonIgnore]
         public ProducerRequestSortEnum Sort = ProducerRequestSortEnum.Id;
 
-        public ProducerRequestQuery(ProducerFilter filter) : base(filter)
+        public ProducerRequestQuery(SimpleFilterBase<Producer> filter) : base(filter)
         {
             Initialize();
         }
 
-        public ProducerRequestQuery(ProducerComplexFilter filter) : base(filter)
+        public ProducerRequestQuery(ComplexFilterBase<Producer> filter) : base(filter)
         {
             Initialize();
         }
@@ -38,12 +38,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
 
         public override List<string> GetEnabledFields()
         {
-            return EnumUtils.GetStringRepresentations(Fields);
+            return EnumUtilities.GetStringRepresentations(Fields);
         }
 
         public override string GetSortString()
         {
-            if (Filters is SimpleFilterBase simpleFilter)
+            if (Filters is SimpleFilterBase<Producer> simpleFilter)
             {
                 if (Sort == ProducerRequestSortEnum.SearchRank)
                 {
@@ -53,9 +53,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
                     }
                 }
             }
-            else if (Filters is ComplexFilterBase complexFilter)
+            else if (Filters is ComplexFilterBase<Producer> complexFilter)
             {
-                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase>();
+                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<Producer>>();
                 if (Sort == ProducerRequestSortEnum.SearchRank)
                 {
                     var searchPredicatesCount = simplePredicates.Count(x => x.Name == ProducerFilterFactory.Search.FilterName);
@@ -66,7 +66,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
                 }
             }
 
-            return EnumUtils.GetStringRepresentation(Sort);
+            return EnumUtilities.GetEnumStringRepresentation(Sort);
         }
     }
 }

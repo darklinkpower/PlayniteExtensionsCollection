@@ -4,6 +4,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
+using PluginsCommon;
 using SqlNado;
 using SqlNado.Utilities;
 using System;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
@@ -70,31 +72,36 @@ namespace VNDBMetadata
 
 
             // Producer
-            //var producerFilter = ProducerFilterFactory.Search.EqualTo("Hira");
-            //var producerQuery = new ProducerRequestQuery(producerFilter);
+            var producerFilter = ProducerFilterFactory.Search.EqualTo("Hira");
+            var producerQuery = new ProducerRequestQuery(producerFilter);
             //var producerQueryResult = vndbService.ExecutePostRequestAsync(producerQuery).GetAwaiter().GetResult();
 
-            // Staff
-            //var staffFilter = StaffFilterFactory.Search.EqualTo("Hira");
-            //var staffQuery = new StaffRequestQuery(staffFilter);
+            //// Staff
+            var staffFilter = StaffFilterFactory.Search.EqualTo("Hira");
+            var staffQuery = new StaffRequestQuery(staffFilter);
             //var staffQueryResult = vndbService.ExecutePostRequestAsync(staffQuery).GetAwaiter().GetResult();
 
-            //// Trait
-            //var traitFilter = TraitFilterFactory.Search.EqualTo("a");
-            //var traitQuery = new TraitRequestQuery(traitFilter);
+            ////// Trait
+            var traitFilter = TraitFilterFactory.Search.EqualTo("a");
+            var traitQuery = new TraitRequestQuery(traitFilter);
             //var traitQueryResult = vndbService.ExecutePostRequestAsync(traitQuery).GetAwaiter().GetResult();
 
             //// Tag
-            //var tagFilter = TagFilterFactory.Category.EqualTo(TagCategoryEnum.Technical);
-            //var tagQuery = new TagRequestQuery(tagFilter);
+            var tagFilter = TagFilterFactory.Category.EqualTo(TagCategoryEnum.Technical);
+            var tagQuery = new TagRequestQuery(tagFilter);
             //var tagQueryResult = vndbService.ExecutePostRequestAsync(tagQuery).GetAwaiter().GetResult();
 
             // Character
-            //var characterFilter = CharacterFilterFactory.Cup.EqualTo(CharacterCupSizeEnum.AAA);
-            //var characterQuery = new CharacterRequestQuery(characterFilter);
+            var characterFilter = CharacterFilterFactory.Cup.EqualTo(CharacterCupSizeEnum.None);
+            var characterQuery = new CharacterRequestQuery(characterFilter);
             //var characterQueryResult = vndbService.ExecutePostRequestAsync(characterQuery).GetAwaiter().GetResult();
 
-            var sss = "";
+            // Release
+            var releaseFilter = ReleaseFilterFactory.ReleaseType.EqualTo(ReleaseTypeEnum.Complete);
+            var releaseQuery = new ReleaseRequestQuery(releaseFilter);
+            //var releaseQueryResult = vndbService.ExecutePostRequestAsync(releaseQuery).GetAwaiter().GetResult();
+
+
 
 
             //var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);

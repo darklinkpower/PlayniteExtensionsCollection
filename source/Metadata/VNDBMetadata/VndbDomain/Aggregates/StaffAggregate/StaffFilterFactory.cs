@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBMetadata.VndbDomain.Common;
 using VNDBMetadata.VndbDomain.Common.Constants;
 using VNDBMetadata.VndbDomain.Common.Enums;
 using VNDBMetadata.VndbDomain.Common.Filters;
@@ -11,135 +12,156 @@ using VNDBMetadata.VndbDomain.Common.Interfaces;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
 {
-    public class StaffFilter : SimpleFilterBase
-    {
-        internal StaffFilter(string filterName, string filterOperator, object value) : base(filterName, filterOperator, value)
-        {
-
-        }
-
-        internal StaffFilter(string filterName, string filterOperator, params object[] values) : base(filterName, filterOperator, values)
-        {
-
-        }
-    }
-
-    public class StaffComplexFilter : ComplexFilterBase
-    {
-        internal StaffComplexFilter(string filterOperator, params IFilter[] value) : base(filterOperator, value)
-        {
-
-        }
-    }
-
     public static class StaffFilterFactory
     {
         public static class Id
 		{
 			public static string FilterName = StaffConstants.Filters.Id;
 			public static bool CanBeNull { get; } = false;
-			public static StaffFilter EqualTo(string value) =>  new StaffFilter(
-				FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null(value) : value);
-			public static StaffFilter NotEqualTo(string value) => new StaffFilter(
-				FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null(value) : value);
-			public static StaffFilter GreaterThanOrEqual(string value) => new StaffFilter(
-				FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null(value) : value);
-			public static StaffFilter GreaterThan(string value) => new StaffFilter(
-				FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null(value) : value);
-			public static StaffFilter LessThanOrEqual(string value) => new StaffFilter(
-				FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null(value) : value);
-			public static StaffFilter LessThan(string value) => new StaffFilter(
-				FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null(value) : value);
-		}
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, string value) =>
+                FilterFactory.CreateFilter<Staff>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(string value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(string value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Staff> GreaterThanOrEqual(string value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Staff> GreaterThan(string value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Staff> LessThanOrEqual(string value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Staff> LessThan(string value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
+        }
 
         public static class Aid
         {
             public static string FilterName = StaffConstants.Filters.Aid;
             public static bool CanBeNull { get; } = false;
-            public static StaffFilter EqualTo(int value) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<int>(value) : value);
-            public static StaffFilter NotEqualTo(int value) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<int>(value) : value);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, int value) =>
+                FilterFactory.CreateFilter<Staff, int>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(int value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(int value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class Search
         {
             public static string FilterName = StaffConstants.Filters.Search;
             public static bool CanBeNull { get; } = false;
-            public static StaffFilter EqualTo(string value) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-            public static StaffFilter NotEqualTo(string value) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, string value) =>
+                 FilterFactory.CreateFilter<Staff>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(string value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(string value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class Language
         {
             public static string FilterName = StaffConstants.Filters.Lang;
             public static bool CanBeNull { get; } = false;
-            public static StaffFilter EqualTo(LanguageEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<LanguageEnum>(value) : value);
-            public static StaffFilter NotEqualTo(LanguageEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<LanguageEnum>(value) : value);
+
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, LanguageEnum value) =>
+                FilterFactory.CreateFilter<Staff, LanguageEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(LanguageEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(LanguageEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class Gender
         {
             public static string FilterName = StaffConstants.Filters.Gender;
             public static bool CanBeNull { get; } = false;
-            public static StaffFilter EqualTo(StaffGenderEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<StaffGenderEnum>(value) : value);
-            public static StaffFilter NotEqualTo(StaffGenderEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<StaffGenderEnum>(value) : value);
+
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, StaffGenderEnum value) =>
+                FilterFactory.CreateFilter<Staff, StaffGenderEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(StaffGenderEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(StaffGenderEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class Role
         {
             public static string FilterName = StaffConstants.Filters.Role;
             public static bool CanBeNull { get; } = false;
-            public static StaffFilter EqualTo(StaffRoleEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<StaffRoleEnum>(value) : value);
-            public static StaffFilter NotEqualTo(StaffRoleEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<StaffRoleEnum>(value) : value);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, StaffRoleEnum value) =>
+                FilterFactory.CreateFilter<Staff, StaffRoleEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(StaffRoleEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(StaffRoleEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class ExtLink
         {
             public static string FilterName = StaffConstants.Filters.ExtLink;
             public static bool CanBeNull { get; } = false;
-            public static StaffFilter EqualTo(ExtLinksEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<ExtLinksEnum>(value) : value);
-            public static StaffFilter NotEqualTo(ExtLinksEnum value) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<ExtLinksEnum>(value) : value);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, ExtLinksEnum value) =>
+                FilterFactory.CreateFilter<Staff>(FilterName, CanBeNull, operatorString, value);
 
-            public static StaffFilter EqualTo(ExtLinksEnum value, string siteIdentifier) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual,
-                CanBeNull ? Guard.Against.Null<ExtLinksEnum>(value) : value,
-                CanBeNull ? Guard.Against.NullOrWhiteSpace(siteIdentifier) : siteIdentifier);
-            public static StaffFilter NotEqualTo(ExtLinksEnum value, string siteIdentifier) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual,
-                CanBeNull ? Guard.Against.Null<ExtLinksEnum>(value) : value,
-                CanBeNull ? Guard.Against.NullOrWhiteSpace(siteIdentifier) : siteIdentifier);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, ExtLinksEnum value, string str) =>
+                FilterFactory.CreateFilter<Staff>(FilterName, CanBeNull, operatorString, value, str);
 
-            public static StaffFilter EqualTo(string extSiteUrl) => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(extSiteUrl) : extSiteUrl);
-            public static StaffFilter NotEqualTo(string extSiteUrl) => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(extSiteUrl) : extSiteUrl);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString, string value) =>
+                FilterFactory.CreateFilter<Staff>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(ExtLinksEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(ExtLinksEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Staff> EqualTo(ExtLinksEnum value, string siteIdentifier) =>
+                CreateFilter(Operators.Matching.IsEqual, value, siteIdentifier);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(ExtLinksEnum value, string siteIdentifier) =>
+                CreateFilter(Operators.Matching.NotEqual, value, siteIdentifier);
+
+            public static SimpleFilterBase<Staff> EqualTo(string extSiteUrl) =>
+                CreateFilter(Operators.Matching.IsEqual, extSiteUrl);
+
+            public static SimpleFilterBase<Staff> NotEqualTo(string extSiteUrl) =>
+                CreateFilter(Operators.Matching.NotEqual, extSiteUrl);
         }
 
         public static class IsMain
         {
             public static string FilterName = StaffConstants.Filters.IsMain;
-            public static StaffFilter True() => new StaffFilter(
-                FilterName, Operators.Matching.IsEqual, 1);
-            public static StaffFilter False() => new StaffFilter(
-                FilterName, Operators.Matching.NotEqual, 1);
+            private static SimpleFilterBase<Staff> CreateFilter(string operatorString) =>
+                FilterFactory.CreateFilter<Staff, int>(FilterName, true, operatorString, 1);
+
+            public static SimpleFilterBase<Staff> EqualTo() =>
+                CreateFilter(Operators.Matching.IsEqual);
+
+            public static SimpleFilterBase<Staff> NotEqualTo() =>
+                CreateFilter(Operators.Matching.NotEqual);
         }
 
-        public static StaffComplexFilter And(params StaffFilter[] value) => new StaffComplexFilter(
-            Operators.Predicates.And, Guard.Against.Null(value));
+        public static ComplexFilterBase<Staff> And(params SimpleFilterBase<Staff>[] values) =>
+            FilterFactory.CreateComplexFilter(Operators.Predicates.And, values);
 
-        public static StaffComplexFilter Or(params StaffFilter[] value) => new StaffComplexFilter(
-            Operators.Predicates.Or, Guard.Against.Null(value));
+        public static ComplexFilterBase<Staff> Or(params SimpleFilterBase<Staff>[] values) =>
+            FilterFactory.CreateComplexFilter(Operators.Predicates.Or, values);
     }
 
 }

@@ -19,12 +19,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
         [JsonIgnore]
         public TraitRequestSortEnum Sort = TraitRequestSortEnum.Id;
 
-        public TraitRequestQuery(TraitFilter filter) : base(filter)
+        public TraitRequestQuery(SimpleFilterBase<Trait> filter) : base(filter)
         {
             Initialize();
         }
 
-        public TraitRequestQuery(TraitComplexFilter filter) : base(filter)
+        public TraitRequestQuery(ComplexFilterBase<Trait> filter) : base(filter)
         {
             Initialize();
         }
@@ -39,12 +39,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
 
         public override List<string> GetEnabledFields()
         {
-            return EnumUtils.GetStringRepresentations(FieldsFlags);
+            return EnumUtilities.GetStringRepresentations(FieldsFlags);
         }
 
         public override string GetSortString()
         {
-            if (Filters is SimpleFilterBase simpleFilter)
+            if (Filters is SimpleFilterBase<Trait> simpleFilter)
             {
                 if (Sort == TraitRequestSortEnum.SearchRank)
                 {
@@ -54,9 +54,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
                     }
                 }
             }
-            else if (Filters is ComplexFilterBase complexFilter)
+            else if (Filters is ComplexFilterBase<Trait> complexFilter)
             {
-                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase>();
+                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<Trait>>();
                 if (Sort == TraitRequestSortEnum.SearchRank)
                 {
                     var searchPredicatesCount = simplePredicates.Count(x => x.Name == TraitFilterFactory.Search.FilterName);
@@ -67,7 +67,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
                 }
             }
 
-            return EnumUtils.GetStringRepresentation(Sort);
+            return EnumUtilities.GetEnumStringRepresentation(Sort);
         }
     }
 }

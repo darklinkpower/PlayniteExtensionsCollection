@@ -23,12 +23,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
         [JsonIgnore]
         public StaffRequestSortEnum Sort = StaffRequestSortEnum.Id;
 
-        public StaffRequestQuery(StaffFilter filter) : base(filter)
+        public StaffRequestQuery(SimpleFilterBase<Staff> filter) : base(filter)
         {
             Initialize();
         }
 
-        public StaffRequestQuery(StaffComplexFilter filter) : base(filter)
+        public StaffRequestQuery(ComplexFilterBase<Staff> filter) : base(filter)
         {
             Initialize();
         }
@@ -53,15 +53,15 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
 
         public override List<string> GetEnabledFields()
         {
-            return EnumUtils.GetStringRepresentations(FieldsFlags)
-                .Concat(EnumUtils.GetStringRepresentations(ExtLinksFieldsFlags))
-                .Concat(EnumUtils.GetStringRepresentations(AliasesFieldsFlags))
+            return EnumUtilities.GetStringRepresentations(FieldsFlags)
+                .Concat(EnumUtilities.GetStringRepresentations(ExtLinksFieldsFlags))
+                .Concat(EnumUtilities.GetStringRepresentations(AliasesFieldsFlags))
                 .ToList();
         }
 
         public override string GetSortString()
         {
-            if (Filters is SimpleFilterBase simpleFilter)
+            if (Filters is SimpleFilterBase<Staff> simpleFilter)
             {
                 if (Sort == StaffRequestSortEnum.SearchRank)
                 {
@@ -71,9 +71,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                     }
                 }
             }
-            else if (Filters is ComplexFilterBase complexFilter)
+            else if (Filters is ComplexFilterBase<Staff> complexFilter)
             {
-                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase>();
+                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<Staff>>();
                 if (Sort == StaffRequestSortEnum.SearchRank)
                 {
                     var searchPredicatesCount = simplePredicates.Count(x => x.Name == StaffFilterFactory.Search.FilterName);
@@ -84,7 +84,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 }
             }
 
-            return EnumUtils.GetStringRepresentation(Sort);
+            return EnumUtilities.GetEnumStringRepresentation(Sort);
         }
     }
 }

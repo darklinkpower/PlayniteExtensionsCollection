@@ -228,7 +228,17 @@
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterRequestSortEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterFilterFactory.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterRequestQuery.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseResolution.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseAvailableLanguageInfo.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseMedia.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseRequestSortEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerRequestSortEnum.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseRequestQuery.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\Release.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseFilterFactory.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseTypeEnum.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseVn.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\VoicedEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\Staff.cs" />
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffRequestQuery.cs" />
     <Compile Include="VndbDomain\Aggregates\StaffAggregate\StaffGenderEnum.cs" />
@@ -246,6 +256,8 @@
     <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitRequestSortEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitRequestQuery.cs" />
     <Compile Include="VndbDomain\Aggregates\TraitAggregate\TraitFilterFactory.cs" />
+    <Compile Include="VndbDomain\Aggregates\VnAggregate\Vn.cs" />
+    <Compile Include="VndbDomain\Common\Attributes\IntStringRepresentationAttribute.cs" />
     <Compile Include="VndbDomain\Common\Attributes\StringRepresentationAttribute.cs" />
     <Compile Include="VndbDomain\Common\Constants\Aliases.cs" />
     <Compile Include="VndbDomain\Common\Converters\StringRepresentationEnumConverter.cs" />
@@ -258,10 +270,12 @@
     <Compile Include="VndbDomain\Aggregates\UList\UListFields.cs" />
     <Compile Include="VndbDomain\Aggregates\VnAggregate\VnRequestFieldsFlags.cs" />
     <Compile Include="VndbDomain\Aggregates\ProducerAggregate\ProducerFilterFactory.cs" />
+    <Compile Include="VndbDomain\Common\Converters\StringRepresentationEnumListConverter.cs" />
     <Compile Include="VndbDomain\Common\Entities\Alias.cs" />
     <Compile Include="VndbDomain\Common\Entities\Extlink.cs" />
     <Compile Include="VndbDomain\Common\Enums\ExtLinksEnum.cs" />
     <Compile Include="VndbDomain\Common\Enums\SpoilerLevel.cs" />
+    <Compile Include="VndbDomain\Common\FilterFactory.cs" />
     <Compile Include="VndbDomain\Common\Flags\AliasesFieldsFlags.cs" />
     <Compile Include="VndbDomain\Common\Flags\ExtLinksFieldsFlags.cs" />
     <Compile Include="VndbDomain\Common\Interfaces\IFilter.cs" />
@@ -291,7 +305,7 @@
       <DependentUpon>VNDBMetadataSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VndbDomain\Common\Utilities\EnumUtils.cs" />
+    <Compile Include="VndbDomain\Common\Utilities\EnumUtilities.cs" />
     <Compile Include="VndbDomain\Common\Enums\LanguageEnum.cs" />
     <Compile Include="VndbDomain\Common\Enums\MediumEnum.cs" />
     <Compile Include="VndbDomain\Common\Enums\PlatformEnum.cs" />

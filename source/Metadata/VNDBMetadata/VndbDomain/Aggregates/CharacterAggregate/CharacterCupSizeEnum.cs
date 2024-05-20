@@ -10,6 +10,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
     public enum CharacterCupSizeEnum
     {
         /// <summary>
+        /// None
+        /// </summary>
+        [StringRepresentation(null)]
+        None,
+
+        /// <summary>
         /// String, possibly null, "AAA".
         /// </summary>
         [StringRepresentation(CharacterConstants.CupSize.AAA)]

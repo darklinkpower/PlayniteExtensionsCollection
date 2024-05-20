@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
@@ -38,7 +39,9 @@ namespace VNDBMetadata.VndbDomain.Services
         {
             // The server will allow up to 200 requests per 5 minutes and up to 1 second of execution time per minute.
             // Using less for safety
-            _requestsLimiter = TimeLimiter.GetFromMaxCountByInterval(30, TimeSpan.FromMinutes(1));
+            var constraint = new CountByIntervalAwaitableConstraint(30, TimeSpan.FromMinutes(1));
+            var constraint2 = new CountByIntervalAwaitableConstraint(100, TimeSpan.FromMilliseconds(700));
+            _requestsLimiter = TimeLimiter.Compose(constraint, constraint2);
             _errorMessages = new Dictionary<int, string>
             {
                 { 400, "Invalid request body or query, the included error message hopefully points at the problem." },
@@ -135,6 +138,17 @@ namespace VNDBMetadata.VndbDomain.Services
             }
 
             return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Character>>(result);
+        }
+
+        public async Task<VndbDatabaseQueryReponse<Release>> ExecutePostRequestAsync(ReleaseRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteRequestAsync(postReleaseEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            if (result is null)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Release>>(result);
         }
     }
 }

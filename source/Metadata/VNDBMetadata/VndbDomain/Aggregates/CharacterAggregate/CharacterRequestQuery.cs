@@ -25,12 +25,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         // vns.* All visual novel fields are available here.
         // vns.release.* Object, usually null, specific release that this character appears in. All release fields are available here.
 
-        public CharacterRequestQuery(CharacterFilter filter) : base(filter)
+        public CharacterRequestQuery(SimpleFilterBase<Character> filter) : base(filter)
         {
             Initialize();
         }
 
-        public CharacterRequestQuery(CharacterComplexFilter filter) : base(filter)
+        public CharacterRequestQuery(ComplexFilterBase<Character> filter) : base(filter)
         {
             Initialize();
         }
@@ -50,14 +50,14 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 
         public override List<string> GetEnabledFields()
         {
-            return EnumUtils.GetStringRepresentations(FieldsFlags)
-                .Concat(EnumUtils.GetStringRepresentations(TraitRequestFieldsFlags, "traits."))
+            return EnumUtilities.GetStringRepresentations(FieldsFlags)
+                .Concat(EnumUtilities.GetStringRepresentations(TraitRequestFieldsFlags, "traits."))
                 .ToList();
         }
 
         public override string GetSortString()
         {
-            if (Filters is SimpleFilterBase simpleFilter)
+            if (Filters is SimpleFilterBase<Character> simpleFilter)
             {
                 if (Sort == CharacterRequestSortEnum.SearchRank)
                 {
@@ -67,9 +67,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                     }
                 }
             }
-            else if (Filters is ComplexFilterBase complexFilter)
+            else if (Filters is ComplexFilterBase<Character> complexFilter)
             {
-                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase>();
+                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<Character>>();
                 if (Sort == CharacterRequestSortEnum.SearchRank)
                 {
                     var searchPredicatesCount = simplePredicates.Count(x => x.Name == CharacterFilterFactory.Search.FilterName);
@@ -80,7 +80,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 }
             }
 
-            return EnumUtils.GetStringRepresentation(Sort);
+            return EnumUtilities.GetEnumStringRepresentation(Sort);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
+using VNDBMetadata.VndbDomain.Common;
 using VNDBMetadata.VndbDomain.Common.Constants;
 using VNDBMetadata.VndbDomain.Common.Enums;
 using VNDBMetadata.VndbDomain.Common.Filters;
@@ -12,55 +13,46 @@ using VNDBMetadata.VndbDomain.Common.Interfaces;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 {
-    public class CharacterFilter : SimpleFilterBase
-    {
-        internal CharacterFilter(string filterName, string filterOperator, object value) : base(filterName, filterOperator, value)
-        {
-
-        }
-
-        internal CharacterFilter(string filterName, string filterOperator, params object[] values) : base(filterName, filterOperator, values)
-        {
-
-        }
-    }
-
-    public class CharacterComplexFilter : ComplexFilterBase
-    {
-        internal CharacterComplexFilter(string filterOperator, params IFilter[] value) : base(filterOperator, value)
-        {
-
-        }
-    }
-
     public static class CharacterFilterFactory
     {
         public static class Id
 		{
 			public static string FilterName = CharacterConstants.Filters.Id;
 			public static bool CanBeNull { get; } = false;
-			public static CharacterFilter EqualTo(string value) =>  new CharacterFilter(
-				FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-			public static CharacterFilter NotEqualTo(string value) => new CharacterFilter(
-				FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-			public static CharacterFilter GreaterThanOrEqual(string value) => new CharacterFilter(
-				FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-			public static CharacterFilter GreaterThan(string value) => new CharacterFilter(
-				FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-			public static CharacterFilter LessThanOrEqual(string value) => new CharacterFilter(
-				FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-			public static CharacterFilter LessThan(string value) => new CharacterFilter(
-				FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-		}
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, string value) =>
+                FilterFactory.CreateFilter<Character>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(string value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(string value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(string value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(string value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(string value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(string value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
+        }
 
         public static class Search
         {
             public static string FilterName = CharacterConstants.Filters.Search;
             public static bool CanBeNull { get; } = false;
-            public static CharacterFilter EqualTo(string value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-            public static CharacterFilter NotEqualTo(string value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, string value) =>
+                 FilterFactory.CreateFilter<Character>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(string value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(string value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         /// <summary>
@@ -70,10 +62,15 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         {
             public static string FilterName = CharacterConstants.Filters.Role;
             public static bool CanBeNull { get; } = false;
-            public static CharacterFilter EqualTo(CharacterRoleEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<CharacterRoleEnum>(value) : value);
-            public static CharacterFilter NotEqualTo(CharacterRoleEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<CharacterRoleEnum>(value) : value);
+
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, CharacterRoleEnum value) =>
+                FilterFactory.CreateFilter<Character, CharacterRoleEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(CharacterRoleEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(CharacterRoleEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         /// <summary>
@@ -83,10 +80,15 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         {
             public static string FilterName = CharacterConstants.Filters.BloodType;
             public static bool CanBeNull { get; } = false;
-            public static CharacterFilter EqualTo(CharacterBloodTypeEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<CharacterBloodTypeEnum>(value) : value);
-            public static CharacterFilter NotEqualTo(CharacterBloodTypeEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<CharacterBloodTypeEnum>(value) : value);
+
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, CharacterBloodTypeEnum value) =>
+                FilterFactory.CreateFilter<Character, CharacterBloodTypeEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(CharacterBloodTypeEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(CharacterBloodTypeEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         /// <summary>
@@ -96,128 +98,186 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         {
             public static string FilterName = CharacterConstants.Filters.Sex;
             public static bool CanBeNull { get; } = false;
-            public static CharacterFilter EqualTo(CharacterSexEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<CharacterSexEnum>(value) : value);
-            public static CharacterFilter NotEqualTo(CharacterSexEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<CharacterSexEnum>(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, CharacterSexEnum value) =>
+                FilterFactory.CreateFilter<Character, CharacterSexEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(CharacterSexEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(CharacterSexEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class Height
         {
             public static string FilterName = CharacterConstants.Filters.Height;
             public static bool CanBeNull { get; } = true;
-            public static CharacterFilter EqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter NotEqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint value) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(uint value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(uint value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
         }
 
         public static class Weight
         {
             public static string FilterName = CharacterConstants.Filters.Weight;
             public static bool CanBeNull { get; } = true;
-            public static CharacterFilter EqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter NotEqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint value) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(uint value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(uint value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
         }
 
         public static class Bust
         {
             public static string FilterName = CharacterConstants.Filters.Bust;
             public static bool CanBeNull { get; } = true;
-            public static CharacterFilter EqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter NotEqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint value) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(uint value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(uint value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
         }
 
         public static class Waist
         {
             public static string FilterName = CharacterConstants.Filters.Waist;
             public static bool CanBeNull { get; } = true;
-            public static CharacterFilter EqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter NotEqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint value) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(uint value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(uint value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
         }
 
         public static class Hips
         {
             public static string FilterName = CharacterConstants.Filters.Hips;
             public static bool CanBeNull { get; } = true;
-            public static CharacterFilter EqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter NotEqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint value) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(uint value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(uint value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
         }
 
         public static class Cup
         {
             public static string FilterName = CharacterConstants.Filters.Cup;
             public static bool CanBeNull { get; } = false;
-            public static CharacterFilter EqualTo(CharacterCupSizeEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<CharacterCupSizeEnum>(value) : value);
-            public static CharacterFilter NotEqualTo(CharacterCupSizeEnum value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<CharacterCupSizeEnum>(value) : value);
+
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, CharacterCupSizeEnum value) =>
+                FilterFactory.CreateFilter<Character, CharacterCupSizeEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(CharacterCupSizeEnum value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(CharacterCupSizeEnum value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         public static class Age
         {
             public static string FilterName = CharacterConstants.Filters.Age;
-            public static bool CanBeNull { get; } = false;
-            public static CharacterFilter EqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter NotEqualTo(uint value) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter GreaterThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThanOrEqual(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null<uint>(value) : value);
-            public static CharacterFilter LessThan(uint value) => new CharacterFilter(
-                FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null<uint>(value) : value);
+            public static bool CanBeNull { get; } = true;
+
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint value) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(uint value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> GreaterThan(uint value) =>
+                CreateFilter(Operators.Ordering.GreaterThan, value);
+
+            public static SimpleFilterBase<Character> LessThanOrEqual(uint value) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, value);
+
+            public static SimpleFilterBase<Character> LessThan(uint value) =>
+                CreateFilter(Operators.Ordering.LessThan, value);
         }
 
         public static class Trait
@@ -225,15 +285,14 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public static string FilterName = CharacterConstants.Filters.Trait;
             public static bool CanBeNull { get; } = false;
 
-            public static CharacterFilter EqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual,
-                CanBeNull ? Guard.Against.Null<uint>(traitId) : traitId,
-                CanBeNull ? Guard.Against.Null<SpoilerLevel>(maxSpoilerLevel) : maxSpoilerLevel);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint traitId, SpoilerLevel maxSpoilerLevel) =>
+                FilterFactory.CreateFilter<Character>(FilterName, CanBeNull, operatorString, traitId, maxSpoilerLevel);
 
-            public static CharacterFilter NotEqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual,
-                CanBeNull ? Guard.Against.Null<uint>(traitId) : traitId,
-                CanBeNull ? Guard.Against.Null<SpoilerLevel>(maxSpoilerLevel) : maxSpoilerLevel);
+            public static SimpleFilterBase<Character> EqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+                CreateFilter(Operators.Matching.IsEqual, traitId, maxSpoilerLevel);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+                CreateFilter(Operators.Matching.NotEqual, traitId, maxSpoilerLevel);
         }
 
         public static class DirectTrait
@@ -241,15 +300,14 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public static string FilterName = CharacterConstants.Filters.DirectTrait;
             public static bool CanBeNull { get; } = false;
 
-            public static CharacterFilter EqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual,
-                CanBeNull ? Guard.Against.Null<uint>(traitId) : traitId,
-                CanBeNull ? Guard.Against.Null<SpoilerLevel>(maxSpoilerLevel) : maxSpoilerLevel);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint traitId, SpoilerLevel maxSpoilerLevel) =>
+                FilterFactory.CreateFilter<Character>(FilterName, CanBeNull, operatorString, traitId, maxSpoilerLevel);
 
-            public static CharacterFilter NotEqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual,
-                CanBeNull ? Guard.Against.Null<uint>(traitId) : traitId,
-                CanBeNull ? Guard.Against.Null<SpoilerLevel>(maxSpoilerLevel) : maxSpoilerLevel);
+            public static SimpleFilterBase<Character> EqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+                CreateFilter(Operators.Matching.IsEqual, traitId, maxSpoilerLevel);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+                CreateFilter(Operators.Matching.NotEqual, traitId, maxSpoilerLevel);
         }
 
         public static class Birthday
@@ -257,15 +315,14 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public static string FilterName = CharacterConstants.Filters.Birthday;
             public static bool CanBeNull { get; } = false;
 
-            public static CharacterFilter EqualTo(uint month, uint day = 0) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual,
-                CanBeNull ? Guard.Against.Null<uint>(month) : month,
-                CanBeNull ? Guard.Against.Null<uint>(day) : day);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint month, uint day) =>
+                FilterFactory.CreateFilter<Character, uint>(FilterName, CanBeNull, operatorString, month, day);
 
-            public static CharacterFilter NotEqualTo(uint month, uint day = 0) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual,
-                CanBeNull ? Guard.Against.Null<uint>(month) : month,
-                CanBeNull ? Guard.Against.Null<uint>(day) : day);
+            public static SimpleFilterBase<Character> EqualTo(uint month, uint day = 0) =>
+                CreateFilter(Operators.Matching.IsEqual, month, day);
+
+            public static SimpleFilterBase<Character> NotEqualTo(uint month, uint day = 0) =>
+                CreateFilter(Operators.Matching.NotEqual, month, day);
         }
 
         public static class Seiyuu
@@ -273,17 +330,23 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public static string FilterName = CharacterConstants.Filters.Seiyuu;
             public static bool CanBeNull { get; } = false;
 
-            public static CharacterFilter EqualTo(StaffFilter staffFilter) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null(staffFilter) : staffFilter);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, SimpleFilterBase<Staff> value) =>
+                FilterFactory.CreateFilter<Character, SimpleFilterBase<Staff>>(FilterName, CanBeNull, operatorString, value);
 
-            public static CharacterFilter NotEqualTo(StaffFilter staffFilter) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null(staffFilter) : staffFilter);
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, ComplexFilterBase<Staff> value) =>
+                FilterFactory.CreateFilter<Character, ComplexFilterBase<Staff>>(FilterName, CanBeNull, operatorString, value);
 
-            public static CharacterFilter EqualTo(StaffComplexFilter staffFilter) => new CharacterFilter(
-                FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null(staffFilter) : staffFilter);
+            public static SimpleFilterBase<Character> EqualTo(SimpleFilterBase<Staff> value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static CharacterFilter NotEqualTo(StaffComplexFilter staffFilter) => new CharacterFilter(
-                FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null(staffFilter) : staffFilter);
+            public static SimpleFilterBase<Character> NotEqualTo(SimpleFilterBase<Staff> value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> EqualTo(ComplexFilterBase<Staff> value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(ComplexFilterBase<Staff> value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
         }
 
         //public static class VisualNovel
@@ -293,11 +356,11 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 
         //}
 
-        public static CharacterComplexFilter And(params CharacterFilter[] value) => new CharacterComplexFilter(
-            Operators.Predicates.And, Guard.Against.Null(value));
+        public static ComplexFilterBase<Character> And(params SimpleFilterBase<Character>[] values) =>
+            FilterFactory.CreateComplexFilter(Operators.Predicates.And, values);
 
-        public static CharacterComplexFilter Or(params CharacterFilter[] value) => new CharacterComplexFilter(
-            Operators.Predicates.Or, Guard.Against.Null(value));
+        public static ComplexFilterBase<Character> Or(params SimpleFilterBase<Character>[] values) =>
+            FilterFactory.CreateComplexFilter(Operators.Predicates.Or, values);
     }
 
 }

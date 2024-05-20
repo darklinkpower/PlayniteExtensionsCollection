@@ -124,7 +124,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         /// Boolean.
         /// </summary>
         [StringRepresentation(CharacterConstants.Fields.TraitsLie)]
-        TraitsLie = 1 << 21,
+        TraitsLie = 1 << 21
     }
 
     // Excluded fields: 

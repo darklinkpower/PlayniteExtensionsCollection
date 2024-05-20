@@ -14,6 +14,7 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
     {
         private static readonly ConcurrentDictionary<TEnum, string> EnumToStringMap = new ConcurrentDictionary<TEnum, string>();
         private static readonly ConcurrentDictionary<string, TEnum> StringToEnumMap = new ConcurrentDictionary<string, TEnum>();
+        private const string _stringKeyForNull = "StringValueUsedForNullKeys";
 
         static StringRepresentationEnumConverter()
         {
@@ -28,7 +29,14 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
                 if (attribute != null)
                 {
                     EnumToStringMap[enumValue] = attribute.Value;
-                    StringToEnumMap[attribute.Value] = enumValue;
+                    if (string.IsNullOrEmpty(attribute.Value))
+                    {
+                        StringToEnumMap[_stringKeyForNull] = enumValue;
+                    }
+                    else
+                    {
+                        StringToEnumMap[attribute.Value] = enumValue;
+                    }
                 }
                 else
                 {
@@ -64,19 +72,13 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var stringValue = reader.Value?.ToString();
-            if (string.IsNullOrEmpty(stringValue))
-            {
-                //throw new JsonSerializationException($"Invalid value for {typeof(TEnum).Name}.");
-                return null;
-            }
-
+            var stringValue = reader.Value?.ToString() ?? _stringKeyForNull;
             if (StringToEnumMap.TryGetValue(stringValue, out var enumValue))
             {
                 return enumValue;
             }
 
-            throw new JsonSerializationException($"Unknown value: {stringValue}");
+            return null;
         }
     }
 

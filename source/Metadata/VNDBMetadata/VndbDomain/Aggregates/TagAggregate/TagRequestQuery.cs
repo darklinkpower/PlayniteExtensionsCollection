@@ -19,12 +19,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
         [JsonIgnore]
         public TagRequestSortEnum Sort = TagRequestSortEnum.Id;
 
-        public TagRequestQuery(TagFilter filter) : base(filter)
+        public TagRequestQuery(SimpleFilterBase<Tag> filter) : base(filter)
         {
             Initialize();
         }
 
-        public TagRequestQuery(TagComplexFilter filter) : base(filter)
+        public TagRequestQuery(ComplexFilterBase<Tag> filter) : base(filter)
         {
             Initialize();
         }
@@ -39,12 +39,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 
         public override List<string> GetEnabledFields()
         {
-            return EnumUtils.GetStringRepresentations(FieldsFlags);
+            return EnumUtilities.GetStringRepresentations(FieldsFlags);
         }
 
         public override string GetSortString()
         {
-            if (Filters is SimpleFilterBase simpleFilter)
+            if (Filters is SimpleFilterBase<Tag> simpleFilter)
             {
                 if (Sort == TagRequestSortEnum.SearchRank)
                 {
@@ -54,9 +54,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
                     }
                 }
             }
-            else if (Filters is ComplexFilterBase complexFilter)
+            else if (Filters is ComplexFilterBase<Tag> complexFilter)
             {
-                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase>();
+                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<Tag>>();
                 if (Sort == TagRequestSortEnum.SearchRank)
                 {
                     var searchPredicatesCount = simplePredicates.Count(x => x.Name == TagFilterFactory.Search.FilterName);
@@ -67,7 +67,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
                 }
             }
 
-            return EnumUtils.GetStringRepresentation(Sort);
+            return EnumUtilities.GetEnumStringRepresentation(Sort);
         }
     }
 }
