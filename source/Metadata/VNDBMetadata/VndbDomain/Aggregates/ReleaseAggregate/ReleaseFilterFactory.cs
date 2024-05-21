@@ -450,17 +450,29 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         /// <summary>
         /// Match releases that are linked to at least one visual novel matching the given visual novel filters.
         /// </summary>
-        //public static class Vn
-        //{
-        //    public static string FilterName = ReleaseConstants.Filters.Vn;
-        //    public static bool CanBeNull { get; } = false;
+        public static class Vn
+        {
+            public static string FilterName = ReleaseConstants.Filters.Vn;
+            public static bool CanBeNull { get; } = false;
 
-        //    public static SimpleFilterBase<Release> EqualTo(string value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, SimpleFilterBase<VnAggregate.Vn> value) =>
+                FilterFactory.CreateFilter<Release, SimpleFilterBase<VnAggregate.Vn>>(FilterName, CanBeNull, operatorString, value);
 
-        //    public static SimpleFilterBase<Release> NotEqualTo(string value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.NullOrWhiteSpace(value) : value);
-        //}
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, ComplexFilterBase<VnAggregate.Vn> value) =>
+                FilterFactory.CreateFilter<Release, ComplexFilterBase<VnAggregate.Vn>>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Release> EqualTo(SimpleFilterBase<VnAggregate.Vn> value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Release> NotEqualTo(SimpleFilterBase<VnAggregate.Vn> value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Release> EqualTo(ComplexFilterBase<VnAggregate.Vn> value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Release> NotEqualTo(ComplexFilterBase<VnAggregate.Vn> value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+        }
 
         /// <summary>
         /// Match releases that have at least one producer matching the given producer filters.

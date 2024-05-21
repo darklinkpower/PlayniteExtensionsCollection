@@ -16,6 +16,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 
     public static class VnFilterFactory
     {
+        /// <summary>
+        /// vndbid
+        /// </summary>
         public static class Id
         {
             public static string FilterName = VnConstants.Filters.Id;
@@ -42,6 +45,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// String search, matches on the VN titles, aliases and release titles. The search algorithm is the same as used on the site.
+        /// </summary>
         public static class Search
         {
             public static string FilterName = VnConstants.Filters.Search;
@@ -56,6 +62,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Language availability.
+        /// </summary>
         public static class Language
         {
             public static string FilterName = VnConstants.Filters.Language;
@@ -71,6 +80,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Original language.
+        /// </summary>
         public static class OriginalLanguage
         {
             public static string FilterName = VnConstants.Filters.OriginalLanguage;
@@ -86,6 +98,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Platform availability.
+        /// </summary>
         public static class Platform
         {
             public static string FilterName = VnConstants.Filters.Platform;
@@ -101,6 +116,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Play time estimate, between Very short and Very long).
+        /// This filter uses the length votes average when available but falls back to the entries’ length field when there are no votes.
+        /// </summary>
         public static class Length
         {
             public static string FilterName = VnConstants.Filters.Length;
@@ -119,7 +138,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
         /// <summary>
         /// Release date.
         /// </summary>
-        public static class Released
+        public static class ReleaseDate
         {
             public static string FilterName = VnConstants.Filters.Released;
             public static bool CanBeNull { get; } = true;
@@ -172,6 +191,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Ordering.LessThan, year, month, day);
         }
 
+        /// <summary>
+        /// Bayesian rating, integer between 10 and 100.
+        /// </summary>
         public static class Rating
         {
             public static string FilterName = VnConstants.Filters.Rating;
@@ -198,6 +220,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Integer, number of votes.
+        /// </summary>
         public static class VoteCount
         {
             public static string FilterName = VnConstants.Filters.VoteCount;
@@ -224,6 +249,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// If visual novel has description available.
+        /// </summary>
         public static class HasDescription
         {
             public static string FilterName = VnConstants.Filters.HasDescription;
@@ -237,6 +265,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual);
         }
 
+        /// <summary>
+        /// If visual novel has anime available.
+        /// </summary>
         public static class HasAnime
         {
             public static string FilterName = VnConstants.Filters.HasAnime;
@@ -250,6 +281,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual);
         }
 
+        /// <summary>
+        /// If visual novel has screenshots available.
+        /// </summary>
         public static class HasScreenshot
         {
             public static string FilterName = VnConstants.Filters.HasScreenshot;
@@ -263,6 +297,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual);
         }
 
+        /// <summary>
+        /// If visual novel has reviews available.
+        /// </summary>
         public static class HasReview
         {
             public static string FilterName = VnConstants.Filters.HasReview;
@@ -276,6 +313,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual);
         }
 
+        /// <summary>
+        /// Development status.
+        /// </summary>
         public static class DevelopmentStatus
         {
             public static string FilterName = VnConstants.Filters.DevStatus;
@@ -291,7 +331,13 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
-        public static class Trait
+        /// <summary>
+        /// Tags applied directly to this VN, does not match parent tags.
+        /// The tag and dtag filters accept either a plain tag ID or a three-element array containing the tag ID, maximum spoiler level (0, 1 or 2) and minimum tag level (number between 0 and 3, inclusive), for example ["tag","=",["g505",2,1.2]] matches all visual novels that have a Donkan Protagonist with a vote of at least 1.2 at any spoiler level.
+        /// If only an ID is given, 0 is assumed for both the spoiler and tag levels.
+        /// For example, ["tag","=","g505"] is equivalent to ["tag","=",["g505",0,0]].
+        /// </summary>
+        public static class Tag
         {
             public static string FilterName = VnConstants.Filters.Tag;
             public static bool CanBeNull { get; } = false;
@@ -307,7 +353,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 
 
             private static SimpleFilterBase<Vn> CreateFilter(string operatorString, uint id, SpoilerLevelEnum maxSpoilerLevel, double minimumTagLevel) =>
-                FilterFactory.CreateFilter<Vn>(FilterName, CanBeNull, operatorString, id, maxSpoilerLevel, Guard.Against.NotInRange(minimumTagLevel, 0, 3) );
+                FilterFactory.CreateFilter<Vn>(FilterName, CanBeNull, operatorString, id, maxSpoilerLevel, Guard.Against.NotInRange(minimumTagLevel, 0, 3));
 
             public static SimpleFilterBase<Vn> EqualTo(uint id, SpoilerLevelEnum maxSpoilerLevel, double minimumTagLevel) =>
                 CreateFilter(Operators.Matching.IsEqual, id, maxSpoilerLevel, minimumTagLevel);
@@ -316,6 +362,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, id, maxSpoilerLevel, minimumTagLevel);
         }
 
+        /// <summary>
+        /// Tags applied directly to this VN, does not match parent tags.
+        /// The tag and dtag filters accept either a plain tag ID or a three-element array containing the tag ID, maximum spoiler level (0, 1 or 2) and minimum tag level (number between 0 and 3, inclusive), for example ["tag","=",["g505",2,1.2]] matches all visual novels that have a Donkan Protagonist with a vote of at least 1.2 at any spoiler level.
+        /// If only an ID is given, 0 is assumed for both the spoiler and tag levels.
+        /// For example, ["tag","=","g505"] is equivalent to ["tag","=",["g505",0,0]].
+        /// </summary>
         public static class DirectTag
         {
             public static string FilterName = VnConstants.Filters.DirectTag;
@@ -341,6 +393,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, id, maxSpoilerLevel, minimumTagLevel);
         }
 
+        /// <summary>
+        /// Integer, AniDB anime identifier.
+        /// </summary>
         public static class AnimeId
         {
             public static string FilterName = VnConstants.Filters.AnimeId;
@@ -355,6 +410,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, id);
         }
 
+        /// <summary>
+        /// User labels applied to this VN. Accepts a two-element array containing a user ID and label ID.
+        /// When authenticated or if the "user" request parameter has been set, then it also accepts just a label ID.
+        /// </summary>
         public static class Label
         {
             public static string FilterName = VnConstants.Filters.Label;
@@ -367,8 +426,20 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 
             public static SimpleFilterBase<Vn> NotEqualTo(string userId, uint labelId) =>
                 CreateFilter(Operators.Matching.NotEqual, userId, labelId);
+
+            private static SimpleFilterBase<Vn> CreateFilter(string operatorString, string labelId) =>
+                FilterFactory.CreateFilter<Vn>(FilterName, CanBeNull, operatorString, labelId);
+
+            public static SimpleFilterBase<Vn> EqualTo(string labelId) =>
+                CreateFilter(Operators.Matching.IsEqual, labelId);
+
+            public static SimpleFilterBase<Vn> NotEqualTo(string labelId) =>
+                CreateFilter(Operators.Matching.NotEqual, labelId);
         }
 
+        /// <summary>
+        /// Match visual novels that have at least one release matching the given release filters.
+        /// </summary>
         public static class Release
         {
             public static string FilterName = VnConstants.Filters.Release;
@@ -393,6 +464,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Match visual novels that have at least one character matching the given character filters.
+        /// </summary>
         public static class Character
         {
             public static string FilterName = VnConstants.Filters.Character;
@@ -417,6 +491,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Match visual novels that have at least one staff member matching the given staff filters.
+        /// </summary>
         public static class Staff
         {
             public static string FilterName = VnConstants.Filters.Staff;
@@ -441,6 +518,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Match visual novels developed by the given producer filters.
+        /// </summary>
         public static class Developer
         {
             public static string FilterName = VnConstants.Filters.Developer;

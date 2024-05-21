@@ -14,6 +14,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
 {
     public static class ProducerFilterFactory
 	{
+        /// <summary>
+        /// vndbid
+        /// </summary>
         public static class Id
         {
             public static string FilterName = ProducerConstants.Filters.Id;
@@ -40,6 +43,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// String search.
+        /// </summary>
         public static class Search
         {
             public static string FilterName = ProducerConstants.Filters.Search;
@@ -54,6 +60,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Language.
+        /// </summary>
         public static class Language
         {
             public static string FilterName = ProducerConstants.Filters.Lang;
@@ -68,6 +77,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Producer type.
+        /// </summary>
         public static class Type
         {
             public static string FilterName = ProducerConstants.Filters.Type;

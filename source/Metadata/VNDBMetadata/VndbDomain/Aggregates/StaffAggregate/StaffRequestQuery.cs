@@ -21,45 +21,45 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
         [JsonIgnore]
         public AliasesFieldsFlags AliasesFieldsFlags;
         [JsonIgnore]
-        public StaffRequestSortEnum Sort = StaffRequestSortEnum.Id;
+        public StaffRequestSortEnum Sort = StaffRequestSortEnum.SearchRank;
 
         public StaffRequestQuery(SimpleFilterBase<Staff> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public StaffRequestQuery(ComplexFilterBase<Staff> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
-            foreach (StaffRequestFieldsFlags field in Enum.GetValues(typeof(StaffRequestFieldsFlags)))
-            {
-                FieldsFlags |= field;
-            }
-
-            foreach (ExtLinksFieldsFlags field in Enum.GetValues(typeof(ExtLinksFieldsFlags)))
-            {
-                ExtLinksFieldsFlags |= field;
-            }
-
-            foreach (AliasesFieldsFlags field in Enum.GetValues(typeof(AliasesFieldsFlags)))
-            {
-                AliasesFieldsFlags |= field;
-            }
+            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref ExtLinksFieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref AliasesFieldsFlags);
         }
 
-        public override List<string> GetEnabledFields()
+        public override void ResetAllFieldsFlags()
         {
-            return EnumUtilities.GetStringRepresentations(FieldsFlags)
-                .Concat(EnumUtilities.GetStringRepresentations(ExtLinksFieldsFlags))
-                .Concat(EnumUtilities.GetStringRepresentations(AliasesFieldsFlags))
-                .ToList();
+            FieldsFlags = default;
+            ExtLinksFieldsFlags = default;
+            AliasesFieldsFlags = default;
         }
 
-        public override string GetSortString()
+        protected override List<string> GetEnabledFields()
+        {
+            var results = new List<List<string>>
+            {
+                EnumUtilities.GetStringRepresentations(FieldsFlags),
+                EnumUtilities.GetStringRepresentations(ExtLinksFieldsFlags),
+                EnumUtilities.GetStringRepresentations(AliasesFieldsFlags)
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<Staff> simpleFilter)
             {

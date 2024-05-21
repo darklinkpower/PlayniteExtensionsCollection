@@ -17,32 +17,34 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
         [JsonIgnore]
         public TraitRequestFieldsFlags FieldsFlags;
         [JsonIgnore]
-        public TraitRequestSortEnum Sort = TraitRequestSortEnum.Id;
+        public TraitRequestSortEnum Sort = TraitRequestSortEnum.SearchRank;
 
         public TraitRequestQuery(SimpleFilterBase<Trait> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public TraitRequestQuery(ComplexFilterBase<Trait> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
-            foreach (TraitRequestFieldsFlags field in Enum.GetValues(typeof(TraitRequestFieldsFlags)))
-            {
-                FieldsFlags |= field;
-            }
+            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
         }
 
-        public override List<string> GetEnabledFields()
+        public override void ResetAllFieldsFlags()
+        {
+            FieldsFlags = default;
+        }
+
+        protected override List<string> GetEnabledFields()
         {
             return EnumUtilities.GetStringRepresentations(FieldsFlags);
         }
 
-        public override string GetSortString()
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<Trait> simpleFilter)
             {

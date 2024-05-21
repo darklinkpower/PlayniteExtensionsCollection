@@ -17,32 +17,34 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
         [JsonIgnore]
         public TagRequestFieldsFlags FieldsFlags;
         [JsonIgnore]
-        public TagRequestSortEnum Sort = TagRequestSortEnum.Id;
+        public TagRequestSortEnum Sort = TagRequestSortEnum.SearchRank;
 
         public TagRequestQuery(SimpleFilterBase<VndbTag> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public TagRequestQuery(ComplexFilterBase<VndbTag> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
-            foreach (TagRequestFieldsFlags field in Enum.GetValues(typeof(TagRequestFieldsFlags)))
-            {
-                FieldsFlags |= field;
-            }
+            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
         }
 
-        public override List<string> GetEnabledFields()
+        public override void ResetAllFieldsFlags()
+        {
+            FieldsFlags = default;
+        }
+
+        protected override List<string> GetEnabledFields()
         {
             return EnumUtilities.GetStringRepresentations(FieldsFlags);
         }
 
-        public override string GetSortString()
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<VndbTag> simpleFilter)
             {

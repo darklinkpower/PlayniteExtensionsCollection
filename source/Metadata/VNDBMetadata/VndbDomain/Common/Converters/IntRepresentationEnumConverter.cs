@@ -12,8 +12,8 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
 {
     public class IntRepresentationEnumConverter<TEnum> : JsonConverter where TEnum : Enum
     {
-        private static readonly ConcurrentDictionary<TEnum, int> EnumToIntMap = new ConcurrentDictionary<TEnum, int>();
-        private static readonly ConcurrentDictionary<int, TEnum> IntToEnumMap = new ConcurrentDictionary<int, TEnum>();
+        private static readonly ConcurrentDictionary<TEnum, int> _enumToIntMap = new ConcurrentDictionary<TEnum, int>();
+        private static readonly ConcurrentDictionary<int, TEnum> _intToEnumMap = new ConcurrentDictionary<int, TEnum>();
 
         static IntRepresentationEnumConverter()
         {
@@ -27,14 +27,14 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
 
                 if (attribute != null)
                 {
-                    EnumToIntMap[enumValue] = attribute.Value;
-                    IntToEnumMap[attribute.Value] = enumValue;
+                    _enumToIntMap[enumValue] = attribute.Value;
+                    _intToEnumMap[attribute.Value] = enumValue;
                 }
                 else
                 {
                     var intValue = Convert.ToInt32(enumValue);
-                    EnumToIntMap[enumValue] = intValue;
-                    IntToEnumMap[intValue] = enumValue;
+                    _enumToIntMap[enumValue] = intValue;
+                    _intToEnumMap[intValue] = enumValue;
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
         {
             if (value is TEnum enumValue)
             {
-                if (EnumToIntMap.TryGetValue(enumValue, out var intValue))
+                if (_enumToIntMap.TryGetValue(enumValue, out var intValue))
                 {
                     writer.WriteValue(intValue);
                 }
@@ -71,7 +71,7 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
             }
 
             var intValue = Convert.ToInt32(reader.Value);
-            if (IntToEnumMap.TryGetValue(intValue, out var enumValue))
+            if (_intToEnumMap.TryGetValue(intValue, out var enumValue))
             {
                 return enumValue;
             }

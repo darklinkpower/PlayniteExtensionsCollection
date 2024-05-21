@@ -10,5 +10,14 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
     {
         public CharacterSexEnum? Apparent { get; set; }
         public CharacterSexEnum? Real { get; set; }
+
+        public override string ToString()
+        {
+            var apparentString = Apparent.HasValue ? Apparent.Value.ToString() : "Not available";
+            var realString = Real.HasValue ? Real.Value.ToString() : "Not available";
+            return $"Apparent: {apparentString}, Real: {realString}";
+        }
+
+
     }
 }

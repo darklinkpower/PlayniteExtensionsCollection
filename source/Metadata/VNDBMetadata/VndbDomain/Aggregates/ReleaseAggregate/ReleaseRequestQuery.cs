@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
@@ -18,41 +19,50 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public ReleaseRequestFieldsFlags FieldsFlags;
         [JsonIgnore]
         public ProducerRequestFieldsFlags ProducerRequestFieldsFlags;
+
         [JsonIgnore]
-        public ReleaseRequestSortEnum Sort = ReleaseRequestSortEnum.Id;
-        // Missing vns.*
+        public VnRequestFieldsFlags VnRequestFieldsFlags;
+
+        [JsonIgnore]
+        public ReleaseRequestSortEnum Sort = ReleaseRequestSortEnum.SearchRank;
 
         public ReleaseRequestQuery(SimpleFilterBase<Release> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public ReleaseRequestQuery(ComplexFilterBase<Release> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
-            foreach (ReleaseRequestFieldsFlags field in Enum.GetValues(typeof(ReleaseRequestFieldsFlags)))
-            {
-                FieldsFlags |= field;
-            }
-
-            foreach (ProducerRequestFieldsFlags field in Enum.GetValues(typeof(ProducerRequestFieldsFlags)))
-            {
-                ProducerRequestFieldsFlags |= field;
-            }
+            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref VnRequestFieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref ProducerRequestFieldsFlags);
         }
 
-        public override List<string> GetEnabledFields()
+        public override void ResetAllFieldsFlags()
         {
-            return EnumUtilities.GetStringRepresentations(FieldsFlags)
-                .Concat(EnumUtilities.GetStringRepresentations(ProducerRequestFieldsFlags, "producers."))
-                .ToList();
+            FieldsFlags = default;
+            VnRequestFieldsFlags = default;
+            ProducerRequestFieldsFlags = default;
         }
 
-        public override string GetSortString()
+        protected override List<string> GetEnabledFields()
+        {
+            var results = new List<List<string>>
+            {
+                EnumUtilities.GetStringRepresentations(FieldsFlags),
+                EnumUtilities.GetStringRepresentations(VnRequestFieldsFlags, ReleaseConstants.Fields.VnsAll),
+                EnumUtilities.GetStringRepresentations(ProducerRequestFieldsFlags, ReleaseConstants.Fields.ProducersAll)
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<Release> simpleFilter)
             {

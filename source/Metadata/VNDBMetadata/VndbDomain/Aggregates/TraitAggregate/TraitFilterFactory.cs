@@ -15,6 +15,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
 
     public static class TraitFilterFactory
     {
+        /// <summary>
+        /// vndbid
+        /// </summary>
         public static class Id
         {
             public static string FilterName = TraitConstants.Filters.Id;
@@ -41,6 +44,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// String search.
+        /// </summary>
         public static class Search
         {
             public static string FilterName = TraitConstants.Filters.Search;

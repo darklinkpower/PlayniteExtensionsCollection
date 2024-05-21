@@ -198,24 +198,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
             public const string MediaQty = "media.qty";
 
             /// <summary>
-            /// Array of objects, the list of visual novels this release is linked to.
-            /// </summary>
-            public const string Vns = "vns";
-
-            /// <summary>
             /// The release type for this visual novel, can be "trial", "partial" or "complete".
             /// </summary>
             public const string VnsRType = "vns.rtype";
-
-            /// <summary>
-            /// All visual novel fields are available here.
-            /// </summary>
-            public const string VnsAll = "vns.*";
-
-            /// <summary>
-            /// Array of objects.
-            /// </summary>
-            public const string Producers = "producers";
 
             /// <summary>
             /// Boolean.
@@ -226,11 +211,6 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
             /// Boolean.
             /// </summary>
             public const string ProducersPublisher = "producers.publisher";
-
-            /// <summary>
-            /// All producer fields are available here.
-            /// </summary>
-            public const string ProducersAll = "producers.*";
 
             /// <summary>
             /// Release date.
@@ -321,6 +301,17 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
             /// Remote identifier for this link. Not all sites have a sensible identifier as part of their URL format, in such cases this field is simply equivalent to the URL.
             /// </summary>
             public const string ExtLinksId = "extlinks.id";
+
+
+            /// <summary>
+            /// Array of objects, the list of visual novels this release is linked to.
+            /// </summary>
+            public const string VnsAll = "vns.";
+
+            /// <summary>
+            /// Array of objects. All producer fields are available here.
+            /// </summary>
+            public const string ProducersAll = "producers.";
         }
 
         public static class ReleaseType

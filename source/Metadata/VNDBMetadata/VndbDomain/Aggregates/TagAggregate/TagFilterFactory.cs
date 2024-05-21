@@ -15,6 +15,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 
     public static class TagFilterFactory
     {
+        /// <summary>
+        /// vndbid
+        /// </summary>
         public static class Id
         {
             public static string FilterName = TagConstants.Filters.Id;
@@ -41,6 +44,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// String search.
+        /// </summary>
         public static class Search
         {
             public static string FilterName = TagConstants.Filters.Search;
@@ -55,6 +61,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Searches tag category.
+        /// </summary>
         public static class Category
         {
             public static string FilterName = TagConstants.Filters.Category;

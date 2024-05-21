@@ -60,7 +60,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 
         [JsonProperty("released")]
         [JsonConverter(typeof(VndbReleaseDateJsonConverter))]
-        public VndbReleaseDate Released { get; set; }
+        public VndbReleaseDate ReleaseDate { get; set; }
 
         [JsonProperty("platforms")]
         [JsonConverter(typeof(StringRepresentationEnumListConverter<PlatformEnum>))]

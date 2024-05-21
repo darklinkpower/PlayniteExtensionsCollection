@@ -14,34 +14,41 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
     public class ProducerRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public ProducerRequestFieldsFlags Fields;
+        public ProducerRequestFieldsFlags FieldsFlags;
         [JsonIgnore]
-        public ProducerRequestSortEnum Sort = ProducerRequestSortEnum.Id;
+        public ProducerRequestSortEnum Sort = ProducerRequestSortEnum.SearchRank;
 
         public ProducerRequestQuery(SimpleFilterBase<Producer> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public ProducerRequestQuery(ComplexFilterBase<Producer> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
-            foreach (ProducerRequestFieldsFlags field in Enum.GetValues(typeof(ProducerRequestFieldsFlags)))
+            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
+        }
+
+        public override void ResetAllFieldsFlags()
+        {
+            FieldsFlags = default;
+        }
+
+        protected override List<string> GetEnabledFields()
+        {
+            var results = new List<List<string>>
             {
-                Fields |= field;
-            }
+                EnumUtilities.GetStringRepresentations(FieldsFlags)
+            };
+
+            return results.SelectMany(x => x).ToList();
         }
 
-        public override List<string> GetEnabledFields()
-        {
-            return EnumUtilities.GetStringRepresentations(Fields);
-        }
-
-        public override string GetSortString()
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<Producer> simpleFilter)
             {

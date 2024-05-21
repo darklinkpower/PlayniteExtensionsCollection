@@ -14,8 +14,6 @@ using VNDBMetadata.VndbDomain.Common.Models;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
 {
-    public enum Platformw { Mac, Win };
-
     public class Release
     {
         [JsonProperty("alttitle")]
@@ -28,7 +26,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public List<ReleaseAvailableLanguageInfo> LanguagesAvailability { get; set; }
 
         [JsonProperty("vns")]
-        public List<ReleaseVn> Vns { get; set; }
+        public List<ReleaseVn> RelatedVisualNovels { get; set; }
 
         [JsonProperty("media")]
         public List<ReleaseMedia> Media { get; set; }
@@ -81,11 +79,11 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public bool Official { get; set; }
 
         [JsonProperty("producers")]
-        public List<Producer> Producers { get; set; }
+        public List<ReleaseProducer> Producers { get; set; }
 
         [JsonProperty("released")]
         [JsonConverter(typeof(VndbReleaseDateJsonConverter))]
-        public VndbReleaseDate Released { get; set; }
+        public VndbReleaseDate ReleaseDate { get; set; }
 
         public override string ToString()
         {

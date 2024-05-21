@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBMetadata.VndbDomain.Aggregates.ImageAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Flags;
 using VNDBMetadata.VndbDomain.Common.Queries;
@@ -20,42 +23,64 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         [JsonIgnore]
         public TraitRequestFieldsFlags TraitRequestFieldsFlags;
         [JsonIgnore]
-        public CharacterRequestSortEnum Sort = CharacterRequestSortEnum.Id;
-
-        // vns.* All visual novel fields are available here.
-        // vns.release.* Object, usually null, specific release that this character appears in. All release fields are available here.
+        public VnRequestFieldsFlags VnRequestFieldsFlags;
+        [JsonIgnore]
+        public ReleaseRequestFieldsFlags VnReleaseRequestFieldsFlags;
+        [JsonIgnore]
+        public ImageRequestFieldsFlags ImageRequestFieldsFlags;
+        [JsonIgnore]
+        public CharacterRequestSortEnum Sort = CharacterRequestSortEnum.SearchRank;
 
         public CharacterRequestQuery(SimpleFilterBase<Character> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public CharacterRequestQuery(ComplexFilterBase<Character> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
-            foreach (CharacterRequestFieldsFlags field in Enum.GetValues(typeof(CharacterRequestFieldsFlags)))
-            {
-                FieldsFlags |= field;
-            }
-
-            foreach (TraitRequestFieldsFlags field in Enum.GetValues(typeof(TraitRequestFieldsFlags)))
-            {
-                TraitRequestFieldsFlags |= field;
-            }
+            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref TraitRequestFieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref VnRequestFieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref VnReleaseRequestFieldsFlags);
+            EnumUtilities.SetAllEnumFlags(ref ImageRequestFieldsFlags);
         }
 
-        public override List<string> GetEnabledFields()
+        public override void ResetAllFieldsFlags()
         {
-            return EnumUtilities.GetStringRepresentations(FieldsFlags)
-                .Concat(EnumUtilities.GetStringRepresentations(TraitRequestFieldsFlags, "traits."))
-                .ToList();
+            FieldsFlags = default;
+            TraitRequestFieldsFlags = default;
+
+            ImageRequestFieldsFlags = default;
+            VnRequestFieldsFlags = default;
+            VnReleaseRequestFieldsFlags = default;
+
+            ImageRequestFieldsFlags = default;
         }
 
-        public override string GetSortString()
+        protected override List<string> GetEnabledFields()
+        {
+            var results = new List<List<string>>
+            {
+                EnumUtilities.GetStringRepresentations(FieldsFlags),
+
+                EnumUtilities.GetStringRepresentations(TraitRequestFieldsFlags, CharacterConstants.Fields.TraitsAllFields),
+                EnumUtilities.GetStringRepresentations(VnRequestFieldsFlags, CharacterConstants.Fields.VnsAllFields),
+                EnumUtilities.GetStringRepresentations(VnReleaseRequestFieldsFlags, CharacterConstants.Fields.VnsReleaseAllFields),
+
+                // thumbnail and thumbnail_dims not available because character images are currently always limited to 256x300px
+                EnumUtilities.GetStringRepresentations(ImageRequestFieldsFlags, CharacterConstants.Fields.ImageAllFields)
+                    .Where(s => !s.EndsWith("thumbnail") && !s.EndsWith("thumbnail_dims")).ToList()
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<Character> simpleFilter)
             {

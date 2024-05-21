@@ -46,15 +46,15 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 
         public VnRequestQuery(SimpleFilterBase<Vn> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
         public VnRequestQuery(ComplexFilterBase<Vn> filter) : base(filter)
         {
-            Initialize();
+            EnableAllFieldsFlags();
         }
 
-        private void Initialize()
+        public override void EnableAllFieldsFlags()
         {
             EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
             EnumUtilities.SetAllEnumFlags(ref RelationsRequestFieldsFlags);
@@ -73,7 +73,26 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
             EnumUtilities.SetAllEnumFlags(ref VaCharacterRequestFieldsFlags);
         }
 
-        public override List<string> GetEnabledFields()
+        public override void ResetAllFieldsFlags()
+        {
+            FieldsFlags = default;
+            RelationsRequestFieldsFlags = default;
+
+            ImageRequestFieldsFlags = default;
+            ScreenshotsRequestFieldsFlags = default;
+            ScreenshotsReleaseRequestFieldsFlags = default;
+
+            TagsRequestFieldsFlags = default;
+
+            DevelopersRequestFieldsFlags = default;
+
+            StaffRequestFieldsFlags = default;
+            VaRequestFieldsFlags = default;
+
+            VaCharacterRequestFieldsFlags = default;
+        }
+
+        protected override List<string> GetEnabledFields()
         {
             var results = new List<List<string>>
             {
@@ -97,7 +116,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
             return results.SelectMany(x => x).ToList();
         }
 
-        public override string GetSortString()
+        protected override string GetSortString()
         {
             if (Filters is SimpleFilterBase<Vn> simpleFilter)
             {

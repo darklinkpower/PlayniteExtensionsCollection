@@ -29,7 +29,7 @@ namespace VNDBMetadata
 {
     public class VNDBMetadata : MetadataPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
 
         private VNDBMetadataSettingsViewModel settings { get; set; }
 

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBMetadata.VndbDomain.Aggregates.ImageAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Converters;
@@ -30,8 +32,11 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         [JsonProperty("blood_type")]
         public CharacterBloodTypeEnum? BloodType { get; set; }
 
+        [JsonProperty("image")]
+        public VndbImage Image { get; set; }
+
         [JsonProperty("traits")]
-        public List<Trait> Traits { get; set; }
+        public List<CharacterTrait> Traits { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -40,7 +45,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         public List<CharacterVn> VisualNovelApperances { get; set; }
 
         [JsonProperty("bust")]
-        public long? Bust { get; set; }
+        public int? Bust { get; set; }
 
         [JsonProperty("waist")]
         public int? Waist { get; set; }
@@ -73,16 +78,6 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         {
             return Name;
         }
-    }
-
-    public class CharacterVn : Vn
-    {
-        [JsonProperty("role")]
-        [JsonConverter(typeof(StringRepresentationEnumConverter<CharacterRoleEnum>))]
-        public CharacterRoleEnum Role { get; set; }
-
-        [JsonProperty("spoiler")]
-        public SpoilerLevelEnum Spoiler { get; set; }
     }
 
     public class CharacterBirthdayConverter : JsonConverter

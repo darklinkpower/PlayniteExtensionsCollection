@@ -228,10 +228,13 @@
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterRequestSortEnum.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterFilterFactory.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterRequestQuery.cs" />
+    <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterTrait.cs" />
+    <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterVn.cs" />
     <Compile Include="VndbDomain\Aggregates\ImageAggregate\VndbImage.cs" />
     <Compile Include="VndbDomain\Aggregates\ImageAggregate\ImageRequestFieldsFlags.cs" />
     <Compile Include="VndbDomain\Aggregates\ImageAggregate\ImageDimensions.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseAvailableLanguageInfo.cs" />
+    <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseProducer.cs" />
     <Compile Include="VndbDomain\Common\Models\VndbReleaseDate.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseMedia.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseRequestSortEnum.cs" />

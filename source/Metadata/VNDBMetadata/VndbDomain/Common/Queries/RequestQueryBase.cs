@@ -46,9 +46,21 @@ namespace VNDBMetadata.VndbDomain.Common.Queries
             Filters = filter;
         }
 
-        public abstract List<string> GetEnabledFields();
+        protected abstract List<string> GetEnabledFields();
 
-        public abstract string GetSortString();
+        protected abstract string GetSortString();
+
+        /// <summary>
+        /// Enables the flags of all the request fields.
+        /// </summary>
+        public abstract void EnableAllFieldsFlags();
+
+        /// <summary>
+        /// Resets the flags of all the request fields.
+        /// </summary>
+        public abstract void ResetAllFieldsFlags();
+
+
 
         public class PredicateConverter : JsonConverter
         {

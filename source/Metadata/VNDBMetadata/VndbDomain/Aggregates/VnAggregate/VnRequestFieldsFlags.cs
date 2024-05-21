@@ -11,6 +11,11 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
     public enum VnRequestFieldsFlags : ulong
     {
         /// <summary>
+        /// No fields selected.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// vndbid.
         /// </summary>
         [StringRepresentation(VnConstants.Fields.Id)]

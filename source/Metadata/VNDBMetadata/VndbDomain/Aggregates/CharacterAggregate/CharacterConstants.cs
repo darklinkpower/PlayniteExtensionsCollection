@@ -124,12 +124,6 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public const string Description = "description";
 
             /// <summary>
-            /// Object, possibly null, same sub-fields as the image visual novel field. 
-            /// (Except for thumbnail and thumbnail_dims because character images are currently always limited to 256x300px, but that is subject to change in the future).
-            /// </summary>
-            public const string Image = "image.*";
-
-            /// <summary>
             /// String, possibly null, "a", "b", "ab" or "o".
             /// </summary>
             public const string BloodType = "blood_type";
@@ -195,16 +189,6 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public const string VNSRole = "vns.role";
 
             /// <summary>
-            /// All visual novel fields are available here.
-            /// </summary>
-            public const string VNSAllFields = "vns.*";
-
-            /// <summary>
-            /// Object, usually null, specific release that this character appears in. All release fields are available here.
-            /// </summary>
-            public const string VNSRelease = "vns.release.*";
-
-            /// <summary>
             /// Array of objects, possibly empty.
             /// </summary>
             public const string Traits = "traits";
@@ -219,10 +203,29 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             /// </summary>
             public const string TraitsLie = "traits.lie";
 
+
+
+
+            /// <summary>
+            /// Object, possibly null, same sub-fields as the image visual novel field. 
+            /// (Except for thumbnail and thumbnail_dims because character images are currently always limited to 256x300px, but that is subject to change in the future).
+            /// </summary>
+            public const string ImageAllFields = "image.";
+
+            /// <summary>
+            /// All visual novel fields are available here.
+            /// </summary>
+            public const string VnsAllFields = "vns.";
+
+            /// <summary>
+            /// Object, usually null, specific release that this character appears in. All release fields are available here.
+            /// </summary>
+            public const string VnsReleaseAllFields = "vns.release.";
+
             /// <summary>
             /// All trait fields are available here.
             /// </summary>
-            public const string TraitsAllFields = "traits.*";
+            public const string TraitsAllFields = "traits.";
         }
 
         public static class RequestSort

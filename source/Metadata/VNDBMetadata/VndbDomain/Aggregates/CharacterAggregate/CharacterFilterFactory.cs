@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common;
 using VNDBMetadata.VndbDomain.Common.Constants;
 using VNDBMetadata.VndbDomain.Common.Enums;
@@ -15,6 +16,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 {
     public static class CharacterFilterFactory
     {
+        /// <summary>
+        /// vndbid
+        /// </summary>
         public static class Id
 		{
 			public static string FilterName = CharacterConstants.Filters.Id;
@@ -41,6 +45,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// String search.
+        /// </summary>
         public static class Search
         {
             public static string FilterName = CharacterConstants.Filters.Search;
@@ -57,6 +64,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 
         /// <summary>
         /// String, see vns.role field. If this filter is used when nested inside a visual novel filter, then this matches the role of the particular visual novel. Otherwise, this matches the role of any linked visual novel.
+        /// "main" for protagonist, "primary" for main characters, "side" or "appears". 
         /// </summary>
         public static class Role
         {
@@ -74,7 +82,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         }
 
         /// <summary>
-        /// String.
+        /// Character blood type.
         /// </summary>
         public static class BloodType
         {
@@ -92,7 +100,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         }
 
         /// <summary>
-        /// String.
+        /// Character sex.
         /// </summary>
         public static class Sex
         {
@@ -108,6 +116,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Height value.
+        /// </summary>
         public static class Height
         {
             public static string FilterName = CharacterConstants.Filters.Height;
@@ -134,6 +145,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Waist size.
+        /// </summary>
         public static class Weight
         {
             public static string FilterName = CharacterConstants.Filters.Weight;
@@ -160,6 +174,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Bust size.
+        /// </summary>
         public static class Bust
         {
             public static string FilterName = CharacterConstants.Filters.Bust;
@@ -186,6 +203,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Waist Size.
+        /// </summary>
         public static class Waist
         {
             public static string FilterName = CharacterConstants.Filters.Waist;
@@ -212,6 +232,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Hips size.
+        /// </summary>
         public static class Hips
         {
             public static string FilterName = CharacterConstants.Filters.Hips;
@@ -238,6 +261,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Cup size.
+        /// </summary>
         public static class Cup
         {
             public static string FilterName = CharacterConstants.Filters.Cup;
@@ -253,6 +279,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Age.
+        /// </summary>
         public static class Age
         {
             public static string FilterName = CharacterConstants.Filters.Age;
@@ -280,6 +309,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// Traits applied to this character, also matches parent traits. See below for more details.
+        /// </summary>
         public static class Trait
         {
             public static string FilterName = CharacterConstants.Filters.Trait;
@@ -295,6 +327,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Matching.NotEqual, traitId, maxSpoilerLevel);
         }
 
+        /// <summary>
+        /// Traits applied directly to this character, does not match parent traits. See below for details.
+        /// </summary>
         public static class DirectTrait
         {
             public static string FilterName = CharacterConstants.Filters.DirectTrait;
@@ -310,6 +345,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Matching.NotEqual, traitId, maxSpoilerLevel);
         }
 
+        /// <summary>
+        /// Array of two integers, month and day. Day may be 0 to find characters whose birthday is in a given month.
+        /// </summary>
         public static class Birthday
         {
             public static string FilterName = CharacterConstants.Filters.Birthday;
@@ -325,6 +363,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Matching.NotEqual, month, day);
         }
 
+        /// <summary>
+        /// Match characters that are voiced by the matching staff filters.
+        /// Voice actor information is actually specific to visual novels, but this filter does not (currently) correlate against the parent entry when nested inside a visual novel filter.
+        /// </summary>
         public static class Seiyuu
         {
             public static string FilterName = CharacterConstants.Filters.Seiyuu;
@@ -349,12 +391,33 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
-        //public static class VisualNovel
-        //{
-        //    public static string FilterName = CharacterConstants.Filters.VisualNovel;
-        //    public static bool CanBeNull { get; } = false;
+        /// <summary>
+        /// Match characters linked to visual novels described by visual novel filters.
+        /// </summary>
+        /// <returns></returns>
+        public static class VisualNovel
+        {
+            public static string FilterName = CharacterConstants.Filters.VisualNovel;
+            public static bool CanBeNull { get; } = false;
 
-        //}
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, SimpleFilterBase<Vn> value) =>
+                FilterFactory.CreateFilter<Character, SimpleFilterBase<Vn>>(FilterName, CanBeNull, operatorString, value);
+
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, ComplexFilterBase<Vn> value) =>
+                FilterFactory.CreateFilter<Character, ComplexFilterBase<Vn>>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(SimpleFilterBase<Vn> value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(SimpleFilterBase<Vn> value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+
+            public static SimpleFilterBase<Character> EqualTo(ComplexFilterBase<Vn> value) =>
+                CreateFilter(Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(ComplexFilterBase<Vn> value) =>
+                CreateFilter(Operators.Matching.NotEqual, value);
+        }
 
         public static ComplexFilterBase<Character> And(params SimpleFilterBase<Character>[] values) =>
             FilterFactory.CreateComplexFilter(Operators.Predicates.And, values);

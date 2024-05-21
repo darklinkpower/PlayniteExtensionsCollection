@@ -14,6 +14,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
 {
     public static class StaffFilterFactory
     {
+        /// <summary>
+        /// vndbid
+        /// </summary>
         public static class Id
 		{
 			public static string FilterName = StaffConstants.Filters.Id;
@@ -40,6 +43,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
+        /// <summary>
+        /// integer, alias identifier
+        /// </summary>
         public static class Aid
         {
             public static string FilterName = StaffConstants.Filters.Aid;
@@ -54,6 +60,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// String search.
+        /// </summary>
         public static class Search
         {
             public static string FilterName = StaffConstants.Filters.Search;
@@ -68,6 +77,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Language.
+        /// </summary>
         public static class Language
         {
             public static string FilterName = StaffConstants.Filters.Lang;
@@ -83,6 +95,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Gender.
+        /// </summary>
         public static class Gender
         {
             public static string FilterName = StaffConstants.Filters.Gender;
@@ -98,6 +113,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// String, can either be "seiyuu" or one of the values from enums.staff_role in the schema JSON. If this filter is used when nested inside a visual novel filter, then this matches the role of the particular visual novel. Otherwise, this matches the role of any linked visual novel.
+        /// </summary>
         public static class Role
         {
             public static string FilterName = StaffConstants.Filters.Role;
@@ -112,6 +130,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
+        /// <summary>
+        /// Match on external links, works similar to the exlink filter for releases.
+        /// </summary>
         public static class ExtLink
         {
             public static string FilterName = StaffConstants.Filters.ExtLink;
@@ -144,6 +165,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
                 CreateFilter(Operators.Matching.NotEqual, extSiteUrl);
         }
 
+        /// <summary>
+        /// Only accepts a single value, integer 1.
+        /// </summary>
         public static class IsMain
         {
             public static string FilterName = StaffConstants.Filters.IsMain;

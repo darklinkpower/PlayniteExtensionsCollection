@@ -12,8 +12,8 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
 {
     public class StringRepresentationEnumConverter<TEnum> : JsonConverter where TEnum : Enum
     {
-        private static readonly ConcurrentDictionary<TEnum, string> EnumToStringMap = new ConcurrentDictionary<TEnum, string>();
-        private static readonly ConcurrentDictionary<string, TEnum> StringToEnumMap = new ConcurrentDictionary<string, TEnum>();
+        private static readonly ConcurrentDictionary<TEnum, string> _enumToStringMap = new ConcurrentDictionary<TEnum, string>();
+        private static readonly ConcurrentDictionary<string, TEnum> _stringToEnumMap = new ConcurrentDictionary<string, TEnum>();
         private const string _stringKeyForNull = "StringValueUsedForNullKeys";
 
         static StringRepresentationEnumConverter()
@@ -28,20 +28,20 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
 
                 if (attribute != null)
                 {
-                    EnumToStringMap[enumValue] = attribute.Value;
+                    _enumToStringMap[enumValue] = attribute.Value;
                     if (string.IsNullOrEmpty(attribute.Value))
                     {
-                        StringToEnumMap[_stringKeyForNull] = enumValue;
+                        _stringToEnumMap[_stringKeyForNull] = enumValue;
                     }
                     else
                     {
-                        StringToEnumMap[attribute.Value] = enumValue;
+                        _stringToEnumMap[attribute.Value] = enumValue;
                     }
                 }
                 else
                 {
-                    EnumToStringMap[enumValue] = enumValue.ToString();
-                    StringToEnumMap[enumValue.ToString()] = enumValue;
+                    _enumToStringMap[enumValue] = enumValue.ToString();
+                    _stringToEnumMap[enumValue.ToString()] = enumValue;
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
         {
             if (value is TEnum enumValue)
             {
-                if (EnumToStringMap.TryGetValue(enumValue, out var stringValue))
+                if (_enumToStringMap.TryGetValue(enumValue, out var stringValue))
                 {
                     writer.WriteValue(stringValue);
                 }
@@ -73,7 +73,7 @@ namespace VNDBMetadata.VndbDomain.Common.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var stringValue = reader.Value?.ToString() ?? _stringKeyForNull;
-            if (StringToEnumMap.TryGetValue(stringValue, out var enumValue))
+            if (_stringToEnumMap.TryGetValue(stringValue, out var enumValue))
             {
                 return enumValue;
             }
