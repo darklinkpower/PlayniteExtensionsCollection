@@ -10,6 +10,9 @@ namespace VNDBMetadata.VndbDomain.Common.Enums
 {
     public enum MediumEnum
     {
+        [StringRepresentation(null)]
+        Unknown,
+
         [StringRepresentation(QueryEnums.Medium.CD)]
         CD,
 

@@ -25,10 +25,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
         Artist,
 
         [StringRepresentation(StaffConstants.Role.Composer)]
-        Composer,
+        Music,
 
         [StringRepresentation(StaffConstants.Role.Songs)]
-        Songs,
+        Vocals,
 
         [StringRepresentation(StaffConstants.Role.Translator)]
         Translator,

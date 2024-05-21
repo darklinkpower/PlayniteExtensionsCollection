@@ -8,7 +8,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 {
     public class CharacterSex
     {
-        public CharacterSexEnum Apparent { get; set; }
-        public CharacterSexEnum Real { get; set; }
+        public CharacterSexEnum? Apparent { get; set; }
+        public CharacterSexEnum? Real { get; set; }
     }
 }

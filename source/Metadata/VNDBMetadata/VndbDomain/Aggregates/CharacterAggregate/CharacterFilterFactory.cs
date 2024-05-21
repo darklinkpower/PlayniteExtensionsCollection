@@ -285,13 +285,13 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public static string FilterName = CharacterConstants.Filters.Trait;
             public static bool CanBeNull { get; } = false;
 
-            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint traitId, SpoilerLevel maxSpoilerLevel) =>
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint traitId, SpoilerLevelEnum maxSpoilerLevel) =>
                 FilterFactory.CreateFilter<Character>(FilterName, CanBeNull, operatorString, traitId, maxSpoilerLevel);
 
-            public static SimpleFilterBase<Character> EqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+            public static SimpleFilterBase<Character> EqualTo(uint traitId, SpoilerLevelEnum maxSpoilerLevel = SpoilerLevelEnum.None) =>
                 CreateFilter(Operators.Matching.IsEqual, traitId, maxSpoilerLevel);
 
-            public static SimpleFilterBase<Character> NotEqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+            public static SimpleFilterBase<Character> NotEqualTo(uint traitId, SpoilerLevelEnum maxSpoilerLevel = SpoilerLevelEnum.None) =>
                 CreateFilter(Operators.Matching.NotEqual, traitId, maxSpoilerLevel);
         }
 
@@ -300,13 +300,13 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             public static string FilterName = CharacterConstants.Filters.DirectTrait;
             public static bool CanBeNull { get; } = false;
 
-            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint traitId, SpoilerLevel maxSpoilerLevel) =>
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, uint traitId, SpoilerLevelEnum maxSpoilerLevel) =>
                 FilterFactory.CreateFilter<Character>(FilterName, CanBeNull, operatorString, traitId, maxSpoilerLevel);
 
-            public static SimpleFilterBase<Character> EqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+            public static SimpleFilterBase<Character> EqualTo(uint traitId, SpoilerLevelEnum maxSpoilerLevel = SpoilerLevelEnum.None) =>
                 CreateFilter(Operators.Matching.IsEqual, traitId, maxSpoilerLevel);
 
-            public static SimpleFilterBase<Character> NotEqualTo(uint traitId, SpoilerLevel maxSpoilerLevel = SpoilerLevel.None) =>
+            public static SimpleFilterBase<Character> NotEqualTo(uint traitId, SpoilerLevelEnum maxSpoilerLevel = SpoilerLevelEnum.None) =>
                 CreateFilter(Operators.Matching.NotEqual, traitId, maxSpoilerLevel);
         }
 

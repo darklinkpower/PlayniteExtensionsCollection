@@ -8,7 +8,7 @@ using VNDBMetadata.VndbDomain.Common.Converters;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 {
-    public class Tag
+    public class VndbTag
     {
         [JsonProperty("aliases")]
         public List<string> Aliases { get; set; }
@@ -34,5 +34,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

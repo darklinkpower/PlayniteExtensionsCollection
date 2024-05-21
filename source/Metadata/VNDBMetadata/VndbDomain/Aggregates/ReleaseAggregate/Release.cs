@@ -1,14 +1,16 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBMetadata.VndbDomain.Aggregates.ImageAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
 using VNDBMetadata.VndbDomain.Common.Converters;
 using VNDBMetadata.VndbDomain.Common.Entities;
 using VNDBMetadata.VndbDomain.Common.Enums;
+using VNDBMetadata.VndbDomain.Common.Models;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
 {
@@ -54,8 +56,8 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public bool HasEro { get; set; }
 
         [JsonProperty("resolution")]
-        [JsonConverter(typeof(ReleaseResolutionConverter))]
-        public ReleaseResolution Resolution { get; set; }
+        [JsonConverter(typeof(ImageResolutionConverter))]
+        public ImageDimensions Resolution { get; set; }
 
         [JsonProperty("freeware")]
         public bool Freeware { get; set; }
@@ -64,7 +66,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public string Engine { get; set; }
 
         [JsonProperty("minage")]
-        public long MinimumAge { get; set; }
+        public int? MinimumAge { get; set; }
 
         [JsonProperty("uncensored")]
         public bool? Uncensored { get; set; }
@@ -82,51 +84,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public List<Producer> Producers { get; set; }
 
         [JsonProperty("released")]
-        public DateTimeOffset Released { get; set; }
-    }
+        [JsonConverter(typeof(VndbReleaseDateJsonConverter))]
+        public VndbReleaseDate Released { get; set; }
 
-    public class ReleaseResolutionConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override string ToString()
         {
-            if (value is null)
-            {
-                writer.WriteNull();
-            }
-            else
-            {
-                ReleaseResolution resolution = (ReleaseResolution)value;
-                writer.WriteStartArray();
-                writer.WriteValue(resolution.Width);
-                writer.WriteValue(resolution.Height);
-                writer.WriteEndArray();
-            }
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null)
-            {
-                return null;
-            }
-
-            if (reader.TokenType == JsonToken.StartArray)
-            {
-                JArray array = JArray.Load(reader);
-                if (array.Count == 2 && array[0].Type == JTokenType.Integer && array[1].Type == JTokenType.Integer)
-                {
-                    var width = array[0].ToObject<int>();
-                    var height = array[1].ToObject<int>();
-                    return new ReleaseResolution { Width = width, Height = height };
-                }
-            }
-
-            throw new JsonSerializationException("Unexpected token or value when parsing release resolution.");
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(ReleaseResolution);
+            return Title;
         }
     }
 

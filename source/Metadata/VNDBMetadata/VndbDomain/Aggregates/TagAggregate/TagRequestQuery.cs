@@ -19,12 +19,12 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
         [JsonIgnore]
         public TagRequestSortEnum Sort = TagRequestSortEnum.Id;
 
-        public TagRequestQuery(SimpleFilterBase<Tag> filter) : base(filter)
+        public TagRequestQuery(SimpleFilterBase<VndbTag> filter) : base(filter)
         {
             Initialize();
         }
 
-        public TagRequestQuery(ComplexFilterBase<Tag> filter) : base(filter)
+        public TagRequestQuery(ComplexFilterBase<VndbTag> filter) : base(filter)
         {
             Initialize();
         }
@@ -44,7 +44,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 
         public override string GetSortString()
         {
-            if (Filters is SimpleFilterBase<Tag> simpleFilter)
+            if (Filters is SimpleFilterBase<VndbTag> simpleFilter)
             {
                 if (Sort == TagRequestSortEnum.SearchRank)
                 {
@@ -54,9 +54,9 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
                     }
                 }
             }
-            else if (Filters is ComplexFilterBase<Tag> complexFilter)
+            else if (Filters is ComplexFilterBase<VndbTag> complexFilter)
             {
-                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<Tag>>();
+                var simplePredicates = complexFilter.Filters.OfType<SimpleFilterBase<VndbTag>>();
                 if (Sort == TagRequestSortEnum.SearchRank)
                 {
                     var searchPredicatesCount = simplePredicates.Count(x => x.Name == TagFilterFactory.Search.FilterName);

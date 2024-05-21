@@ -111,5 +111,28 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
             /// </summary>
             public const string Technical = "tech";
         }
+
+        public static class TagLevel
+        {
+            /// <summary>
+            /// Indicates level 0.
+            /// </summary>
+            public const int Zero = 0;
+
+            /// <summary>
+            /// Indicates level 1.
+            /// </summary>
+            public const int One = 0;
+
+            /// <summary>
+            /// Indicates level 2.
+            /// </summary>
+            public const int Two = 0;
+
+            /// <summary>
+            /// Indicates level 3.
+            /// </summary>
+            public const int Three = 0;
+        }
     }
 }

@@ -3,256 +3,210 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBMetadata.VndbDomain.Common.Attributes;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 {
     [Flags]
-    public enum VnRequestFieldsFlags
+    public enum VnRequestFieldsFlags : ulong
     {
         /// <summary>
-        /// No fields selected.
+        /// vndbid.
         /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// Visual novel ID.
-        /// </summary>
+        [StringRepresentation(VnConstants.Fields.Id)]
         Id = 1 << 0,
 
         /// <summary>
         /// Main title as displayed on the site, typically romanized from the original script.
         /// </summary>
+        [StringRepresentation(VnConstants.Fields.Title)]
         Title = 1 << 1,
 
         /// <summary>
         /// Alternative title, typically the same as title but in the original script.
         /// </summary>
+        [StringRepresentation(VnConstants.Fields.AltTitle)]
         AltTitle = 1 << 2,
 
         /// <summary>
-        /// Full list of titles associated with the VN.
+        /// Language of the title.
         /// </summary>
-        Titles = 1 << 3,
-
-        /// <summary>
-        /// Language of the titles.
-        /// </summary>
-        TitlesLang = 1 << 4,
+        [StringRepresentation(VnConstants.Fields.TitlesLang)]
+        TitlesLang = 1 << 3,
 
         /// <summary>
         /// Title in the original script.
         /// </summary>
-        TitlesTitle = 1 << 5,
+        [StringRepresentation(VnConstants.Fields.TitlesTitle)]
+        TitlesTitle = 1 << 4,
 
         /// <summary>
-        /// Romanized version of title.
+        /// Romanized version of title, can be null.
         /// </summary>
-        TitlesLatin = 1 << 6,
+        [StringRepresentation(VnConstants.Fields.TitlesLatin)]
+        TitlesLatin = 1 << 5,
 
         /// <summary>
-        /// Boolean.
+        /// Whether this is the official title.
         /// </summary>
-        TitlesOfficial = 1 << 7,
+        [StringRepresentation(VnConstants.Fields.TitlesOfficial)]
+        TitlesOfficial = 1 << 6,
 
         /// <summary>
-        /// Whether this is the “main” title for the visual novel entry.
+        /// Whether this is the main title for the visual novel entry.
         /// </summary>
-        TitlesMain = 1 << 8,
+        [StringRepresentation(VnConstants.Fields.TitlesMain)]
+        TitlesMain = 1 << 7,
 
         /// <summary>
         /// List of aliases.
         /// </summary>
-        Aliases = 1 << 9,
+        [StringRepresentation(VnConstants.Fields.Aliases)]
+        Aliases = 1 << 8,
 
         /// <summary>
         /// Language the VN has originally been written in.
         /// </summary>
-        OLang = 1 << 10,
+        [StringRepresentation(VnConstants.Fields.Olang)]
+        Olang = 1 << 9,
 
         /// <summary>
-        /// Development status.
+        /// Development status: 0 = Finished, 1 = In development, 2 = Cancelled.
         /// </summary>
-        DevStatus = 1 << 11,
+        [StringRepresentation(VnConstants.Fields.DevStatus)]
+        DevStatus = 1 << 10,
 
         /// <summary>
-        /// Release date.
+        /// Release date, possibly null.
         /// </summary>
-        Released = 1 << 12,
+        [StringRepresentation(VnConstants.Fields.Released)]
+        Released = 1 << 11,
 
         /// <summary>
-        /// List of languages this VN is available in.
+        /// List of languages this VN is available in. Does not include machine translations.
         /// </summary>
-        Languages = 1 << 13,
+        [StringRepresentation(VnConstants.Fields.Languages)]
+        Languages = 1 << 12,
 
         /// <summary>
         /// List of platforms for which this VN is available.
         /// </summary>
-        Platforms = 1 << 14,
+        [StringRepresentation(VnConstants.Fields.Platforms)]
+        Platforms = 1 << 13,
 
         /// <summary>
-        /// Image information.
+        /// Rough length estimate of the VN between 1 (very short) and 5 (very long). Possibly null.
         /// </summary>
-        Image = 1 << 15,
+        [StringRepresentation(VnConstants.Fields.Length)]
+        Length = 1 << 14,
 
         /// <summary>
-        /// Image identifier.
+        /// Average of user-submitted play times in minutes, possibly null.
         /// </summary>
-        ImageId = 1 << 16,
-
-        /// <summary>
-        /// URL of the image.
-        /// </summary>
-        ImageUrl = 1 << 17,
-
-        /// <summary>
-        /// Pixel dimensions of the image.
-        /// </summary>
-        ImageDims = 1 << 18,
-
-        /// <summary>
-        /// Average image flagging vote for sexual content.
-        /// </summary>
-        ImageSexual = 1 << 19,
-
-        /// <summary>
-        /// Average image flagging vote for violence.
-        /// </summary>
-        ImageViolence = 1 << 20,
-
-        /// <summary>
-        /// Number of image flagging votes.
-        /// </summary>
-        ImageVoteCount = 1 << 21,
-
-        /// <summary>
-        /// URL to the thumbnail.
-        /// </summary>
-        ImageThumbnail = 1 << 22,
-
-        /// <summary>
-        /// Pixel dimensions of the thumbnail.
-        /// </summary>
-        ImageThumbnailDims = 1 << 23,
-
-        /// <summary>
-        /// Rough length estimate of the VN between 1 (very short) and 5 (very long).
-        /// </summary>
-        Length = 1 << 24,
-
-        /// <summary>
-        /// Average of user-submitted play times in minutes.
-        /// </summary>
-        LengthMinutes = 1 << 25,
+        [StringRepresentation(VnConstants.Fields.LengthMinutes)]
+        LengthMinutes = 1 << 15,
 
         /// <summary>
         /// Number of submitted play times.
         /// </summary>
-        LengthVotes = 1 << 26,
+        [StringRepresentation(VnConstants.Fields.LengthVotes)]
+        LengthVotes = 1 << 16,
 
         /// <summary>
-        /// Description of the visual novel.
+        /// Description, possibly null, may contain formatting codes.
         /// </summary>
-        Description = 1 << 27,
+        [StringRepresentation(VnConstants.Fields.Description)]
+        Description = 1 << 17,
 
         /// <summary>
-        /// Rating of the visual novel.
+        /// Rating between 10 and 100, null if nobody voted.
         /// </summary>
-        Rating = 1 << 28,
+        [StringRepresentation(VnConstants.Fields.Rating)]
+        Rating = 1 << 18,
 
         /// <summary>
         /// Number of votes.
         /// </summary>
-        VoteCount = 1 << 29,
-
-        /// <summary>
-        /// Array of objects, possibly empty.
-        /// </summary>
-        Screenshots = 1 << 30,
-
-        /// <summary>
-        /// List of VNs directly related to this entry.
-        /// </summary>
-        Relations = 1 << 31,
+        [StringRepresentation(VnConstants.Fields.VoteCount)]
+        VoteCount = 1 << 19,
 
         /// <summary>
         /// Relation type.
         /// </summary>
-        RelationsRelation = 1 << 32,
+        [StringRepresentation(VnConstants.Fields.RelationsRelation)]
+        RelationsRelation = 1 << 20,
 
         /// <summary>
         /// Whether this VN relation is official.
         /// </summary>
-        RelationsRelationOfficial = 1 << 33,
-
-        /// <summary>
-        /// Array of tags.
-        /// </summary>
-        Tags = 1 << 34,
+        [StringRepresentation(VnConstants.Fields.RelationsRelationOfficial)]
+        RelationsRelationOfficial = 1 << 21,
 
         /// <summary>
         /// Tag rating between 0 (exclusive) and 3 (inclusive).
         /// </summary>
-        TagsRating = 1 << 35,
+        [StringRepresentation(VnConstants.Fields.TagsRating)]
+        TagsRating = 1 << 22,
 
         /// <summary>
-        /// Spoiler level of the tag.
+        /// Spoiler level: 0, 1 or 2.
         /// </summary>
-        TagsSpoiler = 1 << 36,
+        [StringRepresentation(VnConstants.Fields.TagsSpoiler)]
+        TagsSpoiler = 1 << 23,
 
         /// <summary>
-        /// Whether the tag is a lie.
+        /// Indicates if the tag is a lie.
         /// </summary>
-        TagsLie = 1 << 37,
-
-        /// <summary>
-        /// List of developers.
-        /// </summary>
-        Developers = 1 << 38,
-
-        /// <summary>
-        /// Array of editions.
-        /// </summary>
-        Editions = 1 << 39,
+        [StringRepresentation(VnConstants.Fields.TagsLie)]
+        TagsLie = 1 << 24,
 
         /// <summary>
         /// Edition identifier.
         /// </summary>
-        EditionsEid = 1 << 40,
+        [StringRepresentation(VnConstants.Fields.EditionsEid)]
+        EditionsEid = 1 << 25,
 
         /// <summary>
-        /// Language of the edition.
+        /// Edition language, possibly null.
         /// </summary>
-        EditionsLang = 1 << 41,
+        [StringRepresentation(VnConstants.Fields.EditionsLang)]
+        EditionsLang = 1 << 26,
 
         /// <summary>
         /// English name / label identifying this edition.
         /// </summary>
-        EditionsName = 1 << 42,
+        [StringRepresentation(VnConstants.Fields.EditionsName)]
+        EditionsName = 1 << 27,
 
         /// <summary>
-        /// Whether the edition is official.
+        /// Indicates if this is the official edition.
         /// </summary>
-        EditionsOfficial = 1 << 43,
+        [StringRepresentation(VnConstants.Fields.EditionsOfficial)]
+        EditionsOfficial = 1 << 28,
 
         /// <summary>
-        /// Array of staff members.
+        /// Edition identifier for the staff or null if they worked on the original version.
         /// </summary>
-        Staff = 1 << 44,
+        [StringRepresentation(VnConstants.Fields.StaffEid)]
+        StaffEid = 1UL << 29,
 
         /// <summary>
-        /// Edition identifier or null when the staff has worked on the “original” version of the visual novel.
+        /// Role of the staff.
         /// </summary>
-        StaffEid = 1 << 45,
+        [StringRepresentation(VnConstants.Fields.StaffRole)]
+        StaffRole = 1UL << 30,
 
         /// <summary>
-        /// Role of the staff member.
+        /// Note about the staff, possibly null.
         /// </summary>
-        StaffRole = 1 << 46,
+        [StringRepresentation(VnConstants.Fields.StaffNote)]
+        StaffNote = 1UL << 31,
 
         /// <summary>
-        /// Note associated with the staff member.
+        /// Note about the voice actor, possibly null.
         /// </summary>
-        StaffNote = 1 << 47
+        [StringRepresentation(VnConstants.Fields.VaNote)]
+        VaNote = 1UL << 32
     }
 
     // Excluded fields: screenshots.*, screenshots.release.* relations.*, tags.*, developers.*, staff.*

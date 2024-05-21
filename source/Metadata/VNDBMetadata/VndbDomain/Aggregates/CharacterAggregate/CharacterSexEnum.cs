@@ -25,7 +25,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         /// Both.
         /// </summary>
         [StringRepresentation(CharacterConstants.Sex.Both)]
-        Both,
+        Both
     }
 
 }

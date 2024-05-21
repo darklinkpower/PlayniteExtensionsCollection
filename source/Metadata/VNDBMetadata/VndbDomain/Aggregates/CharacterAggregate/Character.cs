@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Converters;
 using VNDBMetadata.VndbDomain.Common.Enums;
 using VNDBMetadata.VndbDomain.Common.Utilities;
@@ -36,7 +37,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
         public string Name { get; set; }
 
         [JsonProperty("vns")]
-        public List<Vn> VisualNovelApperances { get; set; }
+        public List<CharacterVn> VisualNovelApperances { get; set; }
 
         [JsonProperty("bust")]
         public long? Bust { get; set; }
@@ -67,19 +68,21 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 
         [JsonProperty("id")]
         public string Id { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
-    public class Vn
+    public class CharacterVn : Vn
     {
         [JsonProperty("role")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<CharacterRoleEnum>))]
         public CharacterRoleEnum Role { get; set; }
 
-        [JsonProperty("id")]
-        public string Id { get; set; }
-
         [JsonProperty("spoiler")]
-        public SpoilerLevel Spoiler { get; set; }
+        public SpoilerLevelEnum Spoiler { get; set; }
     }
 
     public class CharacterBirthdayConverter : JsonConverter
@@ -134,8 +137,24 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             if (value is CharacterSex characterSex)
             {
                 writer.WriteStartArray();
-                writer.WriteValue(EnumUtilities.GetEnumStringRepresentation(characterSex.Apparent));
-                writer.WriteValue(EnumUtilities.GetEnumStringRepresentation(characterSex.Real));
+                if (characterSex.Apparent.HasValue)
+                {
+                    EnumUtilities.GetEnumStringRepresentation(characterSex.Apparent.Value);
+                }
+                else
+                {
+                    writer.WriteNull();
+                }
+
+                if (characterSex.Real.HasValue)
+                {
+                    EnumUtilities.GetEnumStringRepresentation(characterSex.Real.Value);
+                }
+                else
+                {
+                    writer.WriteNull();
+                }
+
                 writer.WriteEndArray();
             }
 
@@ -152,15 +171,39 @@ namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
             if (reader.TokenType == JsonToken.StartArray)
             {
                 JArray array = JArray.Load(reader);
-                if (array.Count == 2 && array[0].Type == JTokenType.String && array[1].Type == JTokenType.String)
+                if (array.Count != 2)
                 {
-                    var apparent = EnumUtilities.GetStringEnumRepresentation<CharacterSexEnum>(array[0].ToString());
-                    var real = EnumUtilities.GetStringEnumRepresentation<CharacterSexEnum>(array[1].ToString());
-                    return new CharacterSex { Apparent = apparent, Real = real };
+                    throw new JsonSerializationException("Expected an array with exactly two elements.");
                 }
+
+                var firstValue = array[0];
+                var secondValue = array[1];
+
+                CharacterSexEnum? apparentSex = null;
+                CharacterSexEnum? realSex = null;
+
+                if (firstValue.Type == JTokenType.String)
+                {
+                    apparentSex = EnumUtilities.GetStringEnumRepresentation<CharacterSexEnum>(firstValue.ToString());
+                }
+                else if (firstValue.Type != JTokenType.Null)
+                {
+                    throw new JsonSerializationException("Expected a string or null for apparent sex.");
+                }
+
+                if (secondValue.Type == JTokenType.String)
+                {
+                    realSex = EnumUtilities.GetStringEnumRepresentation<CharacterSexEnum>(secondValue.ToString());
+                }
+                else if (secondValue.Type != JTokenType.Null)
+                {
+                    throw new JsonSerializationException("Expected a string or null for real sex.");
+                }
+
+                return new CharacterSex { Apparent = apparentSex, Real = realSex };
             }
 
-            throw new JsonSerializationException("Unexpected token or value when parsing sex.");
+            throw new JsonSerializationException("Unexpected token or value when parsing character sex.");
         }
 
         public override bool CanConvert(Type objectType)

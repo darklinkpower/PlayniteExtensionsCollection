@@ -27,7 +27,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
 
         [JsonProperty("gender")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<StaffGenderEnum>))]
-        public StaffGenderEnum Gender { get; set; }
+        public StaffGenderEnum? Gender { get; set; }
 
         [JsonProperty("original")]
         public string Original { get; set; }
@@ -43,5 +43,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
 
         [JsonProperty("aid")]
         public long Aid { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

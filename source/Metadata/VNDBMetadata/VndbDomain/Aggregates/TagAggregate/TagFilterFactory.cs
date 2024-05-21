@@ -19,25 +19,25 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
         {
             public static string FilterName = TagConstants.Filters.Id;
             public static bool CanBeNull { get; } = false;
-            private static SimpleFilterBase<Tag> CreateFilter(string operatorString, string value) =>
-                FilterFactory.CreateFilter<Tag>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<VndbTag> CreateFilter(string operatorString, string value) =>
+                FilterFactory.CreateFilter<VndbTag>(FilterName, CanBeNull, operatorString, value);
 
-            public static SimpleFilterBase<Tag> EqualTo(string value) =>
+            public static SimpleFilterBase<VndbTag> EqualTo(string value) =>
                 CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Tag> NotEqualTo(string value) =>
+            public static SimpleFilterBase<VndbTag> NotEqualTo(string value) =>
                 CreateFilter(Operators.Matching.NotEqual, value);
 
-            public static SimpleFilterBase<Tag> GreaterThanOrEqual(string value) =>
+            public static SimpleFilterBase<VndbTag> GreaterThanOrEqual(string value) =>
                 CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
 
-            public static SimpleFilterBase<Tag> GreaterThan(string value) =>
+            public static SimpleFilterBase<VndbTag> GreaterThan(string value) =>
                 CreateFilter(Operators.Ordering.GreaterThan, value);
 
-            public static SimpleFilterBase<Tag> LessThanOrEqual(string value) =>
+            public static SimpleFilterBase<VndbTag> LessThanOrEqual(string value) =>
                 CreateFilter(Operators.Ordering.LessThanOrEqual, value);
 
-            public static SimpleFilterBase<Tag> LessThan(string value) =>
+            public static SimpleFilterBase<VndbTag> LessThan(string value) =>
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
@@ -45,13 +45,13 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
         {
             public static string FilterName = TagConstants.Filters.Search;
             public static bool CanBeNull { get; } = false;
-            private static SimpleFilterBase<Tag> CreateFilter(string operatorString, string value) =>
-                 FilterFactory.CreateFilter<Tag>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<VndbTag> CreateFilter(string operatorString, string value) =>
+                 FilterFactory.CreateFilter<VndbTag>(FilterName, CanBeNull, operatorString, value);
 
-            public static SimpleFilterBase<Tag> EqualTo(string value) =>
+            public static SimpleFilterBase<VndbTag> EqualTo(string value) =>
                 CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Tag> NotEqualTo(string value) =>
+            public static SimpleFilterBase<VndbTag> NotEqualTo(string value) =>
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
@@ -60,20 +60,20 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
             public static string FilterName = TagConstants.Filters.Category;
             public static bool CanBeNull { get; } = false;
 
-            private static SimpleFilterBase<Tag> CreateFilter(string operatorString, TagCategoryEnum value) =>
-                FilterFactory.CreateFilter<Tag, TagCategoryEnum>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<VndbTag> CreateFilter(string operatorString, TagCategoryEnum value) =>
+                FilterFactory.CreateFilter<VndbTag, TagCategoryEnum>(FilterName, CanBeNull, operatorString, value);
 
-            public static SimpleFilterBase<Tag> EqualTo(TagCategoryEnum value) =>
+            public static SimpleFilterBase<VndbTag> EqualTo(TagCategoryEnum value) =>
                 CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Tag> NotEqualTo(TagCategoryEnum value) =>
+            public static SimpleFilterBase<VndbTag> NotEqualTo(TagCategoryEnum value) =>
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
-        public static ComplexFilterBase<Tag> And(params SimpleFilterBase<Tag>[] values) =>
+        public static ComplexFilterBase<VndbTag> And(params SimpleFilterBase<VndbTag>[] values) =>
             FilterFactory.CreateComplexFilter(Operators.Predicates.And, values);
 
-        public static ComplexFilterBase<Tag> Or(params SimpleFilterBase<Tag>[] values) =>
+        public static ComplexFilterBase<VndbTag> Or(params SimpleFilterBase<VndbTag>[] values) =>
             FilterFactory.CreateComplexFilter(Operators.Predicates.Or, values);
     }
 

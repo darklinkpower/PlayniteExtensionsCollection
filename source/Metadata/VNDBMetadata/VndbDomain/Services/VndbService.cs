@@ -17,6 +17,7 @@ using VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Models;
 
 namespace VNDBMetadata.VndbDomain.Services
@@ -118,7 +119,7 @@ namespace VNDBMetadata.VndbDomain.Services
             return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Trait>>(result);
         }
 
-        public async Task<VndbDatabaseQueryReponse<Tag>> ExecutePostRequestAsync(TagRequestQuery query, CancellationToken cancellationToken = default)
+        public async Task<VndbDatabaseQueryReponse<VndbTag>> ExecutePostRequestAsync(TagRequestQuery query, CancellationToken cancellationToken = default)
         {
             var result = await ExecuteRequestAsync(postTagEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
@@ -126,7 +127,7 @@ namespace VNDBMetadata.VndbDomain.Services
                 return null;
             }
 
-            return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Tag>>(result);
+            return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<VndbTag>>(result);
         }
 
         public async Task<VndbDatabaseQueryReponse<Character>> ExecutePostRequestAsync(CharacterRequestQuery query, CancellationToken cancellationToken = default)
@@ -149,6 +150,17 @@ namespace VNDBMetadata.VndbDomain.Services
             }
 
             return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Release>>(result);
+        }
+
+        public async Task<VndbDatabaseQueryReponse<Vn>> ExecutePostRequestAsync(VnRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteRequestAsync(postVnEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            if (result is null)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Vn>>(result);
         }
     }
 }

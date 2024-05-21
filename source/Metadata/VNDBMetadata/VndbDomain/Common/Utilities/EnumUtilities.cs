@@ -16,6 +16,8 @@ namespace VNDBMetadata.VndbDomain.Common.Utilities
         private static readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, Enum>> _stringEnumRepresentationCache =
             new ConcurrentDictionary<Type, ConcurrentDictionary<string, Enum>>();
 
+        private static readonly ConcurrentDictionary<Type, Enum> _cachedAllEnumFlagsResults = new ConcurrentDictionary<Type, Enum>();
+
         internal static MemberInfo GetEnumMemberInfo<TEnum>(TEnum enumValue) where TEnum : Enum
         {
             var enumType = enumValue.GetType();
@@ -118,6 +120,37 @@ namespace VNDBMetadata.VndbDomain.Common.Utilities
             var stringRepresentations = GetStringRepresentations(enumValue, prefixString);
             return string.Join(",", $"{stringRepresentations}");
         }
+
+        public static void SetAllEnumFlags<TEnum>(ref TEnum targetField) where TEnum : Enum
+        {
+            if (!typeof(TEnum).IsEnum)
+            {
+                throw new ArgumentException("TEnum must be an enum type.");
+            }
+
+            if (!Attribute.IsDefined(typeof(TEnum), typeof(FlagsAttribute)))
+            {
+                throw new ArgumentException("TEnum must have the FlagsAttribute.");
+            }
+
+            var enumType = typeof(TEnum);
+            if (!_cachedAllEnumFlagsResults.ContainsKey(enumType))
+            {
+                TEnum result = default;
+                foreach (TEnum value in Enum.GetValues(enumType))
+                {
+                    var numValue = Convert.ToInt64(value);
+                    var targetNumValue = Convert.ToInt64(result);
+                    result = (TEnum)Enum.ToObject(enumType, numValue | targetNumValue);
+                }
+
+                _cachedAllEnumFlagsResults[enumType] = result;
+            }
+
+            targetField = (TEnum)_cachedAllEnumFlagsResults[enumType];
+        }
+
+
     }
 
 }

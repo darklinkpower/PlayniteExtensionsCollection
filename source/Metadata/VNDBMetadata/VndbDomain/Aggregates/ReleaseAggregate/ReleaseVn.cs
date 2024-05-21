@@ -13,6 +13,6 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
     {
         [JsonProperty("rtype")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<ReleaseTypeEnum>))]
-        public ReleaseTypeEnum Rtype { get; set; }
+        public ReleaseTypeEnum ReleaseType { get; set; }
     }
 }

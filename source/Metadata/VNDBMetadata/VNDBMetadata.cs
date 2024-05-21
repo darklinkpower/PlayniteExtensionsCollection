@@ -21,6 +21,7 @@ using VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Enums;
 using VNDBMetadata.VndbDomain.Services;
 
@@ -66,10 +67,9 @@ namespace VNDBMetadata
             return new VNDBMetadataSettingsView();
         }
 
-        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        private void Tests()
         {
             var vndbService = new VndbService();
-
 
             // Producer
             var producerFilter = ProducerFilterFactory.Search.EqualTo("Hira");
@@ -97,12 +97,21 @@ namespace VNDBMetadata
             //var characterQueryResult = vndbService.ExecutePostRequestAsync(characterQuery).GetAwaiter().GetResult();
 
             // Release
-            var releaseFilter = ReleaseFilterFactory.ReleaseType.EqualTo(ReleaseTypeEnum.Complete);
+            var releaseFilter = ReleaseFilterFactory.Voiced.EqualTo(null);
             var releaseQuery = new ReleaseRequestQuery(releaseFilter);
             //var releaseQueryResult = vndbService.ExecutePostRequestAsync(releaseQuery).GetAwaiter().GetResult();
 
+            // Vn
+            var vnFilter = VnFilterFactory.Search.EqualTo("a");
+            var vnQuery = new VnRequestQuery(vnFilter); ;
+            //var vnQueryResult = vndbService.ExecutePostRequestAsync(vnQuery).GetAwaiter().GetResult();
 
+            var ss = "";
+        }
 
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            Tests();
 
             //var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);
             //var complexFilter = ProducerFilterFactory.And(filterOne, filterTwo);

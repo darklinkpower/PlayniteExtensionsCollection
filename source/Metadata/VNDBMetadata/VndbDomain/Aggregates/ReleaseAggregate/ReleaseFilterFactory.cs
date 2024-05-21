@@ -147,8 +147,15 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
             public static string FilterName = ReleaseConstants.Filters.Resolution;
             public static bool CanBeNull { get; } = false;
 
-            private static SimpleFilterBase<Release> CreateFilter(string operatorString, params uint[] values) =>
-                FilterFactory.CreateFilter<Release>(FilterName, CanBeNull, operatorString, values);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, params uint[] values)
+            {
+                foreach (var value in values)
+                {
+                    Guard.Against.NotLessThan(value, 1);
+                }
+
+                return FilterFactory.CreateFilter<Release>(FilterName, CanBeNull, operatorString, values);
+            }
 
             public static SimpleFilterBase<Release> EqualTo(uint width, uint height) =>
                 CreateFilter(Operators.Matching.IsEqual, width, height);
@@ -172,29 +179,39 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         /// <summary>
         /// Same as the resolution filter, but additionally requires that the aspect ratio matches that of the given resolution.
         /// </summary>
-        //public static class ResolutionAspect
-        //{
-        //    public static string FilterName = ReleaseConstants.Filters.ResolutionAspect;
-        //    public static bool CanBeNull { get; } = false;
+        public static class ResolutionAspect
+        {
+            public static string FilterName = ReleaseConstants.Filters.ResolutionAspect;
+            public static bool CanBeNull { get; } = false;
 
-        //    public static SimpleFilterBase<Release> EqualTo(int[] value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Matching.IsEqual, CanBeNull ? Guard.Against.Null(value) : value);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, params uint[] values)
+            {
+                foreach (var value in values)
+                {
+                    Guard.Against.NotLessThan(value, 1);
+                }
 
-        //    public static SimpleFilterBase<Release> NotEqualTo(int[] value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Matching.NotEqual, CanBeNull ? Guard.Against.Null(value) : value);
+                return FilterFactory.CreateFilter<Release>(FilterName, CanBeNull, operatorString, values);
+            }
 
-        //    public static SimpleFilterBase<Release> GreaterThanOrEqual(int[] value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Ordering.GreaterThanOrEqual, CanBeNull ? Guard.Against.Null(value) : value);
+            public static SimpleFilterBase<Release> EqualTo(uint width, uint height) =>
+                CreateFilter(Operators.Matching.IsEqual, width, height);
 
-        //    public static SimpleFilterBase<Release> GreaterThan(int[] value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Ordering.GreaterThan, CanBeNull ? Guard.Against.Null(value) : value);
+            public static SimpleFilterBase<Release> NotEqualTo(uint width, uint height) =>
+                CreateFilter(Operators.Matching.NotEqual, width, height);
 
-        //    public static SimpleFilterBase<Release> LessThanOrEqual(int[] value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Ordering.LessThanOrEqual, CanBeNull ? Guard.Against.Null(value) : value);
+            public static SimpleFilterBase<Release> GreaterThanOrEqual(uint width, uint height) =>
+                CreateFilter(Operators.Ordering.GreaterThanOrEqual, width, height);
 
-        //    public static SimpleFilterBase<Release> LessThan(int[] value) => new SimpleFilterBase<Release>(
-        //        FilterName, Operators.Ordering.LessThan, CanBeNull ? Guard.Against.Null(value) : value);
-        //}
+            public static SimpleFilterBase<Release> GreaterThan(uint width, uint height) =>
+                CreateFilter(Operators.Ordering.GreaterThan, width, height);
+
+            public static SimpleFilterBase<Release> LessThanOrEqual(uint width, uint height) =>
+                CreateFilter(Operators.Ordering.LessThanOrEqual, width, height);
+
+            public static SimpleFilterBase<Release> LessThan(uint width, uint height) =>
+                CreateFilter(Operators.Ordering.LessThan, width, height);
+        }
 
         /// <summary>
         /// Integer (0-18), age rating.
@@ -202,35 +219,37 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public static class MinAge
         {
             public static string FilterName = ReleaseConstants.Filters.MinAge;
-            public static bool CanBeNull { get; } = false;
+            public static bool CanBeNull { get; } = true;
 
-            private static SimpleFilterBase<Release> CreateFilter(string operatorString, uint value)
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, uint? value)
             {
-                if (!CanBeNull)
+                if (value.HasValue)
                 {
-                    Guard.Against.Null(value);
+                    Guard.Against.NotInRange(value.Value, 0, 18, "Age must be in the 0-18 range.");
+                    return FilterFactory.CreateFilter<Release, uint>(FilterName, CanBeNull, operatorString, value.Value);
                 }
-
-                Guard.Against.NotInRange(value, 0, 18, "Age must be in the 0-18 range.");
-                return FilterFactory.CreateFilter<Release, uint>(FilterName, true, operatorString, value);
+                else
+                {
+                    return FilterFactory.CreateFilter<Release, uint>(FilterName, CanBeNull, operatorString, null);
+                }
             }
 
-            public static SimpleFilterBase<Release> EqualTo(uint value) =>
+            public static SimpleFilterBase<Release> EqualTo(uint? value) =>
                 CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Release> NotEqualTo(uint value) =>
+            public static SimpleFilterBase<Release> NotEqualTo(uint? value) =>
                 CreateFilter(Operators.Matching.NotEqual, value);
 
-            public static SimpleFilterBase<Release> GreaterThanOrEqual(uint value) =>
+            public static SimpleFilterBase<Release> GreaterThanOrEqual(uint? value) =>
                 CreateFilter(Operators.Ordering.GreaterThanOrEqual, value);
 
-            public static SimpleFilterBase<Release> GreaterThan(uint value) =>
+            public static SimpleFilterBase<Release> GreaterThan(uint? value) =>
                 CreateFilter(Operators.Ordering.GreaterThan, value);
 
-            public static SimpleFilterBase<Release> LessThanOrEqual(uint value) =>
+            public static SimpleFilterBase<Release> LessThanOrEqual(uint? value) =>
                 CreateFilter(Operators.Ordering.LessThanOrEqual, value);
 
-            public static SimpleFilterBase<Release> LessThan(uint value) =>
+            public static SimpleFilterBase<Release> LessThan(uint? value) =>
                 CreateFilter(Operators.Ordering.LessThan, value);
         }
 
@@ -240,15 +259,15 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
         public static class Medium
         {
             public static string FilterName = ReleaseConstants.Filters.Medium;
-            public static bool CanBeNull { get; } = false;
+            public static bool CanBeNull { get; } = true;
 
-            private static SimpleFilterBase<Release> CreateFilter(string operatorString, string value) =>
-                 FilterFactory.CreateFilter<Release>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, MediumEnum value) =>
+                 FilterFactory.CreateFilter<Release, MediumEnum>(FilterName, CanBeNull, operatorString, value);
 
-            public static SimpleFilterBase<Release> EqualTo(string value) =>
+            public static SimpleFilterBase<Release> EqualTo(MediumEnum value) =>
                 CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Release> NotEqualTo(string value) =>
+            public static SimpleFilterBase<Release> NotEqualTo(MediumEnum value) =>
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 
@@ -260,13 +279,22 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
             public static string FilterName = ReleaseConstants.Filters.Voiced;
             public static bool CanBeNull { get; } = true;
 
-            private static SimpleFilterBase<Release> CreateFilter(string operatorString, VoicedEnum value) =>
-                FilterFactory.CreateFilter<Release, VoicedEnum>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, VoicedEnum? value)
+            {
+                if (value.HasValue)
+                {
+                    return FilterFactory.CreateFilter<Release, VoicedEnum>(FilterName, CanBeNull, operatorString, value.Value);
+                }
+                else
+                {
+                    return FilterFactory.CreateFilter<Release, VoicedEnum>(FilterName, CanBeNull, operatorString, null);
+                }
+            }
 
-            public static SimpleFilterBase<Release> EqualTo(VoicedEnum value) =>
+            public static SimpleFilterBase<Release> EqualTo(VoicedEnum? value) =>
                 CreateFilter(Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Release> NotEqualTo(VoicedEnum value) =>
+            public static SimpleFilterBase<Release> NotEqualTo(VoicedEnum? value) =>
                 CreateFilter(Operators.Matching.NotEqual, value);
         }
 

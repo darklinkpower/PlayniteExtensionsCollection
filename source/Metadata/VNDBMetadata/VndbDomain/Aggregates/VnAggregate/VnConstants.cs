@@ -143,57 +143,57 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
             public const string Id = "id";
 
             /// <summary>
-            /// String, main title as displayed on the site, typically romanized from the original script.
+            /// Main title as displayed on the site, typically romanized from the original script.
             /// </summary>
             public const string Title = "title";
 
             /// <summary>
-            /// String, can be null. Alternative title, typically the same as title but in the original script.
+            /// Alternative title, typically the same as title but in the original script.
             /// </summary>
             public const string AltTitle = "alttitle";
 
             /// <summary>
-            /// Array of objects, full list of titles associated with the VN, always contains at least one title.
+            /// Full list of titles associated with the VN, always contains at least one title.
             /// </summary>
             public const string Titles = "titles";
 
             /// <summary>
-            /// String, language. Each language appears at most once in the titles list.
+            /// Language of the title.
             /// </summary>
-            public const string Lang = "titles.lang";
+            public const string TitlesLang = "titles.lang";
 
             /// <summary>
-            /// String, title in the original script.
+            /// Title in the original script.
             /// </summary>
-            public const string LangTitle = "titles.title";
+            public const string TitlesTitle = "titles.title";
 
             /// <summary>
-            /// String, can be null, romanized version of title.
+            /// Romanized version of title, can be null.
             /// </summary>
-            public const string LangLatin = "titles.latin";
+            public const string TitlesLatin = "titles.latin";
 
             /// <summary>
-            /// Boolean.
+            /// Whether this is the official title.
             /// </summary>
-            public const string LangOfficial = "titles.official";
+            public const string TitlesOfficial = "titles.official";
 
             /// <summary>
-            /// Boolean, whether this is the “main” title for the visual novel entry. Exactly one title has this flag set in the titles array and it’s always the title whose lang matches the VN’s olang field. This field is included for convenience, you can of course also use the olang field to grab the main title.
+            /// Whether this is the main title for the visual novel entry.
             /// </summary>
-            public const string LangMain = "titles.main";
+            public const string TitlesMain = "titles.main";
 
             /// <summary>
-            /// Array of strings, list of aliases.
+            /// List of aliases.
             /// </summary>
             public const string Aliases = "aliases";
 
             /// <summary>
-            /// String, language the VN has originally been written in.
+            /// Language the VN has originally been written in.
             /// </summary>
-            public const string OLang = "olang";
+            public const string Olang = "olang";
 
             /// <summary>
-            /// Integer, development status. 0 meaning ‘Finished’, 1 is ‘In development’ and 2 for ‘Cancelled’.
+            /// Development status: 0 = Finished, 1 = In development, 2 = Cancelled.
             /// </summary>
             public const string DevStatus = "devstatus";
 
@@ -203,135 +203,303 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
             public const string Released = "released";
 
             /// <summary>
-            /// Array of strings, list of languages this VN is available in. Does not include machine translations.
+            /// List of languages this VN is available in. Does not include machine translations.
             /// </summary>
             public const string Languages = "languages";
 
             /// <summary>
-            /// Array of strings, list of platforms for which this VN is available.
+            /// List of platforms for which this VN is available.
             /// </summary>
             public const string Platforms = "platforms";
 
             /// <summary>
-            /// Object, can be null.
-            /// </summary>
-            public const string Image = "image";
-
-            /// <summary>
-            /// String, image identifier.
-            /// </summary>
-            public const string ImageId = "image.id";
-
-            /// <summary>
-            /// String.
-            /// </summary>
-            public const string ImageUrl = "image.url";
-
-            /// <summary>
-            /// Pixel dimensions of the image, array with two integer elements indicating the width and height.
-            /// </summary>
-            public const string ImageDims = "image.dims";
-
-            /// <summary>
-            /// Number between 0 and 2 (inclusive), average image flagging vote for sexual content.
-            /// </summary>
-            public const string ImageSexual = "image.sexual";
-
-            /// <summary>
-            /// Number between 0 and 2 (inclusive), average image flagging vote for violence.
-            /// </summary>
-            public const string ImageViolence = "image.violence";
-
-            /// <summary>
-            /// Integer, number of image flagging votes.
-            /// </summary>
-            public const string ImageVoteCount = "image.votecount";
-
-            /// <summary>
-            /// Integer, possibly null, rough length estimate of the VN between 1 (very short) and 5 (very long). This field is only used as a fallback for when there are no length votes, so you’ll probably want to fetch length_minutes too.
+            /// Rough length estimate of the VN between 1 (very short) and 5 (very long). Possibly null.
             /// </summary>
             public const string Length = "length";
 
             /// <summary>
-            /// Integer, possibly null, average of user-submitted play times in minutes.
+            /// Average of user-submitted play times in minutes, possibly null.
             /// </summary>
             public const string LengthMinutes = "length_minutes";
 
             /// <summary>
-            /// Integer, number of submitted play times.
+            /// Number of submitted play times.
             /// </summary>
             public const string LengthVotes = "length_votes";
 
             /// <summary>
-            /// String, possibly null, may contain formatting codes.
+            /// Description, possibly null, may contain formatting codes.
             /// </summary>
             public const string Description = "description";
 
             /// <summary>
-            /// Number between 10 and 100, null if nobody voted.
+            /// Rating between 10 and 100, null if nobody voted.
             /// </summary>
             public const string Rating = "rating";
 
             /// <summary>
-            /// Integer, number of votes.
+            /// Number of votes.
             /// </summary>
             public const string VoteCount = "votecount";
 
             /// <summary>
-            /// Array of objects, possibly empty.
+            /// Relation type.
             /// </summary>
-            public const string Screenshots = "screenshots";
+            public const string RelationsRelation = "relations.relation";
 
             /// <summary>
-            /// String, URL to the thumbnail.
+            /// Whether this VN relation is official.
             /// </summary>
-            public const string ScreenshotsThumbnail = "screenshots.thumbnail";
+            public const string RelationsRelationOfficial = "relations.relation_official";
 
             /// <summary>
-            /// Pixel dimensions of the thumbnail, array with two integer elements.
-            /// </summary>
-            public const string ScreenshotsThumbnailDims = "screenshots.thumbnail_dims";
-
-            /// <summary>
-            /// Release object. All release fields can be selected. It is very common for all screenshots of a VN to be assigned to the same release, so the fields you select here are likely to get duplicated several times in the response. If you want to fetch more than just a few fields, it is more efficient to only select release.id here and then grab detailed release info with a separate request.
-            /// </summary>
-            public const string ScreenshotsRelease = "screenshots.release";
-
-            /// <summary>
-            /// Array of objects, possibly empty. Only directly applied tags are returned, parent tags are not included.
-            /// </summary>
-            public const string Tags = "tags";
-
-            /// <summary>
-            /// Number, tag rating between 0 (exclusive) and 3 (inclusive).
+            /// Tag rating between 0 (exclusive) and 3 (inclusive).
             /// </summary>
             public const string TagsRating = "tags.rating";
 
             /// <summary>
-            /// Integer, 0, 1, or 2, spoiler level.
+            /// Spoiler level: 0, 1 or 2.
             /// </summary>
             public const string TagsSpoiler = "tags.spoiler";
 
             /// <summary>
-            /// Boolean.
+            /// Indicates if the tag is a lie.
             /// </summary>
             public const string TagsLie = "tags.lie";
 
             /// <summary>
-            /// All tag fields can be used here. If you’re fetching tags for more than a single visual novel, it’s usually more efficient to only select tags.id here and then fetch (and cache) further tag information as a separate request. Otherwise, the same tag info may get duplicated many times in the response.
+            /// Edition identifier.
             /// </summary>
-            public const string TagsAll = "tags.*";
+            public const string EditionsEid = "editions.eid";
+
+            /// <summary>
+            /// Edition language, possibly null.
+            /// </summary>
+            public const string EditionsLang = "editions.lang";
+
+            /// <summary>
+            /// English name / label identifying this edition.
+            /// </summary>
+            public const string EditionsName = "editions.name";
+
+            /// <summary>
+            /// Indicates if this is the official edition.
+            /// </summary>
+            public const string EditionsOfficial = "editions.official";
+
+            /// <summary>
+            /// Edition identifier for the staff or null if they worked on the original version.
+            /// </summary>
+            public const string StaffEid = "staff.eid";
+
+            /// <summary>
+            /// Role of the staff.
+            /// </summary>
+            public const string StaffRole = "staff.role";
+
+            /// <summary>
+            /// Note about the staff, possibly null.
+            /// </summary>
+            public const string StaffNote = "staff.note";
+
+            /// <summary>
+            /// Note about the voice actor, possibly null.
+            /// </summary>
+            public const string VaNote = "va.note";
+
+
+
+
+            /// <summary>
+            /// Image object, can be null.
+            /// </summary>
+            public const string Image = "image.";
+
+            /// <summary>
+            /// Array of objects, possibly empty.
+            /// The above image.* fields are also available for screenshots. 
+            /// </summary>
+            public const string Screenshots = "screenshots.";
+
+            /// <summary>
+            /// Release object for the screenshots. All release fields can be selected.
+            /// </summary>
+            public const string ScreenshotsRelease = "screenshots.release.";
+
+            /// <summary>
+            /// Array of objects, list of VNs directly related to this entry.
+            /// All visual novel fields can be selected here.
+            /// </summary>
+            public const string Relations = "relations.";
+
+            /// <summary>
+            /// Array of objects, possibly empty. Only directly applied tags are returned, parent tags are not included.
+            /// All tag fields can be used here. If you’re fetching tags for more than a single visual novel, it’s usually more efficient to only select tags.id here and then fetch (and cache) further tag information as a separate request. Otherwise the same tag info may get duplicated many times in the response.
+            /// </summary>
+            public const string Tags = "tags.";
 
             /// <summary>
             /// Array of objects. The developers of a VN are all producers with a “developer” role on a release linked to the VN. You can get this same information by fetching all relevant release entries, but if all you need is the list of developers then querying this field is faster.
-            /// </summary>
-            public const string Developers = "developers";
-
-            /// <summary>
             /// All producer fields can be used here.
             /// </summary>
-            public const string DevelopersAll = "developers.*";
+            public const string Developers = "developers.";
 
+            /// <summary>
+            /// All staff fields can be used here.
+            /// </summary>
+            public const string Staff = "staff.";
+
+            /// <summary>
+            /// Person who voiced the character, all staff fields can be used here.
+            /// </summary>
+            public const string VaStaff = "va.staff.";
+
+            /// <summary>
+            /// VN character being voiced, all character fields can be used here.
+            /// </summary>
+            public const string VaCharacter = "va.character.";
+
+        }
+
+        /// <summary>
+        /// Provides constants for sorting fields in requests.
+        /// </summary>
+        public static class RequestSort
+        {
+            /// <summary>
+            /// Sort by ID.
+            /// </summary>
+            public const string Id = "id";
+
+            /// <summary>
+            /// Sort by title.
+            /// </summary>
+            public const string Title = "title";
+
+            /// <summary>
+            /// Sort by release date.
+            /// </summary>
+            public const string Released = "released";
+
+            /// <summary>
+            /// Sort by rating.
+            /// </summary>
+            public const string Rating = "rating";
+
+            /// <summary>
+            /// Sort by vote count.
+            /// </summary>
+            public const string VoteCount = "votecount";
+
+            /// <summary>
+            /// Sort by search rank.
+            /// </summary>
+            public const string SearchRank = "searchrank";
+        }
+
+        /// <summary>
+        /// Constants representing different lengths of visual novels.
+        /// </summary>
+        public static class VnLength
+        {
+            /// <summary>
+            /// Indicates a very short visual novel.
+            /// </summary>
+            public const int VeryShort = 1;
+
+            /// <summary>
+            /// Indicates a short visual novel.
+            /// </summary>
+            public const int Short = 2;
+
+            /// <summary>
+            /// Indicates a medium-length visual novel.
+            /// </summary>
+            public const int Medium = 3;
+
+            /// <summary>
+            /// Indicates a long visual novel.
+            /// </summary>
+            public const int Long = 4;
+
+            /// <summary>
+            /// Indicates a very long visual novel.
+            /// </summary>
+            public const int VeryLong = 5;
+        }
+
+        public static class VnDevelopmentStatus
+        {
+            /// <summary>
+            /// Indicates that the visual novel is finished.
+            /// </summary>
+            public const int Finished = 0;
+
+            /// <summary>
+            /// Indicates that the visual novel is in development.
+            /// </summary>
+            public const int InDevelopment = 1;
+
+            /// <summary>
+            /// Indicates that the visual novel has been cancelled.
+            /// </summary>
+            public const int Cancelled = 2;
+        }
+
+        /// <summary>
+        /// Constants representing different types of relationships of visual novels.
+        /// </summary>
+        public static class VnRelationType
+        {
+            /// <summary>
+            /// Alternative version of the same visual novel.
+            /// </summary>
+            public const string AlternativeVersion = "alt";
+
+            /// <summary>
+            /// Visual novel that shares characters with another visual novel.
+            /// </summary>
+            public const string SharesCharacters = "char";
+
+            /// <summary>
+            /// Fandisc, usually additional content or a side story for an existing visual novel.
+            /// </summary>
+            public const string Fandisc = "fan";
+
+            /// <summary>
+            /// The original game that a visual novel is based on.
+            /// </summary>
+            public const string OriginalGame = "orig";
+
+            /// <summary>
+            /// Parent story from which the current visual novel is derived.
+            /// </summary>
+            public const string ParentStory = "par";
+
+            /// <summary>
+            /// Prequel, a story that precedes the current visual novel.
+            /// </summary>
+            public const string Prequel = "preq";
+
+            /// <summary>
+            /// Sequel, a story that follows the current visual novel.
+            /// </summary>
+            public const string Sequel = "seq";
+
+            /// <summary>
+            /// Visual novel that is part of the same series.
+            /// </summary>
+            public const string SameSeries = "ser";
+
+            /// <summary>
+            /// Visual novel that is set in the same universe or setting.
+            /// </summary>
+            public const string SameSetting = "set";
+
+            /// <summary>
+            /// Side story, a narrative that runs parallel or provides additional context to the main story.
+            /// </summary>
+            public const string SideStory = "side";
         }
     }
 }

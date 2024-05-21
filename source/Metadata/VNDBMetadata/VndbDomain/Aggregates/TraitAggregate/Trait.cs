@@ -36,5 +36,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.TraitAggregate
 
         [JsonProperty("group_id")]
         public string GroupId { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
