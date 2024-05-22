@@ -75,7 +75,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetacriticMetadata", "Metad
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilterPresetsQuickLauncher", "Generic\FilterPresetsQuickLauncher\FilterPresetsQuickLauncher.csproj", "{E2246410-C505-4C5D-BA43-8C2375BA1DB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNDBMetadata", "Metadata\VNDBMetadata\VNDBMetadata.csproj", "{9F9EB64D-E018-4085-AB44-962ED72CB883}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNDBFuze", "Metadata\VNDBFuze\VNDBFuze.csproj", "{9F9EB64D-E018-4085-AB44-962ED72CB883}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayNotes", "Generic\PlayNotes\PlayNotes.csproj", "{4A94B45A-B63C-487F-990E-7BD0C5B10B5A}"
 EndProject

@@ -1,7 +1,0 @@
-﻿Id: VNDBMetadata_39229206-1199-4fee-a014-e8478ea4cd77
-Name: Custom Metadata Provider
-Author: John Doe
-Version: 1.0
-Module: VNDBMetadata.dll
-Type: MetadataProvider
-Icon: icon.png
