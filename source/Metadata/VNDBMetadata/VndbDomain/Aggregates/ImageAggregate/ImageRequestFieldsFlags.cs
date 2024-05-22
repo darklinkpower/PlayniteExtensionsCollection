@@ -26,7 +26,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ImageAggregate
         /// Pixel dimensions of the image, array with two integer elements indicating the width and height.
         /// </summary>
         [StringRepresentation(ImageConstants.Fields.Dims)]
-        Dims = 1 << 2,
+        Dimensions = 1 << 2,
 
         /// <summary>
         /// Average flagging vote for sexual content (0 to 2).
@@ -50,7 +50,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ImageAggregate
         /// URL to the thumbnail.
         /// </summary>
         [StringRepresentation(ImageConstants.Fields.Thumbnail)]
-        Thumbnail = 1 << 6,
+        ThumbnailUrl = 1 << 6,
 
         /// <summary>
         /// Pixel dimensions of the thumbnail, array with two integer elements.

@@ -30,36 +30,49 @@ namespace VNDBMetadata
     public class VNDBMetadata : MetadataPlugin
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
-
-        private VNDBMetadataSettingsViewModel settings { get; set; }
+        private readonly VndbService _vndbService;
+        private readonly BbCodeProcessor _bbcodeProcessor;
+        private readonly VNDBMetadataSettingsViewModel _settings;
 
         public override Guid Id { get; } = Guid.Parse("39229206-1199-4fee-a014-e8478ea4cd77");
 
         public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
-            //MetadataField.Description
-            // Include addition fields if supported by the metadata source
+            MetadataField.Name,
+            MetadataField.Platform,
+            MetadataField.Developers,
+            MetadataField.Description,
+            MetadataField.BackgroundImage,
+            MetadataField.CoverImage,
+            MetadataField.CommunityScore,
+            MetadataField.ReleaseDate,
+            MetadataField.Tags,
+            //MetadataField.Publishers,
+            //MetadataField.Links
         };
 
         public override string Name => "VNDB Metadata";
 
         public VNDBMetadata(IPlayniteAPI api) : base(api)
         {
-            settings = new VNDBMetadataSettingsViewModel(this);
+            _settings = new VNDBMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
                 HasSettings = true
             };
+
+            _vndbService = new VndbService();
+            _bbcodeProcessor = new BbCodeProcessor();
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new VNDBMetadataProvider(options, this);
+            return new VNDBMetadataProvider(options, _vndbService, _settings, _bbcodeProcessor);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return _settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
@@ -69,8 +82,6 @@ namespace VNDBMetadata
 
         private void Tests()
         {
-            var vndbService = new VndbService();
-
             // Producer
             var producerFilter = ProducerFilterFactory.Search.EqualTo("Hira");
             var producerQuery = new ProducerRequestQuery(producerFilter);

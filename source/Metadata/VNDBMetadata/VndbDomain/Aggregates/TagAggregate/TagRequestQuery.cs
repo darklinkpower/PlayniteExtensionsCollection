@@ -7,41 +7,54 @@ using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Flags;
+using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Models;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.TagAggregate
 {
+    public class TagRequestFields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public TagRequestFieldsFlags Flags = TagRequestFieldsFlags.Id | TagRequestFieldsFlags.Name | TagRequestFieldsFlags.Category;
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref Flags);
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            Flags = default;
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            return EnumUtilities.GetStringRepresentations(Flags, prefix);
+        }
+    }
+
     public class TagRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public TagRequestFieldsFlags FieldsFlags;
+        public TagRequestFields Fields = new TagRequestFields();
         [JsonIgnore]
         public TagRequestSortEnum Sort = TagRequestSortEnum.SearchRank;
 
         public TagRequestQuery(SimpleFilterBase<VndbTag> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
+
         }
 
         public TagRequestQuery(ComplexFilterBase<VndbTag> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
-        }
 
-        public override void EnableAllFieldsFlags()
-        {
-            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
-        }
-
-        public override void ResetAllFieldsFlags()
-        {
-            FieldsFlags = default;
         }
 
         protected override List<string> GetEnabledFields()
         {
-            return EnumUtilities.GetStringRepresentations(FieldsFlags);
+            return Fields.GetFlagsStringRepresentations();
         }
 
         protected override string GetSortString()

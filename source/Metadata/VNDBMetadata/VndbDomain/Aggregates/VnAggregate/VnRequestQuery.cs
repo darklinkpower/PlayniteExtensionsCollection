@@ -13,107 +13,126 @@ using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.TagAggregate;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Flags;
+using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Models;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
 {
+    public class VnRequestSubfieldsFlags : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public VnRequestFieldsFlags VisualNovelRelationsFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
+        public ImageRequestFields Image = new ImageRequestFields();
+        public ImageRequestFields Screenshots = new ImageRequestFields();
+        public ReleaseRequestFields ScreenshotsRelease = new ReleaseRequestFields();
+        public TagRequestFields Tags = new TagRequestFields();
+        public ProducerRequestFields Developers = new ProducerRequestFields();
+        public StaffRequestFields Staff = new StaffRequestFields();
+        public StaffRequestFields VoiceActor = new StaffRequestFields();
+        public CharacterRequestFields VoiceActorCharacter = new CharacterRequestFields();
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref VisualNovelRelationsFlags);
+            Image.EnableAllFlags();
+            Screenshots.EnableAllFlags();
+            ScreenshotsRelease.EnableAllFlags(enableSubfields);
+            Tags.EnableAllFlags(enableSubfields);
+            Developers.EnableAllFlags(enableSubfields);
+            Staff.EnableAllFlags(enableSubfields);
+            VoiceActor.EnableAllFlags(enableSubfields);
+            VoiceActorCharacter.EnableAllFlags(enableSubfields);
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            VisualNovelRelationsFlags = default;
+            Image.DisableAllFlags();
+            Screenshots.DisableAllFlags();
+            ScreenshotsRelease.DisableAllFlags(disableSubfields);
+            Tags.DisableAllFlags(disableSubfields);
+            Developers.DisableAllFlags(disableSubfields);
+            Staff.DisableAllFlags(disableSubfields);
+            VoiceActor.DisableAllFlags(disableSubfields);
+            VoiceActorCharacter.DisableAllFlags(disableSubfields);
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var results = new List<List<string>>
+            {
+                EnumUtilities.GetStringRepresentations(VisualNovelRelationsFlags, GetFullPrefixString(prefix, VnConstants.Fields.Relations)),
+                Image.GetFlagsStringRepresentations(prefix, VnConstants.Fields.Image),
+                Screenshots.GetFlagsStringRepresentations(prefix, VnConstants.Fields.Screenshots),
+                ScreenshotsRelease.GetFlagsStringRepresentations(prefix, VnConstants.Fields.ScreenshotsRelease),
+                Tags.GetFlagsStringRepresentations(prefix, VnConstants.Fields.Tags),
+                Developers.GetFlagsStringRepresentations(prefix, VnConstants.Fields.Developers),
+                Staff.GetFlagsStringRepresentations(prefix, VnConstants.Fields.Staff),
+                VoiceActor.GetFlagsStringRepresentations(prefix, VnConstants.Fields.VaStaff),
+                VoiceActorCharacter.GetFlagsStringRepresentations(prefix, VnConstants.Fields.VaCharacter)
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+    }
+
+    public class VnRequestFields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public VnRequestFieldsFlags Flags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
+        public readonly VnRequestSubfieldsFlags Subfields = new VnRequestSubfieldsFlags();
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref Flags);
+            if (enableSubfields)
+            {
+                Subfields.EnableAllFlags(enableSubfields);
+            }
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            Flags = default;
+            if (disableSubfields)
+            {
+                Subfields.DisableAllFlags(disableSubfields);
+            }
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var mainList = EnumUtilities.GetStringRepresentations(Flags, prefix);
+            var subfieldsLists = Subfields.GetFlagsStringRepresentations(prefix);
+            mainList.AddRange(subfieldsLists);
+
+            return mainList;
+        }
+    }
+
     public class VnRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public VnRequestFieldsFlags FieldsFlags;
-        [JsonIgnore]
-        public VnRequestSortEnum Sort = VnRequestSortEnum.Id;
+        public VnRequestFields Fields = new VnRequestFields();
 
         [JsonIgnore]
-        public ImageRequestFieldsFlags ImageRequestFieldsFlags;
-        [JsonIgnore]
-        public ImageRequestFieldsFlags ScreenshotsRequestFieldsFlags;
-        [JsonIgnore]
-        public ReleaseRequestFieldsFlags ScreenshotsReleaseRequestFieldsFlags;
-        [JsonIgnore]
-        public VnRequestFieldsFlags RelationsRequestFieldsFlags;
-        [JsonIgnore]
-        public TagRequestFieldsFlags TagsRequestFieldsFlags;
-        [JsonIgnore]
-        public ProducerRequestFieldsFlags DevelopersRequestFieldsFlags;
-        [JsonIgnore]
-        public StaffRequestFieldsFlags StaffRequestFieldsFlags;
-        [JsonIgnore]
-        public StaffRequestFieldsFlags VaRequestFieldsFlags;
-        [JsonIgnore]
-        public CharacterRequestFieldsFlags VaCharacterRequestFieldsFlags;
+        public VnRequestSortEnum Sort = VnRequestSortEnum.SearchRank;
 
         public VnRequestQuery(SimpleFilterBase<Vn> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
+
         }
 
         public VnRequestQuery(ComplexFilterBase<Vn> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
-        }
 
-        public override void EnableAllFieldsFlags()
-        {
-            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref RelationsRequestFieldsFlags);
-
-            EnumUtilities.SetAllEnumFlags(ref ImageRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref ScreenshotsRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref ScreenshotsReleaseRequestFieldsFlags);
-
-            EnumUtilities.SetAllEnumFlags(ref TagsRequestFieldsFlags);
-
-            EnumUtilities.SetAllEnumFlags(ref DevelopersRequestFieldsFlags);
-
-            EnumUtilities.SetAllEnumFlags(ref StaffRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref VaRequestFieldsFlags);
-
-            EnumUtilities.SetAllEnumFlags(ref VaCharacterRequestFieldsFlags);
-        }
-
-        public override void ResetAllFieldsFlags()
-        {
-            FieldsFlags = default;
-            RelationsRequestFieldsFlags = default;
-
-            ImageRequestFieldsFlags = default;
-            ScreenshotsRequestFieldsFlags = default;
-            ScreenshotsReleaseRequestFieldsFlags = default;
-
-            TagsRequestFieldsFlags = default;
-
-            DevelopersRequestFieldsFlags = default;
-
-            StaffRequestFieldsFlags = default;
-            VaRequestFieldsFlags = default;
-
-            VaCharacterRequestFieldsFlags = default;
         }
 
         protected override List<string> GetEnabledFields()
         {
-            var results = new List<List<string>>
-            {
-                EnumUtilities.GetStringRepresentations(FieldsFlags),
-                EnumUtilities.GetStringRepresentations(RelationsRequestFieldsFlags, VnConstants.Fields.Relations),
-
-                EnumUtilities.GetStringRepresentations(ImageRequestFieldsFlags, VnConstants.Fields.Image),
-                EnumUtilities.GetStringRepresentations(ScreenshotsRequestFieldsFlags, VnConstants.Fields.Screenshots),
-                EnumUtilities.GetStringRepresentations(ScreenshotsReleaseRequestFieldsFlags, VnConstants.Fields.ScreenshotsRelease),
-
-                EnumUtilities.GetStringRepresentations(TagsRequestFieldsFlags, VnConstants.Fields.Tags),
-
-                EnumUtilities.GetStringRepresentations(DevelopersRequestFieldsFlags, VnConstants.Fields.Developers),
-
-                EnumUtilities.GetStringRepresentations(StaffRequestFieldsFlags, VnConstants.Fields.Staff),
-                EnumUtilities.GetStringRepresentations(VaRequestFieldsFlags, VnConstants.Fields.VaStaff),
-
-                EnumUtilities.GetStringRepresentations(VaCharacterRequestFieldsFlags, VnConstants.Fields.VaCharacter)
-            };
-
-            return results.SelectMany(x => x).ToList();
+            return Fields.GetFlagsStringRepresentations();
         }
 
         protected override string GetSortString()

@@ -6,60 +6,102 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate;
+using VNDBMetadata.VndbDomain.Aggregates.StaffAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Filters;
+using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Models;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.ReleaseAggregate
 {
+    public class ReleaseRequestSubfields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public StaffRequestFields Producer = new StaffRequestFields();
+        public VnRequestFieldsFlags VisualNovelFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref VisualNovelFlags);
+            Producer.DisableAllFlags(enableSubfields);
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            VisualNovelFlags = default;
+            Producer.DisableAllFlags(disableSubfields);
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var results = new List<List<string>>
+            {
+                Producer.GetFlagsStringRepresentations(prefix, ReleaseConstants.Fields.ProducersAll),
+                EnumUtilities.GetStringRepresentations(VisualNovelFlags, GetFullPrefixString(prefix, ReleaseConstants.Fields.VnsAll))
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+    }
+
+    public class ReleaseRequestFields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public ReleaseRequestFieldsFlags Flags =
+            ReleaseRequestFieldsFlags.Id | ReleaseRequestFieldsFlags.Title | ReleaseRequestFieldsFlags.Official | ReleaseRequestFieldsFlags.Platforms;
+        public readonly ReleaseRequestSubfields Subfields = new ReleaseRequestSubfields();
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref Flags);
+            if (enableSubfields)
+            {
+                Subfields.EnableAllFlags(enableSubfields);
+            }
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            Flags = default;
+            if (disableSubfields)
+            {
+                Subfields.DisableAllFlags(disableSubfields);
+            }
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var mainList = EnumUtilities.GetStringRepresentations(Flags, prefix);
+            var subfieldsLists = Subfields.GetFlagsStringRepresentations(prefix);
+            mainList.AddRange(subfieldsLists);
+
+            return mainList;
+        }
+    }
+
     public class ReleaseRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public ReleaseRequestFieldsFlags FieldsFlags;
-        [JsonIgnore]
-        public ProducerRequestFieldsFlags ProducerRequestFieldsFlags;
-
-        [JsonIgnore]
-        public VnRequestFieldsFlags VnRequestFieldsFlags;
+        public ReleaseRequestFields Fields = new ReleaseRequestFields();
 
         [JsonIgnore]
         public ReleaseRequestSortEnum Sort = ReleaseRequestSortEnum.SearchRank;
 
         public ReleaseRequestQuery(SimpleFilterBase<Release> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
+
         }
 
         public ReleaseRequestQuery(ComplexFilterBase<Release> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
-        }
 
-        public override void EnableAllFieldsFlags()
-        {
-            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref VnRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref ProducerRequestFieldsFlags);
-        }
-
-        public override void ResetAllFieldsFlags()
-        {
-            FieldsFlags = default;
-            VnRequestFieldsFlags = default;
-            ProducerRequestFieldsFlags = default;
         }
 
         protected override List<string> GetEnabledFields()
         {
-            var results = new List<List<string>>
-            {
-                EnumUtilities.GetStringRepresentations(FieldsFlags),
-                EnumUtilities.GetStringRepresentations(VnRequestFieldsFlags, ReleaseConstants.Fields.VnsAll),
-                EnumUtilities.GetStringRepresentations(ProducerRequestFieldsFlags, ReleaseConstants.Fields.ProducersAll)
-            };
-
-            return results.SelectMany(x => x).ToList();
+            return Fields.GetFlagsStringRepresentations();
         }
 
         protected override string GetSortString()

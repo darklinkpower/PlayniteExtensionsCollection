@@ -11,73 +11,110 @@ using VNDBMetadata.VndbDomain.Aggregates.TraitAggregate;
 using VNDBMetadata.VndbDomain.Aggregates.VnAggregate;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Flags;
+using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Models;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.CharacterAggregate
 {
+    public class CharacterRequestSubfields : RequestFieldAbstractBase, IVndbRequestSubfields
+    {
+        public TraitRequestFields Traits = new TraitRequestFields();
+        public ReleaseRequestFields VisualNovelRelease = new ReleaseRequestFields();
+        public ImageRequestFields Image = new ImageRequestFields();
+        public VnRequestFieldsFlags VisualNovelFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
+
+        public void EnableAllFlags()
+        {
+            EnumUtilities.SetAllEnumFlags(ref VisualNovelFlags);
+            Image.EnableAllFlags();
+            Traits.EnableAllFlags(true);
+            VisualNovelRelease.EnableAllFlags(true);
+        }
+
+        public void DisableAllFlags()
+        {
+            VisualNovelFlags = default;
+            Image.DisableAllFlags();
+            Traits.DisableAllFlags(true);
+            VisualNovelRelease.DisableAllFlags(true);
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var results = new List<List<string>>
+            {
+                Traits.GetFlagsStringRepresentations(prefix, CharacterConstants.Fields.TraitsAllFields),
+                VisualNovelRelease.GetFlagsStringRepresentations(prefix, CharacterConstants.Fields.VnsReleaseAllFields),
+
+                // thumbnail and thumbnail_dims not available because character images are currently always limited to 256x300px
+                Image.GetFlagsStringRepresentations(prefix, CharacterConstants.Fields.ImageAllFields)
+                    .Where(s => !s.EndsWith("thumbnail") && !s.EndsWith("thumbnail_dims")).ToList(),
+                EnumUtilities.GetStringRepresentations(VisualNovelFlags, GetFullPrefixString(prefix, CharacterConstants.Fields.VnsAllFields))
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+    }
+
+    public class CharacterRequestFields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public CharacterRequestFieldsFlags Flags =
+            CharacterRequestFieldsFlags.Id | CharacterRequestFieldsFlags.Name | CharacterRequestFieldsFlags.VnsRole;
+        public readonly CharacterRequestSubfields Subfields = new CharacterRequestSubfields();
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref Flags);
+            if (enableSubfields)
+            {
+                Subfields.EnableAllFlags();
+            }
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            Flags = default;
+            if (disableSubfields)
+            {
+                Subfields.DisableAllFlags();
+            }
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var mainList = EnumUtilities.GetStringRepresentations(Flags, prefix);
+            var subfieldsLists = Subfields.GetFlagsStringRepresentations(prefix);
+            mainList.AddRange(subfieldsLists);
+
+            return mainList;
+        }
+    }
+
     public class CharacterRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public CharacterRequestFieldsFlags FieldsFlags;
-        [JsonIgnore]
-        public TraitRequestFieldsFlags TraitRequestFieldsFlags;
-        [JsonIgnore]
-        public VnRequestFieldsFlags VnRequestFieldsFlags;
-        [JsonIgnore]
-        public ReleaseRequestFieldsFlags VnReleaseRequestFieldsFlags;
-        [JsonIgnore]
-        public ImageRequestFieldsFlags ImageRequestFieldsFlags;
+        public CharacterRequestFields Fields = new CharacterRequestFields();
+
         [JsonIgnore]
         public CharacterRequestSortEnum Sort = CharacterRequestSortEnum.SearchRank;
 
         public CharacterRequestQuery(SimpleFilterBase<Character> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
+
         }
 
         public CharacterRequestQuery(ComplexFilterBase<Character> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
-        }
 
-        public override void EnableAllFieldsFlags()
-        {
-            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref TraitRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref VnRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref VnReleaseRequestFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref ImageRequestFieldsFlags);
-        }
-
-        public override void ResetAllFieldsFlags()
-        {
-            FieldsFlags = default;
-            TraitRequestFieldsFlags = default;
-
-            ImageRequestFieldsFlags = default;
-            VnRequestFieldsFlags = default;
-            VnReleaseRequestFieldsFlags = default;
-
-            ImageRequestFieldsFlags = default;
         }
 
         protected override List<string> GetEnabledFields()
         {
-            var results = new List<List<string>>
-            {
-                EnumUtilities.GetStringRepresentations(FieldsFlags),
-
-                EnumUtilities.GetStringRepresentations(TraitRequestFieldsFlags, CharacterConstants.Fields.TraitsAllFields),
-                EnumUtilities.GetStringRepresentations(VnRequestFieldsFlags, CharacterConstants.Fields.VnsAllFields),
-                EnumUtilities.GetStringRepresentations(VnReleaseRequestFieldsFlags, CharacterConstants.Fields.VnsReleaseAllFields),
-
-                // thumbnail and thumbnail_dims not available because character images are currently always limited to 256x300px
-                EnumUtilities.GetStringRepresentations(ImageRequestFieldsFlags, CharacterConstants.Fields.ImageAllFields)
-                    .Where(s => !s.EndsWith("thumbnail") && !s.EndsWith("thumbnail_dims")).ToList()
-            };
-
-            return results.SelectMany(x => x).ToList();
+            return Fields.GetFlagsStringRepresentations();
         }
 
         protected override string GetSortString()

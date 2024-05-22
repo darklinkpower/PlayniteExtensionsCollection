@@ -37,10 +37,10 @@ namespace VNDBMetadata.VndbDomain.Aggregates.ImageAggregate
 
         [JsonProperty("thumbnail_dims")]
         [JsonConverter(typeof(ImageResolutionConverter))]
-        public ImageDimensions ThumbnailDims { get; set; }
+        public ImageDimensions ThumbnailDimensions { get; set; }
 
         [JsonProperty("thumbnail")]
-        public Uri Thumbnail { get; set; }
+        public Uri ThumbnailUrl { get; set; }
 
         [JsonProperty("release", NullValueHandling = NullValueHandling.Ignore)]
         public Release Release { get; set; }

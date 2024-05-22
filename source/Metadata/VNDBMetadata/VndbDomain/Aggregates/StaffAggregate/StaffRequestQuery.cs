@@ -7,56 +7,98 @@ using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Common.Filters;
 using VNDBMetadata.VndbDomain.Common.Flags;
+using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Models;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.StaffAggregate
 {
+    public class StaffRequestSubfieldsFlags : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public ExtLinksRequestFields ExtLinks = new ExtLinksRequestFields();
+        public AliasesRequestFields Aliases = new AliasesRequestFields();
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            ExtLinks.EnableAllFlags();
+            Aliases.EnableAllFlags();
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            ExtLinks.DisableAllFlags();
+            Aliases.DisableAllFlags();
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var results = new List<List<string>>
+            {
+                ExtLinks.GetFlagsStringRepresentations(prefix),
+                Aliases.GetFlagsStringRepresentations(prefix)
+            };
+
+            return results.SelectMany(x => x).ToList();
+        }
+    }
+
+    public class StaffRequestFields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public StaffRequestFieldsFlags Flags = StaffRequestFieldsFlags.Id | StaffRequestFieldsFlags.Name;
+        public readonly StaffRequestSubfieldsFlags Subfields = new StaffRequestSubfieldsFlags();
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref Flags);
+            if (enableSubfields)
+            {
+                Subfields.EnableAllFlags(enableSubfields);
+            }
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            Flags = default;
+            if (disableSubfields)
+            {
+                Subfields.DisableAllFlags(disableSubfields);
+            }
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            var mainList = EnumUtilities.GetStringRepresentations(Flags, prefix);
+            var subfieldsLists = Subfields.GetFlagsStringRepresentations(prefix);
+            mainList.AddRange(subfieldsLists);
+
+            return mainList;
+        }
+    }
+
     public class StaffRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public StaffRequestFieldsFlags FieldsFlags;
-        [JsonIgnore]
-        public ExtLinksFieldsFlags ExtLinksFieldsFlags;
-        [JsonIgnore]
-        public AliasesFieldsFlags AliasesFieldsFlags;
+        public StaffRequestFields Fields = new StaffRequestFields();
+
         [JsonIgnore]
         public StaffRequestSortEnum Sort = StaffRequestSortEnum.SearchRank;
 
         public StaffRequestQuery(SimpleFilterBase<Staff> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
+
         }
 
         public StaffRequestQuery(ComplexFilterBase<Staff> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
-        }
 
-        public override void EnableAllFieldsFlags()
-        {
-            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref ExtLinksFieldsFlags);
-            EnumUtilities.SetAllEnumFlags(ref AliasesFieldsFlags);
-        }
-
-        public override void ResetAllFieldsFlags()
-        {
-            FieldsFlags = default;
-            ExtLinksFieldsFlags = default;
-            AliasesFieldsFlags = default;
         }
 
         protected override List<string> GetEnabledFields()
         {
-            var results = new List<List<string>>
-            {
-                EnumUtilities.GetStringRepresentations(FieldsFlags),
-                EnumUtilities.GetStringRepresentations(ExtLinksFieldsFlags),
-                EnumUtilities.GetStringRepresentations(AliasesFieldsFlags)
-            };
-
-            return results.SelectMany(x => x).ToList();
+            return Fields.GetFlagsStringRepresentations();
         }
 
         protected override string GetSortString()

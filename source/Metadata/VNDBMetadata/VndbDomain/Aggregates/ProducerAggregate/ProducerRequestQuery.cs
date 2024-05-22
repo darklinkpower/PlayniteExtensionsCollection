@@ -6,46 +6,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VNDBMetadata.VndbDomain.Common.Filters;
+using VNDBMetadata.VndbDomain.Common.Interfaces;
+using VNDBMetadata.VndbDomain.Common.Models;
 using VNDBMetadata.VndbDomain.Common.Queries;
 using VNDBMetadata.VndbDomain.Common.Utilities;
 
 namespace VNDBMetadata.VndbDomain.Aggregates.ProducerAggregate
 {
+    public class ProducerRequestFields : RequestFieldAbstractBase, IVndbRequestFields
+    {
+        public ProducerRequestFieldsFlags Flags =
+            ProducerRequestFieldsFlags.Id | ProducerRequestFieldsFlags.Name | ProducerRequestFieldsFlags.Type;
+
+        public void EnableAllFlags(bool enableSubfields)
+        {
+            EnumUtilities.SetAllEnumFlags(ref Flags);
+        }
+
+        public void DisableAllFlags(bool disableSubfields)
+        {
+            Flags = default;
+        }
+
+        public override List<string> GetFlagsStringRepresentations(params string[] prefixParts)
+        {
+            var prefix = GetFullPrefixString(prefixParts);
+            return EnumUtilities.GetStringRepresentations(Flags, prefix);
+        }
+    }
+
     public class ProducerRequestQuery : RequestQueryBase
     {
         [JsonIgnore]
-        public ProducerRequestFieldsFlags FieldsFlags;
+        public ProducerRequestFields Fields = new ProducerRequestFields();
         [JsonIgnore]
         public ProducerRequestSortEnum Sort = ProducerRequestSortEnum.SearchRank;
 
         public ProducerRequestQuery(SimpleFilterBase<Producer> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
+
         }
 
         public ProducerRequestQuery(ComplexFilterBase<Producer> filter) : base(filter)
         {
-            EnableAllFieldsFlags();
-        }
 
-        public override void EnableAllFieldsFlags()
-        {
-            EnumUtilities.SetAllEnumFlags(ref FieldsFlags);
-        }
-
-        public override void ResetAllFieldsFlags()
-        {
-            FieldsFlags = default;
         }
 
         protected override List<string> GetEnabledFields()
         {
-            var results = new List<List<string>>
-            {
-                EnumUtilities.GetStringRepresentations(FieldsFlags)
-            };
-
-            return results.SelectMany(x => x).ToList();
+            return Fields.GetFlagsStringRepresentations();
         }
 
         protected override string GetSortString()

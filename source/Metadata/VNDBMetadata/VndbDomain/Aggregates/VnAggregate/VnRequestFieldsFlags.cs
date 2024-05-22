@@ -85,7 +85,7 @@ namespace VNDBMetadata.VndbDomain.Aggregates.VnAggregate
         /// Release date, possibly null.
         /// </summary>
         [StringRepresentation(VnConstants.Fields.Released)]
-        Released = 1 << 11,
+        ReleaseDate = 1 << 11,
 
         /// <summary>
         /// List of languages this VN is available in. Does not include machine translations.

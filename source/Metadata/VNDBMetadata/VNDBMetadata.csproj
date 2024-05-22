@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,14 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeKicker.BBCode, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CodeKicker.BBCode.5.0.0.0\lib\net35\CodeKicker.BBCode.dll</HintPath>
+    </Reference>
     <Reference Include="ComposableAsync.Core, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ComposableAsync.Core.1.3.0\lib\netstandard2.0\ComposableAsync.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Flurl, Version=2.7.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Flurl.2.7.1\lib\net40\Flurl.dll</HintPath>
-    </Reference>
-    <Reference Include="Flurl.Http, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Flurl.Http.2.1.1\lib\net45\Flurl.Http.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -69,16 +67,13 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Playnite.SDK, Version=6.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PlayniteSDK.6.9.0\lib\net462\Playnite.SDK.dll</HintPath>
+    <Reference Include="Playnite.SDK, Version=6.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PlayniteSDK.6.11.0\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RateLimiter, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RateLimiter.2.2.0\lib\netstandard2.0\RateLimiter.dll</HintPath>
-    </Reference>
-    <Reference Include="SqlNado, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SqlNado.2.0.2\lib\netstandard2.0\SqlNado.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -173,6 +168,12 @@
     <Compile Include="..\..\Common\PluginsCommon\BindingTools.cs">
       <Link>Shared\PluginsCommon\BindingTools.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToListConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumToListConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToStringConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumToStringConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
       <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
     </Compile>
@@ -218,6 +219,8 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="BbCodeProcessor.cs" />
+    <Compile Include="Converters\EnumToLocalizationStringConverter.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\Character.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterBirthday.cs" />
     <Compile Include="VndbDomain\Aggregates\CharacterAggregate\CharacterRoleEnum.cs" />
@@ -235,6 +238,12 @@
     <Compile Include="VndbDomain\Aggregates\ImageAggregate\ImageDimensions.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseAvailableLanguageInfo.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseProducer.cs" />
+    <Compile Include="VndbDomain\Common\Interfaces\IVndbRequestFields.cs" />
+    <Compile Include="VndbDomain\Common\Interfaces\IVndbRequestSubfields.cs" />
+    <Compile Include="VndbDomain\Common\Models\ExtLinksRequestFields.cs" />
+    <Compile Include="VndbDomain\Common\Models\AliasesRequestFields.cs" />
+    <Compile Include="VndbDomain\Common\Models\ImageRequestFields.cs" />
+    <Compile Include="VndbDomain\Common\Models\RequestFieldAbstractBase.cs" />
     <Compile Include="VndbDomain\Common\Models\VndbReleaseDate.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseMedia.cs" />
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseRequestSortEnum.cs" />
@@ -321,7 +330,6 @@
     <Compile Include="VndbDomain\Aggregates\ReleaseAggregate\ReleaseConstants.cs" />
     <Compile Include="VndbDomain\Aggregates\VnAggregate\VnConstants.cs" />
     <Compile Include="VndbDomain\Services\VndbService.cs" />
-    <Compile Include="VndbCacheManager.cs" />
     <Compile Include="VNDBMetadata.cs" />
     <Compile Include="VNDBMetadataProvider.cs" />
     <Compile Include="VNDBMetadataSettings.cs" />

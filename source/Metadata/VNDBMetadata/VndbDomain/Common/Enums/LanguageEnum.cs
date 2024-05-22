@@ -10,6 +10,9 @@ namespace VNDBMetadata.VndbDomain.Common.Enums
 {
     public enum LanguageEnum
     {
+        [StringRepresentation(null)]
+        Unknown,
+
         [StringRepresentation(QueryEnums.Language.Arabic)]
         Arabic,
 

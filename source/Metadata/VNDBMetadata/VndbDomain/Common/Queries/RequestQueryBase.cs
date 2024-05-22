@@ -50,18 +50,6 @@ namespace VNDBMetadata.VndbDomain.Common.Queries
 
         protected abstract string GetSortString();
 
-        /// <summary>
-        /// Enables the flags of all the request fields.
-        /// </summary>
-        public abstract void EnableAllFieldsFlags();
-
-        /// <summary>
-        /// Resets the flags of all the request fields.
-        /// </summary>
-        public abstract void ResetAllFieldsFlags();
-
-
-
         public class PredicateConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
