@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using VNDBFuze.PlayniteControls;
 using VNDBFuze.VndbDomain.Aggregates.CharacterAggregate;
 using VNDBFuze.VndbDomain.Aggregates.ProducerAggregate;
 using VNDBFuze.VndbDomain.Aggregates.ReleaseAggregate;
@@ -30,9 +31,11 @@ namespace VNDBFuze
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly VndbService _vndbService;
         private readonly BbCodeProcessor _bbcodeProcessor;
-        private readonly VNDBFuzeSettingsViewModel _settings;
+        public VNDBFuzeSettingsViewModel Settings { get; private set; }
 
         public override Guid Id { get; } = Guid.Parse("39229206-1199-4fee-a014-e8478ea4cd77");
+        private const string _pluginExtensionsSource = "VNDBFuze";
+        private const string _vndbVisualNovelViewControlName = "VndbVisualNovelViewControl";
 
         public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
@@ -53,7 +56,7 @@ namespace VNDBFuze
 
         public VNDBFuze(IPlayniteAPI api) : base(api)
         {
-            _settings = new VNDBFuzeSettingsViewModel(this);
+            Settings = new VNDBFuzeSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
                 HasSettings = true
@@ -61,16 +64,38 @@ namespace VNDBFuze
 
             _vndbService = new VndbService();
             _bbcodeProcessor = new BbCodeProcessor();
+
+            AddCustomElementSupport(new AddCustomElementSupportArgs
+            {
+                ElementList = new List<string> { _vndbVisualNovelViewControlName },
+                SourceName = _pluginExtensionsSource,
+            });
+
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
+                SourceName = _pluginExtensionsSource,
+                SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
+            });
+        }
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            if (args.Name == _vndbVisualNovelViewControlName)
+            {
+                return new VndbVisualNovelViewControl(_vndbService, this, Settings, _bbcodeProcessor);
+            }
+
+            return null;
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new VNDBFuzeMetadataProvider(options, _vndbService, _settings, _bbcodeProcessor);
+            return new VNDBFuzeMetadataProvider(options, _vndbService, Settings, _bbcodeProcessor);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return _settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)

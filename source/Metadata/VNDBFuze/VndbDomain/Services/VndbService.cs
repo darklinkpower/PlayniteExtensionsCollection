@@ -162,5 +162,40 @@ namespace VNDBFuze.VndbDomain.Services
 
             return JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Vn>>(result);
         }
+
+        public async Task<string> GetResponseFromPostRequest(ProducerRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postProducerEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
+
+        public async Task<string> GetResponseFromPostRequest(StaffRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postStaffEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
+
+        public async Task<string> GetResponseFromPostRequest(TraitRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postTraitEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
+
+        public async Task<string> GetResponseFromPostRequest(TagRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postTagEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
+
+        public async Task<string> GetResponseFromPostRequest(CharacterRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postCharacterEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
+
+        public async Task<string> GetResponseFromPostRequest(ReleaseRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postReleaseEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
+
+        public async Task<string> GetResponseFromPostRequest(VnRequestQuery query, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteRequestAsync(postVnEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+        }
     }
 }

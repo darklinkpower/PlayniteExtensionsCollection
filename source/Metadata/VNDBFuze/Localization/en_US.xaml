@@ -25,4 +25,7 @@
     <sys:String x:Key="LOC_VndbFuze_ViolenceLevelTame">Tame</sys:String>
     <sys:String x:Key="LOC_VndbFuze_ViolenceLevelViolent">Violent</sys:String>
     <sys:String x:Key="LOC_VndbFuze_ViolenceLevelBrutal">Brutal</sys:String>
+    <sys:String x:Key="LOC_VndbFuze_MetadataSelectBackgroundImage">Select background image to download</sys:String>
+    <sys:String x:Key="LOC_VndbFuze_TagsDisplayOptionEnumAll">All</sys:String>
+    <sys:String x:Key="LOC_VndbFuze_TagsDisplayOptionSummary">Summary</sys:String>
 </ResourceDictionary>

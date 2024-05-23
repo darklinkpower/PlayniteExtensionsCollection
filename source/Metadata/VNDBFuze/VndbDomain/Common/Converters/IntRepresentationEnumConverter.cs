@@ -65,6 +65,11 @@ namespace VNDBFuze.VndbDomain.Common.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader.TokenType == JsonToken.Null)
+            {
+                return null;
+            }
+            
             if (reader.TokenType != JsonToken.Integer)
             {
                 throw new JsonSerializationException($"Unexpected token parsing {typeof(TEnum).Name}. Expected Integer, got {reader.TokenType}.");

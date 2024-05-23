@@ -1,0 +1,482 @@
+﻿<PluginUserControl x:Class="VNDBFuze.PlayniteControls.VndbVisualNovelViewControl"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:pluginControls="clr-namespace:VNDBFuze.Controls"
+                   xmlns:pluginConverters="clr-namespace:VNDBFuze.Converters"
+                   xmlns:commonConverters="clr-namespace:PluginsCommon.Converters"
+                   xmlns:vndbVnEnums="clr-namespace:VNDBFuze.VndbDomain.Aggregates.VnAggregate"
+                   xmlns:vndbTraitEnums="clr-namespace:VNDBFuze.VndbDomain.Aggregates.TraitAggregate"
+                   xmlns:vndbEnums="clr-namespace:VNDBFuze.VndbDomain.Common.Enums"
+                   xmlns:vndbFuzeEnums="clr-namespace:VNDBFuze.Enums"
+             xmlns:local="clr-namespace:VNDBFuze.PlayniteControls"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:VndbVisualNovelViewControl, IsDesignTimeCreatable=True}"
+             d:DesignHeight="2000" d:DesignWidth="500">
+    <PluginUserControl.Resources>
+        <pluginConverters:BbCodeToHtmlStringConverter x:Key="BbCodeToHtmlStringConverter" />
+        <pluginConverters:VnRelationFiltererConverter x:Key="VnRelationFiltererConverter" />
+        <pluginConverters:TraitGroupAndSpoilerFilterConverter x:Key="TraitGroupAndSpoilerFilterConverter" />
+        <pluginConverters:EnumToLocalizationStringConverter x:Key="EnumToLocalizationStringConverter" />
+        <pluginConverters:CharacterBirthdayToStringConverter x:Key="CharacterBirthdayToStringConverter" />
+        <pluginConverters:CharacterToMeasurementsStringConverter x:Key="CharacterToMeasurementsStringConverter" />
+        <commonConverters:EnumToListConverter x:Key="EnumToListConverter" />
+        <commonConverters:EnumerableStringJoinConverter x:Key="EnumerableStringJoinConverter" />
+        <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <commonConverters:EqualityToVisibilityConverter x:Key="EqualityToVisibilityConverter" />
+        <commonConverters:TypeEqualityToVisibilityConverter x:Key="TypeEqualityToVisibilityConverter" />
+        <commonConverters:EnumValueToVisibilityConverter x:Key="EnumValueToVisibilityConverter" />
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style TargetType="{x:Type pluginControls:VnRelationControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type pluginControls:VnRelationControl}">
+                        <StackPanel Margin="0,0,0,5">
+                            <TextBlock FontWeight="Medium"
+                                       Text="{Binding RelationType, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            <ItemsControl Margin="20,2,0,0"
+                                          ItemsSource="{Binding Relations, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.Resources>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+                                </ItemsControl.Resources>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="[unnoficial]" Margin="0,0,5,0"
+                                                           Opacity="0.50"
+                                                           Visibility="{Binding RelationOfficial, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+                                            <Button Background="Transparent"
+                                                    HorizontalAlignment="Left"
+                                                    HorizontalContentAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Padding="0"
+                                                    Command="{Binding DataContext.OpenVnVndbPageCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}">
+                                                <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                                            </Button>
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type pluginControls:CharacterTraitControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type pluginControls:CharacterTraitControl}">
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding FilteredTraits, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.Resources>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+                                </ItemsControl.Resources>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="0,3,5,0" Padding="1" Background="Transparent" BorderThickness="0"
+                                                Command="{Binding DataContext.OpenTraitVndbPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                                CommandParameter="{Binding}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                                <TextBlock Text="S" Margin="3,0,0,3"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="10"
+                                                           Visibility="{Binding SpoilerLevel, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Major}}"
+                                                           Foreground="Red" />
+                                                <TextBlock Text="S" Margin="3,0,0,3"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="10"
+                                                           Visibility="{Binding SpoilerLevel, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Minimum}}"
+                                                           Foreground="Orange" />
+                                            </StackPanel>
+                                            
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--<Style TargetType="ItemsControl" x:Key="ControlStackPanelListString">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border>
+                            <ScrollViewer>
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+    </PluginUserControl.Resources>
+    <Grid>
+        <StackPanel>
+            <pluginControls:GridEx AutoLayoutColumns="2" ColumnCount="2" RowCount="5"
+                                   StarColumns="1">
+                <TextBlock Text="Title" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding ActiveVisualNovel.Title}" VerticalAlignment="Center" />
+
+                <TextBlock Text="Titles" VerticalAlignment="Top" />
+                <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding ActiveVisualNovel.Titles}" />
+
+                <TextBlock Text="Aliases" VerticalAlignment="Center" />
+                <ItemsControl VerticalAlignment="Center" ItemsSource="{Binding ActiveVisualNovel.Aliases}" />
+                
+                <TextBlock Text="Relations" VerticalAlignment="Top" />
+                <StackPanel>
+                    <ToggleButton x:Name="UnofficialToggleButton"
+                                  Content="Show unnoficial"
+                                  HorizontalAlignment="Right"
+                                  Margin="0,0,0,5"
+                                  IsChecked="{Binding DisplayUnnoficialRelations}" />
+                    <pluginControls:VnRelationControl
+                        RelationsSource="{Binding ActiveVisualNovel.Relations}"
+                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.SharesCharacters}"
+                        IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
+                    <pluginControls:VnRelationControl
+                        RelationsSource="{Binding ActiveVisualNovel.Relations}"
+                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.Prequel}"
+                        IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
+                    <pluginControls:VnRelationControl
+                        RelationsSource="{Binding ActiveVisualNovel.Relations}"
+                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.Sequel}"
+                        IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
+                    <pluginControls:VnRelationControl
+                        RelationsSource="{Binding ActiveVisualNovel.Relations}"
+                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.SameSetting}"
+                        IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
+                    <pluginControls:VnRelationControl
+                        RelationsSource="{Binding ActiveVisualNovel.Relations}"
+                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.SideStory}"
+                        IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
+                </StackPanel>
+
+                <TextBlock/>
+            </pluginControls:GridEx>
+
+            <StackPanel>
+                <TextBlock Text="Description" FontWeight="SemiBold" />
+                <ScrollViewer MaxHeight="180">
+                    <pluginControls:HtmlTextView HtmlText="{Binding ActiveVisualNovel.Description, Converter={StaticResource BbCodeToHtmlStringConverter}}"
+                                                 HorizontalAlignment="left"
+                                                 HtmlFontFamily="{DynamicResource FontFamily}"
+                                                 HtmlForeground="{DynamicResource TextColor}"
+                                                 LinkForeground="{DynamicResource GlyphColor}"
+                                                 HtmlFontSize="{DynamicResource FontSize}" />
+                </ScrollViewer>
+            </StackPanel>
+            
+            <StackPanel Margin="0,20,0,0">
+                <TextBlock Text="Tags" FontWeight="SemiBold" />
+                <Separator Margin="0,5,0,5" />
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                    <ComboBox Margin="0,0,0,0" ItemsSource="{Binding Source={x:Type vndbFuzeEnums:TagsDisplayOptionEnum}, Converter={StaticResource EnumToListConverter}}"
+                          SelectedItem="{Binding TagsDisplayOption}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <ToggleButton Content="Content" Margin="0,0,5,0"
+                                  Visibility="{Binding TagsContentCategoryButtonVisibility}"
+                                  x:Name="TagsContentToggleButton"
+                                  IsChecked="{Binding TagsDisplayContentCategory}" />
+                    <ToggleButton Content="Technical" Margin="0,0,5,0"
+                                  Visibility="{Binding TagsTechnicalCategoryButtonVisibility}"
+                                  IsChecked="{Binding TagsDisplayTechnicalCategory}" />
+                    <ToggleButton Content="Sexual" Margin="0,0,0,0"
+                                  Visibility="{Binding TagsSexualCategoryButtonVisibility}"
+                                  IsChecked="{Binding TagsDisplaySexualCategory}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <ToggleButton Content="None" Margin="0,0,5,0"
+                                  Visibility="{Binding TagsNoneSpoilerButtonVisibility}"
+                                  IsChecked="{Binding TagsDisplayNoneSpoilers}" />
+
+                    <ToggleButton Content="Minimum" Margin="0,0,5,0"
+                                  Visibility="{Binding TagsMinimumSpoilerButtonVisibility}"
+                                  IsChecked="{Binding TagsDisplayMinimumSpoilers}" />
+
+                    <ToggleButton Content="Major" Margin="0,0,0,0"
+                                  Visibility="{Binding TagsMajorSpoilerButtonVisibility}"
+                                  IsChecked="{Binding TagsDisplayMajorSpoilers}" />
+                </StackPanel>
+                
+                <DockPanel Margin="0,5,0,0" LastChildFill="True">
+                    <TextBlock Text="Minimum score:" VerticalAlignment="Center"
+                               DockPanel.Dock="Left" />
+                    <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center"
+                               MinWidth="30" Text="{Binding TagsMinimumScore}" />
+                    <Slider DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0"
+                            TickFrequency="0.1"
+                            Minimum="0" Maximum="3" Value="{Binding TagsMinimumScore}" />
+                </DockPanel>
+                
+                <WrapPanel>
+
+                    <Separator x:Name="SeparatorProxy" Visibility="Collapsed" />
+                    <Border Width="1" Opacity="0.5" Margin="0,0,5,0" Background="{Binding ElementName=SeparatorProxy, Path=Foreground}"
+                            Height="{Binding ElementName=TagsContentToggleButton,Path=Height}" />
+
+
+                </WrapPanel>
+
+                <Separator Margin="0,5,0,5" />
+                <ItemsControl ItemsSource="{Binding TagsToDisplay}" Margin="0,5,0,5">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,3,5,0">
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="S" Margin="3,0,0,3"
+                                               VerticalAlignment="Center"
+                                               FontSize="10"
+                                               Visibility="{Binding Spoiler, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Major}}"
+                                               Foreground="Red" />
+                                <TextBlock Text="S" Margin="3,0,0,3"
+                                               VerticalAlignment="Center"
+                                               FontSize="10"
+                                               Visibility="{Binding Spoiler, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Minimum}}"
+                                               Foreground="Orange" />
+                                <TextBlock Text="{Binding Rating, StringFormat={}{0:F1}}"
+                                               FontSize="10" Margin="3,0,0,0"
+                                               VerticalAlignment="Bottom"
+                                               Opacity="0.5" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <TextBlock Text="Characters" Margin="0,20,0,0" FontWeight="Medium"/>
+            <Separator Margin="0,5,0,5" />
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
+                <TextBlock Text="{DynamicResource LOC_VndbFuze_MaximumSpoilerLevel}"
+                                   VerticalAlignment="Center" />
+                <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbEnums:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                          SelectedItem="{Binding CharactersMaxSpoilerLevel}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ToggleButton Content="Show sexual traits" Margin="10,0,0,0"
+                              IsChecked="{Binding DisplayCharacterSexualTraits}" />
+            </StackPanel>
+
+
+
+            <ListBox ItemsSource="{Binding ActiveVisualNovelCharacters}"
+                     Margin="0,10,0,0" MaxHeight="900"
+                     IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <ScrollViewer VirtualizingStackPanel.IsVirtualizing="True" 
+                                      Padding="5,0,0,0"
+                                      VirtualizingStackPanel.VirtualizationMode="Recycling">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,0">
+                            <DockPanel>
+                                <Border x:Name="CharacterImage" Padding="0,0,0,0" Background="Blue" Width="90" Height="150"
+                                            VerticalAlignment="Top"
+                                            DockPanel.Dock="Left"
+                                            Margin="0,0,10,0"/>
+                                <DockPanel Height="{Binding ElementName=CharacterImage, Path=Height}">
+                                    <TextBlock Text="{Binding Name}" DockPanel.Dock="Top" FontWeight="Bold" FontSize="16" Margin="0,0,0,0"/>
+
+                                    <StackPanel Margin="0,10,0,0" VerticalAlignment="Bottom">
+                                        <TextBlock Text="Description" FontWeight="Medium" VerticalAlignment="Bottom" />
+                                        <Separator Margin="0,3,0,3" />
+                                        <ScrollViewer VerticalAlignment="Bottom" VerticalScrollBarVisibility="Auto" MaxHeight="100">
+                                            <pluginControls:HtmlTextView HtmlText="{Binding Description, Converter={StaticResource BbCodeToHtmlStringConverter}}"
+                                                             Margin="0,0,0,0"
+                                                         HorizontalAlignment="left"
+                                                         HtmlFontFamily="{DynamicResource FontFamily}"
+                                                         HtmlForeground="{DynamicResource TextColor}"
+                                                         LinkForeground="{DynamicResource GlyphColor}"
+                                                         HtmlFontSize="{DynamicResource FontSize}" />
+                                        </ScrollViewer>
+
+                                    </StackPanel>
+                                </DockPanel>
+                            </DockPanel>
+
+
+
+                            <pluginControls:GridEx AutoLayoutColumns="2" ColumnCount="2" RowCount="20" Margin="0,10,0,0"
+                                                       StarColumns="1">
+
+                                <TextBlock Text="Aliases" FontWeight="Medium" />
+
+                                <TextBlock Text="{Binding Aliases, Converter={StaticResource EnumerableStringJoinConverter}}" />
+
+                                <TextBlock Text="Measurements" FontWeight="Medium" />
+
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource CharacterToMeasurementsStringConverter}}" TextWrapping="Wrap" />
+
+                                <TextBlock Text="Birthday" FontWeight="Medium" />
+
+                                <TextBlock Text="{Binding Birthday, Converter={StaticResource CharacterBirthdayToStringConverter}}" />
+
+                                <TextBlock Text="Hair" FontWeight="Medium"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Hair}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" 
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Eyes" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Eyes}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Body" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Body}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Clothes" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Clothes}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Items" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Items}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Personality" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Personality}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Role" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Role}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Engages in" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.EngagesIn}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Subject of" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.SubjectOf}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Engages in (Sexual)" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.EngagesInSexual}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+
+                                <TextBlock Text="Subject of (Sexual)" FontWeight="Bold"/>
+
+                                <pluginControls:CharacterTraitControl 
+                                        Traits="{Binding Traits}"
+                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.SubjectOfSexual}"
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                            </pluginControls:GridEx>
+
+                            <Separator Margin="0,5,0,10" />
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+            
+
+
+
+        </StackPanel>
+    </Grid>
+</PluginUserControl>

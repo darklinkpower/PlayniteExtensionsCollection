@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBFuze.Enums;
 using VNDBFuze.VndbDomain.Aggregates.ImageAggregate;
 using VNDBFuze.VndbDomain.Common.Enums;
 
@@ -35,6 +36,16 @@ namespace VNDBFuze.Converters
                 { ImageViolenceLevelEnum.Violent, ResourceProvider.GetString("LOC_VndbFuze_ViolenceLevelViolent") },
                 { ImageViolenceLevelEnum.Brutal, ResourceProvider.GetString("LOC_VndbFuze_ViolenceLevelBrutal") }
             });
+
+            AddStringMapDictionary<TagsDisplayOptionEnum>(new Dictionary<Enum, string>
+            {
+                { TagsDisplayOptionEnum.All, ResourceProvider.GetString("LOC_VndbFuze_TagsDisplayOptionEnumAll") },
+                { TagsDisplayOptionEnum.Summary, ResourceProvider.GetString("LOC_VndbFuze_TagsDisplayOptionSummary") }
+            });
         }
+
+
     }
+
+
 }

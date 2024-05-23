@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VNDBFuze.VndbDomain.Common.Converters;
 using VNDBFuze.VndbDomain.Common.Entities;
 
 namespace VNDBFuze.VndbDomain.Aggregates.TraitAggregate
@@ -32,7 +33,8 @@ namespace VNDBFuze.VndbDomain.Aggregates.TraitAggregate
         public List<string> Aliases { get; set; }
 
         [JsonProperty("group_name")]
-        public string GroupName { get; set; }
+        [JsonConverter(typeof(StringRepresentationEnumConverter<TraitGroupEnum>))]
+        public TraitGroupEnum Group { get; set; }
 
         [JsonProperty("group_id")]
         public string GroupId { get; set; }

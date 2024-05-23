@@ -39,7 +39,7 @@ namespace PluginsCommon.Converters
                 }
             }
 
-            return null;
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

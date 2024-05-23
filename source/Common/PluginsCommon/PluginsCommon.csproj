@@ -52,14 +52,18 @@
   <ItemGroup>
     <Compile Include="BindingTools.cs" />
     <Compile Include="Converters\BooleanToOpacityConverter.cs" />
+    <Compile Include="Converters\EnumerableStringJoinConverter.cs" />
     <Compile Include="Converters\EnumToListConverter.cs" />
     <Compile Include="Converters\EnumToStringConverter.cs" />
+    <Compile Include="Converters\EnumValueToVisibilityConverter.cs" />
+    <Compile Include="Converters\EqualityToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringNullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IEnumerableHasItemsToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertedVisibilityConverter.cs" />
     <Compile Include="Converters\NumericConverters.cs" />
+    <Compile Include="Converters\TypeEqualityToVisibilityConverter.cs" />
     <Compile Include="Encryption.cs" />
     <Compile Include="Extensions\CharExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

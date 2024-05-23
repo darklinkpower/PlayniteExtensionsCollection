@@ -13,11 +13,6 @@
     <UserControl.Resources>
         <commonConverters:EnumToListConverter x:Key="EnumToListConverter" />
         <pluginConverters:EnumToLocalizationStringConverter x:Key="EnumToLocalizationStringConverter" />
-        <ObjectDataProvider x:Key="GetViolenceLevelsFromEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="vndbDomainCommonEnums:SpoilerLevelEnum" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
     </UserControl.Resources>
     <ScrollViewer Margin="20">
         <StackPanel>

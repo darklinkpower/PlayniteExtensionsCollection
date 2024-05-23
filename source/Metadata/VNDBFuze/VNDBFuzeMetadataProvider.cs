@@ -429,7 +429,7 @@ namespace VNDBFuze
 
             var selectedImage = API.Instance.Dialogs.ChooseImageFile(
                 imageOptions,
-                "Select background image to download");
+                ResourceProvider.GetString("LOC_VndbFuze_MetadataSelectBackgroundImage"));
             if (selectedImage != null)
             {
                 var selectionIndex = imageOptions.IndexOf(selectedImage);

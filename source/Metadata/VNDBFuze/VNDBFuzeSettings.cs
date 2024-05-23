@@ -91,6 +91,14 @@ namespace VNDBFuze
 
         private ImageViolenceLevelEnum _imagesMaxViolenceLevel = ImageViolenceLevelEnum.Tame;
         public ImageViolenceLevelEnum ImagesMaxViolenceLevel { get => _imagesMaxViolenceLevel; set => SetValue(ref _imagesMaxViolenceLevel, value); }
+
+        
+        private bool _isControlVisible = false;
+        [DontSerialize]
+        public bool IsControlVisible { get => _isControlVisible; set => SetValue(ref _isControlVisible, value); }
+
+        private bool _enableVnViewControl = true;
+        public bool EnableVnViewControl { get => _enableVnViewControl; set => SetValue(ref _enableVnViewControl, value); }
     }
 
     public class VNDBFuzeSettingsViewModel : ObservableObject, ISettings
