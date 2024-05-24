@@ -1,6 +1,7 @@
-#Ignore thumbnails created by Windows
+# Ignore thumbnails created by Windows
 Thumbs.db
-#Ignore files built by Visual Studio
+
+# Ignore files built by Visual Studio
 *.obj
 *.exe
 *.pdb
@@ -19,15 +20,15 @@ Thumbs.db
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug*/
+**/bin/[Dd]ebug*/
 *.lib
 *.sbr
 obj/
-[Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
 .vs/
-#Nuget packages folder
+# NuGet packages folder
 packages/
 
-!ReleaseAggregate/
+# Ignore everything else in release folders
+**/bin/[Rr]elease*/
