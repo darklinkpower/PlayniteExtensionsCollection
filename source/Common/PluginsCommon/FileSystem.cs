@@ -17,7 +17,7 @@ namespace PluginsCommon
         Directory
     }
 
-    public static partial class FileSystem
+    internal static partial class FileSystem
     {
         [DllImport("kernel32.dll")]
         static extern uint GetCompressedFileSizeW([In, MarshalAs(UnmanagedType.LPWStr)] string lpFileName,

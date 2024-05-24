@@ -89,9 +89,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata", "Metadata\Xb
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VNDB", "VNDB", "{F608FE6C-231A-42B5-806E-49B8B8E0CFEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApi.Domain", "Metadata\VNDB\VndbApi.Domain\VndbApi.Domain.csproj", "{38AF54C8-402D-4C31-8000-951605BC4B64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiDomain", "Metadata\VNDB\VndbApiDomain\VndbApiDomain.csproj", "{38AF54C8-402D-4C31-8000-951605BC4B64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApi.Infrastructure", "Metadata\VNDB\VndbApi.Infrastructure\VndbApi.Infrastructure.csproj", "{13817ADD-ED1D-47BF-B734-10B63D20ECB7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiInfrastructure", "Metadata\VNDB\VndbApiInfrastructure\VndbApiInfrastructure.csproj", "{13817ADD-ED1D-47BF-B734-10B63D20ECB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

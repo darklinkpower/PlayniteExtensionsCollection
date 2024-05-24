@@ -15,13 +15,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using VndbApiDomain.CharacterAggregate;
+using VndbApiDomain.SharedKernel;
+using VndbApiDomain.TagAggregate;
+using VndbApiDomain.VisualNovelAggregate;
+using VndbApiInfrastructure.Services;
+using VndbApiInfrastructure.SharedKernel.Responses;
+using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBFuze.Enums;
-using VNDBFuze.VndbDomain.Aggregates.CharacterAggregate;
-using VNDBFuze.VndbDomain.Aggregates.TagAggregate;
-using VNDBFuze.VndbDomain.Aggregates.VnAggregate;
-using VNDBFuze.VndbDomain.Common.Enums;
-using VNDBFuze.VndbDomain.Common.Models;
-using VNDBFuze.VndbDomain.Services;
 
 namespace VNDBFuze.PlayniteControls
 {
@@ -31,7 +32,6 @@ namespace VNDBFuze.PlayniteControls
     public partial class VndbVisualNovelViewControl : PluginUserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private readonly VndbService _vndbService;
         private readonly BbCodeProcessor _bbcodeProcessor;
         private readonly IPlayniteAPI _playniteApi;
         private readonly string _pluginStoragePath;
@@ -74,8 +74,8 @@ namespace VNDBFuze.PlayniteControls
             }
         }
 
-        private Vn _activeVisualNovel;
-        public Vn ActiveVisualNovel
+        private VisualNovel _activeVisualNovel;
+        public VisualNovel ActiveVisualNovel
         {
             get => _activeVisualNovel;
             set
@@ -94,7 +94,7 @@ namespace VNDBFuze.PlayniteControls
             }
         }
 
-        public IEnumerable<VnVndbTag> TagsToDisplay => GetTagsToDisplay();
+        public IEnumerable<VisualNovelTag> TagsToDisplay => GetTagsToDisplay();
 
         public Visibility TagsContentCategoryButtonVisibility =>
             _activeVisualNovel?.Tags.Any(x => x.Category == TagCategoryEnum.Content) == true
@@ -248,7 +248,7 @@ namespace VNDBFuze.PlayniteControls
             if (FileSystem.FileExists(filePath))
             {
                 var text = FileSystem.ReadStringFromFile(filePath);
-                var queryResponse = JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<Vn>>(text);
+                var queryResponse = JsonConvert.DeserializeObject<VndbDatabaseQueryReponse<VisualNovel>>(text);
                 if (queryResponse.Results.Count > 0)
                 {
                     ActiveVisualNovel = queryResponse.Results.FirstOrDefault();
@@ -267,10 +267,9 @@ namespace VNDBFuze.PlayniteControls
             }
         }
 
-        public VndbVisualNovelViewControl(VndbService vndbService, VNDBFuze plugin, VNDBFuzeSettingsViewModel settingsViewModel, BbCodeProcessor bbcodeProcessor)
+        public VndbVisualNovelViewControl(VNDBFuze plugin, VNDBFuzeSettingsViewModel settingsViewModel, BbCodeProcessor bbcodeProcessor)
         {
             InitializeComponent();
-            _vndbService = vndbService;
             _bbcodeProcessor = bbcodeProcessor;
             _playniteApi = plugin.PlayniteApi;
             _pluginStoragePath = plugin.GetPluginUserDataPath();
@@ -362,10 +361,10 @@ namespace VNDBFuze.PlayniteControls
             var searchStoragePath = Path.Combine(_pluginStoragePath, "SearchVnId", $"{vndbId}.json");
             if (!FileSystem.FileExists(searchStoragePath))
             {
-                var vndbRequestFilter = VnFilterFactory.Id.EqualTo(vndbId);
-                var query = new VnRequestQuery(vndbRequestFilter);
+                var vndbRequestFilter = VisualNovelFilterFactory.Id.EqualTo(vndbId);
+                var query = new VisualNovelRequestQuery(vndbRequestFilter);
                 query.Fields.EnableAllFlags(true);
-                var searchResult = await _vndbService.GetResponseFromPostRequest(query);
+                var searchResult = await VndbService.GetResponseFromPostRequest(query);
                 if (searchResult.IsNullOrEmpty())
                 {
                     return;
@@ -378,7 +377,7 @@ namespace VNDBFuze.PlayniteControls
                 }
             }
 
-            if (Serialization.TryFromJsonFile<VndbDatabaseQueryReponse<Vn>>(searchStoragePath, out var queryResponse))
+            if (Serialization.TryFromJsonFile<VndbDatabaseQueryReponse<VisualNovel>>(searchStoragePath, out var queryResponse))
             {
                 SetVisibleVisibility();
                 if (queryResponse.Results.Count == 0)
@@ -390,7 +389,7 @@ namespace VNDBFuze.PlayniteControls
             }
         }
 
-        private IEnumerable<VnVndbTag> GetTagsToDisplay()
+        private IEnumerable<VisualNovelTag> GetTagsToDisplay()
         {
             var counters = new Dictionary<TagCategoryEnum, int>
             {
@@ -450,9 +449,9 @@ namespace VNDBFuze.PlayniteControls
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public RelayCommand<Vn> OpenVnVndbPageCommand
+        public RelayCommand<VisualNovel> OpenVnVndbPageCommand
         {
-            get => new RelayCommand<Vn>((Vn visualNovel) =>
+            get => new RelayCommand<VisualNovel>((VisualNovel visualNovel) =>
             {
                 if (visualNovel != null && !visualNovel.Id.IsNullOrEmpty())
                 {

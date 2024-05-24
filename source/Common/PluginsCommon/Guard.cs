@@ -10,7 +10,7 @@ namespace PluginsCommon
     /// <summary>
     /// Provides methods to guard against common argument validation scenarios.
     /// </summary>
-    public static class Guard
+    internal static class Guard
     {
         private static readonly HashSet<Type> _numericTypes = new HashSet<Type>
         {

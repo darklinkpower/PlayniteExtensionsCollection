@@ -10,7 +10,7 @@ using System.Web;
 
 namespace System
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         #region Constants and Fields
         private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
@@ -22,7 +22,7 @@ namespace System
 
         #region Hashing and Encoding
 
-        public static string MD5(this string s)
+        internal static string MD5(this string s)
         {
             var builder = new StringBuilder();
             foreach (byte b in MD5Bytes(s))
@@ -33,7 +33,7 @@ namespace System
             return builder.ToString();
         }
 
-        public static byte[] MD5Bytes(this string s)
+        internal static byte[] MD5Bytes(this string s)
         {
             using (var provider = System.Security.Cryptography.MD5.Create())
             {
@@ -41,7 +41,7 @@ namespace System
             }
         }
 
-        public static string GetSHA256Hash(this string input)
+        internal static string GetSHA256Hash(this string input)
         {
             using (var sha = Security.Cryptography.SHA256.Create())
             {
@@ -50,7 +50,7 @@ namespace System
             }
         }
 
-        public static string UrlEncode(this string str)
+        internal static string UrlEncode(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -60,7 +60,7 @@ namespace System
             return HttpUtility.UrlPathEncode(str);
         }
 
-        public static string UrlDecode(this string str)
+        internal static string UrlDecode(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -70,7 +70,7 @@ namespace System
             return HttpUtility.UrlDecode(str);
         }
 
-        public static string HtmlEncode(this string str)
+        internal static string HtmlEncode(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -80,7 +80,7 @@ namespace System
             return HttpUtility.HtmlEncode(str);
         }
 
-        public static string HtmlDecode(this string str)
+        internal static string HtmlDecode(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -90,7 +90,7 @@ namespace System
             return HttpUtility.HtmlDecode(str);
         }
 
-        public static string EscapeDataString(this string str)
+        internal static string EscapeDataString(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -100,7 +100,7 @@ namespace System
             return Uri.EscapeDataString(str);
         }
 
-        public static string Base64Encode(this string str)
+        internal static string Base64Encode(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -110,7 +110,7 @@ namespace System
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(str));
         }
 
-        public static string Base64Decode(this string str)
+        internal static string Base64Decode(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -124,22 +124,22 @@ namespace System
 
         #region Utility Methods
 
-        public static bool IsNullOrEmpty(this string source)
+        internal static bool IsNullOrEmpty(this string source)
         {
             return string.IsNullOrEmpty(source);
         }
 
-        public static bool IsNullOrWhiteSpace(this string source)
+        internal static bool IsNullOrWhiteSpace(this string source)
         {
             return string.IsNullOrWhiteSpace(source);
         }
 
-        public static string Format(this string source, params object[] args)
+        internal static string Format(this string source, params object[] args)
         {
             return string.Format(source, args);
         }
 
-        public static string TrimEndString(this string source, string value, StringComparison comp = StringComparison.Ordinal)
+        internal static string TrimEndString(this string source, string value, StringComparison comp = StringComparison.Ordinal)
         {
             if (!source.EndsWith(value, comp))
             {
@@ -149,7 +149,7 @@ namespace System
             return source.Remove(source.LastIndexOf(value, comp));
         }
 
-        public static string TrimStringWithEllipsis(this string input, int maxLength, bool trimToLastFullWord)
+        internal static string TrimStringWithEllipsis(this string input, int maxLength, bool trimToLastFullWord)
         {
             if (input.Length <= maxLength)
             {
@@ -203,7 +203,7 @@ namespace System
             return output;
         }
 
-        public static bool IsHttpUrl(this string str)
+        internal static bool IsHttpUrl(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -213,7 +213,7 @@ namespace System
             return Regex.IsMatch(str, @"^https?:\/\/", RegexOptions.IgnoreCase);
         }
 
-        public static bool IsUri(this string str)
+        internal static bool IsUri(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -227,7 +227,7 @@ namespace System
 
         #region String Manipulation
 
-        public static string ToTitleCase(this string source, CultureInfo culture = null)
+        internal static string ToTitleCase(this string source, CultureInfo culture = null)
         {
             if (source.IsNullOrEmpty())
             {
@@ -245,7 +245,7 @@ namespace System
         }
 
         // Courtesy of https://stackoverflow.com/questions/6275980/string-replace-ignoring-case
-        public static string Replace(this string str, string oldValue, string @newValue, StringComparison comparisonType)
+        internal static string Replace(this string str, string oldValue, string @newValue, StringComparison comparisonType)
         {
             // Check inputs.
             if (str == null)
@@ -317,7 +317,7 @@ namespace System
             return resultStringBuilder.ToString();
         }
 
-        public static string ConvertToSortableName(string name)
+        internal static string ConvertToSortableName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -331,7 +331,7 @@ namespace System
             return newName;
         }
 
-        public static string RemoveTrademarks(this string str, string replacement = "")
+        internal static string RemoveTrademarks(this string str, string replacement = "")
         {
             if (str.IsNullOrEmpty())
             {
@@ -341,7 +341,7 @@ namespace System
             return Regex.Replace(str, @"[™©®]", replacement);
         }
 
-        public static string NormalizeGameName(this string name)
+        internal static string NormalizeGameName(this string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -365,7 +365,7 @@ namespace System
             return newName.Trim();
         }
 
-        public static string GetPathWithoutAllExtensions(string path)
+        internal static string GetPathWithoutAllExtensions(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -375,7 +375,7 @@ namespace System
             return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
         }
 
-        public static string Normalize(this string str)
+        internal static string Normalize(this string str)
         {
             if (string.IsNullOrEmpty(str))
             {
@@ -398,32 +398,32 @@ namespace System
 
         #region Comparison and Search
 
-        public static bool Contains(this string str, string value, StringComparison comparisonType)
+        internal static bool Contains(this string str, string value, StringComparison comparisonType)
         {
             return str?.IndexOf(value, 0, comparisonType) != -1;
         }
 
-        public static bool ContainsAny(this string str, char[] chars)
+        internal static bool ContainsAny(this string str, char[] chars)
         {
             return str?.IndexOfAny(chars) >= 0;
         }
 
-        public static bool ContainsInvariantCulture(this string source, string value, CompareOptions compareOptions)
+        internal static bool ContainsInvariantCulture(this string source, string value, CompareOptions compareOptions)
         {
             return CultureInfo.InvariantCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
         }
 
-        public static bool ContainsCurrentCulture(this string source, string value, CompareOptions compareOptions)
+        internal static bool ContainsCurrentCulture(this string source, string value, CompareOptions compareOptions)
         {
             return CultureInfo.CurrentCulture.CompareInfo.IndexOf(source, value, compareOptions) >= 0;
         }
 
-        public static bool EqualsIgnoreCase(this string str, string toMatch)
+        internal static bool EqualsIgnoreCase(this string str, string toMatch)
         {
             return str.Equals(toMatch, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public static bool MatchesAllWords(this string str, string toMatch, CompareOptions compareOptions = CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols | CompareOptions.IgnoreNonSpace, char[] textMatchSplitter = null)
+        internal static bool MatchesAllWords(this string str, string toMatch, CompareOptions compareOptions = CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols | CompareOptions.IgnoreNonSpace, char[] textMatchSplitter = null)
         {
             textMatchSplitter = textMatchSplitter ?? _textMatchSplitter;
 
@@ -434,12 +434,12 @@ namespace System
                 toMatchSplit.Any(a => a.ContainsInvariantCulture(word, compareOptions)));
         }
 
-        public static int GetLevenshteinDistanceIgnoreCase(this string source, string value)
+        internal static int GetLevenshteinDistanceIgnoreCase(this string source, string value)
         {
             return GetLevenshteinDistance(source, value, _charCaseInsensitiveComparer);
         }
 
-        public static int GetLevenshteinDistance(this string source, string value)
+        internal static int GetLevenshteinDistance(this string source, string value)
         {
             return GetLevenshteinDistance(source, value, EqualityComparer<char>.Default);
         }
@@ -450,7 +450,7 @@ namespace System
         /// Thread safe.
         /// </summary>
         /// <returns>Difference. 0 complete match.</returns>
-        public static int GetLevenshteinDistance(this string value1, string value2, IEqualityComparer<char> comparer)
+        internal static int GetLevenshteinDistance(this string value1, string value2, IEqualityComparer<char> comparer)
         {
             if (value2.Length == 0)
             {
@@ -503,12 +503,12 @@ namespace System
         }
 
         //Based on https://gist.github.com/ronnieoverby/2aa19724199df4ec8af6
-        public static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
+        internal static double GetJaroWinklerSimilarityIgnoreCase(this string str, string str2, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
         {
             return GetJaroWinklerSimilarity(str, str2, _charCaseInsensitiveComparer, winklerWeightThreshold);
         }
 
-        public static double GetJaroWinklerSimilarity(this string str, string str2, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
+        internal static double GetJaroWinklerSimilarity(this string str, string str2, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
         {
             return GetJaroWinklerSimilarity(str, str2, EqualityComparer<char>.Default, winklerWeightThreshold);
         }
@@ -523,7 +523,7 @@ namespace System
         /// <param name="comparer">Comparer used to determine character equality.</param>
         /// <param name="winklerWeightThreshold">The weight threshold is used to determine whether the similarity score is high enough to consider two strings as a match. Winkler's paper used a default value of 0.7.</param>
         /// <returns>Similarity between the specified strings.</returns>
-        public static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
+        internal static double GetJaroWinklerSimilarity(this string str, string str2, IEqualityComparer<char> comparer, double winklerWeightThreshold = _defaultWinklerWeightThreshold)
         {
             var lLen1 = str.Length;
             var lLen2 = str2.Length;

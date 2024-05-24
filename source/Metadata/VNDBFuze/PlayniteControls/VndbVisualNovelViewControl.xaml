@@ -6,9 +6,9 @@
                    xmlns:pluginControls="clr-namespace:VNDBFuze.Controls"
                    xmlns:pluginConverters="clr-namespace:VNDBFuze.Converters"
                    xmlns:commonConverters="clr-namespace:PluginsCommon.Converters"
-                   xmlns:vndbVnEnums="clr-namespace:VNDBFuze.VndbDomain.Aggregates.VnAggregate"
-                   xmlns:vndbTraitEnums="clr-namespace:VNDBFuze.VndbDomain.Aggregates.TraitAggregate"
-                   xmlns:vndbEnums="clr-namespace:VNDBFuze.VndbDomain.Common.Enums"
+                   xmlns:vndbVnDomain="clr-namespace:VndbApiDomain.VisualNovelAggregate;assembly=VndbApiDomain"
+                   xmlns:vndbTraitDomain="clr-namespace:VndbApiDomain.TraitAggregate;assembly=VndbApiDomain"
+                   xmlns:vndbDomainSharedkernel="clr-namespace:VndbApiDomain.SharedKernel;assembly=VndbApiDomain"
                    xmlns:vndbFuzeEnums="clr-namespace:VNDBFuze.Enums"
              xmlns:local="clr-namespace:VNDBFuze.PlayniteControls"
              mc:Ignorable="d"
@@ -103,12 +103,12 @@
                                                 <TextBlock Text="S" Margin="3,0,0,3"
                                                            VerticalAlignment="Center"
                                                            FontSize="10"
-                                                           Visibility="{Binding SpoilerLevel, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Major}}"
+                                                           Visibility="{Binding SpoilerLevel, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbDomainSharedkernel:SpoilerLevelEnum.Major}}"
                                                            Foreground="Red" />
                                                 <TextBlock Text="S" Margin="3,0,0,3"
                                                            VerticalAlignment="Center"
                                                            FontSize="10"
-                                                           Visibility="{Binding SpoilerLevel, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Minimum}}"
+                                                           Visibility="{Binding SpoilerLevel, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbDomainSharedkernel:SpoilerLevelEnum.Minimum}}"
                                                            Foreground="Orange" />
                                             </StackPanel>
                                             
@@ -172,23 +172,23 @@
                                   IsChecked="{Binding DisplayUnnoficialRelations}" />
                     <pluginControls:VnRelationControl
                         RelationsSource="{Binding ActiveVisualNovel.Relations}"
-                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.SharesCharacters}"
+                        RelationType="{x:Static vndbVnDomain:VnRelationTypeEnum.SharesCharacters}"
                         IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
                     <pluginControls:VnRelationControl
                         RelationsSource="{Binding ActiveVisualNovel.Relations}"
-                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.Prequel}"
+                        RelationType="{x:Static vndbVnDomain:VnRelationTypeEnum.Prequel}"
                         IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
                     <pluginControls:VnRelationControl
                         RelationsSource="{Binding ActiveVisualNovel.Relations}"
-                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.Sequel}"
+                        RelationType="{x:Static vndbVnDomain:VnRelationTypeEnum.Sequel}"
                         IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
                     <pluginControls:VnRelationControl
                         RelationsSource="{Binding ActiveVisualNovel.Relations}"
-                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.SameSetting}"
+                        RelationType="{x:Static vndbVnDomain:VnRelationTypeEnum.SameSetting}"
                         IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
                     <pluginControls:VnRelationControl
                         RelationsSource="{Binding ActiveVisualNovel.Relations}"
-                        RelationType="{x:Static vndbVnEnums:VnRelationTypeEnum.SideStory}"
+                        RelationType="{x:Static vndbVnDomain:VnRelationTypeEnum.SideStory}"
                         IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
                 </StackPanel>
 
@@ -282,12 +282,12 @@
                                 <TextBlock Text="S" Margin="3,0,0,3"
                                                VerticalAlignment="Center"
                                                FontSize="10"
-                                               Visibility="{Binding Spoiler, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Major}}"
+                                               Visibility="{Binding Spoiler, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbDomainSharedkernel:SpoilerLevelEnum.Major}}"
                                                Foreground="Red" />
                                 <TextBlock Text="S" Margin="3,0,0,3"
                                                VerticalAlignment="Center"
                                                FontSize="10"
-                                               Visibility="{Binding Spoiler, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbEnums:SpoilerLevelEnum.Minimum}}"
+                                               Visibility="{Binding Spoiler, Converter={StaticResource EnumValueToVisibilityConverter}, ConverterParameter={x:Static vndbDomainSharedkernel:SpoilerLevelEnum.Minimum}}"
                                                Foreground="Orange" />
                                 <TextBlock Text="{Binding Rating, StringFormat={}{0:F1}}"
                                                FontSize="10" Margin="3,0,0,0"
@@ -305,7 +305,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
                 <TextBlock Text="{DynamicResource LOC_VndbFuze_MaximumSpoilerLevel}"
                                    VerticalAlignment="Center" />
-                <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbEnums:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainSharedkernel:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                           SelectedItem="{Binding CharactersMaxSpoilerLevel}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -382,7 +382,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Hair}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Hair}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" 
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -390,7 +390,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Eyes}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Eyes}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -398,7 +398,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Body}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Body}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -406,7 +406,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Clothes}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Clothes}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -414,7 +414,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Items}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Items}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -422,7 +422,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Personality}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Personality}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -430,7 +430,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.Role}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Role}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -438,7 +438,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.EngagesIn}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.EngagesIn}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -446,7 +446,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.SubjectOf}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.SubjectOf}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -454,7 +454,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.EngagesInSexual}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.EngagesInSexual}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
@@ -462,7 +462,7 @@
 
                                 <pluginControls:CharacterTraitControl 
                                         Traits="{Binding Traits}"
-                                        TraitGroup="{x:Static vndbTraitEnums:TraitGroupEnum.SubjectOfSexual}"
+                                        TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.SubjectOfSexual}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
                             </pluginControls:GridEx>

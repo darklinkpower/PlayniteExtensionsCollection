@@ -3,11 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:commonConverters="clr-namespace:PluginsCommon.Converters"
              xmlns:pluginConverters="clr-namespace:VNDBFuze.Converters"
-             xmlns:vndbImage="clr-namespace:VNDBFuze.VndbDomain.Aggregates.ImageAggregate"
-             xmlns:vndbDomainCommonEnums="clr-namespace:VNDBFuze.VndbDomain.Common.Enums"
+             xmlns:vndbDomainImage="clr-namespace:VndbApiDomain.ImageAggregate;assembly=VndbApiDomain"
+             xmlns:vndbDomainSharedKernel="clr-namespace:VndbApiDomain.SharedKernel;assembly=VndbApiDomain"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="600">
     <UserControl.Resources>
@@ -54,7 +53,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource LOC_VndbFuze_MaximumSexualityLevel}"
                                VerticalAlignment="Center" />
-                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbImage:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                                   SelectedItem="{Binding Settings.ImagesMaxSexualityLevel}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -67,7 +66,7 @@
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <TextBlock Text="{DynamicResource LOC_VndbFuze_MaximumViolenceLevel}"
                                VerticalAlignment="Center" />
-                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbImage:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                                   SelectedItem="{Binding Settings.ImagesMaxViolenceLevel}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -95,7 +94,7 @@
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <TextBlock Text="{DynamicResource LOC_VndbFuze_MaximumSpoilerLevel}"
                                    VerticalAlignment="Center" />
-                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainCommonEnums:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainSharedKernel:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                                   SelectedItem="{Binding Settings.TagsMaxSpoilerLevel}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>

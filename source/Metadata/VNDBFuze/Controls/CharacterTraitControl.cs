@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using VNDBFuze.VndbDomain.Aggregates.CharacterAggregate;
-using VNDBFuze.VndbDomain.Aggregates.TraitAggregate;
-using VNDBFuze.VndbDomain.Common.Enums;
+using VndbApiDomain.CharacterAggregate;
+using VndbApiDomain.SharedKernel;
+using VndbApiDomain.TraitAggregate;
 
 namespace VNDBFuze.Controls
 {

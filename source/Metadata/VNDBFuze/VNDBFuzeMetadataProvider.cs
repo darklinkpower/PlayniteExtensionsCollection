@@ -1,20 +1,20 @@
-﻿using ComposableAsync;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using RateLimiter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using VNDBFuze.VndbDomain.Aggregates.ImageAggregate;
-using VNDBFuze.VndbDomain.Aggregates.ProducerAggregate;
-using VNDBFuze.VndbDomain.Aggregates.TagAggregate;
-using VNDBFuze.VndbDomain.Aggregates.VnAggregate;
-using VNDBFuze.VndbDomain.Common.Enums;
-using VNDBFuze.VndbDomain.Services;
+using VndbApiDomain.ImageAggregate;
+using VndbApiDomain.SharedKernel;
+using VndbApiDomain.TagAggregate;
+using VndbApiDomain.VisualNovelAggregate;
+using VndbApiInfrastructure.ProducerAggregate;
+using VndbApiInfrastructure.Services;
+using VndbApiInfrastructure.TagAggregate;
+using VndbApiInfrastructure.VisualNovelAggregate;
 
 namespace VNDBFuze
 {
@@ -22,13 +22,12 @@ namespace VNDBFuze
     {
         private readonly MetadataRequestOptions _requestOptions;
         private readonly VNDBFuzeSettingsViewModel _settings;
-        private readonly VndbService _vndbService;
         private readonly BbCodeProcessor _bbcodeProcessor;
         private static readonly ILogger _logger = LogManager.GetLogger();
         private bool _dataSearchCompleted = false;
 
         private List<MetadataField> availableFields = null;
-        private Vn _matchedVisualNovel;
+        private VisualNovel _matchedVisualNovel;
 
         public override List<MetadataField> AvailableFields
         {
@@ -43,11 +42,10 @@ namespace VNDBFuze
             }
         }
 
-        public VNDBFuzeMetadataProvider(MetadataRequestOptions options, VndbService vndbService, VNDBFuzeSettingsViewModel settings, BbCodeProcessor bbcodeProcessor)
+        public VNDBFuzeMetadataProvider(MetadataRequestOptions options, VNDBFuzeSettingsViewModel settings, BbCodeProcessor bbcodeProcessor)
         {
             _requestOptions = options;
             _settings = settings;
-            _vndbService = vndbService;
             _bbcodeProcessor = bbcodeProcessor;
         }
 
@@ -135,11 +133,11 @@ namespace VNDBFuze
                     _matchedVisualNovel.Tags = secondFilteredList.ToList();
                     fields.Add(MetadataField.Tags);
                 }
-                
-                //if (_settings.Settings.MetadataFieldsConfiguration.EnableLinks)
-                //{
-                //    fields.Add(MetadataField.Links);
-                //}
+
+                if (_settings.Settings.MetadataFieldsConfiguration.EnableLinks)
+                {
+                    fields.Add(MetadataField.Links);
+                }
 
                 //if (_settings.Settings.MetadataFieldsConfiguration.EnablePublishers)
                 //{
@@ -191,7 +189,7 @@ namespace VNDBFuze
             }
             else
             {
-                List<Vn> searchResults = null;
+                List<VisualNovel> searchResults = null;
                 List<GenericItemOption> itemOptions = null;
                 var selectedItem = API.Instance.Dialogs.ChooseItemWithSearch(null, (a) =>
                 {
@@ -215,33 +213,72 @@ namespace VNDBFuze
             _dataSearchCompleted = true;
         }
 
-        private List<Vn> GetVnSearchResults(string searchTerm)
+        private List<VisualNovel> GetVnSearchResults(string searchTerm)
         {
-            var results = new List<Vn>();
+            var results = new List<VisualNovel>();
             var isSearchVndbId = Regex.IsMatch(searchTerm, @"^v\d+$");
             var vndbRequestFilter = isSearchVndbId
-                ? VnFilterFactory.Id.EqualTo(searchTerm)
-                : VnFilterFactory.Search.EqualTo(searchTerm);
+                ? VisualNovelFilterFactory.Id.EqualTo(searchTerm)
+                : VisualNovelFilterFactory.Search.EqualTo(searchTerm);
 
-            var query = new VnRequestQuery(vndbRequestFilter);
+            var query = new VisualNovelRequestQuery(vndbRequestFilter);
             query.Fields.DisableAllFlags(true);
 
-            query.Fields.Flags = VnRequestFieldsFlags.Title | VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Description | VnRequestFieldsFlags.Platforms
-                | VnRequestFieldsFlags.Rating | VnRequestFieldsFlags.TagsRating | VnRequestFieldsFlags.TagsSpoiler | VnRequestFieldsFlags.ReleaseDate;
+            query.Fields.Flags = VnRequestFieldsFlags.Title | VnRequestFieldsFlags.Id;
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableDescription)
+            {
+                query.Fields.Flags |= VnRequestFieldsFlags.Description;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableCommunityScore)
+            {
+                query.Fields.Flags |= VnRequestFieldsFlags.Rating;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableReleaseDate)
+            {
+                query.Fields.Flags |= VnRequestFieldsFlags.ReleaseDate;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnablePlatform)
+            {
+                query.Fields.Flags |= VnRequestFieldsFlags.Platforms;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableCoverImage)
+            {
+                query.Fields.Subfields.Image.Flags =
+                    ImageRequestFieldsFlags.ThumbnailUrl | ImageRequestFieldsFlags.VoteCount | ImageRequestFieldsFlags.Sexual
+                    | ImageRequestFieldsFlags.Violence | ImageRequestFieldsFlags.Url;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableBackgroundImage)
+            {
+                query.Fields.Flags |= VnRequestFieldsFlags.TagsRating | VnRequestFieldsFlags.TagsSpoiler;
+                query.Fields.Subfields.Screenshots.Flags =
+                    ImageRequestFieldsFlags.ThumbnailUrl | ImageRequestFieldsFlags.VoteCount | ImageRequestFieldsFlags.Sexual
+                    | ImageRequestFieldsFlags.Violence | ImageRequestFieldsFlags.Url;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableDevelopers)
+            {
+                query.Fields.Subfields.Developers.Flags = ProducerRequestFieldsFlags.Name | ProducerRequestFieldsFlags.Type;
+            }
+
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableTags)
+            {
+                query.Fields.Subfields.Tags.Flags = TagRequestFieldsFlags.Name | TagRequestFieldsFlags.Category;
+            }
             
-            query.Fields.Subfields.Image.Flags =
-                ImageRequestFieldsFlags.ThumbnailUrl | ImageRequestFieldsFlags.VoteCount | ImageRequestFieldsFlags.Sexual
-                | ImageRequestFieldsFlags.Violence | ImageRequestFieldsFlags.Url;
 
-            query.Fields.Subfields.Screenshots.Flags =
-                ImageRequestFieldsFlags.ThumbnailUrl | ImageRequestFieldsFlags.VoteCount | ImageRequestFieldsFlags.Sexual
-                | ImageRequestFieldsFlags.Violence | ImageRequestFieldsFlags.Url;
+            if (_settings.Settings.MetadataFieldsConfiguration.EnableLinks)
+            {
+                query.Fields.Subfields.ExternalLinks.Flags = ExtLinksFieldsFlags.Label | ExtLinksFieldsFlags.Url;
+            }
 
-            query.Fields.Subfields.Developers.Flags = ProducerRequestFieldsFlags.Name | ProducerRequestFieldsFlags.Type;
-            query.Fields.Subfields.Tags.Flags = TagRequestFieldsFlags.Name | TagRequestFieldsFlags.Category;
-
-            query.Results = 12;
-            var queryResult = _vndbService.ExecutePostRequestAsync(query).GetAwaiter().GetResult();
+            query.Results = 6;
+            var queryResult = VndbService.ExecutePostRequestAsync(query).GetAwaiter().GetResult();
             if (queryResult?.Results?.Count > 0)
             {
                 results.AddRange(queryResult.Results);
@@ -250,7 +287,7 @@ namespace VNDBFuze
             return results;
         }
 
-        private GenericItemOption CreateGenericItemOption(Vn visualNovel)
+        private GenericItemOption CreateGenericItemOption(VisualNovel visualNovel)
         {
             var description = visualNovel.Id;
             if (visualNovel.ReleaseDate != null)
@@ -327,7 +364,23 @@ namespace VNDBFuze
                 return base.GetLinks(args);
             }
 
-            return base.GetLinks(args);
+            var links = new List<Link>
+            {
+                new Link { Name = "VNDB", Url = $"https://vndb.org/{_matchedVisualNovel.Id}" }
+            };
+
+            var externalLinks = _matchedVisualNovel.ExternalLinks?.Select(x => new Link
+            {
+                Name = x.Label,
+                Url = x.Url.ToString()
+            });
+
+            if (externalLinks.HasItems())
+            {
+                links.AddRange(externalLinks);
+            }
+            
+            return links;
         }
 
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
@@ -487,6 +540,6 @@ namespace VNDBFuze
             return tags;
         }
 
-
+        
     }
 }

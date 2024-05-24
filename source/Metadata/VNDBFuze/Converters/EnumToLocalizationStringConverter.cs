@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VndbApiDomain.ImageAggregate;
+using VndbApiDomain.SharedKernel;
 using VNDBFuze.Enums;
-using VNDBFuze.VndbDomain.Aggregates.ImageAggregate;
-using VNDBFuze.VndbDomain.Common.Enums;
 
 namespace VNDBFuze.Converters
 {

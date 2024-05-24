@@ -13,23 +13,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using VndbApiDomain.CharacterAggregate;
+using VndbApiDomain.TagAggregate;
+using VndbApiInfrastructure.CharacterAggregate;
+using VndbApiInfrastructure.ProducerAggregate;
+using VndbApiInfrastructure.ReleaseAggregate;
+using VndbApiInfrastructure.StaffAggregate;
+using VndbApiInfrastructure.TagAggregate;
+using VndbApiInfrastructure.TraitAggregate;
+using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBFuze.PlayniteControls;
-using VNDBFuze.VndbDomain.Aggregates.CharacterAggregate;
-using VNDBFuze.VndbDomain.Aggregates.ProducerAggregate;
-using VNDBFuze.VndbDomain.Aggregates.ReleaseAggregate;
-using VNDBFuze.VndbDomain.Aggregates.StaffAggregate;
-using VNDBFuze.VndbDomain.Aggregates.TagAggregate;
-using VNDBFuze.VndbDomain.Aggregates.TraitAggregate;
-using VNDBFuze.VndbDomain.Aggregates.VnAggregate;
-using VNDBFuze.VndbDomain.Common.Enums;
-using VNDBFuze.VndbDomain.Services;
 
 namespace VNDBFuze
 {
     public class VNDBFuze : MetadataPlugin
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
-        private readonly VndbService _vndbService;
         private readonly BbCodeProcessor _bbcodeProcessor;
         public VNDBFuzeSettingsViewModel Settings { get; private set; }
 
@@ -48,8 +47,8 @@ namespace VNDBFuze
             MetadataField.CommunityScore,
             MetadataField.ReleaseDate,
             MetadataField.Tags,
-            //MetadataField.Publishers,
-            //MetadataField.Links
+            MetadataField.Links
+            //MetadataField.Publishers
         };
 
         public override string Name => "VNDB Fuze";
@@ -62,7 +61,6 @@ namespace VNDBFuze
                 HasSettings = true
             };
 
-            _vndbService = new VndbService();
             _bbcodeProcessor = new BbCodeProcessor();
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
@@ -82,7 +80,7 @@ namespace VNDBFuze
         {
             if (args.Name == _vndbVisualNovelViewControlName)
             {
-                return new VndbVisualNovelViewControl(_vndbService, this, Settings, _bbcodeProcessor);
+                return new VndbVisualNovelViewControl(this, Settings, _bbcodeProcessor);
             }
 
             return null;
@@ -90,7 +88,7 @@ namespace VNDBFuze
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new VNDBFuzeMetadataProvider(options, _vndbService, Settings, _bbcodeProcessor);
+            return new VNDBFuzeMetadataProvider(options, Settings, _bbcodeProcessor);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -136,8 +134,8 @@ namespace VNDBFuze
             //var releaseQueryResult = vndbService.ExecutePostRequestAsync(releaseQuery).GetAwaiter().GetResult();
 
             // Vn
-            var vnFilter = VnFilterFactory.Search.EqualTo("a");
-            var vnQuery = new VnRequestQuery(vnFilter); ;
+            var vnFilter = VisualNovelFilterFactory.Search.EqualTo("a");
+            var vnQuery = new VisualNovelRequestQuery(vnFilter); ;
             //var vnQueryResult = vndbService.ExecutePostRequestAsync(vnQuery).GetAwaiter().GetResult();
 
             var ss = "";

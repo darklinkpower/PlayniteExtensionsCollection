@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using VNDBFuze.VndbDomain.Aggregates.VnAggregate;
+using VndbApiDomain.VisualNovelAggregate;
 
 namespace VNDBFuze.Controls
 {
