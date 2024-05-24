@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F9EB64D-E018-4085-AB44-962ED72CB883}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VNDBNexus</RootNamespace>
+    <AssemblyName>VNDBNexus</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CodeKicker.BBCode, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CodeKicker.BBCode.5.0.0.0\lib\net35\CodeKicker.BBCode.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer.WPF, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlRenderer.WPF.1.5.0.6\lib\net45\HtmlRenderer.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Playnite.SDK, Version=6.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PlayniteSDK.6.11.0\lib\net462\Playnite.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
+      <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\BindingTools.cs">
+      <Link>Shared\PluginsCommon\BindingTools.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\BooleanToOpacityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\BooleanToOpacityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\BooleanToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\BooleanToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumerableStringJoinConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumerableStringJoinConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToListConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumToListConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToStringConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumToStringConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumValueToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumValueToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EqualityToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EqualityToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\InvertedVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\NullToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\NullToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
+      <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\StringNullOrEmptyToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\StringNullOrEmptyToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\TypeEqualityToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\TypeEqualityToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Encryption.cs">
+      <Link>Shared\PluginsCommon\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\CharExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\EnumExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Extensions\LongExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\LongExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\FileSystem.cs">
+      <Link>Shared\PluginsCommon\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\GlobalCommands.cs">
+      <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Guard.cs">
+      <Link>Shared\PluginsCommon\Guard.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
+    <Compile Include="BbCodeProcessor.cs" />
+    <Compile Include="Controls\CharacterTraitControl.cs" />
+    <Compile Include="Controls\GridEx.cs" />
+    <Compile Include="Controls\HtmlTextView.cs" />
+    <Compile Include="Controls\VisualNovelRelationTypeEnum.cs" />
+    <Compile Include="Controls\VnRelationControl.cs" />
+    <Compile Include="Converters\BbCodeToHtmlStringConverter.cs" />
+    <Compile Include="Converters\CharacterBirthdayToStringConverter.cs" />
+    <Compile Include="Converters\CharacterToMeasurementsStringConverter.cs" />
+    <Compile Include="Converters\EnumToLocalizationStringConverter.cs" />
+    <Compile Include="Converters\TraitGroupAndSpoilerFilterConverter.cs" />
+    <Compile Include="Converters\VnRelationFiltererConverter.cs" />
+    <Compile Include="Enums\TagsDisplayOptionEnum.cs" />
+    <Compile Include="PlayniteControls\VndbVisualNovelViewControl.xaml.cs">
+      <DependentUpon>VndbVisualNovelViewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VNDBNexus.cs" />
+    <Compile Include="VNDBNexusMetadataProvider.cs" />
+    <Compile Include="VNDBNexusSettings.cs" />
+    <Compile Include="VNDBNexusSettingsView.xaml.cs">
+      <DependentUpon>VNDBNexusSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VndbUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="extension.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Localization\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PlayniteControls\VndbVisualNovelViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VNDBNexusSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="VndbDomain\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VNDB\VndbApiDomain\VndbApiDomain.csproj">
+      <Project>{38af54c8-402d-4c31-8000-951605bc4b64}</Project>
+      <Name>VndbApiDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VNDB\VndbApiInfrastructure\VndbApiInfrastructure.csproj">
+      <Project>{13817add-ed1d-47bf-b734-10b63d20ecb7}</Project>
+      <Name>VndbApiInfrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
