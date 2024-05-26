@@ -18,7 +18,7 @@ namespace VNDBNexus.Converters
                 return null;
             }
 
-            if (!(values[0] is IEnumerable<VnRelation> relations))
+            if (!(values[0] is IEnumerable<VisualNovelRelation> relations))
             {
                 return null;
             }

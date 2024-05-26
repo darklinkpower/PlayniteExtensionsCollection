@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 
 namespace VndbApiDomain.TraitAggregate
 {
-    public class Trait
+    public class Trait : IAggregateRoot
     {
         [JsonProperty("id")]
         public string Id { get; set; }

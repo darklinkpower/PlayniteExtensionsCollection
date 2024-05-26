@@ -211,7 +211,7 @@ namespace VndbApiInfrastructure.VisualNovelAggregate
         /// Note about the voice actor, possibly null.
         /// </summary>
         [StringRepresentation(VisualNovelConstants.Fields.VoiceActorNote)]
-        VaNote = 1UL << 32
+        VoiceActorNote = 1UL << 32
     }
 
     // Excluded fields: screenshots.*, screenshots.release.* relations.*, tags.*, developers.*, staff.*

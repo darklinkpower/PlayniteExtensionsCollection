@@ -56,7 +56,7 @@
     <Compile Include="Aggregates\Character\CharacterSex.cs" />
     <Compile Include="Aggregates\Character\CharacterSexEnum.cs" />
     <Compile Include="Aggregates\Character\CharacterTrait.cs" />
-    <Compile Include="Aggregates\Character\CharacterVn.cs" />
+    <Compile Include="Aggregates\Character\CharacterVisualNovel.cs" />
     <Compile Include="Aggregates\Image\ImageDimensions.cs" />
     <Compile Include="Aggregates\Image\ImageSexualityLevelEnum.cs" />
     <Compile Include="Aggregates\Image\ImageViolenceLevelEnum.cs" />
@@ -110,6 +110,7 @@
     <Compile Include="SharedKernel\Converters\VndbReleaseDateJsonConverter.cs" />
     <Compile Include="SharedKernel\Entities\Alias.cs" />
     <Compile Include="SharedKernel\Entities\ExternalLink.cs" />
+    <Compile Include="SharedKernel\Entities\IAggregateRoot.cs" />
     <Compile Include="SharedKernel\Enums\ExtLinksEnum.cs" />
     <Compile Include="SharedKernel\Enums\LanguageEnum.cs" />
     <Compile Include="SharedKernel\Enums\MediumEnum.cs" />

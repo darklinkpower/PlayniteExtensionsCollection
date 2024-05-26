@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace System
 {
-    public static class LongExtensions
+    internal static class LongExtensions
     {
         /// <summary>
         /// Formats a byte value into a human-readable format (e.g., "2.5 GB").
         /// </summary>
         /// <param name="bytes">The number of bytes to format.</param>
         /// <returns>The formatted byte value as a string.</returns>
-        public static string ToReadableSize(this long bytes)
+        internal static string ToReadableSize(this long bytes)
         {
             long absolute_i = (bytes < 0 ? -bytes : bytes);
             string suffix;

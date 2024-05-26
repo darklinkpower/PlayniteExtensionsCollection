@@ -8,7 +8,7 @@ using VndbApiDomain.SharedKernel;
 
 namespace VndbApiDomain.ReleaseAggregate
 {
-    public partial class ReleaseAvailableLanguageInfo
+    public class ReleaseAvailableLanguageInfo
     {
         [JsonProperty("title")]
         public string Title { get; set; }

@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 namespace PluginsCommon
 {
     // Based on https://github.com/JosefNemec/Playnite
-    public enum FileSystemItem
+    internal enum FileSystemItem
     {
         File,
         Directory
     }
 
-    internal static partial class FileSystem
+    internal static class FileSystem
     {
         [DllImport("kernel32.dll")]
         static extern uint GetCompressedFileSizeW([In, MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
@@ -32,12 +32,12 @@ namespace PluginsCommon
         private const string longPathPrefix = @"\\?\";
         private const string longPathUncPrefix = @"\\?\UNC\";
 
-        public static void CreateDirectory(string path)
+        internal static void CreateDirectory(string path)
         {
             CreateDirectory(path, false);
         }
 
-        public static void CreateDirectory(string path, bool clean)
+        internal static void CreateDirectory(string path, bool clean)
         {
             var directory = FixPathLength(path);
             if (string.IsNullOrEmpty(directory))
@@ -60,7 +60,7 @@ namespace PluginsCommon
             Directory.CreateDirectory(directory);
         }
 
-        public static void PrepareSaveFile(string path, bool deleteFile = true)
+        internal static void PrepareSaveFile(string path, bool deleteFile = true)
         {
             path = FixPathLength(path);
             CreateDirectory(Path.GetDirectoryName(path));
@@ -70,7 +70,7 @@ namespace PluginsCommon
             }
         }
 
-        public static bool IsDirectoryEmpty(string path)
+        internal static bool IsDirectoryEmpty(string path)
         {
             path = FixPathLength(path);
             if (Directory.Exists(path))
@@ -83,7 +83,7 @@ namespace PluginsCommon
             }
         }
 
-        public static void DeleteFile(string path, bool includeReadonly = false)
+        internal static void DeleteFile(string path, bool includeReadonly = false)
         {
             path = FixPathLength(path);
             if (!File.Exists(path))
@@ -103,13 +103,13 @@ namespace PluginsCommon
             File.Delete(path);
         }
 
-        public static void CreateFile(string path)
+        internal static void CreateFile(string path)
         {
             path = FixPathLength(path);
             File.Create(path).Dispose();
         }
 
-        public static bool CopyFile(string sourcePath, string targetPath, bool overwrite = true)
+        internal static bool CopyFile(string sourcePath, string targetPath, bool overwrite = true)
         {
             sourcePath = FixPathLength(sourcePath);
             targetPath = FixPathLength(targetPath);
@@ -128,7 +128,7 @@ namespace PluginsCommon
             }
         }
 
-        public static bool MoveFile(string sourcePath, string targetPath)
+        internal static bool MoveFile(string sourcePath, string targetPath)
         {
             sourcePath = FixPathLength(sourcePath);
             targetPath = FixPathLength(targetPath);
@@ -159,7 +159,7 @@ namespace PluginsCommon
             return true;
         }
 
-        public static void ClearDirectory(string path)
+        internal static void ClearDirectory(string path)
         {
             path = FixPathLength(path);
             if (!Directory.Exists(path))
@@ -181,7 +181,7 @@ namespace PluginsCommon
             }
         }
 
-        public static void DeleteDirectory(string path, bool includeReadonly = true)
+        internal static void DeleteDirectory(string path, bool includeReadonly = true)
         {
             path = FixPathLength(path);
             if (!Directory.Exists(path))
@@ -215,7 +215,7 @@ namespace PluginsCommon
             }
         }
 
-        public static bool CanWriteToFolder(string folder)
+        internal static bool CanWriteToFolder(string folder)
         {
             folder = FixPathLength(folder);
             try
@@ -237,7 +237,7 @@ namespace PluginsCommon
             }
         }
 
-        public static string ReadFileAsStringSafe(string path, int retryAttempts = 5)
+        internal static string ReadFileAsStringSafe(string path, int retryAttempts = 5)
         {
             path = FixPathLength(path);
             IOException ioException = null;
@@ -258,7 +258,7 @@ namespace PluginsCommon
             throw new IOException($"Failed to read {path}", ioException);
         }
 
-        public static byte[] ReadFileAsBytesSafe(string path, int retryAttempts = 5)
+        internal static byte[] ReadFileAsBytesSafe(string path, int retryAttempts = 5)
         {
             path = FixPathLength(path);
             IOException ioException = null;
@@ -279,7 +279,7 @@ namespace PluginsCommon
             throw new IOException($"Failed to read {path}", ioException);
         }
 
-        public static Stream CreateWriteFileStreamSafe(string path, int retryAttempts = 5)
+        internal static Stream CreateWriteFileStreamSafe(string path, int retryAttempts = 5)
         {
             path = FixPathLength(path);
             IOException ioException = null;
@@ -300,7 +300,7 @@ namespace PluginsCommon
             throw new IOException($"Failed to read {path}", ioException);
         }
 
-        public static Stream OpenReadFileStreamSafe(string path, int retryAttempts = 5)
+        internal static Stream OpenReadFileStreamSafe(string path, int retryAttempts = 5)
         {
             path = FixPathLength(path);
             IOException ioException = null;
@@ -321,7 +321,7 @@ namespace PluginsCommon
             throw new IOException($"Failed to read {path}", ioException);
         }
 
-        public static void WriteStringToFile(string path, string content, bool useUtf8 = false)
+        internal static void WriteStringToFile(string path, string content, bool useUtf8 = false)
         {
             path = FixPathLength(path);
             PrepareSaveFile(path);
@@ -335,7 +335,7 @@ namespace PluginsCommon
             }
         }
 
-        public static string ReadStringFromFile(string path, bool useUtf8 = false)
+        internal static string ReadStringFromFile(string path, bool useUtf8 = false)
         {
             path = FixPathLength(path);
             if (useUtf8)
@@ -348,7 +348,7 @@ namespace PluginsCommon
             }
         }
 
-        public static void WriteStringToFileSafe(string path, string content, int retryAttempts = 5)
+        internal static void WriteStringToFileSafe(string path, string content, int retryAttempts = 5)
         {
             path = FixPathLength(path);
             IOException ioException = null;
@@ -371,7 +371,7 @@ namespace PluginsCommon
             //throw new IOException($"Failed to write to {path}", ioException);
         }
 
-        public static void DeleteFileSafe(string path, int retryAttempts = 5)
+        internal static void DeleteFileSafe(string path, int retryAttempts = 5)
         {
             path = FixPathLength(path);
             if (!File.Exists(path))
@@ -403,20 +403,20 @@ namespace PluginsCommon
             throw new IOException($"Failed to delete {path}", ioException);
         }
 
-        public static long GetFileSize(string path)
+        internal static long GetFileSize(string path)
         {
             path = FixPathLength(path);
             return new FileInfo(path).Length;
         }
 
         
-        public static long GetFileSizeOnDisk(string path)
+        internal static long GetFileSizeOnDisk(string path)
         {
             return GetFileSizeOnDisk(new FileInfo(FixPathLength(path)));
         }
 
         
-        public static long GetFileSizeOnDisk(FileInfo info)
+        internal static long GetFileSizeOnDisk(FileInfo info)
         {
             // From https://stackoverflow.com/a/3751135
             uint dummy, sectorsPerCluster, bytesPerSector;
@@ -430,7 +430,7 @@ namespace PluginsCommon
             return ((size + clusterSize - 1) / clusterSize) * clusterSize;
         }
 
-        public static long GetDirectorySize(string path)
+        internal static long GetDirectorySize(string path)
         {
             return GetDirectorySize(new DirectoryInfo(FixPathLength(path)));
         }
@@ -461,12 +461,12 @@ namespace PluginsCommon
             }
         }
 
-        public static long GetDirectorySizeOnDisk(string path)
+        internal static long GetDirectorySizeOnDisk(string path)
         {
             return GetDirectorySizeOnDisk(new DirectoryInfo(FixPathLength(path)));
         }
 
-        public static long GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
+        internal static long GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
         {
             long size = 0;
 
@@ -485,7 +485,7 @@ namespace PluginsCommon
             return size;
         }
 
-        public static void CopyDirectory(string sourceDirName, string destDirName, bool copySubDirs = true, bool overwrite = true)
+        internal static void CopyDirectory(string sourceDirName, string destDirName, bool copySubDirs = true, bool overwrite = true)
         {
             sourceDirName = FixPathLength(sourceDirName);
             destDirName = FixPathLength(destDirName);
@@ -520,17 +520,17 @@ namespace PluginsCommon
             }
         }
 
-        public static bool DirectoryExists(string path)
+        internal static bool DirectoryExists(string path)
         {
             return Directory.Exists(FixPathLength(path));
         }
 
-        public static bool FileExists(string path)
+        internal static bool FileExists(string path)
         {
             return File.Exists(FixPathLength(path));
         }
 
-        public static string FixPathLength(string path)
+        internal static string FixPathLength(string path)
         {
             // Relative paths don't support long paths
             // https://docs.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=cmd

@@ -76,7 +76,7 @@ namespace VNDBNexus.Controls
 
         private void UpdateFilteredTraits()
         {
-            if (Traits is null || (!IncludeSexualTraits && TraitGroup == TraitGroupEnum.EngagesInSexual) || (!IncludeSexualTraits && TraitGroup == TraitGroupEnum.SubjectOfSexual))
+            if (Traits is null || !Traits.Any() || (!IncludeSexualTraits && TraitGroup == TraitGroupEnum.EngagesInSexual) || (!IncludeSexualTraits && TraitGroup == TraitGroupEnum.SubjectOfSexual))
             {
                 FilteredTraits = Enumerable.Empty<CharacterTrait>();
             }

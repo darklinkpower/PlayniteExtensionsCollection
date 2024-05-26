@@ -44,6 +44,33 @@
     <Reference Include="HtmlRenderer.WPF, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlRenderer.WPF.1.5.0.6\lib\net45\HtmlRenderer.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Http, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Http.6.0.0\lib\net461\Microsoft.Extensions.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.6.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Options.6.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -53,10 +80,31 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +117,57 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\common\flowhttp\constants\HttpContentTypeConstants.cs">
+      <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\constants\HttpContentTypes.cs">
+      <Link>Shared\FlowHttp\Constants\HttpContentTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\CookiesUtilities.cs">
+      <Link>Shared\FlowHttp\CookiesUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\DownloadStateController.cs">
+      <Link>Shared\FlowHttp\DownloadStateController.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\enums\HttpRequestClientStatus.cs">
+      <Link>Shared\FlowHttp\Enums\HttpRequestClientStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\events\DownloadProgressArgs.cs">
+      <Link>Shared\FlowHttp\Events\DownloadProgressArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\events\DownloadStateArgs.cs">
+      <Link>Shared\FlowHttp\Events\DownloadStateArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\exceptions\MissingContentRangeHeaderException.cs">
+      <Link>Shared\FlowHttp\Exceptions\MissingContentRangeHeaderException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\HttpClientFactory.cs">
+      <Link>Shared\FlowHttp\HttpClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\HttpRequestFactory.cs">
+      <Link>Shared\FlowHttp\HttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpFileRequest.cs">
+      <Link>Shared\FlowHttp\HttpRequests\FlowHttpFileRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpRequest.cs">
+      <Link>Shared\FlowHttp\HttpRequests\FlowHttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpRequestBase.cs">
+      <Link>Shared\FlowHttp\HttpRequests\FlowHttpRequestBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\results\HttpContentResultT.cs">
+      <Link>Shared\FlowHttp\Results\HttpContentResultT.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\results\HttpFileDownloadResult.cs">
+      <Link>Shared\FlowHttp\Results\HttpFileDownloadResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\results\HttpResultBase.cs">
+      <Link>Shared\FlowHttp\Results\HttpResultBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\valueobjects\HttpContentType.cs">
+      <Link>Shared\FlowHttp\ValueObjects\HttpContentType.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
@@ -98,6 +197,9 @@
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedEnumValueToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\InvertedEnumValueToVisibilityConverter.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedVisibilityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\InvertedVisibilityConverter.cs</Link>
@@ -157,6 +259,7 @@
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="BbCodeProcessor.cs" />
+    <Compile Include="Controls\VndbImageControl.cs" />
     <Compile Include="Controls\CharacterTraitControl.cs" />
     <Compile Include="Controls\GridEx.cs" />
     <Compile Include="Controls\HtmlTextView.cs" />
@@ -166,12 +269,19 @@
     <Compile Include="Converters\CharacterBirthdayToStringConverter.cs" />
     <Compile Include="Converters\CharacterToMeasurementsStringConverter.cs" />
     <Compile Include="Converters\EnumToLocalizationStringConverter.cs" />
+    <Compile Include="Converters\ImageUriToBitmapImageConverter.cs" />
     <Compile Include="Converters\TraitGroupAndSpoilerFilterConverter.cs" />
     <Compile Include="Converters\VnRelationFiltererConverter.cs" />
+    <Compile Include="Database\VisualNovelRelationList.cs" />
     <Compile Include="Enums\TagsDisplayOptionEnum.cs" />
     <Compile Include="PlayniteControls\VndbVisualNovelViewControl.xaml.cs">
       <DependentUpon>VndbVisualNovelViewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shared\DatabaseCommon\CharacterWrapper.cs" />
+    <Compile Include="Shared\DatabaseCommon\IDatabaseItem.cs" />
+    <Compile Include="Shared\DatabaseCommon\IRepository.cs" />
+    <Compile Include="Shared\DatabaseCommon\LiteDbRepository.cs" />
+    <Compile Include="Database\VndbDatabase.cs" />
     <Compile Include="VNDBNexus.cs" />
     <Compile Include="VNDBNexusMetadataProvider.cs" />
     <Compile Include="VNDBNexusSettings.cs" />
@@ -226,4 +336,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
+  </Target>
 </Project>

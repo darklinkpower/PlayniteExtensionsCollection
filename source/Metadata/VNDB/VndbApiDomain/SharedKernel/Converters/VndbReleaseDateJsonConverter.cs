@@ -24,7 +24,7 @@ namespace VndbApiDomain.SharedKernel
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var dateString = reader.Value?.ToString();
-            if (string.IsNullOrEmpty(dateString))
+            if (string.IsNullOrWhiteSpace(dateString))
             {
                 return null;
             }
@@ -37,7 +37,7 @@ namespace VndbApiDomain.SharedKernel
 
             if (!int.TryParse(parts[0], out int year))
             {
-                throw new JsonSerializationException("Year is required and must be a valid integer.");
+                return null;
             }
 
             int? month = null;

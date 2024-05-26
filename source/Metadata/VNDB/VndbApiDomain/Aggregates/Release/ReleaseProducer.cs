@@ -11,9 +11,9 @@ namespace VndbApiDomain.ReleaseAggregate
     public class ReleaseProducer : Producer
     {
         [JsonProperty("developer")]
-        public bool Developer { get; set; }
+        public bool IsDeveloper { get; set; }
 
         [JsonProperty("publisher")]
-        public bool Publisher { get; set; }
+        public bool IsPublisher { get; set; }
     }
 }

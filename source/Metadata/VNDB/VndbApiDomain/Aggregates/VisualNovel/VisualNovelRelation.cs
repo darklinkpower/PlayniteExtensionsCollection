@@ -8,7 +8,7 @@ using VndbApiDomain.SharedKernel;
 
 namespace VndbApiDomain.VisualNovelAggregate
 {
-    public class VnRelation : VisualNovel
+    public class VisualNovelRelation : VisualNovel
     {
         [JsonProperty("relation")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<VnRelationTypeEnum>))]

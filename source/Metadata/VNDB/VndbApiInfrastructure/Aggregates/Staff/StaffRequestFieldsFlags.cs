@@ -22,7 +22,7 @@ namespace VndbApiInfrastructure.StaffAggregate
         [StringRepresentation(StaffConstants.Fields.Original)]
         Original = 1 << 4,
         [StringRepresentation(StaffConstants.Fields.Lang)]
-        Lang = 1 << 5,
+        Language = 1 << 5,
         [StringRepresentation(StaffConstants.Fields.Gender)]
         Gender = 1 << 6,
         [StringRepresentation(StaffConstants.Fields.Description)]

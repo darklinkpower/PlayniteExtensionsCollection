@@ -6,12 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.ImageAggregate;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 using VndbApiDomain.VisualNovelAggregate;
 
 namespace VndbApiDomain.ReleaseAggregate
 {
-    public class Release
+    public class Release : IAggregateRoot
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("alttitle")]
         public string AlternativeTitle { get; set; }
 
@@ -68,9 +72,6 @@ namespace VndbApiDomain.ReleaseAggregate
 
         [JsonProperty("gtin")]
         public string Gtin { get; set; }
-
-        [JsonProperty("id")]
-        public string Id { get; set; }
 
         [JsonProperty("official")]
         public bool Official { get; set; }

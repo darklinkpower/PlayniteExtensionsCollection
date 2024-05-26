@@ -8,6 +8,7 @@
                    xmlns:commonConverters="clr-namespace:PluginsCommon.Converters"
                    xmlns:vndbVnDomain="clr-namespace:VndbApiDomain.VisualNovelAggregate;assembly=VndbApiDomain"
                    xmlns:vndbTraitDomain="clr-namespace:VndbApiDomain.TraitAggregate;assembly=VndbApiDomain"
+                   xmlns:vndbImageDomain="clr-namespace:VndbApiDomain.ImageAggregate;assembly=VndbApiDomain"
                    xmlns:vndbDomainSharedkernel="clr-namespace:VndbApiDomain.SharedKernel;assembly=VndbApiDomain"
                    xmlns:vndbNexusEnums="clr-namespace:VNDBNexus.Enums"
              xmlns:local="clr-namespace:VNDBNexus.PlayniteControls"
@@ -27,6 +28,7 @@
         <commonConverters:EqualityToVisibilityConverter x:Key="EqualityToVisibilityConverter" />
         <commonConverters:TypeEqualityToVisibilityConverter x:Key="TypeEqualityToVisibilityConverter" />
         <commonConverters:EnumValueToVisibilityConverter x:Key="EnumValueToVisibilityConverter" />
+        <commonConverters:InvertedEnumValueToVisibilityConverter x:Key="InvertedEnumValueToVisibilityConverter" />
         <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
 
         <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -121,34 +123,46 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        <!--<Style TargetType="ItemsControl" x:Key="ControlStackPanelListString">
+
+        <Style TargetType="{x:Type pluginControls:VndbImageControl}">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ItemsControl">
-                        <Border>
-                            <ScrollViewer>
-                                <ItemsPresenter/>
-                            </ScrollViewer>
-                        </Border>
+                    <ControlTemplate TargetType="{x:Type pluginControls:VndbImageControl}">
+                        <StackPanel>
+                            <ItemsControl ItemsSource="{Binding FilteredImages, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="0,10,10,0" Padding="1" Background="Transparent" BorderThickness="0"
+                                                Command="{Binding DataContext.OpenUriInWebViewCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                                CommandParameter="{Binding Url}">
+                                            <Grid>
+                                                <Image Source="{Binding ThumbnailUrl, Mode=OneWay, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=True}"
+                                                    Height="110" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                                                    DockPanel.Dock="Left" Margin="2" />
+                                                <Border BorderThickness="2" BorderBrush="Red"
+                                                        Visibility="{Binding ViolenceLevel,
+                                                        Converter={StaticResource InvertedEnumValueToVisibilityConverter},
+                                                        ConverterParameter={x:Static vndbImageDomain:ImageViolenceLevelEnum.Tame}}" />
+                                                <Border BorderThickness="2" BorderBrush="Red"
+                                                        Visibility="{Binding SexualityLevel,
+                                                        Converter={StaticResource InvertedEnumValueToVisibilityConverter},
+                                                        ConverterParameter={x:Static vndbImageDomain:ImageSexualityLevelEnum.Safe}}" />
+                                            </Grid>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" />
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
+        </Style>
+        
     </PluginUserControl.Resources>
     <Grid>
         <StackPanel>
@@ -318,9 +332,7 @@
                               IsChecked="{Binding DisplayCharacterSexualTraits}" />
             </StackPanel>
 
-
-
-            <ListBox ItemsSource="{Binding ActiveVisualNovelCharacters}"
+            <ListBox ItemsSource="{Binding CharacterWrappers}"
                      Margin="0,10,0,0" MaxHeight="900"
                      IsSynchronizedWithCurrentItem="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -337,18 +349,17 @@
                     <DataTemplate>
                         <StackPanel Margin="0,0,0,0">
                             <DockPanel>
-                                <Border x:Name="CharacterImage" Padding="0,0,0,0" Background="Blue" Width="90" Height="150"
-                                            VerticalAlignment="Top"
-                                            DockPanel.Dock="Left"
-                                            Margin="0,0,10,0"/>
+                                <Image Source="{Binding Character.Image.Url, Mode=OneWay, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=True}"
+                                       Width="120" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"
+                                       VerticalAlignment="Top" DockPanel.Dock="Left" Margin="0,0,10,0" />
                                 <DockPanel Height="{Binding ElementName=CharacterImage, Path=Height}">
-                                    <TextBlock Text="{Binding Name}" DockPanel.Dock="Top" FontWeight="Bold" FontSize="16" Margin="0,0,0,0"/>
+                                    <TextBlock Text="{Binding Character.Name}" DockPanel.Dock="Top" FontWeight="Bold" FontSize="16" Margin="0,0,0,0"/>
 
                                     <StackPanel Margin="0,10,0,0" VerticalAlignment="Bottom">
                                         <TextBlock Text="Description" FontWeight="Medium" VerticalAlignment="Bottom" />
                                         <Separator Margin="0,3,0,3" />
                                         <ScrollViewer VerticalAlignment="Bottom" VerticalScrollBarVisibility="Auto" MaxHeight="100">
-                                            <pluginControls:HtmlTextView HtmlText="{Binding Description, Converter={StaticResource BbCodeToHtmlStringConverter}}"
+                                            <pluginControls:HtmlTextView HtmlText="{Binding Character.Description, Converter={StaticResource BbCodeToHtmlStringConverter}}"
                                                              Margin="0,0,0,0"
                                                          HorizontalAlignment="left"
                                                          HtmlFontFamily="{DynamicResource FontFamily}"
@@ -368,92 +379,83 @@
 
                                 <TextBlock Text="Aliases" FontWeight="Medium" />
 
-                                <TextBlock Text="{Binding Aliases, Converter={StaticResource EnumerableStringJoinConverter}}" />
+                                <TextBlock Text="{Binding Character.Aliases, Converter={StaticResource EnumerableStringJoinConverter}}" />
 
                                 <TextBlock Text="Measurements" FontWeight="Medium" />
 
-                                <TextBlock Text="{Binding Path=., Converter={StaticResource CharacterToMeasurementsStringConverter}}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Character, Converter={StaticResource CharacterToMeasurementsStringConverter}}" TextWrapping="Wrap" />
 
                                 <TextBlock Text="Birthday" FontWeight="Medium" />
 
-                                <TextBlock Text="{Binding Birthday, Converter={StaticResource CharacterBirthdayToStringConverter}}" />
+                                <TextBlock Text="{Binding Character.Birthday, Converter={StaticResource CharacterBirthdayToStringConverter}}" />
 
                                 <TextBlock Text="Hair" FontWeight="Medium"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Hair}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" 
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Eyes" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Eyes}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Body" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Body}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Clothes" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Clothes}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Items" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Items}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Personality" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Personality}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Role" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Role}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Engages in" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.EngagesIn}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Subject of" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.SubjectOf}"
-                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
+                                        MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
                                 <TextBlock Text="Engages in (Sexual)" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.EngagesInSexual}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
@@ -461,7 +463,7 @@
                                 <TextBlock Text="Subject of (Sexual)" FontWeight="Bold"/>
 
                                 <pluginControls:CharacterTraitControl 
-                                        Traits="{Binding Traits}"
+                                        Traits="{Binding Character.Traits}"
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.SubjectOfSexual}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
@@ -473,10 +475,36 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListBox>
+
+            <TextBlock Text="Screenshots" Margin="0,20,0,0" FontWeight="Medium"/>
+            <Separator Margin="0,5,0,5" />
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                <ComboBox Margin="0,0,0,0" ItemsSource="{Binding Source={x:Type vndbImageDomain:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                          SelectedItem="{Binding ScreenshotsMaxSexualityLevel}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
+                <ComboBox Margin="0,0,0,0" ItemsSource="{Binding Source={x:Type vndbImageDomain:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                          SelectedItem="{Binding ScreenshotsMaxViolenceLevel}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
             
-
-
-
+            <pluginControls:VndbImageControl
+                MaximumSexuality="{Binding ScreenshotsMaxSexualityLevel}"
+                MaximumViolence="{Binding ScreenshotsMaxViolenceLevel}"
+                ImagesSource="{Binding ActiveVisualNovel.Screenshots}" />
         </StackPanel>
     </Grid>
 </PluginUserControl>

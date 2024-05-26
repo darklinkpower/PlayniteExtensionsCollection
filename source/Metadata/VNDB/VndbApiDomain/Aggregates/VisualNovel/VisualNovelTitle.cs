@@ -8,7 +8,7 @@ using VndbApiDomain.SharedKernel;
 
 namespace VndbApiDomain.VisualNovelAggregate
 {
-    public class VnTitle
+    public class VisualNovelTitle
     {
         [JsonProperty("title")]
         public string Title { get; set; }

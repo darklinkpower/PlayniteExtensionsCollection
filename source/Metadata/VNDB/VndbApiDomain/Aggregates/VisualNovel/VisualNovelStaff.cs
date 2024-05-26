@@ -9,7 +9,7 @@ using VndbApiDomain.SharedKernel;
 
 namespace VndbApiDomain.VisualNovelAggregate
 {
-    public class VnStaff : Staff
+    public class VisualNovelStaff : Staff
     {
         [JsonProperty("note")]
         public string Note { get; set; }

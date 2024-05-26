@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 
 namespace VndbApiDomain.TagAggregate
 {
-    public class Tag
+    public class Tag : IAggregateRoot
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("aliases")]
         public List<string> Aliases { get; set; }
 
@@ -28,9 +32,6 @@ namespace VndbApiDomain.TagAggregate
 
         [JsonProperty("applicable")]
         public bool Applicable { get; set; }
-
-        [JsonProperty("id")]
-        public string Id { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }

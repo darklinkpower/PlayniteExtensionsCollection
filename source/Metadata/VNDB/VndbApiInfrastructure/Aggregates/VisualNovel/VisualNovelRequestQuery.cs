@@ -18,7 +18,7 @@ namespace VndbApiInfrastructure.VisualNovelAggregate
 {
     public class VnRequestSubfieldsFlags : RequestFieldAbstractBase, IRequestFields
     {
-        public VnRequestFieldsFlags VisualNovelRelationsFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
+        public VnRequestFieldsFlags VisualNovelRelationsFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title | VnRequestFieldsFlags.RelationsRelation | VnRequestFieldsFlags.RelationsRelationOfficial | VnRequestFieldsFlags.ReleaseDate;
         public ImageRequestFields Image = new ImageRequestFields();
         public ImageRequestFields Screenshots = new ImageRequestFields();
         public ReleaseRequestFields ScreenshotsRelease = new ReleaseRequestFields();

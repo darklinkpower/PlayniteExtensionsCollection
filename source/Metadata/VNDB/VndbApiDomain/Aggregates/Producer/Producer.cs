@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 
 namespace VndbApiDomain.ProducerAggregate
 {
-    public class Producer
+    public class Producer : IAggregateRoot
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("description")]
         public string Description { get; set; }
 
@@ -18,7 +22,7 @@ namespace VndbApiDomain.ProducerAggregate
 
         [JsonProperty("lang")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<LanguageEnum>))]
-        public LanguageEnum Lang { get; set; }
+        public LanguageEnum Language { get; set; }
 
         [JsonProperty("aliases")]
         public List<string> Aliases { get; set; }
@@ -29,9 +33,6 @@ namespace VndbApiDomain.ProducerAggregate
         [JsonProperty("type")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<ProducerTypeEnum>))]
         public ProducerTypeEnum Type { get; set; }
-
-        [JsonProperty("id")]
-        public string Id { get; set; }
 
         public override string ToString()
         {

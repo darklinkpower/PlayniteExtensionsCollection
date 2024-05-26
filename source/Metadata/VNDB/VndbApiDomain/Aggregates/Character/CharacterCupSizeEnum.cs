@@ -10,7 +10,7 @@ namespace VndbApiDomain.CharacterAggregate
     public enum CharacterCupSizeEnum
     {
         /// <summary>
-        /// None
+        /// None.
         /// </summary>
         [StringRepresentation(null)]
         None,

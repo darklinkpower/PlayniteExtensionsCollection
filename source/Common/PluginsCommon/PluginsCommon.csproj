@@ -55,6 +55,7 @@
     <Compile Include="Converters\EnumerableStringJoinConverter.cs" />
     <Compile Include="Converters\EnumToListConverter.cs" />
     <Compile Include="Converters\EnumToStringConverter.cs" />
+    <Compile Include="Converters\InvertedEnumValueToVisibilityConverter.cs" />
     <Compile Include="Converters\EnumValueToVisibilityConverter.cs" />
     <Compile Include="Converters\EqualityToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />

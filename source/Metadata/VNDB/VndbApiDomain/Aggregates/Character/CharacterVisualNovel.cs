@@ -10,7 +10,7 @@ using VndbApiDomain.SharedKernel;
 
 namespace VndbApiDomain.CharacterAggregate
 {
-    public class CharacterVn : VisualNovel
+    public class CharacterVisualNovel : VisualNovel
     {
         [JsonProperty("role")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<CharacterRoleEnum>))]

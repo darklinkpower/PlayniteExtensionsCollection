@@ -5,14 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 
 namespace VndbApiDomain.StaffAggregate
 {
-    public class Staff
+    public class Staff : IAggregateRoot
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("lang")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<LanguageEnum>))]
-        public LanguageEnum Lang { get; set; }
+        public LanguageEnum Language { get; set; }
 
         [JsonProperty("ismain")]
         public bool IsMain { get; set; }
@@ -32,9 +36,6 @@ namespace VndbApiDomain.StaffAggregate
 
         [JsonProperty("extlinks")]
         public List<ExternalLink<Staff>> ExternalLinks { get; set; }
-
-        [JsonProperty("id")]
-        public string Id { get; set; }
 
         [JsonProperty("aliases")]
         public List<Alias<Staff>> Aliases { get; set; }

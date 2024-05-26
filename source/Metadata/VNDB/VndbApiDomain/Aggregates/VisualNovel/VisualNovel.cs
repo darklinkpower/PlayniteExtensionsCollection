@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 using VndbApiDomain.ImageAggregate;
 using VndbApiDomain.ProducerAggregate;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 
 namespace VndbApiDomain.VisualNovelAggregate
 {
-    public class VisualNovel
+    public class VisualNovel : IAggregateRoot
     {
+        /// <summary>
+        /// vndbid.
+        /// </summary>
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         /// <summary>
         /// Array of strings, list of aliases.
         /// </summary>
@@ -47,7 +54,7 @@ namespace VndbApiDomain.VisualNovelAggregate
         /// Array of objects, possibly empty.
         /// </summary>
         [JsonProperty("editions")]
-        public List<VnEdition> Editions { get; set; }
+        public List<VisualNovelEdition> Editions { get; set; }
 
         /// <summary>
         /// Array, links to external websites. This list is equivalent to the links displayed on the release pages on the site, so it may include redundant entries (e.g. if a Steam ID is known, links to both Steam and SteamDB are included) and links that are automatically fetched from external resources (e.g. PlayAsia, for which a GTIN lookup is performed).
@@ -61,12 +68,6 @@ namespace VndbApiDomain.VisualNovelAggregate
         /// </summary>
         [JsonProperty("image")]
         public VndbImage Image { get; set; }
-
-        /// <summary>
-        /// vndbid.
-        /// </summary>
-        [JsonProperty("id")]
-        public string Id { get; set; }
 
         /// <summary>
         /// Array of strings, list of languages this VN is available in. Does not include machine translations.
@@ -95,7 +96,7 @@ namespace VndbApiDomain.VisualNovelAggregate
         public int LengthVotes { get; set; }
 
         /// <summary>
-        ///      String, language the VN has originally been written in.
+        /// String, language the VN has originally been written in.
         /// </summary>
         [JsonProperty("olang")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<LanguageEnum>))]
@@ -125,7 +126,7 @@ namespace VndbApiDomain.VisualNovelAggregate
         ///  Array of objects, list of VNs directly related to this entry.
         /// </summary>
         [JsonProperty("relations")]
-        public List<VnRelation> Relations { get; set; }
+        public List<VisualNovelRelation> Relations { get; set; }
 
         /// <summary>
         /// Array of objects, possibly empty.
@@ -137,7 +138,7 @@ namespace VndbApiDomain.VisualNovelAggregate
         /// Array of objects, possibly empty.
         /// </summary>
         [JsonProperty("staff")]
-        public List<VnStaff> Staff { get; set; }
+        public List<VisualNovelStaff> Staff { get; set; }
 
         /// <summary>
         /// Tags applied to this VN, also matches parent tags.
@@ -155,7 +156,7 @@ namespace VndbApiDomain.VisualNovelAggregate
         /// Array of objects, full list of titles associated with the VN, always contains at least one title.
         /// </summary>
         [JsonProperty("titles")]
-        public List<VnTitle> Titles { get; set; }
+        public List<VisualNovelTitle> Titles { get; set; }
 
         /// <summary>
         /// Integer, number of votes. 

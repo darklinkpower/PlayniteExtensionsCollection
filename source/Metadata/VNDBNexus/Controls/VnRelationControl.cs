@@ -23,10 +23,10 @@ namespace VNDBNexus.Controls
             DependencyProperty.Register("IncludeUnofficial", typeof(bool), typeof(VnRelationControl), new PropertyMetadata(true, OnRelationTypeChanged));
 
         public static readonly DependencyProperty RelationsProperty =
-            DependencyProperty.Register("Relations", typeof(IEnumerable<VnRelation>), typeof(VnRelationControl), new PropertyMetadata(default(IEnumerable<VnRelation>), OnRelationsChanged));
+            DependencyProperty.Register("Relations", typeof(IEnumerable<VisualNovelRelation>), typeof(VnRelationControl), new PropertyMetadata(default(IEnumerable<VisualNovelRelation>), OnRelationsChanged));
 
         public static readonly DependencyProperty RelationsSourceProperty =
-            DependencyProperty.Register("RelationsSource", typeof(IEnumerable<VnRelation>), typeof(VnRelationControl), new PropertyMetadata(default(IEnumerable<VnRelation>), OnAllRelationsChanged));
+            DependencyProperty.Register("RelationsSource", typeof(IEnumerable<VisualNovelRelation>), typeof(VnRelationControl), new PropertyMetadata(default(IEnumerable<VisualNovelRelation>), OnAllRelationsChanged));
 
         public VnRelationTypeEnum RelationType
         {
@@ -40,15 +40,15 @@ namespace VNDBNexus.Controls
             set => SetValue(IncludeUnofficialProperty, value);
         }
 
-        public IEnumerable<VnRelation> Relations
+        public IEnumerable<VisualNovelRelation> Relations
         {
-            get => (IEnumerable<VnRelation>)GetValue(RelationsProperty);
+            get => (IEnumerable<VisualNovelRelation>)GetValue(RelationsProperty);
             set => SetValue(RelationsProperty, value);
         }
 
-        public IEnumerable<VnRelation> RelationsSource
+        public IEnumerable<VisualNovelRelation> RelationsSource
         {
-            get => (IEnumerable<VnRelation>)GetValue(RelationsSourceProperty);
+            get => (IEnumerable<VisualNovelRelation>)GetValue(RelationsSourceProperty);
             set => SetValue(RelationsSourceProperty, value);
         }
 

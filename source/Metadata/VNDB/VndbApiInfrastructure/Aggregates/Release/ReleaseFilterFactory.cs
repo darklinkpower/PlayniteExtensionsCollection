@@ -449,27 +449,27 @@ namespace VndbApiInfrastructure.ReleaseAggregate
         /// <summary>
         /// Match releases that are linked to at least one visual novel matching the given visual novel filters.
         /// </summary>
-        public static class Vn
+        public static class VisualNovel
         {
             public static string FilterName = ReleaseConstants.Filters.VisualNovel;
             public static bool CanBeNull { get; } = false;
 
-            private static SimpleFilterBase<Release> CreateFilter(string operatorString, SimpleFilterBase<VisualNovel> value) =>
-                FilterFactory.CreateFilter<Release, SimpleFilterBase<VisualNovel>>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, SimpleFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel> value) =>
+                FilterFactory.CreateFilter<Release, SimpleFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel>>(FilterName, CanBeNull, operatorString, value);
 
-            private static SimpleFilterBase<Release> CreateFilter(string operatorString, ComplexFilterBase<VisualNovel> value) =>
-                FilterFactory.CreateFilter<Release, ComplexFilterBase<VisualNovel>>(FilterName, CanBeNull, operatorString, value);
+            private static SimpleFilterBase<Release> CreateFilter(string operatorString, ComplexFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel> value) =>
+                FilterFactory.CreateFilter<Release, ComplexFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel>>(FilterName, CanBeNull, operatorString, value);
 
-            public static SimpleFilterBase<Release> EqualTo(SimpleFilterBase<VisualNovel> value) =>
+            public static SimpleFilterBase<Release> EqualTo(SimpleFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel> value) =>
                 CreateFilter(RequestConstants.Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Release> NotEqualTo(SimpleFilterBase<VisualNovel> value) =>
+            public static SimpleFilterBase<Release> NotEqualTo(SimpleFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel> value) =>
                 CreateFilter(RequestConstants.Operators.Matching.NotEqual, value);
 
-            public static SimpleFilterBase<Release> EqualTo(ComplexFilterBase<VisualNovel> value) =>
+            public static SimpleFilterBase<Release> EqualTo(ComplexFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel> value) =>
                 CreateFilter(RequestConstants.Operators.Matching.IsEqual, value);
 
-            public static SimpleFilterBase<Release> NotEqualTo(ComplexFilterBase<VisualNovel> value) =>
+            public static SimpleFilterBase<Release> NotEqualTo(ComplexFilterBase<VndbApiDomain.VisualNovelAggregate.VisualNovel> value) =>
                 CreateFilter(RequestConstants.Operators.Matching.NotEqual, value);
         }
 

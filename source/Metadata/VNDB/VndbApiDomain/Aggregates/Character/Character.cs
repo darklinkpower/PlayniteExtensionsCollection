@@ -10,11 +10,15 @@ using VndbApiDomain.ReleaseAggregate;
 using VndbApiDomain.TraitAggregate;
 using VndbApiDomain.VisualNovelAggregate;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.SharedKernel.Entities;
 
 namespace VndbApiDomain.CharacterAggregate
 {
-    public class Character
+    public class Character : IAggregateRoot
     {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
         [JsonProperty("birthday")]
         [JsonConverter(typeof(CharacterBirthdayConverter))]
         public CharacterBirthday Birthday { get; set; }
@@ -25,9 +29,10 @@ namespace VndbApiDomain.CharacterAggregate
 
         [JsonProperty("cup")]
         [JsonConverter(typeof(StringRepresentationEnumConverter<CharacterCupSizeEnum>))]
-        public CharacterCupSizeEnum? Cup { get; set; }
+        public CharacterCupSizeEnum? CupSize { get; set; }
 
         [JsonProperty("blood_type")]
+        [JsonConverter(typeof(StringRepresentationEnumConverter<CharacterBloodTypeEnum>))]
         public CharacterBloodTypeEnum? BloodType { get; set; }
 
         [JsonProperty("image")]
@@ -40,7 +45,7 @@ namespace VndbApiDomain.CharacterAggregate
         public string Name { get; set; }
 
         [JsonProperty("vns")]
-        public List<CharacterVn> VisualNovelApperances { get; set; }
+        public List<CharacterVisualNovel> VisualNovelAppearances { get; set; }
 
         [JsonProperty("bust")]
         public int? Bust { get; set; }
@@ -68,9 +73,6 @@ namespace VndbApiDomain.CharacterAggregate
 
         [JsonProperty("original")]
         public string Original { get; set; }
-
-        [JsonProperty("id")]
-        public string Id { get; set; }
 
         public override string ToString()
         {

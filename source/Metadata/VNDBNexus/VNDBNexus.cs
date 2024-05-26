@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DatabaseCommon;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -14,14 +15,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using VndbApiDomain.CharacterAggregate;
+using VndbApiDomain.ProducerAggregate;
+using VndbApiDomain.ReleaseAggregate;
+using VndbApiDomain.StaffAggregate;
 using VndbApiDomain.TagAggregate;
+using VndbApiDomain.TraitAggregate;
+using VndbApiDomain.VisualNovelAggregate;
 using VndbApiInfrastructure.CharacterAggregate;
 using VndbApiInfrastructure.ProducerAggregate;
 using VndbApiInfrastructure.ReleaseAggregate;
+using VndbApiInfrastructure.SharedKernel.Responses;
 using VndbApiInfrastructure.StaffAggregate;
 using VndbApiInfrastructure.TagAggregate;
 using VndbApiInfrastructure.TraitAggregate;
 using VndbApiInfrastructure.VisualNovelAggregate;
+using VNDBNexus.Database;
 using VNDBNexus.PlayniteControls;
 
 namespace VNDBNexus
@@ -30,6 +38,8 @@ namespace VNDBNexus
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly BbCodeProcessor _bbcodeProcessor;
+        private readonly VndbDatabase _vndbDatabase;
+
         public VNDBNexusSettingsViewModel Settings { get; private set; }
 
         public override Guid Id { get; } = Guid.Parse("39229206-1199-4fee-a014-e8478ea4cd77");
@@ -74,13 +84,16 @@ namespace VNDBNexus
                 SourceName = _pluginExtensionsSource,
                 SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
+
+            var pluginDatabaPath = GetPluginUserDataPath();
+            _vndbDatabase = new VndbDatabase(pluginDatabaPath);
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (args.Name == _vndbVisualNovelViewControlName)
             {
-                return new VndbVisualNovelViewControl(this, Settings, _bbcodeProcessor);
+                return new VndbVisualNovelViewControl(this, Settings, _bbcodeProcessor, _vndbDatabase);
             }
 
             return null;
@@ -144,7 +157,18 @@ namespace VNDBNexus
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
             Tests();
+            //var tags = JsonConvert.DeserializeObject<List<Tag>>(FileSystem.ReadStringFromFile(tagsPath));
+            //var traits = JsonConvert.DeserializeObject<List<Trait>>(FileSystem.ReadStringFromFile(traitsPath));
+            //tags.ForEach(t => t.Id = $"g{t.Id}");
+            //traits.ForEach(t => t.Id = $"i{t.Id}");
 
+            //_vndbDatabase.Tags.DeleteAll();
+            //_vndbDatabase.Tags.InsertBulk(tags);
+
+            //_vndbDatabase.Traits.DeleteAll();
+            //_vndbDatabase.Traits.InsertBulk(traits);
+
+            //var sdd = "";
             //var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);
             //var complexFilter = ProducerFilterFactory.And(filterOne, filterTwo);
 

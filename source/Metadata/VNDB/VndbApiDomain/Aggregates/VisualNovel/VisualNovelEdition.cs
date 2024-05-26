@@ -8,7 +8,7 @@ using VndbApiDomain.SharedKernel;
 
 namespace VndbApiDomain.VisualNovelAggregate
 {
-    public class VnEdition
+    public class VisualNovelEdition
     {
         [JsonProperty("lang", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(StringRepresentationEnumConverter<LanguageEnum>))]
