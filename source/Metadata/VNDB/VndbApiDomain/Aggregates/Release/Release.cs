@@ -49,7 +49,7 @@ namespace VndbApiDomain.ReleaseAggregate
         public string CatalogCode { get; set; }
 
         [JsonProperty("patch")]
-        public bool Patch { get; set; }
+        public bool IsPatch { get; set; }
 
         [JsonProperty("has_ero")]
         public bool HasErotic { get; set; }
@@ -74,7 +74,7 @@ namespace VndbApiDomain.ReleaseAggregate
         public string Gtin { get; set; }
 
         [JsonProperty("official")]
-        public bool Official { get; set; }
+        public bool IsOfficial { get; set; }
 
         [JsonProperty("producers")]
         public List<ReleaseProducer> Producers { get; set; }

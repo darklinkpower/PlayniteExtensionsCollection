@@ -77,7 +77,7 @@ namespace VNDBNexus.Controls
                 Relations = RelationsSource
                     .Where(r => r.Relation == RelationType && (IncludeUnofficial || r.RelationOfficial))
                     .OrderBy(x => !x.RelationOfficial)
-                    .ThenBy(x => x.ReleaseDate.Year);
+                    .ThenBy(x => x.ReleaseDate?.Year ?? 2222).ThenBy(x => x.ReleaseDate?.Month ?? 13);
             }
         }
 

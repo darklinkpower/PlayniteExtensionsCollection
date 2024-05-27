@@ -110,8 +110,9 @@ namespace VndbApiDomain.ImageAggregate
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.Null)
+            if (reader.TokenType == JsonToken.Null || reader.TokenType == JsonToken.String)
             {
+                // The value sometimes is a string like "non-standard"
                 return null;
             }
 

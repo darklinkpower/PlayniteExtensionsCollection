@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ using VndbApiDomain.CharacterAggregate;
 using VndbApiDomain.ImageAggregate;
 using VndbApiDomain.ReleaseAggregate;
 using VndbApiDomain.SharedKernel;
+using VndbApiDomain.StaffAggregate;
 using VndbApiDomain.TagAggregate;
 using VndbApiDomain.TraitAggregate;
 using VndbApiDomain.VisualNovelAggregate;
@@ -46,14 +48,14 @@ namespace VNDBNexus.PlayniteControls
         public event PropertyChangedEventHandler PropertyChanged;
 
         private readonly VndbDatabase _vndbDatabase;
-        private readonly BbCodeProcessor _bbcodeProcessor;
         private readonly IPlayniteAPI _playniteApi;
         private readonly string _pluginStoragePath;
         private readonly VNDBNexusSettingsViewModel _settingsViewModel;
         private readonly DesktopView _activeViewAtCreation;
         private readonly DispatcherTimer _updateControlDataDelayTimer;
+        private bool _isValuesDefaultState = true;
         private Game _currentGame;
-        private Guid _currentGameId = Guid.Empty;
+        private Guid _activeContext = default;
 
         private IEnumerable<ReleaseProducer> _developers;
         public IEnumerable<ReleaseProducer> Developers
@@ -96,6 +98,125 @@ namespace VNDBNexus.PlayniteControls
             {
                 _characterWrappers = value;
                 OnPropertyChanged();
+                SetCharacterWrappers();
+            }
+        }
+
+        private Visibility _mainCharacterWrappersVisibility = Visibility.Collapsed;
+        public Visibility MainCharacterWrappersVisibility
+        {
+            get => _mainCharacterWrappersVisibility;
+            set
+            {
+                _mainCharacterWrappersVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _primaryCharacterWrappersVisibility = Visibility.Collapsed;
+        public Visibility PrimaryCharacterWrappersVisibility
+        {
+            get => _primaryCharacterWrappersVisibility;
+            set
+            {
+                _primaryCharacterWrappersVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _sideCharacterWrappersVisibility = Visibility.Collapsed;
+        public Visibility SideCharacterWrappersVisibility
+        {
+            get => _sideCharacterWrappersVisibility;
+            set
+            {
+                _sideCharacterWrappersVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _appearsCharacterWrappersVisibility = Visibility.Collapsed;
+        public Visibility AppearsCharacterWrappersVisibility
+        {
+            get => _appearsCharacterWrappersVisibility;
+            set
+            {
+                _appearsCharacterWrappersVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void SetCharacterWrappers()
+        {
+            if (_characterWrappers?.Any() == true)
+            {
+                MainCharacterWrappers = GetFilteredCharacters(CharacterRoleEnum.Main);
+                PrimaryCharacterWrappers = GetFilteredCharacters(CharacterRoleEnum.Primary);
+                SideCharacterWrappers = GetFilteredCharacters(CharacterRoleEnum.Side);
+                AppearsCharacterWrappers = GetFilteredCharacters(CharacterRoleEnum.Appears);
+            }
+            else
+            {
+                MainCharacterWrappers = Enumerable.Empty<CharacterWrapper>();
+                PrimaryCharacterWrappers = Enumerable.Empty<CharacterWrapper>();
+                SideCharacterWrappers = Enumerable.Empty<CharacterWrapper>();
+                AppearsCharacterWrappers = Enumerable.Empty<CharacterWrapper>();
+            }
+        }
+
+        private IEnumerable<CharacterWrapper> _mainCharacterWrappers;
+        public IEnumerable<CharacterWrapper> MainCharacterWrappers
+        {
+            get => _mainCharacterWrappers;
+            set
+            {
+                _mainCharacterWrappers = value;
+                OnPropertyChanged();
+                MainCharacterWrappersVisibility = _mainCharacterWrappers?.Any() == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+        }
+
+        private IEnumerable<CharacterWrapper> _primaryCharacterWrappers;
+        public IEnumerable<CharacterWrapper> PrimaryCharacterWrappers
+        {
+            get => _primaryCharacterWrappers;
+            set
+            {
+                _primaryCharacterWrappers = value;
+                OnPropertyChanged();
+                PrimaryCharacterWrappersVisibility = _primaryCharacterWrappers?.Any() == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+        }
+
+        private IEnumerable<CharacterWrapper> _sideCharacterWrappers;
+        public IEnumerable<CharacterWrapper> SideCharacterWrappers
+        {
+            get => _sideCharacterWrappers;
+            set
+            {
+                _sideCharacterWrappers = value;
+                OnPropertyChanged();
+                SideCharacterWrappersVisibility = _sideCharacterWrappers?.Any() == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+        }
+
+        private IEnumerable<CharacterWrapper> _appearsCharacterWrappers;
+        public IEnumerable<CharacterWrapper> AppearsCharacterWrappers
+        {
+            get => _appearsCharacterWrappers;
+            set
+            {
+                _appearsCharacterWrappers = value;
+                OnPropertyChanged();
+                AppearsCharacterWrappersVisibility = _appearsCharacterWrappers?.Any() == true
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
             }
         }
 
@@ -107,6 +228,7 @@ namespace VNDBNexus.PlayniteControls
             {
                 _charactersMaxSpoilerLevel = value;
                 OnPropertyChanged();
+                SetCharacterWrappers();
             }
         }
 
@@ -184,6 +306,17 @@ namespace VNDBNexus.PlayniteControls
                     OnPropertyChanged(nameof(TagsToDisplay));
                 }
                 
+            }
+        }
+
+        private GroupedDictionary<LanguageEnum, Release> _groupedReleasesByLanguage;
+        public GroupedDictionary<LanguageEnum, Release> GroupedReleasesByLanguage
+        {
+            get { return _groupedReleasesByLanguage; }
+            set
+            {
+                _groupedReleasesByLanguage = value;
+                OnPropertyChanged();
             }
         }
 
@@ -271,7 +404,7 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
-        private bool _displayUnnoficialRelations = false;
+        private bool _displayUnnoficialRelations = true;
         public bool DisplayUnnoficialRelations
         {
             get => _displayUnnoficialRelations;
@@ -304,14 +437,14 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
-        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, BbCodeProcessor bbcodeProcessor, VndbDatabase vndbDatabase)
+        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter)
         {
-            var imageUriToBitmapImageConverter = new ImageUriToBitmapImageConverter(Path.Combine(plugin.GetPluginUserDataPath(), "ImagesCache"));
             Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
-            InitializeComponent();
-            _vndbDatabase = vndbDatabase;
-            _bbcodeProcessor = bbcodeProcessor;
             _playniteApi = plugin.PlayniteApi;
+            SetControlTextBlockStyle();
+            
+            _vndbDatabase = vndbDatabase;
+            
             _pluginStoragePath = plugin.GetPluginUserDataPath();
             _settingsViewModel = settingsViewModel;
             if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
@@ -321,13 +454,24 @@ namespace VNDBNexus.PlayniteControls
 
             _updateControlDataDelayTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(700)
+                Interval = TimeSpan.FromMilliseconds(1500)
             };
 
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
 
-
+            InitializeComponent();
             DataContext = this;
+        }
+
+        private void SetControlTextBlockStyle()
+        {
+            // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
+            var baseStyleName = _playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "BaseTextBlockStyle" : "TextBlockBaseStyle";
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
         }
 
         private async void UpdateControlData(object sender, EventArgs e)
@@ -338,9 +482,95 @@ namespace VNDBNexus.PlayniteControls
 
         private void SetVisibleVisibility()
         {
+            CharactersTabVisibility = CharacterWrappers?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            ReleasesTabVisibility = GroupedReleasesByLanguage?.GroupedResults?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            ScreenshotsTabVisibility = ActiveVisualNovel?.Screenshots?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            RelationsSectionVisibility = ActiveVisualNovel?.Relations?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            RelationsUnofficialButonVisibility = ActiveVisualNovel?.Relations?.Any(vn => !vn.RelationOfficial) == true ? Visibility.Visible : Visibility.Collapsed;
+            SelectedControlTabIndex = 0;
+            SelectedCharactersControlTabIndex = CharacterWrappers?.Any(x => x.Role == CharacterRoleEnum.Main && x.SpoilerLevel == SpoilerLevelEnum.None) == true ? 0 : 1;
+
             Visibility = Visibility.Visible;
             _settingsViewModel.Settings.IsControlVisible = true;
         }
+
+        private Visibility _relationsSectionVisibility = Visibility.Collapsed;
+        public Visibility RelationsSectionVisibility
+        {
+            get => _relationsSectionVisibility;
+            set
+            {
+                _relationsSectionVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _CharactersTabVisibility = Visibility.Collapsed;
+        public Visibility CharactersTabVisibility
+        {
+            get => _CharactersTabVisibility;
+            set
+            {
+                _CharactersTabVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _releasesTabVisibility = Visibility.Collapsed;
+        public Visibility ReleasesTabVisibility
+        {
+            get => _releasesTabVisibility;
+            set
+            {
+                _releasesTabVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _screenshotsTabVisibility = Visibility.Collapsed;
+        public Visibility ScreenshotsTabVisibility
+        {
+            get => _screenshotsTabVisibility;
+            set
+            {
+                _screenshotsTabVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Visibility _relationsUnofficialButonVisibility = Visibility.Collapsed;
+        public Visibility RelationsUnofficialButonVisibility
+        {
+            get => _relationsUnofficialButonVisibility;
+            set
+            {
+                _relationsUnofficialButonVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _selectedControlTabIndex = 0;
+        public int SelectedControlTabIndex
+        {
+            get => _selectedControlTabIndex;
+            set
+            {
+                _selectedControlTabIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _selectedCharactersControlTabIndex = 0;
+        public int SelectedCharactersControlTabIndex
+        {
+            get => _selectedCharactersControlTabIndex;
+            set
+            {
+                _selectedCharactersControlTabIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private void SetCollapsedVisibility()
         {
@@ -354,30 +584,49 @@ namespace VNDBNexus.PlayniteControls
             //is not in the active view. To prevent unecessary processing we
             //can stop processing if the active view is not the same one was
             //the one during creation
+            _updateControlDataDelayTimer.Stop();
             if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && _activeViewAtCreation != _playniteApi.MainView.ActiveDesktopView)
             {
-                _updateControlDataDelayTimer.Stop();
                 return;
             }
 
-            _currentGame = newContext;
-            SetCollapsedVisibility();
-            _updateControlDataDelayTimer.Stop();
-
-            if (ActiveVisualNovel != null)
+            if (!_isValuesDefaultState)
             {
-                ActiveVisualNovel = null;
+                ResetToDefaultValues();
             }
 
-            if (_currentGame is null || !_settingsViewModel.Settings.EnableVnViewControl)
+            if (newContext != null &&_settingsViewModel.Settings.EnableVnViewControl)
             {
-                _currentGameId = Guid.Empty;
-            }
-            else
-            {
-                _currentGameId = _currentGame.Id;
+                _currentGame = newContext;
                 _updateControlDataDelayTimer.Start();
             }
+        }
+
+        private void ResetToDefaultValues()
+        {
+            SetCollapsedVisibility();
+            _activeContext = default;
+            ActiveVisualNovel = null;
+            Developers = Enumerable.Empty<ReleaseProducer>();
+            Publishers = Enumerable.Empty<ReleaseProducer>();
+            Releases = Enumerable.Empty<Release>();
+            CharacterWrappers = Enumerable.Empty<CharacterWrapper>();
+            CharactersMaxSpoilerLevel = SpoilerLevelEnum.None;
+            DisplayCharacterSexualTraits = false;
+            TagsMinimumScore = 2.0;
+            GroupedReleasesByLanguage = new GroupedDictionary<LanguageEnum, Release>();
+            TagsDisplayOption = TagsDisplayOptionEnum.Summary;
+            TagsDisplayNoneSpoilers = true;
+            TagsDisplayMinimumSpoilers = false;
+            TagsDisplayMajorSpoilers = false;
+            TagsDisplayContentCategory = true;
+            TagsDisplayTechnicalCategory = false;
+            TagsDisplaySexualCategory = false;
+            DisplayUnnoficialRelations = true;
+            ScreenshotsMaxSexualityLevel = ImageSexualityLevelEnum.Safe;
+            ScreenshotsMaxViolenceLevel = ImageViolenceLevelEnum.Tame;
+
+            _isValuesDefaultState = true;
         }
 
         private async Task UpdateControlAsync()
@@ -387,24 +636,27 @@ namespace VNDBNexus.PlayniteControls
                 return;
             }
 
-            var vndbId = VndbUtilities.GetVndbIdFromLinks(_currentGame);
+            await LoadGameVisualNovelAsync(_currentGame, false);
+        }
+
+        private async Task LoadGameVisualNovelAsync(Game game, bool forceUpdate, CancellationToken cancellationToken = default)
+        {
+            var vndbId = VndbUtilities.GetVndbIdFromLinks(game);
             if (!vndbId.IsNullOrEmpty())
             {
-                await LoadVisualNovelById(vndbId).ConfigureAwait(false);
+                await LoadVisualNovelByIdAsync(vndbId, forceUpdate).ConfigureAwait(false);
             }
         }
 
-        private async Task LoadVisualNovelById(string vndbId)
+        private async Task LoadVisualNovelByIdAsync(string vndbId, bool forceUpdate, CancellationToken cancellationToken = default)
         {
-            var contextGame = _currentGame;
-            var contextGameId = contextGame.Id;
-            _currentGameId = contextGameId;
-
+            var contextId = Guid.NewGuid();
+            _activeContext = contextId;
             var visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
-            if (visualNovel is null)
+            if (visualNovel is null || forceUpdate)
             {
-                var updateSuccess = await UpdateVisualNovel(vndbId);
-                if (!updateSuccess || _currentGameId == null || _currentGameId != contextGameId)
+                var updateSuccess = await UpdateVisualNovel(vndbId, cancellationToken);
+                if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
                 {
                     return;
                 }
@@ -422,50 +674,66 @@ namespace VNDBNexus.PlayniteControls
             }
 
             // Releases
-            var vnRelations = _vndbDatabase.VisualNovelRelations.GetOrCreateById(visualNovel.Id);
-            if (vnRelations.ReleaseIds is null)
+            var releasesGroup = _vndbDatabase.Releases.GetById(visualNovel.Id);
+            if (releasesGroup is null || forceUpdate)
             {
-                var updateSuccess = await UpdateVisualNovelReleases(vndbId, vnRelations);
-                if (!updateSuccess || _currentGameId == null || _currentGameId != contextGameId)
+                var updateSuccess = await UpdateVisualNovelReleases(visualNovel, cancellationToken);
+                if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
                 {
                     return;
                 }
+
+                releasesGroup = _vndbDatabase.Releases.GetById(visualNovel.Id);
             }
 
-            var matchingReleases = _vndbDatabase.Releases.GetByIds(vnRelations.ReleaseIds);
-            var developers = matchingReleases.SelectMany(x => x.Producers.Where(p => p.IsDeveloper));
-            var publishers = matchingReleases.SelectMany(x => x.Producers.Where(p => p.IsPublisher));
+            var developers = releasesGroup.Members.SelectMany(x => x.Producers.Where(p => p.IsDeveloper));
+            var publishers = releasesGroup.Members.SelectMany(x => x.Producers.Where(p => p.IsPublisher));
 
             // Characters
-            if (vnRelations.CharacterIds is null)
+            var charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
+            if (charactersGroup is null || forceUpdate)
             {
-                var updateSuccess = await UpdateVisualNovelCharacters(vndbId, vnRelations);
-                if (!updateSuccess || _currentGameId == null || _currentGameId != contextGameId)
+                var updateSuccess = await UpdateVisualNovelCharacters(visualNovel, cancellationToken);
+                if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
                 {
                     return;
                 }
+
+                charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
             }
 
-            var matchingCharacters = _vndbDatabase.Characters.GetByIds(vnRelations.CharacterIds);
+            var matchingCharacters = charactersGroup.Members;
             var uniqueTraitIds = matchingCharacters
                 .SelectMany(character => character.Traits)
                 .Select(trait => trait.Id)
                 .Distinct();
 
             var matchingTraits = _vndbDatabase.Traits.GetByIds(uniqueTraitIds).ToDictionary(x => x.Id);
-            var voiceActors = visualNovel.VoiceActors.ToDictionary(x => x.Character.Id);
 
-            var characterWrappers = matchingCharacters.Select(c => GetCharacterWrapper(c, matchingTraits, voiceActors));
-
+            var groupedVoiceActors = new GroupedDictionary<string, VisualNovelVoiceActor>(visualNovel.VoiceActors, va => va.Character.Id);
+            var characterWrappers = matchingCharacters.Select(c => GetCharacterWrapper(c, matchingTraits, groupedVoiceActors, visualNovel));
+            
             ActiveVisualNovel = visualNovel;
-            Releases = matchingReleases;
             CharacterWrappers = characterWrappers;
             Developers = developers;
             Publishers = publishers;
+
+            GroupedReleasesByLanguage = new GroupedDictionary<LanguageEnum, Release>(
+                releasesGroup.Members.Distinct(),
+                release => release.LanguagesAvailability.Select(langInfo => langInfo.Language),
+                releases => releases
+                    .OrderBy(r => r.ReleaseDate?.Year ?? 2222)
+                    .ThenBy(r => r.ReleaseDate?.Month ?? 13)
+                    .ThenBy(r => r.ReleaseDate?.Day ?? 32));
+            CharacterWrappers = characterWrappers.OrderBy(c => c.Character.Name);
+
+            var groupedDevelopers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(developers.Distinct(), dev => dev.Language);
+            var groupedPublishers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(publishers.Distinct(), dev => dev.Language);
+            _isValuesDefaultState = false;
             SetVisibleVisibility();
         }
 
-        private async Task<bool> UpdateVisualNovel(string vndbId)
+        private async Task<bool> UpdateVisualNovel(string vndbId, CancellationToken cancellationToken)
         {
             var vndbRequestFilter = VisualNovelFilterFactory.Id.EqualTo(vndbId);
             var query = new VisualNovelRequestQuery(vndbRequestFilter);
@@ -482,33 +750,33 @@ namespace VNDBNexus.PlayniteControls
             query.Fields.Subfields.Tags.Flags = TagRequestFieldsFlags.Id | TagRequestFieldsFlags.Category;
             query.Results = 1;
 
-            var reponse = await VndbService.ExecutePostRequestAsync(query);
+            var reponse = await VndbService.ExecutePostRequestAsync(query, cancellationToken);
             if (reponse is null || !reponse.Results.HasItems())
             {
                 return false;
             }
 
             var visualNovel = reponse.Results.First();
-            _vndbDatabase.VisualNovels.Insert(visualNovel);
+            _vndbDatabase.VisualNovels.InsertOrReplace(visualNovel);
             return true;
         }
 
-        private async Task<bool> UpdateVisualNovelReleases(string vndbId, VisualNovelRelations vnRelations)
+        private async Task<bool> UpdateVisualNovelReleases(VisualNovel visualNovel, CancellationToken cancellationToken)
         {
-            var vndbRequestFilter = VisualNovelFilterFactory.Id.EqualTo(vndbId);
+            var vndbRequestFilter = VisualNovelFilterFactory.Id.EqualTo(visualNovel.Id);
             var releasesRequestFilter = ReleaseFilterFactory.VisualNovel.EqualTo(vndbRequestFilter);
             var query = new ReleaseRequestQuery(releasesRequestFilter);
             query.Fields.DisableAllFlags(true);
             query.Fields.EnableAllFlags(false);
             query.Fields.Subfields.ExternalLinks.EnableAllFlags();
-            query.Fields.Subfields.Producer.Flags = StaffRequestFieldsFlags.Id | StaffRequestFieldsFlags.Name | StaffRequestFieldsFlags.Original;
+            query.Fields.Subfields.Producer.Flags = ProducerRequestFieldsFlags.Id | ProducerRequestFieldsFlags.Name | ProducerRequestFieldsFlags.Original | ProducerRequestFieldsFlags.Language;
             query.Page = 1;
             query.Results = 40;
 
-            var releaseIds = new List<string>();
+            var releases = new List<Release>();
             while (true)
             {
-                var response = await VndbService.ExecutePostRequestAsync(query);
+                var response = await VndbService.ExecutePostRequestAsync(query, cancellationToken);
                 if (response is null)
                 {
                     return false;
@@ -516,12 +784,7 @@ namespace VNDBNexus.PlayniteControls
 
                 if (response.Results.HasItems())
                 {
-                    foreach (var release in response.Results)
-                    {
-                        _vndbDatabase.Releases.InsertOrReplace(release);
-                    }
-
-                    releaseIds.AddRange(response.Results.Select(c => c.Id));
+                    releases.AddRange(response.Results);
                 }
 
                 if (response.More)
@@ -534,27 +797,28 @@ namespace VNDBNexus.PlayniteControls
                 }
             }
 
-            vnRelations.ReleaseIds = releaseIds;
-            _vndbDatabase.VisualNovelRelations.Update(vnRelations);
+            var group = new VisualNovelReleasesSearchResults(visualNovel, releases);
+            _vndbDatabase.Releases.InsertOrReplace(group);
             return true;
         }
 
-        private async Task<bool> UpdateVisualNovelCharacters(string vndbId, VisualNovelRelations vnRelations)
+        private async Task<bool> UpdateVisualNovelCharacters(VisualNovel visualNovel, CancellationToken cancellationToken)
         {
-            var vndbRequestFilter = VisualNovelFilterFactory.Id.EqualTo(vndbId);
+            var vndbRequestFilter = VisualNovelFilterFactory.Id.EqualTo(visualNovel.Id);
             var characterRequestFilter = CharacterFilterFactory.VisualNovel.EqualTo(vndbRequestFilter);
             var query = new CharacterRequestQuery(characterRequestFilter);
             query.Fields.DisableAllFlags(true);
             query.Fields.Subfields.Image.EnableAllFlags();
+            query.Fields.Subfields.VisualNovelFlags = VnRequestFieldsFlags.Id;
             query.Fields.Subfields.Traits.Flags = TraitRequestFieldsFlags.Id | TraitRequestFieldsFlags.GroupName;
             query.Fields.EnableAllFlags(false);
             query.Page = 1;
             query.Results = 40;
 
-            var charaterIds = new List<string>();
+            var characters = new List<Character>();
             while (true)
             {
-                var response = await VndbService.ExecutePostRequestAsync(query);
+                var response = await VndbService.ExecutePostRequestAsync(query, cancellationToken);
                 if (response is null)
                 {
                     return false;
@@ -562,12 +826,7 @@ namespace VNDBNexus.PlayniteControls
 
                 if (response.Results.HasItems())
                 {
-                    foreach (var character in response.Results)
-                    {
-                        _vndbDatabase.Characters.InsertOrReplace(character);
-                    }
-
-                    charaterIds.AddRange(response.Results.Select(c => c.Id).ToList());
+                    characters.AddRange(response.Results);
                 }
 
                 if (response.More)
@@ -580,15 +839,16 @@ namespace VNDBNexus.PlayniteControls
                 }
             }
 
-            vnRelations.CharacterIds = charaterIds;
-            _vndbDatabase.VisualNovelRelations.Update(vnRelations);
+            var group = new VisualNovelCharactersSearchResults(visualNovel, characters);
+            _vndbDatabase.Characters.InsertOrReplace(group);
             return true;
         }
 
         private CharacterWrapper GetCharacterWrapper(
             Character character,
             Dictionary<string, Trait> matchingTraits,
-            Dictionary<string, VisualNovelVoiceActor> voiceActors)
+            GroupedDictionary<string, VisualNovelVoiceActor> voiceActorsGroups,
+            VisualNovel visualNovel)
         {
             foreach (var trait in character.Traits)
             {
@@ -599,14 +859,11 @@ namespace VNDBNexus.PlayniteControls
                 }
             }
 
-            if (voiceActors.TryGetValue(character.Id, out var voiceActor))
-            {
-                return new CharacterWrapper(character, voiceActor);
-            }
-            else
-            {
-                return new CharacterWrapper(character, null);
-            }
+            var visualNovelAppearance = character.VisualNovelAppearances
+                .FirstOrDefault(vnAppearance => vnAppearance.Id == visualNovel.Id);
+            var voiceActorGroup = voiceActorsGroups[character.Id];
+            var voiceActor = voiceActorGroup.FirstOrDefault();
+            return new CharacterWrapper(character, voiceActor, visualNovelAppearance);
         }
 
         private IEnumerable<VisualNovelTag> GetTagsToDisplay()
@@ -664,6 +921,30 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
+        private IEnumerable<CharacterWrapper> GetFilteredCharacters(CharacterRoleEnum targetRole)
+        {
+            foreach (var characterWrapper in _characterWrappers)
+            {
+                if (characterWrapper.Role != targetRole)
+                {
+                    continue;
+                }
+
+                if (characterWrapper.SpoilerLevel == SpoilerLevelEnum.None)
+                {
+                    yield return characterWrapper;
+                }
+                else if (_charactersMaxSpoilerLevel == SpoilerLevelEnum.Major)
+                {
+                    yield return characterWrapper;
+                }
+                else if (characterWrapper.SpoilerLevel == _charactersMaxSpoilerLevel)
+                {
+                    yield return characterWrapper;
+                }
+            }
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -680,6 +961,46 @@ namespace VNDBNexus.PlayniteControls
             });
         }
 
+        public RelayCommand<object> LoadVnRelationDataCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is VisualNovelRelation visualNovel)
+                {
+                    var dialogText = "Loading visual novel data...";
+                    var progressOptions = new GlobalProgressOptions(dialogText, true)
+                    {
+                        IsIndeterminate = true
+                    };
+
+                    _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                    {
+                        await LoadVisualNovelByIdAsync(visualNovel.Id, false, a.CancelToken);
+                    }, progressOptions);
+                }
+            });
+        }
+
+        public RelayCommand<object> RefreshVisualNovelDataCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is VisualNovel visualNovel)
+                {
+                    var dialogText = "Loading visual novel data...";
+                    var progressOptions = new GlobalProgressOptions(dialogText, true)
+                    {
+                        IsIndeterminate = true
+                    };
+
+                    _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+                    {
+                        await LoadVisualNovelByIdAsync(visualNovel.Id, true, a.CancelToken);
+                    }, progressOptions);
+                }
+            });
+        }
+
         public RelayCommand<CharacterTrait> OpenTraitVndbPageCommand
         {
             get => new RelayCommand<CharacterTrait>((CharacterTrait characterTrait) =>
@@ -691,13 +1012,68 @@ namespace VNDBNexus.PlayniteControls
             });
         }
 
+        public RelayCommand<object> OpenCharacterVndbPageCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is Character character)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{character.Id}");
+                }
+            });
+        }
+
+        public RelayCommand<object> OpenStaffVndbPageCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is Staff staff)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{staff.Id}");
+                }
+            });
+        }
+
+        public RelayCommand<object> OpenReleaseVndbPageCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is Release release)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{release.Id}");
+                }
+            });
+        }
+
+        public RelayCommand<object> OpenTagVndbPageCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is VndbApiDomain.TagAggregate.Tag tag)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{tag.Id}");
+                }
+            });
+        }
+
+        public RelayCommand<object> OpenUriCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is Uri uri)
+                {
+                    ProcessStarter.StartUrl(uri.ToString());
+                }
+            });
+        }
+
         public RelayCommand<object> OpenUriInWebViewCommand
         {
             get => new RelayCommand<object>((object parameter) =>
             {
                 if (parameter is Uri uri)
                 {
-                    using (var webView = _playniteApi.WebViews.CreateView(1280, 720))
+                    using (var webView = _playniteApi.WebViews.CreateView(1200, 720))
                     {
                         webView.Navigate(uri.ToString());
                         webView.OpenDialog();

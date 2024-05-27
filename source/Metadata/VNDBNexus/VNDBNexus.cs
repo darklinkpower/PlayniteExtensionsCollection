@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using TemporaryCache;
 using VndbApiDomain.CharacterAggregate;
 using VndbApiDomain.ProducerAggregate;
 using VndbApiDomain.ReleaseAggregate;
@@ -29,6 +30,7 @@ using VndbApiInfrastructure.StaffAggregate;
 using VndbApiInfrastructure.TagAggregate;
 using VndbApiInfrastructure.TraitAggregate;
 using VndbApiInfrastructure.VisualNovelAggregate;
+using VNDBNexus.Converters;
 using VNDBNexus.Database;
 using VNDBNexus.PlayniteControls;
 
@@ -39,6 +41,7 @@ namespace VNDBNexus
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly BbCodeProcessor _bbcodeProcessor;
         private readonly VndbDatabase _vndbDatabase;
+        private readonly ImageUriToBitmapImageConverter _imageUriToBitmapImageConverter;
 
         public VNDBNexusSettingsViewModel Settings { get; private set; }
 
@@ -87,13 +90,14 @@ namespace VNDBNexus
 
             var pluginDatabaPath = GetPluginUserDataPath();
             _vndbDatabase = new VndbDatabase(pluginDatabaPath);
+            _imageUriToBitmapImageConverter = new ImageUriToBitmapImageConverter(Path.Combine(GetPluginUserDataPath(), "ImagesCache"));
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (args.Name == _vndbVisualNovelViewControlName)
             {
-                return new VndbVisualNovelViewControl(this, Settings, _bbcodeProcessor, _vndbDatabase);
+                return new VndbVisualNovelViewControl(this, Settings, _vndbDatabase, _imageUriToBitmapImageConverter);
             }
 
             return null;

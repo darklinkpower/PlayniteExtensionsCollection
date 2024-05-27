@@ -10,12 +10,13 @@ using VndbApiInfrastructure.VisualNovelAggregate;
 using VndbApiInfrastructure.SharedKernel;
 using VndbApiInfrastructure.SharedKernel.Filters;
 using VndbApiDomain.ReleaseAggregate;
+using VndbApiInfrastructure.ProducerAggregate;
 
 namespace VndbApiInfrastructure.ReleaseAggregate
 {
     public class ReleaseRequestSubfields : RequestFieldAbstractBase, IRequestFields
     {
-        public StaffRequestFields Producer = new StaffRequestFields();
+        public ProducerRequestFields Producer = new ProducerRequestFields();
         public ExternalLinksRequestFields ExternalLinks = new ExternalLinksRequestFields();
         public VnRequestFieldsFlags VisualNovelFlags = VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Title;
 

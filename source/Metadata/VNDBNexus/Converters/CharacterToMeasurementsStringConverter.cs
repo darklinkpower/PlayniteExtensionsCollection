@@ -26,9 +26,14 @@ namespace VNDBNexus.Converters
                     character.Bust.HasValue && character.Waist.HasValue && character.Hips.HasValue
                         ? string.Format(_bustWeightHipsFormatString, character.Bust, character.Waist, character.Hips)
                         : null
-                }.Where(part => part != null);
+                }.Where(part => !string.IsNullOrWhiteSpace(part));
 
-                return string.Join(", ", parts);
+                if (parts.Count() > 0)
+                {
+                    return string.Join(", ", parts);
+                }
+
+                return string.Empty;
             }
 
             return null;

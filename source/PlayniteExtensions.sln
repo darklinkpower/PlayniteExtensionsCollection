@@ -93,10 +93,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiDomain", "Metadata\V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiInfrastructure", "Metadata\VNDB\VndbApiInfrastructure\VndbApiInfrastructure.csproj", "{13817ADD-ED1D-47BF-B734-10B63D20ECB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiPersistence", "Metadata\VNDB\VndbApiPersistence\VndbApiPersistence.csproj", "{C9F3949C-BE83-4537-81F3-948AC82FD559}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbPersistence", "Metadata\VNDB\VndbPersistence\VndbPersistence.csproj", "{92CD7523-7B8A-4867-90C4-A4971DE8DC96}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -263,14 +259,6 @@ Global
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9F3949C-BE83-4537-81F3-948AC82FD559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9F3949C-BE83-4537-81F3-948AC82FD559}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9F3949C-BE83-4537-81F3-948AC82FD559}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9F3949C-BE83-4537-81F3-948AC82FD559}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92CD7523-7B8A-4867-90C4-A4971DE8DC96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92CD7523-7B8A-4867-90C4-A4971DE8DC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92CD7523-7B8A-4867-90C4-A4971DE8DC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92CD7523-7B8A-4867-90C4-A4971DE8DC96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -317,8 +305,6 @@ Global
 		{F608FE6C-231A-42B5-806E-49B8B8E0CFEF} = {BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}
 		{38AF54C8-402D-4C31-8000-951605BC4B64} = {F608FE6C-231A-42B5-806E-49B8B8E0CFEF}
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7} = {F608FE6C-231A-42B5-806E-49B8B8E0CFEF}
-		{C9F3949C-BE83-4537-81F3-948AC82FD559} = {F608FE6C-231A-42B5-806E-49B8B8E0CFEF}
-		{92CD7523-7B8A-4867-90C4-A4971DE8DC96} = {F608FE6C-231A-42B5-806E-49B8B8E0CFEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

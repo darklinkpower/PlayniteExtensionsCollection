@@ -112,7 +112,7 @@ namespace VndbApiInfrastructure.CharacterAggregate
         /// String, "main" for protagonist, "primary" for main characters, "side" or "appears".
         /// </summary>
         [StringRepresentation(CharacterConstants.Fields.VNSRole)]
-        VnsRole = 1 << 17,
+        VisualNovelRole = 1 << 17,
 
         /// <summary>
         /// Integer, 0, 1 or 2, spoiler level.

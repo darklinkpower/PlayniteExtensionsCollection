@@ -58,7 +58,7 @@ namespace VndbApiInfrastructure.CharacterAggregate
     public class CharacterRequestFields : RequestFieldAbstractBase, IRequestFields
     {
         public CharacterRequestFieldsFlags Flags =
-            CharacterRequestFieldsFlags.Id | CharacterRequestFieldsFlags.Name | CharacterRequestFieldsFlags.VnsRole;
+            CharacterRequestFieldsFlags.Id | CharacterRequestFieldsFlags.Name | CharacterRequestFieldsFlags.VisualNovelRole;
         public readonly CharacterRequestSubfields Subfields = new CharacterRequestSubfields();
 
         public void EnableAllFlags(bool enableSubfields)

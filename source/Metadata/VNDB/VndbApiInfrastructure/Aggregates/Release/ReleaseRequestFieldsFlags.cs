@@ -42,7 +42,7 @@ namespace VndbApiInfrastructure.ReleaseAggregate
         [StringRepresentation(ReleaseConstants.Fields.Released)]
         Released = 1 << 14,
         [StringRepresentation(ReleaseConstants.Fields.MinAge)]
-        MinAge = 1 << 15,
+        MinimumAge = 1 << 15,
         [StringRepresentation(ReleaseConstants.Fields.Patch)]
         Patch = 1 << 16,
         [StringRepresentation(ReleaseConstants.Fields.Freeware)]
@@ -52,7 +52,7 @@ namespace VndbApiInfrastructure.ReleaseAggregate
         [StringRepresentation(ReleaseConstants.Fields.Official)]
         Official = 1 << 19,
         [StringRepresentation(ReleaseConstants.Fields.HasEro)]
-        HasEro = 1 << 20,
+        HasErotic = 1 << 20,
         [StringRepresentation(ReleaseConstants.Fields.Resolution)]
         Resolution = 1 << 21,
         [StringRepresentation(ReleaseConstants.Fields.Engine)]
