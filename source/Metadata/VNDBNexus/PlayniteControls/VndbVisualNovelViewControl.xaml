@@ -44,7 +44,7 @@
                         <Expander IsExpanded="True">
                             <Expander.Header>
                                 <TextBlock FontWeight="Medium"
-                                           Text="{Binding RelationType, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                           Text="{Binding RelationType, RelativeSource={RelativeSource TemplatedParent},Converter={StaticResource EnumToLocalizationStringConverter}}"/>
                             </Expander.Header>
                             <StackPanel Margin="0,0,0,5">
                                 <ItemsControl Margin="30,5,0,0"
@@ -52,7 +52,7 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                                <TextBlock Text="[unnoficial]" Margin="0,0,5,0"
+                                                <TextBlock Text="{DynamicResource LOC_VndbNexus_UnofficialReleaseLabel}" Margin="0,0,5,0"
                                                        Style="{DynamicResource BaseTextBlockStyle}"
                                                            Opacity="0.50"
                                                            Visibility="{Binding RelationOfficial, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
@@ -191,7 +191,7 @@
 
                         <StackPanel Grid.Row="1" Margin="0,10,0,0" VerticalAlignment="Bottom"
                                     Visibility="{Binding Character.Description, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
-                            <TextBlock Text="Description" FontWeight="Medium" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_DescriptionLabel}" FontWeight="Medium" VerticalAlignment="Bottom" />
                             <Separator Margin="0,3,0,3" />
                             <ScrollViewer VerticalAlignment="Bottom" VerticalScrollBarVisibility="Auto" MaxHeight="100">
                                 <pluginControls:HtmlTextView Margin="0,0,0,0"
@@ -216,28 +216,28 @@
                 <pluginControls:GridEx AutoLayoutColumns="2" ColumnCount="2" RowCount="15" Margin="0,20,0,0"
                                                        StarColumns="1">
 
-                    <TextBlock Text="Aliases" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsAliases}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharAliasesText, Path=Visibility}"/>
 
                     <TextBlock Text="{Binding Character.Aliases, Converter={StaticResource EnumerableStringJoinConverter}}"
                                Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
                                Margin="8,3,0,0" x:Name="CharAliasesText" />
 
-                    <TextBlock Text="Measurements" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsMeasurements}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharMeasurementsText, Path=Visibility}" />
 
                     <TextBlock Text="{Binding Character, Converter={StaticResource CharacterToMeasurementsStringConverter}}" TextWrapping="Wrap"
                                                    Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
                                                    Margin="8,3,0,0" x:Name="CharMeasurementsText" />
 
-                    <TextBlock Text="Birthday" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsBirthday}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharBirthdayText, Path=Visibility}" />
 
                     <TextBlock Text="{Binding Character.Birthday, Converter={StaticResource CharacterBirthdayToStringConverter}}"
                                Visibility="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
                                Margin="8,3,0,0" x:Name="CharBirthdayText" />
 
-                    <TextBlock Text="Hair" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsHair}" FontWeight="Medium" Margin="0,3,0,0"
                                Visibility="{Binding ElementName=CharHairTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -246,7 +246,7 @@
                                             TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Hair}"
                                             MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Eyes" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsEyes}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharEyesTraitsControl, Path=Visibility}"/>
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -255,7 +255,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Eyes}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Body" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsBody}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharBodyTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -264,7 +264,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Body}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Clothes" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsClothes}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharClothesTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -273,7 +273,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Clothes}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Items" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsItems}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharItemsTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -282,7 +282,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Items}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Personality" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsPersonality}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharPersonalityTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -291,7 +291,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Personality}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Role" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsRole}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharRoleTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -300,7 +300,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.Role}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Engages in" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsEngagesIn}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharEngagesInTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -309,7 +309,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.EngagesIn}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Subject of" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsSubjectOf}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharSubjectOfTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -318,7 +318,7 @@
                                         TraitGroup="{x:Static vndbTraitDomain:TraitGroupEnum.SubjectOf}"
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Engages in (Sexual)" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsEngagesInSexual}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharEngagesInSexualTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -328,7 +328,7 @@
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Subject of (Sexual)" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsSubjectOfSexual}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=CharSubjectOfSexualTraitsControl, Path=Visibility}" />
 
                     <pluginControls:CharacterTraitControl Margin="8,3,0,0"
@@ -338,7 +338,7 @@
                                         MaxSpoilerLevel="{Binding CharactersMaxSpoilerLevel, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
                                         IncludeSexualTraits="{Binding DisplayCharacterSexualTraits, RelativeSource={RelativeSource AncestorType=PluginUserControl}}" />
 
-                    <TextBlock Text="Voiced by" FontWeight="Medium" Margin="0,3,0,0"
+                    <TextBlock Text="{DynamicResource LOC_VndbNexus_CharacterTraitsVoicedBy}" FontWeight="Medium" Margin="0,3,0,0"
                                                    Visibility="{Binding ElementName=ButtonVoiceActor, Path=Visibility}" />
 
                     <Button BorderThickness="0" Background="Transparent" Padding="0"
@@ -503,7 +503,7 @@
             <Expander IsExpanded="True" Margin="0,0,0,5">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Grouper}" />
+                        <TextBlock Text="{Binding Grouper, Converter={StaticResource EnumToLocalizationStringConverter}}" />
                     </StackPanel>
                 </Expander.Header>
                 <ListBox Margin="30,5,0,0" ItemsSource="{Binding Entities}" Style="{StaticResource ReleasesLbStyle}"
@@ -515,7 +515,7 @@
 
     <Grid x:Name="MainGrid">
         <TabControl SelectedIndex="{Binding SelectedControlTabIndex}">
-            <TabItem Header="Information">
+            <TabItem Header="{DynamicResource LOC_VndbNexus_InformationLabel}">
                 <StackPanel Margin="0,20,0,0">
                     <DockPanel Margin="0,0,0,10">
                         <Button DockPanel.Dock="Right"
@@ -548,17 +548,17 @@
                         <StackPanel DockPanel.Dock="Left">
 
 
-                            <Expander x:Name="TitlesExpander" Header="Titles" VerticalAlignment="Center"
+                            <Expander x:Name="TitlesExpander" Header="{DynamicResource LOC_VndbNexus_VisualNovelTitlesLabel}" VerticalAlignment="Center"
                                   Visibility="{Binding ElementName=TitlesControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <ItemsControl x:Name="TitlesControl" VerticalAlignment="Top" Margin="30,5,0,0"
                                           ItemsSource="{Binding ActiveVisualNovel.Titles}" />
                             </Expander>
-                            <Expander Header="Relations" IsExpanded="True"
+                            <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelRelationsLabel}" IsExpanded="True"
                                       Visibility="{Binding RelationsSectionVisibility}">
                                 <StackPanel Margin="30,0,0,0">
                                     <ToggleButton x:Name="UnofficialToggleButton"
                                                   Visibility="{Binding RelationsUnofficialButonVisibility}"
-                                  Content="Show unnoficial"
+                                  Content="{DynamicResource LOC_VndbNexus_VisualNovelsShowUnnoficial}"
                                   HorizontalAlignment="Left"
                                   Margin="0,10,0,5"
                                   IsChecked="{Binding DisplayUnnoficialRelations}" />
@@ -605,7 +605,7 @@
                                 </StackPanel>
                             </Expander>
 
-                            <Expander Header="Aliases" IsExpanded="True"
+                            <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelAliasesLabel}" IsExpanded="True"
                                       Visibility="{Binding ElementName=VnAliasesControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <ItemsControl Margin="30,0,0,0" x:Name="VnAliasesControl"
                                       VerticalAlignment="Center" ItemsSource="{Binding ActiveVisualNovel.Aliases}">
@@ -621,7 +621,7 @@
                         </StackPanel>
                     </DockPanel>
 
-                    <Expander Header="Links" Visibility="{Binding ElementName=VnExternalLinksControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    <Expander Header="{DynamicResource LOC_VndbNexus_LinksLabel}" Visibility="{Binding ElementName=VnExternalLinksControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}"
                                       IsExpanded="True" Margin="0,20,0,0">
                         <ItemsControl x:Name="VnExternalLinksControl"
                                               ItemsSource="{Binding ActiveVisualNovel.ExternalLinks}" Margin="20,10,0,0">
@@ -644,7 +644,7 @@
                     <StackPanel Margin="0,10,0,0"
                                 Visibility="{Binding ActiveVisualNovel.Description, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
                         <Separator Margin="0,5,0,5" />
-                        <TextBlock Text="Description" FontWeight="SemiBold" Margin="0,10,0,0" />
+                        <TextBlock Text="{DynamicResource LOC_VndbNexus_DescriptionLabel}" FontWeight="SemiBold" Margin="0,10,0,0" />
                         <ScrollViewer MaxHeight="280" Margin="0,10,0,0">
                             <pluginControls:HtmlTextView Margin="0,0,0,0" HorizontalAlignment="left"
                                                  HtmlFontFamily="{DynamicResource FontFamily}"
@@ -662,9 +662,9 @@
 
                     <StackPanel Margin="0,20,0,0">
                         <Separator Margin="0,5,0,5" />
-                        <TextBlock Text="Tags" FontWeight="SemiBold" Margin="0,10,0,0" />
+                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsLabel}" FontWeight="SemiBold" Margin="0,10,0,0" />
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
-                            <TextBlock Text="Display" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsDisplayTypeOption}" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <ComboBox Margin="0,0,0,0" ItemsSource="{Binding Source={x:Type vndbNexusEnums:TagsDisplayOptionEnum}, Converter={StaticResource EnumToListConverter}}"
                                      SelectedItem="{Binding TagsDisplayOption}">
                                 <ComboBox.ItemTemplate>
@@ -676,36 +676,36 @@
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <TextBlock Text="Categories" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <ToggleButton Content="Content" Margin="0,0,5,0"
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_CategoriesLabel}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <ToggleButton Content="{DynamicResource LOC_VndbNexus_TagsContentCategory}" Margin="0,0,5,0"
                                   Visibility="{Binding TagsContentCategoryButtonVisibility}"
                                   x:Name="TagsContentToggleButton"
                                   IsChecked="{Binding TagsDisplayContentCategory}" />
-                            <ToggleButton Content="Technical" Margin="0,0,5,0"
+                            <ToggleButton Content="{DynamicResource LOC_VndbNexus_TagsTechnicalCategory}" Margin="0,0,5,0"
                                   Visibility="{Binding TagsTechnicalCategoryButtonVisibility}"
                                   IsChecked="{Binding TagsDisplayTechnicalCategory}" />
-                            <ToggleButton Content="Sexual" Margin="0,0,0,0"
+                            <ToggleButton Content="{DynamicResource LOC_VndbNexus_TagsSexualCategory}" Margin="0,0,0,0"
                                   Visibility="{Binding TagsSexualCategoryButtonVisibility}"
                                   IsChecked="{Binding TagsDisplaySexualCategory}" />
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <TextBlock Text="Spoiler levels" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <ToggleButton Content="None" Margin="0,0,5,0"
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_SpoilerLevelsLabel}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <ToggleButton Content="{DynamicResource LOC_VndbNexus_SpoilerLevelNone}" Margin="0,0,5,0"
                                   Visibility="{Binding TagsNoneSpoilerButtonVisibility}"
                                   IsChecked="{Binding TagsDisplayNoneSpoilers}" />
 
-                            <ToggleButton Content="Minimum" Margin="0,0,5,0"
+                            <ToggleButton Content="{DynamicResource LOC_VndbNexus_SpoilerLevelMinimum}" Margin="0,0,5,0"
                                   Visibility="{Binding TagsMinimumSpoilerButtonVisibility}"
                                   IsChecked="{Binding TagsDisplayMinimumSpoilers}" />
 
-                            <ToggleButton Content="Major" Margin="0,0,0,0"
+                            <ToggleButton Content="{DynamicResource LOC_VndbNexus_SpoilerLevelMajor}" Margin="0,0,0,0"
                                   Visibility="{Binding TagsMajorSpoilerButtonVisibility}"
                                   IsChecked="{Binding TagsDisplayMajorSpoilers}" />
                         </StackPanel>
 
                         <DockPanel Margin="0,10,0,0" LastChildFill="True">
-                            <TextBlock Text="Minimum score:" VerticalAlignment="Center"
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_TagMinimumScore}" VerticalAlignment="Center"
                                DockPanel.Dock="Left" />
                             <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center"
                                MinWidth="30" Text="{Binding TagsMinimumScore}" />
@@ -757,7 +757,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Releases" Visibility="{Binding ReleasesTabVisibility}">
+            <TabItem Header="{DynamicResource LOC_VndbNexus_ReleasesLabel}" Visibility="{Binding ReleasesTabVisibility}">
                 <StackPanel>
                     <ListBox Style="{DynamicResource CharacterWrappersLbStyle}"
                              ItemTemplate="{DynamicResource ReleasesGroupItemTemplate}"
@@ -765,7 +765,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Characters" Visibility="{Binding CharactersTabVisibility}">
+            <TabItem Header="{DynamicResource LOC_VndbNexus_CharactersLabel}" Visibility="{Binding CharactersTabVisibility}">
                 <StackPanel Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Right">
                         <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSpoilerLevel}"
@@ -778,8 +778,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        
-                        <ToggleButton Content="Show sexual traits" Margin="20,0,0,0"
+
+                        <ToggleButton Content="{DynamicResource LOC_VndbNexus_CharacterShowSexualTraits}" Margin="20,0,0,0"
                                   HorizontalAlignment="Right"
                                   IsChecked="{Binding DisplayCharacterSexualTraits}" />
                     </StackPanel>
@@ -787,19 +787,19 @@
 
 
                     <TabControl Margin="0,10,0,0" SelectedIndex="{Binding SelectedCharactersControlTabIndex}">
-                        <TabItem Header="Protagonist" Visibility="{Binding MainCharacterWrappersVisibility}">
+                        <TabItem Header="{DynamicResource LOC_VndbNexus_CharacterTypeProtagonist}" Visibility="{Binding MainCharacterWrappersVisibility}">
                             <ListBox Style="{DynamicResource CharacterWrappersLbStyle}"
                                      ItemsSource="{Binding MainCharacterWrappers}" />
                         </TabItem>
-                        <TabItem Header="Main characters" Visibility="{Binding PrimaryCharacterWrappersVisibility}">
+                        <TabItem Header="{DynamicResource LOC_VndbNexus_CharacterTypeMainCharacters}" Visibility="{Binding PrimaryCharacterWrappersVisibility}">
                             <ListBox Style="{DynamicResource CharacterWrappersLbStyle}"
                                      ItemsSource="{Binding PrimaryCharacterWrappers}" />
                         </TabItem>
-                        <TabItem Header="Side characters" Visibility="{Binding SideCharacterWrappersVisibility}">
+                        <TabItem Header="{DynamicResource LOC_VndbNexus_CharacterTypeSideCharacters}" Visibility="{Binding SideCharacterWrappersVisibility}">
                             <ListBox Style="{DynamicResource CharacterWrappersLbStyle}"
                                      ItemsSource="{Binding SideCharacterWrappers}" />
                         </TabItem>
-                        <TabItem Header="Make an appearance" Visibility="{Binding AppearsCharacterWrappersVisibility}">
+                        <TabItem Header="{DynamicResource LOC_VndbNexus_CharacterTypeMakeAppearance}" Visibility="{Binding AppearsCharacterWrappersVisibility}">
                             <ListBox Style="{DynamicResource CharacterWrappersLbStyle}"
                                      ItemsSource="{Binding AppearsCharacterWrappers}" />
                         </TabItem>
@@ -807,29 +807,43 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Screenshots" Visibility="{Binding ScreenshotsTabVisibility}">
-                <StackPanel Margin="0,20,0,0">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0" HorizontalAlignment="Left">
-                        <ComboBox Margin="0,0,0,0" ItemsSource="{Binding Source={x:Type vndbImageDomain:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
-                          SelectedItem="{Binding ScreenshotsMaxSexualityLevel}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+            <TabItem Header="{DynamicResource LOC_VndbNexus_ScreenshotsLabel}" Visibility="{Binding ScreenshotsTabVisibility}">
+                <StackPanel Margin="0,0,0,0">
+                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,20,20,0">
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSexualityLevel}"
+                                       Margin="0,0,0,0"
+                                       VerticalAlignment="Center" />
+                            <ComboBox Margin="10,0,0,0"
+                                      VerticalAlignment="Center"
+                                      ItemsSource="{Binding Source={x:Type vndbImageDomain:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                      SelectedItem="{Binding ScreenshotsMaxSexualityLevel}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Left">
-                        <ComboBox Margin="0,0,0,0" ItemsSource="{Binding Source={x:Type vndbImageDomain:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
-                          SelectedItem="{Binding ScreenshotsMaxViolenceLevel}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumViolenceLevel}"
+                               Margin="0,0,0,0"
+                               VerticalAlignment="Center" />
+                            <ComboBox Margin="10,0,0,0"
+                                      VerticalAlignment="Center"
+                                      ItemsSource="{Binding Source={x:Type vndbImageDomain:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                      SelectedItem="{Binding ScreenshotsMaxViolenceLevel}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+
+                    </WrapPanel>
+
 
                     <pluginControls:VndbImageControl
                         MaximumSexuality="{Binding ScreenshotsMaxSexualityLevel}"

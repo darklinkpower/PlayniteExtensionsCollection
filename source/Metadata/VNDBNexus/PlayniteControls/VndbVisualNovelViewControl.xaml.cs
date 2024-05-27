@@ -730,7 +730,8 @@ namespace VNDBNexus.PlayniteControls
             var groupedDevelopers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(developers.Distinct(), dev => dev.Language);
             var groupedPublishers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(publishers.Distinct(), dev => dev.Language);
             _isValuesDefaultState = false;
-            SetVisibleVisibility();
+
+            _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
         }
 
         private async Task<bool> UpdateVisualNovel(string vndbId, CancellationToken cancellationToken)
@@ -967,12 +968,13 @@ namespace VNDBNexus.PlayniteControls
             {
                 if (parameter is VisualNovelRelation visualNovel)
                 {
-                    var dialogText = "Loading visual novel data...";
+                    var dialogText = string.Format(ResourceProvider.GetString("LOC_VndbNexus_LoadingVndbDataProgressFormat"), visualNovel.Title);
                     var progressOptions = new GlobalProgressOptions(dialogText, true)
                     {
                         IsIndeterminate = true
                     };
 
+                    ResetToDefaultValues();
                     _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                     {
                         await LoadVisualNovelByIdAsync(visualNovel.Id, false, a.CancelToken);
@@ -987,7 +989,7 @@ namespace VNDBNexus.PlayniteControls
             {
                 if (parameter is VisualNovel visualNovel)
                 {
-                    var dialogText = "Loading visual novel data...";
+                    var dialogText = string.Format(ResourceProvider.GetString("LOC_VndbNexus_LoadingVndbDataProgressFormat"), visualNovel.Title);
                     var progressOptions = new GlobalProgressOptions(dialogText, true)
                     {
                         IsIndeterminate = true

@@ -15,12 +15,20 @@
     </UserControl.Resources>
     <ScrollViewer Margin="20">
         <StackPanel>
-            <Expander Header="{DynamicResource LOC_VndbNexus_MetadataFieldsObtainLabel}" IsExpanded="True">
-                <StackPanel Margin="20,0,0,0">
+
+            <CheckBox Content="{DynamicResource LOC_VndbNexus_EnableVndbControl}" Margin="0,10,0,0"
+                      IsChecked="{Binding Settings.EnableVnViewControl}" />
+            
+            <Expander Header="{DynamicResource LOC_VndbNexus_MetadataFieldsObtainLabel}" Margin="0,20,0,0" IsExpanded="True">
+                <StackPanel Margin="30,0,0,0">
                     <CheckBox Content="{DynamicResource LOCNameLabel}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableName}" />
-                    <CheckBox Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,10,0,0"
+                    <CheckBox x:Name="CbReleaseDate" Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableReleaseDate}" />
+                    <CheckBox Content="{DynamicResource LOC_VndbNexus_SettingsAllowPartialDates}" Margin="30,10,0,0"
+                              IsEnabled="{Binding ElementName=CbReleaseDate, Path=IsChecked}"
+                              ToolTip="{DynamicResource LOC_VndbNexus_SettingsAllowPartialDatesTooltip}"
+                              IsChecked="{Binding Settings.MetadataAllowPartialDates}" />
                     <CheckBox Content="{DynamicResource LOCGameDevelopersTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableDevelopers}" />
                     <CheckBox Content="{DynamicResource LOCGamePublishersTitle}" Margin="0,10,0,0"
@@ -47,9 +55,10 @@
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableTags}" />
                 </StackPanel>
             </Expander>
-
+            
+            
             <Expander Header="{DynamicResource LOC_VndbNexus_ImagesImportSettings}" IsExpanded="True" Margin="0,20,0,0">
-                <StackPanel Margin="20,10,0,0">
+                <StackPanel Margin="30,10,0,0">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSexualityLevel}"
                                VerticalAlignment="Center" />
@@ -80,7 +89,7 @@
             </Expander>
 
             <Expander Header="{DynamicResource LOC_VndbNexus_TagsImportSettings}" IsExpanded="True" Margin="0,20,0,0">
-                <StackPanel IsEnabled="{Binding ElementName=EnableTagsCb, Path=IsChecked}" Margin="20,10,0,0">
+                <StackPanel IsEnabled="{Binding ElementName=EnableTagsCb, Path=IsChecked}" Margin="30,10,0,0">
                     <DockPanel Margin="0,0,0,0" LastChildFill="True">
                         <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsMinScoreToImport}" VerticalAlignment="Center"
                                    DockPanel.Dock="Left" />

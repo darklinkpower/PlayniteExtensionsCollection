@@ -30,6 +30,11 @@ namespace PluginsCommon.Converters
             }
 
             var enumType = value.GetType();
+            if (!enumType.IsEnum)
+            {
+                return null;
+            }
+
             if (_enumStringMappers.TryGetValue(enumType, out var enumStringMapper))
             {
                 var enumValue = (Enum)value;
