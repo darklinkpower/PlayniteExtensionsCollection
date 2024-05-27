@@ -524,7 +524,7 @@
                             <TextBlock Text="&#xEFD1;"
                                        VerticalAlignment="Center"
                                        FontFamily="{DynamicResource FontIcoFont}"
-                                       ToolTip="Refresh data"/>
+                                       ToolTip="{DynamicResource LOC_VndbNexus_RefreshDataLabel}"/>
                         </Button>
 
                         <Button Command="{Binding DataContext.OpenVnVndbPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"

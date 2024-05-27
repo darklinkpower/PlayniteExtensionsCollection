@@ -45,6 +45,9 @@ namespace VndbApiDomain.SharedKernel
         [StringRepresentation(QueryEnums.Medium.InternetDownload)]
         InternetDownload,
 
+        [StringRepresentation(QueryEnums.Medium.DownloadCard)]
+        DownloadCard,
+
         [StringRepresentation(QueryEnums.Medium.Other)]
         Other
     }

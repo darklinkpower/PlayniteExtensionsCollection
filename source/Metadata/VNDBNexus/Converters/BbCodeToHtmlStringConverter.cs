@@ -14,14 +14,27 @@ namespace VNDBNexus.Converters
     {
         private static readonly BbCodeProcessor _bbcodeProcessor = new BbCodeProcessor();
         private const string _spoilerTextReplacement = "<code>Hidden by spoiler settings</code>";
-        private static readonly Regex _spoilerRegex = new Regex(@"<spoiler>(.|\s)+?<\/spoiler>", RegexOptions.Compiled);
+        private static readonly Regex _spoilerRegex = new Regex(@"<spoiler>(.|\s)+?<\/spoiler>", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (values[0] is string str && !string.IsNullOrEmpty(str))
+            if (values[0] is string str)
             {
+                if (str.IsNullOrEmpty())
+                {
+                    return str;
+                }
+
+                // Some titles like The Great Ace Attorney only have the spoiler opening
+                // tag but not the closing one.
+                if (str.Contains("[spoiler]", StringComparison.InvariantCultureIgnoreCase) &&
+                    !str.Contains("[/spoiler]", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    str += "[/spoiler]";
+                }
+
                 var htmlString = _bbcodeProcessor.ToHtml(str);
-                if (!htmlString.Contains("<spoiler>"))
+                if (!htmlString.Contains("<spoiler>", StringComparison.InvariantCultureIgnoreCase))
                 {
                     return htmlString;
                 }

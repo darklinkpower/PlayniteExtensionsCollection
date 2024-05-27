@@ -72,6 +72,7 @@ namespace VndbApiDomain.SharedKernel
             public const string UMD = "umd";
             public const string NintendoOpticalDisc = "nod";
             public const string InternetDownload = "in";
+            public const string DownloadCard = "dc";
             public const string Other = "otc";
         }
 

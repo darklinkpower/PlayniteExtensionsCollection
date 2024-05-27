@@ -74,7 +74,7 @@ namespace VNDBNexus
 
             foreach (var item in regexFormatters)
             {
-                bbCodeString = Regex.Replace(bbCodeString, item.Key, item.Value);
+                bbCodeString = Regex.Replace(bbCodeString, item.Key, item.Value, RegexOptions.IgnoreCase);
             }
 
             return bbCodeString;
