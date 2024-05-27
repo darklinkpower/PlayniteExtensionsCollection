@@ -80,6 +80,7 @@
     <Compile Include="ProcessStarter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="TaskExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

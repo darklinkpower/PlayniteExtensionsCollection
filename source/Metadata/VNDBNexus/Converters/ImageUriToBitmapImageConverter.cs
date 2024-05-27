@@ -23,18 +23,59 @@ namespace VNDBNexus.Converters
             _storageDirectory = storageDirectory;
         }
 
+        public async Task<bool> DownloadUriToStorageAsync(Uri uri)
+        {
+            var storagePath = GetUriStorageLocation(uri);
+            if (FileSystem.FileExists(storagePath))
+            {
+                return true;
+            }
+
+            var request = HttpRequestFactory.GetHttpFileRequest()
+                .WithUrl(uri)
+                .WithDownloadTo(storagePath);
+            var result = await request.DownloadFileAsync();
+            if (!result.IsSuccess)
+            {
+                if (FileSystem.FileExists(storagePath))
+                {
+                    FileSystem.DeleteFileSafe(storagePath);
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private string GetUriStorageLocation(Uri uri)
+        {
+            var fileName = GetUriStorageFilename(uri);
+            return GetFilenameStorageLocation(fileName);
+        }
+
+        private string GetFilenameStorageLocation(string fileName)
+        {
+            return Path.Combine(_storageDirectory, Paths.GetSafePathName(fileName));
+        }
+
+        private string GetUriStorageFilename(Uri uri)
+        {
+            return Paths.ReplaceInvalidCharacters(uri.ToString().Replace(@"https://", string.Empty));
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is Uri uri)
             {
-                var fileName = Paths.ReplaceInvalidCharacters(uri.ToString().Replace(@"https://", string.Empty));
+                var fileName = GetUriStorageFilename(uri);
                 var existingCache = _imagesCacheManager.GetCache(fileName, true);
                 if (existingCache != null)
                 {
                     return existingCache.Item;
                 }
 
-                var storagePath = Path.Combine(_storageDirectory, Paths.GetSafePathName(fileName));
+                var storagePath = GetFilenameStorageLocation(fileName);
                 if (!FileSystem.FileExists(storagePath))
                 {
                     var request = HttpRequestFactory.GetHttpFileRequest()
@@ -43,6 +84,11 @@ namespace VNDBNexus.Converters
                     var result = request.DownloadFile();
                     if (!result.IsSuccess)
                     {
+                        if (FileSystem.FileExists(storagePath))
+                        {
+                            FileSystem.DeleteFileSafe(storagePath);
+                        }
+
                         return null;
                     }
                 }

@@ -53,6 +53,7 @@ namespace VNDBNexus.PlayniteControls
         private readonly VNDBNexusSettingsViewModel _settingsViewModel;
         private readonly DesktopView _activeViewAtCreation;
         private readonly DispatcherTimer _updateControlDataDelayTimer;
+        private readonly ImageUriToBitmapImageConverter _imageUriToBitmapImageConverter;
         private bool _isValuesDefaultState = true;
         private Game _currentGame;
         private Guid _activeContext = default;
@@ -439,6 +440,7 @@ namespace VNDBNexus.PlayniteControls
 
         public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter)
         {
+            _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
             Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
             _playniteApi = plugin.PlayniteApi;
             SetControlTextBlockStyle();
@@ -454,7 +456,7 @@ namespace VNDBNexus.PlayniteControls
 
             _updateControlDataDelayTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(1500)
+                Interval = TimeSpan.FromMilliseconds(1000)
             };
 
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
@@ -662,6 +664,7 @@ namespace VNDBNexus.PlayniteControls
                 }
 
                 visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
+                await DownloadVisualNovelImages(visualNovel);
             }
 
             var vnMatchingTags = _vndbDatabase.Tags.GetByIds(visualNovel.Tags.Select(x => x.Id)).ToDictionary(x => x.Id);
@@ -700,6 +703,10 @@ namespace VNDBNexus.PlayniteControls
                 }
 
                 charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
+                if (charactersGroup.Members != null)
+                {
+                    await DownloadCharactersImages(charactersGroup.Members);
+                }
             }
 
             var matchingCharacters = charactersGroup.Members;
@@ -732,6 +739,71 @@ namespace VNDBNexus.PlayniteControls
             _isValuesDefaultState = false;
 
             _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
+        }
+
+        private async Task DownloadCharactersImages(List<Character> characters)
+        {
+            if (!characters.HasItems())
+            {
+                return;
+            }
+
+            var tasks = new List<Func<Task>>();
+            foreach (var character in characters)
+            {
+                if (character.Image is null)
+                {
+                    continue;
+                }
+
+                tasks.Add(async () =>
+                {
+                    await _imageUriToBitmapImageConverter.DownloadUriToStorageAsync(character.Image.Url);
+                });
+            }
+
+            using (var taskExecutor = new TaskExecutor(6))
+            {
+                await taskExecutor.ExecuteAsync(tasks);
+            }
+        }
+
+        private async Task DownloadVisualNovelImages(VisualNovel visualNovel)
+        {
+            if (visualNovel is null)
+            {
+                return;
+            }
+
+            var tasks = new List<Func<Task>>();
+            if (visualNovel.Image != null)
+            {
+                tasks.Add(async () =>
+                {
+                    await _imageUriToBitmapImageConverter.DownloadUriToStorageAsync(visualNovel.Image.Url);
+                });
+            }
+
+            if (visualNovel.Screenshots.HasItems())
+            {
+                foreach (var vndbImage in visualNovel.Screenshots)
+                {
+                    tasks.Add(async () =>
+                    {
+                        await _imageUriToBitmapImageConverter.DownloadUriToStorageAsync(vndbImage.Url);
+                    });
+
+                    tasks.Add(async () =>
+                    {
+                        await _imageUriToBitmapImageConverter.DownloadUriToStorageAsync(vndbImage.ThumbnailUrl);
+                    });
+                }
+            }
+
+            using (var taskExecutor = new TaskExecutor(5))
+            {
+                await taskExecutor.ExecuteAsync(tasks);
+            }
         }
 
         private async Task<bool> UpdateVisualNovel(string vndbId, CancellationToken cancellationToken)
