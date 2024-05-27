@@ -85,10 +85,10 @@
     <sys:String x:Key="LOC_VndbNexus_PlayTimeLabel">Tempo di gioco</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VotesFormat">{0} voti</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RefreshDataLabel">Aggiorna dati</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_VisualNovelScreenshotsFormat">{0} screenshots</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_SelectedScreenshotPositionFormat">{0} of {1}</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_MoveBackLabel">Back</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_MoveNextLabel">Next</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VisualNovelScreenshotsFormat">{0} screenshot</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SelectedScreenshotPositionFormat">{0} di {1}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MoveBackLabel">Indietro</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MoveNextLabel">Avanti</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Sconosciuto</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabo</sys:String>
