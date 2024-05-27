@@ -287,6 +287,10 @@
     <Compile Include="PlayniteControls\VndbVisualNovelViewControl.xaml.cs">
       <DependentUpon>VndbVisualNovelViewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScreenshotsView\ScreenshotsView.xaml.cs">
+      <DependentUpon>ScreenshotsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenshotsView\ScreenshotsViewModel.cs" />
     <Compile Include="Shared\DatabaseCommon\CharacterWrapper.cs" />
     <Compile Include="Shared\DatabaseCommon\IDatabaseItem.cs" />
     <Compile Include="Shared\DatabaseCommon\IRepository.cs" />
@@ -324,6 +328,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PlayniteControls\VndbVisualNovelViewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreenshotsView\ScreenshotsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -86,6 +86,10 @@
     <sys:String x:Key="LOC_VndbNexus_PlayTimeLabel">Play time</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VotesFormat">{0} votes</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RefreshDataLabel">Refresh data</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VisualNovelScreenshotsFormat">{0} screenshots</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SelectedScreenshotPositionFormat">{0} of {1}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MoveBackLabel">Back</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MoveNextLabel">Next</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Unknown</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabic</sys:String>

@@ -136,8 +136,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Button Margin="0,10,10,0" Padding="1" Background="Transparent" BorderThickness="0"
-                                                Command="{Binding DataContext.OpenUriInWebViewCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                                CommandParameter="{Binding Url}">
+                                                Command="{Binding ElementName=MainGrid, Path=DataContext.OpenScreenshotCommand}"
+                                                CommandParameter="{Binding}">
                                             <Grid>
                                                 <Image Source="{Binding ThumbnailUrl, Mode=OneWay, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
                                                     Height="110" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both"

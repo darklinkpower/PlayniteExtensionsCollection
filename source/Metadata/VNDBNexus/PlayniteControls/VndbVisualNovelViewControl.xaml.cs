@@ -36,6 +36,7 @@ using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBNexus.Converters;
 using VNDBNexus.Database;
 using VNDBNexus.Enums;
+using VNDBNexus.Screenshots;
 using VNDBNexus.Shared.DatabaseCommon;
 
 namespace VNDBNexus.PlayniteControls
@@ -1018,9 +1019,49 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public void OpenVisualNovelScreenshots(VndbImage selectedImage = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            if (_activeVisualNovel is null || !_activeVisualNovel.Screenshots.HasItems())
+            {
+                return;
+            }
+
+            var window = _playniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = true
+            });
+
+            window.Width = 1330;
+            window.Height = 845;
+            window.Title = string.Format(
+                ResourceProvider.GetString("LOC_VndbNexus_VisualNovelScreenshotsFormat"),
+                _activeVisualNovel.Title);
+
+            var screenshotsViewModel = new ScreenshotsViewModel();
+            screenshotsViewModel.LoadImages(_activeVisualNovel.Screenshots);
+            if (selectedImage != null)
+            {
+                screenshotsViewModel.SelectImage(selectedImage);
+            }
+
+            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.DataContext = screenshotsViewModel;
+            window.Content = new ScreenshotsView(_imageUriToBitmapImageConverter);
+            window.ShowDialog();
+        }
+
+        public RelayCommand<object> OpenScreenshotCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (parameter is VndbImage vndbImage)
+                {
+                    OpenVisualNovelScreenshots(vndbImage);
+                }
+            });
         }
 
         public RelayCommand<VisualNovel> OpenVnVndbPageCommand
@@ -1154,6 +1195,11 @@ namespace VNDBNexus.PlayniteControls
                     }
                 }
             });
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
