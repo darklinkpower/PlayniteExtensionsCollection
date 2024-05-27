@@ -84,7 +84,7 @@
     <sys:String x:Key="LOC_VndbNexus_LengthVeryLong">Molto lungo</sys:String>
     <sys:String x:Key="LOC_VndbNexus_PlayTimeLabel">Tempo di gioco</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VotesFormat">{0} voti</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_RefreshDataLabel">Refresh data</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_RefreshDataLabel">Aggiorna dati</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Sconosciuto</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabo</sys:String>
