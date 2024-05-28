@@ -201,6 +201,7 @@
     <Compile Include="Services\VndbService.cs" />
     <Compile Include="SharedKernel\Requests\AliasesRequestFields.cs" />
     <Compile Include="SharedKernel\EnumUtilities.cs" />
+    <Compile Include="SharedKernel\Requests\DatabaseDumpsConstants.cs" />
     <Compile Include="SharedKernel\Requests\ExternalLinksRequestFields.cs" />
     <Compile Include="SharedKernel\Filters\FilterFactory.cs" />
     <Compile Include="SharedKernel\Filters\ComplexFilterBase.cs" />

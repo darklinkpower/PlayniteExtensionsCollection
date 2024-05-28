@@ -17,6 +17,7 @@ namespace DatabaseCommon
         private readonly object _bufferLock = new object();
         private readonly double _bufferProcessTime = 300;
         private readonly Timer _autoProcessTimer;
+        public int Count => _collection.Count();
 
         public LiteDbRepository(string databasePath)
         {

@@ -99,6 +99,8 @@ namespace VNDBNexus
 
         private bool _enableVnViewControl = true;
         public bool EnableVnViewControl { get => _enableVnViewControl; set => SetValue(ref _enableVnViewControl, value); }
+
+        public DateTime LastDataseDumpsUpdate = DateTime.MinValue;
     }
 
     public class VNDBNexusSettingsViewModel : ObservableObject, ISettings

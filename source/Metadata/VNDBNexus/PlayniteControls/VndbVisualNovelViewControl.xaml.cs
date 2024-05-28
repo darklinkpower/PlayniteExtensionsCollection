@@ -668,12 +668,12 @@ namespace VNDBNexus.PlayniteControls
                 await DownloadVisualNovelImages(visualNovel);
             }
 
-            var vnMatchingTags = _vndbDatabase.Tags.GetByIds(visualNovel.Tags.Select(x => x.Id)).ToDictionary(x => x.Id);
+            var vnMatchingTags = _vndbDatabase.DatabaseDumpTags.GetByIds(visualNovel.Tags.Select(x => x.Id)).ToDictionary(x => x.Id);
             foreach (var tag in visualNovel.Tags)
             {
                 if (vnMatchingTags.TryGetValue(tag.Id, out var matchingTag))
                 {
-                    tag.Name = matchingTag.Name;
+                    tag.Name = matchingTag.Tag.Name;
                 }
             }
 
@@ -716,7 +716,7 @@ namespace VNDBNexus.PlayniteControls
                 .Select(trait => trait.Id)
                 .Distinct();
 
-            var matchingTraits = _vndbDatabase.Traits.GetByIds(uniqueTraitIds).ToDictionary(x => x.Id);
+            var matchingTraits = _vndbDatabase.DatabaseDumpTraits.GetByIds(uniqueTraitIds).ToDictionary(x => x.Id);
 
             var groupedVoiceActors = new GroupedDictionary<string, VisualNovelVoiceActor>(visualNovel.VoiceActors, va => va.Character.Id);
             var characterWrappers = matchingCharacters.Select(c => GetCharacterWrapper(c, matchingTraits, groupedVoiceActors, visualNovel));
@@ -920,7 +920,7 @@ namespace VNDBNexus.PlayniteControls
 
         private CharacterWrapper GetCharacterWrapper(
             Character character,
-            Dictionary<string, Trait> matchingTraits,
+            Dictionary<string, DatabaseDumpTraitWrapper> matchingTraits,
             GroupedDictionary<string, VisualNovelVoiceActor> voiceActorsGroups,
             VisualNovel visualNovel)
         {
@@ -928,8 +928,8 @@ namespace VNDBNexus.PlayniteControls
             {
                 if (matchingTraits.TryGetValue(trait.Id, out var matchingTrait))
                 {
-                    trait.Name = matchingTrait.Name;
-                    trait.Description = matchingTrait.Description;
+                    trait.Name = matchingTrait.Trait.Name;
+                    trait.Description = matchingTrait.Trait.Description;
                 }
             }
 

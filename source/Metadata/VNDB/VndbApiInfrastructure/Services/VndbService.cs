@@ -3,15 +3,19 @@ using FlowHttp;
 using FlowHttp.Constants;
 using Newtonsoft.Json;
 using Playnite.SDK;
+using PluginsCommon;
 using RateLimiter;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VndbApiDomain.CharacterAggregate;
+using VndbApiDomain.DatabaseDumpTraitAggregate;
 using VndbApiDomain.ProducerAggregate;
 using VndbApiDomain.ReleaseAggregate;
 using VndbApiDomain.StaffAggregate;
@@ -19,8 +23,10 @@ using VndbApiDomain.TagAggregate;
 using VndbApiDomain.TraitAggregate;
 using VndbApiDomain.VisualNovelAggregate;
 using VndbApiInfrastructure.CharacterAggregate;
+using VndbApiInfrastructure.DatabaseDumpTagAggregate;
 using VndbApiInfrastructure.ProducerAggregate;
 using VndbApiInfrastructure.ReleaseAggregate;
+using VndbApiInfrastructure.SharedKernel.Requests;
 using VndbApiInfrastructure.SharedKernel.Responses;
 using VndbApiInfrastructure.StaffAggregate;
 using VndbApiInfrastructure.TagAggregate;
@@ -31,24 +37,24 @@ namespace VndbApiInfrastructure.Services
 {
     public static class VndbService
     {
-        private const string baseApiEndpoint = @"https://api.vndb.org/kana";
-        private const string postVnEndpoint = @"/vn";
-        private const string postReleaseEndpoint = @"/release";
-        private const string postProducerEndpoint = @"/producer";
-        private const string postCharacterEndpoint = @"/character";
-        private const string postStaffEndpoint = @"/staff";
-        private const string postTagEndpoint = @"/tag";
-        private const string postTraitEndpoint = @"/trait";
+        private const string _baseApiEndpoint = @"https://api.vndb.org/kana";
+        private const string _postVnEndpoint = @"/vn";
+        private const string _postReleaseEndpoint = @"/release";
+        private const string _postProducerEndpoint = @"/producer";
+        private const string _postCharacterEndpoint = @"/character";
+        private const string _postStaffEndpoint = @"/staff";
+        private const string _postTagEndpoint = @"/tag";
+        private const string _postTraitEndpoint = @"/trait";
         private static readonly TimeLimiter _requestsLimiter;
         private static readonly Dictionary<int, string> _errorMessages;
         private static readonly ILogger _logger = LogManager.GetLogger();
 
         static VndbService()
         {
-            // The server will allow up to 200 requests per 5 minutes and up to 1 second of execution time per minute.
-            // Using less for safety
+            // The server will allow up to 200 requests per 5 minutes and up to 
+            // 1 second of execution time per minute. Using less for safety.
             var constraint = new CountByIntervalAwaitableConstraint(30, TimeSpan.FromMinutes(1));
-            var constraint2 = new CountByIntervalAwaitableConstraint(100, TimeSpan.FromMilliseconds(700));
+            var constraint2 = new CountByIntervalAwaitableConstraint(5, TimeSpan.FromMilliseconds(700));
             _requestsLimiter = TimeLimiter.Compose(constraint, constraint2);
             _errorMessages = new Dictionary<int, string>
             {
@@ -63,7 +69,7 @@ namespace VndbApiInfrastructure.Services
 
         private static async Task<string> ExecuteRequestAsync(string endpointRoute, string postBody, CancellationToken cancellationToken)
         {
-            var url = string.Concat(baseApiEndpoint, endpointRoute);
+            var url = string.Concat(_baseApiEndpoint, endpointRoute);
             var request = HttpRequestFactory.GetHttpRequest()
                 .WithUrl(url)
                 .WithPostHttpMethod()
@@ -87,7 +93,7 @@ namespace VndbApiInfrastructure.Services
                     var isRateLimited = errorCode == 429;
                 }
 
-                _logger.Error(result.Error, $"Failed to perform request. Status code: \"{errorCode}\". Reason: \"{errorReason}\". Message: \"{result.ResponseReaderPhrase}\"");
+                _logger.Error(result.Error, $"Failed to perform request. Status code: \"{errorCode}\". Reason: \"{errorReason}\". Endpoint: \"{url}\". PostBody: \"{postBody}\"");
             }
 
             return null;
@@ -95,7 +101,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<Producer>> ExecutePostRequestAsync(ProducerRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postProducerEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postProducerEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -106,7 +112,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<Staff>> ExecutePostRequestAsync(StaffRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postStaffEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postStaffEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -117,7 +123,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<Trait>> ExecutePostRequestAsync(TraitRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postTraitEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postTraitEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -128,7 +134,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<Tag>> ExecutePostRequestAsync(TagRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postTagEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postTagEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -139,7 +145,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<Character>> ExecutePostRequestAsync(CharacterRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postCharacterEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postCharacterEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -150,7 +156,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<Release>> ExecutePostRequestAsync(ReleaseRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postReleaseEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postReleaseEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -161,7 +167,7 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<VndbDatabaseQueryReponse<VisualNovel>> ExecutePostRequestAsync(VisualNovelRequestQuery query, CancellationToken cancellationToken = default)
         {
-            var result = await ExecuteRequestAsync(postVnEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            var result = await ExecuteRequestAsync(_postVnEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
             if (result is null)
             {
                 return null;
@@ -172,37 +178,117 @@ namespace VndbApiInfrastructure.Services
 
         public static async Task<string> GetResponseFromPostRequest(ProducerRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postProducerEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postProducerEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
 
         public static async Task<string> GetResponseFromPostRequest(StaffRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postStaffEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postStaffEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
 
         public static async Task<string> GetResponseFromPostRequest(TraitRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postTraitEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postTraitEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
 
         public static async Task<string> GetResponseFromPostRequest(TagRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postTagEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postTagEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
 
         public static async Task<string> GetResponseFromPostRequest(CharacterRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postCharacterEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postCharacterEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
 
         public static async Task<string> GetResponseFromPostRequest(ReleaseRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postReleaseEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postReleaseEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
 
         public static async Task<string> GetResponseFromPostRequest(VisualNovelRequestQuery query, CancellationToken cancellationToken = default)
         {
-            return await ExecuteRequestAsync(postVnEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
+            return await ExecuteRequestAsync(_postVnEndpoint, JsonConvert.SerializeObject(query), cancellationToken);
         }
+
+        public static async Task<List<DatabaseDumpTag>> GetDatabaseDumpsTags(CancellationToken cancellationToken = default)
+        {
+            return await DownloadDatabaseDump<DatabaseDumpTag>(
+                DatabaseDumpsUrls.TagsUrl, cancellationToken);
+        }
+
+        public static async Task<List<DatabaseDumpTrait>> GetDatabaseDumpsTraits(CancellationToken cancellationToken = default)
+        {
+            return await DownloadDatabaseDump<DatabaseDumpTrait>(
+                DatabaseDumpsUrls.TraitsUrl, cancellationToken);
+        }
+
+        private async static Task<List<T>> DownloadDatabaseDump<T>(string downloadUrl, CancellationToken cancellationToken)
+        {
+            var tempGzFile = Path.Combine(Path.GetTempPath(), "file.gz");
+            var tempExtractedFile = Path.Combine(Path.GetTempPath(), "file.json");
+
+            try
+            {
+                if (FileSystem.FileExists(tempGzFile))
+                {
+                    FileSystem.DeleteFileSafe(tempGzFile);
+                }
+
+                if (FileSystem.FileExists(tempExtractedFile))
+                {
+                    FileSystem.DeleteFileSafe(tempExtractedFile);
+                }
+
+                var request = HttpRequestFactory.GetHttpFileRequest()
+                    .WithUrl(downloadUrl)
+                    .WithDownloadTo(tempGzFile);
+                var result = await _requestsLimiter.Enqueue(
+                    () => request.DownloadFileAsync(cancellationToken),
+                    cancellationToken);
+
+                if (!result.IsSuccess)
+                {
+                    return null;
+                }
+
+                ExtractGZipFile(tempGzFile, tempExtractedFile);
+                var fileContent = FileSystem.ReadStringFromFile(tempExtractedFile);
+                return JsonConvert.DeserializeObject<List<T>>(fileContent);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Failed to get dumps from {downloadUrl}");
+                return null;
+            }
+            finally
+            {
+                if (FileSystem.FileExists(tempGzFile))
+                {
+                    FileSystem.DeleteFileSafe(tempGzFile);
+                }
+
+                if (FileSystem.FileExists(tempExtractedFile))
+                {
+                    FileSystem.DeleteFileSafe(tempExtractedFile);
+                }
+            }
+        }
+
+        public static void ExtractGZipFile(string sourceFile, string destinationFile)
+        {
+            using (FileStream originalFileStream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read))
+            {
+                using (FileStream decompressedFileStream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write))
+                {
+                    using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
+                    {
+                        decompressionStream.CopyTo(decompressedFileStream);
+                    }
+                }
+            }
+        }
+
+
     }
 }

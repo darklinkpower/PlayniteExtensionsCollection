@@ -57,6 +57,8 @@
     <Compile Include="Aggregates\Character\CharacterSexEnum.cs" />
     <Compile Include="Aggregates\Character\CharacterTrait.cs" />
     <Compile Include="Aggregates\Character\CharacterVisualNovel.cs" />
+    <Compile Include="Aggregates\DatabaseDumpTag\DatabaseDumpTag.cs" />
+    <Compile Include="Aggregates\DatabaseDumpTrait\DatabaseDumpTrait.cs" />
     <Compile Include="Aggregates\Image\ImageDimensions.cs" />
     <Compile Include="Aggregates\Image\ImageSexualityLevelEnum.cs" />
     <Compile Include="Aggregates\Image\ImageViolenceLevelEnum.cs" />
@@ -100,7 +102,6 @@
     <Compile Include="SharedKernel\Attributes\IntStringRepresentationAttribute.cs" />
     <Compile Include="SharedKernel\Attributes\StringRepresentationAttribute.cs" />
     <Compile Include="SharedKernel\Constants\Aliases.cs" />
-    <Compile Include="SharedKernel\Constants\DatabaseDumps.cs" />
     <Compile Include="SharedKernel\Constants\ExtLinks.cs" />
     <Compile Include="SharedKernel\Constants\QueryEnums.cs" />
     <Compile Include="SharedKernel\Constants\SpoilerLevel.cs" />

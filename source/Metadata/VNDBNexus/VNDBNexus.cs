@@ -16,15 +16,19 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using TemporaryCache;
 using VndbApiDomain.CharacterAggregate;
+using VndbApiDomain.DatabaseDumpTraitAggregate;
 using VndbApiDomain.ProducerAggregate;
 using VndbApiDomain.ReleaseAggregate;
+using VndbApiDomain.SharedKernel.Entities;
 using VndbApiDomain.StaffAggregate;
 using VndbApiDomain.TagAggregate;
 using VndbApiDomain.TraitAggregate;
 using VndbApiDomain.VisualNovelAggregate;
 using VndbApiInfrastructure.CharacterAggregate;
+using VndbApiInfrastructure.DatabaseDumpTagAggregate;
 using VndbApiInfrastructure.ProducerAggregate;
 using VndbApiInfrastructure.ReleaseAggregate;
+using VndbApiInfrastructure.Services;
 using VndbApiInfrastructure.SharedKernel.Responses;
 using VndbApiInfrastructure.StaffAggregate;
 using VndbApiInfrastructure.TagAggregate;
@@ -154,89 +158,67 @@ namespace VNDBNexus
             var vnFilter = VisualNovelFilterFactory.Search.EqualTo("a");
             var vnQuery = new VisualNovelRequestQuery(vnFilter); ;
             //var vnQueryResult = vndbService.ExecutePostRequestAsync(vnQuery).GetAwaiter().GetResult();
-
-            var ss = "";
         }
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            Tests();
-            //var tags = JsonConvert.DeserializeObject<List<Tag>>(FileSystem.ReadStringFromFile(tagsPath));
-            //var traits = JsonConvert.DeserializeObject<List<Trait>>(FileSystem.ReadStringFromFile(traitsPath));
-            //tags.ForEach(t => t.Id = $"g{t.Id}");
-            //traits.ForEach(t => t.Id = $"i{t.Id}");
-
-            //_vndbDatabase.Tags.DeleteAll();
-            //_vndbDatabase.Tags.InsertBulk(tags);
-
-            //_vndbDatabase.Traits.DeleteAll();
-            //_vndbDatabase.Traits.InsertBulk(traits);
-
-            //var sdd = "";
-            //var filterTwo = ProducerFilterFactory.Language.EqualTo(LanguageEnum.English);
-            //var complexFilter = ProducerFilterFactory.And(filterOne, filterTwo);
-
-            //var filterOneJson = filterOne.ToJsonString();
-            //var filterTwoJson = filterTwo.ToJsonString();
-            //var complexFilterJson = complexFilter.ToJsonString();
-            //var complexQuery = new ProducerRequestQuery(complexFilter);
-
-            //var simpleQuerySerialized = Serialization.ToJson(producerQuery);
-            //var complexQuerySerialized = Serialization.ToJson(complexQuery);
-
-            //var complexQueryResult = vndbService.ExecutePostRequestAsync(complexQuery).GetAwaiter().GetResult();
-
-            //var requestSettings = new VisualNovelFieldsSettings();
-            //var request = requestSettings.ToString();
-
-            //var predicateOne = new SimplePredicate("Name 1", Operators.OrderingOperator.GreaterOrEqual, "string");
-            //var predicateTwo = new SimplePredicate("Name 1", Operators.OrderingOperator.GreaterOrEqual, predicateOne);
-
-            //var sss = Operators.OrderingOperator.GreaterOrEqual;
-            //var predicate1 = new ComplexPredicate(Operators.Predicates.Or,
-            //    new SimplePredicate(ReleaseConstants.Filters.Lang, Operators.OrderingOperator.GreaterOrEqual, QueryEnums.Language.English),
-            //    new SimplePredicate(ReleaseConstants.Filters.Lang, Operators.Matching.IsEqual, QueryEnums.Language.German),
-            //    new SimplePredicate(ReleaseConstants.Filters.Lang, Operators.Matching.IsEqual, QueryEnums.Language.French));
-
-            //var predicate2 = new SimplePredicate(VnConstants.Filters.OriginalLanguage, Operators.Inverting.NotEqual, QueryEnums.Language.Japanese);
-
-            //var releaseCondition = new ComplexPredicate(Operators.Predicates.Or,
-            //    new SimplePredicate(ReleaseConstants.Filters.Released, Operators.Ordering.GreaterThanOrEqual, "2020-01-01"),
-            //    new SimplePredicate(ReleaseConstants.Filters.Producer, Operators.Matching.IsEqual, new SimplePredicate(ProducerConstants.Filters.Id, Operators.Matching.IsEqual, "p30")));
-            //var predicate3 = new SimplePredicate(VnConstants.Filters.Release, Operators.Matching.IsEqual, releaseCondition);
-
-            //var complexFilter = new ComplexPredicate(Operators.Predicates.And,
-            //    predicate1,
-            //    predicate2,
-            //    predicate3);
-
-            //var query = new VndbQuery(complexFilter, requestSettings);
-            //var queryJson = JsonConvert.SerializeObject(query, Formatting.None);
-
-            //var steamFilter = new SimplePredicate(VnConstants.Filters.Release, Operators.Matching.IsEqual, new SimplePredicate(ReleaseConstants.Filters.ExtLink, Operators.Matching.IsEqual, new object[] { ExtLinks.Release.Steam, 888790 }));
-            //var steamquery = new VndbQuery(steamFilter, requestSettings);
-            //var steamqueryJson = JsonConvert.SerializeObject(steamquery, Formatting.None);
-
-            //var attribute = new ProducerA.FilterStringAttribute("someValue");
-            //string value = attribute.GetValue();
-            //var ssdsd = FilterFlags.Invertible;
-            //var builder = new VNDB.Models.StandardPredicateBuilder<VNDB.Enums.SpoilerLevelEnum, int, int>("images");
-            //var predicate = builder.EqualTo(VNDB.Enums.SpoilerLevelEnum.Major, 2, 3);
-            ////var ssss = new SimplePredicate(ProducerFilters.Lang, );
-
-            //var vnSearch = new StandardPredicateBuilder<string>("search");
-
-            //var vnLangSearch = VnRequests.Lang;
-            //var vnLangSearchP = VnRequests.Lang.EqualTo("english");
-
-            //vnSearch.--------------------
-            //var vnSearchPredicate = vnSearch.EqualTo("My vn name");
-
-            //var vnSearchPredicate = vnSearch("My vn name").AreEqual();
-            //var vnSearchPredicate = vnSearch("My vn name").EqualTo();
-
-            //var vnIdPredicate = vnIdSearch(23).IsGreater();
+            if (ShouldUpdateDumps())
+            {
+                var updateSuccess = Task.Run(() => UpdateTags()).GetAwaiter().GetResult();
+                if (updateSuccess)
+                {
+                    Settings.Settings.LastDataseDumpsUpdate = DateTime.Now;
+                    SavePluginSettings(Settings.Settings);
+                }
+            }
         }
+
+        private async Task<bool> UpdateTags()
+        {
+            var tags = await VndbService.GetDatabaseDumpsTags();            
+            if (tags is null)
+            {
+                return false;
+            }
+
+            var traits = await VndbService.GetDatabaseDumpsTraits();
+            if (traits is null)
+            {
+                return false;
+            }
+
+            var tagWrappers = tags.Select(x => new DatatabaseDumpTagWrapper(x));
+            var traitWrappers = traits.Select(x => new DatatabaseDumpTraitWrapper(x));
+
+            _vndbDatabase.DatabaseDumpTags.DeleteAll();
+            _vndbDatabase.DatabaseDumpTags.InsertBulk(tagWrappers);
+
+            _vndbDatabase.DatabaseDumpTraits.DeleteAll();
+            _vndbDatabase.DatabaseDumpTraits.InsertBulk(traitWrappers);
+            return true;
+        }
+
+        private bool ShouldUpdateDumps()
+        {
+            var timeElapsed = DateTime.Now - Settings.Settings.LastDataseDumpsUpdate;
+            if (timeElapsed >= TimeSpan.FromDays(7))
+            {
+                return true;
+            }
+
+            if (_vndbDatabase.DatabaseDumpTags.Count == 0)
+            {
+                return true;
+            }
+
+            if (_vndbDatabase.DatabaseDumpTraits.Count == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
     }
 }

@@ -203,9 +203,6 @@ namespace VndbApiInfrastructure.CharacterAggregate
             /// </summary>
             public const string TraitsLie = "traits.lie";
 
-
-
-
             /// <summary>
             /// Object, possibly null, same sub-fields as the image visual novel field. 
             /// (Except for thumbnail and thumbnail_dims because character images are currently always limited to 256x300px, but that is subject to change in the future).

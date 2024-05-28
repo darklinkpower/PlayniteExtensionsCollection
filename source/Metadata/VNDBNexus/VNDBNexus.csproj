@@ -281,6 +281,8 @@
     <Compile Include="Converters\ImageUriToBitmapImageConverter.cs" />
     <Compile Include="Converters\TraitGroupAndSpoilerFilterConverter.cs" />
     <Compile Include="Converters\VnRelationFiltererConverter.cs" />
+    <Compile Include="Database\DatatabaseDumpTagWrapper.cs" />
+    <Compile Include="Database\DatatabaseDumpTraitWrapper.cs" />
     <Compile Include="Database\GroupedEnumerable.cs" />
     <Compile Include="Database\VisualNovelRelationList.cs" />
     <Compile Include="Enums\TagsDisplayOptionEnum.cs" />

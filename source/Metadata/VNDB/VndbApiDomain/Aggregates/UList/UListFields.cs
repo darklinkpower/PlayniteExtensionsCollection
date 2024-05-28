@@ -24,7 +24,4 @@ namespace VndbApiDomain.UListAggregate
         Releases = 1 << 11,
         ReleasesListStatus = 1 << 12
     }
-
-    // Excluded fields: 
-    // Vn.*, releases.*
 }
