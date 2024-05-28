@@ -1,0 +1,18 @@
+﻿Id: SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b
+Name: Generic Plugin
+Author: darklinkpower
+Version: 1.0
+Module: SteamScreenshots.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Support
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/Steam%20Screenshots
+    - Name: Issues Tracker
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/Steam%20Screenshots
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
+    - Name: Ko-fi (Tips and Donations)
+      Url: https://ko-fi.com/darklinkpower

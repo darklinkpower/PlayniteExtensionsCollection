@@ -4,6 +4,7 @@ using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
+using PluginsCommon.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -655,6 +656,7 @@ namespace VNDBNexus.PlayniteControls
         {
             var contextId = Guid.NewGuid();
             _activeContext = contextId;
+            _isValuesDefaultState = false;
             var visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
             if (visualNovel is null || forceUpdate)
             {
@@ -737,8 +739,6 @@ namespace VNDBNexus.PlayniteControls
 
             var groupedDevelopers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(developers.Distinct(), dev => dev.Language);
             var groupedPublishers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(publishers.Distinct(), dev => dev.Language);
-            _isValuesDefaultState = false;
-
             _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
         }
 

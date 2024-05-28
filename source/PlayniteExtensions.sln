@@ -93,6 +93,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiDomain", "Metadata\V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiInfrastructure", "Metadata\VNDB\VndbApiInfrastructure\VndbApiInfrastructure.csproj", "{13817ADD-ED1D-47BF-B734-10B63D20ECB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamScreenshots", "Generic\SteamScreenshots\SteamScreenshots.csproj", "{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -259,6 +261,10 @@ Global
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -305,6 +311,7 @@ Global
 		{F608FE6C-231A-42B5-806E-49B8B8E0CFEF} = {BC5A7304-24C6-48B1-A1F8-9BDC4DD4B6E5}
 		{38AF54C8-402D-4C31-8000-951605BC4B64} = {F608FE6C-231A-42B5-806E-49B8B8E0CFEF}
 		{13817ADD-ED1D-47BF-B734-10B63D20ECB7} = {F608FE6C-231A-42B5-806E-49B8B8E0CFEF}
+		{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}

@@ -66,9 +66,12 @@ namespace SteamCommon.Models
 
             public class Screenshot
             {
-                public int id;
-                public string path_thumbnail;
-                public string path_full;
+                [SerializationPropertyName("id")]
+                public int Id { get; set; }
+                [SerializationPropertyName("path_thumbnail")]
+                public Uri PathThumbnail { get; set; }
+                [SerializationPropertyName("path_full")]
+                public Uri PathFull { get; set; }
             }
 
             public class Movie

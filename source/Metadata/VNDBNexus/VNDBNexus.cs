@@ -6,6 +6,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
+using PluginsCommon.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;

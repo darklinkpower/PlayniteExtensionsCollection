@@ -11,16 +11,18 @@ using FlowHttp;
 using System.Windows.Media.Imaging;
 using TemporaryCache;
 
-namespace VNDBNexus.Converters
+namespace PluginsCommon.Converters
 {
     public class ImageUriToBitmapImageConverter : IValueConverter
     {
         private readonly string _storageDirectory;
+        private readonly bool _useLocalPathForFilenames;
         private static readonly CacheManager<string, BitmapImage> _imagesCacheManager = new CacheManager<string, BitmapImage>(TimeSpan.FromSeconds(60));
 
-        public ImageUriToBitmapImageConverter(string storageDirectory)
+        public ImageUriToBitmapImageConverter(string storageDirectory, bool useLocalPathForFilenames = false)
         {
             _storageDirectory = storageDirectory;
+            _useLocalPathForFilenames = useLocalPathForFilenames;
         }
 
         public async Task<bool> DownloadUriToStorageAsync(Uri uri)
@@ -54,14 +56,21 @@ namespace VNDBNexus.Converters
             return GetFilenameStorageLocation(fileName);
         }
 
+        private string GetUriStorageFilename(Uri uri)
+        {
+            if (_useLocalPathForFilenames)
+            {
+                return Paths.ReplaceInvalidCharacters(Path.GetFileName(uri.LocalPath));
+            }
+            else
+            {
+                return Paths.ReplaceInvalidCharacters(uri.ToString().Replace(@"https://", string.Empty));
+            }
+        }
+
         private string GetFilenameStorageLocation(string fileName)
         {
             return Path.Combine(_storageDirectory, Paths.GetSafePathName(fileName));
-        }
-
-        private string GetUriStorageFilename(Uri uri)
-        {
-            return Paths.ReplaceInvalidCharacters(uri.ToString().Replace(@"https://", string.Empty));
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

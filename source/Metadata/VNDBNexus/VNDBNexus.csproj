@@ -177,6 +177,9 @@
     <Compile Include="..\..\Common\PluginsCommon\Converters\BooleanToVisibilityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\BooleanToVisibilityConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\ConvertersUtilities.cs">
+      <Link>Shared\PluginsCommon\Converters\ConvertersUtilities.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\EnumerableStringJoinConverter.cs">
       <Link>Shared\PluginsCommon\Converters\EnumerableStringJoinConverter.cs</Link>
     </Compile>
@@ -194,6 +197,9 @@
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\ImageUriToBitmapImageConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\ImageUriToBitmapImageConverter.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedEnumValueToVisibilityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\InvertedEnumValueToVisibilityConverter.cs</Link>
@@ -274,11 +280,9 @@
     <Compile Include="Controls\VnRelationControl.cs" />
     <Compile Include="Converters\BbCodeToHtmlStringConverter.cs" />
     <Compile Include="Converters\CharacterBirthdayToStringConverter.cs" />
-    <Compile Include="Converters\ConvertersUtilities.cs" />
     <Compile Include="Converters\ReleaseToAdditionalnformationConverter.cs" />
     <Compile Include="Converters\CharacterToMeasurementsStringConverter.cs" />
     <Compile Include="Converters\EnumToLocalizationStringConverter.cs" />
-    <Compile Include="Converters\ImageUriToBitmapImageConverter.cs" />
     <Compile Include="Converters\TraitGroupAndSpoilerFilterConverter.cs" />
     <Compile Include="Converters\VnRelationFiltererConverter.cs" />
     <Compile Include="Database\DatabaseDumpTagWrapper.cs" />

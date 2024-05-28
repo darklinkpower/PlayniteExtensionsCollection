@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace VNDBNexus.Converters
+namespace PluginsCommon.Converters
 {
     public static class ConvertersUtilities
     {
