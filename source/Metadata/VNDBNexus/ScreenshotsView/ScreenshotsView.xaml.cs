@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using PluginsCommon.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,22 @@ namespace VNDBNexus.Screenshots
         {
             Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
             SetControlTextBlockStyle();
-
+            Loaded += ScreenshotsView_Loaded;
+            Unloaded += ScreenshotsView_Unloaded;
+            Focusable = true;
             InitializeComponent();
+        }
+
+        private void ScreenshotsView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= ScreenshotsView_Loaded;
+            Unloaded -= ScreenshotsView_Unloaded;
+        }
+
+        private void ScreenshotsView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Focus();
+            Keyboard.Focus(this);
         }
 
         private void SetControlTextBlockStyle()

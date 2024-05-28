@@ -10,6 +10,10 @@
     <UserControl.Resources>
         <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding BackCommand}" />
+        <KeyBinding Key="Right" Command="{Binding NextCommand}" />
+    </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
