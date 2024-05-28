@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace FlowHttp.Results
 {
-    public class HttpFileDownloadResult : HttpResultBase
+    internal class HttpFileDownloadResult : HttpResultBase
     {
         /// <summary>
         /// Gets the string value of the download request.
         /// </summary>
-        public string DownloadPath { get; }
+        internal string DownloadPath { get; }
 
-        public string DownloadDirectory => !string.IsNullOrEmpty(DownloadPath) ? Path.GetDirectoryName(DownloadPath) : null;
+        internal string DownloadDirectory => !string.IsNullOrEmpty(DownloadPath) ? Path.GetDirectoryName(DownloadPath) : null;
         /// <summary>
         /// Gets the long value that indicates the size of the downloaded file in bytes.
         /// </summary>
-        public long FileSize { get; }
+        internal long FileSize { get; }
 
         private HttpFileDownloadResult(Uri url, bool isSuccess, FileInfo fileInfo, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
             : base(url, isSuccess, error, httpStatusCode, httpResponseMessage)

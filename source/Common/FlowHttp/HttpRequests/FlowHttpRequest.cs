@@ -13,19 +13,19 @@ using FlowHttp.Results;
 
 namespace FlowHttp.Requests
 {
-    public class FlowHttpRequest : FlowHttpRequestBase<FlowHttpRequest>
+    internal class FlowHttpRequest : FlowHttpRequestBase<FlowHttpRequest>
     {
-        public FlowHttpRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
+        internal FlowHttpRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
 
         }
 
-        public HttpContentResult<string> DownloadString(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
+        internal HttpContentResult<string> DownloadString(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
             return Task.Run(() => DownloadStringAsync(cancellationToken, downloadStateController, stateChangedCallback, progressChangedCallback)).GetAwaiter().GetResult();
         }
 
-        public async Task<HttpContentResult<string>> DownloadStringAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
+        internal async Task<HttpContentResult<string>> DownloadStringAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
 #if DEBUG
             _logger.Info($"Starting download of url \"{_url}\"...");

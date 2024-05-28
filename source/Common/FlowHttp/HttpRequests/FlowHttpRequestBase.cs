@@ -15,7 +15,7 @@ using Playnite.SDK;
 
 namespace FlowHttp.Requests
 {
-    public abstract class FlowHttpRequestBase<T> where T : FlowHttpRequestBase<T>
+    internal abstract class FlowHttpRequestBase<T> where T : FlowHttpRequestBase<T>
     {
         protected static readonly ILogger _logger = LogManager.GetLogger();
 

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace FlowHttp.Results
 {
-    public abstract class HttpResultBase
+    internal abstract class HttpResultBase
     {
-        public bool IsSuccess { get; }
-        public bool IsFailure => !IsSuccess;
-        public bool IsCancelled => Error is OperationCanceledException;
-        public Uri Url { get; }
-        public Exception Error { get; }
-        public HttpStatusCode? HttpStatusCode { get; }
-        public Dictionary<string, string> ResponseHeaders { get; }
-        public string ResponseReaderPhrase { get; }
-        public Dictionary<string, string> ContentHeaders { get; }
-        public List<Cookie> ResponseCookies { get; }
+        internal bool IsSuccess { get; }
+        internal bool IsFailure => !IsSuccess;
+        internal bool IsCancelled => Error is OperationCanceledException;
+        internal Uri Url { get; }
+        internal Exception Error { get; }
+        internal HttpStatusCode? HttpStatusCode { get; }
+        internal Dictionary<string, string> ResponseHeaders { get; }
+        internal string ResponseReaderPhrase { get; }
+        internal Dictionary<string, string> ContentHeaders { get; }
+        internal List<Cookie> ResponseCookies { get; }
 
         protected HttpResultBase(Uri url, bool isSuccess, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
         {

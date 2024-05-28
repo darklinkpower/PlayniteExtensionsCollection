@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace FlowHttp.Results
 {
-    public class HttpContentResult<T> : HttpResultBase
+    internal class HttpContentResult<T> : HttpResultBase
     {
-        public T Content { get; }
+        internal T Content { get; }
 
         private HttpContentResult(Uri url, bool isSuccess, T content, Exception error, HttpStatusCode? httpStatusCode, HttpResponseMessage httpResponseMessage)
             : base(url, isSuccess, error, httpStatusCode, httpResponseMessage)

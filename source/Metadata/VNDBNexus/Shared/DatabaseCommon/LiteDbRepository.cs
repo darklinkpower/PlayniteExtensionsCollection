@@ -143,7 +143,7 @@ namespace DatabaseCommon
         public bool InsertOrReplace(T item)
         {
             var existingItem = GetById(item.Id);
-            if (existingItem is null || Delete(existingItem))
+            if (existingItem == null || Delete(existingItem))
             {
                 _collection.Insert(item);
                 return true;
