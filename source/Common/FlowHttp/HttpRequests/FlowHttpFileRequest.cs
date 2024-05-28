@@ -100,31 +100,48 @@ namespace FlowHttp.Requests
                 StringContent stringContent = null;
                 try
                 {
+                    int redirectCount = 0;
+                    int maxRedirects = _maxRedirects;
+                    var currentUrl = _url;
                     if (!string.IsNullOrEmpty(_content))
                     {
                         stringContent = new StringContent(_content, _contentEncoding, _contentMediaType);
                     }
 
-                    using (var request = CreateRequest(_url, stringContent, resumeOffset))
+                    while (redirectCount <= maxRedirects)
                     {
-                        var httpClient = _httpClientFactory.GetClient(request);
-                        using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token))
+                        using (var request = CreateRequest(currentUrl, stringContent, resumeOffset))
                         {
-                            httpStatusCode = response.StatusCode;
-                            response.EnsureSuccessStatusCode();
-
-                            if (appendToFile && response.Content.Headers.ContentRange is null)
+                            var httpClient = _httpClientFactory.GetClient(request);
+                            using (var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
                             {
-                                throw new MissingContentRangeHeaderException();
-                            }
+                                httpStatusCode = response.StatusCode;
+                                if (httpStatusCode == HttpStatusCode.Redirect ||
+                                    httpStatusCode == HttpStatusCode.Moved ||
+                                    httpStatusCode == HttpStatusCode.RedirectMethod ||
+                                    httpStatusCode == HttpStatusCode.TemporaryRedirect ||
+                                    (int)httpStatusCode == 308) // Permanent Redirect (308) is not in HttpStatusCode enum
+                                {
+                                    currentUrl = response.Headers.Location;
+                                    redirectCount++;
+                                    continue;
+                                }
 
-                            await SaveFileContent(response, cts.Token, appendToFile, downloadStateController, stateChangedCallback, progressChangedCallback);
-                            var fileInfo = new FileInfo(_downloadPath);
-                            var result = HttpFileDownloadResult.Success(_url, fileInfo, httpStatusCode, response);
-                            OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Completed);
-                            return result;
+                                if (appendToFile && response.Content.Headers.ContentRange is null)
+                                {
+                                    throw new MissingContentRangeHeaderException();
+                                }
+
+                                await SaveFileContent(response, cts.Token, appendToFile, downloadStateController, stateChangedCallback, progressChangedCallback);
+                                var fileInfo = new FileInfo(_downloadPath);
+                                var result = HttpFileDownloadResult.Success(_url, fileInfo, httpStatusCode, response);
+                                OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Completed);
+                                return result;
+                            }
                         }
                     }
+
+                    throw new HttpRequestException($"Too many redirects: {redirectCount}");
                 }
                 catch (MissingContentRangeHeaderException ex)
                 {

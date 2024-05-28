@@ -29,6 +29,7 @@ namespace FlowHttp.Requests
         protected readonly List<Cookie> _cookies = new List<Cookie>();
         protected TimeSpan? _timeout;
         protected TimeSpan _progressReportInterval = TimeSpan.FromMilliseconds(1000);
+        protected int _maxRedirects = 4;
 
         /// <summary>
         /// Initializes a new instance of the HttpRequesT class with the specified HttpClientFactory.
@@ -36,6 +37,16 @@ namespace FlowHttp.Requests
         public FlowHttpRequestBase(HttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
+        }
+
+        public T WithMaxRedirects(int maxRedirects)
+        {
+            if (maxRedirects >= 0)
+            {
+                _maxRedirects = maxRedirects;
+            }
+            
+            return (T)this;
         }
 
         public T WithUrl(string url)
@@ -155,7 +166,7 @@ namespace FlowHttp.Requests
         protected HttpRequestMessage CreateRequest(Uri url, StringContent stringContent, long resumeOffset = 0)
         {
             var request = new HttpRequestMessage(_httpMethod, url);
-            if (_headers != null)
+            if (_headers != null && _headers.Count > 0)
             {
                 foreach (var header in _headers)
                 {
