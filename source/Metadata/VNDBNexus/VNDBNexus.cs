@@ -187,8 +187,8 @@ namespace VNDBNexus
                 return false;
             }
 
-            var tagWrappers = tags.Select(x => new DatatabaseDumpTagWrapper(x));
-            var traitWrappers = traits.Select(x => new DatatabaseDumpTraitWrapper(x));
+            var tagWrappers = tags.Select(x => new DatabaseDumpTagWrapper(x));
+            var traitWrappers = traits.Select(x => new DatabaseDumpTraitWrapper(x));
 
             _vndbDatabase.DatabaseDumpTags.DeleteAll();
             _vndbDatabase.DatabaseDumpTags.InsertBulk(tagWrappers);
