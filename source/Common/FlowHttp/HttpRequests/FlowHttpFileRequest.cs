@@ -25,13 +25,13 @@ namespace FlowHttp.Requests
 
         }
 
-        public FlowHttpFileRequest WithDownloadTo(string filePath)
+        internal FlowHttpFileRequest WithDownloadTo(string filePath)
         {
             _downloadPath = filePath;
             return this;
         }
 
-        public FlowHttpFileRequest WithAppendToFile(bool appendToFile)
+        internal FlowHttpFileRequest WithAppendToFile(bool appendToFile)
         {
             _appendToFile = appendToFile;
             return this;
@@ -45,7 +45,7 @@ namespace FlowHttp.Requests
         /// <param name="stateChangedCallback">The optional callback for reporting changes in download state.</param>
         /// <param name="progressChangedCallback">The optional callback for reporting download progress.</param>
         /// <returns>The result of the download and file-saving operation represented by an <see cref="HttpFileDownloadResult"/>.</returns>
-        public HttpFileDownloadResult DownloadFile(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
+        internal HttpFileDownloadResult DownloadFile(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
             return Task.Run(() => DownloadFileAsync(cancellationToken, downloadStateController, stateChangedCallback, progressChangedCallback)).GetAwaiter().GetResult();
         }
@@ -58,7 +58,7 @@ namespace FlowHttp.Requests
         /// <param name="stateChangedCallback">The optional callback for reporting changes in download state.</param>
         /// <param name="progressChangedCallback">The optional callback for reporting download progress.</param>
         /// <returns>An awaitable task representing the asynchronous download and file-saving operation. The task's result is the <see cref="HttpFileDownloadResult"/>.</returns>
-        public async Task<HttpFileDownloadResult> DownloadFileAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
+        internal async Task<HttpFileDownloadResult> DownloadFileAsync(CancellationToken cancellationToken = default, DownloadStateController downloadStateController = null, DownloadStateChangedCallback stateChangedCallback = null, DownloadProgressChangedCallback progressChangedCallback = null)
         {
             if (_url is null)
             {

@@ -12,7 +12,7 @@ namespace FlowHttp
     /// <summary>
     /// Factory for creating and managing instances of HttpClient for HTTP requests.
     /// </summary>
-    public class HttpClientFactory
+    internal class HttpClientFactory
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _clientForCookiesName = "ClientForCookiesUse";
@@ -48,7 +48,7 @@ namespace FlowHttp
         /// </summary>
         /// <param name="httpRequestMessage">The HttpRequestMessage for which an HttpClient is requested.</param>
         /// <returns>An HttpClient instance for the specified request.</returns>
-        public HttpClient GetClient(HttpRequestMessage httpRequestMessage)
+        internal HttpClient GetClient(HttpRequestMessage httpRequestMessage)
         {
             if (httpRequestMessage.Headers.Contains("Cookie"))
             {

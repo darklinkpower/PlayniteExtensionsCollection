@@ -10,7 +10,7 @@ namespace FlowHttp
     /// <summary>
     /// Controls the state of a download operation, allowing pausing, resuming, and cancelling.
     /// </summary>
-    public class DownloadStateController : IDisposable
+    internal class DownloadStateController : IDisposable
     {
         private readonly object _lock = new object();
         private readonly object _disposeLock = new object();
@@ -22,12 +22,12 @@ namespace FlowHttp
         /// <summary>
         /// Gets the CancellationToken associated with the download operation.
         /// </summary>
-        public CancellationToken CancellationToken => _cancellationTokenSource.Token;
+        internal CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
         /// <summary>
         /// Pauses the download operation.
         /// </summary>
-        public void Pause()
+        internal void Pause()
         {
             lock (_lock)
             {
@@ -36,7 +36,7 @@ namespace FlowHttp
             }
         }
 
-        public async Task PauseAsync()
+        internal async Task PauseAsync()
         {
             lock (_lock)
             {
@@ -50,7 +50,7 @@ namespace FlowHttp
         /// <summary>
         /// Resumes the download operation.
         /// </summary>
-        public void Resume()
+        internal void Resume()
         {
             lock (_lock)
             {
@@ -64,7 +64,7 @@ namespace FlowHttp
         /// Checks if the download operation is paused.
         /// </summary>
         /// <returns>True if the download is paused, otherwise false.</returns>
-        public bool IsPaused()
+        internal bool IsPaused()
         {
             lock (_lock)
             {
@@ -75,7 +75,7 @@ namespace FlowHttp
         /// <summary>
         /// Cancels the download operation.
         /// </summary>
-        public void Cancel()
+        internal void Cancel()
         {
             lock (_lock)
             {
@@ -91,7 +91,7 @@ namespace FlowHttp
         /// <summary>
         /// Resets the download state controller, clearing the pause state and creating a new CancellationTokenSource.
         /// </summary>
-        public void Reset()
+        internal void Reset()
         {
             lock (_lock)
             {

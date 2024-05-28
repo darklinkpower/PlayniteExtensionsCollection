@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlowHttp.Enums
 {
-    public enum HttpRequestClientStatus
+    internal enum HttpRequestClientStatus
     {
         Idle,
         Downloading,

@@ -34,12 +34,12 @@ namespace FlowHttp.Requests
         /// <summary>
         /// Initializes a new instance of the HttpRequesT class with the specified HttpClientFactory.
         /// </summary>
-        public FlowHttpRequestBase(HttpClientFactory httpClientFactory)
+        internal FlowHttpRequestBase(HttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public T WithMaxRedirects(int maxRedirects)
+        internal T WithMaxRedirects(int maxRedirects)
         {
             if (maxRedirects >= 0)
             {
@@ -49,19 +49,19 @@ namespace FlowHttp.Requests
             return (T)this;
         }
 
-        public T WithUrl(string url)
+        internal T WithUrl(string url)
         {
             _url = new Uri(url);
             return (T)this;
         }
 
-        public T WithUrl(Uri url)
+        internal T WithUrl(Uri url)
         {
             _url = new Uri(url.AbsoluteUri);
             return (T)this;
         }
 
-        public T WithContent(string content, HttpContentType httpContentType = null, Encoding encoding = null)
+        internal T WithContent(string content, HttpContentType httpContentType = null, Encoding encoding = null)
         {
             _content = content;
             if (encoding != null)
@@ -77,20 +77,20 @@ namespace FlowHttp.Requests
             return (T)this;
         }
 
-        public T WithHeaders(Dictionary<string, string> headers)
+        internal T WithHeaders(Dictionary<string, string> headers)
         {
             _headers.Clear();
             headers.ForEach(kv => _headers[kv.Key] = kv.Value);
             return (T)this;
         }
 
-        public T AddHeader(string name, string value)
+        internal T AddHeader(string name, string value)
         {
             _headers[name] = value;
             return (T)this;
         }
 
-        public T WithCookies(List<Cookie> cookies)
+        internal T WithCookies(List<Cookie> cookies)
         {
             var cookiesClone = cookies.Select(x => new Cookie(x.Name, x.Value));
             _cookies.Clear();
@@ -98,7 +98,7 @@ namespace FlowHttp.Requests
             return (T)this;
         }
 
-        public T WithCookies(Dictionary<string, string> cookiesDictionary)
+        internal T WithCookies(Dictionary<string, string> cookiesDictionary)
         {
             var cookiesClone = cookiesDictionary.Select(kvp => new Cookie(kvp.Key, kvp.Value));
             _cookies.Clear();
@@ -106,43 +106,43 @@ namespace FlowHttp.Requests
             return (T)this;
         }
 
-        public T WithHttpMethod(HttpMethod method)
+        internal T WithHttpMethod(HttpMethod method)
         {
             _httpMethod = method;
             return (T)this;
         }
 
-        public T WithGetHttpMethod()
+        internal T WithGetHttpMethod()
         {
             _httpMethod = HttpMethod.Get;
             return (T)this;
         }
 
-        public T WithPostHttpMethod()
+        internal T WithPostHttpMethod()
         {
             _httpMethod = HttpMethod.Post;
             return (T)this;
         }
 
-        public T WithHeadHttpMethod()
+        internal T WithHeadHttpMethod()
         {
             _httpMethod = HttpMethod.Head;
             return (T)this;
         }
 
-        public T WithProgressReportInterval(TimeSpan reportInterval)
+        internal T WithProgressReportInterval(TimeSpan reportInterval)
         {
             _progressReportInterval = reportInterval;
             return (T)this;
         }
 
-        public T WithTimeout(double milliseconds)
+        internal T WithTimeout(double milliseconds)
         {
             _timeout = TimeSpan.FromMilliseconds(milliseconds);
             return (T)this;
         }
 
-        public T WithTimeout(TimeSpan timeout)
+        internal T WithTimeout(TimeSpan timeout)
         {
             _timeout = timeout;
             return (T)this;

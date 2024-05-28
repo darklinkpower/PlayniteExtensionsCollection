@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace FlowHttp.ValueObjects
 {
-    public sealed class HttpContentType
+    internal sealed class HttpContentType
     {
-        public string Value { get; }
-        public HttpContentType(string contentTypeString)
+        internal string Value { get; }
+        internal HttpContentType(string contentTypeString)
         {
             Value = contentTypeString;
         }

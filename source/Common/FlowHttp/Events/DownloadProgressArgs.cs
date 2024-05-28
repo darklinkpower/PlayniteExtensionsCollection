@@ -10,65 +10,65 @@ namespace FlowHttp.Events
     /// Represents a callback method that is invoked to report progress during a download operation.
     /// </summary>
     /// <param name="args">An instance of <see cref="DownloadProgressArgs"/> containing information about the download progress.</param>
-    public delegate void DownloadProgressChangedCallback(DownloadProgressArgs args);
+    internal delegate void DownloadProgressChangedCallback(DownloadProgressArgs args);
 
     /// <summary>
     /// Represents progress information for an ongoing HTTP download operation.
     /// </summary>
-    public class DownloadProgressArgs
+    internal class DownloadProgressArgs
     {
         /// <summary>
         /// Gets the number of bytes received during the download.
         /// </summary>
-        public long BytesReceived { get; }
+        internal long BytesReceived { get; }
 
         /// <summary>
         /// Gets the total number of bytes to receive for the download.
         /// </summary>
-        public long TotalBytesToReceive { get; }
+        internal long TotalBytesToReceive { get; }
 
         /// <summary>
         /// Gets the amount of time elapsed during the download operation.
         /// </summary>
-        public TimeSpan TimeElapsed { get; }
+        internal TimeSpan TimeElapsed { get; }
 
         /// <summary>
         /// Gets the estimated time remaining for the download operation.
         /// </summary>
-        public TimeSpan TimeRemaining { get; }
+        internal TimeSpan TimeRemaining { get; }
 
         /// <summary>
         /// Gets the download progress as a percentage, calculated based on bytes received and total bytes to receive.
         /// If total bytes to receive is zero, the progress is set to 0.
         /// </summary>
-        public double ProgressPercentage { get; }
+        internal double ProgressPercentage { get; }
 
         /// <summary>
         /// Gets the download speed in bytes per second.
         /// </summary>
-        public long DownloadSpeedBytesPerSecond { get; }
+        internal long DownloadSpeedBytesPerSecond { get; }
 
         /// <summary>
         /// Gets the number of bytes received during the download in a human-readable format (e.g., "2.5 GB").
         /// </summary>
-        public string FormattedBytesReceived => BytesReceived.ToReadableSize();
+        internal string FormattedBytesReceived => BytesReceived.ToReadableSize();
 
         /// <summary>
         /// Gets the total number of bytes to receive for the download in a human-readable format (e.g., "5 MB").
         /// </summary>
-        public string FormattedTotalBytesToReceive => TotalBytesToReceive.ToReadableSize();
+        internal string FormattedTotalBytesToReceive => TotalBytesToReceive.ToReadableSize();
 
         /// <summary>
         /// Gets the download speed in bytes per second in a human-readable format (e.g., "5 MB/s").
         /// </summary>
-        public string FormattedDownloadSpeedPerSecond => !IsComplete ? $"{DownloadSpeedBytesPerSecond.ToReadableSize()}/s" : string.Empty;
+        internal string FormattedDownloadSpeedPerSecond => !IsComplete ? $"{DownloadSpeedBytesPerSecond.ToReadableSize()}/s" : string.Empty;
 
-        public bool IsComplete => TotalBytesToReceive == BytesReceived;
+        internal bool IsComplete => TotalBytesToReceive == BytesReceived;
 
         /// <summary>
         /// Initializes a new instance of the DownloadProgressReporter class with the specified values.
         /// </summary>
-        public DownloadProgressArgs(long bytesReceived, long totalBytesToReceive, TimeSpan totalEllapsedDownloadTime, TimeSpan intervalElapsedTime, long bytesReadThisInterval)
+        internal DownloadProgressArgs(long bytesReceived, long totalBytesToReceive, TimeSpan totalEllapsedDownloadTime, TimeSpan intervalElapsedTime, long bytesReadThisInterval)
         {
             BytesReceived = bytesReceived;
             TotalBytesToReceive = totalBytesToReceive;
