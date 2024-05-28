@@ -220,7 +220,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             SetUrl(uri);
         }
 
-        public void UpdateProperties(DownloadProgressArgs downloadProgressArgs)
+        internal void UpdateProperties(DownloadProgressArgs downloadProgressArgs)
         {
             if (downloadProgressArgs is null)
             {

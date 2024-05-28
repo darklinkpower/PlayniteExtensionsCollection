@@ -37,7 +37,7 @@ namespace JastUsaLibrary.DownloadManager.Models
             DownloadStatusChanged?.Invoke(this, new DownloadStatusChangedEventArgs(newStatus));
         }
 
-        public event EventHandler<DownloadProgressArgs> DownloadProgressChanged;
+        internal event EventHandler<DownloadProgressArgs> DownloadProgressChanged;
 
         private void OnDownloadProgressChanged(DownloadProgressArgs downloadProgressArgs)
         {
