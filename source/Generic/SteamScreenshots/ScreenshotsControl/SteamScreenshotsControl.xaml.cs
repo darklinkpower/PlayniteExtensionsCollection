@@ -190,6 +190,7 @@ namespace SteamScreenshots.ScreenshotsControl
         private void ResetToDefaultValues()
         {
             SetCollapsedVisibility();
+            _activeContext = default;
             _isValuesDefaultState = true;
         }
 
@@ -217,7 +218,7 @@ namespace SteamScreenshots.ScreenshotsControl
             var gameDataPath = Path.Combine(_pluginStoragePath, "appdetails", $"{steamId}_appdetails.json");
             if (FileSystem.FileExists(gameDataPath))
             {
-                await SetScreenshots(gameDataPath, false);
+                await SetScreenshots(gameDataPath, false, scopeContext);
                 return;
             }
             
@@ -231,10 +232,10 @@ namespace SteamScreenshots.ScreenshotsControl
                 return;
             }
 
-            await SetScreenshots(gameDataPath, true);
+            await SetScreenshots(gameDataPath, true, scopeContext);
         }
 
-        private async Task SetScreenshots(string gameDataPath, bool downloadScreenshots)
+        private async Task SetScreenshots(string gameDataPath, bool downloadScreenshots, Guid scopeContext)
         {
             try
             {
@@ -258,6 +259,10 @@ namespace SteamScreenshots.ScreenshotsControl
                 if (downloadScreenshots)
                 {
                     await DownloadScreenshotsThumbnails(response.data.screenshots);
+                    if (_activeContext != scopeContext)
+                    {
+                        return;
+                    }
                 }
 
                 foreach (var screenshot in response.data.screenshots)
