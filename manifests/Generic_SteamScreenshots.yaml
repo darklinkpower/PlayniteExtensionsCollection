@@ -6,3 +6,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.28_b4c54b51/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.28_7a47d283/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_1.pext
+    Changelog:
+    - 'Addded: Ability to change the active screenshot with the arrow keys'
+    - 'Addded: Buttons to change to the previous and next screenshot'
