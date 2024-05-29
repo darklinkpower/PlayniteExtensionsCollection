@@ -101,6 +101,21 @@ namespace VNDBNexus
         public bool EnableVnViewControl { get => _enableVnViewControl; set => SetValue(ref _enableVnViewControl, value); }
 
         public DateTime LastDataseDumpsUpdate = DateTime.MinValue;
+
+        private ImageSexualityLevelEnum _controlDefaultImagesMaxSexualityLevel = ImageSexualityLevelEnum.Safe;
+        public ImageSexualityLevelEnum ControlDefaultImagesMaxSexualityLevel { get => _controlDefaultImagesMaxSexualityLevel; set => SetValue(ref _controlDefaultImagesMaxSexualityLevel, value); }
+
+        private ImageViolenceLevelEnum _controlDefaultImagesMaxViolenceLevel = ImageViolenceLevelEnum.Tame;
+        public ImageViolenceLevelEnum ControlDefaultImagesMaxViolenceLevel { get => _controlDefaultImagesMaxViolenceLevel; set => SetValue(ref _controlDefaultImagesMaxViolenceLevel, value); }
+
+        private bool _controlDefaultEnableContentCategory = true;
+        public bool ControlDefaultEnableContentCategory { get => _controlDefaultEnableContentCategory; set => SetValue(ref _controlDefaultEnableContentCategory, value); }
+
+        private bool _controlDefaultEnableTechnicalCategory = true;
+        public bool ControlDefaultEnableTechnicalCategory { get => _controlDefaultEnableTechnicalCategory; set => SetValue(ref _controlDefaultEnableTechnicalCategory, value); }
+
+        private bool _controlDefaultEnableSexualCategoryCategory = false;
+        public bool ControlDefaultEnableSexualCategoryCategory { get => _controlDefaultEnableSexualCategoryCategory; set => SetValue(ref _controlDefaultEnableSexualCategoryCategory, value); }
     }
 
     public class VNDBNexusSettingsViewModel : ObservableObject, ISettings

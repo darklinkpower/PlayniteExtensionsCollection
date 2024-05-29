@@ -14,147 +14,190 @@
         <pluginConverters:EnumToLocalizationStringConverter x:Key="EnumToLocalizationStringConverter" />
     </UserControl.Resources>
     <ScrollViewer Margin="20">
-        <StackPanel>
-
-            <CheckBox Content="{DynamicResource LOC_VndbNexus_EnableVndbControl}" Margin="0,10,0,0"
-                      IsChecked="{Binding Settings.EnableVnViewControl}" />
-            
-            <Expander Header="{DynamicResource LOC_VndbNexus_MetadataFieldsObtainLabel}" Margin="0,20,0,0" IsExpanded="True">
-                <StackPanel Margin="30,0,0,0">
-                    <CheckBox Content="{DynamicResource LOCNameLabel}" Margin="0,10,0,0"
+        <TabControl>
+            <TabItem Header="{DynamicResource LOC_VndbNexus_MetadataDownloadSettings}">
+                <StackPanel>
+                    <Expander Header="{DynamicResource LOC_VndbNexus_MetadataFieldsObtainLabel}" Margin="0,20,0,0" IsExpanded="True">
+                        <StackPanel Margin="30,0,0,0">
+                            <CheckBox Content="{DynamicResource LOCNameLabel}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableName}" />
-                    <CheckBox x:Name="CbReleaseDate" Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,10,0,0"
+                            <CheckBox x:Name="CbReleaseDate" Content="{DynamicResource LOCGameReleaseDateTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableReleaseDate}" />
-                    <CheckBox Content="{DynamicResource LOC_VndbNexus_SettingsAllowPartialDates}" Margin="30,10,0,0"
+                            <CheckBox Content="{DynamicResource LOC_VndbNexus_SettingsAllowPartialDates}" Margin="30,10,0,0"
                               IsEnabled="{Binding ElementName=CbReleaseDate, Path=IsChecked}"
                               ToolTip="{DynamicResource LOC_VndbNexus_SettingsAllowPartialDatesTooltip}"
                               IsChecked="{Binding Settings.MetadataAllowPartialDates}" />
-                    <CheckBox Content="{DynamicResource LOCGameDevelopersTitle}" Margin="0,10,0,0"
+                            <CheckBox Content="{DynamicResource LOCGameDevelopersTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableDevelopers}" />
-                    <CheckBox Content="{DynamicResource LOCGamePublishersTitle}" Margin="0,10,0,0"
+                            <CheckBox Content="{DynamicResource LOCGamePublishersTitle}" Margin="0,10,0,0"
                               Visibility="Collapsed"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnablePublishers}" />
-                    <CheckBox Content="{DynamicResource LOCPlatformsTitle}" Margin="0,10,0,0"
+                            <CheckBox Content="{DynamicResource LOCPlatformsTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnablePlatform}" />
-                    <CheckBox Content="{DynamicResource LOCGameDescriptionTitle}" Margin="0,10,0,0"
+                            <CheckBox Content="{DynamicResource LOCGameDescriptionTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableDescription}" />
-                    <CheckBox Content="{DynamicResource LOCCommunityScore}" Margin="0,10,0,0"
+                            <CheckBox Content="{DynamicResource LOCCommunityScore}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableCommunityScore}" />
 
-                    <CheckBox x:Name="EnableCoverImageCb" Content="{DynamicResource LOCGameCoverTitle}" Margin="0,10,0,0"
+                            <CheckBox x:Name="EnableCoverImageCb" Content="{DynamicResource LOCGameCoverTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableCoverImage}" />
 
-                    <CheckBox x:Name="EnableBackgroundImageCb" Content="{DynamicResource LOCGameBackgroundTitle}" Margin="0,10,0,0"
+                            <CheckBox x:Name="EnableBackgroundImageCb" Content="{DynamicResource LOCGameBackgroundTitle}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableBackgroundImage}" />
 
-                    <CheckBox x:Name="EnableLinksCb" Content="{DynamicResource LOCGameLinksTitle}" Margin="0,10,0,0"
+                            <CheckBox x:Name="EnableLinksCb" Content="{DynamicResource LOCGameLinksTitle}" Margin="0,10,0,0"
                           Visibility="Collapsed"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableLinks}" />
 
-                    <CheckBox x:Name="EnableTagsCb" Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
+                            <CheckBox x:Name="EnableTagsCb" Content="{DynamicResource LOCTagsLabel}" Margin="0,10,0,0"
                           IsChecked="{Binding Settings.MetadataFieldsConfiguration.EnableTags}" />
-                </StackPanel>
-            </Expander>
-            
-            
-            <Expander Header="{DynamicResource LOC_VndbNexus_ImagesImportSettings}" IsExpanded="True" Margin="0,20,0,0">
-                <StackPanel Margin="30,10,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSexualityLevel}"
+                        </StackPanel>
+                    </Expander>
+
+
+                    <Expander Header="{DynamicResource LOC_VndbNexus_ImagesImportSettings}" IsExpanded="True" Margin="0,20,0,0">
+                        <StackPanel Margin="30,10,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSexualityLevel}"
                                VerticalAlignment="Center" />
-                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                                   SelectedItem="{Binding Settings.ImagesMaxSexualityLevel}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumViolenceLevel}"
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumViolenceLevel}"
                                VerticalAlignment="Center" />
-                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                                   SelectedItem="{Binding Settings.ImagesMaxViolenceLevel}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                    
-                </StackPanel>
-            </Expander>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
 
-            <Expander Header="{DynamicResource LOC_VndbNexus_TagsImportSettings}" IsExpanded="True" Margin="0,20,0,0">
-                <StackPanel IsEnabled="{Binding ElementName=EnableTagsCb, Path=IsChecked}" Margin="30,10,0,0">
-                    <DockPanel Margin="0,0,0,0" LastChildFill="True">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsMinScoreToImport}" VerticalAlignment="Center"
+                        </StackPanel>
+                    </Expander>
+
+                    <Expander Header="{DynamicResource LOC_VndbNexus_TagsImportSettings}" IsExpanded="True" Margin="0,20,0,0">
+                        <StackPanel IsEnabled="{Binding ElementName=EnableTagsCb, Path=IsChecked}" Margin="30,10,0,0">
+                            <DockPanel Margin="0,0,0,0" LastChildFill="True">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsMinScoreToImport}" VerticalAlignment="Center"
                                    DockPanel.Dock="Left" />
-                        <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center"
+                                <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center"
                                    MinWidth="30" Text="{Binding Settings.TagsMinimumScore}" />
-                        <Slider DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0"
+                                <Slider DockPanel.Dock="Left" VerticalAlignment="Center" Margin="5,0,5,0"
                                 TickFrequency="0.1"
                                 Minimum="0" Maximum="3" Value="{Binding Settings.TagsMinimumScore}" />
-                    </DockPanel>
+                            </DockPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSpoilerLevel}"
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSpoilerLevel}"
                                    VerticalAlignment="Center" />
-                        <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainSharedKernel:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainSharedKernel:SpoilerLevelEnum}, Converter={StaticResource EnumToListConverter}}"
                                   SelectedItem="{Binding Settings.TagsMaxSpoilerLevel}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                    <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsContentCategory}" Margin="0,10,0,0" />
-                    <Separator Margin="0,5,0,0" />
-                    <CheckBox x:Name="ImportContentTagsCb" Content="{DynamicResource LOC_VndbNexus_TagsImportActionLabel}" Margin="0,5,0,0"
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsContentCategory}" Margin="0,10,0,0" />
+                            <Separator Margin="0,5,0,0" />
+                            <CheckBox x:Name="ImportContentTagsCb" Content="{DynamicResource LOC_VndbNexus_TagsImportActionLabel}" Margin="0,5,0,0"
                           IsChecked="{Binding Settings.TagsImportContentCat}" />
-                    <StackPanel IsEnabled="{Binding ElementName=ImportContentTagsCb, Path=IsChecked}" Orientation="Vertical" Margin="0,10,0,0">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixLabel}"
+                            <StackPanel IsEnabled="{Binding ElementName=ImportContentTagsCb, Path=IsChecked}" Orientation="Vertical" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixLabel}"
                                    ToolTip="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}"
                                    VerticalAlignment="Center" />
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}" Margin="0,5,0,0" Opacity="0.5"/>
-                        <TextBox VerticalAlignment="Center" Margin="0,5,0,0"
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}" Margin="0,5,0,0" Opacity="0.5"/>
+                                <TextBox VerticalAlignment="Center" Margin="0,5,0,0"
                                  HorizontalAlignment="Left"
                                  MinWidth="100" Text="{Binding Settings.TagsPrefixContentCat}" />
-                    </StackPanel>
+                            </StackPanel>
 
-                    <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsTechnicalCategory}" Margin="0,10,0,0" />
-                    <Separator Margin="0,5,0,0" />
-                    <CheckBox x:Name="ImportTechnicalTagsCb" Content="{DynamicResource LOC_VndbNexus_TagsImportActionLabel}" Margin="0,5,0,0"
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsTechnicalCategory}" Margin="0,10,0,0" />
+                            <Separator Margin="0,5,0,0" />
+                            <CheckBox x:Name="ImportTechnicalTagsCb" Content="{DynamicResource LOC_VndbNexus_TagsImportActionLabel}" Margin="0,5,0,0"
                           IsChecked="{Binding Settings.TagsImportTechnicalCat}" />
-                    <StackPanel IsEnabled="{Binding ElementName=ImportTechnicalTagsCb, Path=IsChecked}" Orientation="Vertical" Margin="0,10,0,0">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixLabel}"
+                            <StackPanel IsEnabled="{Binding ElementName=ImportTechnicalTagsCb, Path=IsChecked}" Orientation="Vertical" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixLabel}"
                                    ToolTip="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}"
                                    VerticalAlignment="Center" />
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}" Margin="0,5,0,0" Opacity="0.5"/>
-                        <TextBox VerticalAlignment="Center" Margin="0,5,0,0"
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}" Margin="0,5,0,0" Opacity="0.5"/>
+                                <TextBox VerticalAlignment="Center" Margin="0,5,0,0"
                                  HorizontalAlignment="Left"
                                  MinWidth="100" Text="{Binding Settings.TagsPrefixTechnicalCat}" />
-                    </StackPanel>
+                            </StackPanel>
 
-                    <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsSexualCategory}" Margin="0,10,0,0" />
-                    <Separator Margin="0,5,0,0" />
-                    <CheckBox x:Name="ImportSexualTagsCb" Content="{DynamicResource LOC_VndbNexus_TagsImportActionLabel}" Margin="0,5,0,0"
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsSexualCategory}" Margin="0,10,0,0" />
+                            <Separator Margin="0,5,0,0" />
+                            <CheckBox x:Name="ImportSexualTagsCb" Content="{DynamicResource LOC_VndbNexus_TagsImportActionLabel}" Margin="0,5,0,0"
                           IsChecked="{Binding Settings.TagsImportSexualCat}" />
-                    <StackPanel IsEnabled="{Binding ElementName=ImportSexualTagsCb, Path=IsChecked}" Orientation="Vertical" Margin="0,10,0,0">
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixLabel}"
+                            <StackPanel IsEnabled="{Binding ElementName=ImportSexualTagsCb, Path=IsChecked}" Orientation="Vertical" Margin="0,10,0,0">
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixLabel}"
                                    ToolTip="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}"
                                    VerticalAlignment="Center" />
-                        <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}" Margin="0,5,0,0" Opacity="0.50"/>
-                        <TextBox VerticalAlignment="Center" Margin="0,5,0,0"
+                                <TextBlock Text="{DynamicResource LOC_VndbNexus_TagsPrefixTooltip}" Margin="0,5,0,0" Opacity="0.50"/>
+                                <TextBox VerticalAlignment="Center" Margin="0,5,0,0"
                                  HorizontalAlignment="Left"
                                  MinWidth="100" Text="{Binding Settings.TagsPrefixSexualCat}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource LOC_VndbNexus_VndbPanelSettings}">
+                <StackPanel>
+                    <CheckBox x:Name="EnableControlCb" Content="{DynamicResource LOC_VndbNexus_EnableVndbControl}" Margin="0,10,0,0"
+                      IsChecked="{Binding Settings.EnableVnViewControl}" />
+                    <StackPanel Margin="30,0,0,0" IsEnabled="{Binding ElementName=EnableControlCb, Path=IsChecked}">
+
+                        <TextBlock Text="{DynamicResource LOC_VndbNexus_CategoriesLabel}" Margin="0,10,0,0" />
+                        <Separator Margin="0,5,0,0" />
+                        <CheckBox Content="{DynamicResource LOC_VndbNexus_TagsContentCategory}" Margin="0,10,0,0" IsChecked="{Binding Settings.ControlDefaultEnableContentCategory}" />
+                        <CheckBox Content="{DynamicResource LOC_VndbNexus_TagsTechnicalCategory}" Margin="0,10,0,0" IsChecked="{Binding Settings.ControlDefaultEnableTechnicalCategory}" />
+                        <CheckBox Content="{DynamicResource LOC_VndbNexus_TagsSexualCategory}" Margin="0,10,0,0" IsChecked="{Binding Settings.ControlDefaultEnableSexualCategoryCategory}" />
+
+                        <TextBlock Text="{DynamicResource LOC_VndbNexus_ImagesLabel}" Margin="0,20,0,0" />
+                        <Separator Margin="0,5,0,0" />
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumSexualityLevel}"
+                               VerticalAlignment="Center" />
+                            <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageSexualityLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                  SelectedItem="{Binding Settings.ControlDefaultImagesMaxSexualityLevel}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="{DynamicResource LOC_VndbNexus_MaximumViolenceLevel}"
+                               VerticalAlignment="Center" />
+                            <ComboBox Margin="5,0,0,0" ItemsSource="{Binding Source={x:Type vndbDomainImage:ImageViolenceLevelEnum}, Converter={StaticResource EnumToListConverter}}"
+                                  SelectedItem="{Binding Settings.ControlDefaultImagesMaxViolenceLevel}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource EnumToLocalizationStringConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </Expander>
-        </StackPanel>
+            </TabItem>
+        </TabControl>
     </ScrollViewer>
 </UserControl>

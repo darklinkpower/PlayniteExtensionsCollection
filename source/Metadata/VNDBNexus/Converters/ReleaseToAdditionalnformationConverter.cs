@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,15 +13,15 @@ namespace VNDBNexus.Converters
 {
     public class ReleaseToAdditionalnformationConverter : IValueConverter
     {
-        private static readonly string _officialPatchMtlString = "(machine translation patch)";
-        private static readonly string _officialPatchString = "(patch)";
-        private static readonly string _officialReleaseMtlString = "(machine translation)";
+        private static readonly string _officialPatchMtlString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseOfficialPatchMtl");
+        private static readonly string _officialPatchString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseOfficialPatch");
+        private static readonly string _officialReleaseMtlString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseOfficialReleaseMtl");
         private static readonly string _officialReleaseString = string.Empty;
 
-        private static readonly string _unofficialPatchMtlString = "(unofficial machine translation patch)";
-        private static readonly string _unofficialPatchString = "(unofficial patch)";
-        private static readonly string _unofficialReleaseMtlString = "(unofficial machine translation)";
-        private static readonly string _unofficialReleaseString = "(unofficial)";
+        private static readonly string _unofficialPatchMtlString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseUnofficialPatchMtl");
+        private static readonly string _unofficialPatchString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseUnofficialPatch");
+        private static readonly string _unofficialReleaseMtlString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseUnofficialReleaseMtl");
+        private static readonly string _unofficialReleaseString = ResourceProvider.GetString("LOC_VndbNexus_ReleaseUnofficialRelease");
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

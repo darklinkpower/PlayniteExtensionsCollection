@@ -493,6 +493,11 @@ namespace VNDBNexus.PlayniteControls
             RelationsUnofficialButonVisibility = ActiveVisualNovel?.Relations?.Any(vn => !vn.RelationOfficial) == true ? Visibility.Visible : Visibility.Collapsed;
             SelectedControlTabIndex = 0;
             SelectedCharactersControlTabIndex = CharacterWrappers?.Any(x => x.Role == CharacterRoleEnum.Main && x.SpoilerLevel == SpoilerLevelEnum.None) == true ? 0 : 1;
+            ScreenshotsMaxSexualityLevel = _settingsViewModel.Settings.ControlDefaultImagesMaxSexualityLevel;
+            ScreenshotsMaxViolenceLevel = _settingsViewModel.Settings.ControlDefaultImagesMaxViolenceLevel;
+            TagsDisplayContentCategory = _settingsViewModel.Settings.ControlDefaultEnableContentCategory;
+            TagsDisplayTechnicalCategory = _settingsViewModel.Settings.ControlDefaultEnableTechnicalCategory;
+            TagsDisplaySexualCategory = _settingsViewModel.Settings.ControlDefaultEnableSexualCategoryCategory;
 
             Visibility = Visibility.Visible;
             _settingsViewModel.Settings.IsControlVisible = true;
@@ -623,12 +628,7 @@ namespace VNDBNexus.PlayniteControls
             TagsDisplayNoneSpoilers = true;
             TagsDisplayMinimumSpoilers = false;
             TagsDisplayMajorSpoilers = false;
-            TagsDisplayContentCategory = true;
-            TagsDisplayTechnicalCategory = false;
-            TagsDisplaySexualCategory = false;
             DisplayUnnoficialRelations = true;
-            ScreenshotsMaxSexualityLevel = ImageSexualityLevelEnum.Safe;
-            ScreenshotsMaxViolenceLevel = ImageViolenceLevelEnum.Tame;
 
             _isValuesDefaultState = true;
         }
