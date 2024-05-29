@@ -69,8 +69,6 @@ namespace SteamScreenshots.ScreenshotsControl
         }
 
         private SteamAppDetails.AppDetails.Screenshot _selectedScreenshot;
-        private ScrollViewer _screenshotsScrollViewer;
-
         public SteamAppDetails.AppDetails.Screenshot SelectedScreenshot
         {
             get => _selectedScreenshot;
@@ -103,9 +101,17 @@ namespace SteamScreenshots.ScreenshotsControl
             };
 
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
-
             InitializeComponent();
+            ScreenshotsListBox.SelectionChanged += ScreenshotsListBox_SelectionChanged;
             DataContext = this;
+        }
+
+        private void ScreenshotsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ScreenshotsListBox.SelectedItem != null)
+            {
+                ScreenshotsListBox.ScrollIntoView(ScreenshotsListBox.SelectedItem);
+            }
         }
 
         private void SetControlTextBlockStyle()
@@ -129,41 +135,12 @@ namespace SteamScreenshots.ScreenshotsControl
         {
             Visibility = Visibility.Collapsed;
             _settingsViewModel.Settings.IsControlVisible = false;
-            Screenshots.Clear();
         }
 
         private void SetVisibleVisibility()
         {
-            if (_screenshotsScrollViewer is null)
-            {
-                _screenshotsScrollViewer = FindVisualChild<ScrollViewer>(ScreenshotsListBox);
-            }
-
-            _screenshotsScrollViewer?.ScrollToHorizontalOffset(0);
             Visibility = Visibility.Visible;
             _settingsViewModel.Settings.IsControlVisible = true;
-        }
-
-        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                if (child != null && child is T)
-                {
-                    return (T)child;
-                }
-                else
-                {
-                    T childOfChild = FindVisualChild<T>(child);
-                    if (childOfChild != null)
-                    {
-                        return childOfChild;
-                    }
-                }
-            }
-
-            return null;
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
@@ -183,6 +160,11 @@ namespace SteamScreenshots.ScreenshotsControl
                 ResetToDefaultValues();
             }
 
+            if (newContext is null)
+            {
+                return;
+            }
+
             _currentGame = newContext;
             _updateControlDataDelayTimer.Start();
         }
@@ -191,6 +173,7 @@ namespace SteamScreenshots.ScreenshotsControl
         {
             SetCollapsedVisibility();
             _activeContext = default;
+            Screenshots.Clear();
             _isValuesDefaultState = true;
         }
 
@@ -300,6 +283,68 @@ namespace SteamScreenshots.ScreenshotsControl
             {
                 await taskExecutor.ExecuteAsync(tasks);
             }
+        }
+
+        private void SelectPreviousImageScreenshot()
+        {
+            if (Screenshots.Count <= 1 || _selectedScreenshot is null)
+            {
+                return;
+            }
+
+            var currentSelectIndex = Screenshots.IndexOf(_selectedScreenshot);
+            if (currentSelectIndex == -1)
+            {
+                return;
+            }
+
+            if (currentSelectIndex == 0)
+            {
+                SelectedScreenshot = Screenshots[Screenshots.Count - 1];
+            }
+            else
+            {
+                SelectedScreenshot = Screenshots[currentSelectIndex - 1];
+            }
+        }
+
+        private void SelectNextScreenshot()
+        {
+            if (Screenshots.Count <= 1 || _selectedScreenshot is null)
+            {
+                return;
+            }
+
+            var currentSelectIndex = Screenshots.IndexOf(_selectedScreenshot);
+            if (currentSelectIndex == -1)
+            {
+                return;
+            }
+
+            if (currentSelectIndex == Screenshots.Count - 1)
+            {
+                SelectedScreenshot = Screenshots[0];
+            }
+            else
+            {
+                SelectedScreenshot = Screenshots[currentSelectIndex + 1];
+            }
+        }
+
+        public RelayCommand SelectPreviousScreenshotCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                SelectPreviousImageScreenshot();
+            });
+        }
+
+        public RelayCommand SelectNextScreenshotCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                SelectNextScreenshot();
+            });
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
