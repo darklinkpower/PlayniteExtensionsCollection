@@ -65,6 +65,9 @@
     <sys:String x:Key="LOC_VndbNexus_CharacterTypeMainCharacters">Personaggi principali</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterTypeSideCharacters">Personaggi secondari</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterTypeMakeAppearance">Crea un aspetto</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ImagesLabel">Images</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MetadataDownloadSettings">Metadata download settings</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VndbPanelSettings">VNDB panel settings</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ScreenshotsLabel">Schermate</sys:String>
     <sys:String x:Key="LOC_VndbNexus_InformationLabel">Informazioni</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VisualNovelTitlesLabel">Titoli</sys:String>
@@ -89,6 +92,13 @@
     <sys:String x:Key="LOC_VndbNexus_SelectedScreenshotPositionFormat">{0} di {1}</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MoveBackLabel">Indietro</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MoveNextLabel">Avanti</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseOfficialPatchMtl">(machine translation patch)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseOfficialPatch">(patch)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseOfficialReleaseMtl">(machine translation)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialPatchMtl">(unofficial machine translation patch)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialPatch">(unofficial patch)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialReleaseMtl">(unofficial machine translation)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialRelease">(unofficial)</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Sconosciuto</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabo</sys:String>
