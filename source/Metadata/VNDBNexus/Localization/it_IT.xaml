@@ -99,6 +99,21 @@
     <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialPatch">(unofficial patch)</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialReleaseMtl">(unofficial machine translation)</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialRelease">(unofficial)</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthJanuary">January</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthFebruary">February</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthMarch">March</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthApril">April</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthMay">May</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthJune">June</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthJuly">July</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthAugust">August</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthSeptember">September</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthOctober">October</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthNovember">November</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthDecember">December</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_CharacterHeightFormat">Height: {0}cm</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_CharacterWeightFormat">Weight: {0}kg</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_CharacterBustWaistHipsFormat">Bust-Waist-Hips: {0}-{1}-{2}cm</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Sconosciuto</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabo</sys:String>
