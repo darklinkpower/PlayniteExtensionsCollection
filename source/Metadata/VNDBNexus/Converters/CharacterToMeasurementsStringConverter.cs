@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace VNDBNexus.Converters
 {
     public class CharacterToMeasurementsStringConverter : IValueConverter
     {
-        private static readonly string _heightFormatString = "Height: {0}cm";
-        private static readonly string _weightFormatString = "Weight: {0}kg";
-        private static readonly string _bustWeightHipsFormatString = "Bust-Waist-Hips: {0}-{1}-{2}cm";
+        private static readonly string _heightFormatString = ResourceProvider.GetString("LOC_VndbNexus_CharacterHeightFormat");
+        private static readonly string _weightFormatString = ResourceProvider.GetString("LOC_VndbNexus_CharacterWeightFormat");
+        private static readonly string _bustWeightHipsFormatString = ResourceProvider.GetString("LOC_VndbNexus_CharacterBustWaistHipsFormat");
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
