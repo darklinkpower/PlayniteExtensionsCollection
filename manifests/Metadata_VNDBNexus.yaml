@@ -13,3 +13,9 @@ Packages:
     Changelog:
     - 'Added: Support to change screenshots with arrow keys in the screenshots view window.'
     - 'Fixed: Displaying the incorrect visual novel data in some circumstances when switching between games.'
+  - Version: 1.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_256ef517/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_2.pext
+    Changelog:
+    - 'Added: Settings to configure which images should be displayed when displaying a new visual novel'
