@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -35,6 +36,7 @@ namespace SteamScreenshots.ScreenshotsControl
     public partial class SteamScreenshotsControl : PluginUserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public IEnumerable<BitmapImage> ScreenshotsBitmapImages => GetScreenshotsBitmapImages();
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly IPlayniteAPI _playniteApi;
         private readonly string _pluginStoragePath;
@@ -45,7 +47,7 @@ namespace SteamScreenshots.ScreenshotsControl
         private bool _isValuesDefaultState = true;
         private Game _currentGame;
         private Guid _activeContext = default;
-        
+
         private ObservableCollection<SteamAppDetails.AppDetails.Screenshot> _screenshots = new ObservableCollection<SteamAppDetails.AppDetails.Screenshot>();
         public ObservableCollection<SteamAppDetails.AppDetails.Screenshot> Screenshots
         {
@@ -114,6 +116,26 @@ namespace SteamScreenshots.ScreenshotsControl
             }
         }
 
+        private IEnumerable<BitmapImage> GetScreenshotsBitmapImages()
+        {
+            if (_screenshots.Count == 0)
+            {
+                return Enumerable.Empty<BitmapImage>();
+            }
+
+            var bitmapImages = new List<BitmapImage>();
+            foreach (var screenshot in _screenshots)
+            {
+                var bitmapImage = _imageUriToBitmapImageConverter.Convert(screenshot.PathThumbnail, typeof(BitmapImage), null, CultureInfo.CurrentCulture);
+                if (bitmapImage != null)
+                {
+                    bitmapImages.Add(bitmapImage as BitmapImage);
+                }
+            }
+
+            return bitmapImages;
+        }
+
         private void SetControlTextBlockStyle()
         {
             // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
@@ -139,6 +161,7 @@ namespace SteamScreenshots.ScreenshotsControl
 
         private void SetVisibleVisibility()
         {
+            OnPropertyChanged(nameof(ScreenshotsBitmapImages));
             Visibility = Visibility.Visible;
             _settingsViewModel.Settings.IsControlVisible = true;
         }
@@ -174,6 +197,7 @@ namespace SteamScreenshots.ScreenshotsControl
             SetCollapsedVisibility();
             _activeContext = default;
             Screenshots.Clear();
+            OnPropertyChanged(nameof(ScreenshotsBitmapImages));
             _isValuesDefaultState = true;
         }
 
