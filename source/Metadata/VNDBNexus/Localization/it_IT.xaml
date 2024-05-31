@@ -99,7 +99,7 @@
     <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialPatch">(unofficial patch)</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialReleaseMtl">(unofficial machine translation)</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ReleaseUnofficialRelease">(unofficial)</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_MonthJanuary">January</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MonthJanuary">Gennaio</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MonthFebruary">February</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MonthMarch">March</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MonthApril">April</sys:String>
