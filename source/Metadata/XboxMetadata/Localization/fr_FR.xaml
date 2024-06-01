@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="MetadataFieldsObtainLabel">Metadata fields to obtain:</sys:String>
-    <sys:String x:Key="PreferredCoverFormat">Preferred Cover format:</sys:String>
-    <sys:String x:Key="PreferredMarketLanguageLabel">Preferred market and language:</sys:String>
-    <sys:String x:Key="ImageQualityLabel">Image quality:</sys:String>
+    <sys:String x:Key="MetadataFieldsObtainLabel">Champs de métadonnées à obtenir:</sys:String>
+    <sys:String x:Key="PreferredCoverFormat">Format de couverture préféré :</sys:String>
+    <sys:String x:Key="PreferredMarketLanguageLabel">Marché préféré et langue :</sys:String>
+    <sys:String x:Key="ImageQualityLabel">Qualité d’image :</sys:String>
     <sys:String x:Key="OriginalImageResolutionLabel">Original</sys:String>
     <sys:String x:Key="ImageVerticalFormatLabel">Vertical</sys:String>
-    <sys:String x:Key="ImageSquareFormatLabel">Square</sys:String>
-    <sys:String x:Key="ImageLandscapeFormatLabel">Landscape</sys:String>
-    <sys:String x:Key="PreferredVerticalCoverResolution">Preferred vertical cover resolution:</sys:String>
-    <sys:String x:Key="PreferredSquareCoverResolution">Preferred square cover resolution:</sys:String>
-    <sys:String x:Key="PreferredImageResolutionLabel">Preferred resolution:</sys:String>
+    <sys:String x:Key="ImageSquareFormatLabel">Carré</sys:String>
+    <sys:String x:Key="ImageLandscapeFormatLabel">Paysage</sys:String>
+    <sys:String x:Key="PreferredVerticalCoverResolution">Résolution de couverture verticale préférée :</sys:String>
+    <sys:String x:Key="PreferredSquareCoverResolution">Résolution de la couverture carrée préférée :</sys:String>
+    <sys:String x:Key="PreferredImageResolutionLabel">Résolution préférée :</sys:String>
 </ResourceDictionary>

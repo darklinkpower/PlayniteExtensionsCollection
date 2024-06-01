@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_SteamScreenshots_ScreenshotsLabel">Знімки екрану</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_SteamScreenshotsLabel">Знімки екрану Steam</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_SelectedScreenshotPositionFormat">{0} з {1}</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_MoveBackLabel">Назад</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_MoveNextLabel">Далі</sys:String>
+</ResourceDictionary>
