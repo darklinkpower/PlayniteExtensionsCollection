@@ -59,7 +59,7 @@
     <sys:String x:Key="LOC_VndbNexus_RelationTypePrequel">Prequel</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RelationTypeSequel">Sequel</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RelationTypeSameSeries">Stessa serie</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_RelationTypeSameSetting">Stessa serie</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_RelationTypeSameSetting">Same setting</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RelationTypeSideStory">Storia secondaria</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterTypeProtagonist">Protagonista</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterTypeMainCharacters">Personaggi principali</sys:String>
