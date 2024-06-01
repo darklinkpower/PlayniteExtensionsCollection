@@ -19,3 +19,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_256ef517/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_2.pext
     Changelog:
     - 'Added: Settings to configure which images should be displayed when displaying a new visual novel'
+  - Version: 1.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_3.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

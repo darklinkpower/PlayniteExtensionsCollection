@@ -134,3 +134,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_20.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.21
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_21.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

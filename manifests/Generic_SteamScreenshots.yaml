@@ -19,3 +19,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_256ef517/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_2.pext
     Changelog:
     - 'Added: Support for theme developers to configure how images should be displayed.'
+  - Version: 1.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_3.pext
+    Changelog:
+    - 'Fixed: The active view scrolling to the screenshots panel when first displaying or selecting a new screenshot'
+    - 'Changed: Updated localizations for improved language support'

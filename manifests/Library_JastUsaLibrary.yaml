@@ -128,3 +128,9 @@ Packages:
     Changelog:
     - 'Added: The tooltip shown when hovering the library manager icon in the sidebar will now display the global download progress.'
     - 'Fixed: Being unable to start downloads if they were not properly stopped during the previous Playnite execution.'
+  - Version: 1.19
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-31
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_19.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'
