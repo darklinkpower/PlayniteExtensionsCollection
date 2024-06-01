@@ -430,7 +430,7 @@ namespace GamePassCatalogBrowser.Services
                             NotificationType.Info));
                     }
                 }
-                else if (addExpiredTagToGames == true)
+                if (addExpiredTagToGames == true)
                 {
                     xboxLibraryHelper.AddExpiredTag(game);
                 }
