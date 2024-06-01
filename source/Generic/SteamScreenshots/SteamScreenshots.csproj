@@ -238,9 +238,6 @@
     <Compile Include="..\..\common\pluginscommon\Guard.cs">
       <Link>Shared\PluginsCommon\Guard.cs</Link>
     </Compile>
-    <Compile Include="..\..\Common\PluginsCommon\ListBoxExtensions.cs">
-      <Link>Shared\PluginsCommon\ListBoxExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\..\common\pluginscommon\native\Kernel32.cs">
       <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
     </Compile>
