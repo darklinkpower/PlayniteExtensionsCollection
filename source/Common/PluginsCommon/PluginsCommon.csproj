@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingTools.cs" />
+    <Compile Include="ControlBehaviors\ScrollIntoViewBehavior.cs" />
     <Compile Include="Converters\BooleanToOpacityConverter.cs" />
     <Compile Include="Converters\ConvertersUtilities.cs" />
     <Compile Include="Converters\EnumerableStringJoinConverter.cs" />

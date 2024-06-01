@@ -60,6 +60,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="Playnite.SDK, Version=6.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PlayniteSDK.6.11.0\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
@@ -160,6 +163,9 @@
     <Compile Include="..\..\common\pluginscommon\BindingTools.cs">
       <Link>Shared\PluginsCommon\BindingTools.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\ControlBehaviors\ScrollIntoViewBehavior.cs">
+      <Link>Shared\PluginsCommon\ControlBehaviors\ScrollIntoViewBehavior.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\converters\BooleanToOpacityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\BooleanToOpacityConverter.cs</Link>
     </Compile>
@@ -231,6 +237,9 @@
     </Compile>
     <Compile Include="..\..\common\pluginscommon\Guard.cs">
       <Link>Shared\PluginsCommon\Guard.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\ListBoxExtensions.cs">
+      <Link>Shared\PluginsCommon\ListBoxExtensions.cs</Link>
     </Compile>
     <Compile Include="..\..\common\pluginscommon\native\Kernel32.cs">
       <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>

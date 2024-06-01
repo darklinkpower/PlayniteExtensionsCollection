@@ -104,16 +104,7 @@ namespace SteamScreenshots.ScreenshotsControl
 
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
             InitializeComponent();
-            ScreenshotsListBox.SelectionChanged += ScreenshotsListBox_SelectionChanged;
             DataContext = this;
-        }
-
-        private void ScreenshotsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ScreenshotsListBox.SelectedItem != null)
-            {
-                ScreenshotsListBox.ScrollIntoView(ScreenshotsListBox.SelectedItem);
-            }
         }
 
         private IEnumerable<BitmapImage> GetScreenshotsBitmapImages()
