@@ -9,8 +9,8 @@
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Kimlik doğrulama durumu kontrol ediliyor…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Kimlik Doğrulaması</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">İndirilenler</sys:String>
-    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Downloads directory:</sys:String>
-    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Extract directory:</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">İndirilenler dizini:</sys:String>
+    <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Çıkartma dizini:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Göz at…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsStartDownloadsOnStartup">Başlangıçta indirmeleri otomatik olarak başlat</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsExtractDownloadedFiles">İndirme işlemi bittiğinde sıkıştırılmış dosyaları otomatik olarak çıkart</sys:String>
@@ -54,9 +54,9 @@
     <sys:String x:Key="LOC_JUL_UnselectAllLabel">Tüm seçimi kaldır</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">İndir</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Yüklü oyunu seç</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Göz at ve oyun çalıştırılabilir dosyasını seç…</sys:String>
     <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Oyunu kütüphanede göster</sys:String>
-    <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Browse and select the game executable file, or choose the game download to begin installation.</sys:String>
+    <sys:String x:Key="LOC_JUL_InstallExploreOrSelectDownload">Göz at ve oyun çalıştırılabilir dosyasını seç, veya kuruluma başlamak için indirilecek oyunu seç.</sys:String>
     <sys:String x:Key="LOC_JUL_ActionDownloadSelected">İndir ve yükle</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">İptal</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectActionLabel">Bir eylem seçin</sys:String>
@@ -69,7 +69,7 @@
     <sys:String x:Key="LOC_JUL_JastDownloaderOpenDirActionLabel">İndirilenler dizinini aç</sys:String>
 
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGameDownloads">Oyun indirmeleri</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Games</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderGames">Oyunlar</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderPatches">Yamalar</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderTabHeaderExtras">Ekstralar</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsColumName">Ad</sys:String>
@@ -94,13 +94,13 @@
     <sys:String x:Key="LOC_JUL_StoppingDownloads">İndirme işlemi durduruluyor…</sys:String>
     <sys:String x:Key="LOC_JUL_WaitingForExtractions">Devam eden sıkıştırılmış dosyaları çıkartma işlemi için lütfen bekleyin…</sys:String>
     <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} zaten indirilenler arasında.</sys:String>
-    <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">The download file &quot;{0}&quot; already exists in &quot;{1}&quot;.</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
+    <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">&quot;{0}&quot; indirme dosyası zaten &quot;{1}&quot; içinde var.</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">&quot;{1}&quot; dosyasında &quot;{0}&quot; dosyası için çıkarılan dosyalar algılandı.
 
-Download the file anyway?</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderExtractFileError" xml:space="preserve">Error during the extraction of file &quot;{0}&quot;.
+Dosya yine de indirilsin mi?</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractFileError" xml:space="preserve">&quot;{0}&quot; dosyası açılırken hata oluştu,
     
-Error: {1}</sys:String>
+Hata: {1}</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateIncorrectCredentials">Kimlik doğrulama bilgileri yanlış</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateError" xml:space="preserve">Giriş sırasında bir hata oluştu.
 
