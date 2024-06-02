@@ -95,7 +95,8 @@ namespace NVIDIAGeForceNowEnabler.Models
         Game = 2,
         Platform_Client = 3,
         Prerequisite = 4,
-        Variant = 5
+        Variant = 5,
+        Interactive_Content = 6
     };
 
     public enum AppStore {
