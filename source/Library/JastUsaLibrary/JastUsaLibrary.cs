@@ -115,17 +115,24 @@ namespace JastUsaLibrary
             }
 
             var jastProducts = _accountClient.GetGames(authenticationToken);
-            if (jastProducts.Count > 0)
+            if (jastProducts.Count == 0)
             {
-                FileSystem.WriteStringToFile(_userGamesCachePath, Serialization.ToJson(jastProducts), true);
+                return games;
             }
 
+            FileSystem.WriteStringToFile(_userGamesCachePath, Serialization.ToJson(jastProducts), true);
             var libraryCache = settings.Settings.LibraryCache;
             var saveSettings = false;
-            foreach (var kv in libraryCache)
+            foreach (var kv in libraryCache.ToList())
             {
                 var gameVariant = jastProducts.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == kv.Value.GameId);
-                if (gameVariant != null && (kv.Value.Product is null || Serialization.ToJson(kv.Value.Product) != Serialization.ToJson(gameVariant))) // TODO Do this properly
+                if (gameVariant is null)
+                {
+                    libraryCache.Remove(kv.Key);
+                    saveSettings = true;
+                    logger.Debug($"Removed cache with id {kv.Value.GameId} because it was not found in the JAST games list response");
+                }
+                else if (kv.Value.Product is null || Serialization.ToJson(kv.Value.Product) != Serialization.ToJson(gameVariant)) // TODO Properly compare if it has changed
                 {
                     kv.Value.Product = gameVariant;
                     saveSettings = true;
@@ -139,13 +146,12 @@ namespace JastUsaLibrary
                     continue;
                 }
 
-                var gameName = jastProduct.ProductVariant.ProductName
-                    .RemoveTrademarks()
-                    .Replace("[PRE-ORDER]", string.Empty, StringComparison.InvariantCultureIgnoreCase)
-                    .Trim();
                 var game = new GameMetadata
                 {
-                    Name = gameName,
+                    Name = jastProduct.ProductVariant.ProductName
+                               .RemoveTrademarks()
+                               .Replace("[PRE-ORDER]", string.Empty, StringComparison.InvariantCultureIgnoreCase)
+                               .Trim(),
                     GameId = jastProduct.ProductVariant.GameId.ToString(),
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                     Source = new MetadataNameProperty("JAST USA")
@@ -182,7 +188,7 @@ namespace JastUsaLibrary
                 }
 
                 var assets = new ObservableCollection<JastAssetWrapper>();
-                var gameTranslations = cache.Product.ProductVariant.Game.Translations.Where(x => x.Key == Locale.En_Us);
+                var gameTranslations = cache.Product?.ProductVariant.Game.Translations.Where(x => x.Key == Locale.En_Us);
                 if (gameTranslations.HasItems())
                 {
                     var response = _accountClient.GetGameTranslations(authenticationToken, gameTranslations.First().Value.Id);
@@ -272,7 +278,7 @@ namespace JastUsaLibrary
             var game = args.Game;
             if (game.PluginId == Id)
             {
-                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) && gameCache.Product != null)
+                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) && gameCache.Program != null)
                 {
                     return new List<PlayController>
                     {
@@ -314,7 +320,7 @@ namespace JastUsaLibrary
         public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
         {
             var game = args.Game;
-            if (args.Game.PluginId == Id)
+            if (game.PluginId == Id)
             {
                 if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
                 {
@@ -323,7 +329,7 @@ namespace JastUsaLibrary
                 }
 
                 if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) &&
-                    gameCache.Product != null && FileSystem.FileExists(gameCache.Program.Path))
+                    gameCache.Program != null && FileSystem.FileExists(gameCache.Program.Path))
                 {
                     return new List<UninstallController> { new JastUninstallController(game, gameCache, this) };
                 }
