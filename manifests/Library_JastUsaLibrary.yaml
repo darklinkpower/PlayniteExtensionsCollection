@@ -134,3 +134,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_19.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.20
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-06-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.02_92c204b7/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_20.pext
+    Changelog:
+    - 'Fixed: Error during library update when a previously imported game is not found in the list of games obtained from JAST USA'
