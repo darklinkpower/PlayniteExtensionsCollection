@@ -92,21 +92,21 @@
     <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Kan ikke hente nedlastingslenken for {0}. Kontroller at du er logget på i innstillingene til utvidelsen.</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Henter nedlasting for {0} …</sys:String>
     <sys:String x:Key="LOC_JUL_StoppingDownloads">Stopper nedlastinger …</sys:String>
-    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Please wait while ongoing compressed file extractions are completed…</sys:String>
-    <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} is already in the downloads list.</sys:String>
-    <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">The download file &quot;{0}&quot; already exists in &quot;{1}&quot;.</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Extracted files for file &quot;{0}&quot; detected in &quot;{1}&quot;.
+    <sys:String x:Key="LOC_JUL_WaitingForExtractions">Vennligst vent mens utpakking av komprimerte filer fullføres …</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetAlreadyInDlListFormat">{0} er allerede i nedlastingslisten.</sys:String>
+    <sys:String x:Key="LOC_JUL_AssetExistsInPathFormat">Nedlastingsfilen &quot;{0}&quot; finnes allerede i &quot;{1}&quot;.</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractedDirectoryDetected" xml:space="preserve">Utpakkede filer for filen &quot;{0}&quot; oppdaget i &quot;{1}&quot;.
 
-Download the file anyway?</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderExtractFileError" xml:space="preserve">Error during the extraction of file &quot;{0}&quot;.
+Last ned filen likevel?</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderExtractFileError" xml:space="preserve">Feil under utpakking av filen &quot;{0}&quot;.
     
 Error: {1}</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateIncorrectCredentials">Authentication credentials are incorrect</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateError" xml:space="preserve">Error occurred during Login.
+    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateIncorrectCredentials">Autentiseringsinformasjon er feil</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageAuthenticateError" xml:space="preserve">En feil oppstod under innlogging.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageGenerateLinkError" xml:space="preserve">Error occurred when obtaining download link.
+Feil: {0}</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageGenerateLinkError" xml:space="preserve">En feil oppstod under henting av nedlastingslenke.
 
-Error: {0}</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageCouldNotObtainAuthTokens">Could not obtain authentication tokens</sys:String>
+Feil: {0}</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageCouldNotObtainAuthTokens">Kunne ikke hente autentiseringsbevis</sys:String>
 </ResourceDictionary>
