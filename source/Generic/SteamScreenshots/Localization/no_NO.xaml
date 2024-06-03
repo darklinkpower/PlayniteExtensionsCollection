@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_SteamScreenshots_ScreenshotsLabel">Screenshots</sys:String>
-    <sys:String x:Key="LOC_SteamScreenshots_SteamScreenshotsLabel">Steam screenshots</sys:String>
-    <sys:String x:Key="LOC_SteamScreenshots_SelectedScreenshotPositionFormat">{0} of {1}</sys:String>
-    <sys:String x:Key="LOC_SteamScreenshots_MoveBackLabel">Back</sys:String>
-    <sys:String x:Key="LOC_SteamScreenshots_MoveNextLabel">Next</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_ScreenshotsLabel">Skjermbilder</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_SteamScreenshotsLabel">Steam-skjermbilder</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_SelectedScreenshotPositionFormat">{0} av {1}</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_MoveBackLabel">Tilbake</sys:String>
+    <sys:String x:Key="LOC_SteamScreenshots_MoveNextLabel">Neste</sys:String>
 </ResourceDictionary>
