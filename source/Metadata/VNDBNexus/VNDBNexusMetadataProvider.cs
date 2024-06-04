@@ -315,7 +315,7 @@ namespace VNDBNexus
                 return base.GetName(args);
             }
 
-            return _matchedVisualNovel.Title.NormalizeGameName();
+            return _matchedVisualNovel.Title;
         }
 
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
