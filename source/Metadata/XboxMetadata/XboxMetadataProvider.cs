@@ -374,8 +374,8 @@ namespace XboxMetadata
             {
                 var gameName = _options.GameData.Name;
                 var results = _xboxWebService.GetGameSearchResults(gameName);
-                var normalizedGameName = gameName.Normalize();
-                var matchingProduct = results.FirstOrDefault(x => x.Title.Normalize() == normalizedGameName);
+                var normalizedGameName = gameName.Satinize();
+                var matchingProduct = results.FirstOrDefault(x => x.Title.Satinize() == normalizedGameName);
                 if (matchingProduct != null)
                 {
                     _matchedProductData = matchingProduct;
