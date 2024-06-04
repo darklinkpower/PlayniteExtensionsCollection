@@ -1,10 +1,8 @@
-﻿using ComposableAsync;
-using FlowHttp;
+﻿using FlowHttp;
 using FlowHttp.Constants;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PluginsCommon;
-using RateLimiter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ThrottlerSharp;
 using VndbApiDomain.CharacterAggregate;
 using VndbApiDomain.DatabaseDumpTraitAggregate;
 using VndbApiDomain.ProducerAggregate;
@@ -45,17 +44,19 @@ namespace VndbApiInfrastructure.Services
         private const string _postStaffEndpoint = @"/staff";
         private const string _postTagEndpoint = @"/tag";
         private const string _postTraitEndpoint = @"/trait";
-        private static readonly TimeLimiter _requestsLimiter;
         private static readonly Dictionary<int, string> _errorMessages;
         private static readonly ILogger _logger = LogManager.GetLogger();
+        private static readonly RateLimiter _requestsRateLimiter;
 
         static VndbService()
         {
             // The server will allow up to 200 requests per 5 minutes and up to 
             // 1 second of execution time per minute. Using less for safety.
-            var constraint = new CountByIntervalAwaitableConstraint(30, TimeSpan.FromMinutes(1));
-            var constraint2 = new CountByIntervalAwaitableConstraint(5, TimeSpan.FromMilliseconds(700));
-            _requestsLimiter = TimeLimiter.Compose(constraint, constraint2);
+            _requestsRateLimiter = RateLimiterBuilder.Create()
+                .WithRequestLimit(180, TimeSpan.FromMinutes(5))
+                .WithMinInterval(TimeSpan.FromMilliseconds(150))
+                .WithAbortMode()
+                .Build();
             _errorMessages = new Dictionary<int, string>
             {
                 { 400, "Invalid request body or query, the included error message hopefully points at the problem." },
@@ -74,10 +75,17 @@ namespace VndbApiInfrastructure.Services
                 .WithUrl(url)
                 .WithPostHttpMethod()
                 .WithContent(postBody, HttpContentTypes.Json);
-            var result = await _requestsLimiter.Enqueue(
-                () => request.DownloadString(cancellationToken),
+
+            var operationResult = await _requestsRateLimiter.ExecuteAsync(
+                async () => await request.DownloadStringAsync(cancellationToken),
                 cancellationToken);
 
+            if (!operationResult.Success)
+            {
+                return null;
+            }
+
+            var result = operationResult.Result;
             if (result.IsSuccess)
             {
                 return result.Content;
@@ -243,10 +251,7 @@ namespace VndbApiInfrastructure.Services
                 var request = HttpRequestFactory.GetHttpFileRequest()
                     .WithUrl(downloadUrl)
                     .WithDownloadTo(tempGzFile);
-                var result = await _requestsLimiter.Enqueue(
-                    () => request.DownloadFileAsync(cancellationToken),
-                    cancellationToken);
-
+                var result = await request.DownloadFileAsync(cancellationToken);
                 if (!result.IsSuccess)
                 {
                     return null;
