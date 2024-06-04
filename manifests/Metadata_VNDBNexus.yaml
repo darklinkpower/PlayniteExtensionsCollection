@@ -25,3 +25,14 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_3.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.03_74640f56/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_4.pext
+    Changelog:
+    - 'Changed: Background metadata download will now also match to the visual novel entry by aliases and alternative titles'
+    - 'Changed: Improvements to how the extension how the extension limits and handles the requests made to VNDB to obtain data'
+    - 'Fixed: Failing to match the game to the visual novel entry during background metadata download even if it was present in the results'
+    - 'Fixed: Certain searches not returning visual novel results'
+    - 'Fixed: Visual novel names removing certain characters when imported to game name during metadata download'
+    - 'Changed: Updated localizations for improved language support'

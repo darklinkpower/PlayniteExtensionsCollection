@@ -26,3 +26,9 @@ Packages:
     Changelog:
     - 'Fixed: The active view scrolling to the screenshots panel when first displaying or selecting a new screenshot'
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-03
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.03_74640f56/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_4.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'
