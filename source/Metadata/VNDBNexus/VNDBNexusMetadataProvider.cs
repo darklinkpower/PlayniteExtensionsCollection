@@ -180,8 +180,12 @@ namespace VNDBNexus
             {
                 var gameName = _requestOptions.GameData.Name;
                 var searchResults = GetVnSearchResults(gameName);
-                var normalizedGameName = gameName.Normalize();
-                var matchingVisualNovel = searchResults.FirstOrDefault(x => x.Title.Normalize() == normalizedGameName);
+                var normalizedGameName = gameName.Satinize();
+
+                var matchingVisualNovel = searchResults.FirstOrDefault(
+                    x => x.Title.Satinize() == normalizedGameName ||
+                    x.Aliases?.Any(x => x.Satinize() == normalizedGameName) == true ||
+                    x.Titles?.Any(x => x.Title.Satinize() == normalizedGameName) == true);
                 if (matchingVisualNovel != null)
                 {
                     _matchedVisualNovel = matchingVisualNovel;
@@ -224,7 +228,7 @@ namespace VNDBNexus
             var query = new VisualNovelRequestQuery(vndbRequestFilter);
             query.Fields.DisableAllFlags(true);
 
-            query.Fields.Flags = VnRequestFieldsFlags.Title | VnRequestFieldsFlags.Id;
+            query.Fields.Flags = VnRequestFieldsFlags.Title | VnRequestFieldsFlags.Id | VnRequestFieldsFlags.Aliases | VnRequestFieldsFlags.TitlesTitle;
 
             if (_settings.Settings.MetadataFieldsConfiguration.EnableDescription)
             {
