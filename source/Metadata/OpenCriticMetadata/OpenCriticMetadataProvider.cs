@@ -41,8 +41,8 @@ namespace OpenCriticMetadata
                     return base.GetCriticScore(args);
                 }
 
-                var normalizedGameName = options.GameData.Name.Normalize();
-                var resultMatch = gameResults.FirstOrDefault(x => x.Name.Normalize() == normalizedGameName);
+                var normalizedGameName = options.GameData.Name.Satinize();
+                var resultMatch = gameResults.FirstOrDefault(x => x.Name.Satinize() == normalizedGameName);
                 if (resultMatch != null)
                 {
                     var data = openCriticService.GetGameData(resultMatch, args.CancelToken);

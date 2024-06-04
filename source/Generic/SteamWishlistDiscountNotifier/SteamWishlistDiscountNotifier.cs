@@ -201,7 +201,7 @@ namespace SteamWishlistDiscountNotifier
                     }
                 }
 
-                var nameForMatchingSources = wishlistItem.Name.Normalize();
+                var nameForMatchingSources = wishlistItem.Name.Satinize();
                 if (itemsSources.TryGetValue(nameForMatchingSources, out var gameOwnedSources))
                 {
                     wishlistItemWrapperList.Add(new WishlistCacheItemViewWrapper(wishlistItem, bannerImagePath, gameOwnedSources));
@@ -263,7 +263,7 @@ namespace SteamWishlistDiscountNotifier
             return PlayniteApi.Database.Games
                 .AsParallel()
                 .Where(game => !Steam.IsGameSteamGame(game))
-                .GroupBy(game => game.Name.Normalize())
+                .GroupBy(game => game.Name.Satinize())
                 .ToDictionary(
                     group => group.Key,
                     group => group.Select(game => game.Source?.Name.IsNullOrEmpty() == false ? game.Source.Name : defaultSource).ToList()
@@ -366,7 +366,7 @@ namespace SteamWishlistDiscountNotifier
                                 notificationLines.Add(string.Format("{0} {1}", newWishlistItem.Currency, ((double)newWishlistItem.PriceOriginal).ToString("0.00")));
                             }
 
-                            var matchingName = newWishlistItem.Name.Normalize();
+                            var matchingName = newWishlistItem.Name.Satinize();
                             if (settings.Settings.NotificationDisplayOwnedSources && otherSourcesOwnership.TryGetValue(matchingName, out var otherOwnedSources))
                             {
                                 notificationLines.Add(string.Format("{0} {1}",
@@ -408,7 +408,7 @@ namespace SteamWishlistDiscountNotifier
                                 string.Format("{0} {1} -> {0} {2}", cachedItem.Currency, ((double)cachedItem.PriceOriginal).ToString("0.00"), ((double)newWishlistItem.PriceFinal).ToString("0.00"))
                             };
 
-                            var matchingName = newWishlistItem.Name.Normalize();
+                            var matchingName = newWishlistItem.Name.Satinize();
                             if (settings.Settings.NotificationDisplayOwnedSources && otherSourcesOwnership.TryGetValue(matchingName, out var otherOwnedSources))
                             {
                                 notificationLines.Add(string.Format("{0} {1}",
@@ -483,7 +483,7 @@ namespace SteamWishlistDiscountNotifier
                 string.Format("{0} {1} -> {0} {2}", newWishlistItem.Currency, ((double)newWishlistItem.PriceOriginal).ToString("0.00"), ((double)newWishlistItem.PriceFinal).ToString("0.00"))
             };
 
-            var matchingName = newWishlistItem.Name.Normalize();
+            var matchingName = newWishlistItem.Name.Satinize();
             if (settings.Settings.NotificationDisplayOwnedSources && otherSourcesOwnership.TryGetValue(matchingName, out var otherOwnedSources))
             {
                 notificationLines.Add(string.Format("{0} {1}",

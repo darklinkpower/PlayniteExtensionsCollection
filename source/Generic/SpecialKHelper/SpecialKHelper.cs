@@ -732,8 +732,8 @@ namespace SpecialKHelper
             results.ForEach(a => a.Name = a.Name.NormalizeGameName());
 
             // Try to see if there's an exact match, to not prompt the user unless needed
-            var matchingGameName = normalizedName.Normalize();
-            var exactMatch = results.FirstOrDefault(x => x.Name.Normalize() == matchingGameName);
+            var matchingGameName = normalizedName.Satinize();
+            var exactMatch = results.FirstOrDefault(x => x.Name.Satinize() == matchingGameName);
 
             // Automatic match method 1: Remove all symbols
             if (exactMatch != null)

@@ -42,8 +42,8 @@ namespace MetacriticMetadata
                     return base.GetCriticScore(args);
                 }
 
-                var normalizedGameName = options.GameData.Name.Normalize();
-                var resultMatch = gameResults.FirstOrDefault(x => x.Name.Normalize() == normalizedGameName);
+                var normalizedGameName = options.GameData.Name.Satinize();
+                var resultMatch = gameResults.FirstOrDefault(x => x.Name.Satinize() == normalizedGameName);
                 if (resultMatch is null || resultMatch.MetacriticScore is null)
                 {
                     return base.GetCriticScore(args);

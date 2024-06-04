@@ -600,10 +600,10 @@ namespace SaveFileView
                 return null;
             }
 
-            var matchName = game.Name.Normalize();
+            var matchName = game.Name.Satinize();
             foreach (var item in query.Query.Search)
             {
-                if (item.Title.Normalize() == matchName)
+                if (item.Title.Satinize() == matchName)
                 {
                     return item.PageId.ToString();
                 }

@@ -32,7 +32,7 @@ namespace PurchaseDateImporter.Services
 
                 licenseNameMatch = Regex.Replace(licenseNameMatch.Replace(" and ", "")
                     .Replace("Game of the Year", "GOTY"), "(GOTY)$", "GOTY Edition");
-                licensesDictionary[licenseNameMatch.Normalize()] = license;
+                licensesDictionary[licenseNameMatch.Satinize()] = license;
             }
 
             return licensesDictionary;

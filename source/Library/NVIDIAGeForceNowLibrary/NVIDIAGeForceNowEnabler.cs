@@ -283,7 +283,7 @@ namespace NVIDIAGeForceNowEnabler
 
         private string SatinizeGameName(string gameName)
         {
-            return gameName.Normalize()
+            return gameName.Satinize()
                 .Replace("gameoftheyearedition", "")
                 .Replace("premiumedition", "")
                 .Replace("gameoftheyearedition", "")

@@ -23,7 +23,7 @@ namespace PurchaseDateImporter.Services
             var licenses = GetLicenses();
             foreach (var license in licenses)
             {
-                licensesDictionary[license.Name.Normalize()] = license;
+                licensesDictionary[license.Name.Satinize()] = license;
             }
 
             return licensesDictionary;
