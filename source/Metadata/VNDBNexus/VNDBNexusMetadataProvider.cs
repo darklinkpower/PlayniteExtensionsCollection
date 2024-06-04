@@ -184,8 +184,8 @@ namespace VNDBNexus
 
                 var matchingVisualNovel = searchResults.FirstOrDefault(
                     x => x.Title.Satinize() == normalizedGameName ||
-                    x.Aliases?.Any(x => x.Satinize() == normalizedGameName) == true ||
-                    x.Titles?.Any(x => x.Title.Satinize() == normalizedGameName) == true);
+                    x.Aliases?.Any(alias => alias.Satinize() == normalizedGameName) == true ||
+                    x.Titles?.Any(altTitle => altTitle.Title.Satinize() == normalizedGameName) == true);
                 if (matchingVisualNovel != null)
                 {
                     _matchedVisualNovel = matchingVisualNovel;
