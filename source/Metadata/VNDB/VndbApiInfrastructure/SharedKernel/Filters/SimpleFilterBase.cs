@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -92,7 +93,7 @@ namespace VndbApiInfrastructure.SharedKernel.Filters
             }
             if (item is string str)
             {
-                sb.Append($"\"{str}\"");
+                sb.Append(JsonConvert.SerializeObject(str));
             }
             else if (item is int intValue)
             {
