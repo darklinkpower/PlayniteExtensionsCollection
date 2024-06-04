@@ -38,6 +38,8 @@ using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBNexus.Converters;
 using VNDBNexus.Database;
 using VNDBNexus.PlayniteControls;
+using VNDBNexus.KeyboardSearch;
+using EventsCommon;
 
 namespace VNDBNexus
 {
@@ -47,6 +49,7 @@ namespace VNDBNexus
         private readonly BbCodeProcessor _bbcodeProcessor;
         private readonly VndbDatabase _vndbDatabase;
         private readonly ImageUriToBitmapImageConverter _imageUriToBitmapImageConverter;
+        private readonly EventAggregator _eventAggregator;
 
         public VNDBNexusSettingsViewModel Settings { get; private set; }
 
@@ -93,6 +96,14 @@ namespace VNDBNexus
                 SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
 
+            _eventAggregator = new EventAggregator();
+            Searches = new List<SearchSupport>
+            {
+                new SearchSupport("vn",
+                    ResourceProvider.GetString("LOC_VndbNexus_SearchOnVndbLabel"),
+                    new VndbKeyboardSearch(Settings, _eventAggregator))
+            };
+
             var pluginDatabaPath = GetPluginUserDataPath();
             _vndbDatabase = new VndbDatabase(pluginDatabaPath);
             _imageUriToBitmapImageConverter = new ImageUriToBitmapImageConverter(Path.Combine(GetPluginUserDataPath(), "ImagesCache"));
@@ -102,7 +113,7 @@ namespace VNDBNexus
         {
             if (args.Name == _vndbVisualNovelViewControlName)
             {
-                return new VndbVisualNovelViewControl(this, Settings, _vndbDatabase, _imageUriToBitmapImageConverter);
+                return new VndbVisualNovelViewControl(this, Settings, _vndbDatabase, _imageUriToBitmapImageConverter, _eventAggregator);
             }
 
             return null;

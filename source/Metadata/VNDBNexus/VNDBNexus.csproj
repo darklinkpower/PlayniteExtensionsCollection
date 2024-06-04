@@ -114,6 +114,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\EventsCommon\EventAggregator.cs">
+      <Link>Shared\EventsCommon\EventAggregator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\EventsCommon\IEventAggregator.cs">
+      <Link>Shared\EventsCommon\IEventAggregator.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\flowhttp\constants\HttpContentTypeConstants.cs">
       <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
     </Compile>
@@ -290,6 +296,7 @@
     <Compile Include="Database\GroupedEnumerable.cs" />
     <Compile Include="Database\VisualNovelRelationList.cs" />
     <Compile Include="Enums\TagsDisplayOptionEnum.cs" />
+    <Compile Include="KeyboardSearch\InvokeVisualNovelDisplayEvent.cs" />
     <Compile Include="PlayniteControls\VndbVisualNovelViewControl.xaml.cs">
       <DependentUpon>VndbVisualNovelViewControl.xaml</DependentUpon>
     </Compile>
@@ -302,6 +309,7 @@
     <Compile Include="Shared\DatabaseCommon\IRepository.cs" />
     <Compile Include="Shared\DatabaseCommon\LiteDbRepository.cs" />
     <Compile Include="Database\VndbDatabase.cs" />
+    <Compile Include="KeyboardSearch\VndbKeyboardSearch.cs" />
     <Compile Include="VNDBNexus.cs" />
     <Compile Include="VNDBNexusMetadataProvider.cs" />
     <Compile Include="VNDBNexusSettings.cs" />

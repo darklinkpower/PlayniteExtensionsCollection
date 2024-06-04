@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EventsCommon;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
@@ -37,6 +38,7 @@ using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBNexus.Converters;
 using VNDBNexus.Database;
 using VNDBNexus.Enums;
+using VNDBNexus.KeyboardSearch;
 using VNDBNexus.Screenshots;
 using VNDBNexus.Shared.DatabaseCommon;
 
@@ -440,7 +442,7 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
-        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter)
+        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter, IEventAggregator eventAggregator)
         {
             _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
             Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
@@ -462,9 +464,26 @@ namespace VNDBNexus.PlayniteControls
             };
 
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
+            eventAggregator.Subscribe<InvokeVisualNovelDisplayEvent>(OnInvokeVisualNovelDisplay);
 
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void OnInvokeVisualNovelDisplay(InvokeVisualNovelDisplayEvent e)
+        {
+            if (e.Handled)
+            {
+                return;
+            }
+
+            if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && _activeViewAtCreation != _playniteApi.MainView.ActiveDesktopView)
+            {
+                return;
+            }
+
+            e.Handled = true;
+            LoadVisualNovelDataWithProgress(e.VisualNovel, false);
         }
 
         private void SetControlTextBlockStyle()
@@ -1053,6 +1072,20 @@ namespace VNDBNexus.PlayniteControls
             window.ShowDialog();
         }
 
+        private void LoadVisualNovelDataWithProgress(VisualNovel visualNovel, bool forceUpdate)
+        {
+            var dialogText = string.Format(ResourceProvider.GetString("LOC_VndbNexus_LoadingVndbDataProgressFormat"), visualNovel.Title);
+            var progressOptions = new GlobalProgressOptions(dialogText, true)
+            {
+                IsIndeterminate = true
+            };
+
+            _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
+            {
+                await LoadVisualNovelByIdAsync(visualNovel.Id, forceUpdate, a.CancelToken);
+            }, progressOptions);
+        }
+
         public RelayCommand<object> OpenScreenshotCommand
         {
             get => new RelayCommand<object>((object parameter) =>
@@ -1102,16 +1135,7 @@ namespace VNDBNexus.PlayniteControls
             {
                 if (parameter is VisualNovel visualNovel)
                 {
-                    var dialogText = string.Format(ResourceProvider.GetString("LOC_VndbNexus_LoadingVndbDataProgressFormat"), visualNovel.Title);
-                    var progressOptions = new GlobalProgressOptions(dialogText, true)
-                    {
-                        IsIndeterminate = true
-                    };
-
-                    _playniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
-                    {
-                        await LoadVisualNovelByIdAsync(visualNovel.Id, true, a.CancelToken);
-                    }, progressOptions);
+                    LoadVisualNovelDataWithProgress(visualNovel, true);
                 }
             });
         }
