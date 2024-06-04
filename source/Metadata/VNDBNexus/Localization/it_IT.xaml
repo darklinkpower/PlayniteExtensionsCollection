@@ -114,13 +114,13 @@
     <sys:String x:Key="LOC_VndbNexus_CharacterHeightFormat">Altezza: {0}cm</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterWeightFormat">Peso: {0}kg</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterBustWaistHipsFormat">Bust-Waist-Hips: {0}-{1}-{2}cm</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_SearchOnVndbLabel">Search on VNDB</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_EnterSearchTermLabel">Enter the search term or VNDB id</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_EnterSearchHint">Search for visual novels on VNDB</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_ViewVnInPlayniteLabel">View in Playnite</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_OpenOnWebLabel">Open on web</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchOnVndbLabel">Cerca su VNDB</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_EnterSearchTermLabel">Inserisci il termine di ricerca o l'id VNDB</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_EnterSearchHint">Cerca romanzi visivi su VNDB</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ViewVnInPlayniteLabel">Visualizza in Playnite</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_OpenOnWebLabel">Apri sul web</sys:String>
     <sys:String x:Key="LOC_VndbNexus_IdFormat">Id: {0}</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_DevelopersFormat">Developers: {0}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_DevelopersFormat">Sviluppatori: {0}</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Sconosciuto</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabo</sys:String>
