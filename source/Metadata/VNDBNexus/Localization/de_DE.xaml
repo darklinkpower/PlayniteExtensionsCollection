@@ -80,6 +80,7 @@
     <sys:String x:Key="LOC_VndbNexus_SettingsAllowPartialDatesTooltip">Wenn diese Option aktiviert ist, werden Daten, bei denen der Monat oder der Tag fehlt, beim Herunterladen der Metadaten importiert.</sys:String>
     <sys:String x:Key="LOC_VndbNexus_EnableVndbControl">VNDB Informationsfeld in unterstützten Themen anzeigen</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LoadingVndbDataProgressFormat">Laden der Daten für {0}…</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchingVnsProgress">Searching visual novels…</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthVeryShort">Sehr kurz</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthShort">Kurz</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthMedium">Mittel</sys:String>
