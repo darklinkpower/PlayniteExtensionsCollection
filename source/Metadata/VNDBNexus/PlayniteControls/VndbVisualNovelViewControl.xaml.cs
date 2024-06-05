@@ -9,6 +9,7 @@ using PluginsCommon.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -58,6 +59,7 @@ namespace VNDBNexus.PlayniteControls
         private readonly DesktopView _activeViewAtCreation;
         private readonly DispatcherTimer _updateControlDataDelayTimer;
         private readonly ImageUriToBitmapImageConverter _imageUriToBitmapImageConverter;
+        private readonly EnumToLocalizationStringConverter _enumToLocalizationConverter;
         private bool _isValuesDefaultState = true;
         private Game _currentGame;
         private Guid _activeContext = default;
@@ -445,6 +447,7 @@ namespace VNDBNexus.PlayniteControls
         public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter, IEventAggregator eventAggregator)
         {
             _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
+            _enumToLocalizationConverter = new EnumToLocalizationStringConverter();
             Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
             _playniteApi = plugin.PlayniteApi;
             SetControlTextBlockStyle();
@@ -599,6 +602,16 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
+        private string _lengthText = string.Empty;
+        public string LengthText
+        {
+            get => _lengthText;
+            set
+            {
+                _lengthText = value;
+                OnPropertyChanged();
+            }
+        }
 
         private void SetCollapsedVisibility()
         {
@@ -648,6 +661,7 @@ namespace VNDBNexus.PlayniteControls
             TagsDisplayMinimumSpoilers = false;
             TagsDisplayMajorSpoilers = false;
             DisplayUnnoficialRelations = true;
+            LengthText = string.Empty;
 
             _isValuesDefaultState = true;
         }
@@ -758,7 +772,70 @@ namespace VNDBNexus.PlayniteControls
 
             var groupedDevelopers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(developers.Distinct(), dev => dev.Language);
             var groupedPublishers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(publishers.Distinct(), dev => dev.Language);
+            if (visualNovel.LengthMinutes.HasValue)
+            {
+                LengthText = GetPlaytimeString(visualNovel);
+            }
+
             _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
+        }
+
+        public string GetPlaytimeString(VisualNovel visualNovel)
+        {
+            var lengthEnum = GetVisualNovelLengthEnum(visualNovel.LengthMinutes.Value);
+            var lengthString = _enumToLocalizationConverter.Convert(lengthEnum, typeof(string), null, CultureInfo.CurrentCulture);
+            var hours = visualNovel.LengthMinutes.Value / 60;
+            var minutes = visualNovel.LengthMinutes.Value % 60;
+
+            string timeString;
+            if (hours > 0)
+            {
+                if (minutes > 0)
+                {
+                    timeString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_HoursMinutesFormat"), hours, minutes);
+                }
+                else
+                {
+                    timeString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_HoursFormat"), hours);
+                }                
+            }
+            else
+            {
+                timeString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_MinutesFormat"), hours, minutes);
+            }
+
+            var votesNumberString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_FromNumberVotesFormatLowerCase"), visualNovel.LengthVotes);
+            return $"{lengthString} ({timeString} {votesNumberString})";
+        }
+
+        public static VnLengthEnum GetVisualNovelLengthEnum(int minutes)
+        {
+            // Ranges available in https://code.blicky.net/yorhel/vndb/src/commit/efcc393ff384576f7f56c8ef21e0991f2a850104/lib/VNDB/Types.pm#L196
+            int veryShortMax = 2 * 60;
+            int shortMax = 10 * 60;
+            int mediumMax = 30 * 60;
+            int longMax = 50 * 60;
+
+            if (minutes < veryShortMax)
+            {
+                return VnLengthEnum.VeryShort;
+            }
+            else if (minutes < shortMax)
+            {
+                return VnLengthEnum.Short;
+            }
+            else if (minutes < mediumMax)
+            {
+                return VnLengthEnum.Medium;
+            }
+            else if (minutes < longMax)
+            {
+                return VnLengthEnum.Long;
+            }
+            else
+            {
+                return VnLengthEnum.VeryLong;
+            }
         }
 
         private async Task DownloadCharactersImages(List<Character> characters)
@@ -1147,6 +1224,17 @@ namespace VNDBNexus.PlayniteControls
                 if (characterTrait != null && !characterTrait.Id.IsNullOrEmpty())
                 {
                     ProcessStarter.StartUrl($"https://vndb.org/{characterTrait.Id}");
+                }
+            });
+        }
+
+        public RelayCommand<object> OpenLenthVotesPageCommand
+        {
+            get => new RelayCommand<object>((object parameter) =>
+            {
+                if (_activeVisualNovel != null)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{_activeVisualNovel.Id}/lengthvotes");
                 }
             });
         }

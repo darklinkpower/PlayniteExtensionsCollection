@@ -553,6 +553,32 @@
                                 <ItemsControl x:Name="TitlesControl" VerticalAlignment="Top" Margin="30,5,0,0"
                                           ItemsSource="{Binding ActiveVisualNovel.Titles}" />
                             </Expander>
+
+                            <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelAliasesLabel}" IsExpanded="True"
+                                      Visibility="{Binding ElementName=VnAliasesControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <ItemsControl Margin="30,0,0,0" x:Name="VnAliasesControl"
+                                      VerticalAlignment="Center" ItemsSource="{Binding ActiveVisualNovel.Aliases}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=.}" Style="{DynamicResource BaseTextBlockStyle}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Expander>
+
+                            <Expander Header="{DynamicResource LOC_VndbNexus_PlayTimeLabel}" IsExpanded="True"
+                                      Visibility="{Binding LengthText, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                                <Button Command="{Binding DataContext.OpenLenthVotesPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        CommandParameter="{Binding ActiveVisualNovel}"
+                                        DockPanel.Dock="Left" VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        Margin="30,0,0,0"
+                                        Padding="0" Background="Transparent" BorderThickness="0">
+                                    <TextBlock Text="{Binding LengthText}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </Button>
+                            </Expander>
+                            
                             <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelRelationsLabel}" IsExpanded="True"
                                       Visibility="{Binding RelationsSectionVisibility}">
                                 <StackPanel Margin="30,0,0,0">
@@ -603,18 +629,6 @@
                                 RelationType="{x:Static vndbVnDomain:VnRelationTypeEnum.SideStory}"
                                 IncludeUnofficial="{Binding DisplayUnnoficialRelations}" />
                                 </StackPanel>
-                            </Expander>
-
-                            <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelAliasesLabel}" IsExpanded="True"
-                                      Visibility="{Binding ElementName=VnAliasesControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <ItemsControl Margin="30,0,0,0" x:Name="VnAliasesControl"
-                                      VerticalAlignment="Center" ItemsSource="{Binding ActiveVisualNovel.Aliases}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Path=.}" Style="{DynamicResource BaseTextBlockStyle}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
                             </Expander>
 
 

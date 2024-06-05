@@ -123,6 +123,10 @@
     <sys:String x:Key="LOC_VndbNexus_OpenOnWebLabel">Open on web</sys:String>
     <sys:String x:Key="LOC_VndbNexus_IdFormat">Id: {0}</sys:String>
     <sys:String x:Key="LOC_VndbNexus_DevelopersFormat">Developers: {0}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_HoursMinutesFormat">{0}h {1}m</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_HoursFormat">{0}h</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MinutesFormat">{0}m</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_FromNumberVotesFormatLowerCase">from {0} votes</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Unknown</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabic</sys:String>
