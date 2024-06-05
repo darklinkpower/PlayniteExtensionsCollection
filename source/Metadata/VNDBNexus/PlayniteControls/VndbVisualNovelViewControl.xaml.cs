@@ -613,6 +613,17 @@ namespace VNDBNexus.PlayniteControls
             }
         }
 
+        private string _votesText = string.Empty;
+        public string VotesText
+        {
+            get => _votesText;
+            set
+            {
+                _votesText = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void SetCollapsedVisibility()
         {
             Visibility = Visibility.Collapsed;
@@ -662,7 +673,8 @@ namespace VNDBNexus.PlayniteControls
             TagsDisplayMajorSpoilers = false;
             DisplayUnnoficialRelations = true;
             LengthText = string.Empty;
-
+            VotesText = string.Empty;
+            
             _isValuesDefaultState = true;
         }
 
@@ -777,7 +789,23 @@ namespace VNDBNexus.PlayniteControls
                 LengthText = GetPlaytimeString(visualNovel);
             }
 
+            if (visualNovel.Rating.HasValue)
+            {
+                VotesText = GetVotesString(visualNovel);
+            }
+
             _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
+        }
+
+        public string GetVotesString(VisualNovel visualNovel)
+        {
+            var votesAverageString = string.Format(
+                ResourceProvider.GetString("LOC_VndbNexus_VotesAverageFormat"),
+                (visualNovel.Rating.Value / 10).ToString("F2"));
+            var votesNumberString = string.Format(
+                ResourceProvider.GetString("LOC_VndbNexus_FromNumberVotesFormatLowerCase"),
+                visualNovel.VoteCount);
+            return $"{votesAverageString} ({votesNumberString})";
         }
 
         public string GetPlaytimeString(VisualNovel visualNovel)
@@ -804,7 +832,9 @@ namespace VNDBNexus.PlayniteControls
                 timeString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_MinutesFormat"), hours, minutes);
             }
 
-            var votesNumberString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_FromNumberVotesFormatLowerCase"), visualNovel.LengthVotes);
+            var votesNumberString = string.Format(
+                ResourceProvider.GetString("LOC_VndbNexus_FromNumberVotesFormatLowerCase"),
+                visualNovel.LengthVotes);
             return $"{lengthString} ({timeString} {votesNumberString})";
         }
 
@@ -1228,13 +1258,24 @@ namespace VNDBNexus.PlayniteControls
             });
         }
 
-        public RelayCommand<object> OpenLenthVotesPageCommand
+        public RelayCommand OpenLengthVotesPageCommand
         {
-            get => new RelayCommand<object>((object parameter) =>
+            get => new RelayCommand(() =>
             {
                 if (_activeVisualNovel != null)
                 {
                     ProcessStarter.StartUrl($"https://vndb.org/{_activeVisualNovel.Id}/lengthvotes");
+                }
+            });
+        }
+
+        public RelayCommand OpenRatingVotesPageCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                if (_activeVisualNovel != null)
+                {
+                    ProcessStarter.StartUrl($"https://vndb.org/{_activeVisualNovel.Id}/votes");
                 }
             });
         }

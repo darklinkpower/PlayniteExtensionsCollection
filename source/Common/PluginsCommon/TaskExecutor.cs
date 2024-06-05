@@ -49,8 +49,6 @@ namespace PluginsCommon
             }
         }
 
-        private static readonly Playnite.SDK.ILogger _logger = Playnite.SDK.LogManager.GetLogger();
-
         public void Dispose()
         {
             lock (_lockObject)

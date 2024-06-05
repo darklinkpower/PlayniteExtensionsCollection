@@ -549,12 +549,14 @@
 
 
                             <Expander x:Name="TitlesExpander" Header="{DynamicResource LOC_VndbNexus_VisualNovelTitlesLabel}" VerticalAlignment="Center"
+                                      Margin="0,10,0,0"
                                   Visibility="{Binding ElementName=TitlesControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <ItemsControl x:Name="TitlesControl" VerticalAlignment="Top" Margin="30,5,0,0"
                                           ItemsSource="{Binding ActiveVisualNovel.Titles}" />
                             </Expander>
 
                             <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelAliasesLabel}" IsExpanded="True"
+                                      Margin="0,10,0,0"
                                       Visibility="{Binding ElementName=VnAliasesControl, Path=HasItems, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <ItemsControl Margin="30,0,0,0" x:Name="VnAliasesControl"
                                       VerticalAlignment="Center" ItemsSource="{Binding ActiveVisualNovel.Aliases}">
@@ -567,10 +569,10 @@
                             </Expander>
 
                             <Expander Header="{DynamicResource LOC_VndbNexus_PlayTimeLabel}" IsExpanded="True"
+                                      Margin="0,10,0,0"
                                       Visibility="{Binding LengthText, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
-                                <Button Command="{Binding DataContext.OpenLenthVotesPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
-                                        CommandParameter="{Binding ActiveVisualNovel}"
-                                        DockPanel.Dock="Left" VerticalAlignment="Center"
+                                <Button Command="{Binding DataContext.OpenLengthVotesPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        VerticalAlignment="Center"
                                         HorizontalAlignment="Left"
                                         Margin="30,0,0,0"
                                         Padding="0" Background="Transparent" BorderThickness="0">
@@ -580,6 +582,7 @@
                             </Expander>
                             
                             <Expander Header="{DynamicResource LOC_VndbNexus_VisualNovelRelationsLabel}" IsExpanded="True"
+                                      Margin="0,10,0,0"
                                       Visibility="{Binding RelationsSectionVisibility}">
                                 <StackPanel Margin="30,0,0,0">
                                     <ToggleButton x:Name="UnofficialToggleButton"
@@ -631,7 +634,18 @@
                                 </StackPanel>
                             </Expander>
 
-
+                            <Expander Header="{DynamicResource LOC_VndbNexus_VotesLabel}" IsExpanded="True"
+                                      Margin="0,10,0,0"
+                                      Visibility="{Binding VotesText, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                                <Button Command="{Binding DataContext.OpenRatingVotesPageCommand, RelativeSource={RelativeSource AncestorType=PluginUserControl}}"
+                                        DockPanel.Dock="Left" VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        Margin="30,0,0,0"
+                                        Padding="0" Background="Transparent" BorderThickness="0">
+                                    <TextBlock Text="{Binding VotesText}"
+                                               TextTrimming="CharacterEllipsis" />
+                                </Button>
+                            </Expander>
                         </StackPanel>
                     </DockPanel>
 
