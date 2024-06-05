@@ -441,87 +441,6 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             }
         }
 
-        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter, IEventAggregator eventAggregator)
-        {
-            _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
-            _enumToLocalizationConverter = new EnumToLocalizationStringConverter();
-            Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
-            _playniteApi = plugin.PlayniteApi;
-            SetControlTextBlockStyle();
-            
-            _vndbDatabase = vndbDatabase;
-            
-            _pluginStoragePath = plugin.GetPluginUserDataPath();
-            _settingsViewModel = settingsViewModel;
-            if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-            {
-                _activeViewAtCreation = _playniteApi.MainView.ActiveDesktopView;
-            }
-
-            _updateControlDataDelayTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(1000)
-            };
-
-            _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
-            eventAggregator.Subscribe<InvokeVisualNovelDisplayEvent>(OnInvokeVisualNovelDisplay);
-
-            InitializeComponent();
-            DataContext = this;
-        }
-
-        private void OnInvokeVisualNovelDisplay(InvokeVisualNovelDisplayEvent e)
-        {
-            if (e.Handled)
-            {
-                return;
-            }
-
-            if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && _activeViewAtCreation != _playniteApi.MainView.ActiveDesktopView)
-            {
-                return;
-            }
-
-            e.Handled = true;
-            LoadVisualNovelDataWithProgress(e.VisualNovel, false);
-        }
-
-        private void SetControlTextBlockStyle()
-        {
-            // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
-            var baseStyleName = _playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "BaseTextBlockStyle" : "TextBlockBaseStyle";
-            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
-            {
-                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
-                Resources.Add(typeof(TextBlock), implicitStyle);
-            }
-        }
-
-        private async void UpdateControlData(object sender, EventArgs e)
-        {
-            _updateControlDataDelayTimer.Stop();
-            await UpdateControlAsync();
-        }
-
-        private void SetVisibleVisibility()
-        {
-            CharactersTabVisibility = CharacterWrappers?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
-            ReleasesTabVisibility = GroupedReleasesByLanguage?.GroupedResults?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
-            ScreenshotsTabVisibility = ActiveVisualNovel?.Screenshots?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
-            RelationsSectionVisibility = ActiveVisualNovel?.Relations?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
-            RelationsUnofficialButonVisibility = ActiveVisualNovel?.Relations?.Any(vn => !vn.RelationOfficial) == true ? Visibility.Visible : Visibility.Collapsed;
-            SelectedControlTabIndex = 0;
-            SelectedCharactersControlTabIndex = CharacterWrappers?.Any(x => x.Role == CharacterRoleEnum.Main && x.SpoilerLevel == SpoilerLevelEnum.None) == true ? 0 : 1;
-            ScreenshotsMaxSexualityLevel = _settingsViewModel.Settings.ControlDefaultImagesMaxSexualityLevel;
-            ScreenshotsMaxViolenceLevel = _settingsViewModel.Settings.ControlDefaultImagesMaxViolenceLevel;
-            TagsDisplayContentCategory = _settingsViewModel.Settings.ControlDefaultEnableContentCategory;
-            TagsDisplayTechnicalCategory = _settingsViewModel.Settings.ControlDefaultEnableTechnicalCategory;
-            TagsDisplaySexualCategory = _settingsViewModel.Settings.ControlDefaultEnableSexualCategoryCategory;
-
-            Visibility = Visibility.Visible;
-            _settingsViewModel.Settings.IsControlVisible = true;
-        }
-
         private Visibility _relationsSectionVisibility = Visibility.Collapsed;
         public Visibility RelationsSectionVisibility
         {
@@ -619,6 +538,106 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
                 _votesText = value;
                 OnPropertyChanged();
             }
+        }
+
+        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter, IEventAggregator eventAggregator)
+        {
+            _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
+            _enumToLocalizationConverter = new EnumToLocalizationStringConverter();
+            Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
+            _playniteApi = plugin.PlayniteApi;
+            SetControlTextBlockStyle();
+            
+            _vndbDatabase = vndbDatabase;
+            
+            _pluginStoragePath = plugin.GetPluginUserDataPath();
+            _settingsViewModel = settingsViewModel;
+            if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                _activeViewAtCreation = _playniteApi.MainView.ActiveDesktopView;
+            }
+
+            _updateControlDataDelayTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(1000)
+            };
+
+            _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
+            eventAggregator.Subscribe<InvokeVisualNovelDisplayEvent>(OnInvokeVisualNovelDisplay);
+
+            InitializeComponent();
+            DataContext = this;
+        }
+
+        private void OnInvokeVisualNovelDisplay(InvokeVisualNovelDisplayEvent e)
+        {
+            if (e.Handled)
+            {
+                return;
+            }
+
+            if (_playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && _activeViewAtCreation != _playniteApi.MainView.ActiveDesktopView)
+            {
+                return;
+            }
+
+            e.Handled = true;
+            LoadVisualNovelDataWithProgress(e.VisualNovel, false);
+        }
+
+        private void SetControlTextBlockStyle()
+        {
+            // Desktop mode uses BaseTextBlockStyle and Fullscreen Mode uses TextBlockBaseStyle
+            var baseStyleName = _playniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop ? "BaseTextBlockStyle" : "TextBlockBaseStyle";
+            if (ResourceProvider.GetResource(baseStyleName) is Style baseStyle && baseStyle.TargetType == typeof(TextBlock))
+            {
+                var implicitStyle = new Style(typeof(TextBlock), baseStyle);
+                Resources.Add(typeof(TextBlock), implicitStyle);
+            }
+        }
+
+        private async void UpdateControlData(object sender, EventArgs e)
+        {
+            _updateControlDataDelayTimer.Stop();
+            await UpdateControlAsync();
+        }
+
+        private void SetVisibleVisibility()
+        {
+            CharactersTabVisibility = CharacterWrappers?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            ReleasesTabVisibility = GroupedReleasesByLanguage?.GroupedResults?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            ScreenshotsTabVisibility = ActiveVisualNovel?.Screenshots?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            RelationsSectionVisibility = ActiveVisualNovel?.Relations?.Any() == true ? Visibility.Visible : Visibility.Collapsed;
+            RelationsUnofficialButonVisibility = ActiveVisualNovel?.Relations?.Any(vn => !vn.RelationOfficial) == true ? Visibility.Visible : Visibility.Collapsed;
+            SelectedControlTabIndex = 0;
+            if (CharacterWrappers?.Any() == true)
+            {
+                if (CharacterWrappers.Any(x => x.Role == CharacterRoleEnum.Main && x.SpoilerLevel == SpoilerLevelEnum.None))
+                {
+                    SelectedCharactersControlTabIndex = 0;
+                }
+                else if (CharacterWrappers.Any(x => x.Role == CharacterRoleEnum.Primary && x.SpoilerLevel == SpoilerLevelEnum.None))
+                {
+                    SelectedCharactersControlTabIndex = 1;
+                }
+                else if (CharacterWrappers.Any(x => x.Role == CharacterRoleEnum.Side && x.SpoilerLevel == SpoilerLevelEnum.None))
+                {
+                    SelectedCharactersControlTabIndex = 2;
+                }
+                else
+                {
+                    SelectedCharactersControlTabIndex = 3;
+                }
+            }
+
+            ScreenshotsMaxSexualityLevel = _settingsViewModel.Settings.ControlDefaultImagesMaxSexualityLevel;
+            ScreenshotsMaxViolenceLevel = _settingsViewModel.Settings.ControlDefaultImagesMaxViolenceLevel;
+            TagsDisplayContentCategory = _settingsViewModel.Settings.ControlDefaultEnableContentCategory;
+            TagsDisplayTechnicalCategory = _settingsViewModel.Settings.ControlDefaultEnableTechnicalCategory;
+            TagsDisplaySexualCategory = _settingsViewModel.Settings.ControlDefaultEnableSexualCategoryCategory;
+
+            Visibility = Visibility.Visible;
+            _settingsViewModel.Settings.IsControlVisible = true;
         }
 
         private void SetCollapsedVisibility()
