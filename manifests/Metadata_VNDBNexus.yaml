@@ -36,3 +36,12 @@ Packages:
     - 'Fixed: Certain searches not returning visual novel results'
     - 'Fixed: Visual novel names removing certain characters when imported to game name during metadata download'
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_5.pext
+    Changelog:
+    - 'Added: The VNDB panel will now display the visual novel rating'
+    - 'Added: The VNDB panel will now display the visual novel length'
+    - 'Added: Implemented support for Playnite Keyboard launcher using the "VN" keyword to search for visual novels. Results can be displayed in either the VNDB panel or opened on the web browser.'
+    - 'Changed: Cancelling the metadata download process will now cancel it immediately.'

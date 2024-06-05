@@ -87,3 +87,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_26.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 2.27
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-06-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_27.pext
+    Changelog:
+    - 'Fixed: Failing to correctly match to games to purchase data in some circumstances'

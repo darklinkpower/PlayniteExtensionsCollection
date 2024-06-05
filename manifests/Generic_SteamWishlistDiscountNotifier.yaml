@@ -230,3 +230,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_32.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.33
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-06-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_33.pext
+    Changelog:
+    - 'Fixed: Failing to identify games as already owned in wishlist view in some circumstances'

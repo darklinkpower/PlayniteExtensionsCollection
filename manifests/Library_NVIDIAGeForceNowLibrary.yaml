@@ -321,3 +321,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.02_92c204b7/NVIDIA_GeForce_Now_Enabler_2_51.pext
     Changelog:
     - 'Fixed: Error when obtaining GeForce Now database on library update'
+  - Version: 2.52
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-06-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/NVIDIA_GeForce_Now_Enabler_2_52.pext
+    Changelog:
+    - 'Fixed: Failing to correctly match to games to results in database in some circumstances'

@@ -144,3 +144,9 @@ Packages:
     Changelog:
     - 'Changed: Updated extension information database'
     - 'Improved: Small improvement during matching games with extension database'
+  - Version: 1.22
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-06-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/CooperativeModesImporter_9767ac15-6e26-4e4c-9d69-f6838625dde3_1_22.pext
+    Changelog:
+    - 'Fixed: Failing to correctly match to games to results in database in some circumstances'

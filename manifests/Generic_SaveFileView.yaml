@@ -140,3 +140,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_21.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 2.22
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-06-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/SaveFileView_f68f302b-9799-4b77-a982-4bfca97130e2_2_22.pext
+    Changelog:
+    - 'Fixed: Failing to correctly match to games to results in database in some circumstances'
