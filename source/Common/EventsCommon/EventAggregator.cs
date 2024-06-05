@@ -9,26 +9,56 @@ namespace EventsCommon
     public class EventAggregator : IEventAggregator
     {
         private readonly Dictionary<Type, List<object>> _subscribers = new Dictionary<Type, List<object>>();
+        private readonly object _lock = new object();
 
         public void Subscribe<TEvent>(Action<TEvent> action)
         {
-            if (!_subscribers.ContainsKey(typeof(TEvent)))
+            lock (_lock)
             {
-                _subscribers[typeof(TEvent)] = new List<object>();
-            }
+                if (!_subscribers.ContainsKey(typeof(TEvent)))
+                {
+                    _subscribers[typeof(TEvent)] = new List<object>();
+                }
 
-            _subscribers[typeof(TEvent)].Add(action);
+                _subscribers[typeof(TEvent)].Add(action);
+            }
+        }
+
+        public void Unsubscribe<TEvent>(Action<TEvent> action)
+        {
+            lock (_lock)
+            {
+                if (!_subscribers.ContainsKey(typeof(TEvent)))
+                {
+                    return;
+                }
+
+                _subscribers[typeof(TEvent)].Remove(action);
+                if (_subscribers[typeof(TEvent)].Count == 0)
+                {
+                    _subscribers.Remove(typeof(TEvent));
+                }
+            }
         }
 
         public void Publish<TEvent>(TEvent eventToPublish)
         {
-            if (_subscribers.ContainsKey(typeof(TEvent)))
+            Action<TEvent>[] subscribersCopy;
+            lock (_lock)
             {
-                foreach (var subscriber in _subscribers[typeof(TEvent)])
+                if (!_subscribers.ContainsKey(typeof(TEvent)))
                 {
-                    ((Action<TEvent>)subscriber)(eventToPublish);
+                    return;
                 }
+
+                subscribersCopy = _subscribers[typeof(TEvent)].Cast<Action<TEvent>>().ToArray();
+            }
+
+            foreach (var subscriber in subscribersCopy)
+            {
+                subscriber(eventToPublish);
             }
         }
+
     }
 }
