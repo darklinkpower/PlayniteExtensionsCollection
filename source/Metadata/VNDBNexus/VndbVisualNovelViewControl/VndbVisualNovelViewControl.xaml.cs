@@ -786,7 +786,7 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
                 LengthText = GetPlaytimeString(visualNovel);
             }
 
-            if (visualNovel.Rating.HasValue)
+            if (visualNovel.Average.HasValue)
             {
                 VotesText = GetVotesString(visualNovel);
             }
@@ -798,11 +798,22 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
         {
             var votesAverageString = string.Format(
                 ResourceProvider.GetString("LOC_VndbNexus_VotesAverageFormat"),
-                (visualNovel.Rating.Value / 10).ToString("F2"));
+                (visualNovel.Average.Value / 10).ToString("F2"));
             var votesNumberString = string.Format(
                 ResourceProvider.GetString("LOC_VndbNexus_FromNumberVotesFormatLowerCase"),
                 visualNovel.VoteCount);
-            return $"{votesAverageString} ({votesNumberString})";
+            if (visualNovel.Rating.HasValue && visualNovel.Average.Value != visualNovel.Rating.Value)
+            {
+                var votesWeightedString = string.Format(
+                    ResourceProvider.GetString("LOC_VndbNexus_VotesWeightedFormat"),
+                    (visualNovel.Rating.Value / 10).ToString("F2"));
+
+                return $"{votesAverageString} ({votesWeightedString}, {votesNumberString})";
+            }
+            else
+            {
+                return $"{votesAverageString} ({votesNumberString})";
+            }
         }
 
         public string GetPlaytimeString(VisualNovel visualNovel)

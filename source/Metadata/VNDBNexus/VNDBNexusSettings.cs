@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.ImageAggregate;
 using VndbApiDomain.SharedKernel;
+using VNDBNexus.Database;
 
 namespace VNDBNexus
 {
@@ -48,6 +49,9 @@ namespace VNDBNexus
 
     public class VNDBNexusSettings : ObservableObject
     {
+        private int _settingsVersion = 1;
+        public int SettingsVersion { get => _settingsVersion; set => SetValue(ref _settingsVersion, value); }
+
         private MetadataFieldsConfiguration _metadataFieldsConfiguration = new MetadataFieldsConfiguration();
         public MetadataFieldsConfiguration MetadataFieldsConfiguration { get => _metadataFieldsConfiguration; set => SetValue(ref _metadataFieldsConfiguration, value); }
 
@@ -124,6 +128,8 @@ namespace VNDBNexus
         public string TagsPrefixSexualCat { get => _tagsPrefixSexualCat; set => SetValue(ref _tagsPrefixSexualCat, value); }
 
         private readonly VNDBNexus _plugin;
+        private readonly VndbDatabase _vndbDatabase;
+
         private VNDBNexusSettings editingClone { get; set; }
 
         private VNDBNexusSettings _settings;
@@ -137,10 +143,21 @@ namespace VNDBNexus
             }
         }
 
-        public VNDBNexusSettingsViewModel(VNDBNexus plugin)
+        internal void UpdateSettings()
+        {
+            if (Settings.SettingsVersion == 1)
+            {
+                _vndbDatabase.VisualNovels.DeleteAll();
+                Settings.SettingsVersion = 2;
+                _plugin.SavePluginSettings(Settings);
+            }
+        }
+
+        public VNDBNexusSettingsViewModel(VNDBNexus plugin, VndbDatabase vndbDatabase)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             _plugin = plugin;
+            _vndbDatabase = vndbDatabase;
 
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<VNDBNexusSettings>();

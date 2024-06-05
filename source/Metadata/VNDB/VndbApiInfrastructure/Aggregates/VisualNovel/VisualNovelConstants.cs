@@ -233,6 +233,11 @@ namespace VndbApiInfrastructure.VisualNovelAggregate
             public const string Description = "description";
 
             /// <summary>
+            /// Raw vote average, between 10 and 100, null if nobody voted (cached, may be out of date by an hour).
+            /// </summary>
+            public const string Average = "average";
+
+            /// <summary>
             /// Rating between 10 and 100, null if nobody voted.
             /// </summary>
             public const string Rating = "rating";

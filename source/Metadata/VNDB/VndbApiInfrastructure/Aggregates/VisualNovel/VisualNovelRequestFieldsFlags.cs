@@ -211,7 +211,13 @@ namespace VndbApiInfrastructure.VisualNovelAggregate
         /// Note about the voice actor, possibly null.
         /// </summary>
         [StringRepresentation(VisualNovelConstants.Fields.VoiceActorNote)]
-        VoiceActorNote = 1UL << 32
+        VoiceActorNote = 1UL << 32,
+
+        /// <summary>
+        /// Raw vote average, between 10 and 100, null if nobody voted (cached, may be out of date by an hour).
+        /// </summary>
+        [StringRepresentation(VisualNovelConstants.Fields.Average)]
+        Average = 1UL << 33
     }
 
     // Excluded fields: screenshots.*, screenshots.release.* relations.*, tags.*, developers.*, staff.*

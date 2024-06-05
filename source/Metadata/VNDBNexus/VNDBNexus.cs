@@ -76,7 +76,8 @@ namespace VNDBNexus
 
         public VNDBNexus(IPlayniteAPI api) : base(api)
         {
-            Settings = new VNDBNexusSettingsViewModel(this);
+            _vndbDatabase = new VndbDatabase(GetPluginUserDataPath());
+            Settings = new VNDBNexusSettingsViewModel(this, _vndbDatabase);
             Properties = new MetadataPluginProperties
             {
                 HasSettings = true
@@ -103,9 +104,7 @@ namespace VNDBNexus
                     ResourceProvider.GetString("LOC_VndbNexus_SearchOnVndbLabel"),
                     new VndbKeyboardSearch(Settings, _eventAggregator))
             };
-
-            var pluginDatabaPath = GetPluginUserDataPath();
-            _vndbDatabase = new VndbDatabase(pluginDatabaPath);
+            
             _imageUriToBitmapImageConverter = new ImageUriToBitmapImageConverter(Path.Combine(GetPluginUserDataPath(), "ImagesCache"));
         }
 
@@ -174,6 +173,7 @@ namespace VNDBNexus
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
+            Settings.UpdateSettings();
             if (ShouldUpdateDumps())
             {
                 var updateSuccess = Task.Run(() => UpdateTags()).GetAwaiter().GetResult();

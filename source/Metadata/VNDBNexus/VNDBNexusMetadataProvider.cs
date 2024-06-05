@@ -26,8 +26,6 @@ namespace VNDBNexus
         private readonly BbCodeProcessor _bbcodeProcessor;
         private static readonly ILogger _logger = LogManager.GetLogger();
         private bool _dataSearchCompleted = false;
-
-        private List<MetadataField> availableFields = null;
         private VisualNovel _matchedVisualNovel;
 
         public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>

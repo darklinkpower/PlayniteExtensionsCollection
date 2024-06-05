@@ -110,6 +110,12 @@ namespace VndbApiDomain.VisualNovelAggregate
         public List<PlatformEnum> Platforms { get; set; }
 
         /// <summary>
+        /// Raw vote average, between 10 and 100, null if nobody voted.
+        /// </summary>
+        [JsonProperty("average")]
+        public double? Average { get; set; }
+
+        /// <summary>
         /// Number between 10 and 100, null if nobody voted. 
         /// </summary>
         [JsonProperty("rating")]
