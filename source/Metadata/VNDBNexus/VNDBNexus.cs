@@ -37,9 +37,9 @@ using VndbApiInfrastructure.TraitAggregate;
 using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBNexus.Converters;
 using VNDBNexus.Database;
-using VNDBNexus.PlayniteControls;
 using VNDBNexus.KeyboardSearch;
 using EventsCommon;
+using VNDBNexus.VndbVisualNovelViewControlAggregate;
 
 namespace VNDBNexus
 {

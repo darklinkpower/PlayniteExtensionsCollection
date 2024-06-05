@@ -25,13 +25,11 @@ using VndbApiDomain.ReleaseAggregate;
 using VndbApiDomain.SharedKernel;
 using VndbApiDomain.StaffAggregate;
 using VndbApiDomain.TagAggregate;
-using VndbApiDomain.TraitAggregate;
 using VndbApiDomain.VisualNovelAggregate;
 using VndbApiInfrastructure.CharacterAggregate;
 using VndbApiInfrastructure.ProducerAggregate;
 using VndbApiInfrastructure.ReleaseAggregate;
 using VndbApiInfrastructure.Services;
-using VndbApiInfrastructure.SharedKernel.Responses;
 using VndbApiInfrastructure.StaffAggregate;
 using VndbApiInfrastructure.TagAggregate;
 using VndbApiInfrastructure.TraitAggregate;
@@ -39,11 +37,10 @@ using VndbApiInfrastructure.VisualNovelAggregate;
 using VNDBNexus.Converters;
 using VNDBNexus.Database;
 using VNDBNexus.Enums;
-using VNDBNexus.KeyboardSearch;
 using VNDBNexus.Screenshots;
 using VNDBNexus.Shared.DatabaseCommon;
 
-namespace VNDBNexus.PlayniteControls
+namespace VNDBNexus.VndbVisualNovelViewControlAggregate
 {
     /// <summary>
     /// Interaction logic for VndbVisualNovelViewControl.xaml

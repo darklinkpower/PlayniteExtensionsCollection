@@ -296,8 +296,8 @@
     <Compile Include="Database\GroupedEnumerable.cs" />
     <Compile Include="Database\VisualNovelRelationList.cs" />
     <Compile Include="Enums\TagsDisplayOptionEnum.cs" />
-    <Compile Include="KeyboardSearch\InvokeVisualNovelDisplayEvent.cs" />
-    <Compile Include="PlayniteControls\VndbVisualNovelViewControl.xaml.cs">
+    <Compile Include="VndbVisualNovelViewControl\InvokeVisualNovelDisplayEvent.cs" />
+    <Compile Include="VndbVisualNovelViewControl\VndbVisualNovelViewControl.xaml.cs">
       <DependentUpon>VndbVisualNovelViewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ScreenshotsView\ScreenshotsView.xaml.cs">
@@ -341,7 +341,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PlayniteControls\VndbVisualNovelViewControl.xaml">
+    <Page Include="VndbVisualNovelViewControl\VndbVisualNovelViewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

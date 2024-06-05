@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VndbApiDomain.VisualNovelAggregate;
 
-namespace VNDBNexus.KeyboardSearch
+namespace VNDBNexus.VndbVisualNovelViewControlAggregate
 {
     public class InvokeVisualNovelDisplayEvent
     {

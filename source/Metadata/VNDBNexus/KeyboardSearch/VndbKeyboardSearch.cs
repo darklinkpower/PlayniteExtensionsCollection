@@ -14,6 +14,7 @@ using VndbApiDomain.VisualNovelAggregate;
 using VndbApiInfrastructure.ProducerAggregate;
 using VndbApiInfrastructure.Services;
 using VndbApiInfrastructure.VisualNovelAggregate;
+using VNDBNexus.VndbVisualNovelViewControlAggregate;
 
 namespace VNDBNexus.KeyboardSearch
 {
