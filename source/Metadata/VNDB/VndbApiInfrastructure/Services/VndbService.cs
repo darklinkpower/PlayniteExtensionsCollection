@@ -55,7 +55,7 @@ namespace VndbApiInfrastructure.Services
             _requestsRateLimiter = RateLimiterBuilder.Create()
                 .WithRequestLimit(180, TimeSpan.FromMinutes(5))
                 .WithMinInterval(TimeSpan.FromMilliseconds(150))
-                .WithAbortMode()
+                .WithWaitForSlotMode()
                 .Build();
             _errorMessages = new Dictionary<int, string>
             {

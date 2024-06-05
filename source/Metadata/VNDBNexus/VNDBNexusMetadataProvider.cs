@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using VndbApiDomain.ImageAggregate;
 using VndbApiDomain.SharedKernel;
@@ -29,18 +30,22 @@ namespace VNDBNexus
         private List<MetadataField> availableFields = null;
         private VisualNovel _matchedVisualNovel;
 
-        public override List<MetadataField> AvailableFields
+        public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>
         {
-            get
-            {
-                if (availableFields is null)
-                {
-                    availableFields = GetAvailableFields();
-                }
+            MetadataField.Name,
+            MetadataField.Platform,
+            MetadataField.Developers,
+            MetadataField.Description,
+            MetadataField.BackgroundImage,
+            MetadataField.CoverImage,
+            MetadataField.CommunityScore,
+            MetadataField.ReleaseDate,
+            MetadataField.Tags,
+            MetadataField.Links
+            //MetadataField.Publishers
+        };
 
-                return availableFields;
-            }
-        }
+        private List<MetadataField> _foundMetadataFields = null;
 
         public VNDBNexusMetadataProvider(MetadataRequestOptions options, VNDBNexusSettingsViewModel settings, BbCodeProcessor bbcodeProcessor)
         {
@@ -49,11 +54,19 @@ namespace VNDBNexus
             _bbcodeProcessor = bbcodeProcessor;
         }
 
-        private List<MetadataField> GetAvailableFields()
+        private void DownloadMetadataAndSetFields(CancellationToken cancellationToken)
         {
-            if (_dataSearchCompleted == false)
+            if (_foundMetadataFields is null)
             {
-                SearchVisualNovel();
+                _foundMetadataFields = GetAvailableFields(cancellationToken);
+            }
+        }
+
+        private List<MetadataField> GetAvailableFields(CancellationToken cancellationToken)
+        {
+            if (!_dataSearchCompleted)
+            {
+                SearchVisualNovel(cancellationToken);
             }
 
             var fields = new List<MetadataField>();
@@ -174,12 +187,14 @@ namespace VNDBNexus
             return true;
         }
 
-        private void SearchVisualNovel()
+        private void SearchVisualNovel(CancellationToken cancellationToken)
         {
             if (_requestOptions.IsBackgroundDownload)
             {
                 var gameName = _requestOptions.GameData.Name;
-                var searchResults = GetVnSearchResults(gameName);
+                var searchResults = Task.Run(async () => await GetVnSearchResultsAsync(gameName, cancellationToken))
+                    .GetAwaiter()
+                    .GetResult();
                 var normalizedGameName = gameName.Satinize();
 
                 var matchingVisualNovel = searchResults.FirstOrDefault(
@@ -195,14 +210,24 @@ namespace VNDBNexus
             {
                 List<VisualNovel> searchResults = null;
                 List<GenericItemOption> itemOptions = null;
-                var selectedItem = API.Instance.Dialogs.ChooseItemWithSearch(null, (a) =>
+                var selectedItem = API.Instance.Dialogs.ChooseItemWithSearch(null, (searchTerm) =>
                 {
-                    if (a.IsNullOrWhiteSpace())
+                    if (searchTerm.IsNullOrWhiteSpace())
                     {
                         return new List<GenericItemOption>();
                     }
 
-                    searchResults = GetVnSearchResults(a);
+                    var dialogText = ResourceProvider.GetString("LOC_VndbNexus_SearchingVnsProgress");
+                    var progressOptions = new GlobalProgressOptions(dialogText, true)
+                    {
+                        IsIndeterminate = true
+                    };
+
+                    API.Instance.Dialogs.ActivateGlobalProgress(async (args) =>
+                    {
+                        searchResults = await GetVnSearchResultsAsync(searchTerm, args.CancelToken);
+                    }, progressOptions);
+
                     itemOptions = searchResults.Select(x => CreateGenericItemOption(x)).ToList();
                     return itemOptions;
                 }, _requestOptions.GameData.Name);
@@ -217,7 +242,7 @@ namespace VNDBNexus
             _dataSearchCompleted = true;
         }
 
-        private List<VisualNovel> GetVnSearchResults(string searchTerm)
+        private async Task<List<VisualNovel>> GetVnSearchResultsAsync(string searchTerm, CancellationToken cancellationToken)
         {
             var results = new List<VisualNovel>();
             var isSearchVndbId = Regex.IsMatch(searchTerm, @"^v\d+$");
@@ -274,7 +299,6 @@ namespace VNDBNexus
             {
                 query.Fields.Subfields.Tags.Flags = TagRequestFieldsFlags.Name | TagRequestFieldsFlags.Category;
             }
-            
 
             if (_settings.Settings.MetadataFieldsConfiguration.EnableLinks)
             {
@@ -282,7 +306,7 @@ namespace VNDBNexus
             }
 
             query.Results = 6;
-            var queryResult = VndbService.ExecutePostRequestAsync(query).GetAwaiter().GetResult();
+            var queryResult = await VndbService.ExecutePostRequestAsync(query, cancellationToken);
             if (queryResult?.Results?.Count > 0)
             {
                 results.AddRange(queryResult.Results);
@@ -310,7 +334,8 @@ namespace VNDBNexus
 
         public override string GetName(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Name))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Name))
             {
                 return base.GetName(args);
             }
@@ -320,7 +345,8 @@ namespace VNDBNexus
 
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.ReleaseDate))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.ReleaseDate))
             {
                 return base.GetReleaseDate(args);
             }
@@ -343,7 +369,8 @@ namespace VNDBNexus
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Developers))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Developers))
             {
                 return base.GetDevelopers(args);
             }
@@ -353,7 +380,8 @@ namespace VNDBNexus
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Publishers))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Publishers))
             {
                 return base.GetPublishers(args);
             }
@@ -363,7 +391,8 @@ namespace VNDBNexus
 
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Links))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Links))
             {
                 return base.GetLinks(args);
             }
@@ -389,7 +418,8 @@ namespace VNDBNexus
 
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Platform))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Platform))
             {
                 return base.GetPlatforms(args);
             }
@@ -459,7 +489,8 @@ namespace VNDBNexus
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Description))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Description))
             {
                 return base.GetDescription(args);
             }
@@ -469,7 +500,8 @@ namespace VNDBNexus
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.BackgroundImage))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.BackgroundImage))
             {
                 return base.GetBackgroundImage(args);
             }
@@ -499,7 +531,8 @@ namespace VNDBNexus
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.CoverImage))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.CoverImage))
             {
                 return base.GetCoverImage(args);
             }
@@ -509,7 +542,8 @@ namespace VNDBNexus
 
         public override int? GetCommunityScore(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.CommunityScore))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.CommunityScore))
             {
                 return base.GetCommunityScore(args);
             }
@@ -519,7 +553,8 @@ namespace VNDBNexus
 
         public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
         {
-            if (!AvailableFields.Contains(MetadataField.Tags))
+            DownloadMetadataAndSetFields(args.CancelToken);
+            if (!_foundMetadataFields.Contains(MetadataField.Tags))
             {
                 return base.GetTags(args);
             }

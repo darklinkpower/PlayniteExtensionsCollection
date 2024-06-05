@@ -81,6 +81,7 @@
     <sys:String x:Key="LOC_VndbNexus_SettingsAllowPartialDatesTooltip">If enabled, dates that are missing the month or day will get imported during metadata download.</sys:String>
     <sys:String x:Key="LOC_VndbNexus_EnableVndbControl">Display VNDB information panel in supported themes</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LoadingVndbDataProgressFormat">Loading data for {0}…</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchingVnsProgress">Searching visual novels…</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthVeryShort">Very short</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthShort">Short</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthMedium">Medium</sys:String>
