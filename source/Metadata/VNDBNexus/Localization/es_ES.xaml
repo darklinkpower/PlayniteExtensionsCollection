@@ -80,12 +80,14 @@
     <sys:String x:Key="LOC_VndbNexus_SettingsAllowPartialDatesTooltip">Si está activado, las fechas que les faltan el mes o el día se importarán durante la descarga de metadatos.</sys:String>
     <sys:String x:Key="LOC_VndbNexus_EnableVndbControl">Mostrar panel de información VNDB en temas soportados</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LoadingVndbDataProgressFormat">Cargando datos para {0}…</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchingVnsProgress">Buscando novelas visuales…</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthVeryShort">Muy corta</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthShort">Corta</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthMedium">Mediana</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthLong">Larga</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthVeryLong">Muy larga</sys:String>
     <sys:String x:Key="LOC_VndbNexus_PlayTimeLabel">Tiempo de juego</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VotesLabel">Votos</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VotesFormat">{0} votos</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RefreshDataLabel">Actualizar datos</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VisualNovelScreenshotsFormat">{0} capturas de pantalla</sys:String>
@@ -114,6 +116,19 @@
     <sys:String x:Key="LOC_VndbNexus_CharacterHeightFormat">Altura: {0}cm</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterWeightFormat">Peso: {0}kg</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterBustWaistHipsFormat">Busto-Cintura-Caderas: {0}-{1}-{2}cm</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchOnVndbLabel">Buscar en VNDB</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_EnterSearchTermLabel">Introduce el término de búsqueda o id de VNDB</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_EnterSearchHint">Buscar novelas visuales en VNDB</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_ViewVnInPlayniteLabel">Ver en Playnite</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_OpenOnWebLabel">Abrir en la web</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_IdFormat">Id: {0}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_DevelopersFormat">Desarrolladores: {0}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_HoursMinutesFormat">{0}h {1}m</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_HoursFormat">{0}h</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_MinutesFormat">{0}m</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_FromNumberVotesFormatLowerCase">de {0} votos</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VotesAverageFormat">{0} promedio</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VotesWeightedFormat">{0} ponderado</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Desconocido</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Árabe</sys:String>
