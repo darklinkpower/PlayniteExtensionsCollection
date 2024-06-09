@@ -856,7 +856,7 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             }
             else
             {
-                timeString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_MinutesFormat"), hours, minutes);
+                timeString = string.Format(ResourceProvider.GetString("LOC_VndbNexus_MinutesFormat"), minutes);
             }
 
             var votesNumberString = string.Format(
