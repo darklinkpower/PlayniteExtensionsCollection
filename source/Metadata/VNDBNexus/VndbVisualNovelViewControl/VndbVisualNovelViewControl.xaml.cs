@@ -7,6 +7,7 @@ using Playnite.SDK.Models;
 using PluginsCommon;
 using PluginsCommon.Converters;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -49,6 +50,7 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private static readonly ConcurrentDictionary<string, SemaphoreWithCount> _semaphores = new ConcurrentDictionary<string, SemaphoreWithCount>();
         private readonly VndbDatabase _vndbDatabase;
         private readonly IPlayniteAPI _playniteApi;
         private readonly string _pluginStoragePath;
@@ -718,99 +720,115 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             var contextId = Guid.NewGuid();
             _activeContext = contextId;
             _isValuesDefaultState = false;
-            var visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
-            if (visualNovel is null || forceUpdate)
+            var semaphoreWithCount = _semaphores.GetOrAdd(vndbId, _ => new SemaphoreWithCount(1, 1));
+            await semaphoreWithCount.WaitAsync();
+            try
             {
-                var updateSuccess = await UpdateVisualNovel(vndbId, cancellationToken);
-                if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
+                var visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
+                if (visualNovel is null || forceUpdate)
                 {
-                    return;
+                    var updateSuccess = await UpdateVisualNovel(vndbId, cancellationToken);
+                    if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
+                    await DownloadVisualNovelImages(visualNovel);
                 }
 
-                visualNovel = _vndbDatabase.VisualNovels.GetById(vndbId);
-                await DownloadVisualNovelImages(visualNovel);
-            }
-
-            var vnMatchingTags = _vndbDatabase.DatabaseDumpTags.GetByIds(visualNovel.Tags.Select(x => x.Id)).ToDictionary(x => x.Id);
-            foreach (var tag in visualNovel.Tags)
-            {
-                if (vnMatchingTags.TryGetValue(tag.Id, out var matchingTag))
+                var vnMatchingTags = _vndbDatabase.DatabaseDumpTags.GetByIds(visualNovel.Tags.Select(x => x.Id)).ToDictionary(x => x.Id);
+                foreach (var tag in visualNovel.Tags)
                 {
-                    tag.Name = matchingTag.Tag.Name;
-                }
-            }
-
-            // Releases
-            var releasesGroup = _vndbDatabase.Releases.GetById(visualNovel.Id);
-            if (releasesGroup is null || forceUpdate)
-            {
-                var updateSuccess = await UpdateVisualNovelReleases(visualNovel, cancellationToken);
-                if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
-                {
-                    return;
+                    if (vnMatchingTags.TryGetValue(tag.Id, out var matchingTag))
+                    {
+                        tag.Name = matchingTag.Tag.Name;
+                    }
                 }
 
-                releasesGroup = _vndbDatabase.Releases.GetById(visualNovel.Id);
-            }
-
-            var developers = releasesGroup.Members.SelectMany(x => x.Producers.Where(p => p.IsDeveloper));
-            var publishers = releasesGroup.Members.SelectMany(x => x.Producers.Where(p => p.IsPublisher));
-
-            // Characters
-            var charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
-            if (charactersGroup is null || forceUpdate)
-            {
-                var updateSuccess = await UpdateVisualNovelCharacters(visualNovel, cancellationToken);
-                if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
+                // Releases
+                var releasesGroup = _vndbDatabase.Releases.GetById(visualNovel.Id);
+                if (releasesGroup is null || forceUpdate)
                 {
-                    return;
+                    var updateSuccess = await UpdateVisualNovelReleases(visualNovel, cancellationToken);
+                    if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    releasesGroup = _vndbDatabase.Releases.GetById(visualNovel.Id);
                 }
 
-                charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
-                if (charactersGroup.Members != null)
+                var developers = releasesGroup.Members.SelectMany(x => x.Producers.Where(p => p.IsDeveloper));
+                var publishers = releasesGroup.Members.SelectMany(x => x.Producers.Where(p => p.IsPublisher));
+
+                // Characters
+                var charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
+                if (charactersGroup is null || forceUpdate)
                 {
-                    await DownloadCharactersImages(charactersGroup.Members);
+                    var updateSuccess = await UpdateVisualNovelCharacters(visualNovel, cancellationToken);
+                    if (!updateSuccess || _activeContext != contextId || cancellationToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    charactersGroup = _vndbDatabase.Characters.GetById(visualNovel.Id);
+                    if (charactersGroup.Members != null)
+                    {
+                        await DownloadCharactersImages(charactersGroup.Members);
+                    }
+                }
+
+                var matchingCharacters = charactersGroup.Members;
+                var uniqueTraitIds = matchingCharacters
+                    .SelectMany(character => character.Traits)
+                    .Select(trait => trait.Id)
+                    .Distinct();
+
+                var matchingTraits = _vndbDatabase.DatabaseDumpTraits.GetByIds(uniqueTraitIds).ToDictionary(x => x.Id);
+
+                var groupedVoiceActors = new GroupedDictionary<string, VisualNovelVoiceActor>(visualNovel.VoiceActors, va => va.Character.Id);
+                var characterWrappers = matchingCharacters.Select(c => GetCharacterWrapper(c, matchingTraits, groupedVoiceActors, visualNovel));
+
+                ActiveVisualNovel = visualNovel;
+                CharacterWrappers = characterWrappers;
+                Developers = developers;
+                Publishers = publishers;
+
+                GroupedReleasesByLanguage = new GroupedDictionary<LanguageEnum, Release>(
+                    releasesGroup.Members.Distinct(),
+                    release => release.LanguagesAvailability.Select(langInfo => langInfo.Language),
+                    releases => releases
+                        .OrderBy(r => r.ReleaseDate?.Year ?? 2222)
+                        .ThenBy(r => r.ReleaseDate?.Month ?? 13)
+                        .ThenBy(r => r.ReleaseDate?.Day ?? 32));
+                CharacterWrappers = characterWrappers.OrderBy(c => c.Character.Name);
+
+                var groupedDevelopers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(developers.Distinct(), dev => dev.Language);
+                var groupedPublishers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(publishers.Distinct(), dev => dev.Language);
+                if (visualNovel.LengthMinutes.HasValue)
+                {
+                    LengthText = GetPlaytimeString(visualNovel);
+                }
+
+                if (visualNovel.Average.HasValue)
+                {
+                    VotesText = GetVotesString(visualNovel);
+                }
+
+                _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
+            }
+            finally
+            {
+                semaphoreWithCount.Release();
+                if (!semaphoreWithCount.IsInUse)
+                {
+                    if (_semaphores.TryRemove(vndbId, out _))
+                    {
+                        semaphoreWithCount.Dispose();
+                    }
                 }
             }
-
-            var matchingCharacters = charactersGroup.Members;
-            var uniqueTraitIds = matchingCharacters
-                .SelectMany(character => character.Traits)
-                .Select(trait => trait.Id)
-                .Distinct();
-
-            var matchingTraits = _vndbDatabase.DatabaseDumpTraits.GetByIds(uniqueTraitIds).ToDictionary(x => x.Id);
-
-            var groupedVoiceActors = new GroupedDictionary<string, VisualNovelVoiceActor>(visualNovel.VoiceActors, va => va.Character.Id);
-            var characterWrappers = matchingCharacters.Select(c => GetCharacterWrapper(c, matchingTraits, groupedVoiceActors, visualNovel));
-            
-            ActiveVisualNovel = visualNovel;
-            CharacterWrappers = characterWrappers;
-            Developers = developers;
-            Publishers = publishers;
-
-            GroupedReleasesByLanguage = new GroupedDictionary<LanguageEnum, Release>(
-                releasesGroup.Members.Distinct(),
-                release => release.LanguagesAvailability.Select(langInfo => langInfo.Language),
-                releases => releases
-                    .OrderBy(r => r.ReleaseDate?.Year ?? 2222)
-                    .ThenBy(r => r.ReleaseDate?.Month ?? 13)
-                    .ThenBy(r => r.ReleaseDate?.Day ?? 32));
-            CharacterWrappers = characterWrappers.OrderBy(c => c.Character.Name);
-
-            var groupedDevelopers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(developers.Distinct(), dev => dev.Language);
-            var groupedPublishers = new GroupedDictionary<LanguageEnum, ReleaseProducer>(publishers.Distinct(), dev => dev.Language);
-            if (visualNovel.LengthMinutes.HasValue)
-            {
-                LengthText = GetPlaytimeString(visualNovel);
-            }
-
-            if (visualNovel.Average.HasValue)
-            {
-                VotesText = GetVotesString(visualNovel);
-            }
-
-            _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
         }
 
         public string GetVotesString(VisualNovel visualNovel)

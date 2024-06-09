@@ -297,6 +297,7 @@
     <Compile Include="Database\VisualNovelRelationList.cs" />
     <Compile Include="Enums\TagsDisplayOptionEnum.cs" />
     <Compile Include="VndbVisualNovelViewControl\InvokeVisualNovelDisplayEvent.cs" />
+    <Compile Include="VndbVisualNovelViewControl\SemaphoreWithCount.cs" />
     <Compile Include="VndbVisualNovelViewControl\VndbVisualNovelViewControl.xaml.cs">
       <DependentUpon>VndbVisualNovelViewControl.xaml</DependentUpon>
     </Compile>
