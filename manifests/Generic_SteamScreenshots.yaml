@@ -32,3 +32,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.03_74640f56/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_4.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.08_d9546671/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_5.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

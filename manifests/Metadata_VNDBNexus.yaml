@@ -45,3 +45,13 @@ Packages:
     - 'Added: The VNDB panel will now display the visual novel length'
     - 'Added: Implemented support for Playnite Keyboard launcher using the "VN" keyword to search for visual novels. Results can be displayed in either the VNDB panel or opened on the web browser.'
     - 'Changed: Cancelling the metadata download process will now cancel it immediately.'
+  - Version: 1.6
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-08
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.08_d9546671/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_6.pext
+    Changelog:
+    - 'Added: The VNDB panel will now displayed the Average and Weighted scores separately if they are different. Special thanks to Yorhel for updating the VNDB API to make this possible.'
+    - 'Fixed: Improvements to how data is obtained in the VNDB panel to prevent issues by downloading data concurrently multiple times, caused by switching to a game back and forth or switching to a different view'
+    - 'Fixed: Selecting a characters tab even by default in cases where it does not have available characters due to being hidden by being spoiler characters'
+    - 'Fixed: Displaying 0 minutes in length when visual novel length is less than an hour'
+    - 'Changed: Updated localizations for improved language support'
