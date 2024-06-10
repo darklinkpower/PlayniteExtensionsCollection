@@ -27,7 +27,7 @@ namespace PlayniteUtilitiesCommon
             return AddFeatureToGame(PlayniteApi, game, feature);
         }
 
-        public static bool GetGameHasFeature(Game game, string featureName, bool ignoreOrdinalCase = false)
+        public static bool GetGameHasFeature(Game game, string featureName, bool ignoreOrdinalCase = true)
         {
             if (!game.Features.HasItems())
             {
@@ -71,13 +71,14 @@ namespace PlayniteUtilitiesCommon
         public static int AddFeatureToGames(IPlayniteAPI PlayniteApi, IEnumerable<Game> games, GameFeature feature)
         {
             var addedCount = 0;
-
             using (PlayniteApi.Database.BufferedUpdate())
-            foreach (var game in games)
             {
-                if (AddFeatureToGame(PlayniteApi, game, feature))
+                foreach (var game in games)
                 {
-                    addedCount++;
+                    if (AddFeatureToGame(PlayniteApi, game, feature))
+                    {
+                        addedCount++;
+                    }
                 }
             }
 

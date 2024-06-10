@@ -9,6 +9,27 @@ using System.Threading.Tasks;
 namespace PluginsCommon.Native
 {
     // Based on https://github.com/JosefNemec/Playnite
+    [Flags]
+    public enum EXECUTION_STATE : uint
+    {
+        // Prevents the system from entering away mode, which is a low-power state
+        // where the computer appears off but can still perform background tasks.
+        ES_AWAYMODE_REQUIRED = 0x00000040,
+
+        // Ensures that the specified state (e.g., preventing sleep) is maintained
+        // continuously until the next call to SetThreadExecutionState.
+        ES_CONTINUOUS = 0x80000000,
+
+        // Prevents the display from turning off due to inactivity.
+        ES_DISPLAY_REQUIRED = 0x00000002,
+
+        // Prevents the system from entering sleep or hibernate mode.
+        ES_SYSTEM_REQUIRED = 0x00000001,
+
+        // Legacy flag indicating user activity; should not be used in modern applications.
+        // ES_USER_PRESENT = 0x00000004
+    }
+
     public class Kernel32
     {
         private const string dllName = "Kernel32.dll";
@@ -82,5 +103,8 @@ namespace PluginsCommon.Native
         [DllImport(dllName, SetLastError = true, CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.U4)]
         public static extern uint GetFileAttributesW(string lpFileName);
+
+        [DllImport(dllName, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
     }
 }

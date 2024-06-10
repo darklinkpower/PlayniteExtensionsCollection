@@ -1,0 +1,18 @@
+﻿Id: PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13
+Name: Prevent Sleep
+Author: darklinkpower
+Version: 1.0
+Module: PreventSleep.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+    - Name: GitHub
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
+    - Name: Support
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/Prevent%20Sleep
+    - Name: Issues Tracker
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/Prevent%20Sleep
+    - Name: Translate
+      Url: https://crowdin.com/project/darklinkpower-playnite-extensi
+    - Name: Ko-fi (Tips and Donations)
+      Url: https://ko-fi.com/darklinkpower
