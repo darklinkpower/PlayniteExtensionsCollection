@@ -1,2 +1,8 @@
 AddonId: PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13
 Packages:
+  - Version: 1.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.10_2b7752b9/PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13_1_0.pext
+    Changelog:
+    - 'Initial release'
