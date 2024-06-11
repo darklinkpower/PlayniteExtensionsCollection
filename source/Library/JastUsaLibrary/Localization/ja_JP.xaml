@@ -8,7 +8,7 @@
     <sys:String x:Key="LOC_JUL_SettingsUserNotAuthenticatedLabel">Requires authentication</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsCheckingAuthenticationLabel">Checking authentication status…</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticationLabel">Authentication</sys:String>
-    <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">Downloads</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsDownloadsLabel">ダウンロード</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadsDirectoryIs">Downloads directory:</sys:String>
     <sys:String x:Key="LOC_JUL_ExtractDirectoryIs">Extract directory:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsBrowseLabel">Browse…</sys:String>
@@ -37,7 +37,7 @@
 
     <sys:String x:Key="LOC_JUL_JastLibraryManager">JAST USA Library Manager</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadStatusIdle">Idle</sys:String>
-    <sys:String x:Key="LOC_JUL_DownloadStatusDownloading">Downloading…</sys:String>
+    <sys:String x:Key="LOC_JUL_DownloadStatusDownloading">ダウンロード中…</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadStatusPaused">Paused</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadStatusCompleted">Completed</sys:String>
     <sys:String x:Key="LOC_JUL_DownloadStatusFailed">Failed</sys:String>
@@ -52,7 +52,7 @@
     <sys:String x:Key="LOC_JUL_SelectItemsToDeleteOnUninstall">Choose the files and directories you want to remove when uninstalling the game</sys:String>
     <sys:String x:Key="LOC_JUL_SelectAllLabel">Select all</sys:String>
     <sys:String x:Key="LOC_JUL_UnselectAllLabel">Unselect all</sys:String>
-    <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">Download</sys:String>
+    <sys:String x:Key="LOC_JUL_DialogMessageDownloadOption">ダウンロード</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectInstalledOption">Select installed game</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageBrowseForGameOption">Browse and select game executable…</sys:String>
     <sys:String x:Key="LOC_JUL_ShowGameOnLibrary">Show game on library</sys:String>
@@ -61,8 +61,8 @@
     <sys:String x:Key="LOC_JUL_DialogMessageCancelOption">Cancel</sys:String>
     <sys:String x:Key="LOC_JUL_DialogMessageSelectActionLabel">Select an action</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderNameLabel">Name</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadLabel">Download</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadActionLabel">Download</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadLabel">ダウンロード</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadActionLabel">ダウンロード</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderResumeActionLabel">Resume</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderPauseActionLabel">Pause</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderRemoveActionLabel">Remove</sys:String>
@@ -80,15 +80,15 @@
     <sys:String x:Key="LOC_JUL_GameStatusInstalled">Installed</sys:String>
     <sys:String x:Key="LOC_JUL_GameStatusNotInstalled">Not installed</sys:String>
     <sys:String x:Key="LOC_JUL_GamesLabel">Games</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingLabel">Downloading…</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingLabel">ダウンロード中…</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderDownloadSizeProgress">Downloaded {0} of {1}</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderDownloadTimeRemaining">Time remaining: {0}</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderDownloadingFileAlreadyDl">File &quot;{0}&quot; has already been downloaded</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderFileDownloadSuccessMessage">File successfully downloaded to &quot;{0}&quot;</sys:String>
     <sys:String x:Key="LOC_JUL_JastDownloaderFileDownloadError">There was an error while downloading the file</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderTimeHoursMinsFormat">{0} hours {1} minutes</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderTimeMinsSecondsFormat">{0} minutes {1} seconds</sys:String>
-    <sys:String x:Key="LOC_JUL_JastDownloaderTimeSecondsFormat">{0} seconds</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeHoursMinsFormat">{0} 時間 {1} 分</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeMinsSecondsFormat">{0} 分 {1} 秒</sys:String>
+    <sys:String x:Key="LOC_JUL_JastDownloaderTimeSecondsFormat">{0} 秒</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainAssetUrlFailFormat">Unable to retrieve download link for {0}. Please ensure you are logged in via the extension settings.</sys:String>
     <sys:String x:Key="LOC_JUL_ObtainingAssetUrlFormat">Retrieving download for {0}…</sys:String>
     <sys:String x:Key="LOC_JUL_StoppingDownloads">Stopping downloads…</sys:String>
