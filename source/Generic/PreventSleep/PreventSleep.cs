@@ -31,7 +31,7 @@ namespace PreventSleep
         public PreventSleep(IPlayniteAPI api) : base(api)
         {
             _eventAggregator = new EventAggregator();
-            _eventAggregator.Subscribe<OnSettingsChangedEvent>(UpdateTopPanelModeSwitcherVisibility);
+            _eventAggregator.Subscribe<OnSettingsChangedEvent>(OnSettingsChanged);
             _settings = new PreventSleepSettingsViewModel(this, _eventAggregator);
             Properties = new GenericPluginProperties
             {
@@ -75,13 +75,17 @@ namespace PreventSleep
         public override void OnGameStarted(OnGameStartedEventArgs args)
         {
             var game = args.Game;
-            if (PlayniteUtilities.GetGameHasFeature(game, _preventSleepFeatureName))
+            var gameHasPreventSleepFeature = PlayniteUtilities.GetGameHasFeature(game, _preventSleepFeatureName);
+            if (gameHasPreventSleepFeature)
             {
                 _gameIdsPreventingSleep.Add(game.Id);
-                if (!_isPreventSleepModeSet)
-                {
-                    SetPreventSleepState();
-                }
+            }
+
+            var shouldPreventSleep = !_isPreventSleepModeSet &&
+                (_settings.Settings.AlwaysPreventSleepWhenPlayingGames || gameHasPreventSleepFeature);
+            if (shouldPreventSleep)
+            {
+                SetPreventSleepState();
             }
         }
 
@@ -92,10 +96,15 @@ namespace PreventSleep
             {
                 _gameIdsPreventingSleep.Remove(game.Id);
                 _logger.Debug($"Game {game.Name} Id {game.Id} removed from {nameof(_gameIdsPreventingSleep)}. Remaining: {_gameIdsPreventingSleep.Count}");
-                if (_gameIdsPreventingSleep.Count == 0 && _isPreventSleepModeSet)
-                {
-                    SetAllowSleepState();
-                }
+            }
+
+            var shouldRestoreAllowSleep = _isPreventSleepModeSet &&
+                _gameIdsPreventingSleep.Count == 0 &&
+                (!_settings.Settings.AlwaysPreventSleepWhenPlayingGames ||
+                 !PlayniteApi.Database.Games.Any(x => x.IsRunning));
+            if (shouldRestoreAllowSleep)
+            {
+                SetAllowSleepState();
             }
         }
 
@@ -156,7 +165,7 @@ namespace PreventSleep
             UpdateTopPanelProperties();
         }
 
-        private void UpdateTopPanelModeSwitcherVisibility(OnSettingsChangedEvent args)
+        private void OnSettingsChanged(OnSettingsChangedEvent args)
         {
             if (_settings.Settings.ShowSwitchModeItemOnTopPanel)
             {
@@ -165,6 +174,13 @@ namespace PreventSleep
             else
             {
                 _topPanelModeSwitcher.Visible = false;
+            }
+
+            if (!_isPreventSleepModeSet &&
+                _settings.Settings.AlwaysPreventSleepWhenPlayingGames &&
+                PlayniteApi.Database.Games.Any(x => x.IsRunning))
+            {
+                SetPreventSleepState();
             }
         }
 
@@ -177,7 +193,9 @@ namespace PreventSleep
                     textblock.Text = "\xee81";
                 }
 
-                _topPanelModeSwitcher.Title = "Prevent Sleep: " + ResourceProvider.GetString("LOC_PreventSleep_PreventingSystemScreenSleep");
+                _topPanelModeSwitcher.Title = "Prevent Sleep: " +
+                    Environment.NewLine +
+                    ResourceProvider.GetString("LOC_PreventSleep_PreventingSystemScreenSleep");
             }
             else
             {
@@ -186,7 +204,9 @@ namespace PreventSleep
                     textblock.Text = "\xef9e";
                 }
 
-                _topPanelModeSwitcher.Title = "Prevent Sleep: " + ResourceProvider.GetString("LOC_PreventSleep_SystemScreenSleepAllowed");
+                _topPanelModeSwitcher.Title = "Prevent Sleep: " +
+                    Environment.NewLine +
+                    ResourceProvider.GetString("LOC_PreventSleep_SystemScreenSleepAllowed");
             }
         }
 

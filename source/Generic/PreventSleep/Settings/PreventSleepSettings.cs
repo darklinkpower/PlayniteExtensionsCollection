@@ -13,6 +13,9 @@ namespace PreventSleep.Settings
     {
         private bool _showSwitchModeItemOnTopPanel = true;
         public bool ShowSwitchModeItemOnTopPanel { get => _showSwitchModeItemOnTopPanel; set => SetValue(ref _showSwitchModeItemOnTopPanel, value); }
+
+        private bool _alwaysPreventSleepWhenPlayingGames = false;
+        public bool AlwaysPreventSleepWhenPlayingGames { get => _alwaysPreventSleepWhenPlayingGames; set => SetValue(ref _alwaysPreventSleepWhenPlayingGames, value); }
     }
 
     public class PreventSleepSettingsViewModel : ObservableObject, ISettings

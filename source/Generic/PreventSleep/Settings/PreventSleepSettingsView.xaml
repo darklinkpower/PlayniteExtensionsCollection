@@ -9,6 +9,8 @@
         <StackPanel>
             <CheckBox IsChecked="{Binding Settings.ShowSwitchModeItemOnTopPanel}"
                       Content="{DynamicResource LOC_PreventSleep_ShowSwitchModeItemOnTopPanel}"/>
+            <CheckBox Margin="0,10,0,0" IsChecked="{Binding Settings.AlwaysPreventSleepWhenPlayingGames}"
+                      Content="{DynamicResource LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames}"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
