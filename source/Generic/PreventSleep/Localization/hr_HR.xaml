@@ -4,5 +4,6 @@
     <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">System and screen sleep is allowed</sys:String>
     <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">Show item in top panel to switch mode to prevent or allow system and screen sleep</sys:String>
     <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">Prevent system and screen sleep when playing</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames">Always prevent system and screen sleep when any game is being played</sys:String>
     <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">Remove configuration</sys:String>
 </ResourceDictionary>
