@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PreventSleep_PreventingSystemScreenSleep">Preventing system and screen sleep…</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">System and screen sleep is allowed</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">Show item in top panel to switch mode to prevent or allow system and screen sleep</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">Prevent system and screen sleep when playing</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_PreventingSystemScreenSleep">Запобігання переходу в режим сну системи та екрану…</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">Режим сну системи та екрану дозволено</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">Показати елемент у верхній панелі для дозволу чи заборони режиму сну</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">Запобігати переходу в режим сну систему та екрану під час гри</sys:String>
     <sys:String x:Key="LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames">Запобігати режимам сну системи та екрану якщо запущена будь-яка гра</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">Remove configuration</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">Вилучити конфігурацію</sys:String>
 </ResourceDictionary>
