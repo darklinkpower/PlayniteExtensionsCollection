@@ -205,7 +205,9 @@ namespace GameRelations
             int currentVersion = 2;
 
             if (settings.SettingsVersion < 2)
+            {
                 SetAdvancedSectionDefaults();
+            }
 
             Settings.SettingsVersion = currentVersion;
         }

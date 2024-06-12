@@ -33,27 +33,27 @@ namespace GameRelations.PlayniteControls
 
         public override IEnumerable<Game> GetMatchingGames(Game game)
         {
-            var gtm = GetGameToMatchInfo(game);
+            var gameToMatchInfo = GetGameToMatchInfo(game);
 
             var similarityScores = new Dictionary<Game, double>();
             foreach (var otherGame in PlayniteApi.Database.Games)
             {
-                if (otherGame.Id == gtm.Game.Id)
+                if (otherGame.Id == gameToMatchInfo.Game.Id)
                 {
                     continue;
                 }
 
-                if (!gtm.Game.Hidden && otherGame.Hidden)
+                if (!gameToMatchInfo.Game.Hidden && otherGame.Hidden)
                 {
                     continue;
                 }
 
-                if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, gtm.SeriesIds))
+                if (_controlSettings.ExcludeGamesSameSeries && HashSetContainsAnyItem(otherGame.SeriesIds, gameToMatchInfo.SeriesIds))
                 {
                     continue;
                 }
 
-                if (GamesAreSimilar(gtm, otherGame, out double similarity))
+                if (GamesAreSimilar(gameToMatchInfo, otherGame, out double similarity))
                 {
                     similarityScores.Add(otherGame, similarity);
                 }
@@ -67,15 +67,15 @@ namespace GameRelations.PlayniteControls
 
         private GameToMatchInfo GetGameToMatchInfo(Game game)
         {
-            var gtm = new GameToMatchInfo(game);
+            var gameToMatchInfo = new GameToMatchInfo(game);
             foreach (var field in _controlSettings.FieldSettings)
             {
                 if (field.Enabled)
                 {
-                    gtm.FilteredValues[field.Field] = GetFilteredValue(game, field.Field).ToHashSet();
+                    gameToMatchInfo.FilteredValues[field.Field] = GetFilteredValue(game, field.Field).ToHashSet();
                 }
             }
-            return gtm;
+            return gameToMatchInfo;
         }
 
         protected HashSet<Guid> GetItemsToIgnore(GameField field)

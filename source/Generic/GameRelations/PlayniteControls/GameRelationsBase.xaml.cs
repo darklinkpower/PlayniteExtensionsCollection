@@ -275,7 +275,7 @@ namespace GameRelations.PlayniteControls
         /// Returns false if the list is null or empty.</returns>
         protected static bool HashSetContainsAnyItem<T>(IEnumerable<T> listToMatch, HashSet<T> hashSet)
         {
-            if (listToMatch is null)
+            if (listToMatch is null || !listToMatch.Any())
             {
                 return false;
             }
