@@ -8,8 +8,8 @@
 
 Playnite will start normally without any limitation!</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_DialogMessagePlaniteControlModeStart">Playnite will start in control mode.</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableDesktopMode">Enable extension for Desktop Mode</sys:String>
-    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableFullscreenMode">Enable extension for Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableDesktopMode">デスクトップモードの拡張機能を有効にする</sys:String>
+    <sys:String x:Key="LOC_PlayniteControlLocker_Settings_EnableFullscreenMode">フルスクリーンモードの拡張機能を有効にする</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_ClosePlayniteOnPwFail">Close Playnite if password is incorrect</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_PlayniteStartingFsModeMessage">Playnite will start in Fullscreen Mode</sys:String>
     <sys:String x:Key="LOC_PlayniteControlLocker_Settings_SetPasswordLabel">Configure password</sys:String>
