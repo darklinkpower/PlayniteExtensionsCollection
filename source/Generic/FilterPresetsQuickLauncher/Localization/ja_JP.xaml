@@ -8,7 +8,7 @@
     <sys:String x:Key="LOCFiltersPresetsQL_ClearFiltersLabel">Clear filters</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetNotFoundLabel">Filter preset &quot;{0}&quot; not found</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filter Preset: {0}</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* Changes require restarting</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* 変更を適用するには再起動が必要です</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Image</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Add image</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Remove image</sys:String>
