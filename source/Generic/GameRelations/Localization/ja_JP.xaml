@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">General settings</sys:String>
+    <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">一般設定</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Controls settings</sys:String>
     <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Covers height:</sys:String>
     <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Related games</sys:String>
