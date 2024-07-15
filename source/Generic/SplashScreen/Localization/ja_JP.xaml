@@ -9,8 +9,8 @@
     <sys:String x:Key="LOCSplashScreen_MenuItemOpenGameSplashscreenConfigWindow">Open &quot;{0}&quot; settings window</sys:String>
     <sys:String x:Key="LOCSplashScreen_MenuItemDeleteGamesSettings">Delete Splash Screen configuration</sys:String>
     
-    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">Intro video has been added</sys:String>
-    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">Intro video has been removed</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoAddedMessage">イントロ動画を追加しました</sys:String>
+    <sys:String x:Key="LOCSplashScreen_IntroVideoRemovedMessage">イントロ動画を削除しました</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureAddResultsMessage">Added &quot;{0}&quot; exclude feature to {1} game(s)</sys:String>
     <sys:String x:Key="LOCSplashScreen_ExcludeFeatureRemoveResultsMessage">Removed &quot;{0}&quot; exclude feature from {1} game(s)</sys:String>
     
