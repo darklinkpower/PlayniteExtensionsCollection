@@ -25,7 +25,7 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMusic">Music</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeApplication">ソフトウェア</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeVideo">動画</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">Hardware</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeHardware">ハードウェア</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">Mods</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">View Steam Wishlist</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">Obtaining Steam Wishlist data…</sys:String>
@@ -34,7 +34,7 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">Rank</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">割引</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypePrice">価格</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">Release Date</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeReleaseDate">発売日</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeAdded">Date Added</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionAscending">昇順</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingDirectionDescending">降順</sys:String>
@@ -45,11 +45,11 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">最高値:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Item type:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">価格:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Available</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">利用可能</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Not Available</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Total items:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Overall Reviews:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Release Date:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">発売日:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">タグ:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Owned in:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Show if game is owned in other sources</sys:String>
