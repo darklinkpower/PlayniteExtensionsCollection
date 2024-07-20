@@ -10,7 +10,7 @@
     <sys:String x:Key="LOCFiltersPresetsQL_FilterPresetFormatLabel">Filter Preset: {0}</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsChangesRestartLabel">* 変更を適用するには再起動が必要です</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsImageLabel">Image</sys:String>
-    <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">Add image</sys:String>
+    <sys:String x:Key="LOCFiltersPresetsQL_SettingsAddImageLabel">画像を追加</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsRemoveImageLabel">Remove image</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsFilterPresetNameLabel">Filter preset name</sys:String>
     <sys:String x:Key="LOCFiltersPresetsQL_SettingsDisplayNameLabel">Display name</sys:String>
