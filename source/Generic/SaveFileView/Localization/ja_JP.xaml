@@ -12,7 +12,7 @@ Could not obtain data of {1} game(s).</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetPcgwkPageMessage">Couldn't get PCGamingWiki page for {0}</sys:String>
     <sys:String x:Key="LOCSaveFileView_CouldntGetGameDirectoriesMessage">Couldn't obtain directories for game {0}</sys:String>
     <sys:String x:Key="LOCSaveFileView_DirectoriesNotDetectedMessage">Directories not detected for {0}</sys:String>
-    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">Downloading game data…</sys:String>
+    <sys:String x:Key="LOCSaveFileView_DialogProgressDownloadingData">ゲームデータをダウンロード中…</sys:String>
     <sys:String x:Key="LOCSaveFileView_DialogTitleSelectPcgwGame">Select PCGamingWiki game</sys:String>
 
     <sys:String x:Key="LOCSaveFileView_SettingAddSaveDirsAsLinks">Add Save directories as links to games when updating data</sys:String>

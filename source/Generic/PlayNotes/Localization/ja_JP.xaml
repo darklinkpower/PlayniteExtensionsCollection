@@ -8,7 +8,7 @@
     <sys:String x:Key="PlayNotes_SteamGuideImporterImportingMessage">Importing Steam guide…</sys:String>
     <sys:String x:Key="PlayNotes_InvalidUrlMessage">Url is invalid.</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterFailedObtainGuideMessage">Failed to obtain guide.</sys:String>
-    <sys:String x:Key="PlayNotes_ImportLabel">Import</sys:String>
+    <sys:String x:Key="PlayNotes_ImportLabel">インポート</sys:String>
     <sys:String x:Key="PlayNotes_UrlInputLabel">Url:</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterImportAsSeparateNotesLabel">Import each section as a separate note</sys:String>
     <sys:String x:Key="PlayNotes_SteamGuideImporterClearExistingNotesNotesLabel">Clear existing notes</sys:String>
