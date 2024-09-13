@@ -56,14 +56,17 @@
 
         <Grid Background="Black" Grid.Row="0">
             <Viewbox Stretch="Uniform">
-                <Image Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+                <Button Margin="0" Padding="0" Background="Transparent" BorderThickness="0"
+                        Command="{Binding OpenScreenshotsViewCommand}">
+                    <Image Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
                        RenderOptions.BitmapScalingMode="Fant"
                        Stretch="Uniform"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
+                </Button>
             </Viewbox>
         </Grid>
-
+        
         <Grid Grid.Row="1" Margin="0,8,0,0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />

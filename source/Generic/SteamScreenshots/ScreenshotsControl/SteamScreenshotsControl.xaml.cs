@@ -7,6 +7,7 @@ using PluginsCommon;
 using PluginsCommon.Converters;
 using SteamCommon;
 using SteamCommon.Models;
+using SteamScreenshots.Screenshots;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using static SteamCommon.Models.SteamAppDetails.AppDetails;
 
 namespace SteamScreenshots.ScreenshotsControl
 {
@@ -365,6 +367,49 @@ namespace SteamScreenshots.ScreenshotsControl
             {
                 SelectedScreenshot = Screenshots[currentSelectIndex + 1];
             }
+        }
+
+        private void OpenScreenshotsView(Screenshot selectedImage = null)
+        {
+            if (_currentGame is null || !_screenshots.HasItems())
+            {
+                return;
+            }
+
+            var window = _playniteApi.Dialogs.CreateWindow(new WindowCreationOptions
+            {
+                ShowMinimizeButton = false,
+                ShowMaximizeButton = true
+            });
+
+            window.Width = 1330;
+            window.Height = 845;
+            window.Title = string.Format(
+                ResourceProvider.GetString("LOC_VndbNexus_VisualNovelScreenshotsFormat"),
+                _currentGame.Name);
+
+            var screenshotsViewModel = new ScreenshotsViewModel();
+            var urisToLoad = _screenshots.Select(x => x.PathFull);
+            screenshotsViewModel.LoadUris(urisToLoad);
+            if (selectedImage != null)
+            {
+                screenshotsViewModel.SelectImage(selectedImage.PathFull);
+            }
+
+            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            window.DataContext = screenshotsViewModel;
+            window.Content = new ScreenshotsView(_imageUriToBitmapImageConverter);
+            window.ShowDialog();
+        }
+
+        public RelayCommand OpenScreenshotsViewCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenScreenshotsView(_selectedScreenshot);
+            });
         }
 
         public RelayCommand SelectPreviousScreenshotCommand

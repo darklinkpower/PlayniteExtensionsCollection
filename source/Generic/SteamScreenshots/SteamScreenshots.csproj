@@ -280,6 +280,10 @@
     <Compile Include="ScreenshotsControl\SteamScreenshotsControl.xaml.cs">
       <DependentUpon>SteamScreenshotsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScreenshotsView\ScreenshotsView.xaml.cs">
+      <DependentUpon>ScreenshotsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenshotsView\ScreenshotsViewModel.cs" />
     <Compile Include="SteamScreenshots.cs" />
     <Compile Include="SteamScreenshotsSettings.cs" />
     <Compile Include="SteamScreenshotsSettingsView.xaml.cs">
@@ -307,6 +311,10 @@
     <Page Include="ScreenshotsControl\SteamScreenshotsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScreenshotsView\ScreenshotsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SteamScreenshotsSettingsView.xaml">
       <SubType>Designer</SubType>
