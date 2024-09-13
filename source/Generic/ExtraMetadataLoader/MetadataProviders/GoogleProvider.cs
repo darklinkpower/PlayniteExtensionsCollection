@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Interfaces;
-using ExtraMetadataLoader.ViewModels;
+﻿using ExtraMetadataLoader.ViewModels;
 using ExtraMetadataLoader.Views;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -11,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ExtraMetadataLoader.LogoProviders
+namespace ExtraMetadataLoader.MetadataProviders
 {
     public class GoogleProvider : ILogoProvider
     {
@@ -26,9 +25,9 @@ namespace ExtraMetadataLoader.LogoProviders
             this.settings = settings;
         }
 
-        public string GetLogoUrl(Game game, bool isBackgroundDownload, CancellationToken cancelToken = default)
+        public string GetLogoUrl(Game game, LogoDownloadOptions downloadOptions, CancellationToken cancelToken = default)
         {
-            if (isBackgroundDownload || cancelToken.IsCancellationRequested)
+            if (downloadOptions.IsBackgroundDownload || cancelToken.IsCancellationRequested)
             {
                 return null;
             }

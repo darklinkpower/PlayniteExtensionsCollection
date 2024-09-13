@@ -1,5 +1,4 @@
-﻿using ExtraMetadataLoader.Interfaces;
-using ExtraMetadataLoader.Models;
+﻿using ExtraMetadataLoader.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -13,46 +12,47 @@ using System.Threading;
 using System.Threading.Tasks;
 using FlowHttp;
 
-namespace ExtraMetadataLoader.LogoProviders
+namespace ExtraMetadataLoader.MetadataProviders
 {
     public class SteamGridDBProvider : ILogoProvider
     {
-        private readonly IPlayniteAPI playniteApi;
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly ExtraMetadataLoaderSettings settings;
+        private readonly IPlayniteAPI _playniteApi;
+        private readonly ILogger _logger;
+        private readonly ExtraMetadataLoaderSettings _settings;
         private const string sgdbGameSearchUriTemplate = @"https://www.steamgriddb.com/api/v2/search/autocomplete/{0}";
         private const string sgdbLogoRequestEnumUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/{0}/{1}?";
         private const string sgdbLogoRequestIdUriTemplate = @"https://www.steamgriddb.com/api/v2/logos/game/{0}?";
 
         public string Id => "sgdbProvider";
-        public SteamGridDBProvider(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings)
+        public SteamGridDBProvider(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings, ILogger logger)
         {
-            this.playniteApi = playniteApi;
-            this.settings = settings;
+            _playniteApi = playniteApi;
+            _settings = settings;
+            _logger = logger;
         }
 
-        public string GetLogoUrl(Game game, bool isBackgroundDownload, CancellationToken cancelToken = default)
+        public string GetLogoUrl(Game game, LogoDownloadOptions downloadOptions, CancellationToken cancelToken = default)
         {
-            if (settings.SgdbApiKey.IsNullOrEmpty())
+            if (_settings.SgdbApiKey.IsNullOrEmpty())
             {
-                logger.Debug("SteamGridDB API Key has not been configured in settings.");
-                playniteApi.Notifications.Add(new NotificationMessage("emtSgdbNoApiKey", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing"), NotificationType.Error));
+                _logger.Debug("SteamGridDB API Key has not been configured in settings.");
+                _playniteApi.Notifications.Add(new NotificationMessage("emtSgdbNoApiKey", ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageSgdbApiKeyMissing"), NotificationType.Error));
                 return null;
             }
 
-            var requestString = GetSgdbRequestUrl(game, isBackgroundDownload);
+            var requestString = GetSgdbRequestUrl(game,downloadOptions.IsBackgroundDownload);
             if (requestString.IsNullOrEmpty())
             {
                 return null;
-
             }
 
             var headers = new Dictionary<string, string> {
                 { "Accept", "application/json" },
-                { "Authorization", $"Bearer {settings.SgdbApiKey}" }
+                { "Authorization", $"Bearer {_settings.SgdbApiKey}" }
             };
 
-            var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(requestString).WithHeaders(headers).DownloadString();
+            var downloadedString = HttpRequestFactory.GetHttpRequest()
+                .WithUrl(requestString).WithHeaders(headers).DownloadString();
             if (!downloadedString.IsSuccess)
             {
                 return null;
@@ -61,7 +61,7 @@ namespace ExtraMetadataLoader.LogoProviders
             var response = Serialization.FromJson<SteamGridDbLogoResponse>(downloadedString.Content);
             if (!response.Success)
             {
-                logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
+                _logger.Debug($"SteamGridDB request failed. Response string: {downloadedString}");
                 return null;
             }
 
@@ -70,7 +70,7 @@ namespace ExtraMetadataLoader.LogoProviders
                 return null;
             }
 
-            if (isBackgroundDownload || response.Data.Count == 1)
+            if (downloadOptions.IsBackgroundDownload || response.Data.Count == 1)
             {
                 return response.Data[0].Url;
             }
@@ -87,8 +87,13 @@ namespace ExtraMetadataLoader.LogoProviders
 
                 if (imageFileOptions.Count > 0)
                 {
-                    var selectedOption = playniteApi.Dialogs.ChooseImageFile(
-                    imageFileOptions, string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"), game.Name));
+                    var selectedOption = _playniteApi.Dialogs.ChooseImageFile
+                    (
+                        imageFileOptions,
+                        string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectLogo"),
+                        game.Name)
+                    );
+
                     if (selectedOption != null)
                     {
                         // Since the ImageFileOption dialog used the thumb url, the full resolution
@@ -112,35 +117,36 @@ namespace ExtraMetadataLoader.LogoProviders
             {
                 return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestEnumUriTemplate, "steam", game.GameId));
             }
+
+            var gamesList = GetSteamGridDbSearchResults(game.Name);
+            // Try to see if there's an exact match, to not prompt the user unless needed
+            var matchingGameName = game.Name.Satinize();
+            var exactMatches = gamesList.Where(x => x.Name.Satinize() == matchingGameName);
+            if (isBackgroundDownload)
+            {
+                if (exactMatches?.ToList().Count > 0)
+                {
+                    var url = string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString());
+                    return ApplySgdbLogoFilters(url);
+                }
+            }
             else
             {
-                var gamesList = GetSteamGridDbSearchResults(game.Name);
-                // Try to see if there's an exact match, to not prompt the user unless needed
-                var matchingGameName = game.Name.Satinize();
-                var exactMatches = gamesList.Where(x => x.Name.Satinize() == matchingGameName);
-                if (isBackgroundDownload)
+                if (exactMatches?.ToList().Count == 1)
                 {
-                    if (exactMatches?.ToList().Count > 0)
-                    {
-                        return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString()));
-                    }
+                    var url = string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString());
+                    return ApplySgdbLogoFilters(url);
                 }
-                else
-                {
-                    if (exactMatches?.ToList().Count == 1)
-                    {
-                        return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestIdUriTemplate, exactMatches.First().Id.ToString()));
-                    }
 
-                    var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
-                        new List<GenericItemOption>(),
-                        (a) => GetSteamGridDbGenericItemOptions(a),
-                        game.Name,
-                        ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
-                    if (selectedGame != null)
-                    {
-                        return ApplySgdbLogoFilters(string.Format(sgdbLogoRequestIdUriTemplate, selectedGame.Description));
-                    }
+                var selectedResult = _playniteApi.Dialogs.ChooseItemWithSearch(
+                    new List<GenericItemOption>(),
+                    (a) => GetSteamGridDbGenericItemOptions(a),
+                    game.Name,
+                    ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
+                if (selectedResult != null)
+                {
+                    var url = string.Format(sgdbLogoRequestIdUriTemplate, selectedResult.Description);
+                    return ApplySgdbLogoFilters(url);
                 }
             }
 
@@ -149,7 +155,7 @@ namespace ExtraMetadataLoader.LogoProviders
 
         private string ApplySgdbLogoFilters(string uri)
         {
-            if (settings.SgdbIncludeHumor)
+            if (_settings.SgdbIncludeHumor)
             {
                 uri += "&nsfw=any";
             }
@@ -158,7 +164,7 @@ namespace ExtraMetadataLoader.LogoProviders
                 uri += "&nsfw=false";
             }
 
-            if (settings.SgdbIncludeNsfw)
+            if (_settings.SgdbIncludeNsfw)
             {
                 uri += "&humor=any";
             }
@@ -172,8 +178,9 @@ namespace ExtraMetadataLoader.LogoProviders
 
         private List<GenericItemOption> GetSteamGridDbGenericItemOptions(string gameName)
         {
-            return new List<GenericItemOption>(GetSteamGridDbSearchResults(gameName)
-                .Select(x => new GenericItemOption(x.Name, x.Id.ToString())));
+            return new List<GenericItemOption>(
+                GetSteamGridDbSearchResults(gameName).Select(x => new GenericItemOption(x.Name, x.Id.ToString()))
+            );
         }
 
         private List<SgdbData> GetSteamGridDbSearchResults(string gameName)
@@ -182,10 +189,13 @@ namespace ExtraMetadataLoader.LogoProviders
             var headers = new Dictionary<string, string>
             {
                 { "Accept", "application/json" },
-                { "Authorization", $"Bearer {settings.SgdbApiKey}" }
+                { "Authorization", $"Bearer {_settings.SgdbApiKey}" }
             };
 
-            var downloadResult = HttpRequestFactory.GetHttpRequest().WithUrl(searchUrl).WithHeaders(headers).DownloadString();
+            var downloadResult = HttpRequestFactory.GetHttpRequest()
+                .WithUrl(searchUrl)
+                .WithHeaders(headers)
+                .DownloadString();
             if (downloadResult.IsSuccess)
             {
                 var response = Serialization.FromJson<SteamGridDbGameSearchResponse>(downloadResult.Content);
@@ -195,7 +205,7 @@ namespace ExtraMetadataLoader.LogoProviders
                 }
                 else
                 {
-                    logger.Debug($"SteamGridDB request failed. Response string: {downloadResult.Content}");
+                    _logger.Debug($"SteamGridDB request failed. Response string: {downloadResult.Content}");
                 }
             }
 

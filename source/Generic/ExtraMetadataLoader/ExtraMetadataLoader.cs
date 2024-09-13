@@ -1,6 +1,5 @@
 ﻿using ExtraMetadataLoader.Helpers;
-using ExtraMetadataLoader.Interfaces;
-using ExtraMetadataLoader.LogoProviders;
+using ExtraMetadataLoader.MetadataProviders;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Services;
 using ExtraMetadataLoader.ViewModels;
@@ -27,6 +26,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using FlowHttp;
 using YouTubeCommon;
+using Microsoft.Extensions.DependencyInjection;
+using EventsCommon;
+using ExtraMetadataLoader.VideosProcessor;
 
 namespace ExtraMetadataLoader
 {
@@ -49,10 +51,10 @@ namespace ExtraMetadataLoader
         private const string _logoMissingTag = "[EMT] Logo Missing";
         private const string _videoMissingTag = "[EMT] Video missing";
         private const string _videoMicroMissingTag = "[EMT] Video Micro missing";
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly VideosDownloader videosDownloader;
-        private readonly ExtraMetadataHelper extraMetadataHelper;
-        private readonly List<ILogoProvider> _logoProviders;
+        private readonly ServiceProvider _serviceProvider;
+        private readonly EventAggregator _eventAggregator;
         private VideoPlayerControl detailsVideoControl;
         private VideoPlayerControl gridVideoControl;
         private VideoPlayerControl genericVideoControl;
@@ -93,14 +95,13 @@ namespace ExtraMetadataLoader
                 SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
             });
 
-            extraMetadataHelper = new ExtraMetadataHelper(PlayniteApi);
-            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings, extraMetadataHelper);
+            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings);
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
                 foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
                 {
                     // Removed Game items have their ExtraMetadataDirectory deleted for cleanup
-                    extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
+                    ExtraMetadataHelper.DeleteExtraMetadataDir(removedItem);
                 }
             };
 
@@ -109,7 +110,7 @@ namespace ExtraMetadataLoader
                 foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
                 {
                     // Removed Platform items have their ExtraMetadataDirectory deleted for cleanup
-                    extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
+                    ExtraMetadataHelper.DeleteExtraMetadataDir(removedItem);
                 }
             };
 
@@ -118,7 +119,7 @@ namespace ExtraMetadataLoader
                 foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
                 {
                     // Removed Source items have their ExtraMetadataDirectory deleted for cleanup
-                    extraMetadataHelper.DeleteExtraMetadataDir(removedItem);
+                    ExtraMetadataHelper.DeleteExtraMetadataDir(removedItem);
                 }
             };
 
@@ -140,11 +141,26 @@ namespace ExtraMetadataLoader
                 PlayniteUtilities.AddTextIcoFontResource(iconResource.Key, iconResource.Value);
             }
 
-            _logoProviders = new List<ILogoProvider>
-            {
-                new SteamProvider(PlayniteApi, settings.Settings),
-                new SteamGridDBProvider(PlayniteApi, settings.Settings)
-            };
+            _eventAggregator = new EventAggregator();
+            var services = new ServiceCollection();
+            services.AddSingleton(PlayniteApi);
+            services.AddSingleton(settings);
+            services.AddSingleton(_logger);
+            services.AddSingleton(_eventAggregator);
+
+            services.AddTransient<LogoProcessor>();
+            services.AddTransient<VideoProcessor>();
+            services.AddTransient(provider => provider.GetService<ExtraMetadataLoaderSettingsViewModel>().Settings);
+
+            services.AddTransient<SteamMetadataProvider>();
+            services.AddTransient<ILogoProvider>(provider => provider.GetService<SteamMetadataProvider>());
+            services.AddTransient<IVideoProvider>(provider => provider.GetService<SteamMetadataProvider>());
+
+            services.AddTransient<ILogoProvider, SteamMetadataProvider>();
+            services.AddTransient<ILogoProvider, SteamGridDBProvider>();
+
+            services.AddTransient<MetadataDownloadService>();
+            _serviceProvider = services.BuildServiceProvider();
         }
 
         protected virtual void OnLogoUpdatedEvent(LogoUpdatedEventArgs e)
@@ -231,7 +247,7 @@ namespace ExtraMetadataLoader
 
         private Control CreateVideoPlayerControlIfNeeded(ref VideoPlayerControl control)
         {
-            if (control == null)
+            if (control is null)
             {
                 control = new VideoPlayerControl(PlayniteApi, settings, GetPluginUserDataPath());
             }
@@ -350,7 +366,8 @@ namespace ExtraMetadataLoader
 
                         var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
-                        var logoProvider = _logoProviders.FirstOrDefault(x => x.Id == "steamProvider");
+                        var metadataDownloadService = _serviceProvider.GetRequiredService<MetadataDownloadService>();
+                        var logoProvider = metadataDownloadService.GetLogoProviderById("steamProvider");
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
@@ -382,7 +399,8 @@ namespace ExtraMetadataLoader
 
                         var progressOptions = new GlobalProgressOptions(progressTitle, true);
                         progressOptions.IsIndeterminate = false;
-                        var logoProvider = _logoProviders.FirstOrDefault(x => x.Id == "sgdbProvider");
+                        var metadataDownloadService = _serviceProvider.GetRequiredService<MetadataDownloadService>();
+                        var logoProvider = metadataDownloadService.GetLogoProviderById("sgdbProvider");
                         PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                         {
                             var games = args.Games.Distinct();
@@ -425,7 +443,7 @@ namespace ExtraMetadataLoader
                         var filePath = PlayniteApi.Dialogs.SelectFile("Logo|*.png");
                         if (!filePath.IsNullOrEmpty())
                         {
-                            var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
+                            var logoPath = ExtraMetadataHelper.GetGameLogoPath(game, true);
                             var fileCopied = FileSystem.CopyFile(filePath, logoPath, true);
                             if (settings.Settings.ProcessLogosOnDownload && fileCopied)
                             {
@@ -445,7 +463,7 @@ namespace ExtraMetadataLoader
                     Action = _ => {
                         foreach (var game in args.Games.Distinct())
                         {
-                            extraMetadataHelper.DeleteGameLogo(game);
+                            ExtraMetadataHelper.DeleteGameLogo(game);
                             OnLogoUpdated(game);
                         };
 
@@ -569,7 +587,7 @@ namespace ExtraMetadataLoader
                     {
                         foreach (var game in args.Games.Distinct())
                         {
-                            Process.Start(extraMetadataHelper.GetExtraMetadataDirectory(game, true));
+                            Process.Start(ExtraMetadataHelper.GetExtraMetadataDirectory(game, true));
                         };
                     }
                 },
@@ -640,8 +658,9 @@ namespace ExtraMetadataLoader
                         ClearVideoSources();
                         foreach (var game in args.Games.Distinct())
                         {
-                            extraMetadataHelper.DeleteGameVideo(game);
+                            ExtraMetadataHelper.DeleteGameVideo(game);
                         };
+
                         UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
@@ -656,8 +675,9 @@ namespace ExtraMetadataLoader
                         ClearVideoSources();
                         foreach (var game in args.Games.Distinct())
                         {
-                            extraMetadataHelper.DeleteGameVideoMicro(game);
+                            ExtraMetadataHelper.DeleteGameVideoMicro(game);
                         };
+
                         UpdatePlayersData();
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
                     }
@@ -745,93 +765,6 @@ namespace ExtraMetadataLoader
             }
         }
 
-        private bool GetGameLogo(ILogoProvider logoProvider, Game game, bool isBackgroundDownload, bool overwrite, CancellationToken cancelToken = default)
-        {
-            var logoPath = extraMetadataHelper.GetGameLogoPath(game, true);
-            if (FileSystem.FileExists(logoPath) && !overwrite)
-            {
-                logger.Debug("Logo exists and overwrite is set to false, skipping");
-                return true;
-            }
-
-            var logoUrl = logoProvider.GetLogoUrl(game, isBackgroundDownload, cancelToken);
-            if (logoUrl.IsNullOrEmpty())
-            {
-                return false;
-            }
-
-            var request = HttpRequestFactory.GetHttpFileRequest().WithUrl(logoUrl).WithDownloadTo(logoPath);
-            var downloadFileResult = request.DownloadFile(cancelToken);
-            if (downloadFileResult.IsSuccess)
-            {
-                if (settings.Settings.ProcessLogosOnDownload)
-                {
-                    ProcessLogoImage(logoPath);
-                }
-
-                OnLogoUpdated(game);
-            }
-
-            return downloadFileResult.IsSuccess;
-        }
-
-        private bool ProcessLogoImage(string logoPath)
-        {
-            try
-            {
-                using (var image = new MagickImage(logoPath))
-                {
-                    var originalWitdh = image.Width;
-                    var originalHeight = image.Height;
-                    var imageChanged = false;
-                    if (settings.Settings.LogoTrimOnDownload)
-                    {
-                        image.Trim();
-                        if (originalWitdh != image.Width || originalHeight != image.Height)
-                        {
-                            imageChanged = true;
-                            originalWitdh = image.Width;
-                            originalHeight = image.Height;
-                        }
-                    }
-
-                    if (settings.Settings.SetLogoMaxProcessDimensions)
-                    {
-                        if (settings.Settings.MaxLogoProcessWidth < image.Width || settings.Settings.MaxLogoProcessHeight < image.Height)
-                        {
-                            var targetWidth = settings.Settings.MaxLogoProcessWidth;
-                            var targetHeight = settings.Settings.MaxLogoProcessHeight;
-                            MagickGeometry size = new MagickGeometry(targetWidth, targetHeight)
-                            {
-                                IgnoreAspectRatio = false
-                            };
-
-                            image.Resize(size);
-                            if (originalWitdh != image.Width || originalHeight != image.Height)
-                            {
-                                imageChanged = true;
-                                originalWitdh = image.Width;
-                                originalHeight = image.Height;
-                            }
-                        }
-                    }
-
-                    // Only save new image if dimensions changed
-                    if (imageChanged)
-                    {
-                        image.Write(logoPath);
-                    }
-
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error while processing logo {logoPath}");
-                return false;
-            }
-        }
-
         private void DownloadYoutubeVideosBatch()
         {
             var overwrite = GetBoolFromYesNoDialog(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageOverwriteVideosChoice"));
@@ -851,7 +784,7 @@ namespace ExtraMetadataLoader
 
                     a.CurrentProgressValue++;
                     a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
-                    if (!overwrite && FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)))
+                    if (!overwrite && FileSystem.FileExists(ExtraMetadataHelper.GetGameVideoPath(game)))
                     {
                         continue;
                     }
@@ -938,14 +871,16 @@ namespace ExtraMetadataLoader
             // This needs to be done in this event because the ItemCollectionChanged raises the event
             // immediately when a game is added to the database, which means the games may not have
             // the necessary metadata added to download the assets automatically
-            if (settings.Settings.DownloadLogosOnLibUpdate == true)
+            var metadataDownloadService = _serviceProvider.GetRequiredService<MetadataDownloadService>();
+            if (settings.Settings.DownloadLogosOnLibUpdate)
             {
                 var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownload");
                 var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
-                PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
+                PlayniteApi.Dialogs.ActivateGlobalProgress(async (a) =>
                 {
-                    var games = PlayniteApi.Database.Games.Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
+                    var games = PlayniteApi.Database.Games
+                        .Where(x => x.Added != null && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
                     a.ProgressMaxValue = games.Count() + 1;
                     foreach (var game in games)
                     {
@@ -956,14 +891,7 @@ namespace ExtraMetadataLoader
                             break;
                         }
 
-                        foreach (var logoProvider in _logoProviders)
-                        {
-                            var logoDownloaded = GetGameLogo(logoProvider, game, true, settings.Settings.LibUpdateSelectLogosAutomatically, a.CancelToken);
-                            if (logoDownloaded)
-                            {
-                                break;
-                            }
-                        }
+                        await metadataDownloadService.DownloadLogoAsync(game, true, a.CancelToken);
                     };
                 }, progressOptions);
             }
@@ -973,6 +901,7 @@ namespace ExtraMetadataLoader
                 var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos");
                 var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
+                var downloadOptions = new VideoDownloadOptions(VideoType.Trailer,);
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var games = PlayniteApi.Database.Games.Where(x => x.Added.HasValue && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);
@@ -1051,9 +980,9 @@ namespace ExtraMetadataLoader
 
         private bool HasFileForTag(Tag tag, Game game)
         {
-            return tag.Name == _logoMissingTag && FileSystem.FileExists(extraMetadataHelper.GetGameLogoPath(game)) ||
-                   tag.Name == _videoMissingTag && FileSystem.FileExists(extraMetadataHelper.GetGameVideoPath(game)) ||
-                   tag.Name == _videoMicroMissingTag && FileSystem.FileExists(extraMetadataHelper.GetGameVideoMicroPath(game));
+            return tag.Name == _logoMissingTag && FileSystem.FileExists(ExtraMetadataHelper.GetGameLogoPath(game)) ||
+                   tag.Name == _videoMissingTag && FileSystem.FileExists(ExtraMetadataHelper.GetGameVideoPath(game)) ||
+                   tag.Name == _videoMicroMissingTag && FileSystem.FileExists(ExtraMetadataHelper.GetGameVideoMicroPath(game));
         }
 
         private bool ValidateExecutablesSettings(bool validateFfmpeg, bool validateYtdl)
@@ -1077,14 +1006,14 @@ namespace ExtraMetadataLoader
         {
             if (exePath.IsNullOrEmpty())
             {
-                logger.Debug($"{exeName} has not been configured");
+                _logger.Debug($"{exeName} has not been configured");
                 ShowConfigurationError(notConfiguredKey);
                 return false;
             }
 
             if (!FileSystem.FileExists(exePath))
             {
-                logger.Debug($"{exeName} executable not found in {exePath}");
+                _logger.Debug($"{exeName} executable not found in {exePath}");
                 ShowConfigurationError(notFoundKey);
                 return false;
             }

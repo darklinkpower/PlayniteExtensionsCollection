@@ -34,11 +34,4 @@ namespace ExtraMetadataLoader.Models
         [JsonProperty("duration", NullValueHandling = NullValueHandling.Include)]
         public string Duration { get; set; }
     }
-
-    public enum VideoActionNeeded : int
-    {
-        Nothing = 0,
-        Conversion = 1,
-        Invalid = 2
-    }
 }

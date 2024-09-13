@@ -11,59 +11,61 @@ using System.Threading.Tasks;
 
 namespace ExtraMetadataLoader.Helpers
 {
-    public class ExtraMetadataHelper
+    public static class ExtraMetadataHelper
     {
-        private readonly IPlayniteAPI playniteApi;
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly string baseDirectory;
+        private static readonly IPlayniteAPI _playniteApi;
+        private static readonly ILogger _logger = LogManager.GetLogger();
+        private static readonly string _baseDirectory;
 
-        public ExtraMetadataHelper(IPlayniteAPI playniteApi)
+        static ExtraMetadataHelper()
         {
-            this.playniteApi = playniteApi;
-            baseDirectory = FileSystem.FixPathLength(Path.Combine(playniteApi.Paths.ConfigurationPath, "ExtraMetadata"));
+            _playniteApi = API.Instance;
+            _logger = LogManager.GetLogger();
+            _baseDirectory = FileSystem.FixPathLength(Path.Combine(_playniteApi.Paths.ConfigurationPath, "ExtraMetadata"));
         }
 
-        public string GetExtraMetadataDirectory(Game game, bool createDirectory = false)
+        public static string GetExtraMetadataDirectory(Game game, bool createDirectory = false)
         {
-            var directory = Path.Combine(baseDirectory, "games", game.Id.ToString());
+            var directory = Path.Combine(_baseDirectory, "games", game.Id.ToString());
             if (createDirectory && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
+
             return directory;
         }
 
-        public string GetGameLogoPath(Game game, bool createDirectory = false)
+        public static string GetGameLogoPath(Game game, bool createDirectory = false)
         {
             return Path.Combine(GetExtraMetadataDirectory(game, createDirectory), "Logo.png");
         }
 
-        public string GetGameVideoPath(Game game, bool createDirectory = false)
+        public static string GetGameVideoPath(Game game, bool createDirectory = false)
         {
             return Path.Combine(GetExtraMetadataDirectory(game, createDirectory), "VideoTrailer.mp4");
         }
 
-        public string GetGameVideoMicroPath(Game game, bool createDirectory = false)
+        public static string GetGameVideoMicroPath(Game game, bool createDirectory = false)
         {
             return Path.Combine(GetExtraMetadataDirectory(game, createDirectory), "VideoMicrotrailer.mp4");
         }
 
-        public bool DeleteExtraMetadataDir(Game game)
+        public static bool DeleteExtraMetadataDir(Game game)
         {
             return DeleteDirectory(GetExtraMetadataDirectory(game));
         }
 
-        public bool DeleteExtraMetadataDir(Platform platform)
+        public static bool DeleteExtraMetadataDir(Platform platform)
         {
-            return DeleteDirectory(Path.Combine(baseDirectory, "platforms", platform.Id.ToString()));
+            return DeleteDirectory(Path.Combine(_baseDirectory, "platforms", platform.Id.ToString()));
         }
 
-        public bool DeleteExtraMetadataDir(GameSource source)
+        public static bool DeleteExtraMetadataDir(GameSource source)
         {
-            return DeleteDirectory(Path.Combine(baseDirectory, "sources", source.Id.ToString()));
+            return DeleteDirectory(Path.Combine(_baseDirectory, "sources", source.Id.ToString()));
         }
 
-        private bool DeleteDirectory(string directoryPath)
+        private static bool DeleteDirectory(string directoryPath)
         {
 
             try
@@ -77,8 +79,8 @@ namespace ExtraMetadataLoader.Helpers
             }
             catch (Exception e)
             {
-                logger.Error(e, $"Error while deleting removed Extra Metadata directory {directoryPath}");
-                playniteApi.Notifications.Add(new NotificationMessage(
+                _logger.Error(e, $"Error while deleting removed Extra Metadata directory {directoryPath}");
+                _playniteApi.Notifications.Add(new NotificationMessage(
                     Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingDirectory"), directoryPath, e.Message),
                     NotificationType.Error)
@@ -87,59 +89,22 @@ namespace ExtraMetadataLoader.Helpers
             }
         }
 
-        public bool DeleteGameLogo(Game game)
+        public static bool DeleteGameLogo(Game game)
         {
             return DeleteFile(GetGameLogoPath(game));
         }
 
-        public bool DeleteGameVideo(Game game)
+        public static bool DeleteGameVideo(Game game)
         {
             return DeleteFile(GetGameVideoPath(game));
         }
 
-        public bool DeleteGameVideoMicro(Game game)
+        public static bool DeleteGameVideoMicro(Game game)
         {
             return DeleteFile(GetGameVideoMicroPath(game));
         }
 
-        public string GetSteamIdFromSearch(Game game, bool isBackgroundDownload)
-        {
-            var normalizedName = game.Name.NormalizeGameName();
-            var results = SteamWeb.GetSteamSearchResults(normalizedName);
-            results.ForEach(a => a.Name = a.Name.NormalizeGameName());
-
-            // First try to match with normalized string
-            var exactNormalizedMatches = results.Where(x => x.Name.Equals(normalizedName, StringComparison.OrdinalIgnoreCase));
-            if (exactNormalizedMatches.HasItems() && (isBackgroundDownload || exactNormalizedMatches.Count() == 1))
-            {
-                return exactNormalizedMatches.First().GameId;
-            }
-
-            // See if there are matches by removing all symbols, spaces, etc
-            var matchingGameName = normalizedName.Satinize();
-            var exactMatches = results.Where(x => x.Name.Satinize() == matchingGameName);
-            if (exactMatches.HasItems() && (isBackgroundDownload || exactMatches.Count() == 1))
-            {
-                return exactMatches.First().GameId;
-            }
-
-            if (!isBackgroundDownload)
-            {
-                var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(
-                    results.Select(x => new GenericItemOption(x.Name, x.GameId)).ToList(),
-                    (a) => SteamWeb.GetSteamSearchGenericItemOptions(a),
-                    normalizedName,
-                    ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogCaptionSelectGame"));
-                if (selectedGame != null)
-                {
-                    return selectedGame.Description;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        public bool DeleteFile(string sourcePath)
+        public static bool DeleteFile(string sourcePath)
         {
             try
             {
@@ -152,8 +117,8 @@ namespace ExtraMetadataLoader.Helpers
             }
             catch (Exception e)
             {
-                logger.Error(e, $"Error deleting file: {sourcePath}.");
-                playniteApi.Notifications.Add(new NotificationMessage(
+                _logger.Error(e, $"Error deleting file: {sourcePath}.");
+                _playniteApi.Notifications.Add(new NotificationMessage(
                     Guid.NewGuid().ToString(),
                     string.Format(ResourceProvider.GetString("LOCExtra_Metadata_Loader_NotificationMessageErrorDeletingFile"), sourcePath, e.Message),
                     NotificationType.Error)
@@ -162,14 +127,14 @@ namespace ExtraMetadataLoader.Helpers
             }
         }
 
-        public string ExpandVariables(string inputString)
+        public static string ExpandVariables(string inputString)
         {
-            return playniteApi.ExpandGameVariables(new Game(), inputString);
+            return _playniteApi.ExpandGameVariables(new Game(), inputString);
         }
 
-        public string ExpandVariables(Game game, string inputString)
+        public static string ExpandVariables(Game game, string inputString)
         {
-            return playniteApi.ExpandGameVariables(game, inputString);
+            return _playniteApi.ExpandGameVariables(game, inputString);
         }
     }
 }
