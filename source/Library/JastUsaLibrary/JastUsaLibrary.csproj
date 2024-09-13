@@ -235,6 +235,7 @@
     <Compile Include="DownloadManager\Models\DownloadItem.cs" />
     <Compile Include="DownloadManager\Models\JastAssetWrapper.cs" />
     <Compile Include="DownloadManager\Models\JastGameWrapper.cs" />
+    <Compile Include="GameNameSanitizer.cs" />
     <Compile Include="JastUrls.cs" />
     <Compile Include="Models\GameInstallCache.cs" />
     <Compile Include="Programs\Models\Program.cs" />
