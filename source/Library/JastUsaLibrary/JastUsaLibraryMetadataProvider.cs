@@ -39,10 +39,7 @@ namespace JastUsaLibrary
             var productResponse = Serialization.FromJson<ProductResponse>(downloadedString.Content);
             var metadata = new GameMetadata()
             {
-                Name = productResponse.Name
-                    .RemoveTrademarks()
-                    .Replace("[PRE-ORDER]", string.Empty, StringComparison.InvariantCultureIgnoreCase)
-                    .Trim(),
+                Name = GameNameSanitizer.Satinize(productResponse.Name),
                 Description = productResponse.Description,
                 Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
             };
