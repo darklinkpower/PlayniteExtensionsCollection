@@ -117,10 +117,10 @@ namespace SteamScreenshots.ScreenshotsControl
             var bitmapImages = new List<BitmapImage>();
             foreach (var screenshot in _screenshots)
             {
-                var bitmapImage = _imageUriToBitmapImageConverter.Convert(screenshot.PathThumbnail, typeof(BitmapImage), null, CultureInfo.CurrentCulture);
+                var bitmapImage = UriToBitmapImage(screenshot.PathThumbnail);
                 if (bitmapImage != null)
                 {
-                    bitmapImages.Add(bitmapImage as BitmapImage);
+                    bitmapImages.Add(bitmapImage);
                 }
             }
 
@@ -263,6 +263,16 @@ namespace SteamScreenshots.ScreenshotsControl
                     }
                 }
 
+                // To prevent loading all the images when first displayed in the UI.
+                // we load some of them in the background to prevent major stutters
+                // Helps in cases where the theme doesn't initially display them, e.g. in a tab control
+                var numberToPreload = Math.Max((int)Math.Ceiling(response.data.screenshots.Count / 2.0), 5);
+                var screenshotsToPreload = response.data.screenshots.Take(numberToPreload);
+                var preloadTasks = screenshotsToPreload
+                    .Select(screenshot => Task.Run(() => UriToBitmapImage(screenshot.PathThumbnail))
+                );
+                await Task.WhenAll(preloadTasks);
+
                 foreach (var screenshot in response.data.screenshots)
                 {
                     Screenshots.Add(screenshot);
@@ -275,6 +285,17 @@ namespace SteamScreenshots.ScreenshotsControl
             {
                 _logger.Error(e, "Error during DownloadAppScreenshotsThumbnails");
             }
+        }
+
+        private BitmapImage UriToBitmapImage(Uri uri)
+        {
+            var bitmapImage = _imageUriToBitmapImageConverter.Convert(uri, typeof(BitmapImage), null, CultureInfo.CurrentCulture);
+            if (bitmapImage != null)
+            {
+                return bitmapImage as BitmapImage;
+            }
+
+            return null;
         }
 
         private async Task DownloadScreenshotsThumbnails(List<SteamAppDetails.AppDetails.Screenshot> screenshots)
