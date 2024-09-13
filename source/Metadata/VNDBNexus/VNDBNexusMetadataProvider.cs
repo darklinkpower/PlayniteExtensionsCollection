@@ -282,7 +282,6 @@ namespace VNDBNexus
 
             if (_settings.Settings.MetadataFieldsConfiguration.EnableBackgroundImage)
             {
-                query.Fields.Flags |= VnRequestFieldsFlags.TagsRating | VnRequestFieldsFlags.TagsSpoiler;
                 query.Fields.Subfields.Screenshots.Flags =
                     ImageRequestFieldsFlags.ThumbnailUrl | ImageRequestFieldsFlags.VoteCount | ImageRequestFieldsFlags.Sexual
                     | ImageRequestFieldsFlags.Violence | ImageRequestFieldsFlags.Url;
@@ -295,6 +294,7 @@ namespace VNDBNexus
 
             if (_settings.Settings.MetadataFieldsConfiguration.EnableTags)
             {
+                query.Fields.Flags |= VnRequestFieldsFlags.TagsRating | VnRequestFieldsFlags.TagsSpoiler;
                 query.Fields.Subfields.Tags.Flags = TagRequestFieldsFlags.Name | TagRequestFieldsFlags.Category;
             }
 
