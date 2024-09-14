@@ -93,7 +93,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiDomain", "Metadata\V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VndbApiInfrastructure", "Metadata\VNDB\VndbApiInfrastructure\VndbApiInfrastructure.csproj", "{13817ADD-ED1D-47BF-B734-10B63D20ECB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamScreenshots", "Generic\SteamScreenshots\SteamScreenshots.csproj", "{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamStoreScreenshotsViewer", "Generic\SteamScreenshots\SteamStoreScreenshotsViewer.csproj", "{9BA1B9D6-F3C3-4D45-B4CF-7C2A6E7B5E96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottlerSharp", "Common\ThrottlerSharp\ThrottlerSharp.csproj", "{814C4C34-9FE7-4503-84E7-BBCEC558B2E5}"
 EndProject
