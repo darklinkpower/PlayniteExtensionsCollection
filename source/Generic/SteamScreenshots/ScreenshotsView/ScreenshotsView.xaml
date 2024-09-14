@@ -9,17 +9,7 @@
     <UserControl.Resources>
         <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <UserControl.InputBindings>
-        <KeyBinding Key="Left" Command="{Binding BackCommand}" />
-        <KeyBinding Key="Right" Command="{Binding NextCommand}" />
-    </UserControl.InputBindings>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
         <Image Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
@@ -27,17 +17,37 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="1" Text="{Binding ImagePositionLabel}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-            <Button Content="{DynamicResource LOC_SteamScreenshots_MoveBackLabel}"
-                    Command="{Binding BackCommand}" 
-                    Margin="5" 
-                    Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Button Content="{DynamicResource LOC_SteamScreenshots_MoveNextLabel}"
-                    Command="{Binding NextCommand}" 
-                    Margin="5" 
-                    Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        </StackPanel>
+        <Border Background="#BF000000" Padding="10,5,10,5"
+                Margin="0,0,0,15"
+                CornerRadius="8"
+                VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="{Binding ImagePositionLabel}"
+                           HorizontalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
+                            HorizontalAlignment="Center">
+                    <Button Content="{DynamicResource LOC_SteamScreenshots_MoveBackLabel}"
+                            Command="{Binding BackCommand}" 
+                            Margin="0,0,2.5,0"
+                            Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <Button Content="{DynamicResource LOC_SteamScreenshots_MoveNextLabel}"
+                            Command="{Binding NextCommand}" 
+                            Margin="2.5,0,0,0"
+                            Visibility="{Binding HasMultipleImages, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Background="#BF000000" Padding="10,5,10,5"
+                Margin="0,15,15,15"
+                CornerRadius="8"
+                VerticalAlignment="Top" HorizontalAlignment="Right">
+            <Button Command="{Binding CloseWindowCommand}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="&#xEC4F;" FontFamily="{DynamicResource FontIcoFont}"
+                           FontSize="30" />
+            </Button>
+        </Border>
     </Grid>
     
 </UserControl>

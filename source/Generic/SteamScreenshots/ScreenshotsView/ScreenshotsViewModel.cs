@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SteamScreenshots.Screenshots
@@ -15,6 +16,7 @@ namespace SteamScreenshots.Screenshots
     {
         private int _currentIndex;
         private Uri _currentImageUri;
+        private readonly Window _window;
 
         public ObservableCollection<Uri> ImageUris { get; set; }
 
@@ -36,13 +38,41 @@ namespace SteamScreenshots.Screenshots
 
         public ICommand NextCommand { get; }
         public ICommand BackCommand { get; }
+        public ICommand CloseWindowCommand { get; }
 
-        public ScreenshotsViewModel()
+        public ScreenshotsViewModel(Window window)
         {
+            _window = window;
             ImageUris = new ObservableCollection<Uri>();
             NextCommand = new RelayCommand(NextImage, CanNavigate);
             BackCommand = new RelayCommand(PreviousImage, CanNavigate);
+            CloseWindowCommand = new RelayCommand(CloseWindow);
             _currentIndex = -1;
+            AddKeyBindings();
+        }
+
+        private void AddKeyBindings()
+        {
+            var leftKeyBinding = new KeyBinding
+            {
+                Key = Key.Left,
+                Command = BackCommand
+            };
+            _window.InputBindings.Add(leftKeyBinding);
+
+            var rightKeyBinding = new KeyBinding
+            {
+                Key = Key.Right,
+                Command = NextCommand
+            };
+            _window.InputBindings.Add(rightKeyBinding);
+
+            var escapeKeyBinding = new KeyBinding
+            {
+                Key = Key.Escape,
+                Command = CloseWindowCommand
+            };
+            _window.InputBindings.Add(escapeKeyBinding);
         }
 
         public void LoadUris(IEnumerable<Uri> uris)
@@ -96,6 +126,11 @@ namespace SteamScreenshots.Screenshots
 
             CurrentImageUri = ImageUris[_currentIndex];
             OnPropertyChanged(nameof(ImagePositionLabel));
+        }
+
+        private void CloseWindow()
+        {
+            _window.Close();
         }
 
         private bool CanNavigate()

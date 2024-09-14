@@ -376,19 +376,16 @@ namespace SteamScreenshots.ScreenshotsControl
                 return;
             }
 
-            var window = _playniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-            {
-                ShowMinimizeButton = false,
-                ShowMaximizeButton = true
-            });
-
+            var window = new Window();
             window.Width = 1330;
             window.Height = 845;
-            window.Title = string.Format(
-                ResourceProvider.GetString("LOC_VndbNexus_VisualNovelScreenshotsFormat"),
-                _currentGame.Name);
+            window.WindowStyle = WindowStyle.None;
+            window.WindowState = WindowState.Maximized;
+            window.ResizeMode = ResizeMode.NoResize;
+            window.Background = new SolidColorBrush(Colors.Black);
+            window.Title = _currentGame.Name;
 
-            var screenshotsViewModel = new ScreenshotsViewModel();
+            var screenshotsViewModel = new ScreenshotsViewModel(window);
             var urisToLoad = _screenshots.Select(x => x.PathFull);
             screenshotsViewModel.LoadUris(urisToLoad);
             if (selectedImage != null)
