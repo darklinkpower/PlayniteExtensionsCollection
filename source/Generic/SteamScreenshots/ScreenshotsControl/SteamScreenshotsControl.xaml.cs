@@ -216,23 +216,31 @@ namespace SteamScreenshots.ScreenshotsControl
             }
 
             var gameDataPath = Path.Combine(_pluginStoragePath, "appdetails", $"{steamId}_appdetails.json");
-            if (FileSystem.FileExists(gameDataPath))
+            if (!FileSystem.FileExists(gameDataPath) || ShouldRefreshAppDetails(gameDataPath))
+            {
+                var url = string.Format(@"https://store.steampowered.com/api/appdetails?appids={0}", steamId);
+                var result = await HttpRequestFactory.GetHttpFileRequest()
+                    .WithUrl(url)
+                    .WithDownloadTo(gameDataPath)
+                    .DownloadFileAsync(cancellationToken);
+                if (!result.IsSuccess || _activeContext != scopeContext)
+                {
+                    return;
+                }
+
+                await SetScreenshots(gameDataPath, true, scopeContext);
+            }
+            else
             {
                 await SetScreenshots(gameDataPath, false, scopeContext);
-                return;
             }
-            
-            var url = string.Format(@"https://store.steampowered.com/api/appdetails?appids={0}", steamId);
-            var result = await HttpRequestFactory.GetHttpFileRequest()
-                .WithUrl(url)
-                .WithDownloadTo(gameDataPath)
-                .DownloadFileAsync(cancellationToken);
-            if (!result.IsSuccess || _activeContext != scopeContext)
-            {
-                return;
-            }
+        }
 
-            await SetScreenshots(gameDataPath, true, scopeContext);
+        private bool ShouldRefreshAppDetails(string gameDataPath)
+        {
+            var fi = new FileInfo(FileSystem.FixPathLength(gameDataPath));
+            var shouldRefresh = fi.LastWriteTime < DateTime.Now.AddDays(-12);
+            return shouldRefresh;
         }
 
         private async Task SetScreenshots(string gameDataPath, bool downloadScreenshots, Guid scopeContext)
@@ -248,11 +256,13 @@ namespace SteamScreenshots.ScreenshotsControl
                 var response = parsedData[parsedData.Keys.First()];
                 if (!response.success || response.data is null)
                 {
+                    _logger.Warn($"Data in {gameDataPath} is not successful");
                     return;
                 }
 
                 if (!response.data.screenshots.HasItems())
                 {
+                    _logger.Warn($"Data in {gameDataPath} does not contain screenshots");
                     return;
                 }
 
