@@ -9,6 +9,7 @@ using PlayState.XInputDotNetPure;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -150,10 +151,10 @@ namespace PlayState
                 return;
             }
 
-            var gameInstallDir = GetGameInstallDir(args.Game);
-            if (!gameInstallDir.IsNullOrEmpty())
+            var detectionDirectory = GetGameDetectionDirectory(args.Game, args.SourceAction);
+            if (!detectionDirectory.IsNullOrEmpty())
             {
-                var scanHandled = await ScanGameProcessesFromDirectoryAsync(game, gameInstallDir);
+                var scanHandled = await ScanGameProcessesFromDirectoryAsync(game, detectionDirectory);
                 if (scanHandled)
                 {
                     return;
@@ -235,8 +236,25 @@ namespace PlayState
             return false;
         }
 
-        private string GetGameInstallDir(Game game)
+        private string GetGameDetectionDirectory(Game game, GameAction gameAction = null)
         {
+            if (gameAction != null && !gameAction.Path.IsNullOrEmpty())
+            {
+                var expandedAction = PlayniteApi.ExpandGameVariables(game, gameAction);
+                if (Path.IsPathRooted(expandedAction.Path))
+                {
+                    return Path.GetDirectoryName(expandedAction.Path);
+                }
+                else if (!expandedAction.WorkingDir.IsNullOrEmpty())
+                {
+                    var fullPath = Path.Combine(expandedAction.WorkingDir, expandedAction.Path);
+                    if (FileSystem.FileExists(fullPath))
+                    {
+                        return fullPath;
+                    }
+                }
+            }
+            
             // Games from Xbox library are UWP apps. UWP apps run from the primary drive, e.g. "C:\".
             // If the game install location is not in the primary drive, Windows creates a symlink from the real files
             // to the primary drive and starts running the game from there. For this reason, we need to obtain the location

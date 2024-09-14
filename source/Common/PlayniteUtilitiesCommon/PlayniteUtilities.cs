@@ -16,6 +16,7 @@ namespace PlayniteUtilitiesCommon
     public static class PlayniteUtilities
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly IPlayniteAPI _playniteApi = API.Instance;
         private const string pcWinPlatformName = "PC (Windows)";
         private const string pcPlatformName = "PC";
         private const string pcSpecId = "pc_windows";
@@ -402,7 +403,7 @@ namespace PlayniteUtilitiesCommon
 
         public static void OpenUrlOnWebView(string url, int width = 1900, int height = 1000, double dpiScalingFactor = 1.25)
         {
-            using (var webView = API.Instance.WebViews.CreateView(Convert.ToInt32(Math.Floor(width / dpiScalingFactor)), Convert.ToInt32(Math.Floor(height / dpiScalingFactor))))
+            using (var webView = _playniteApi.WebViews.CreateView(Convert.ToInt32(Math.Floor(width / dpiScalingFactor)), Convert.ToInt32(Math.Floor(height / dpiScalingFactor))))
             {
                 webView.Navigate(url);
                 webView.OpenDialog();
@@ -416,7 +417,7 @@ namespace PlayniteUtilitiesCommon
                 defaultCulture = CultureInfo.InvariantCulture;
             }
 
-            var settingsLanguage = API.Instance.ApplicationSettings.Language;
+            var settingsLanguage = _playniteApi.ApplicationSettings.Language;
             try
             {
                 var cultureParts = settingsLanguage.Split('_');
