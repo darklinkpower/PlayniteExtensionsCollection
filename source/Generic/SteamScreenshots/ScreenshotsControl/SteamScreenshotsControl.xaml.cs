@@ -254,9 +254,18 @@ namespace SteamScreenshots.ScreenshotsControl
                 }
 
                 var response = parsedData[parsedData.Keys.First()];
-                if (!response.success || response.data is null)
+                if (!response.success)
                 {
+                    // #550 Due to unknown circumstances, the response can return success:false
+                    // despite data being available but a redownload fixes it
                     _logger.Warn($"Data in {gameDataPath} is not successful");
+                    FileSystem.DeleteFile(gameDataPath);
+                    return;
+                }
+
+                if (response.data is null)
+                {
+                    _logger.Warn($"Data in {gameDataPath} is null");
                     return;
                 }
 
