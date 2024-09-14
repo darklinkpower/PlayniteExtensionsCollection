@@ -528,3 +528,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/PlayState_2_76.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 2.77
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2024-09-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.13_60b1b221/PlayState_2_77.pext
+    Changelog:
+    - 'Fixed: Failing to detect game processes in cases where the game action of the manually added game has a Working directory set that is different from the game installation directory'

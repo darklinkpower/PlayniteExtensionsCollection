@@ -146,3 +146,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.03_74640f56/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_21.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.22
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-09-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.13_60b1b221/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_22.pext
+    Changelog:
+    - 'Changed: Additional variants of pre-order games suffixes will be removed from game names'

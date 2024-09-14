@@ -55,3 +55,9 @@ Packages:
     - 'Fixed: Selecting a characters tab even by default in cases where it does not have available characters due to being hidden by being spoiler characters'
     - 'Fixed: Displaying 0 minutes in length when visual novel length is less than an hour'
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-09-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.13_60b1b221/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_7.pext
+    Changelog:
+    - 'Fixed: Failing to obtain tags during metadata download if download of background images is disabled'
