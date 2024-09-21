@@ -13,8 +13,8 @@ namespace TemporaryCache
 {
     public class CacheManager<TKey, TValue>
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly ConcurrentDictionary<TKey, CacheItem<TValue>> cacheDictionary = new ConcurrentDictionary<TKey, CacheItem<TValue>>();
+        private static readonly ILogger _logger = LogManager.GetLogger();
+        private readonly ConcurrentDictionary<TKey, CacheItem<TValue>> _cacheDictionary = new ConcurrentDictionary<TKey, CacheItem<TValue>>();
         private readonly TimeSpan _cacheAliveTime;
         private readonly DispatcherTimer _cacheCleanupTimer;
         private bool _cleanupInProgress = false;
@@ -35,19 +35,16 @@ namespace TemporaryCache
             }
 
             _cleanupInProgress = true;
-            var currentTime = DateTime.Now;
-            foreach (var cacheItem in cacheDictionary)
+            var expiredItems = _cacheDictionary.Where(x => x.Value.IsExpired);
+            foreach (var cacheItem in expiredItems)
             {
-                if (currentTime >= cacheItem.Value.ExpirationDate)
+                if (!_cacheDictionary.TryRemove(cacheItem.Key, out _))
                 {
-                    if (!cacheDictionary.TryRemove(cacheItem.Key, out _))
-                    {
-                        logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
-                    }
+                    _logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
                 }
             }
 
-            if (cacheDictionary.Values.Count == 0)
+            if (_cacheDictionary.Values.Count == 0)
             {
                 _cacheCleanupTimer.Stop();
             }
@@ -57,7 +54,7 @@ namespace TemporaryCache
 
         public CacheItem<TValue> GetCache(TKey key, bool refreshExpirationDate = false)
         {
-            if (cacheDictionary.TryGetValue(key, out var cache))
+            if (_cacheDictionary.TryGetValue(key, out var cache))
             {
                 if (refreshExpirationDate)
                 {
@@ -73,7 +70,7 @@ namespace TemporaryCache
         public CacheItem<TValue> SaveCache(TKey key, TValue item)
         {
             var cache = new CacheItem<TValue>(_cacheAliveTime, item);
-            cacheDictionary[key] = cache;
+            _cacheDictionary[key] = cache;
             _cacheCleanupTimer.Start();
             return cache;
         }

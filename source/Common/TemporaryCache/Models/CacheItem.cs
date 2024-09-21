@@ -10,8 +10,8 @@ namespace TemporaryCache.Models
     public class CacheItem<T>
     {
         public DateTime ExpirationDate { get; private set; }
-
-        public readonly T Item;
+        public bool IsExpired => DateTime.Now >= ExpirationDate;
+        public T Item { get; }
         private readonly TimeSpan _aliveTime;
 
         public CacheItem(TimeSpan aliveTime, T item)
