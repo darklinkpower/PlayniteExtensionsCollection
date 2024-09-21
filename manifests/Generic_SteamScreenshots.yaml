@@ -48,3 +48,9 @@ Packages:
     - 'Changed: Optimizations to image loading in background to decrease stutters when images are first displayed'
     - 'Changed: Screenshots will be refreshed each 12 days after the initial download to help in cases where screenshots have been changed or updated'
     - 'Fixed: Implemented measures to try to redownload screenshots data in rare cases where Steam does not provide it initially'
+  - Version: 1.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-09-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.21_8d80969f/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_7.pext
+    Changelog:
+    - 'Changed: When closing the fullscreen screenshot viewer window, the extension will now select the last displayed screenshot in the screenshot carousel selector'
