@@ -395,14 +395,19 @@ namespace SteamScreenshots.ScreenshotsControl
                 return;
             }
 
-            var window = new Window();
-            window.Width = 1330;
-            window.Height = 845;
-            window.WindowStyle = WindowStyle.None;
-            window.WindowState = WindowState.Maximized;
-            window.ResizeMode = ResizeMode.NoResize;
-            window.Background = new SolidColorBrush(Colors.Black);
-            window.Title = _currentGame.Name;
+            var window = new Window
+            {
+                Width = 1330,
+                Height = 845,
+                WindowStyle = WindowStyle.None,
+                WindowState = WindowState.Maximized,
+                ResizeMode = ResizeMode.NoResize,
+                Background = new SolidColorBrush(Colors.Black),
+                Title = _currentGame.Name,
+                Owner = API.Instance.Dialogs.GetCurrentAppWindow(),
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Content = new ScreenshotsView(_imageUriToBitmapImageConverter)
+            };
 
             var screenshotsViewModel = new ScreenshotsViewModel(window);
             var urisToLoad = _screenshots.Select(x => x.PathFull);
@@ -412,12 +417,14 @@ namespace SteamScreenshots.ScreenshotsControl
                 screenshotsViewModel.SelectImage(selectedImage.PathFull);
             }
 
-            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
             window.DataContext = screenshotsViewModel;
-            window.Content = new ScreenshotsView(_imageUriToBitmapImageConverter);
             window.ShowDialog();
+            var windowLastDisplayedScreenshotUri = screenshotsViewModel.CurrentImageUri;
+            var matchingScreenshot = _screenshots.FirstOrDefault(x => x.PathFull == windowLastDisplayedScreenshotUri);
+            if (matchingScreenshot != null)
+            {
+                SelectedScreenshot = matchingScreenshot;
+            }
         }
 
         public RelayCommand OpenScreenshotsViewCommand
