@@ -24,6 +24,7 @@ namespace ThemesDetailsViewToGridViewConverter
         //TODO Rework to not use hardcoded values...
         private const string themeIdHelium = @"8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1";
         private const string themeIdStardust = @"Stardust 2.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002";
+        private const string themeIdStardustLegacy = @"Stardust_LegacyLayout";
         private const string themeIdMythic = @"Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8";
         private const string themeIdHarmony = @"Harmony_d49ef7bc-49de-4fd0-9a67-bd1f26b56047";
         private const string themeIdDhDawn = @"felixkmh_DesktopTheme_DH_Dawn";
@@ -65,6 +66,7 @@ namespace ThemesDetailsViewToGridViewConverter
             {
                 themeIdHelium,
                 themeIdStardust,
+                themeIdStardustLegacy,
                 themeIdMythic,
                 themeIdHarmony,
                 themeIdDhDawn,
@@ -266,6 +268,8 @@ namespace ThemesDetailsViewToGridViewConverter
                     return "8b15c46a-90c2-4fe5-9ebb-1ab25ba7fcb1";
                 case themeIdStardust:
                     return "Stardust 2.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002";
+                case themeIdStardustLegacy:
+                    return "Stardust_LegacyLayout";
                 case themeIdMythic:
                     return "Mythic_e231056c-4fa7-49d8-ad2b-0a6f1c589eb8";
                 case themeIdHarmony:
@@ -289,6 +293,8 @@ namespace ThemesDetailsViewToGridViewConverter
                     return settings.Settings.ConvertHelium;
                 case themeIdStardust:
                     return settings.Settings.ConvertStardust;
+                case themeIdStardustLegacy:
+                    return settings.Settings.ConvertStardustLegacy;
                 case themeIdMythic:
                     return settings.Settings.ConvertMythic;
                 case themeIdHarmony:
@@ -312,6 +318,8 @@ namespace ThemesDetailsViewToGridViewConverter
                     return Version.Parse("1.31");
                 case themeIdStardust:
                     return Version.Parse("2.39");
+                case themeIdStardustLegacy:
+                    return Version.Parse("2.66");
                 case themeIdMythic:
                     return Version.Parse("1.24");
                 case themeIdHarmony:

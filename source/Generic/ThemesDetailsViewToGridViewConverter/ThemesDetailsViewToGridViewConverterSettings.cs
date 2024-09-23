@@ -14,6 +14,8 @@ namespace ThemesDetailsViewToGridViewConverter
         public bool ConvertHelium { get => convertHelium; set => SetValue(ref convertHelium, value); }
         private bool convertStardust = false;
         public bool ConvertStardust { get => convertStardust; set => SetValue(ref convertStardust, value); }
+        private bool convertStardustLegacy = false;
+        public bool ConvertStardustLegacy { get => convertStardustLegacy; set => SetValue(ref convertStardustLegacy, value); }
         private bool convertMythic = false;
         public bool ConvertMythic { get => convertMythic; set => SetValue(ref convertMythic, value); }
         private bool convertHarmony = false;

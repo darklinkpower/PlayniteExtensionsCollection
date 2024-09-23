@@ -30,6 +30,9 @@
                 <CheckBox Content="Stardust"
                           Margin="0,10,0,0"
                           IsChecked="{Binding Settings.ConvertStardust}"/>
+                <CheckBox Content="Stardust (Legacy Layout)"
+                          Margin="0,10,0,0"
+                          IsChecked="{Binding Settings.ConvertStardustLegacy}"/>
             </StackPanel>
             
         </StackPanel>
