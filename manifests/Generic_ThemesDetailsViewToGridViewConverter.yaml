@@ -61,3 +61,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_9.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.10
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-09-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.23_6ce05621/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_10.pext
+    Changelog:
+    - 'Added: Support to "Stardust (Legacy Layout)" theme'
