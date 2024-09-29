@@ -10,7 +10,17 @@
         <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
-        <Image Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+
+        <Image x:Name="ImageA"
+               Source="{Binding ImageUriA, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+               RenderOptions.BitmapScalingMode="Fant"
+               Stretch="Uniform"
+               StretchDirection="DownOnly"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+
+        <Image x:Name="ImageB"
+               Source="{Binding ImageUriB, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
                StretchDirection="DownOnly"

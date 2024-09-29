@@ -25,6 +25,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
@@ -49,14 +50,27 @@ namespace SteamScreenshots.ScreenshotsControl
         private bool _isValuesDefaultState = true;
         private Game _currentGame;
         private Guid _activeContext = default;
+        private DoubleAnimation _fadeOutAnimation;
+        private DoubleAnimation _fadeInAnimation;
 
-        private ObservableCollection<SteamAppDetails.AppDetails.Screenshot> _screenshots = new ObservableCollection<SteamAppDetails.AppDetails.Screenshot>();
-        public ObservableCollection<SteamAppDetails.AppDetails.Screenshot> Screenshots
+        private ObservableCollection<Screenshot> _screenshots = new ObservableCollection<SteamAppDetails.AppDetails.Screenshot>();
+        public ObservableCollection<Screenshot> Screenshots
         {
             get => _screenshots;
             set
             {
                 _screenshots = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Uri _oldImageUri;
+        public Uri OldImageUri
+        {
+            get => _oldImageUri;
+            set
+            {
+                _oldImageUri = value;
                 OnPropertyChanged();
             }
         }
@@ -72,17 +86,20 @@ namespace SteamScreenshots.ScreenshotsControl
             }
         }
 
-        private SteamAppDetails.AppDetails.Screenshot _selectedScreenshot;
-        public SteamAppDetails.AppDetails.Screenshot SelectedScreenshot
+        private Screenshot _selectedScreenshot;
+        public Screenshot SelectedScreenshot
         {
             get => _selectedScreenshot;
             set
             {
-                _selectedScreenshot = value;
-                OnPropertyChanged();
-                CurrentImageUri = _selectedScreenshot != null
-                    ? _selectedScreenshot.PathThumbnail
-                    : null;
+                if (_selectedScreenshot != value)
+                {
+                    _selectedScreenshot = value;                    
+                    OldImageUri = CurrentImageUri;
+                    CurrentImageUri = _selectedScreenshot?.PathThumbnail;
+                    FadeImages();
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -106,7 +123,40 @@ namespace SteamScreenshots.ScreenshotsControl
 
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
             InitializeComponent();
+            InitializeAnimations();
             DataContext = this;
+        }
+
+        private void InitializeAnimations()
+        {
+            _fadeOutAnimation = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                Duration = TimeSpan.FromSeconds(0.4),
+                FillBehavior = FillBehavior.HoldEnd
+            };
+
+            _fadeInAnimation = new DoubleAnimation
+            {
+                From = 0.0,
+                To = 1.0,
+                Duration = TimeSpan.FromSeconds(0.4),
+                FillBehavior = FillBehavior.HoldEnd
+            };
+        }
+
+        private void FadeImages()
+        {
+            Storyboard.SetTarget(_fadeOutAnimation, OldImage);
+            Storyboard.SetTargetProperty(_fadeOutAnimation, new PropertyPath("Opacity"));
+            Storyboard.SetTarget(_fadeInAnimation, NewImage);
+            Storyboard.SetTargetProperty(_fadeInAnimation, new PropertyPath("Opacity"));
+
+            var storyboard = new Storyboard();
+            storyboard.Children.Add(_fadeOutAnimation);
+            storyboard.Children.Add(_fadeInAnimation);
+            storyboard.Begin();
         }
 
         private IEnumerable<BitmapImage> GetScreenshotsBitmapImages()
@@ -190,6 +240,8 @@ namespace SteamScreenshots.ScreenshotsControl
             SetCollapsedVisibility();
             _activeContext = default;
             Screenshots.Clear();
+            OldImageUri = null;
+            CurrentImageUri = null;
             OnPropertyChanged(nameof(ScreenshotsBitmapImages));
             _isValuesDefaultState = true;
         }
@@ -419,7 +471,7 @@ namespace SteamScreenshots.ScreenshotsControl
 
             window.DataContext = screenshotsViewModel;
             window.ShowDialog();
-            var windowLastDisplayedScreenshotUri = screenshotsViewModel.CurrentImageUri;
+            var windowLastDisplayedScreenshotUri = screenshotsViewModel.GetLastDisplayedImageUri();
             var matchingScreenshot = _screenshots.FirstOrDefault(x => x.PathFull == windowLastDisplayedScreenshotUri);
             if (matchingScreenshot != null)
             {

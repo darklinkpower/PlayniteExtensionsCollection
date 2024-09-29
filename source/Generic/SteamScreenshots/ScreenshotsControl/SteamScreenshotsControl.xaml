@@ -55,16 +55,23 @@
         </Grid.RowDefinitions>
 
         <Grid Background="Black" Grid.Row="0">
-            <Viewbox Stretch="Uniform">
-                <Button Margin="0" Padding="0" Background="Transparent" BorderThickness="0"
-                        Command="{Binding OpenScreenshotsViewCommand}">
-                    <Image Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
-                       RenderOptions.BitmapScalingMode="Fant"
-                       Stretch="Uniform"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-                </Button>
-            </Viewbox>
+            <Button Margin="0" Padding="0" Background="Transparent" BorderThickness="0"
+                    Command="{Binding OpenScreenshotsViewCommand}">
+                <Grid>
+                    <Viewbox Stretch="Uniform">
+                        <Image x:Name="OldImage"
+                               Source="{Binding OldImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Stretch="Uniform" />
+                    </Viewbox>
+                    <Viewbox Stretch="Uniform">
+                        <Image x:Name="NewImage"
+                               Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Stretch="Uniform" />
+                    </Viewbox>
+                </Grid>
+            </Button>
         </Grid>
         
         <Grid Grid.Row="1" Margin="0,8,0,0" >
