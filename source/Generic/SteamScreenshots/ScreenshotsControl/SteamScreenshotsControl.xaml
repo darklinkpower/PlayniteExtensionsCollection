@@ -56,6 +56,7 @@
 
         <Grid Background="Black" Grid.Row="0">
             <Button Margin="0" Padding="0" Background="Transparent" BorderThickness="0"
+                    Cursor="Hand"
                     Command="{Binding OpenScreenshotsViewCommand}">
                 <Grid>
                     <Viewbox Stretch="Uniform">
