@@ -9,26 +9,19 @@ namespace TemporaryCache.Models
 {
     public class CacheItem<T>
     {
-        public DateTime ExpirationDate { get; private set; }
-        public bool IsExpired => DateTime.Now >= ExpirationDate;
-        public T Item { get; }
-        private readonly TimeSpan _aliveTime;
+        public T Value { get; }
+        public DateTime Expiration { get; private set; }
+        public bool IsExpired => DateTime.Now >= Expiration;
 
-        public CacheItem(TimeSpan aliveTime, T item)
+        public CacheItem(T value, DateTime expiration)
         {
-            _aliveTime = aliveTime;
-            Item = item;
-            SetExpirationDate();
+            Value = value;
+            Expiration = expiration;
         }
 
-        private void SetExpirationDate()
+        public void RefreshExpiration(DateTime expirationDate)
         {
-            ExpirationDate = DateTime.Now + _aliveTime;
-        }
-
-        public void RefreshExpirationDate()
-        {
-            SetExpirationDate();
+            Expiration = Expiration = expirationDate;
         }
     }
 }

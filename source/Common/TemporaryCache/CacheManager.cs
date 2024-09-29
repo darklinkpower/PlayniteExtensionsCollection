@@ -15,19 +15,72 @@ namespace TemporaryCache
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly ConcurrentDictionary<TKey, CacheItem<TValue>> _cacheDictionary = new ConcurrentDictionary<TKey, CacheItem<TValue>>();
-        private readonly TimeSpan _cacheAliveTime;
+        private readonly TimeSpan _defaultExpirationDuration;
         private readonly DispatcherTimer _cacheCleanupTimer;
         private bool _cleanupInProgress = false;
 
-        public CacheManager(TimeSpan cacheAliveTime)
+        public CacheManager(TimeSpan expirationDuration)
         {
-            _cacheAliveTime = cacheAliveTime;
-            _cacheCleanupTimer = new DispatcherTimer();
-            _cacheCleanupTimer.Interval = TimeSpan.FromSeconds(10);
-            _cacheCleanupTimer.Tick += new EventHandler(CleanCache);
+            _defaultExpirationDuration = expirationDuration;
+            _cacheCleanupTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(8)
+            };
+
+            _cacheCleanupTimer.Tick += new EventHandler(CleanupExpiredItems);
         }
 
-        private void CleanCache(object sender, EventArgs e)
+        public TValue Add(TKey key, TValue value, TimeSpan? expirationTime = null)
+        {
+            var expiration = DateTime.UtcNow.Add(expirationTime ?? _defaultExpirationDuration);
+            _cacheDictionary[key] = new CacheItem<TValue>(value, expiration);
+
+            if (!_cacheCleanupTimer.IsEnabled)
+            {
+                _cacheCleanupTimer.Start();
+            }
+
+            return value;
+        }
+
+        public bool Remove(TKey key)
+        {
+            return _cacheDictionary.TryRemove(key, out _);
+        }
+
+        public void Clear()
+        {
+            _cacheDictionary.Clear();
+            _cacheCleanupTimer.Stop();
+        }
+
+        public bool TryGetValue(TKey key, out TValue value, bool refreshExpiration = true, TimeSpan? refreshExpirationTime = null)
+        {
+            if (_cacheDictionary.TryGetValue(key, out var cacheItem))
+            {
+                if (!cacheItem.IsExpired)
+                {
+                    value = cacheItem.Value;
+
+                    if (refreshExpiration)
+                    {
+                        var newExpiration = DateTime.UtcNow.Add(refreshExpirationTime ?? _defaultExpirationDuration);
+                        cacheItem.RefreshExpiration(newExpiration);
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    _cacheDictionary.TryRemove(key, out _);
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        private async void CleanupExpiredItems(object sender, EventArgs e)
         {
             if (_cleanupInProgress)
             {
@@ -35,16 +88,20 @@ namespace TemporaryCache
             }
 
             _cleanupInProgress = true;
-            var expiredItems = _cacheDictionary.Where(x => x.Value.IsExpired);
-            foreach (var cacheItem in expiredItems)
-            {
-                if (!_cacheDictionary.TryRemove(cacheItem.Key, out _))
-                {
-                    _logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
-                }
-            }
 
-            if (_cacheDictionary.Values.Count == 0)
+            await Task.Run(() =>
+            {
+                var expiredItems = _cacheDictionary.Where(x => x.Value.IsExpired).ToList();
+                foreach (var cacheItem in expiredItems)
+                {
+                    if (!_cacheDictionary.TryRemove(cacheItem.Key, out _))
+                    {
+                        _logger.Error($"Failed to remove cache with key {cacheItem.Key} from cache");
+                    }
+                }
+            });
+
+            if (_cacheDictionary.IsEmpty)
             {
                 _cacheCleanupTimer.Stop();
             }
@@ -52,27 +109,5 @@ namespace TemporaryCache
             _cleanupInProgress = false;
         }
 
-        public CacheItem<TValue> GetCache(TKey key, bool refreshExpirationDate = false)
-        {
-            if (_cacheDictionary.TryGetValue(key, out var cache))
-            {
-                if (refreshExpirationDate)
-                {
-                    cache.RefreshExpirationDate();
-                }
-
-                return cache;
-            }
-
-            return null;
-        }
-
-        public CacheItem<TValue> SaveCache(TKey key, TValue item)
-        {
-            var cache = new CacheItem<TValue>(_cacheAliveTime, item);
-            _cacheDictionary[key] = cache;
-            _cacheCleanupTimer.Start();
-            return cache;
-        }
     }
 }
