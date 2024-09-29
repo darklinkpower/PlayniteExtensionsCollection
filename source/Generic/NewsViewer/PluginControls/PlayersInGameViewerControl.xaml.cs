@@ -122,8 +122,7 @@ namespace NewsViewer.PluginControls
                 currentGameId = currentGame.Id;
                 updateControlDataDelayTimer.Stop();
 
-                var cache = playersCountCacheManager.GetCache(currentGame.Id);
-                if (cache != null)
+                if (playersCountCacheManager.TryGetValue(currentGame.Id, out var cache))
                 {
                     UpdatePlayersCount(cache);
                 }
@@ -169,7 +168,7 @@ namespace NewsViewer.PluginControls
                     return;
                 }
 
-                var savedCache = playersCountCacheManager.SaveCache(contextGameId, data);
+                var savedCache = playersCountCacheManager.Add(contextGameId, data);
                 // To detect if game changed while downloading data
                 if (currentGameId != null && contextGameId == currentGameId)
                 {
@@ -178,9 +177,9 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private void UpdatePlayersCount(CacheItem<NumberOfPlayersResponse> cacheItem)
+        private void UpdatePlayersCount(NumberOfPlayersResponse cacheItem)
         {
-            InGamePlayersCount = cacheItem.Item.Response.PlayerCount;
+            InGamePlayersCount = cacheItem.Response.PlayerCount;
             ControlVisibility = Visibility.Visible;
             SettingsModel.Settings.PlayersCountAvailable = true;
         }

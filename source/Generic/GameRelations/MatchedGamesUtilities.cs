@@ -83,14 +83,13 @@ namespace GameRelations
                 {
                     var coverHeight = settings.CoversHeight;
                     var cacheKey = $"{imagePath}_{coverHeight}";
-                    var cacheBitmap = _imagesCacheManager.GetCache(cacheKey, true);
-                    if (!(cacheBitmap is null))
+                    if (_imagesCacheManager.TryGetValue(cacheKey, out var cachedBitmap))
                     {
-                        return cacheBitmap.Item;
+                        return cachedBitmap;
                     }
 
                     var createdBitmap = CreateResizedBitmapImageFromPath(imagePath, 0, coverHeight);
-                    _imagesCacheManager.SaveCache(cacheKey, createdBitmap);
+                    _imagesCacheManager.Add(cacheKey, createdBitmap);
 
                     return createdBitmap;
                 }

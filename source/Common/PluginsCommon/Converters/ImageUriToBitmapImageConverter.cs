@@ -78,10 +78,9 @@ namespace PluginsCommon.Converters
             if (value is Uri uri)
             {
                 var fileName = GetUriStorageFilename(uri);
-                var existingCache = _imagesCacheManager.GetCache(fileName, true);
-                if (existingCache != null)
+                if (_imagesCacheManager.TryGetValue(fileName, out var cache))
                 {
-                    return existingCache.Item;
+                    return cache;
                 }
 
                 var storagePath = GetFilenameStorageLocation(fileName);
@@ -103,7 +102,7 @@ namespace PluginsCommon.Converters
                 }
 
                 var createdBitmapImage = ConvertersUtilities.CreateResizedBitmapImageFromPath(storagePath);
-                _imagesCacheManager.SaveCache(fileName, createdBitmapImage);
+                _imagesCacheManager.Add(fileName, createdBitmapImage);
                 return createdBitmapImage;
             }
 

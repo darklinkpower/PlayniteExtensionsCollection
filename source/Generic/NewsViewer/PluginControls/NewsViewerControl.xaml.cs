@@ -356,14 +356,13 @@ namespace NewsViewer.PluginControls
         private async void UpdateContextTimer_Tick(object sender, EventArgs e)
         {
             updateContextTimer.Stop();
-            var cache = newsCacheManager.GetCache(currentGame.Id);
-            if (cache is null)
+            if (newsCacheManager.TryGetValue(currentGame.Id, out var cache))
             {
-                await UpdateNewsContextAsync();
+                UpdateControlData(cache);                
             }
             else
             {
-                UpdateControlData(cache);
+                await UpdateNewsContextAsync();
             }
         }
 
@@ -396,7 +395,7 @@ namespace NewsViewer.PluginControls
                 return;
             }
 
-            var savedCache = newsCacheManager.SaveCache(contextId, newsFeed);
+            var savedCache = newsCacheManager.Add(contextId, newsFeed);
             if (currentGame != null && currentGame?.Id == contextId)
             {
                 UpdateControlData(savedCache);
@@ -494,16 +493,16 @@ namespace NewsViewer.PluginControls
             }
         }
 
-        private void UpdateControlData(CacheItem<SteamNewsRssFeed> newsCache)
+        private void UpdateControlData(SteamNewsRssFeed newsCache)
         {
-            if (!newsCache.Item.Channel.Items.HasItems())
+            if (!newsCache.Channel.Items.HasItems())
             {
                 SettingsModel.Settings.ReviewsAvailable = false;
                 ControlVisibility = Visibility.Collapsed;
                 return;
             }
 
-            if (newsCache.Item.Channel.Items.Count > 0)
+            if (newsCache.Channel.Items.Count > 0)
             {
                 multipleNewsAvailable = true;
                 SwitchNewsVisibility = Visibility.Visible;
@@ -515,7 +514,7 @@ namespace NewsViewer.PluginControls
 
             SettingsModel.Settings.ReviewsAvailable = true;
             ControlVisibility = Visibility.Visible;
-            newsNodes = newsCache.Item.Channel.Items;
+            newsNodes = newsCache.Channel.Items;
             SelectedNewsIndex = 0;
 
             NotifyCommandsChanged();
