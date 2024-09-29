@@ -54,3 +54,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.21_8d80969f/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_7.pext
     Changelog:
     - 'Changed: When closing the fullscreen screenshot viewer window, the extension will now select the last displayed screenshot in the screenshot carousel selector'
+  - Version: 1.8
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-09-29
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.29_291afa73/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_8.pext
+    Changelog:
+    - 'Changed: Added a fade transition when switching images in the careousel screenshots viewer or the Screenshots view window'
