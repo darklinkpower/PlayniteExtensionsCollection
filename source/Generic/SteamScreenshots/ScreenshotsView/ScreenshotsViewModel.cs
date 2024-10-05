@@ -1,8 +1,10 @@
 ﻿using Playnite.SDK;
+using PluginsCommon.Converters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 
 namespace SteamScreenshots.Screenshots
 {
@@ -22,16 +25,17 @@ namespace SteamScreenshots.Screenshots
         }
         
         private int _currentIndex;
-        private Uri _currentImageUri;
+        private BitmapImage _currentImageUri;
         private readonly Window _window;
+        private readonly ImageUriToBitmapImageConverter _imageUriToBitmapImageConverter;
         private ImageIdentifier _lastImageSet = ImageIdentifier.ImageB;
         private DoubleAnimation _fadeOutAnimation;
         private DoubleAnimation _fadeInAnimation;
 
         public ObservableCollection<Uri> ImageUris { get; set; }
 
-        private Uri _oldImageUri;
-        public Uri ImageUriA
+        private BitmapImage _oldImageUri;
+        public BitmapImage ImageUriA
         {
             get => _oldImageUri;
             set
@@ -41,7 +45,7 @@ namespace SteamScreenshots.Screenshots
             }
         }
 
-        public Uri ImageUriB
+        public BitmapImage ImageUriB
         {
             get => _currentImageUri;
             set
@@ -61,9 +65,12 @@ namespace SteamScreenshots.Screenshots
         public ICommand BackCommand { get; }
         public ICommand CloseWindowCommand { get; }
 
-        public ScreenshotsViewModel(Window window)
+        public Uri LastDisplayedUri = null;
+
+        public ScreenshotsViewModel(Window window, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter)
         {
             _window = window;
+            _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
             ImageUris = new ObservableCollection<Uri>();
             NextCommand = new RelayCommand(NextImage, CanNavigate);
             BackCommand = new RelayCommand(PreviousImage, CanNavigate);
@@ -71,13 +78,6 @@ namespace SteamScreenshots.Screenshots
             _currentIndex = -1;
             AddKeyBindings();
             InitializeAnimations();
-        }
-
-        public Uri GetLastDisplayedImageUri()
-        {
-            return _lastImageSet == ImageIdentifier.ImageA
-                ? ImageUriA
-                : ImageUriB;
         }
 
         private void AddKeyBindings()
@@ -180,16 +180,28 @@ namespace SteamScreenshots.Screenshots
         {
             if (_lastImageSet == ImageIdentifier.ImageA)
             {
-                ImageUriB = uri;
+                ImageUriB = UriToBitmapImage(uri);
                 _lastImageSet = ImageIdentifier.ImageB;
             }
             else
             {
-                ImageUriA = uri;
+                ImageUriA = UriToBitmapImage(uri);
                 _lastImageSet = ImageIdentifier.ImageA;
             }
 
+            LastDisplayedUri = uri;
             FadeImages();
+        }
+
+        private BitmapImage UriToBitmapImage(Uri uri)
+        {
+            var bitmapImage = _imageUriToBitmapImageConverter.Convert(uri, typeof(BitmapImage), null, CultureInfo.CurrentCulture);
+            if (bitmapImage != null)
+            {
+                return bitmapImage as BitmapImage;
+            }
+
+            return null;
         }
 
         private void FadeImages()

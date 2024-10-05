@@ -458,10 +458,10 @@ namespace SteamScreenshots.ScreenshotsControl
                 Title = _currentGame.Name,
                 Owner = API.Instance.Dialogs.GetCurrentAppWindow(),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                Content = new ScreenshotsView(_imageUriToBitmapImageConverter)
+                Content = new ScreenshotsView()
             };
 
-            var screenshotsViewModel = new ScreenshotsViewModel(window);
+            var screenshotsViewModel = new ScreenshotsViewModel(window, _imageUriToBitmapImageConverter);
             var urisToLoad = _screenshots.Select(x => x.PathFull);
             screenshotsViewModel.LoadUris(urisToLoad);
             if (selectedImage != null)
@@ -471,7 +471,7 @@ namespace SteamScreenshots.ScreenshotsControl
 
             window.DataContext = screenshotsViewModel;
             window.ShowDialog();
-            var windowLastDisplayedScreenshotUri = screenshotsViewModel.GetLastDisplayedImageUri();
+            var windowLastDisplayedScreenshotUri = screenshotsViewModel.LastDisplayedUri;
             var matchingScreenshot = _screenshots.FirstOrDefault(x => x.PathFull == windowLastDisplayedScreenshotUri);
             if (matchingScreenshot != null)
             {

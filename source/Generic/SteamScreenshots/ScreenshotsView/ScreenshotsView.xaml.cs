@@ -22,9 +22,8 @@ namespace SteamScreenshots.Screenshots
     /// </summary>
     public partial class ScreenshotsView : UserControl
     {
-        public ScreenshotsView(ImageUriToBitmapImageConverter imageUriToBitmapImageConverter)
+        public ScreenshotsView()
         {
-            Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
             SetControlTextBlockStyle();
             Loaded += ScreenshotsView_Loaded;
             Unloaded += ScreenshotsView_Unloaded;
