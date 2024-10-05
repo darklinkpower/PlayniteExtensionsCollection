@@ -219,22 +219,34 @@
       <Link>Shared\SteamCommon\Web.cs</Link>
     </Compile>
     <Compile Include="Behaviors\SelectorBehaviors.cs" />
-    <Compile Include="Localization\LocalizationKeys.cs" />
-    <Compile Include="Models\Enums.cs" />
-    <Compile Include="Models\GameDataCache.cs" />
-    <Compile Include="Models\SpecialKProfile.cs" />
-    <Compile Include="SpecialKHelper.cs" />
-    <Compile Include="SpecialKHelperSettings.cs" />
-    <Compile Include="SpecialKHelperSettingsView.xaml.cs">
+    <Compile Include="Core\Domain\SpecialKExecutionMode.cs" />
+    <Compile Include="Core\Domain\SteamOverlay.cs" />
+    <Compile Include="EasyAnticheat\Application\EasyAnticheatService.cs" />
+    <Compile Include="EasyAnticheat\Application\IEasyAnticheatService.cs" />
+    <Compile Include="EasyAnticheat\Domain\EasyAnticheatStatus.cs" />
+    <Compile Include="EasyAnticheat\Persistence\EasyAnticheatCache.cs" />
+    <Compile Include="EasyAnticheat\Persistence\IEasyAnticheatCache.cs" />
+    <Compile Include="Core\Localization\LocalizationKeys.cs" />
+    <Compile Include="EasyAnticheat\Domain\GameDataCache.cs" />
+    <Compile Include="SpecialKProfilesEditor\Domain\PluginLoadMode.cs" />
+    <Compile Include="SpecialKProfilesEditor\Domain\SpecialKProfile.cs" />
+    <Compile Include="SpecialKHandler\Domain\Exceptions\SpecialKFileNotFoundException.cs" />
+    <Compile Include="SpecialKHandler\Domain\Exceptions\SpecialKPathNotFoundException.cs" />
+    <Compile Include="SpecialKHandler\Application\SpecialKConfigurationManager.cs" />
+    <Compile Include="SpecialKHandler\Application\SpecialKServiceManager.cs" />
+    <Compile Include="Core\Application\SpecialKHelper.cs" />
+    <Compile Include="Core\Application\SpecialKHelperSettings.cs" />
+    <Compile Include="Core\Presentation\SpecialKHelperSettingsView.xaml.cs">
       <DependentUpon>SpecialKHelperSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\SidebarItemSwitcherViewModel.cs" />
-    <Compile Include="ViewModels\SpecialKProfileEditorViewModel.cs" />
-    <Compile Include="Views\SidebarItemSwitcherView.xaml.cs">
+    <Compile Include="Core\Application\SteamHelper.cs" />
+    <Compile Include="PluginSidebarItem\Application\SidebarItemSwitcherViewModel.cs" />
+    <Compile Include="SpecialKProfilesEditor\Application\SpecialKProfileEditorViewModel.cs" />
+    <Compile Include="PluginSidebarItem\Presentation\SidebarItemSwitcherView.xaml.cs">
       <DependentUpon>SidebarItemSwitcherView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SpecialKProfileEditorView.xaml.cs">
+    <Compile Include="SpecialKProfilesEditor\Presentation\SpecialKProfileEditorView.xaml.cs">
       <DependentUpon>SpecialKProfileEditorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -244,13 +256,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Resources\ReshadeDefaultPreset.ini">
+    <None Include="Core\Resources\ReshadeDefaultPreset.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\SidebarEnabled.png">
+    <None Include="PluginSidebarItem\Resources\SidebarEnabled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\SidebarDisabled.png">
+    <None Include="PluginSidebarItem\Resources\SidebarDisabled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -259,26 +271,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Localization\en_US.xaml">
+    <Page Include="Core\Localization\en_US.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="SpecialKHelperSettingsView.xaml">
+    <Page Include="Core\Presentation\SpecialKHelperSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SidebarItemSwitcherView.xaml">
+    <Page Include="PluginSidebarItem\Presentation\SidebarItemSwitcherView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SpecialKProfileEditorView.xaml">
+    <Page Include="SpecialKProfilesEditor\Presentation\SpecialKProfileEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="icon.png">
+    <None Include="Core\Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -292,6 +304,6 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)Core\Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
   </PropertyGroup>
 </Project>

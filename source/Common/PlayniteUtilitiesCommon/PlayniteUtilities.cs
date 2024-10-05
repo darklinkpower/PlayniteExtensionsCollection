@@ -281,7 +281,7 @@ namespace PlayniteUtilitiesCommon
             return false;
         }
 
-        public static bool GetIsInstallDirectoryValid(Game game)
+        public static bool IsGameInstallDirectoryValid(Game game)
         {
             if (string.IsNullOrEmpty(game.InstallDirectory) || !Directory.Exists(game.InstallDirectory))
             {
