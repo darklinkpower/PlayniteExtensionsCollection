@@ -1,5 +1,4 @@
-﻿using MetacriticMetadata.Services;
-using MetacriticMetadata.Models;
+﻿
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -9,40 +8,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetacriticMetadata.Domain.Entities;
+using MetacriticMetadata.Domain.Interfaces;
 
 namespace MetacriticMetadata
 {
     public class MetacriticMetadataProvider : OnDemandMetadataProvider
     {
-        private readonly MetadataRequestOptions options;
-        private readonly MetacriticMetadata plugin;
-        private readonly MetacriticService metacriticService;
-        private List<MetacriticSearchResult> currentResults = new List<MetacriticSearchResult>();
-        private bool firstSearchMade = false;
+        private readonly MetadataRequestOptions _options;
+        private readonly IPlayniteAPI _playniteApi;
+        private readonly IMetacriticService _metacriticService;
+        private readonly MetacriticMetadataSettingsViewModel _settingsViewModel;
+        private List<MetacriticSearchResult> _currentResults = new List<MetacriticSearchResult>();
+        private bool _firstSearchMade = false;
 
         public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>
         {
             MetadataField.CriticScore
         };
 
-        public MetacriticMetadataProvider(MetadataRequestOptions options, MetacriticMetadata plugin, MetacriticService metacriticService)
+        public MetacriticMetadataProvider(
+            MetadataRequestOptions options,
+            IMetacriticService metacriticService,
+            IPlayniteAPI playniteApi,
+            MetacriticMetadataSettingsViewModel settings)
         {
-            this.options = options;
-            this.plugin = plugin;
-            this.metacriticService = metacriticService;
+            _options = options;
+            _playniteApi = playniteApi;
+            _metacriticService = metacriticService;
+            _settingsViewModel = settings;
         }
 
         public override int? GetCriticScore(GetMetadataFieldArgs args)
         {
-            if (options.IsBackgroundDownload)
+            if (_options.IsBackgroundDownload)
             {
-                var gameResults = metacriticService.GetGameSearchResults(options.GameData, args.CancelToken);
+                var gameResults = Task.Run(() => _metacriticService.GetGameSearchResultsAsync(
+                    _options.GameData,
+                    _settingsViewModel.Settings.ApiKey,
+                    args.CancelToken))
+                    .GetAwaiter().GetResult();
                 if (!gameResults.HasItems())
                 {
                     return base.GetCriticScore(args);
                 }
 
-                var normalizedGameName = options.GameData.Name.Satinize();
+                var normalizedGameName = _options.GameData.Name.Satinize();
                 var resultMatch = gameResults.FirstOrDefault(x => x.Name.Satinize() == normalizedGameName);
                 if (resultMatch is null || resultMatch.MetacriticScore is null)
                 {
@@ -53,16 +64,16 @@ namespace MetacriticMetadata
             }
             else
             {
-                var selectedData = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(
+                var selectedData = _playniteApi.Dialogs.ChooseItemWithSearch(
                     null,
-                    (a) => GetOpencriticSearchOptions(a),
-                    options.GameData.Name,
+                    (a) => Task.Run(() => GetOpencriticSearchOptions(a)).GetAwaiter().GetResult(),
+                    _options.GameData.Name,
                     "Select game");
 
                 if (selectedData != null)
                 {
                     // The original item is retrieved from the search. This is because GenericItems don't allow setting arbitrary data
-                    var selectedResult = currentResults?.FirstOrDefault(x => selectedData.Description.StartsWith(x.Url));
+                    var selectedResult = _currentResults?.FirstOrDefault(x => selectedData.Description.StartsWith(x.Url));
                     if (selectedResult?.MetacriticScore.HasValue == true)
                     {
                         return selectedResult.MetacriticScore;
@@ -94,19 +105,23 @@ namespace MetacriticMetadata
             return name;
         }
 
-        private List<GenericItemOption> GetOpencriticSearchOptions(string gameName)
+        private async Task<List<GenericItemOption>> GetOpencriticSearchOptions(string gameName)
         {
-            if (!firstSearchMade) //First search makes use of game platform
+            if (!_firstSearchMade) //First search makes use of game platform
             {
-                currentResults = metacriticService.GetGameSearchResults(options.GameData);
-                firstSearchMade = true;
+                _currentResults = await _metacriticService.GetGameSearchResultsAsync(
+                    _options.GameData,
+                    _settingsViewModel.Settings.ApiKey);
+                _firstSearchMade = true;
             }
             else
             {
-                currentResults = metacriticService.GetGameSearchResults(gameName);
+                _currentResults = await _metacriticService.GetGameSearchResultsAsync(
+                    gameName,
+                    _settingsViewModel.Settings.ApiKey);
             }
 
-            return GetItemOptionListFromResults(currentResults);
+            return GetItemOptionListFromResults(_currentResults);
         }
     }
 }

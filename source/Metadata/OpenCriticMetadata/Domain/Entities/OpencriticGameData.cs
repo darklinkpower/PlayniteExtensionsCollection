@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenCriticMetadata.Models
+namespace OpenCriticMetadata.Domain.Entities
 {
     public class OpenCriticGameData
     {

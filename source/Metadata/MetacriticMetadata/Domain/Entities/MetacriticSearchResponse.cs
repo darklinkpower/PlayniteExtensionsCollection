@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetacriticMetadata.Models
+namespace MetacriticMetadata.Domain.Entities
 {
     public class MetacriticSearchResponse
     {

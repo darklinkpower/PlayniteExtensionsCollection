@@ -1,5 +1,5 @@
-﻿using MetacriticMetadata.Models;
-using MetacriticMetadata.Services;
+﻿using MetacriticMetadata.Domain.Entities;
+using MetacriticMetadata.Domain.Interfaces;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
@@ -13,15 +13,17 @@ namespace MetacriticMetadata
 {
     public class MetacriticSearchContext : SearchContext
     {
-        private readonly MetacriticService metacriticService;
+        private readonly IMetacriticService _metacriticService;
+        private readonly MetacriticMetadataSettingsViewModel _settingsViewModel;
 
-        public MetacriticSearchContext(MetacriticService metacriticService)
+        public MetacriticSearchContext(IMetacriticService metacriticService, MetacriticMetadataSettingsViewModel settingsViewModel)
         {
             Description = "Enter search term";
             Label = "Metacritic";
             Hint = "Searches games on Metacritic";
             Delay = 600;
-            this.metacriticService = metacriticService;
+            _metacriticService = metacriticService;
+            _settingsViewModel = settingsViewModel;
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -33,7 +35,9 @@ namespace MetacriticMetadata
                 return searchItems;
             }
 
-            var searchResults = metacriticService.GetGameSearchResults(searchTerm);
+            var searchResults = Task.Run(
+                () => _metacriticService.GetGameSearchResultsAsync(searchTerm, _settingsViewModel.Settings.ApiKey, args.CancelToken))
+                .GetAwaiter().GetResult();
             if (args.CancelToken.IsCancellationRequested)
             {
                 return searchItems;

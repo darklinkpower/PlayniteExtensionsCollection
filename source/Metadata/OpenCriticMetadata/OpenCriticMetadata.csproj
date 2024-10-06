@@ -200,8 +200,9 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="Models\OpencriticGameData.cs" />
-    <Compile Include="Models\OpenCriticGameSearch.cs" />
+    <Compile Include="Domain\Entities\OpencriticGameData.cs" />
+    <Compile Include="Domain\Entities\OpenCriticGameResult.cs" />
+    <Compile Include="Domain\Interfaces\IOpenCriticService.cs" />
     <Compile Include="OpenCriticMetadata.cs" />
     <Compile Include="OpenCriticMetadataProvider.cs" />
     <Compile Include="OpenCriticMetadataSettings.cs" />
@@ -210,7 +211,7 @@
     </Compile>
     <Compile Include="OpenCriticSearchContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\OpenCriticService.cs" />
+    <Compile Include="Infrastructure\Services\OpenCriticService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

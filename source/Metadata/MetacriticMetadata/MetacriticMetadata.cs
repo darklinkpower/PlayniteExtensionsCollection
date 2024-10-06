@@ -1,4 +1,5 @@
-﻿using MetacriticMetadata.Services;
+﻿using MetacriticMetadata.Domain.Interfaces;
+using MetacriticMetadata.Services;
 using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
@@ -14,7 +15,7 @@ namespace MetacriticMetadata
     public class MetacriticMetadata : MetadataPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly MetacriticService metacriticService;
+        private readonly IMetacriticService _metacriticService;
 
         private MetacriticMetadataSettingsViewModel settings { get; set; }
 
@@ -35,18 +36,18 @@ namespace MetacriticMetadata
                 HasSettings = true
             };
 
-            metacriticService = new MetacriticService(settings.Settings);
+            _metacriticService = new MetacriticService();
             Searches = new List<SearchSupport>
             {
                 new SearchSupport("mc",
                     "Metacritic",
-                    new MetacriticSearchContext(metacriticService))
+                    new MetacriticSearchContext(_metacriticService, settings))
             };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new MetacriticMetadataProvider(options, this, metacriticService);
+            return new MetacriticMetadataProvider(options, _metacriticService, PlayniteApi, settings);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

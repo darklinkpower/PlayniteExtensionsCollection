@@ -1,4 +1,5 @@
-﻿using OpenCriticMetadata.Services;
+﻿using OpenCriticMetadata.Domain.Interfaces;
+using OpenCriticMetadata.Infrastructure.Services;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
@@ -12,16 +13,16 @@ namespace OpenCriticMetadata
 {
     public class OpenCriticSearchContext : SearchContext
     {
-        private readonly OpenCriticService openCriticService;
-        private const string openCriticGameUrlTemplate = @"https://opencritic.com/game/{0}/{1}";
+        private readonly IOpenCriticService _openCriticService;
+        private const string _openCriticGameUrlTemplate = @"https://opencritic.com/game/{0}/{1}";
 
-        public OpenCriticSearchContext(OpenCriticService openCriticService)
+        public OpenCriticSearchContext(IOpenCriticService openCriticService)
         {
             Description = "Enter search term";
             Label = "OpenCritic";
             Hint = "Searches games on OpenCritic";
             Delay = 600;
-            this.openCriticService = openCriticService;
+            _openCriticService = openCriticService;
         }
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
@@ -33,7 +34,8 @@ namespace OpenCriticMetadata
                 return searchItems;
             }
 
-            var searchResults = openCriticService.GetGameSearchResults(searchTerm);
+            var searchResults = Task.Run(() => _openCriticService.GetGameSearchResultsAsync(searchTerm))
+                .GetAwaiter().GetResult();
             if (args.CancelToken.IsCancellationRequested)
             {
                 return searchItems;
@@ -42,7 +44,7 @@ namespace OpenCriticMetadata
             foreach (var searchResult in searchResults)
             {
                 var cleanName = GetGameUrlName(searchResult.Name);
-                var url = string.Format(openCriticGameUrlTemplate, searchResult.Id, cleanName);
+                var url = string.Format(_openCriticGameUrlTemplate, searchResult.Id, cleanName);
                 var searchItem = new SearchItem(
                     searchResult.Name,
                     new SearchItemAction("Open on browser",

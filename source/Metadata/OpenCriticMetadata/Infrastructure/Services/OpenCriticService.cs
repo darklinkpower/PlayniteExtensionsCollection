@@ -1,5 +1,4 @@
-﻿using OpenCriticMetadata.Models;
-using Playnite.SDK.Data;
+﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +10,15 @@ using System.Threading;
 using RateLimiter;
 using ComposableAsync;
 using FlowHttp.Results;
+using OpenCriticMetadata.Domain.Entities;
+using OpenCriticMetadata.Domain.Interfaces;
 
-namespace OpenCriticMetadata.Services
+namespace OpenCriticMetadata.Infrastructure.Services
 {
-    public class OpenCriticService
+    public class OpenCriticService : IOpenCriticService
     {
-        private const string searchGameTemplate = @"https://api.opencritic.com/api/game/search?criteria={0}";
-        private const string getGameDataTemplate = @"https://api.opencritic.com/api/game/{0}";
+        private const string _searchGameTemplate = @"https://api.opencritic.com/api/game/search?criteria={0}";
+        private const string _getGameDataTemplate = @"https://api.opencritic.com/api/game/{0}";
         private readonly TimeLimiter timeConstraint;
 
         public OpenCriticService()
@@ -33,11 +34,10 @@ namespace OpenCriticMetadata.Services
                 .AddHeader("Referer", @"https://opencritic.com")
                 .DownloadString(cancelToken);
         }
-
-        public List<OpenCriticGameResult> GetGameSearchResults(string searchTerm, CancellationToken cancelToken = default)
+        public async Task<List<OpenCriticGameResult>> GetGameSearchResultsAsync(string searchTerm, CancellationToken cancelToken = default)
         {
-            var requestUrl = string.Format(searchGameTemplate, searchTerm.EscapeDataString());
-            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl, cancelToken)).Result;
+            var requestUrl = string.Format(_searchGameTemplate, searchTerm.EscapeDataString());
+            var result = await ExecuteRequestAsync(requestUrl, cancelToken);
             if (result.IsSuccess)
             {
                 return Serialization.FromJson<List<OpenCriticGameResult>>(result.Content);
@@ -48,15 +48,15 @@ namespace OpenCriticMetadata.Services
             }
         }
 
-        public OpenCriticGameData GetGameData(OpenCriticGameResult gameData, CancellationToken cancelToken = default)
+        public async Task<OpenCriticGameData> GetGameDataAsync(OpenCriticGameResult gameData, CancellationToken cancelToken = default)
         {
-            return GetGameData(gameData.Id.ToString(), cancelToken);
+            return await GetGameDataAsync(gameData.Id.ToString(), cancelToken);
         }
 
-        public OpenCriticGameData GetGameData(string gameId, CancellationToken cancelToken = default)
+        public async Task<OpenCriticGameData> GetGameDataAsync(string gameId, CancellationToken cancelToken)
         {
-            var requestUrl = string.Format(getGameDataTemplate, gameId);
-            var result = Task.Run(async () => await ExecuteRequestAsync(requestUrl, cancelToken)).Result;
+            var requestUrl = string.Format(_getGameDataTemplate, gameId);
+            var result = await ExecuteRequestAsync(requestUrl, cancelToken);
             if (result.IsSuccess)
             {
                 return Serialization.FromJson<OpenCriticGameData>(result.Content);
@@ -66,6 +66,5 @@ namespace OpenCriticMetadata.Services
                 return null;
             }
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using OpenCriticMetadata.Services;
+﻿using OpenCriticMetadata.Domain.Interfaces;
+using OpenCriticMetadata.Infrastructure.Services;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
@@ -12,12 +13,12 @@ namespace OpenCriticMetadata
 {
     public class OpenCriticMetadata : MetadataPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
 
         private OpenCriticMetadataSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("c29e6c13-089b-43d5-a916-514d85e10486");
-        private readonly OpenCriticService openCriticService = new OpenCriticService();
+        private readonly IOpenCriticService _openCriticService = new OpenCriticService();
 
         public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
         {
@@ -38,13 +39,13 @@ namespace OpenCriticMetadata
             {
                 new SearchSupport("oc",
                     "OpenCritic",
-                    new OpenCriticSearchContext(openCriticService))
+                    new OpenCriticSearchContext(_openCriticService))
             };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new OpenCriticMetadataProvider(options, this, openCriticService);
+            return new OpenCriticMetadataProvider(options, this, _openCriticService);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
