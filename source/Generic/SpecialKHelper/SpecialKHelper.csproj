@@ -241,8 +241,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Application\SteamHelper.cs" />
-    <Compile Include="PluginSidebarItem\Application\SidebarItemSwitcherViewModel.cs" />
-    <Compile Include="SpecialKProfilesEditor\Application\SpecialKProfileEditorViewModel.cs" />
+    <Compile Include="PluginSidebarItem\Presentation\SidebarItemSwitcherViewModel.cs" />
+    <Compile Include="SpecialKProfilesEditor\Presentation\SpecialKProfileEditorViewModel.cs" />
     <Compile Include="PluginSidebarItem\Presentation\SidebarItemSwitcherView.xaml.cs">
       <DependentUpon>SidebarItemSwitcherView.xaml</DependentUpon>
     </Compile>
