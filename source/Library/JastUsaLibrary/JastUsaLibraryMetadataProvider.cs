@@ -1,5 +1,4 @@
-﻿using JastUsaLibrary.Models;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
@@ -9,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JastUsaLibrary.JastUsaIntegration.Domain.Aggregates.Product;
+using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
 
 namespace JastUsaLibrary
 {

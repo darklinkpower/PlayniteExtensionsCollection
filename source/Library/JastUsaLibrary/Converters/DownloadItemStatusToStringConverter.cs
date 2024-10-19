@@ -1,4 +1,4 @@
-﻿using JastUsaLibrary.DownloadManager.Enums;
+﻿using JastUsaLibrary.DownloadManager.Domain.Enums;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;

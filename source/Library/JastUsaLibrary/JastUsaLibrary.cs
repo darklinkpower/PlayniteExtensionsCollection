@@ -1,8 +1,4 @@
-﻿using JastUsaLibrary.Models;
-using JastUsaLibrary.Services;
-using JastUsaLibrary.ViewModels;
-using JastUsaLibrary.Views;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -15,24 +11,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using JastUsaLibrary.ProgramsHelper.Models;
 using System.Reflection;
 using Playnite.SDK.Events;
-using JastUsaLibrary.DownloadManager.ViewModels;
-using JastUsaLibrary.DownloadManager.Models;
-using JastUsaLibrary.DownloadManager.Enums;
-using System.IO.Compression;
 using JastUsaLibrary.DownloadManager.Views;
 using System.Collections.ObjectModel;
 using JastUsaLibrary.ProgramsHelper;
 using PlayniteUtilitiesCommon;
 using System.Threading;
+using JastUsaLibrary.JastUsaIntegration.Infrastructure.Persistence;
+using JastUsaLibrary.JastUsaIntegration.Application.Services;
+using JastUsaLibrary.JastUsaIntegration.Infrastructure.External;
+using JastUsaLibrary.DownloadManager.Domain.Events;
+using EventsCommon;
+using JastUsaLibrary.JastUsaIntegration.Domain.Enums;
+using JastUsaLibrary.DownloadManager.Domain.Entities;
+using JastUsaLibrary.JastUsaIntegration.Domain.Aggregates.Product;
+using JastUsaLibrary.DownloadManager.Domain.Enums;
+using JastUsaLibrary.DownloadManager.Application;
+using JastUsaLibrary.JastLibraryCacheService.Application;
+using JastUsaLibrary.DownloadManager.Presentation;
+using JastUsaLibrary.JastLibraryCacheService.Interfaces;
+using JastUsaLibrary.DownloadManager.Domain.Interfaces;
+using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
 
 namespace JastUsaLibrary
 {
     public class JastUsaLibrary : LibraryPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly IEventAggregator _eventBus;
 
         private JastUsaLibrarySettingsViewModel settings { get; set; }
 
@@ -45,18 +52,24 @@ namespace JastUsaLibrary
         public override string Name => "JAST USA";
         public override LibraryClient Client { get; } = new JastUsaLibraryClient();
         private readonly JastUsaAccountClient _accountClient;
-        private readonly DownloadsManagerViewModel _downloadsManagerViewModel;
         private readonly string _userGamesCachePath;
         public string UserGamesCachePath => _userGamesCachePath;
         private readonly string _authenticationPath;
+        private readonly ILibraryCacheService _libraryCacheService;
+        private readonly DownloadsManager _downloadsManager;
+        private DownloadsManagerViewModel _downloadsManagerViewModel;
 
         public JastUsaLibrary(IPlayniteAPI api) : base(api)
         {
+            _eventBus = new EventAggregator();
             _userGamesCachePath = Path.Combine(GetPluginUserDataPath(), "userGamesCache.json");
-            _authenticationPath = Path.Combine(GetPluginUserDataPath(), "authentication.json");
-            _accountClient = new JastUsaAccountClient(api, _authenticationPath);
+            var authenticationPersistence = new AuthenticationPersistence(Path.Combine(GetPluginUserDataPath(), "authentication.json"));
+            var apiClient = new JastUsaApiClient();
+            _accountClient = new JastUsaAccountClient(api, apiClient, authenticationPersistence);
+            var downloadsPersistence = new DownloadsPersistence(settings);
+            _libraryCacheService = new LibraryCacheService(PlayniteApi, settings, Id);
+            _downloadsManager = new DownloadsManager(this, _accountClient, settings, downloadsPersistence, _libraryCacheService, _eventBus);
             settings = new JastUsaLibrarySettingsViewModel(this, PlayniteApi, _accountClient);
-            _downloadsManagerViewModel = new DownloadsManagerViewModel(this, _accountClient, settings);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
@@ -72,18 +85,33 @@ namespace JastUsaLibrary
                 ProgressValue = 0,
                 ProgressMaximum = 100,
                 Opened = () => {
-                    _downloadsManagerViewModel.RefreshLibraryGames();
-                    return new DownloadsManagerView { DataContext = _downloadsManagerViewModel };
+                    _downloadsManagerViewModel = new DownloadsManagerViewModel(this, settings, PlayniteApi, _libraryCacheService, _eventBus);
+                    return new DownloadsManagerView() { DataContext = _downloadsManagerViewModel };
                 },
                 Closed = () => {
-
+                    _downloadsManagerViewModel?.Dispose();
                 }
             };
 
-            _downloadsManagerViewModel.GlobalProgressChanged += DownloadsManagerViewModel_GlobalProgressChanged;
+            SubscribeToEvents();
         }
 
-        private void DownloadsManagerViewModel_GlobalProgressChanged(object sender, GlobalProgressChangedEventArgs e)
+        private void SubscribeToEvents()
+        {
+            _eventBus.Subscribe<GlobalProgressChangedEventArgs>(OnGlobalProgressChanged);
+        }
+
+        private void UnsubscribeToEvents()
+        {
+            _eventBus.Unsubscribe<GlobalProgressChangedEventArgs>(OnGlobalProgressChanged);
+        }
+
+        private void OnGlobalProgressChanged(GlobalProgressChangedEventArgs args)
+        {
+            UpdateSidebarProgress(args);
+        }
+
+        private void UpdateSidebarProgress(GlobalProgressChangedEventArgs e)
         {
             if (e.TotalItems == 0 || !e.TotalDownloadProgress.HasValue)
             {
@@ -107,14 +135,15 @@ namespace JastUsaLibrary
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
             var games = new List<GameMetadata>();
-            var authenticationToken = _accountClient.GetAuthenticationToken();
-            if (authenticationToken is null) // User is not logged in
+            var isLoggedIn = _accountClient.GetIsUserLoggedIn();
+            if (!isLoggedIn)
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOC_JUL_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
                 return games;
             }
 
-            var jastProducts = _accountClient.GetGames(authenticationToken);
+            var jastProducts = Task.Run(() => _accountClient.GetGamesAsync())
+                .GetAwaiter().GetResult();
             if (jastProducts.Count == 0)
             {
                 return games;
@@ -188,18 +217,24 @@ namespace JastUsaLibrary
                 var gameTranslations = cache.Product?.ProductVariant.Game.Translations.Where(x => x.Key == Locale.En_Us);
                 if (gameTranslations.HasItems())
                 {
-                    var response = _accountClient.GetGameTranslations(authenticationToken, gameTranslations.First().Value.Id);
-                    if (response != null)
+                    var response = Task.Run(() => _accountClient.GetGameTranslationsAsync(gameTranslations.First().Value))
+                        .GetAwaiter().GetResult();
+                    if (response is null)
                     {
-                        assets = (new[]
-                        {
-                            response.GamePathLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Game)) ?? Enumerable.Empty<JastAssetWrapper>(),
-                            response.GameExtraLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Extra)) ?? Enumerable.Empty<JastAssetWrapper>(),
-                            response.GamePatchLinks?.Select(x => new JastAssetWrapper(x, JastAssetType.Patch)) ?? Enumerable.Empty<JastAssetWrapper>()
-                        })
-                        .SelectMany(x => x)
-                        .ToObservable();
+                        continue;
                     }
+
+                    assets = (new[]
+                    {
+                        response.GamePathLinks?
+                            .Select(x => new JastAssetWrapper(x, JastAssetType.Game)) ?? Enumerable.Empty<JastAssetWrapper>(),
+                        response.GameExtraLinks?
+                            .Select(x => new JastAssetWrapper(x, JastAssetType.Extra)) ?? Enumerable.Empty<JastAssetWrapper>(),
+                        response.GamePatchLinks?
+                            .Select(x => new JastAssetWrapper(x, JastAssetType.Patch)) ?? Enumerable.Empty<JastAssetWrapper>()
+                    })
+                    .SelectMany(x => x)
+                    .ToObservable();
                 }
 
                 cache.Assets = assets;
@@ -234,7 +269,7 @@ namespace JastUsaLibrary
             settings.UpgradeSettings();
             if (settings.Settings.StartDownloadsOnStartup)
             {
-                _ = Task.Run(() => _downloadsManagerViewModel.StartDownloadsAsync(false, false));
+                _ = Task.Run(() => _downloadsManager.StartDownloadsAsync(false, false));
             }
         }
 
@@ -305,9 +340,10 @@ namespace JastUsaLibrary
                     return base.GetInstallActions(args);
                 }
 
-                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) && gameCache.Product != null)
+                var gameCache = _libraryCacheService.GetCacheById(game.GameId);
+                if (gameCache?.Product != null)
                 {
-                    return new List<InstallController> { new JastInstallController(game, gameCache, _downloadsManagerViewModel, this) };
+                    return new List<InstallController> { new JastInstallController(game, gameCache, _downloadsManager, _eventBus, this) };
                 }
             }
 
@@ -337,8 +373,10 @@ namespace JastUsaLibrary
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
-            _downloadsManagerViewModel.StopDownloadsAndPersistDownloadData();
-            _downloadsManagerViewModel.Dispose();
+            UnsubscribeToEvents();
+            _downloadsManager.StopDownloadsAndPersistDownloadData();
+            _downloadsManager?.Dispose();
+            _downloadsManagerViewModel?.Dispose();
         }
 
         public GameTranslationsResponse GetGameTranslations(Game game, CancellationToken cancellationToken)
@@ -347,15 +385,7 @@ namespace JastUsaLibrary
             {
                 return null;
             }
-
-            var authenticationToken = _accountClient.GetAuthenticationToken(cancellationToken);
-            PlayniteApi.Notifications.Remove("JastNotLoggedIn");
-            if (authenticationToken is null) // User is not logged in
-            {
-                PlayniteApi.Notifications.Add(new NotificationMessage("JastNotLoggedIn", "JAST USA Library: " + ResourceProvider.GetString("LOC_JUL_DialogMessageNotAuthenticated"), NotificationType.Error, () => OpenSettingsView()));
-                return null;
-            }
-
+            
             var cache = Serialization.FromJsonFile<List<JastProduct>>(_userGamesCachePath);
             var gameVariant = cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == game.GameId);
             if (gameVariant is null)
@@ -369,12 +399,13 @@ namespace JastUsaLibrary
                 return null;
             }
 
-            return _accountClient.GetGameTranslations(authenticationToken, gameTranslations.First().Value.Id);
+            return Task.Run(() => _accountClient.GetGameTranslationsAsync(gameTranslations.First().Value))
+                .GetAwaiter().GetResult();
         }
 
         public void SavePluginSettings()
         {
-            SavePluginSettings(settings.Settings);
+            settings.SaveSettings();
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()

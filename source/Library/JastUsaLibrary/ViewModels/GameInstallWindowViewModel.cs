@@ -1,6 +1,6 @@
-﻿using JastUsaLibrary.DownloadManager.Enums;
-using JastUsaLibrary.DownloadManager.Models;
-using JastUsaLibrary.DownloadManager.ViewModels;
+﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
+using JastUsaLibrary.DownloadManager.Domain.Enums;
+using JastUsaLibrary.DownloadManager.Domain.Interfaces;
 using JastUsaLibrary.ProgramsHelper;
 using JastUsaLibrary.ProgramsHelper.Models;
 using Playnite.SDK;
@@ -20,14 +20,14 @@ namespace JastUsaLibrary.ViewModels
         public IEnumerable<JastAssetWrapper> GameAssets { get; }
 
         private readonly Window _window;
-        private readonly DownloadsManagerViewModel _downloadsManager;
+        private readonly IDownloadService _downloadsManager;
         public JastAssetWrapper SelectedGameAsset { get; set; }
 
         public JastAssetWrapper AddedGameAsset { get; private set; }
 
         public Program BrowsedProgram { get; private set; }
 
-        public GameInstallWindowViewModel(Game game, GameCache gameCache, Window window, DownloadsManagerViewModel downloadsManager)
+        public GameInstallWindowViewModel(Game game, GameCache gameCache, Window window, IDownloadService downloadsManager)
         {
             Game = game;
             GameAssets = gameCache.Assets.Where(x => x.Type == JastAssetType.Game).OrderBy(x => x.Asset.Label);

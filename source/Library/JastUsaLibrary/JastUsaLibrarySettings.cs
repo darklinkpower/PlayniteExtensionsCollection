@@ -1,7 +1,8 @@
-﻿using JastUsaLibrary.DownloadManager.Models;
+﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
+using JastUsaLibrary.JastUsaIntegration.Application.Services;
+using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
 using JastUsaLibrary.Models;
 using JastUsaLibrary.ProgramsHelper.Models;
-using JastUsaLibrary.Services;
 using JastUsaLibrary.ViewModels;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -70,12 +71,12 @@ namespace JastUsaLibrary
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings
     {
-        private readonly JastUsaLibrary plugin;
+        private readonly JastUsaLibrary _plugin;
         private JastUsaLibrarySettings editingClone { get; set; }
 
         private JastUsaLibrarySettings settings;
-        private readonly IPlayniteAPI playniteApi;
-        private readonly JastUsaAccountClient accountClient;
+        private readonly IPlayniteAPI _playniteApi;
+        private readonly JastUsaAccountClient _accountClient;
 
         public JastUsaLibrarySettings Settings
         {
@@ -94,7 +95,7 @@ namespace JastUsaLibrary
             {
                 if (isUserLoggedIn is null)
                 {
-                    isUserLoggedIn = accountClient.GetIsUserLoggedIn().ToString();
+                    isUserLoggedIn = _accountClient.GetIsUserLoggedIn().ToString();
                 }
 
                 return isUserLoggedIn;
@@ -120,10 +121,10 @@ namespace JastUsaLibrary
         public JastUsaLibrarySettingsViewModel(JastUsaLibrary plugin, IPlayniteAPI api, JastUsaAccountClient accountClient)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
+            _plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<JastUsaLibrarySettings>();
+            var savedSettings = _plugin.LoadPluginSettings<JastUsaLibrarySettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
@@ -135,8 +136,8 @@ namespace JastUsaLibrary
                 Settings = new JastUsaLibrarySettings();
             }
 
-            playniteApi = api;
-            this.accountClient = accountClient;
+            _playniteApi = api;
+            _accountClient = accountClient;
             InitializeSettings();
         }
 
@@ -185,18 +186,18 @@ namespace JastUsaLibrary
             var settingsUpdated = false;
             if (settings.SettingsVersion < 2)
             {
-                var libraryGames = playniteApi.Database.Games.Where(g => g.PluginId == plugin.Id);
+                var libraryGames = _playniteApi.Database.Games.Where(g => g.PluginId == _plugin.Id);
                 var gamesInstallCache = new List<GameInstallCache>();
-                var gameInstallCachePath = Path.Combine(plugin.GetPluginUserDataPath(), "gameInstallCache.json");
+                var gameInstallCachePath = Path.Combine(_plugin.GetPluginUserDataPath(), "gameInstallCache.json");
                 if (FileSystem.FileExists(gameInstallCachePath))
                 {
                     gamesInstallCache = Serialization.FromJsonFile<List<GameInstallCache>>(gameInstallCachePath);
                 }
 
                 var cache = new List<JastProduct>();
-                if (FileSystem.FileExists(plugin.UserGamesCachePath))
+                if (FileSystem.FileExists(_plugin.UserGamesCachePath))
                 {
-                    cache = Serialization.FromJsonFile<List<JastProduct>>(plugin.UserGamesCachePath);
+                    cache = Serialization.FromJsonFile<List<JastProduct>>(_plugin.UserGamesCachePath);
                 }
 
                 foreach (var game in libraryGames)
@@ -227,7 +228,7 @@ namespace JastUsaLibrary
 
             if (settingsUpdated)
             {
-                plugin.SavePluginSettings();
+                SaveSettings();
             }
         }
 
@@ -250,7 +251,7 @@ namespace JastUsaLibrary
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            _plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -275,15 +276,20 @@ namespace JastUsaLibrary
             if (!LoginEmail.IsNullOrEmpty() && !passwordBox.Password.IsNullOrEmpty())
             {
                 isUserLoggedIn = null;
-                IsUserLoggedIn = accountClient.Login(LoginEmail, passwordBox.Password).ToString();
+                IsUserLoggedIn = _accountClient.Login(LoginEmail, passwordBox.Password).ToString();
             }
+        }
+
+        internal void SaveSettings()
+        {
+            _plugin.SavePluginSettings(settings);
         }
 
         public RelayCommand<DownloadSettings> SelectDownloadDirectoryCommand
         {
             get => new RelayCommand<DownloadSettings>((DownloadSettings downloadSettings) =>
             {
-                var selectedDir = playniteApi.Dialogs.SelectFolder();
+                var selectedDir = _playniteApi.Dialogs.SelectFolder();
                 if (!selectedDir.IsNullOrEmpty())
                 {
                     downloadSettings.DownloadDirectory = selectedDir;
@@ -295,7 +301,7 @@ namespace JastUsaLibrary
         {
             get => new RelayCommand<DownloadSettings>((DownloadSettings downloadSettings) =>
             {
-                var selectedDir = playniteApi.Dialogs.SelectFolder();
+                var selectedDir = _playniteApi.Dialogs.SelectFolder();
                 if (!selectedDir.IsNullOrEmpty())
                 {
                     downloadSettings.ExtractDirectory = selectedDir;

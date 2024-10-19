@@ -1,5 +1,7 @@
-﻿using JastUsaLibrary.DownloadManager.Models;
-using JastUsaLibrary.DownloadManager.ViewModels;
+﻿using EventsCommon;
+using JastUsaLibrary.DownloadManager.Domain.Entities;
+using JastUsaLibrary.DownloadManager.Domain.Events;
+using JastUsaLibrary.DownloadManager.Domain.Interfaces;
 using JastUsaLibrary.ProgramsHelper.Models;
 using JastUsaLibrary.ViewModels;
 using JastUsaLibrary.Views;
@@ -24,17 +26,60 @@ namespace JastUsaLibrary
         private readonly IPlayniteAPI _playniteAPI = API.Instance;
         private readonly Game _game;
         private readonly GameCache _gameCache;
-        private readonly DownloadsManagerViewModel _downloadsManager;
         private readonly JastUsaLibrary _plugin;
+        private readonly IDownloadService _downloadsManager;
+        private readonly IEventAggregator _eventBus;
         private bool _subscribedToEvents = false;
         private JastAssetWrapper _downloadingAsset;
 
-        public JastInstallController(Game game, GameCache gameCache, DownloadsManagerViewModel downloadsManager, JastUsaLibrary jastUsaLibrary) : base(game)
+        public JastInstallController(Game game, GameCache gameCache, IDownloadService downloadsManager, IEventAggregator eventBus, JastUsaLibrary jastUsaLibrary) : base(game)
         {
             _game = game;
             _gameCache = gameCache;
-            _downloadsManager = downloadsManager;
             _plugin = jastUsaLibrary;
+            _downloadsManager = downloadsManager;
+            _eventBus = eventBus;
+        }
+
+        private void SubscribeToEvents()
+        {
+            _eventBus.Subscribe<GameInstallationAppliedEventArgs>(OnGameInstallationApplied);
+            _eventBus.Subscribe<DownloadsListItemsRemovedEventArgs>(OnDownloadsListItemsRemoved);
+        }
+
+        private void UnsubscribeFromEvents()
+        {
+            _eventBus.Unsubscribe<GameInstallationAppliedEventArgs>(OnGameInstallationApplied);
+            _eventBus.Unsubscribe<DownloadsListItemsRemovedEventArgs>(OnDownloadsListItemsRemoved);
+        }
+
+        private void OnGameInstallationApplied(GameInstallationAppliedEventArgs args)
+        {
+            var eventGame = args.Game;
+            var cache = args.Cache;
+            if (_game.Id != eventGame.Id)
+            {
+                return;
+            }
+
+            var installInfo = new GameInstallationData()
+            {
+                InstallDirectory = Path.GetDirectoryName(cache.Program.Path)
+            };
+
+            InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
+        }
+
+        private void OnDownloadsListItemsRemoved(DownloadsListItemsRemovedEventArgs args)
+        {
+            foreach (var removedItem in args.Items)
+            {
+                if (removedItem.DownloadData.GameLink.Equals(_downloadingAsset.Asset))
+                {
+                    StopInstallationProcess();
+                    break;
+                }
+            }
         }
 
         public override void Install(InstallActionArgs args)
@@ -47,51 +92,13 @@ namespace JastUsaLibrary
             else if (gameInstallViewModel.AddedGameAsset != null)
             {
                 _downloadingAsset = gameInstallViewModel.AddedGameAsset;
-                _downloadsManager.GameInstallationApplied += DownloadsManager_GameInstallationApplied;
-                _downloadsManager.DownloadsList.CollectionChanged += DownloadsList_CollectionChanged;
+                SubscribeToEvents();
                 _subscribedToEvents = true;
             }
             else
             {
                 StopInstallationProcess();
             }
-        }
-
-        private void DownloadsList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action != NotifyCollectionChangedAction.Remove)
-            {
-                return;
-            }
-
-            foreach (var removedItem in e.OldItems)
-            {
-                if (removedItem is DownloadItem downloadItem)
-                {
-                    if (downloadItem.DownloadData.GameLink.Equals(_downloadingAsset.Asset))
-                    {
-                        StopInstallationProcess();
-                        break;
-                    }
-                }
-            }
-        }
-
-        private void DownloadsManager_GameInstallationApplied(object sender, GameInstallationAppliedEventArgs e)
-        {
-            var eventGame = e.Game;
-            var cache = e.Cache;
-            if (_game.Id != eventGame.Id)
-            {
-                return;
-            }
-
-            var installInfo = new GameInstallationData()
-            {
-                InstallDirectory = Path.GetDirectoryName(cache.Program.Path)
-            };
-
-            InvokeOnInstalled(new GameInstalledEventArgs(installInfo));
         }
 
         private void StopInstallationProcess()
@@ -139,8 +146,7 @@ namespace JastUsaLibrary
         {
             if (_subscribedToEvents)
             {
-                _downloadsManager.GameInstallationApplied -= DownloadsManager_GameInstallationApplied;
-                _downloadsManager.DownloadsList.CollectionChanged -= DownloadsList_CollectionChanged;
+                UnsubscribeFromEvents();
             }
         }
     }
