@@ -15,7 +15,7 @@
                Source="{Binding ImageUriA, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
-               StretchDirection="DownOnly"
+               StretchDirection="Both"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
 
@@ -23,7 +23,7 @@
                Source="{Binding ImageUriB, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
-               StretchDirection="DownOnly"
+               StretchDirection="Both"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"/>
 
