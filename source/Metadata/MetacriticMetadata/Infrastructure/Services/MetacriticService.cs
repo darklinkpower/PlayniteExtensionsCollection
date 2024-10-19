@@ -1,5 +1,4 @@
-﻿using AngleSharp.Parser.Html;
-using ComposableAsync;
+﻿using ComposableAsync;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using RateLimiter;
