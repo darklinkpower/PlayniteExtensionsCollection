@@ -21,7 +21,7 @@ namespace MetacriticMetadata.Services
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
-        private const string _searchGameApiTemplate = @"https://internal-prod.apigee.fandom.net/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
+        private const string _searchGameApiTemplate = @"https://backend.metacritic.com/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
         private readonly TimeLimiter _timeConstraint;
         private readonly Dictionary<string, string> _platformSpecIdToMetacriticId;
         private static readonly Dictionary<string, string> defaultApiHeaders = new Dictionary<string, string>

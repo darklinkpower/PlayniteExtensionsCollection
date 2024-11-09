@@ -66,7 +66,7 @@ namespace MetacriticMetadata
             {
                 var selectedData = _playniteApi.Dialogs.ChooseItemWithSearch(
                     null,
-                    (a) => Task.Run(() => GetOpencriticSearchOptions(a)).GetAwaiter().GetResult(),
+                    (a) => Task.Run(() => GetMetacriticSearchOptions(a)).GetAwaiter().GetResult(),
                     _options.GameData.Name,
                     "Select game");
 
@@ -105,7 +105,7 @@ namespace MetacriticMetadata
             return name;
         }
 
-        private async Task<List<GenericItemOption>> GetOpencriticSearchOptions(string gameName)
+        private async Task<List<GenericItemOption>> GetMetacriticSearchOptions(string gameName)
         {
             if (!_firstSearchMade) //First search makes use of game platform
             {
