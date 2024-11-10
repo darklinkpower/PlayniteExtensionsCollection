@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MetacriticMetadata.Domain.Entities;
 using MetacriticMetadata.Domain.Interfaces;
+using System.Threading;
 
 namespace MetacriticMetadata
 {
@@ -18,6 +19,7 @@ namespace MetacriticMetadata
         private readonly MetadataRequestOptions _options;
         private readonly IPlayniteAPI _playniteApi;
         private readonly IMetacriticService _metacriticService;
+        private readonly ILogger _logger;
         private readonly MetacriticMetadataSettingsViewModel _settingsViewModel;
         private List<MetacriticSearchResult> _currentResults = new List<MetacriticSearchResult>();
         private bool _firstSearchMade = false;
@@ -31,11 +33,13 @@ namespace MetacriticMetadata
             MetadataRequestOptions options,
             IMetacriticService metacriticService,
             IPlayniteAPI playniteApi,
+            ILogger logger,
             MetacriticMetadataSettingsViewModel settings)
         {
             _options = options;
             _playniteApi = playniteApi;
             _metacriticService = metacriticService;
+            _logger = logger;
             _settingsViewModel = settings;
         }
 
@@ -66,7 +70,7 @@ namespace MetacriticMetadata
             {
                 var selectedData = _playniteApi.Dialogs.ChooseItemWithSearch(
                     null,
-                    (a) => Task.Run(() => GetMetacriticSearchOptions(a)).GetAwaiter().GetResult(),
+                    (a) => GetMetacriticSearchOptions(a, args.CancelToken),
                     _options.GameData.Name,
                     "Select game");
 
@@ -89,39 +93,61 @@ namespace MetacriticMetadata
             return list
                 .Select(x => new GenericItemOption(
                     GenerateItemOptionName(x),
-                    x.Url + "\n\n" + x.Description))
+                    $"{x.Url}\n\n{x.Description}"))
                 .ToList();
         }
 
         private static string GenerateItemOptionName(MetacriticSearchResult result)
         {
-            var name = $"{result.Name} ({string.Join(", ", result.Platforms)} - {result.ReleaseDate}";
-            if (result.MetacriticScore.HasValue)
-            {
-                name += $" - {result.MetacriticScore.Value}";
-            }
+            var platforms = string.Join(", ", result.Platforms);
+            var releaseDate = result.ReleaseDate;
+            var metacriticScore = result.MetacriticScore.HasValue ? $" - {result.MetacriticScore.Value}" : string.Empty;
 
-            name += ")";
-            return name;
+            return $"{result.Name} ({platforms} - {releaseDate}{metacriticScore})";
         }
 
-        private async Task<List<GenericItemOption>> GetMetacriticSearchOptions(string gameName)
+        private List<GenericItemOption> GetMetacriticSearchOptions(string gameName, CancellationToken cancelToken)
         {
-            if (!_firstSearchMade) //First search makes use of game platform
+            try
             {
-                _currentResults = await _metacriticService.GetGameSearchResultsAsync(
+                if (_firstSearchMade)
+                {
+                    var results = GetMetacriticSearchOptionsAsync(gameName, true, cancelToken).GetAwaiter().GetResult();
+                    _currentResults = results;
+                    _firstSearchMade = true;
+                    return GetItemOptionListFromResults(_currentResults);
+                }
+                else
+                {
+                    var results = GetMetacriticSearchOptionsAsync(gameName, false, cancelToken).GetAwaiter().GetResult();
+                    _currentResults = results;
+                    return GetItemOptionListFromResults(_currentResults);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to get Metacritic search options.");
+                throw;
+            }
+        }
+
+        private async Task<List<MetacriticSearchResult>> GetMetacriticSearchOptionsAsync(string gameName, bool useGameData, CancellationToken cancelToken)
+        {
+            if (useGameData)
+            {
+                return await _metacriticService.GetGameSearchResultsAsync(
                     _options.GameData,
-                    _settingsViewModel.Settings.ApiKey);
-                _firstSearchMade = true;
+                    _settingsViewModel.Settings.ApiKey,
+                    cancelToken);
             }
             else
             {
-                _currentResults = await _metacriticService.GetGameSearchResultsAsync(
+                return await _metacriticService.GetGameSearchResultsAsync(
                     gameName,
-                    _settingsViewModel.Settings.ApiKey);
+                    _settingsViewModel.Settings.ApiKey,
+                    cancelToken);
             }
-
-            return GetItemOptionListFromResults(_currentResults);
         }
+
     }
 }

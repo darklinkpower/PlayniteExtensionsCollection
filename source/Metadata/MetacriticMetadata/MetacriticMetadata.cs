@@ -14,7 +14,7 @@ namespace MetacriticMetadata
 {
     public class MetacriticMetadata : MetadataPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly IMetacriticService _metacriticService;
 
         private MetacriticMetadataSettingsViewModel settings { get; set; }
@@ -41,13 +41,13 @@ namespace MetacriticMetadata
             {
                 new SearchSupport("mc",
                     "Metacritic",
-                    new MetacriticSearchContext(_metacriticService, settings))
+                    new MetacriticSearchContext(_metacriticService, _logger, settings))
             };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new MetacriticMetadataProvider(options, _metacriticService, PlayniteApi, settings);
+            return new MetacriticMetadataProvider(options, _metacriticService, PlayniteApi, _logger ,settings);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

@@ -19,12 +19,11 @@ namespace MetacriticMetadata.Services
 {
     public class MetacriticService : IMetacriticService
     {
-        private static readonly ILogger _logger = LogManager.GetLogger();
         private const string _searchGameWithPlatformTemplate = @"https://www.metacritic.com/search/game/{0}/results?search_type=advanced&plats[{1}]=1";
         private const string _searchGameApiTemplate = @"https://backend.metacritic.com/v1/xapi/finder/metacritic/search/{0}/web?apiKey={1}&offset=0&limit=30&mcoTypeId=13&componentName=search&componentDisplayName=Search&componentType=SearchResults&sortBy=";
         private readonly TimeLimiter _timeConstraint;
         private readonly Dictionary<string, string> _platformSpecIdToMetacriticId;
-        private static readonly Dictionary<string, string> defaultApiHeaders = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _defaultApiHeaders = new Dictionary<string, string>
         {
             {"Referer", @"https://www.metacritic.com"},
             {"User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
@@ -61,10 +60,28 @@ namespace MetacriticMetadata.Services
         private async Task<HttpContentResult<string>> ExecuteRequestAsync(string requestUrl, CancellationToken cancelToken)
         {
             await _timeConstraint;
-            return await HttpRequestFactory.GetHttpRequest()
+            var response = await HttpRequestFactory.GetHttpRequest()
                 .WithUrl(requestUrl)
-                .WithHeaders(defaultApiHeaders)
+                .WithHeaders(_defaultApiHeaders)
                 .DownloadStringAsync(cancelToken);
+
+            if (!response.IsSuccess)
+            {
+                if (response.IsCancelled)
+                {
+                    throw new OperationCanceledException("The request was cancelled.");
+                }
+                else if (response.Error != null)
+                {
+                    throw response.Error;
+                }
+                else
+                {
+                    throw new Exception($"Failed to execute request. URL: {requestUrl}, Status: {response.HttpStatusCode?.ToString() ?? "Unknown"}");
+                }
+            }
+
+            return response;
         }
 
         public async Task<List<MetacriticSearchResult>> GetGameSearchResultsAsync(Game game, string apiKey, CancellationToken cancelToken = default)

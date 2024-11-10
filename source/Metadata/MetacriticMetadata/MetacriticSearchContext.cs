@@ -1,5 +1,6 @@
 ﻿using MetacriticMetadata.Domain.Entities;
 using MetacriticMetadata.Domain.Interfaces;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MetacriticMetadata
@@ -14,15 +16,17 @@ namespace MetacriticMetadata
     public class MetacriticSearchContext : SearchContext
     {
         private readonly IMetacriticService _metacriticService;
+        private readonly ILogger _logger;
         private readonly MetacriticMetadataSettingsViewModel _settingsViewModel;
 
-        public MetacriticSearchContext(IMetacriticService metacriticService, MetacriticMetadataSettingsViewModel settingsViewModel)
+        public MetacriticSearchContext(IMetacriticService metacriticService, ILogger logger, MetacriticMetadataSettingsViewModel settingsViewModel)
         {
             Description = "Enter search term";
             Label = "Metacritic";
             Hint = "Searches games on Metacritic";
             Delay = 600;
             _metacriticService = metacriticService;
+            _logger = logger;
             _settingsViewModel = settingsViewModel;
         }
 
@@ -35,9 +39,7 @@ namespace MetacriticMetadata
                 return searchItems;
             }
 
-            var searchResults = Task.Run(
-                () => _metacriticService.GetGameSearchResultsAsync(searchTerm, _settingsViewModel.Settings.ApiKey, args.CancelToken))
-                .GetAwaiter().GetResult();
+            var searchResults = GetMetacriticSearchOptions(searchTerm, _settingsViewModel.Settings.ApiKey, args.CancelToken);
             if (args.CancelToken.IsCancellationRequested)
             {
                 return searchItems;
@@ -63,15 +65,29 @@ namespace MetacriticMetadata
             return searchItems;
         }
 
+        private List<MetacriticSearchResult> GetMetacriticSearchOptions(string gameName, string apiKey, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var results = _metacriticService.GetGameSearchResultsAsync(gameName, apiKey, cancellationToken).GetAwaiter().GetResult();
+                return results;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to get Metacritic search options.");
+                return new List<MetacriticSearchResult>();
+            }
+        }
+
         private string GetSearchItemDescription(MetacriticSearchResult searchResult)
         {
-            var description = $"{string.Join(", ", searchResult.Platforms)} - {searchResult.ReleaseDate}";
-            if (searchResult.MetacriticScore.HasValue)
-            {
-                description += $" - {searchResult.MetacriticScore}";
-            }
+            var platforms = string.Join(", ", searchResult.Platforms);
+            var releaseDate = searchResult.ReleaseDate;
+            var metacriticScore = searchResult.MetacriticScore.HasValue
+                                  ? $" - {searchResult.MetacriticScore}"
+                                  : string.Empty;
 
-            return description;
+            return $"{platforms} - {releaseDate}{metacriticScore}";
         }
     }
 }
