@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="WebExplorer.WebExplorerSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sharedConverters="clr-namespace:PluginsCommon.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <UserControl.Resources>
+        <sharedConverters:ImagePathToBitmapImageWithCacheConverter x:Key="ImageConverter" />
+
+        <DataTemplate x:Key="BookmarkListTemplate">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Image Source="{Binding IconPath, Converter={StaticResource ImageConverter}}"
+                       RenderOptions.BitmapScalingMode="Fant"
+                       Width="16" Height="16" Margin="5" Stretch="Uniform"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding Address}" Opacity="0.75" FontSize="10" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="BookmarkFormTemplate">
+            <StackPanel>
+                <TextBlock Text="New bookmark" FontSize="14" Margin="0,10,0,0" FontWeight="Medium" />
+                <DockPanel Margin="0,10,0,0">
+                    <TextBlock Text="{DynamicResource LOCWebExplorer_BookmarkNameIs}" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding NewBookmarkName}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <TextBlock Text="{DynamicResource LOCWebExplorer_BookmarkAddressIs}" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding NewBookmarkAddress}" Margin="5,0,0,0" VerticalAlignment="Center" />
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <TextBlock Text="{DynamicResource LOCWebExplorer_BookmarkIconIs}" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <Button Content="..." HorizontalAlignment="Center" DockPanel.Dock="Right"
+                        VerticalAlignment="Center"
+                        Command="{Binding SelectIconCommand}" Margin="5,0,0,0" />
+                    <TextBox Text="{Binding NewBookmarkIconPath}" Margin="5,0,0,0" VerticalAlignment="Center" IsReadOnly="True" />
+                </DockPanel>
+                <Button Content="{DynamicResource LOCWebExplorer_AddBookmark}" HorizontalAlignment="Center"
+                        Command="{Binding AddBookmarkCommand}" Margin="5" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <ScrollViewer SnapsToDevicePixels="True" UseLayoutRounding="True" Padding="20">
+        <TabControl>
+            <TabItem Header="{DynamicResource LOCWebExplorer_GeneralSettings}">
+                <Grid>
+                    <StackPanel>
+                        <CheckBox Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.ShowLinksInContextMenu}"
+                                  Content="{DynamicResource LOCWebExplorer_SettingShowLinksInContextMenu}" />
+
+                        <TextBlock Margin="0,20,0,0" FontSize="16" Text="{DynamicResource LOCWebExplorer_ThemesWebViewIntegration}" FontWeight="SemiBold" />
+                        <TextBlock Margin="0,10,0,0"
+                                   TextWrapping="Wrap"
+                                   Text="{DynamicResource LOCWebExplorer_ThemesWebViewIntegrationDesc}"
+                                   Opacity="0.75" />
+                        <CheckBox Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.EnableSupportDetailsView}"
+                                  Content="{DynamicResource LOCWebExplorer_PlayniteDesktopModeDetails}" />
+                        <CheckBox Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.EnableSupportGridView}"
+                                  Content="{DynamicResource LOCWebExplorer_PlayniteDesktopModeGrid}" />
+                        <CheckBox Margin="0,10,0,0"
+                                  IsChecked="{Binding Settings.EnableSupportFullscreenMode}"
+                                  Content="{DynamicResource LOCWebExplorer_PlayniteFullscreenMode}" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{DynamicResource LOCWebExplorer_SidebarWebView}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" Margin="0,10,0,0">
+                        <TextBlock Text="{DynamicResource LOCWebExplorer_Bookmarks}" DockPanel.Dock="Left" FontSize="16" FontWeight="SemiBold" />
+                        <Button Content="{DynamicResource LOCWebExplorer_RestoreDefault}" Command="{Binding RestoreDefaultBookmarksCommand}"
+                                Margin="5,0,0,0" DockPanel.Dock="Right"
+                                HorizontalAlignment="Right"/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1">
+                        <Button Content="{DynamicResource LOCWebExplorer_RemoveSelected}" Command="{Binding RemoveBookmarkCommand}" Margin="5,10,0,0" DockPanel.Dock="Bottom"
+                                HorizontalAlignment="Center"/>
+                        <ListBox ItemsSource="{Binding EditingBookmarks}" SelectedItem="{Binding SelectedBookmark}"
+                                 Margin="0,10,0,10" ItemTemplate="{StaticResource BookmarkListTemplate}"
+                                 DockPanel.Dock="Top">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </DockPanel>
+
+                    <ContentControl Grid.Row="2" Content="{Binding SidebarBookmarkFormViewModel}"
+                                   ContentTemplate="{StaticResource BookmarkFormTemplate}" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource LOCWebExplorer_ThemesWebView}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="{DynamicResource LOCWebExplorer_Bookmarks}" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,0"/>
+                        <TextBlock Margin="0,10,0,0"
+                                   TextWrapping="Wrap"
+                                   Text="{DynamicResource LOCWebExplorer_ThemeBookmarksInstruction}"
+                                   Opacity="0.75" />
+                    </StackPanel>
+
+                    <DockPanel Grid.Row="1">
+                        <Button Content="{DynamicResource LOCWebExplorer_RemoveSelected}" Command="{Binding RemoveThemeBookmarkCommand}" Margin="5,10,0,0" DockPanel.Dock="Bottom"
+                                HorizontalAlignment="Center"/>
+                        <ListBox ItemsSource="{Binding EditingThemeBookmarks}" SelectedItem="{Binding SelectedThemeBookmark}"
+                                 Margin="0,10,0,10" ItemTemplate="{StaticResource BookmarkListTemplate}"
+                                 DockPanel.Dock="Top">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </DockPanel>
+
+                    <ContentControl Grid.Row="2" Content="{Binding ThemeBookmarkFormViewModel}"
+                                    ContentTemplate="{StaticResource BookmarkFormTemplate}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </ScrollViewer>
+
+</UserControl>

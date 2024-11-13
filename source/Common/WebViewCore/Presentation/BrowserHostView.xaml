@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="WebViewCore.Application.BrowserHostView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WebViewCore.Application"
+             xmlns:sharedConverters="clr-namespace:PluginsCommon.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <sharedConverters:ImagePathToBitmapImageWithCacheConverter x:Key="ImageConverter" />
+    </UserControl.Resources>
+    <Grid x:Name="MainGrid" SnapsToDevicePixels="True" UseLayoutRounding="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="Header">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" Margin="5,35,5,5"
+                       Visibility="{Binding UserInterfaceSettings.IsNavigationVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button Content="&#xEA5C;" FontFamily="{DynamicResource FontIcoFont}"
+                    DockPanel.Dock="Left"
+                    Command="{Binding GoBackCommand}"
+                    Width="40" Margin="5" />
+                <Button Content="&#xEA5D;" FontFamily="{DynamicResource FontIcoFont}"
+                    DockPanel.Dock="Left"
+                    Command="{Binding GoForwardCommand}"
+                    Width="40" Margin="5" />
+
+                <Button Content="&#xEFE1;" FontFamily="{DynamicResource FontIcoFont}"
+                    DockPanel.Dock="Right"
+                    Command="{Binding OpenSettingsCommand}" 
+                    Width="40" Margin="5" />
+
+                <Button Content="&#xEF1F;" FontFamily="{DynamicResource FontIcoFont}"
+                    DockPanel.Dock="Right"
+                    Command="{Binding OpenAddressExternallyCommand}" 
+                    Width="40" Margin="5" />
+                
+                <Button Content="Clear History"
+                        Visibility="Collapsed"
+                        DockPanel.Dock="Right"
+                        Command="{Binding ClearHistoryCommand}"
+                        Width="100" Margin="5" />
+
+                <Button Content="&#xEFD1;" FontFamily="{DynamicResource FontIcoFont}"
+                    DockPanel.Dock="Right"
+                    Command="{Binding ReloadCommand}" 
+                    Width="40" Margin="5" />
+
+                <Button DockPanel.Dock="Right"
+                    Content="&#xEFE9;" FontFamily="{DynamicResource FontIcoFont}"
+                    Command="{Binding NavigateToAddressCommand}" 
+                    Width="40" Margin="5" />
+
+                <Viewbox Width="40" Height="20" Margin="5" VerticalAlignment="Center"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                         DockPanel.Dock="Right">
+                    <Path Stroke="White" Fill="White" StrokeThickness="0.0"
+                          Data="F1 M 13.75 6.875 L 13.75 9.375 C 13.75 9.544271 13.68815 9.690756 13.564453 9.814453 C 13.440755 9.938151 13.294271 10 13.125 10 L 10.625 10 C 10.455729 10 10.309244 9.938151 10.185547 9.814453 C 10.061849 9.690756 10 9.544271 10 9.375 C 10 9.205729 10.061849 9.059245 10.185547 8.935547 C 10.309244 8.81185 10.455729 8.75 10.625 8.75 L 11.875 8.75 C 11.5625 8.359375 11.194661 8.053386 10.771484 7.832031 C 10.348307 7.610678 9.882812 7.5 9.375 7.5 C 9.016927 7.5 8.683268 7.552084 8.374023 7.65625 C 8.064778 7.760418 7.78483 7.908529 7.53418 8.100586 C 7.283528 8.292644 7.062174 8.522136 6.870117 8.789062 C 6.67806 9.05599 6.520182 9.352214 6.396484 9.677734 C 6.344401 9.807943 6.267903 9.912109 6.166992 9.990234 C 6.066081 10.068359 5.94401 10.107422 5.800781 10.107422 C 5.63151 10.107422 5.485026 10.047201 5.361328 9.926758 C 5.23763 9.806315 5.175781 9.661459 5.175781 9.492188 C 5.175781 9.433594 5.185547 9.36849 5.205078 9.296875 C 5.335286 8.847656 5.538737 8.435873 5.81543 8.061523 C 6.092122 7.687175 6.417643 7.364909 6.791992 7.094727 C 7.166341 6.824545 7.574869 6.616211 8.017578 6.469727 C 8.460286 6.323242 8.91276 6.25 9.375 6.25 C 9.960938 6.25 10.525716 6.362305 11.069336 6.586914 C 11.612955 6.811523 12.089844 7.135417 12.5 7.558594 C 12.5 7.5 12.498372 7.438151 12.495117 7.373047 C 12.491861 7.307943 12.490234 7.239584 12.490234 7.167969 C 12.490234 7.057292 12.496744 6.948242 12.509766 6.84082 C 12.522786 6.733398 12.550455 6.635742 12.592773 6.547852 C 12.63509 6.459961 12.698566 6.388347 12.783203 6.333008 C 12.867838 6.27767 12.981771 6.25 13.125 6.25 C 13.294271 6.25 13.440755 6.31185 13.564453 6.435547 C 13.68815 6.559245 13.75 6.705729 13.75 6.875 Z M 13.535156 11.894531 C 13.535155 11.959636 13.522135 12.027995 13.496094 12.099609 C 13.326822 12.542318 13.10384 12.942709 12.827148 13.300781 C 12.550455 13.658854 12.231445 13.963217 11.870117 14.213867 C 11.508789 14.464519 11.113281 14.658203 10.683594 14.794922 C 10.253906 14.931641 9.804688 15 9.335938 15 C 8.75651 15 8.199869 14.88444 7.666016 14.65332 C 7.132161 14.422201 6.660156 14.101562 6.25 13.691406 C 6.25 13.75 6.251627 13.81185 6.254883 13.876953 C 6.258138 13.942058 6.259766 14.010417 6.259766 14.082031 C 6.259766 14.192709 6.253255 14.303386 6.240234 14.414062 C 6.227213 14.52474 6.197917 14.624023 6.152344 14.711914 C 6.106771 14.799805 6.043294 14.869792 5.961914 14.921875 C 5.880534 14.973959 5.768229 15 5.625 15 C 5.455729 15 5.309245 14.938151 5.185547 14.814453 C 5.061849 14.690756 5 14.544271 5 14.375 L 5 11.875 C 5 11.770834 5.024414 11.676433 5.073242 11.591797 C 5.12207 11.507162 5.183919 11.437175 5.258789 11.381836 C 5.333659 11.326498 5.419922 11.28418 5.517578 11.254883 C 5.615234 11.225586 5.712891 11.210938 5.810547 11.210938 C 5.895182 11.210938 5.973307 11.223959 6.044922 11.25 L 8.125 11.25 C 8.294271 11.25 8.440755 11.31185 8.564453 11.435547 C 8.68815 11.559245 8.75 11.705729 8.75 11.875 C 8.75 12.044271 8.68815 12.190756 8.564453 12.314453 C 8.440755 12.438151 8.294271 12.5 8.125 12.5 L 6.875 12.5 C 7.19401 12.910156 7.569986 13.221029 8.00293 13.432617 C 8.435872 13.644206 8.91276 13.75 9.433594 13.75 C 9.759114 13.75 10.061849 13.701172 10.341797 13.603516 C 10.621744 13.505859 10.895182 13.365886 11.162109 13.183594 C 11.461588 12.975261 11.695963 12.755534 11.865234 12.524414 C 12.034505 12.293295 12.184244 12.011719 12.314453 11.679688 C 12.366535 11.55599 12.44466 11.455078 12.548828 11.376953 C 12.652994 11.298828 12.773438 11.259766 12.910156 11.259766 C 13.085938 11.259766 13.234049 11.323242 13.354492 11.450195 C 13.474934 11.577148 13.535155 11.725261 13.535156 11.894531 Z "
+                          Stretch="Uniform"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <RotateTransform x:Name="LoadingSpinnerTransform" Angle="0"/>
+                        </Path.RenderTransform>
+
+                        <Path.Triggers>
+                            <EventTrigger RoutedEvent="Path.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                                Storyboard.TargetName="LoadingSpinnerTransform"
+                                                Storyboard.TargetProperty="Angle"
+                                                From="0" To="360"
+                                                Duration="0:0:1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Path.Triggers>
+                    </Path>
+                </Viewbox>
+
+                <TextBox x:Name="AddressBar" 
+                     Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     VerticalContentAlignment="Center"
+                     KeyDown="AddressBar_KeyDown"
+                     Margin="5" />
+            </DockPanel>
+            <DockPanel Grid.Row="1" Margin="7,5,10,5"
+                       Visibility="{Binding UserInterfaceSettings.IsBookmarksVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding Bookmarks}" DockPanel.Dock="Top" Background="Transparent">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.NavigateToAddressCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding Address}"
+                                    Margin="3"
+                                    ToolTip="{Binding Address}"
+                                    Padding="0" HorizontalContentAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding IconPath, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                                           RenderOptions.BitmapScalingMode="Fant"
+                                           Width="16" Height="16" Stretch="Uniform" Margin="5"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DockPanel>
+            <Border Height="1" Grid.Row="2" Background="#800c0c0d" />
+        </Grid>
+
+        <Grid x:Name="BrowserGrid" Grid.Row="1" >
+            <!-- CefSharp webview instance is placed here in class code behind -->
+        </Grid>
+    </Grid>
+</UserControl>

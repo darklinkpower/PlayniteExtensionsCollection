@@ -57,6 +57,8 @@
     <Compile Include="Converters\EnumerableStringJoinConverter.cs" />
     <Compile Include="Converters\EnumToListConverter.cs" />
     <Compile Include="Converters\EnumToStringConverter.cs" />
+    <Compile Include="Converters\ImagePathToBitmapImageConverter.cs" />
+    <Compile Include="Converters\ImagePathToBitmapImageWithCacheConverter.cs" />
     <Compile Include="Converters\ImageUriToBitmapImageConverter.cs" />
     <Compile Include="Converters\InvertedEnumValueToVisibilityConverter.cs" />
     <Compile Include="Converters\EnumValueToVisibilityConverter.cs" />

@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C344303D-4A7E-4ACD-BDB6-6E20E0363355}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebExplorer</RootNamespace>
+    <AssemblyName>WebExplorer</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Http, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Http.6.0.0\lib\net461\Microsoft.Extensions.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.6.0.0\lib\net461\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\lib\net461\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Options.6.0.0\lib\net461\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Playnite.SDK, Version=6.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PlayniteSDK.6.11.0\lib\net462\Playnite.SDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\common\eventscommon\EventAggregator.cs">
+      <Link>Shared\EventsCommon\EventAggregator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\eventscommon\IEventAggregator.cs">
+      <Link>Shared\EventsCommon\IEventAggregator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\constants\HttpContentTypeConstants.cs">
+      <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\constants\HttpContentTypes.cs">
+      <Link>Shared\FlowHttp\Constants\HttpContentTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\CookiesUtilities.cs">
+      <Link>Shared\FlowHttp\CookiesUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\DownloadStateController.cs">
+      <Link>Shared\FlowHttp\DownloadStateController.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\enums\HttpRequestClientStatus.cs">
+      <Link>Shared\FlowHttp\Enums\HttpRequestClientStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\events\DownloadProgressArgs.cs">
+      <Link>Shared\FlowHttp\Events\DownloadProgressArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\events\DownloadStateArgs.cs">
+      <Link>Shared\FlowHttp\Events\DownloadStateArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\exceptions\MissingContentRangeHeaderException.cs">
+      <Link>Shared\FlowHttp\Exceptions\MissingContentRangeHeaderException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\HttpClientFactory.cs">
+      <Link>Shared\FlowHttp\HttpClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\HttpRequestFactory.cs">
+      <Link>Shared\FlowHttp\HttpRequestFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpFileRequest.cs">
+      <Link>Shared\FlowHttp\HttpRequests\FlowHttpFileRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpRequest.cs">
+      <Link>Shared\FlowHttp\HttpRequests\FlowHttpRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\httprequests\FlowHttpRequestBase.cs">
+      <Link>Shared\FlowHttp\HttpRequests\FlowHttpRequestBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\results\HttpContentResultT.cs">
+      <Link>Shared\FlowHttp\Results\HttpContentResultT.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\results\HttpFileDownloadResult.cs">
+      <Link>Shared\FlowHttp\Results\HttpFileDownloadResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\results\HttpResultBase.cs">
+      <Link>Shared\FlowHttp\Results\HttpResultBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\flowhttp\valueobjects\HttpContentType.cs">
+      <Link>Shared\FlowHttp\ValueObjects\HttpContentType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
+      <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\BindingTools.cs">
+      <Link>Shared\PluginsCommon\BindingTools.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\BooleanToOpacityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\BooleanToOpacityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\BooleanToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\BooleanToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\ConvertersUtilities.cs">
+      <Link>Shared\PluginsCommon\Converters\ConvertersUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumerableStringJoinConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumerableStringJoinConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToListConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumToListConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToStringConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumToStringConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumValueToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumValueToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EqualityToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EqualityToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\IEnumerableHasItemsToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\ImagePathToBitmapImageConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\ImagePathToBitmapImageConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\ImagePathToBitmapImageWithCacheConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\ImagePathToBitmapImageWithCacheConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\ImageUriToBitmapImageConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\ImageUriToBitmapImageConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedEnumValueToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\InvertedEnumValueToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\InvertedVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\NullToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\NullToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\NumericConverters.cs">
+      <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\StringNullOrEmptyToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\StringNullOrEmptyToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\TypeEqualityToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\TypeEqualityToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Encryption.cs">
+      <Link>Shared\PluginsCommon\Encryption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\CharExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\CharExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\EnumExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\LongExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\LongExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\extensions\StringExtensions.cs">
+      <Link>Shared\PluginsCommon\Extensions\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\FileSystem.cs">
+      <Link>Shared\PluginsCommon\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\GlobalCommands.cs">
+      <Link>Shared\PluginsCommon\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Guard.cs">
+      <Link>Shared\PluginsCommon\Guard.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Kernel32.cs">
+      <Link>Shared\PluginsCommon\Native\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Ntdll.cs">
+      <Link>Shared\PluginsCommon\Native\Ntdll.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\Processthreadsapi.cs">
+      <Link>Shared\PluginsCommon\Native\Processthreadsapi.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\native\WinBase.cs">
+      <Link>Shared\PluginsCommon\Native\WinBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\Paths.cs">
+      <Link>Shared\PluginsCommon\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
+      <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\pluginscommon\TaskExecutor.cs">
+      <Link>Shared\PluginsCommon\TaskExecutor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\temporarycache\CacheManager.cs">
+      <Link>Shared\TemporaryCache\CacheManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\temporarycache\models\CacheItem.cs">
+      <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Application\BookmarksManager.cs">
+      <Link>Shared\WebViewCore\Application\BookmarksManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Application\BrowserHostViewModel.cs">
+      <Link>Shared\WebViewCore\Application\BrowserHostViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Application\CefSharpWebBrowserHost.cs">
+      <Link>Shared\WebViewCore\Application\CefSharpWebBrowserHost.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Application\WebBrowserUserInterfaceSettings.cs">
+      <Link>Shared\WebViewCore\Application\WebBrowserUserInterfaceSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Entities\Bookmark.cs">
+      <Link>Shared\WebViewCore\Domain\Entities\Bookmark.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Entities\BookmarkInternal.cs">
+      <Link>Shared\WebViewCore\Domain\Entities\BookmarkInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Events\AddressChangedEventArgs.cs">
+      <Link>Shared\WebViewCore\Domain\Events\AddressChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Events\BookmarkAddedEventArgs.cs">
+      <Link>Shared\WebViewCore\Domain\Events\BookmarkAddedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Events\BookmarkRemovedEventArgs.cs">
+      <Link>Shared\WebViewCore\Domain\Events\BookmarkRemovedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Events\BookmarksChangedEventArgs.cs">
+      <Link>Shared\WebViewCore\Domain\Events\BookmarksChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Events\IsLoadingChangedEventArgs.cs">
+      <Link>Shared\WebViewCore\Domain\Events\IsLoadingChangedEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Interfaces\IBookmarksIconRepository.cs">
+      <Link>Shared\WebViewCore\Application\Interfaces\IBookmarksIconRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Domain\Interfaces\IBookmarksRepository.cs">
+      <Link>Shared\WebViewCore\Application\Interfaces\IBookmarksRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Infrastructure\BookmarksIconRepository.cs">
+      <Link>Shared\WebViewCore\Infrastructure\BookmarksIconRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Infrastructure\FileBookmarksRepository.cs">
+      <Link>Shared\WebViewCore\Infrastructure\FileBookmarksRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Infrastructure\InMemoryBookmarksRepository.cs">
+      <Link>Shared\WebViewCore\Infrastructure\InMemoryBookmarksRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\WebViewCore\Presentation\BrowserHostView.xaml.cs">
+      <Link>Shared\WebViewCore\Presentation\BrowserHostView.xaml.cs</Link>
+      <DependentUpon>BrowserHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BookmarkFormViewModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WebExplorer.cs" />
+    <Compile Include="WebExplorerSettings.cs" />
+    <Compile Include="WebExplorerSettingsViewModel.cs" />
+    <Compile Include="WebExplorerSettingsView.xaml.cs">
+      <DependentUpon>WebExplorerSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebViewPlayniteControl\Models\BookmarksWithCommand.cs" />
+    <Compile Include="WebViewPlayniteControl\Models\ThemesWebHostControlCommandsForwarder.cs" />
+    <Compile Include="WebViewPlayniteControl\Models\ThemesWebHostControlInformationForwarder.cs" />
+    <Compile Include="WebViewPlayniteControl\WebHostControl.xaml.cs">
+      <DependentUpon>WebHostControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="extension.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Localization\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Include="..\..\Common\WebViewCore\Presentation\BrowserHostView.xaml">
+      <Link>Shared\WebViewCore\Presentation\BrowserHostView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WebExplorerSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WebViewPlayniteControl\WebHostControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\PluginsCommon\ControlBehaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>
+  </PropertyGroup>
+</Project>
