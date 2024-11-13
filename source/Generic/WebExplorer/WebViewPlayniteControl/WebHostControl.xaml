@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WebExplorer.WebViewPlayniteControl"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid x:Name="BrowserGrid" Grid.Row="1">
+    <Grid x:Name="BrowserGrid" Grid.Row="1" UseLayoutRounding="True" SnapsToDevicePixels="True">
         <!-- CefSharp webview instance is placed here in class code behind -->
     </Grid>
 </PluginUserControl>

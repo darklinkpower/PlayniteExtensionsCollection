@@ -79,7 +79,7 @@
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" Margin="0,10,0,0">
                         <TextBlock Text="{DynamicResource LOCWebExplorer_Bookmarks}" DockPanel.Dock="Left" FontSize="16" FontWeight="SemiBold" />
-                        <Button Content="{DynamicResource LOCWebExplorer_RestoreDefault}" Command="{Binding RestoreDefaultBookmarksCommand}"
+                        <Button Content="{DynamicResource LOCWebExplorer_RestoreDefaults}" Command="{Binding RestoreDefaultBookmarksCommand}"
                                 Margin="5,0,0,0" DockPanel.Dock="Right"
                                 HorizontalAlignment="Right"/>
                     </DockPanel>
