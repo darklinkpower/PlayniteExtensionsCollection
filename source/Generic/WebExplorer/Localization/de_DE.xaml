@@ -12,7 +12,7 @@
     <sys:String x:Key="LOCWebExplorer_SidebarWebView">Seitenleisten-Web-Ansicht</sys:String>
     <sys:String x:Key="LOCWebExplorer_ThemesWebView">Theme-Integration Web-Ansicht</sys:String>
     <sys:String x:Key="LOCWebExplorer_Bookmarks">Lesezeichen</sys:String>
-    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Restore defaults</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Standardeinstellungen wiederherstellen</sys:String>
     <sys:String x:Key="LOCWebExplorer_AddBookmark">Hinzufügen</sys:String>
     <sys:String x:Key="LOCWebExplorer_RemoveSelected">Ausgewählte entfernen</sys:String>
     <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Hier hinzugefügte Lesezeichen werden neben den Spiel-Links im Webbrowser zur Verfügung gestellt.</sys:String>
