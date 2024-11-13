@@ -12,7 +12,7 @@ Changes require restart.</sys:String>
     <sys:String x:Key="LOCWebExplorer_SidebarWebView">Sidebar web view</sys:String>
     <sys:String x:Key="LOCWebExplorer_ThemesWebView">Themes integration web view</sys:String>
     <sys:String x:Key="LOCWebExplorer_Bookmarks">Bookmarks</sys:String>
-    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Restore defaults</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Ripristina impostazioni predefinite</sys:String>
     <sys:String x:Key="LOCWebExplorer_AddBookmark">Add</sys:String>
     <sys:String x:Key="LOCWebExplorer_RemoveSelected">Remove Selected</sys:String>
     <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Bookmarks added here will be made available alongside the game links in the web browser.</sys:String>
