@@ -60,3 +60,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.29_291afa73/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_8.pext
     Changelog:
     - 'Changed: Added a fade transition when switching images in the careousel screenshots viewer or the Screenshots view window'
+  - Version: 1.9
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-11-13
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.13_a8ed3eb7/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_9.pext
+    Changelog:
+    - 'Added: Support for Fullscreen Mode themes to obtain and display high resolution images'
+    - 'Changed: Screenshots in fullscreen view will now be stretched to use all the screen'
