@@ -9,6 +9,7 @@ using SteamCommon;
 using SteamCommon.Models;
 using SteamScreenshots.Screenshots;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -39,7 +40,9 @@ namespace SteamScreenshots.ScreenshotsControl
     public partial class SteamScreenshotsControl : PluginUserControl, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public IEnumerable<BitmapImage> ScreenshotsBitmapImages => GetScreenshotsBitmapImages();
+        public IEnumerable<BitmapImage> ScreenshotsBitmapImages => GetScreenshotsBitmapImages(_screenshots?.Select(x => x.PathThumbnail));
+        public IEnumerable<BitmapImage> ScreenshotsFullBitmapImages => GetScreenshotsBitmapImages(_screenshots?.Select(x => x.PathFull));
+
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly IPlayniteAPI _playniteApi;
         private readonly string _pluginStoragePath;
@@ -159,22 +162,23 @@ namespace SteamScreenshots.ScreenshotsControl
             storyboard.Begin();
         }
 
-        private IEnumerable<BitmapImage> GetScreenshotsBitmapImages()
+        private IEnumerable<BitmapImage> GetScreenshotsBitmapImages(IEnumerable<Uri> uris)
         {
-            if (_screenshots.Count == 0)
+            if (uris is null || !uris.HasItems())
             {
                 return Enumerable.Empty<BitmapImage>();
             }
 
-            var bitmapImages = new List<BitmapImage>();
-            foreach (var screenshot in _screenshots)
+            var bitmapImages = new ConcurrentBag<BitmapImage>();
+            var options = new ParallelOptions { MaxDegreeOfParallelism = 4 };
+            Parallel.ForEach(uris, options, (uri) =>
             {
-                var bitmapImage = UriToBitmapImage(screenshot.PathThumbnail);
+                var bitmapImage = UriToBitmapImage(uri);
                 if (bitmapImage != null)
                 {
                     bitmapImages.Add(bitmapImage);
                 }
-            }
+            });
 
             return bitmapImages;
         }
@@ -205,6 +209,7 @@ namespace SteamScreenshots.ScreenshotsControl
         private void SetVisibleVisibility()
         {
             OnPropertyChanged(nameof(ScreenshotsBitmapImages));
+            OnPropertyChanged(nameof(ScreenshotsFullBitmapImages));
             Visibility = Visibility.Visible;
             _settingsViewModel.Settings.IsControlVisible = true;
         }
@@ -243,6 +248,7 @@ namespace SteamScreenshots.ScreenshotsControl
             OldImageUri = null;
             CurrentImageUri = null;
             OnPropertyChanged(nameof(ScreenshotsBitmapImages));
+            OnPropertyChanged(nameof(ScreenshotsFullBitmapImages));
             _isValuesDefaultState = true;
         }
 
