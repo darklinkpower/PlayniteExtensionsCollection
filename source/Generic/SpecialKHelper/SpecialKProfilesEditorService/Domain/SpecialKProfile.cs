@@ -7,9 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using IniParser.Model;
 using System.Collections.ObjectModel;
-using SpecialKHelper.SpecialKProfilesEditor.Application;
 
-namespace SpecialKHelper.SpecialKProfilesEditor.Domain
+namespace SpecialKHelper.SpecialKProfilesEditorService.Domain
 {
     public class SpecialKProfile : ObservableObject
     {

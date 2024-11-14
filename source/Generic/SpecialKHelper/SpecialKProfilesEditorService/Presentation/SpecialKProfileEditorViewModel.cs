@@ -3,7 +3,7 @@ using IniParser;
 using IniParser.Model;
 using Playnite.SDK;
 using PluginsCommon;
-using SpecialKHelper.SpecialKProfilesEditor.Domain;
+using SpecialKHelper.SpecialKProfilesEditorService.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace SpecialKHelper.SpecialKProfilesEditor.Application
+namespace SpecialKHelper.SpecialKProfilesEditorService.Application
 {
     public class SpecialKProfileEditorViewModel : ObservableObject
     {

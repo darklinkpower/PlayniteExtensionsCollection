@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SpecialKHelper.SpecialKProfilesEditor.Presentation.Views
+namespace SpecialKHelper.SpecialKProfilesEditorService.Presentation
 {
     /// <summary>
     /// Interaction logic for SpecialKProfileEditorView.xaml

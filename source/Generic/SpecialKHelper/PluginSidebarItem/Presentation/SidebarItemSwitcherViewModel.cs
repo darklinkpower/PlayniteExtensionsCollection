@@ -2,6 +2,7 @@
 using SpecialKHelper.SpecialKHandler.Application;
 using SpecialKHelper.SpecialKHandler.Domain.Enums;
 using SpecialKHelper.SpecialKHandler.Domain.Events;
+using SpecialKHelper.SpecialKProfilesEditorService.Application;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +18,7 @@ namespace SpecialKHelper.PluginSidebarItem.Application
     {
         private bool _isDisposed = false;
         private readonly SpecialKServiceManager _specialKServiceManager;
-
+        private readonly SpecialKProfilesEditor _specialKProfilesEditor;
 
         public string IconEnabledPath { get; }
         public string IconDisabledPath { get; }
@@ -53,10 +54,17 @@ namespace SpecialKHelper.PluginSidebarItem.Application
         public RelayCommand Stop64BitsServiceCommand { get; }
         public RelayCommand StartAllServicesCommand { get; }
         public RelayCommand StopAllServicesCommand { get; }
+        public RelayCommand OpenSpecialKCommand { get; }
+        public RelayCommand OpenProfilesEditorCommand { get; }
 
-        public SidebarItemSwitcherViewModel(bool allowSkUse, string pluginInstallPath, SpecialKServiceManager specialKServiceManager)
+        public SidebarItemSwitcherViewModel(
+            bool allowSkUse,
+            string pluginInstallPath,
+            SpecialKServiceManager specialKServiceManager,
+            SpecialKProfilesEditor specialKProfilesEditor)
         {
             _specialKServiceManager = specialKServiceManager;
+            _specialKProfilesEditor = specialKProfilesEditor;
 
             AllowSkUse = allowSkUse;
 
@@ -70,6 +78,8 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             Stop32BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Stop32BitsService());
             Start64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Start64BitsService());
             Stop64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Stop64BitsService());
+            OpenSpecialKCommand = new RelayCommand(() => _specialKServiceManager.OpenSpecialK());
+            OpenProfilesEditorCommand = new RelayCommand(() => _specialKProfilesEditor.OpenEditorWindow());
 
             StartAllServicesCommand = new RelayCommand(() =>
             {
@@ -92,16 +102,41 @@ namespace SpecialKHelper.PluginSidebarItem.Application
         private void UpdateContextMenuItems()
         {
             ContextMenuItems.Clear();
-            var anyServiceRunning = Is32BitsServiceRunning || Is64BitsServiceRunning;
             ContextMenuItems.Add(new MenuItem
             {
-                Header = anyServiceRunning
-                    ? ResourceProvider.GetString("LOCSpecial_K_Helper_StopAllServices")
-                    : ResourceProvider.GetString("LOCSpecial_K_Helper_StartAllServices"),
-                Command = anyServiceRunning ? StopAllServicesCommand : StartAllServicesCommand
+                Header = ResourceProvider.GetString("LOCSpecial_K_Helper_OpenSpecialK"),
+                Command = OpenSpecialKCommand
+            });
+
+            ContextMenuItems.Add(new MenuItem
+            {
+                Header = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
+                Command = OpenProfilesEditorCommand
             });
 
             ContextMenuItems.Add(new Separator());
+            var bothServicesRunning = Is32BitsServiceRunning && Is64BitsServiceRunning;
+            if (bothServicesRunning)
+            {
+                ContextMenuItems.Add(new MenuItem
+                {
+                    Header = ResourceProvider.GetString("LOCSpecial_K_Helper_StopAllServices"),
+                    Command = StopAllServicesCommand
+                });
+                ContextMenuItems.Add(new Separator());
+            }
+
+            var bothServicesNotRunning = !Is32BitsServiceRunning && !Is64BitsServiceRunning;
+            if (bothServicesNotRunning)
+            {
+                ContextMenuItems.Add(new MenuItem
+                {
+                    Header = ResourceProvider.GetString("LOCSpecial_K_Helper_StartAllServices"),
+                    Command = StartAllServicesCommand
+                });
+                ContextMenuItems.Add(new Separator());
+            }
+
             ContextMenuItems.Add(new MenuItem
             {
                 Header = Is32BitsServiceRunning

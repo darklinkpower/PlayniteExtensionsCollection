@@ -231,8 +231,9 @@
     <Compile Include="SpecialKHandler\Domain\Enums\CpuArchitecture.cs" />
     <Compile Include="SpecialKHandler\Domain\Enums\SpecialKServiceStatus.cs" />
     <Compile Include="SpecialKHandler\Domain\Events\SpecialKServiceStatusChangedEventArgs.cs" />
-    <Compile Include="SpecialKProfilesEditor\Domain\PluginLoadMode.cs" />
-    <Compile Include="SpecialKProfilesEditor\Domain\SpecialKProfile.cs" />
+    <Compile Include="SpecialKProfilesEditorService\Application\SpecialKProfilesEditor.cs" />
+    <Compile Include="SpecialKProfilesEditorService\Domain\PluginLoadMode.cs" />
+    <Compile Include="SpecialKProfilesEditorService\Domain\SpecialKProfile.cs" />
     <Compile Include="SpecialKHandler\Domain\Exceptions\SpecialKFileNotFoundException.cs" />
     <Compile Include="SpecialKHandler\Domain\Exceptions\SpecialKPathNotFoundException.cs" />
     <Compile Include="SpecialKHandler\Application\SpecialKConfigurationManager.cs" />
@@ -245,12 +246,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Application\SteamHelper.cs" />
     <Compile Include="PluginSidebarItem\Presentation\SidebarItemSwitcherViewModel.cs" />
-    <Compile Include="SpecialKProfilesEditor\Domain\SpecialKProfileData.cs" />
-    <Compile Include="SpecialKProfilesEditor\Presentation\SpecialKProfileEditorViewModel.cs" />
+    <Compile Include="SpecialKProfilesEditorService\Domain\SpecialKProfileData.cs" />
+    <Compile Include="SpecialKProfilesEditorService\Presentation\SpecialKProfileEditorViewModel.cs" />
     <Compile Include="PluginSidebarItem\Presentation\SidebarItemSwitcherView.xaml.cs">
       <DependentUpon>SidebarItemSwitcherView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SpecialKProfilesEditor\Presentation\SpecialKProfileEditorView.xaml.cs">
+    <Compile Include="SpecialKProfilesEditorService\Presentation\SpecialKProfileEditorView.xaml.cs">
       <DependentUpon>SpecialKProfileEditorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -288,7 +289,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SpecialKProfilesEditor\Presentation\SpecialKProfileEditorView.xaml">
+    <Page Include="SpecialKProfilesEditorService\Presentation\SpecialKProfileEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

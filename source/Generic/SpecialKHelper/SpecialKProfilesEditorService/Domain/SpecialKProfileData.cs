@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpecialKHelper.SpecialKProfilesEditor.Domain
+namespace SpecialKHelper.SpecialKProfilesEditorService.Domain
 {
     public class SpecialKProfileData
     {

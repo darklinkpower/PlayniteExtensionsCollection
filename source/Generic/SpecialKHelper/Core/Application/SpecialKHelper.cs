@@ -12,8 +12,7 @@ using SpecialKHelper.PluginSidebarItem.Presentation;
 using SpecialKHelper.SpecialKHandler.Application;
 using SpecialKHelper.SpecialKHandler.Domain.Enums;
 using SpecialKHelper.SpecialKHandler.Domain.Exceptions;
-using SpecialKHelper.SpecialKProfilesEditor.Application;
-using SpecialKHelper.SpecialKProfilesEditor.Presentation.Views;
+using SpecialKHelper.SpecialKProfilesEditorService.Application;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace SpecialKHelper
         private readonly SpecialKServiceManager _specialKServiceManager;
         private const string _globalModeDisableFeatureName = "[SK] Global Mode Disable";
         private const string _selectiveModeEnableFeatureName = "[SK] Selective Mode Enable";
-
+        private readonly SpecialKProfilesEditor _specialKProfilesEditor;
         private readonly SidebarItemSwitcherViewModel _sidebarItemSwitcherViewModel;
 
         private readonly EasyAnticheatService _easyAnticheatHelper;
@@ -48,7 +47,7 @@ namespace SpecialKHelper
 
         public SpecialKHelper(IPlayniteAPI api) : base(api)
         {
-            settings = new SpecialKHelperSettingsViewModel(this);
+            settings = new SpecialKHelperSettingsViewModel(this, _specialKServiceManager);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -56,7 +55,9 @@ namespace SpecialKHelper
 
             _pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             _specialKServiceManager = new SpecialKServiceManager();
-            _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath, _specialKServiceManager);
+            _specialKServiceManager.SetSpecialKInstallDirectory(settings.Settings.CustomSpecialKPath);
+            _specialKProfilesEditor = new SpecialKProfilesEditor(_specialKServiceManager, PlayniteApi);
+            _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath, _specialKServiceManager, _specialKProfilesEditor);
             _easyAnticheatHelper = new EasyAnticheatService(new EasyAnticheatCache(GetPluginUserDataPath()));
             _steamHelper = new SteamHelper(GetPluginUserDataPath(), PlayniteApi);
         }
@@ -133,12 +134,12 @@ namespace SpecialKHelper
             {
                 if (_specialKServiceManager.Service32BitsStatus != SpecialKServiceStatus.Running)
                 {
-                    service32Started = _specialKServiceManager.Start32BitsService(skifPath);
+                    service32Started = _specialKServiceManager.Start32BitsService();
                 }
 
                 if (_specialKServiceManager.Service32BitsStatus != SpecialKServiceStatus.Running)
                 {
-                    service64Started = _specialKServiceManager.Start64BitsService(skifPath);
+                    service64Started = _specialKServiceManager.Start64BitsService();
                 }
             }
             catch (SpecialKFileNotFoundException e)
@@ -243,12 +244,12 @@ namespace SpecialKHelper
             {
                 if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
                 {
-                    _specialKServiceManager.Start32BitsService(skifPath);
+                    _specialKServiceManager.Start32BitsService();
                 }
 
                 if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
                 {
-                    _specialKServiceManager.Stop64BitsService(skifPath);
+                    _specialKServiceManager.Stop64BitsService();
                 }
             }
             catch (SpecialKFileNotFoundException e)
@@ -266,37 +267,6 @@ namespace SpecialKHelper
             return settings;
         }
 
-        private void OpenEditorWindow(string searchTerm = null)
-        {
-            var skifPath = GetSpecialKPath();
-            if (skifPath.IsNullOrEmpty())
-            {
-                PlayniteApi.Notifications.Add(new NotificationMessage(
-                    "sk_registryNotFound",
-                    ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkRegistryKeyNotFound"),
-                    NotificationType.Error
-                ));
-                return;
-            }
-
-            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
-            {
-                ShowMinimizeButton = false,
-                ShowMaximizeButton = true
-            });
-
-            window.Height = 700;
-            window.Width = 900;
-            window.Title = ResourceProvider.GetString("LOCSpecial_K_Helper_WindowTitleSkProfileEditor");
-
-            window.Content = new SpecialKProfileEditorView();
-            window.DataContext = new SpecialKProfileEditorViewModel(PlayniteApi, skifPath, searchTerm);
-            window.Owner = PlayniteApi.Dialogs.GetCurrentAppWindow();
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            window.ShowDialog();
-        }
-
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return new List<MainMenuItem>
@@ -305,8 +275,8 @@ namespace SpecialKHelper
                 {
                     Description = ResourceProvider.GetString("LOCSpecial_K_Helper_MenuItemDescriptionOpenEditor"),
                     MenuSection = "@Special K Helper",
-                    Action = o => {
-                        OpenEditorWindow();
+                    Action = (a) => {
+                        _specialKProfilesEditor.OpenEditorWindow();
                     }
                 },
             };

@@ -17,10 +17,13 @@ namespace SpecialKHelper.SpecialKHandler.Application
     public class SpecialKServiceManager
     {
         public event EventHandler<SpecialKServiceStatusChangedEventArgs> SpecialKServiceStatusChanged;
+        private string _customSpecialKInstallationPath = string.Empty;
         private const string _32BitsPrefix = "32";
         private const string _64BitsPrefix = "64";
         private const string _32BitsServiceProcessName = "SKIFsvc32";
         private const string _64BitsServiceProcessName = "SKIFsvc64";
+        private const string _specialKExecutableName = "SKIF.exe";
+
         private const string _specialKRegistryPath = @"SOFTWARE\Kaldaien\Special K";
         private const int _startServiceMaxRetries = 15;
         private const int _startServiceSleepDurationMs = 100;
@@ -88,6 +91,26 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return Process.GetProcessesByName(processName).Any();
         }
 
+        internal void OpenSpecialK()
+        {
+            try
+            {
+                var installDir = GetInstallDirectory();
+                if (!installDir.IsNullOrEmpty())
+                {
+                    var exePath = Path.Combine(installDir, _specialKExecutableName);
+                    if (FileSystem.FileExists(exePath))
+                    {
+                        ProcessStarter.StartProcess(exePath);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
         public bool Is32BitsServiceRunning()
         {
             return IsProcessRunning(_32BitsServiceProcessName);
@@ -98,8 +121,25 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return IsProcessRunning(_64BitsServiceProcessName);
         }
 
-        private string GetInstallDirectory()
+        internal void SetSpecialKInstallDirectory(string customSpecialKPath)
         {
+            if (customSpecialKPath.IsNullOrEmpty() || !FileSystem.DirectoryExists(customSpecialKPath))
+            {
+                _customSpecialKInstallationPath = string.Empty;
+            }
+            else
+            {
+                _customSpecialKInstallationPath = customSpecialKPath;
+            }
+        }
+
+        public string GetInstallDirectory()
+        {
+            if (!_customSpecialKInstallationPath.IsNullOrEmpty() && FileSystem.DirectoryExists(_customSpecialKInstallationPath))
+            {
+                return _customSpecialKInstallationPath;
+            }
+            
             using (var key = Registry.CurrentUser.OpenSubKey(_specialKRegistryPath))
             {
                 if (key is null)
@@ -123,14 +163,14 @@ namespace SpecialKHelper.SpecialKHandler.Application
             }
         }
 
-        public bool Start32BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        public bool Start32BitsService(CancellationToken cancellationToken = default)
         {
-            return StartService(CpuArchitecture.X86, customSpecialKPath, cancellationToken);
+            return StartService(CpuArchitecture.X86, _customSpecialKInstallationPath, cancellationToken);
         }
 
-        public bool Start64BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        public bool Start64BitsService(CancellationToken cancellationToken = default)
         {
-            return StartService(CpuArchitecture.X64, customSpecialKPath, cancellationToken);
+            return StartService(CpuArchitecture.X64, _customSpecialKInstallationPath, cancellationToken);
         }
 
         private bool StartService(CpuArchitecture cpuArchitecture, string customSpecialKPath = null, CancellationToken cancellationToken = default)
@@ -225,14 +265,14 @@ namespace SpecialKHelper.SpecialKHandler.Application
             Process.Start(info);
         }
 
-        public bool Stop32BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        public bool Stop32BitsService(CancellationToken cancellationToken = default)
         {
-            return StopService(CpuArchitecture.X86, customSpecialKPath, cancellationToken);
+            return StopService(CpuArchitecture.X86, _customSpecialKInstallationPath, cancellationToken);
         }
 
-        public bool Stop64BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        public bool Stop64BitsService(CancellationToken cancellationToken = default)
         {
-            return StopService(CpuArchitecture.X64, customSpecialKPath, cancellationToken);
+            return StopService(CpuArchitecture.X64, _customSpecialKInstallationPath, cancellationToken);
         }
 
         private bool StopService(CpuArchitecture cpuArchitecture, string customSpecialKPath, CancellationToken cancellationToken)

@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using PluginsCommon;
 using SpecialKHelper.Core.Domain;
+using SpecialKHelper.SpecialKHandler.Application;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,7 +51,9 @@ namespace SpecialKHelper
 
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly SpecialKHelper plugin;
+        private readonly SpecialKHelper _plugin;
+        private readonly SpecialKServiceManager _specialKServiceManager;
+
         private SpecialKHelperSettings editingClone { get; set; }
 
         private SpecialKHelperSettings settings;
@@ -64,11 +67,11 @@ namespace SpecialKHelper
             }
         }
 
-        public SpecialKHelperSettingsViewModel(SpecialKHelper plugin)
+        public SpecialKHelperSettingsViewModel(SpecialKHelper plugin, SpecialKServiceManager specialKServiceManager)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
-
+            _plugin = plugin;
+            _specialKServiceManager = specialKServiceManager;
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<SpecialKHelperSettings>();
 
@@ -100,7 +103,8 @@ namespace SpecialKHelper
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            _plugin.SavePluginSettings(Settings);
+            _specialKServiceManager.SetSpecialKInstallDirectory(settings.CustomSpecialKPath);
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -124,7 +128,7 @@ namespace SpecialKHelper
         {
             get => new RelayCommand(() =>
             {
-                var filePath = plugin.PlayniteApi.Dialogs.SelectFile("SKIF|SKIF.exe");
+                var filePath = _plugin.PlayniteApi.Dialogs.SelectFile("SKIF|SKIF.exe");
                 if (!filePath.IsNullOrEmpty())
                 {
                     settings.CustomSpecialKPath = filePath;
