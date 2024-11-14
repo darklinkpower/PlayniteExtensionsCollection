@@ -6,6 +6,9 @@
              xmlns:local="SpecialKHelper.PluginSidebarItem.Presentation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.ContextMenu>
+        <ContextMenu ItemsSource="{Binding ContextMenuItems}" />
+    </UserControl.ContextMenu>
     <Grid>
         <!-- #region Icon Section -->
         <Image Source="{Binding IconEnabledPath, Converter={StaticResource ImageStringToImageConverter}}"
@@ -19,10 +22,10 @@
         <!-- #region Service Overlays -->
         <Image Source="{Binding Icon32BitsServiceOverlayPath, Converter={StaticResource ImageStringToImageConverter}}"
                RenderOptions.BitmapScalingMode="Fant"
-               Visibility="{Binding Show32BitsIcon, Converter={StaticResource BooleanToVisibilityConverter}}" />
+               Visibility="{Binding Is32BitsServiceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <Image Source="{Binding Icon64BitsServiceOverlayPath, Converter={StaticResource ImageStringToImageConverter}}"
                RenderOptions.BitmapScalingMode="Fant"
-               Visibility="{Binding Show64BitsIcon, Converter={StaticResource BooleanToVisibilityConverter}}" />
+               Visibility="{Binding Is64BitsServiceRunning, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <!-- #endregion -->
     </Grid>
 </UserControl>

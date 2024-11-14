@@ -1,12 +1,15 @@
-﻿using SpecialKHelper.SpecialKHandler.Application;
+﻿using Playnite.SDK;
+using SpecialKHelper.SpecialKHandler.Application;
 using SpecialKHelper.SpecialKHandler.Domain.Enums;
 using SpecialKHelper.SpecialKHandler.Domain.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace SpecialKHelper.PluginSidebarItem.Application
 {
@@ -14,88 +17,126 @@ namespace SpecialKHelper.PluginSidebarItem.Application
     {
         private bool _isDisposed = false;
         private readonly SpecialKServiceManager _specialKServiceManager;
+
+
         public string IconEnabledPath { get; }
+        public string IconDisabledPath { get; }
         public string Icon32BitsServiceOverlayPath { get; }
         public string Icon64BitsServiceOverlayPath { get; }
-        public string IconDisabledPath { get; }
 
-        private bool _allowSkUse = false;
+
+        private bool _allowSkUse;
         public bool AllowSkUse
         {
             get => _allowSkUse;
-            set
-            {
-                _allowSkUse = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref _allowSkUse, value);
         }
 
-        private bool _show32BitsIcon = false;
-        public bool Show32BitsIcon
+        private bool _is32BitsServiceRunning;
+        public bool Is32BitsServiceRunning
         {
-            get => _show32BitsIcon;
-            set
-            {
-                _show32BitsIcon = value;
-                OnPropertyChanged();
-            }
+            get => _is32BitsServiceRunning;
+            set => SetValue(ref _is32BitsServiceRunning, value);
         }
 
-        private bool _show64BitsIcon = false;
-        public bool Show64BitsIcon
+        private bool _is64BitsServiceRunning;
+        public bool Is64BitsServiceRunning
         {
-            get => _show64BitsIcon;
-            set
-            {
-                _show64BitsIcon = value;
-                OnPropertyChanged();
-            }
+            get => _is64BitsServiceRunning;
+            set => SetValue(ref _is64BitsServiceRunning, value);
         }
+
+        public ObservableCollection<Control> ContextMenuItems { get; } = new ObservableCollection<Control>();
+        public RelayCommand Start32BitsServiceCommand { get; }
+        public RelayCommand Stop32BitsServiceCommand { get; }
+        public RelayCommand Start64BitsServiceCommand { get; }
+        public RelayCommand Stop64BitsServiceCommand { get; }
+        public RelayCommand StartAllServicesCommand { get; }
+        public RelayCommand StopAllServicesCommand { get; }
 
         public SidebarItemSwitcherViewModel(bool allowSkUse, string pluginInstallPath, SpecialKServiceManager specialKServiceManager)
         {
+            _specialKServiceManager = specialKServiceManager;
+
             AllowSkUse = allowSkUse;
+
             var resourcesPath = Path.Combine(pluginInstallPath, "PluginSidebarItem", "Resources");
             IconEnabledPath = Path.Combine(resourcesPath, "SidebarEnabled.png");
             IconDisabledPath = Path.Combine(resourcesPath, "SidebarDisabled.png");
             Icon32BitsServiceOverlayPath = Path.Combine(resourcesPath, "32BitsServiceOverlay.png");
             Icon64BitsServiceOverlayPath = Path.Combine(resourcesPath, "64BitsServiceOverlay.png");
-            _specialKServiceManager = specialKServiceManager;
-            specialKServiceManager.SpecialKServiceStatusChanged += SpecialKServiceManager_SpecialKServiceStatusChanged;
-            Show32BitsIcon = specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running;
-            Show64BitsIcon = specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running;
+
+            Start32BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Start32BitsService());
+            Stop32BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Stop32BitsService());
+            Start64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Start64BitsService());
+            Stop64BitsServiceCommand = new RelayCommand(() => _specialKServiceManager.Stop64BitsService());
+
+            StartAllServicesCommand = new RelayCommand(() =>
+            {
+                _specialKServiceManager.Start32BitsService();
+                _specialKServiceManager.Start64BitsService();
+            });
+
+            StopAllServicesCommand = new RelayCommand(() =>
+            {
+                _specialKServiceManager.Stop32BitsService();
+                _specialKServiceManager.Stop64BitsService();
+            });
+
+            Is32BitsServiceRunning = _specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running;
+            Is64BitsServiceRunning = _specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running;
+            _specialKServiceManager.SpecialKServiceStatusChanged += SpecialKServiceManager_SpecialKServiceStatusChanged;
+            UpdateContextMenuItems();
+        }
+
+        private void UpdateContextMenuItems()
+        {
+            ContextMenuItems.Clear();
+            var anyServiceRunning = Is32BitsServiceRunning || Is64BitsServiceRunning;
+            ContextMenuItems.Add(new MenuItem
+            {
+                Header = anyServiceRunning
+                    ? ResourceProvider.GetString("LOCSpecial_K_Helper_StopAllServices")
+                    : ResourceProvider.GetString("LOCSpecial_K_Helper_StartAllServices"),
+                Command = anyServiceRunning ? StopAllServicesCommand : StartAllServicesCommand
+            });
+
+            ContextMenuItems.Add(new Separator());
+            ContextMenuItems.Add(new MenuItem
+            {
+                Header = Is32BitsServiceRunning
+                    ? ResourceProvider.GetString("LOCSpecial_K_Helper_Stop32BitsService")
+                    : ResourceProvider.GetString("LOCSpecial_K_Helper_Start32BitsService"),
+                Command = Is32BitsServiceRunning ? Stop32BitsServiceCommand : Start32BitsServiceCommand
+            });
+
+            ContextMenuItems.Add(new MenuItem
+            {
+                Header = Is64BitsServiceRunning
+                    ? ResourceProvider.GetString("LOCSpecial_K_Helper_Stop64BitsService")
+                    : ResourceProvider.GetString("LOCSpecial_K_Helper_Start64BitsService"),
+                Command = Is64BitsServiceRunning ? Stop64BitsServiceCommand : Start64BitsServiceCommand
+            });
         }
 
         private void SpecialKServiceManager_SpecialKServiceStatusChanged(object sender, SpecialKServiceStatusChangedEventArgs e)
         {
             if (e.Architecture == CpuArchitecture.X64)
             {
-                if (e.Status == SpecialKServiceStatus.Running)
-                {
-                    Show64BitsIcon = true;
-                }
-                else if (e.Status == SpecialKServiceStatus.Stopped)
-                {
-                    Show64BitsIcon = false;
-                }
+                Is64BitsServiceRunning = e.Status == SpecialKServiceStatus.Running;
             }
             else
             {
-                if (e.Status == SpecialKServiceStatus.Running)
-                {
-                    Show32BitsIcon = true;
-                }
-                else if (e.Status == SpecialKServiceStatus.Stopped)
-                {
-                    Show32BitsIcon = false;
-                }
+                Is32BitsServiceRunning = e.Status == SpecialKServiceStatus.Running;
             }
+
+            UpdateContextMenuItems();
         }
 
         public bool SwitchAllowState()
         {
             AllowSkUse = !AllowSkUse;
-            return _allowSkUse;
+            return AllowSkUse;
         }
 
         public void Dispose()
@@ -107,4 +148,5 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             }
         }
     }
+
 }
