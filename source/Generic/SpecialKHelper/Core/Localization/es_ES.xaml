@@ -85,4 +85,10 @@ Si este ajuste está deshabilitado, los servicios no se iniciarán sin importar 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Usar si deseas utilizar Special K en una ubicación específica o si está usando una instalación portable</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Examinar…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Quitar</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
 </ResourceDictionary>
