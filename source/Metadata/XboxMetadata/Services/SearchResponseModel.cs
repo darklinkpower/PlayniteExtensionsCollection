@@ -428,7 +428,7 @@ namespace XboxMetadata.Services
 
     public enum Eligibility { None };
 
-    public enum AvailableOn { Pc, XboxOne, XboxSeriesX, MobileDevice, HoloLens, Hub };
+    public enum AvailableOn { Pc, XboxOne, XboxSeriesX, MobileDevice, HoloLens, Hub, XCloud };
 
     [JsonConverter(typeof(BoardNameConverter))]
     public enum BoardName
