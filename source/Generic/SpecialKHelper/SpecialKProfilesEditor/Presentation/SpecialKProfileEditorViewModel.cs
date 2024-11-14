@@ -295,8 +295,14 @@ namespace SpecialKHelper.SpecialKProfilesEditor.Application
             }
 
             var iniData = _iniParser.ReadFile(iniPath);
-            var sections = iniData.Sections.Select(iniSection =>
-                new Section(iniSection.SectionName, iniSection.Keys.Select(x => new ProfileKey(x.KeyName, x.Value))));
+            var sections = iniData.Sections
+                .OrderBy(section => section.SectionName)
+                .Select(iniSection => new Section(
+                    iniSection.SectionName,
+                    iniSection.Keys
+                        .OrderBy(key => key.KeyName)
+                        .Select(key => new ProfileKey(key.KeyName, key.Value))
+                ));
 
             return new SpecialKProfile(profileData, sections.ToList());
         }
