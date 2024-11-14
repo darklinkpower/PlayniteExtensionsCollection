@@ -13,12 +13,10 @@ namespace SpecialKHelper.PluginSidebarItem.Application
     public class SidebarItemSwitcherViewModel : ObservableObject, IDisposable
     {
         private bool _isDisposed = false;
+        private readonly SpecialKServiceManager _specialKServiceManager;
         public string IconEnabledPath { get; }
         public string Icon32BitsServiceOverlayPath { get; }
         public string Icon64BitsServiceOverlayPath { get; }
-
-        private readonly SpecialKServiceManager _specialKServiceManager;
-
         public string IconDisabledPath { get; }
 
         private bool _allowSkUse = false;

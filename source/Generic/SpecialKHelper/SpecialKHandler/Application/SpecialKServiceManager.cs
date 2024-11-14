@@ -22,8 +22,9 @@ namespace SpecialKHelper.SpecialKHandler.Application
         private const string _32BitsServiceProcessName = "SKIFsvc32";
         private const string _64BitsServiceProcessName = "SKIFsvc64";
         private const string _specialKRegistryPath = @"SOFTWARE\Kaldaien\Special K";
-        private const int _startServiceMaxRetries = 12;
+        private const int _startServiceMaxRetries = 15;
         private const int _startServiceSleepDurationMs = 100;
+        private const int _backgroundServiceDelay = 15000;
         private SpecialKServiceStatus _service32BitsStatus;
         private SpecialKServiceStatus _service64BitsStatus;
         public SpecialKServiceStatus Service32BitsStatus => _service32BitsStatus;
@@ -33,6 +34,53 @@ namespace SpecialKHelper.SpecialKHandler.Application
         {
             _service32BitsStatus = Is32BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
             _service64BitsStatus = Is64BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+            StartBackgroundServiceStatusCheck();
+        }
+
+        private async void StartBackgroundServiceStatusCheck()
+        {
+            await Task.Run(async () =>
+            {
+                while (true)
+                {
+                    await Task.Delay(_backgroundServiceDelay);
+                    UpdateServiceStatus();
+                }
+            });
+        }
+
+        private void UpdateServiceStatus()
+        {
+            var is32BitsServiceRunning = false;
+            var is64BitsServiceRunning = false;
+            foreach (var process in Process.GetProcesses())
+            {
+                if (process.ProcessName == _32BitsServiceProcessName)
+                {
+                    is32BitsServiceRunning = true;
+                }
+                else if (process.ProcessName == _64BitsServiceProcessName)
+                {
+                    is64BitsServiceRunning = true;
+                }
+
+                if (is32BitsServiceRunning && is64BitsServiceRunning)
+                {
+                    break;
+                }
+            }
+
+            var current32BitsStatus = is32BitsServiceRunning ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+            var current64BitsStatus = is64BitsServiceRunning ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+            if (current32BitsStatus != _service32BitsStatus)
+            {
+                OnServiceStatusChanged(current32BitsStatus, CpuArchitecture.X86);
+            }
+
+            if (current64BitsStatus != _service64BitsStatus)
+            {
+                OnServiceStatusChanged(current64BitsStatus, CpuArchitecture.X64);
+            }
         }
 
         private bool IsProcessRunning(string processName)
@@ -157,7 +205,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
                 if (isProcessStarted)
                 {
-                    OnServiceStatusChangedEventArgs(SpecialKServiceStatus.Running, cpuArchitecture);
+                    OnServiceStatusChanged(SpecialKServiceStatus.Running, cpuArchitecture);
                     return true;
                 }
             }
@@ -221,7 +269,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
                 if (!isProcessStarted)
                 {
-                    OnServiceStatusChangedEventArgs(SpecialKServiceStatus.Stopped, cpuArchitecture);
+                    OnServiceStatusChanged(SpecialKServiceStatus.Stopped, cpuArchitecture);
                     return true;
                 }
             }
@@ -229,9 +277,9 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return false;
         }
 
-        private void OnServiceStatusChangedEventArgs(SpecialKServiceStatus status, CpuArchitecture architecture)
+        private void OnServiceStatusChanged(SpecialKServiceStatus status, CpuArchitecture architecture)
         {
-            if (architecture == CpuArchitecture.X64)
+            if (architecture == CpuArchitecture.X86)
             {
                 _service32BitsStatus = status;
             }
