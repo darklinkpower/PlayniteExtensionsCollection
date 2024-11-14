@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
 using PluginsCommon;
+using SpecialKHelper.SpecialKHandler.Domain.Enums;
+using SpecialKHelper.SpecialKHandler.Domain.Events;
 using SpecialKHelper.SpecialKHandler.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -12,14 +14,9 @@ using System.Threading.Tasks;
 
 namespace SpecialKHelper.SpecialKHandler.Application
 {
-    public static class SpecialKServiceManager
+    public class SpecialKServiceManager
     {
-        private enum CpuArchitecture
-        {
-            X86, // 32-bit
-            X64  // 64-bit
-        }
-
+        public event EventHandler<SpecialKServiceStatusChangedEventArgs> SpecialKServiceStatusChanged;
         private const string _32BitsPrefix = "32";
         private const string _64BitsPrefix = "64";
         private const string _32BitsServiceProcessName = "SKIFsvc32";
@@ -27,24 +24,33 @@ namespace SpecialKHelper.SpecialKHandler.Application
         private const string _specialKRegistryPath = @"SOFTWARE\Kaldaien\Special K";
         private const int _startServiceMaxRetries = 12;
         private const int _startServiceSleepDurationMs = 100;
+        private SpecialKServiceStatus _service32BitsStatus;
+        private SpecialKServiceStatus _service64BitsStatus;
+        public SpecialKServiceStatus Service32BitsStatus => _service32BitsStatus;
+        public SpecialKServiceStatus Service64BitsStatus => _service64BitsStatus;
 
-        private static bool IsProcessRunning(string processName)
+        public SpecialKServiceManager()
         {
-            var processes = Process.GetProcessesByName(processName);
-            return processes.Length > 0;
+            _service32BitsStatus = Is32BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+            _service64BitsStatus = Is64BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
         }
 
-        public static bool Is32BitsServiceRunning()
+        private bool IsProcessRunning(string processName)
+        {
+            return Process.GetProcessesByName(processName).Any();
+        }
+
+        public bool Is32BitsServiceRunning()
         {
             return IsProcessRunning(_32BitsServiceProcessName);
         }
 
-        public static bool Is64BitsServiceRunning()
+        public bool Is64BitsServiceRunning()
         {
             return IsProcessRunning(_64BitsServiceProcessName);
         }
 
-        private static string GetInstallDirectory()
+        private string GetInstallDirectory()
         {
             using (var key = Registry.CurrentUser.OpenSubKey(_specialKRegistryPath))
             {
@@ -69,17 +75,17 @@ namespace SpecialKHelper.SpecialKHandler.Application
             }
         }
 
-        public static bool Start32BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        public bool Start32BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
         {
             return StartService(CpuArchitecture.X86, customSpecialKPath, cancellationToken);
         }
 
-        public static bool Start64BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        public bool Start64BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
         {
             return StartService(CpuArchitecture.X64, customSpecialKPath, cancellationToken);
         }
 
-        private static bool StartService(CpuArchitecture cpuArchitecture, string customSpecialKPath = null, CancellationToken cancellationToken = default)
+        private bool StartService(CpuArchitecture cpuArchitecture, string customSpecialKPath = null, CancellationToken cancellationToken = default)
         {
             var serviceAlreadyRunning = cpuArchitecture == CpuArchitecture.X86 
                ? Is32BitsServiceRunning()
@@ -93,12 +99,12 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return StartServiceInternal(specialKInstallDir, cpuArchitecture, cancellationToken);
         }
 
-        private static string GetSpecialKInstallDirectory(string customPath)
+        private string GetSpecialKInstallDirectory(string customPath)
         {
             return !customPath.IsNullOrEmpty() ? customPath : GetInstallDirectory();
         }
 
-        private static bool StartServiceInternal(string skifPath, CpuArchitecture cpuArchitecture, CancellationToken cancellationToken = default)
+        private bool StartServiceInternal(string skifPath, CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
             ValidateServiceFiles(skifPath, cpuArchitecture);
 
@@ -111,7 +117,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return WaitForProcessToStart(cpuArchitecture, cancellationToken);
         }
 
-        private static void ValidateServiceFiles(string skifPath, CpuArchitecture cpuArchitecture)
+        private void ValidateServiceFiles(string skifPath, CpuArchitecture cpuArchitecture)
         {
             var architectureName = cpuArchitecture == CpuArchitecture.X86
                 ? _32BitsPrefix
@@ -129,7 +135,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
             }
         }
 
-        private static void StartServiceProcess(string servletExe)
+        private void StartServiceProcess(string servletExe)
         {
             var info = new ProcessStartInfo(servletExe)
             {
@@ -141,7 +147,25 @@ namespace SpecialKHelper.SpecialKHandler.Application
             Process.Start(info);
         }
 
-        private static void StopServiceProcess(string servletExe)
+        private bool WaitForProcessToStart(CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
+        {
+            for (int i = 0; i < _startServiceMaxRetries; i++)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                Thread.Sleep(_startServiceSleepDurationMs);
+                var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
+                if (isProcessStarted)
+                {
+                    OnServiceStatusChangedEventArgs(SpecialKServiceStatus.Running, cpuArchitecture);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void StopServiceProcess(string servletExe)
         {
             var info = new ProcessStartInfo(servletExe)
             {
@@ -153,17 +177,17 @@ namespace SpecialKHelper.SpecialKHandler.Application
             Process.Start(info);
         }
 
-        public static bool Stop32BitsService(string customSpecialKPath = null)
+        public bool Stop32BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
         {
-            return StopService(CpuArchitecture.X86, customSpecialKPath);
+            return StopService(CpuArchitecture.X86, customSpecialKPath, cancellationToken);
         }
 
-        public static bool Stop64BitsService(string customSpecialKPath = null)
+        public bool Stop64BitsService(string customSpecialKPath = null, CancellationToken cancellationToken = default)
         {
-            return StopService(CpuArchitecture.X64, customSpecialKPath);
+            return StopService(CpuArchitecture.X64, customSpecialKPath, cancellationToken);
         }
 
-        private static bool StopService(CpuArchitecture cpuArchitecture, string customSpecialKPath = null)
+        private bool StopService(CpuArchitecture cpuArchitecture, string customSpecialKPath, CancellationToken cancellationToken)
         {
             var serviceAlreadyRunning = cpuArchitecture == CpuArchitecture.X86
                 ? Is32BitsServiceRunning()
@@ -174,20 +198,20 @@ namespace SpecialKHelper.SpecialKHandler.Application
             }
 
             var specialKInstallDir = GetSpecialKInstallDirectory(customSpecialKPath);
-            return StopServiceInternal(specialKInstallDir, cpuArchitecture);
+            return StopServiceInternal(specialKInstallDir, cpuArchitecture, cancellationToken);
         }
 
-        private static bool StopServiceInternal(string skifPath, CpuArchitecture cpuArchitecture)
+        private bool StopServiceInternal(string skifPath, CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
             var architectureName = cpuArchitecture == CpuArchitecture.X86
                 ? _32BitsPrefix
                 : _64BitsPrefix;
             var servletExe = Path.Combine(skifPath, "Servlet", "SKIFsvc" + architectureName + ".exe");
             StopServiceProcess(servletExe);
-            return true;
+            return WaitForProcessToStop(cpuArchitecture, cancellationToken);
         }
 
-        private static bool WaitForProcessToStart(CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
+        private bool WaitForProcessToStop(CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
             for (int i = 0; i < _startServiceMaxRetries; i++)
             {
@@ -195,13 +219,30 @@ namespace SpecialKHelper.SpecialKHandler.Application
 
                 Thread.Sleep(_startServiceSleepDurationMs);
                 var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
-                if (isProcessStarted)
+                if (!isProcessStarted)
                 {
+                    OnServiceStatusChangedEventArgs(SpecialKServiceStatus.Stopped, cpuArchitecture);
                     return true;
                 }
             }
 
             return false;
         }
+
+        private void OnServiceStatusChangedEventArgs(SpecialKServiceStatus status, CpuArchitecture architecture)
+        {
+            if (architecture == CpuArchitecture.X64)
+            {
+                _service32BitsStatus = status;
+            }
+            else
+            {
+                _service64BitsStatus = status;
+            }
+
+            SpecialKServiceStatusChanged?.Invoke(this, new SpecialKServiceStatusChangedEventArgs(status, architecture));
+        }
+
+
     }
 }

@@ -10,6 +10,7 @@ using SpecialKHelper.EasyAnticheat.Persistence;
 using SpecialKHelper.PluginSidebarItem.Application;
 using SpecialKHelper.PluginSidebarItem.Presentation;
 using SpecialKHelper.SpecialKHandler.Application;
+using SpecialKHelper.SpecialKHandler.Domain.Enums;
 using SpecialKHelper.SpecialKHandler.Domain.Exceptions;
 using SpecialKHelper.SpecialKProfilesEditor.Application;
 using SpecialKHelper.SpecialKProfilesEditor.Presentation.Views;
@@ -32,6 +33,7 @@ namespace SpecialKHelper
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly string _pluginInstallPath;
+        private readonly SpecialKServiceManager _specialKServiceManager;
         private const string _globalModeDisableFeatureName = "[SK] Global Mode Disable";
         private const string _selectiveModeEnableFeatureName = "[SK] Selective Mode Enable";
 
@@ -53,7 +55,8 @@ namespace SpecialKHelper
             };
 
             _pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath);
+            _specialKServiceManager = new SpecialKServiceManager();
+            _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath, _specialKServiceManager);
             _easyAnticheatHelper = new EasyAnticheatService(new EasyAnticheatCache(GetPluginUserDataPath()));
             _steamHelper = new SteamHelper(GetPluginUserDataPath(), PlayniteApi);
         }
@@ -123,30 +126,37 @@ namespace SpecialKHelper
                 return;
             }
 
-            var startSuccess32 = false;
-            var startSuccess64 = false;
+
+            var service32Started = false;
+            var service64Started = false;
             try
             {
-                startSuccess32 = SpecialKServiceManager.Start32BitsService(skifPath);
-                startSuccess64 = SpecialKServiceManager.Start64BitsService(skifPath);
+                if (_specialKServiceManager.Service32BitsStatus != SpecialKServiceStatus.Running)
+                {
+                    service32Started = _specialKServiceManager.Start32BitsService(skifPath);
+                }
+
+                if (_specialKServiceManager.Service32BitsStatus != SpecialKServiceStatus.Running)
+                {
+                    service64Started = _specialKServiceManager.Start64BitsService(skifPath);
+                }
             }
             catch (SpecialKFileNotFoundException e)
             {
                 LogSkFileNotFound(e);
+                return;
             }
             catch (SpecialKPathNotFoundException e)
             {
                 LogSkPathNotFound(e);
-            }
-
-            if (!startSuccess32 || !startSuccess64)
-            {
-                _logger.Info("Execution stopped due to services not started");
                 return;
             }
 
-            SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
-            SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
+            if (service32Started || service64Started)
+            {
+                SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
+                SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
+            }
         }
 
         private void LogSkFileNotFound(SpecialKFileNotFoundException e)
@@ -231,8 +241,15 @@ namespace SpecialKHelper
             var skifPath = GetSpecialKPath();
             try
             {
-                SpecialKServiceManager.Stop32BitsService(skifPath);
-                SpecialKServiceManager.Stop64BitsService(skifPath);
+                if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
+                {
+                    _specialKServiceManager.Start32BitsService(skifPath);
+                }
+
+                if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
+                {
+                    _specialKServiceManager.Stop64BitsService(skifPath);
+                }
             }
             catch (SpecialKFileNotFoundException e)
             {
