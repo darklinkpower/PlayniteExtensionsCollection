@@ -85,4 +85,10 @@
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Використовуйте якщо хочете користуватися Special K, що знаходиться в конкретному місці, або якщо використовуєте портативну версію</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Огляд…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Вилучити</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
 </ResourceDictionary>
