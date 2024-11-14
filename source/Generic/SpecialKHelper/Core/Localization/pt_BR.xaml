@@ -85,4 +85,10 @@ Se configurado como desativado, os serviços não serão iniciados, independente
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use se você quiser usar o Special K em uma localização específica ou se estiver usando uma instalação portátil</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Navegar…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Remover</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
 </ResourceDictionary>
