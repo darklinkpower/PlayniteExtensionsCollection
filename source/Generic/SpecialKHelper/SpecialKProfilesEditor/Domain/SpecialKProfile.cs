@@ -6,61 +6,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IniParser.Model;
+using System.Collections.ObjectModel;
+using SpecialKHelper.SpecialKProfilesEditor.Application;
 
 namespace SpecialKHelper.SpecialKProfilesEditor.Domain
 {
-    class SpecialKProfile : ObservableObject
+    public class SpecialKProfile : ObservableObject
     {
-        public string ProfileName { get; set; }
-        public string ProfileIniPath { get; set; }
-        private List<Section> sections = new List<Section>();
-        public List<Section> Sections
+        public Guid Id => Data.Id;
+        public string Name => Data.Name;
+        public string ConfigurationPath => Data.ConfigurationPath;
+        public SpecialKProfileData Data { get; }
+
+        public ObservableCollection<Section> Sections { get; }
+
+        public SpecialKProfile(SpecialKProfileData profileData, IEnumerable<Section> sections = null)
         {
-            get
-            {
-                return sections;
-            }
-            set
-            {
-                sections = value;
-                OnPropertyChanged();
-            }
+            Data = profileData;
+            Sections = sections?.ToObservable() ?? new ObservableCollection<Section>();
         }
     }
 
     public class Section : ObservableObject
     {
-        public string Name { get; set; }
-        private List<ProfileKey> keys = new List<ProfileKey>();
-        public List<ProfileKey> Keys
+        public string Name { get; }
+        public ObservableCollection<ProfileKey> Keys { get; }
+        public Section (string name, IEnumerable<ProfileKey> keys = null)
         {
-            get
-            {
-                return keys;
-            }
-            set
-            {
-                keys = value;
-                OnPropertyChanged();
-            }
+            Name = name;
+            Keys = keys?.ToObservable() ?? new ObservableCollection<ProfileKey>();
         }
     }
 
     public class ProfileKey : ObservableObject
     {
-        public string Name { get; set; }
-        private string value;
+        public string Name { get; }
+        private string _value;
         public string Value
         {
             get
             {
-                return value;
+                return _value;
             }
             set
             {
-                this.value = value;
+                _value = value;
                 OnPropertyChanged();
             }
+        }
+
+        public ProfileKey(string name, string value)
+        {
+            Name = name;
+            Value = value;
         }
     }
 }

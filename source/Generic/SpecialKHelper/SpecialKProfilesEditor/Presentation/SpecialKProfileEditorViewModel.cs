@@ -16,305 +16,199 @@ using System.Windows.Data;
 
 namespace SpecialKHelper.SpecialKProfilesEditor.Application
 {
-    class SpecialKProfileEditorViewModel : ObservableObject
+    public class SpecialKProfileEditorViewModel : ObservableObject
     {
-        private readonly IPlayniteAPI playniteApi;
-        private static readonly ILogger logger = LogManager.GetLogger();
+        #region Fields
+        private readonly IPlayniteAPI _playniteApi;
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly FileIniDataParser _iniParser;
-        private readonly string skProfilesPath;
-        private List<SpecialKProfile> sKProfilesCollectionItems;
-        public List<SpecialKProfile> SKProfilesCollectionItems
+        private List<SpecialKProfileData> _specialKProfilesCollectionItems;
+        private readonly ICollectionView _specialKProfilesDataCollection;
+
+        private string _currentEditSection = string.Empty;
+        private string _currentEditKey = string.Empty;
+        private string _currentEditValue = string.Empty;
+        private string _searchString = string.Empty;
+        private bool _isKeySelected = false;
+        private bool _useFuzzySearch = false;
+        private bool _isProfileSelected = false;
+        private SpecialKProfileData _selectedSpecialKProfileData;
+        private SpecialKProfile _selectedProfile;
+        private Section selectedProfileSection;
+        private ProfileKey _selectedProfileKey;
+        private string _selectedProfileKeyValue = string.Empty;
+        #endregion
+
+        #region Properties
+        public List<SpecialKProfileData> SpecialKProfilesCollectionItems
         {
-            get
-            {
-                return sKProfilesCollectionItems;
-            }
+            get => _specialKProfilesCollectionItems;
             set
             {
-                sKProfilesCollectionItems = value;
+                _specialKProfilesCollectionItems = value;
                 OnPropertyChanged();
             }
         }
 
-        private ICollectionView sKProfilesCollection;
-        public ICollectionView SKProfilesCollection
-        {
-            get { return sKProfilesCollection; }
-        }
+        public ICollectionView SpecialKProfilesDataCollection => _specialKProfilesDataCollection;
 
-        private string currentEditSection;
         public string CurrentEditSection
         {
-            get
-            {
-                if (currentEditSection.IsNullOrEmpty())
-                {
-                    return string.Empty;
-                }
-
-                return currentEditSection;
-            }
+            get => _currentEditSection;
             set
             {
-                currentEditSection = value;
+                _currentEditSection = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool isKeySelected { get; set; } = false;
         public bool IsKeySelected
         {
-            get => isKeySelected;
+            get => _isKeySelected;
             set
             {
-                isKeySelected = value;
+                _isKeySelected = value;
                 OnPropertyChanged();
             }
         }
 
-        private string currentEditKey;
         public string CurrentEditKey
         {
-            get
-            {
-                if (currentEditKey.IsNullOrEmpty())
-                {
-                    return string.Empty;
-                }
-
-                return currentEditKey;
-            }
+            get => _currentEditKey;
             set
             {
-                currentEditKey = value;
+                _currentEditKey = value;
                 OnPropertyChanged();
             }
         }
 
-        private string currentEditValue;
         public string CurrentEditValue
         {
-            get
-            {
-                if (currentEditValue.IsNullOrEmpty())
-                {
-                    isKeySelected = true;
-                    return string.Empty;
-                }
-
-                isKeySelected = true;
-                return currentEditValue;
-            }
+            get => _currentEditValue;
             set
             {
-                currentEditValue = value;
+                _currentEditValue = value;
                 OnPropertyChanged();
             }
         }
 
-        private string searchString;
         public string SearchString
         {
-            get { return searchString; }
+            get => _searchString;
             set
             {
-                searchString = value.ToLower();
+                _searchString = value;
                 OnPropertyChanged();
-                sKProfilesCollection.Refresh();
+                OnSearchStringChanged();
             }
         }
 
-        private SpecialKProfile selectedProfile;
+        public SpecialKProfileData SelectedSpecialKProfileData
+        {
+            get => _selectedSpecialKProfileData;
+            set
+            {
+                _selectedSpecialKProfileData = value;
+                OnPropertyChanged();
+                SelectedProfile = GetSpecialKProfileFromData(_selectedSpecialKProfileData);
+            }
+        }
+
         public SpecialKProfile SelectedProfile
         {
-            get { return selectedProfile; }
+            get => _selectedProfile;
             set
             {
-                selectedProfile = value;
-                if (selectedProfile != null)
-                {
-                    IsProfileSelected = true;
-                }
-                else
-                {
-                    IsProfileSelected = false;
-                }
-
+                _selectedProfile = value;
+                IsProfileSelected = _selectedProfile != null;
                 OnPropertyChanged();
             }
         }
 
-        private Section selectedProfileSection;
         public Section SelectedProfileSection
         {
             get => selectedProfileSection;
             set
             {
                 selectedProfileSection = value;
-                CurrentEditSection = selectedProfileSection?.Name ?? null;
+                CurrentEditSection = selectedProfileSection?.Name ?? string.Empty;
                 OnPropertyChanged();
             }
         }
 
-        private ProfileKey selectedProfileKey;
         public ProfileKey SelectedProfileKey
         {
-            get => selectedProfileKey;
+            get => _selectedProfileKey;
             set
             {
-                selectedProfileKey = value;
-                CurrentEditKey = selectedProfileKey?.Name ?? null;
-                CurrentEditValue = selectedProfileKey?.Value;
+                _selectedProfileKey = value;
+                CurrentEditKey = _selectedProfileKey?.Name ?? string.Empty;
+                CurrentEditValue = _selectedProfileKey?.Value;
                 OnPropertyChanged();
             }
         }
 
-        private string selectedProfileKeyValue;
         public string SelectedProfileKeyValue
         {
-            get
-            {
-                if (selectedProfileKeyValue.IsNullOrEmpty())
-                {
-                    return string.Empty;
-                }
-                else
-                {
-                    return selectedProfileKeyValue;
-                }
-            }
+            get => !_selectedProfileKeyValue.IsNullOrEmpty() ? _selectedProfileKeyValue : string.Empty;
             set
             {
-                selectedProfileKeyValue = value;
+                _selectedProfileKeyValue = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool useFuzzySearch { get; set; } = false;
         public bool UseFuzzySearch
         {
-            get => useFuzzySearch;
+            get => _useFuzzySearch;
             set
             {
-                useFuzzySearch = value;
+                _useFuzzySearch = value;
                 OnPropertyChanged();
-                sKProfilesCollection.Refresh();
+                _specialKProfilesDataCollection.Refresh();
             }
         }
 
-        private bool isProfileSelected { get; set; } = false;
         public bool IsProfileSelected
         {
-            get => isProfileSelected;
+            get => _isProfileSelected;
             set
             {
-                isProfileSelected = value;
+                _isProfileSelected = value;
                 OnPropertyChanged();
             }
         }
+        #endregion
 
+        #region Commands
+        public RelayCommand SaveSelectedProfileCommand
+            => new RelayCommand(() => SaveProfile(SelectedProfile), () => _isProfileSelected);
+
+        public RelayCommand SaveValueCommand
+            => new RelayCommand(() => SaveValue(), () =>_isKeySelected);
+
+        public RelayCommand DeleteSelectedProfileCommand
+            => new RelayCommand(() => DeleteProfile(SelectedProfile), () => _isProfileSelected);
+        #endregion
+
+        #region Constructor
         public SpecialKProfileEditorViewModel(IPlayniteAPI playniteApi, string skifPath, string initialSearch = null)
         {
-            this.playniteApi = playniteApi;
+            _playniteApi = playniteApi;
             _iniParser = new FileIniDataParser();
-            _iniParser.Parser.Configuration.AssigmentSpacer = string.Empty;
-            _iniParser.Parser.Configuration.AllowDuplicateKeys = true;
-            _iniParser.Parser.Configuration.OverrideDuplicateKeys = true;
-            _iniParser.Parser.Configuration.AllowDuplicateSections = true;
-            skProfilesPath = Path.Combine(skifPath, "Profiles");
-            SKProfilesCollectionItems = GetSkProfiles();
-            sKProfilesCollection = CollectionViewSource.GetDefaultView(SKProfilesCollectionItems);
-            sKProfilesCollection.Filter = FilterSkProfilesCollection;
+            ConfigureIniParser(_iniParser);
 
-            if (initialSearch.IsNullOrEmpty())
-            {
-                SearchString = string.Empty;
-            }
-            else
-            {
-                SearchString = initialSearch;
-            }
+            SpecialKProfilesCollectionItems = GetSpecialKDataProfiles(skifPath);
+            _specialKProfilesDataCollection = CollectionViewSource.GetDefaultView(SpecialKProfilesCollectionItems);
+            _specialKProfilesDataCollection.Filter = FilterSkProfilesCollection;
+            SearchString = !initialSearch.IsNullOrEmpty() ? initialSearch : string.Empty;
         }
+        #endregion
 
-        bool FilterSkProfilesCollection(object item)
-        {
-            var profile = item as SpecialKProfile;
-            if (SearchString.IsNullOrEmpty())
-            {
-                return true;
-            }
-
-            if (UseFuzzySearch)
-            {
-                if (Fuzz.Ratio(SearchString, profile.ProfileName.ToLower()) > 65)
-                {
-                    return true;
-                }
-            }
-            else if (profile.ProfileName.ToLower().Contains(SearchString))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private List<SpecialKProfile> GetSkProfiles()
-        {
-            var profileDirectoriesSearch = Directory.GetDirectories(skProfilesPath).ToList();
-            var profiles = new List<SpecialKProfile>();
-            foreach (var profileDir in profileDirectoriesSearch)
-            {
-                var iniPath = Path.Combine(profileDir, "SpecialK.ini");
-                if (!FileSystem.FileExists(iniPath))
-                {
-                    continue;
-                }
-
-                IniData ini = _iniParser.ReadFile(iniPath);
-
-                var profile = new SpecialKProfile
-                {
-                    ProfileName = Path.GetFileName(profileDir),
-                    ProfileIniPath = iniPath
-                };
-
-                foreach (var iniSection in ini.Sections)
-                {
-                    var section = new Section
-                    {
-                        Name = iniSection.SectionName
-                    };
-
-                    foreach (var iniKey in iniSection.Keys)
-                    {
-                        section.Keys.Add(new ProfileKey
-                        {
-                            Name = iniKey.KeyName,
-                            Value = iniKey.Value
-                        });
-                    }
-
-                    profile.Sections.Add(section);
-                }
-
-                profiles.Add(profile);
-            }
-
-            return profiles;
-        }
-
-        public RelayCommand<object> SaveSelectedProfileCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                SaveProfile(SelectedProfile);
-            }, a => isProfileSelected);
-        }
-
+        #region Common Methods
         private bool SaveProfile(SpecialKProfile specialKProfile)
         {
-            if (specialKProfile == null)
+            if (specialKProfile is null)
             {
                 return false;
             }
@@ -328,92 +222,129 @@ namespace SpecialKHelper.SpecialKProfilesEditor.Application
                     iniData[section.Name][key.Name] = key.Value;
                 }
             }
-            
-            _iniParser.WriteFile(specialKProfile.ProfileIniPath, iniData, Encoding.UTF8);
-            playniteApi.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDialogMessageSaveProfile"), specialKProfile.ProfileName, specialKProfile.ProfileIniPath));
-            return true;
-        }
 
-        public RelayCommand<object> SaveValueCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                SaveValue();
-            }, a => isKeySelected);
+            _iniParser.WriteFile(specialKProfile.ConfigurationPath, iniData, Encoding.UTF8);
+            _playniteApi.Dialogs.ShowMessage(
+                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDialogMessageSaveProfile"), specialKProfile.Name, specialKProfile.ConfigurationPath));
+
+            return true;
         }
 
         private bool SaveValue()
         {
-            if (AddValueToIni(SelectedProfile, CurrentEditSection, CurrentEditKey, CurrentEditValue) == 1)
-            {
-                return true;
-            }
-
-            return false;
+            return AddValueToIni(SelectedProfile, CurrentEditSection, CurrentEditKey, CurrentEditValue) == true;
         }
 
-        public RelayCommand<object> DeleteSelectedProfileCommand
+        private bool DeleteProfile(SpecialKProfile specialKProfile)
         {
-            get => new RelayCommand<object>((a) =>
-            {
-                DeleteProfile(SelectedProfile);
-            }, a => isProfileSelected);
-        }
-
-        private bool DeleteProfile(SpecialKProfile profile)
-        {
-            var selection = playniteApi.Dialogs.ShowMessage(
+            var selection = _playniteApi.Dialogs.ShowMessage(
                 ResourceProvider.GetString("LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice"),
                 "Special K Profile Editor",
                 MessageBoxButton.YesNo);
+
             if (selection == MessageBoxResult.Yes)
             {
-                var profileDirectory = Path.GetDirectoryName(profile.ProfileIniPath);
+                var profileDirectory = Path.GetDirectoryName(specialKProfile.ConfigurationPath);
                 try
                 {
                     if (Directory.Exists(profileDirectory))
                     {
                         Directory.Delete(profileDirectory, true);
                     }
-                    SKProfilesCollectionItems.Remove(profile);
-                    sKProfilesCollection.Refresh();
+
+                    SpecialKProfilesCollectionItems.Remove(specialKProfile.Data);
+                    _specialKProfilesDataCollection.Refresh();
                     return true;
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, $"Error while deleting profile directory in {profileDirectory}");
-                    playniteApi.Dialogs.ShowErrorMessage(
-                        string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDeleteProfileError"), profile.ProfileName, profileDirectory, e.Message),
+                    _logger.Error(e, $"Error while deleting profile directory in {profileDirectory}");
+                    _playniteApi.Dialogs.ShowErrorMessage(
+                        string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_EditorDeleteProfileError"), specialKProfile.Name, profileDirectory, e.Message),
                         "Special K Profile Editor");
                 }
             }
-            
+
+            return false;
+        }
+        #endregion
+
+        #region Helper Methods
+        private void ConfigureIniParser(FileIniDataParser iniParser)
+        {
+            iniParser.Parser.Configuration.AssigmentSpacer = string.Empty;
+            iniParser.Parser.Configuration.AllowDuplicateKeys = true;
+            iniParser.Parser.Configuration.OverrideDuplicateKeys = true;
+            iniParser.Parser.Configuration.AllowDuplicateSections = true;
+        }
+
+        private List<SpecialKProfileData> GetSpecialKDataProfiles(string skifPath)
+        {
+            var skProfilesPath = Path.Combine(skifPath, "Profiles");
+            return Directory.GetDirectories(skProfilesPath)
+                .Select(x => new SpecialKProfileData(x))
+                .ToList();
+        }
+
+        private SpecialKProfile GetSpecialKProfileFromData(SpecialKProfileData profileData)
+        {
+            var iniPath = profileData.ConfigurationPath;
+            if (!FileSystem.FileExists(iniPath))
+            {
+                return null;
+            }
+
+            var iniData = _iniParser.ReadFile(iniPath);
+            var sections = iniData.Sections.Select(iniSection =>
+                new Section(iniSection.SectionName, iniSection.Keys.Select(x => new ProfileKey(x.KeyName, x.Value))));
+
+            return new SpecialKProfile(profileData, sections.ToList());
+        }
+
+        private void OnSearchStringChanged()
+        {
+            _specialKProfilesDataCollection.Refresh();
+        }
+
+        private bool FilterSkProfilesCollection(object item)
+        {
+            var profile = item as SpecialKProfile;
+            if (SearchString.IsNullOrEmpty())
+            {
+                return true;
+            }
+
+            return UseFuzzySearch
+                ? Fuzz.Ratio(SearchString.ToLower(), profile.Name.ToLower()) > 65
+                : profile.Name.ToLower().Contains(SearchString);
+        }
+
+        private bool AddValueToIni(SpecialKProfile profile, string section, string key, string newValue)
+        {
+            var profileSection = profile.Sections.FirstOrDefault(x => x.Name == section);
+            if (profileSection is null)
+            {
+                profileSection = new Section(section);
+                profile.Sections.Add(profileSection);
+            }
+
+            var existingKey = profileSection.Keys.FirstOrDefault(x => x.Name == key);
+            if (existingKey is null)
+            {
+                profileSection.Keys.Add(new ProfileKey(key, newValue));
+                return true;
+            }
+
+            if (existingKey.Value != newValue)
+            {
+                existingKey.Value = newValue;
+                return true;
+            }
+
             return false;
         }
 
-        private int AddValueToIni(SpecialKProfile profile, string section, string key, string newValue)
-        {
-            var profileSection = profile.Sections.FirstOrDefault(x => x.Name == section);
-            if (profileSection == null)
-            {
-                profile.Sections.Add(new Section { Name = section });
-            }
+        #endregion
 
-            var existingSection = profile.Sections.FirstOrDefault(x => x.Name == section);
-            var existingKey = existingSection.Keys.FirstOrDefault(x => x.Name == key);
-            if (existingKey == null)
-            {
-                existingSection.Keys.Add(new ProfileKey { Name = key, Value = newValue});
-                return 1;
-            }
-            else if (existingKey.Value != newValue)
-            {
-                existingKey.Value = newValue;
-                return 1;
-            }
-
-            return 0;
-        }
     }
 }
