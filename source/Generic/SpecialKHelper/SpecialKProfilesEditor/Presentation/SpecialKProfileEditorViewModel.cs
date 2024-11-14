@@ -314,7 +314,7 @@ namespace SpecialKHelper.SpecialKProfilesEditor.Application
 
         private bool FilterSkProfilesCollection(object item)
         {
-            var profile = item as SpecialKProfile;
+            var profile = item as SpecialKProfileData;
             if (SearchString.IsNullOrEmpty())
             {
                 return true;

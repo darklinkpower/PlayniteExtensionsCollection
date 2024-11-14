@@ -34,7 +34,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
             _iniParser.Parser.Configuration.AllowDuplicateSections = true;
 
             _pluginInstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            _emptyReshadePresetPath = Path.Combine(_pluginInstallPath, "Resources", "ReshadeDefaultPreset.ini");
+            _emptyReshadePresetPath = Path.Combine(_pluginInstallPath, "Core", "Resources", "ReshadeDefaultPreset.ini");
         }
         
         public static void ValidateReshadeConfiguration(Game game, string skifPath)
