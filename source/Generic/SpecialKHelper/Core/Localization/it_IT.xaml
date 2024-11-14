@@ -85,11 +85,11 @@ Se questo set è disabilitato, i servizi non saranno avviati a prescindere dalle
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Utilizzare se si desidera utilizzare Special K in una posizione specifica o se si utilizza un'installazione portatile</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Sfoglia…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Rimuovi</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Open Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Avvia servizi a 32 e 64 bit</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Arresta servizi a 32 e 64 bit</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Avvia il servizio a 32 bit</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Arresta il servizio a 32 bit</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Avvia il servizio a 64 bit</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Arresta il servizio a 64 bit</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Apri Special K</sys:String>
 </ResourceDictionary>
