@@ -39,6 +39,18 @@ namespace SteamScreenshots.ScreenshotsControl
     /// </summary>
     public partial class SteamScreenshotsControl : PluginUserControl, INotifyPropertyChanged
     {
+        private class UriIndexPair
+        {
+            public Uri Uri { get; }
+            public int Index { get; }
+
+            internal UriIndexPair(Uri uri, int index)
+            {
+                Uri = uri;
+                Index = index;
+            }
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         public IEnumerable<BitmapImage> ScreenshotsBitmapImages => GetScreenshotsBitmapImages(_screenshots?.Select(x => x.PathThumbnail));
         public IEnumerable<BitmapImage> ScreenshotsFullBitmapImages => GetScreenshotsBitmapImages(_screenshots?.Select(x => x.PathFull));
@@ -169,18 +181,23 @@ namespace SteamScreenshots.ScreenshotsControl
                 return Enumerable.Empty<BitmapImage>();
             }
 
-            var bitmapImages = new ConcurrentBag<BitmapImage>();
+            var bitmapImages = new BitmapImage[uris.Count()];
+            var lockObject = new object();
+            var uriIndexPairs = uris.Select((uri, index) => new UriIndexPair(uri, index)).ToList();
             var options = new ParallelOptions { MaxDegreeOfParallelism = 4 };
-            Parallel.ForEach(uris, options, (uri) =>
+            Parallel.ForEach(uriIndexPairs, options, (pair) =>
             {
-                var bitmapImage = UriToBitmapImage(uri);
+                var bitmapImage = UriToBitmapImage(pair.Uri);
                 if (bitmapImage != null)
                 {
-                    bitmapImages.Add(bitmapImage);
+                    lock (lockObject)
+                    {
+                        bitmapImages[pair.Index] = bitmapImage;
+                    }
                 }
             });
 
-            return bitmapImages;
+            return bitmapImages.Where(bmp => bmp != null);
         }
 
         private void SetControlTextBlockStyle()
