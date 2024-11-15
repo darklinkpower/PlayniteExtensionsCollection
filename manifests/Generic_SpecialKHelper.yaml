@@ -224,4 +224,12 @@ Packages:
     - "Added: Ability to start and stop Special K injection services from the right-click menu in the plugin's sidebar icon."
     - "Added: Sidebar icon now displays status indicators when Special K injection services are running."
     - "Improved: Significantly reduced loading time for launching the Special K Profiles Editor."
+    - "Changed: Sections and keys in Profiles Editor will now be ordered alphabetically"
+    - "Fixed: Incorrect detection of Special K Services status that could lead to the plugin not starting them when games are started"
     - "Fixed: Profiles data in the Special K Profiles Editor now updates correctly when modified externally after the editor is opened."
+  - Version: 1.35
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-11-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.15_c85c4abf/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_35.pext
+    Changelog:
+    - 'Fixed: Potential crash that could happen when a change in the status of Special K services is detected in the background'
