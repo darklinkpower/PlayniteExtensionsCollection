@@ -214,3 +214,14 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_33.pext
     Changelog:
     - 'Fixed: Failing to correctly match to games to Steam results in some circumstances'
+  - Version: 1.34
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-11-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.14_c5bdefc1/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_34.pext
+    Changelog:
+    - "Added: Ability to launch the Special K software from the right-click menu in the plugin's sidebar icon."
+    - "Added: Ability to open the plugin Special K Profiles Editor from the right-click menu in the plugin's sidebar icon."
+    - "Added: Ability to start and stop Special K injection services from the right-click menu in the plugin's sidebar icon."
+    - "Added: Sidebar icon now displays status indicators when Special K injection services are running."
+    - "Improved: Significantly reduced loading time for launching the Special K Profiles Editor."
+    - "Fixed: Profiles data in the Special K Profiles Editor now updates correctly when modified externally after the editor is opened."
