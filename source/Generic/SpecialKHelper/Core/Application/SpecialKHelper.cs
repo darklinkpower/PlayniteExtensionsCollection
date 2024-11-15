@@ -78,29 +78,6 @@ namespace SpecialKHelper
             }
         }
 
-        private string GetSpecialKPath()
-        {
-            if (settings.Settings.CustomSpecialKPath.IsNullOrEmpty())
-            {
-                return null;
-            }
-
-            if (FileSystem.FileExists(settings.Settings.CustomSpecialKPath))
-            {
-                return Path.GetDirectoryName(settings.Settings.CustomSpecialKPath);
-            }
-
-            _logger.Warn($"Special K Registry Directory not found in {settings.Settings.CustomSpecialKPath}");
-            PlayniteApi.Notifications.Add(new NotificationMessage(
-                "sk_customExeNotFound",
-                string.Format(ResourceProvider.GetString("LOCSpecial_K_Helper_NotifcationErrorMessageSkCustomExecutablePathNotFound"), settings.Settings.CustomSpecialKPath),
-                NotificationType.Error,
-                () => OpenSettingsView()
-            ));
-
-            return null;
-        }
-
         public override void OnGameStarting(OnGameStartingEventArgs args)
         {
             var game = args.Game;
@@ -120,13 +97,12 @@ namespace SpecialKHelper
                 _steamHelper.SetBigPictureModeEnvVariable();
             }
 
-            var skifPath = GetSpecialKPath();
+            var skifPath = _specialKServiceManager.GetInstallDirectory();
             if (!startServices)
             {
                 StopAllSpecialKServices();
                 return;
             }
-
 
             var service32Started = false;
             var service64Started = false;
@@ -156,7 +132,10 @@ namespace SpecialKHelper
             if (service32Started || service64Started)
             {
                 SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
-                SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
+                if (settings.Settings.EnableReshadeOnNewProfiles)
+                {
+                    SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
+                }
             }
         }
 
@@ -239,7 +218,6 @@ namespace SpecialKHelper
 
         private void StopAllSpecialKServices()
         {
-            var skifPath = GetSpecialKPath();
             try
             {
                 if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
