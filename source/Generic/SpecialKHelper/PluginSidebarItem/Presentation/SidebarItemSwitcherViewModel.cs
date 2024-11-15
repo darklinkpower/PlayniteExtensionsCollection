@@ -10,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SpecialKHelper.PluginSidebarItem.Application
@@ -19,6 +21,7 @@ namespace SpecialKHelper.PluginSidebarItem.Application
         private bool _isDisposed = false;
         private readonly SpecialKServiceManager _specialKServiceManager;
         private readonly SpecialKProfilesEditor _specialKProfilesEditor;
+        private readonly Dispatcher _uiDispatcher;
 
         public string IconEnabledPath { get; }
         public string IconDisabledPath { get; }
@@ -96,10 +99,26 @@ namespace SpecialKHelper.PluginSidebarItem.Application
             Is32BitsServiceRunning = _specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running;
             Is64BitsServiceRunning = _specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running;
             _specialKServiceManager.SpecialKServiceStatusChanged += SpecialKServiceManager_SpecialKServiceStatusChanged;
-            UpdateContextMenuItems();
+            _uiDispatcher = System.Windows.Application.Current.Dispatcher;
+            RefreshContextMenuItemsOnUIThread();
         }
 
-        private void UpdateContextMenuItems()
+        private void RefreshContextMenuItemsOnUIThread()
+        {
+            if (_uiDispatcher.CheckAccess())
+            {
+                RefreshContextMenuItems();
+            }
+            else
+            {
+                _uiDispatcher.Invoke(() =>
+                {
+                    RefreshContextMenuItems();
+                });
+            }
+        }
+
+        private void RefreshContextMenuItems()
         {
             ContextMenuItems.Clear();
             ContextMenuItems.Add(new MenuItem
@@ -165,7 +184,7 @@ namespace SpecialKHelper.PluginSidebarItem.Application
                 Is32BitsServiceRunning = e.Status == SpecialKServiceStatus.Running;
             }
 
-            UpdateContextMenuItems();
+            RefreshContextMenuItemsOnUIThread();
         }
 
         public bool SwitchAllowState()
