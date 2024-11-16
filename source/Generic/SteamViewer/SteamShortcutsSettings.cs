@@ -1,27 +1,27 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
-using SteamViewer.Application;
+using SteamShortcuts.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SteamViewer
+namespace SteamShortcuts
 {
-    public class SteamViewerSettings : ObservableObject
+    public class SteamShortcutsSettings : ObservableObject
     {
         private bool _launchUrlsInSteamClient = true;
         public bool LaunchUrlsInSteamClient { get => _launchUrlsInSteamClient; set => SetValue(ref _launchUrlsInSteamClient, value); }
     }
 
-    public class SteamViewerSettingsViewModel : ObservableObject, ISettings
+    public class SteamShortcutsSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly SteamViewer _plugin;
+        private readonly SteamShortcuts _plugin;
         private readonly SteamUriLauncherService _steamUriLauncherService;
-        private SteamViewerSettings _editingClone;
-        private SteamViewerSettings _settings;
-        public SteamViewerSettings Settings
+        private SteamShortcutsSettings _editingClone;
+        private SteamShortcutsSettings _settings;
+        public SteamShortcutsSettings Settings
         {
             get => _settings;
             set
@@ -31,12 +31,12 @@ namespace SteamViewer
             }
         }
 
-        public SteamViewerSettingsViewModel(SteamViewer plugin, SteamUriLauncherService teamUriLauncherService)
+        public SteamShortcutsSettingsViewModel(SteamShortcuts plugin, SteamUriLauncherService teamUriLauncherService)
         {
             _plugin = plugin;
             _steamUriLauncherService = teamUriLauncherService;
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<SteamViewerSettings>();
+            var savedSettings = plugin.LoadPluginSettings<SteamShortcutsSettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
@@ -45,7 +45,7 @@ namespace SteamViewer
             }
             else
             {
-                Settings = new SteamViewerSettings();
+                Settings = new SteamShortcutsSettings();
             }
         }
 

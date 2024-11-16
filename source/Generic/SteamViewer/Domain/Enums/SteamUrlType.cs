@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SteamViewer.Domain.Enums
+namespace SteamShortcuts.Domain.Enums
 {
     public enum SteamUrlType
     {

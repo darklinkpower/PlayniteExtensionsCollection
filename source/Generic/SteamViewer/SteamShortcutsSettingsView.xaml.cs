@@ -13,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SteamViewer
+namespace SteamShortcuts
 {
-    public partial class SteamViewerSettingsView : UserControl
+    public partial class SteamShortcutsSettingsView : UserControl
     {
-        public SteamViewerSettingsView()
+        public SteamShortcutsSettingsView()
         {
             InitializeComponent();
         }

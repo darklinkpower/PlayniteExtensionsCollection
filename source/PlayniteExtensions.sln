@@ -105,7 +105,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebExplorer", "Generic\WebE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebViewCore", "Common\WebViewCore\WebViewCore.csproj", "{279E9155-A80E-475C-97B5-B76AF0A5FDBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamViewer", "Generic\SteamViewer\SteamViewer.csproj", "{B362182C-0D36-4E85-94D6-2504CA50ED5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamShortcuts", "Generic\SteamViewer\SteamShortcuts.csproj", "{B362182C-0D36-4E85-94D6-2504CA50ED5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

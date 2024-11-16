@@ -4,8 +4,8 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
 using PluginsCommon;
-using SteamViewer.Application;
-using SteamViewer.Domain.Enums;
+using SteamShortcuts.Application;
+using SteamShortcuts.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +13,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace SteamViewer
+namespace SteamShortcuts
 {
-    public class SteamViewer : GenericPlugin
+    public class SteamShortcuts : GenericPlugin
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private static readonly Guid _steamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
         private readonly SteamUriLauncherService _steamUriLauncherService;
-        private readonly SteamViewerSettingsViewModel _settingsViewModel;
+        private readonly SteamShortcutsSettingsViewModel _settingsViewModel;
         private readonly List<GameMenuItem> _steamComponentMenuItems;
-        private const string _menuSection = "Steam Viewer";
+        private static readonly string _menuSection = ResourceProvider.GetString("LOCSteam_Viewer_SteamShortcutsLabel");
         public override Guid Id { get; } = Guid.Parse("0a3edabb-065f-4056-a294-d6bc0656e2ac");
 
-        public SteamViewer(IPlayniteAPI api) : base(api)
+        public SteamShortcuts(IPlayniteAPI api) : base(api)
         {
             _steamUriLauncherService = new SteamUriLauncherService();
-            _settingsViewModel = new SteamViewerSettingsViewModel(this, _steamUriLauncherService);
+            _settingsViewModel = new SteamShortcutsSettingsViewModel(this, _steamUriLauncherService);
             Properties = new GenericPluginProperties { HasSettings = true };
             _steamComponentMenuItems = GetSteamComponentMenuItems();
             _steamUriLauncherService.LaunchUrlsInSteamClient = _settingsViewModel.Settings.LaunchUrlsInSteamClient;
@@ -73,19 +73,18 @@ namespace SteamViewer
 
         private List<GameMenuItem> GetSteamComponentMenuItems()
         {
-            var subSection = ResourceProvider.GetString("LOCSteam_Viewer_MenuItemComponentsSection");
             return new List<GameMenuItem>
             {
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentActivateProductDescription", SteamComponentType.ActivateProduct, subSection, '\uE963'),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentDownloadsDescription", SteamComponentType.Downloads, subSection, '\uEF08'),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentFriendsDescription", SteamComponentType.Friends, subSection, '\uECF9'),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentNewsDescription", SteamComponentType.News, subSection, '\uEFA7'),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentScreenshotsDescription", SteamComponentType.Screenshots, subSection, '\uEF4B'),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentSettingsDescription", SteamComponentType.Settings, subSection, '\uEFE1')
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentActivateProductDescription", SteamComponentType.ActivateProduct, '\uE963'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentDownloadsDescription", SteamComponentType.Downloads, '\uEF08'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentFriendsDescription", SteamComponentType.Friends, '\uECF9'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentNewsDescription", SteamComponentType.News, '\uEFA7'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentScreenshotsDescription", SteamComponentType.Screenshots, '\uEF4B'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentSettingsDescription", SteamComponentType.Settings, '\uEFE1')
             };
         }
 
-        private GameMenuItem CreateMenuItem(string descriptionKey, SteamComponentType componentType, string section, char icoChar = '\uE93E')
+        private GameMenuItem CreateMenuItem(string descriptionKey, SteamComponentType componentType, char icoChar = '\uE93E')
         {
             return new GameMenuItem
             {
@@ -118,9 +117,14 @@ namespace SteamViewer
             };
         }
 
+        public override ISettings GetSettings(bool firstRunSettings)
+        {
+            return _settingsViewModel;
+        }
+
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new SteamViewerSettingsView();
+            return new SteamShortcutsSettingsView();
         }
     }
 

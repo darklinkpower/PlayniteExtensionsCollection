@@ -1,14 +1,12 @@
-﻿using Playnite.SDK;
-using PluginsCommon;
-using SteamViewer.Domain.Enums;
+﻿using PluginsCommon;
+using SteamShortcuts.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static SteamViewer.SteamViewer;
 
-namespace SteamViewer.Application
+namespace SteamShortcuts.Application
 {
     public class SteamUriLauncherService
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{B362182C-0D36-4E85-94D6-2504CA50ED5A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SteamViewer</RootNamespace>
-    <AssemblyName>SteamViewer</AssemblyName>
+    <RootNamespace>SteamShortcuts</RootNamespace>
+    <AssemblyName>SteamShortcuts</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -151,11 +151,11 @@
     <Compile Include="Domain\Enums\SteamClientGameUriType.cs" />
     <Compile Include="Domain\Enums\SteamComponentType.cs" />
     <Compile Include="Domain\Enums\SteamUrlType.cs" />
-    <Compile Include="Application\SteamLauncherService.cs" />
-    <Compile Include="SteamViewer.cs" />
-    <Compile Include="SteamViewerSettings.cs" />
-    <Compile Include="SteamViewerSettingsView.xaml.cs">
-      <DependentUpon>SteamViewerSettingsView.xaml</DependentUpon>
+    <Compile Include="Application\SteamUriLauncherService.cs" />
+    <Compile Include="SteamShortcuts.cs" />
+    <Compile Include="SteamShortcutsSettings.cs" />
+    <Compile Include="SteamShortcutsSettingsView.xaml.cs">
+      <DependentUpon>SteamShortcutsSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -175,7 +175,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SteamViewerSettingsView.xaml">
+    <Page Include="SteamShortcutsSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

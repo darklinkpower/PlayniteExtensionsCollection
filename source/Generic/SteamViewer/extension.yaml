@@ -1,17 +1,17 @@
 ﻿Id: Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac
-Name: Generic Plugin
+Name: Steam Shortcuts
 Author: darklinkpower
 Version: 3.0
-Module: SteamViewer.dll
+Module: SteamShortcuts.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
     - Name: Support
-      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/SteamViewer
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/Steam%20Shortcuts
     - Name: Issues Tracker
-      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/SteamViewer
+      Url: https://github.com/darklinkpower/PlayniteExtensionsCollection/labels/Steam%20Shortcuts
     - Name: Translate
       Url: https://crowdin.com/project/darklinkpower-playnite-extensi
     - Name: Ko-fi (Tips and Donations)
