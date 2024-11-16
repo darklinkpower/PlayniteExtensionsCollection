@@ -96,7 +96,6 @@ namespace SpecialKHelper
                 _steamHelper.SetBigPictureModeEnvVariable();
             }
 
-            var skifPath = _specialKServiceManager.GetInstallDirectory();
             if (!startServices)
             {
                 StopAllSpecialKServices();
@@ -112,7 +111,7 @@ namespace SpecialKHelper
                     service32Started = _specialKServiceManager.Start32BitsService();
                 }
 
-                if (_specialKServiceManager.Service32BitsStatus != SpecialKServiceStatus.Running)
+                if (_specialKServiceManager.Service64BitsStatus != SpecialKServiceStatus.Running)
                 {
                     service64Started = _specialKServiceManager.Start64BitsService();
                 }
@@ -139,6 +138,7 @@ namespace SpecialKHelper
                 return;
             }
 
+            var skifPath = _specialKServiceManager.GetInstallDirectory();
             SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
             if (settings.Settings.EnableReshadeOnNewProfiles)
             {
@@ -229,10 +229,10 @@ namespace SpecialKHelper
             {
                 if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
                 {
-                    _specialKServiceManager.Start32BitsService();
+                    _specialKServiceManager.Stop32BitsService();
                 }
 
-                if (_specialKServiceManager.Service32BitsStatus == SpecialKServiceStatus.Running)
+                if (_specialKServiceManager.Service64BitsStatus == SpecialKServiceStatus.Running)
                 {
                     _specialKServiceManager.Stop64BitsService();
                 }
@@ -245,7 +245,11 @@ namespace SpecialKHelper
             {
                 LogSkPathNotFound(e);
             }
-        }        
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error on StopAllSpecialKServices");
+            }
+        }
 
         public override ISettings GetSettings(bool firstRunSettings)
         {
