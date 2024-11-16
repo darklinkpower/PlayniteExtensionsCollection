@@ -239,3 +239,10 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.15_c7cda3df/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_36.pext
     Changelog:
     - 'Fixed: Error when saving settings'
+  - Version: 1.37
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-11-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.16_366bc4a1/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_37.pext
+    Changelog:
+    - 'Fixed: Plugin not using custom Special K installation path when configured in settings'
+    - 'Fixed: Issues with starting and stopping Special K services in certain situations'
