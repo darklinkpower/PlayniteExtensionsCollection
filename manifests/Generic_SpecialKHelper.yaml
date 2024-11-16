@@ -233,3 +233,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.15_c85c4abf/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_35.pext
     Changelog:
     - 'Fixed: Potential crash that could happen when a change in the status of Special K services is detected in the background'
+  - Version: 1.36
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-11-15
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.15_c7cda3df/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_36.pext
+    Changelog:
+    - 'Fixed: Error when saving settings'
