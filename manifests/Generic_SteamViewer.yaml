@@ -92,3 +92,14 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_2_14.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 3.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-11-16
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.16_92da71fc/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_0.pext
+    Changelog:
+    - 'Added: Option to configure if Steam web urls, like store or discussion pages, should be opened in the web browser or Steam client'
+    - 'Added: New menu items to open the Steam input or Properties windows of Steam games'
+    - 'Changed: The extension has been renamed from "Steam Viewer" to "Steam Shortcuts"'
+    - 'Changed: Items in menu will now display an icon'
+    - 'Changed: Items in menu will now be in a single list and separated by categories'
+    - 'Changed: The extension has been completely rewritten in C# to improve performance, reliability, and maintainability, while also enabling easier future feature additions'
