@@ -6,6 +6,7 @@ using SpecialKHelper.SpecialKHandler.Application;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,7 +105,7 @@ namespace SpecialKHelper
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
             _plugin.SavePluginSettings(Settings);
-            _specialKServiceManager.SetSpecialKInstallDirectory(settings.CustomSpecialKPath);
+            _specialKServiceManager.SetSpecialKInstallDirectory(Path.GetDirectoryName(settings.CustomSpecialKPath));
         }
 
         public bool VerifySettings(out List<string> errors)

@@ -59,7 +59,7 @@ namespace SpecialKHelper
             _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath, _specialKServiceManager, _specialKProfilesEditor);
             _easyAnticheatHelper = new EasyAnticheatService(new EasyAnticheatCache(GetPluginUserDataPath()));
             _steamHelper = new SteamHelper(GetPluginUserDataPath(), PlayniteApi);
-            _specialKServiceManager.SetSpecialKInstallDirectory(settings.Settings.CustomSpecialKPath);
+            _specialKServiceManager.SetSpecialKInstallDirectory(Path.GetDirectoryName(settings.Settings.CustomSpecialKPath));
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
