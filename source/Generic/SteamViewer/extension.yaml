@@ -1,14 +1,12 @@
-Id: Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac
-Name: Steam Viewer
+﻿Id: Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac
+Name: Generic Plugin
 Author: darklinkpower
-Version: 2.14
-Module: SteamViewer.psm1
-Type: Script
+Version: 3.0
+Module: SteamViewer.dll
+Type: GenericPlugin
 Icon: icon.png
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
-    - Name: Playnite Forums thread
-      Url: https://playnite.link/forum/thread-506.html
     - Name: Translate
       Url: https://crowdin.com/project/darklinkpower-playnite-extensi
