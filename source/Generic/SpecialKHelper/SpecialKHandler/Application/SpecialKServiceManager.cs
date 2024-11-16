@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Playnite.SDK;
 using PluginsCommon;
 using SpecialKHelper.SpecialKHandler.Domain.Enums;
 using SpecialKHelper.SpecialKHandler.Domain.Events;
@@ -27,16 +28,21 @@ namespace SpecialKHelper.SpecialKHandler.Application
         private const string _specialKRegistryPath = @"SOFTWARE\Kaldaien\Special K";
         private const int _startServiceMaxRetries = 15;
         private const int _startServiceSleepDurationMs = 100;
+        private const int _stopServiceMaxRetries = 15;
+        private const int _stopServiceSleepDurationMs = 100;
         private const int _backgroundServiceDelay = 15000;
         private SpecialKServiceStatus _service32BitsStatus;
         private SpecialKServiceStatus _service64BitsStatus;
+        private readonly ILogger _logger;
+
         public SpecialKServiceStatus Service32BitsStatus => _service32BitsStatus;
         public SpecialKServiceStatus Service64BitsStatus => _service64BitsStatus;
 
-        public SpecialKServiceManager()
+        public SpecialKServiceManager(ILogger logger)
         {
             _service32BitsStatus = Is32BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
             _service64BitsStatus = Is64BitsServiceRunning() ? SpecialKServiceStatus.Running : SpecialKServiceStatus.Stopped;
+            _logger = logger;
             StartBackgroundServiceStatusCheck();
         }
 
@@ -105,9 +111,9 @@ namespace SpecialKHelper.SpecialKHandler.Application
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.Error(ex, "Failed to start Special K software");
             }
         }
 
@@ -123,14 +129,14 @@ namespace SpecialKHelper.SpecialKHandler.Application
 
         internal void SetSpecialKInstallDirectory(string customSpecialKPath)
         {
-            if (customSpecialKPath.IsNullOrEmpty() || !FileSystem.DirectoryExists(customSpecialKPath))
+            if (customSpecialKPath.IsNullOrWhiteSpace() || !FileSystem.DirectoryExists(customSpecialKPath))
             {
-                _customSpecialKInstallationPath = string.Empty;
+                _logger.Info($"Failed to set Special K installation path: {customSpecialKPath ?? "null"}. Directory does not exist.");
+                return;
             }
-            else
-            {
-                _customSpecialKInstallationPath = customSpecialKPath;
-            }
+
+            _customSpecialKInstallationPath = customSpecialKPath;
+            _logger.Info($"Special K installation path successfully set to: {_customSpecialKInstallationPath}");
         }
 
         public string GetInstallDirectory()
@@ -250,6 +256,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 }
             }
 
+            _logger.Info($"Special K {cpuArchitecture} did not start after set time.");
             return false;
         }
 
@@ -301,11 +308,11 @@ namespace SpecialKHelper.SpecialKHandler.Application
 
         private bool WaitForProcessToStop(CpuArchitecture cpuArchitecture, CancellationToken cancellationToken)
         {
-            for (int i = 0; i < _startServiceMaxRetries; i++)
+            for (int i = 0; i < _stopServiceMaxRetries; i++)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                Thread.Sleep(_startServiceSleepDurationMs);
+                Thread.Sleep(_stopServiceSleepDurationMs);
                 var isProcessStarted = cpuArchitecture == CpuArchitecture.X86 ? Is32BitsServiceRunning() : Is64BitsServiceRunning();
                 if (!isProcessStarted)
                 {
@@ -314,11 +321,16 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 }
             }
 
+            _logger.Info($"Special K {cpuArchitecture} did not stop after set time.");
             return false;
         }
 
         private void OnServiceStatusChanged(SpecialKServiceStatus status, CpuArchitecture architecture)
         {
+            var currentStatus = (architecture == CpuArchitecture.X86)
+                ? _service32BitsStatus
+                : _service64BitsStatus;
+
             if (architecture == CpuArchitecture.X86)
             {
                 _service32BitsStatus = status;
@@ -328,6 +340,7 @@ namespace SpecialKHelper.SpecialKHandler.Application
                 _service64BitsStatus = status;
             }
 
+            _logger.Info($"Special K {architecture} service status changed from {currentStatus} to {status}");
             SpecialKServiceStatusChanged?.Invoke(this, new SpecialKServiceStatusChangedEventArgs(status, architecture));
         }
 

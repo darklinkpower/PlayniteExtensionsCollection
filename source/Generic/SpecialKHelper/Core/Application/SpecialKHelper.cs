@@ -47,7 +47,7 @@ namespace SpecialKHelper
 
         public SpecialKHelper(IPlayniteAPI api) : base(api)
         {
-            _specialKServiceManager = new SpecialKServiceManager();
+            _specialKServiceManager = new SpecialKServiceManager(_logger);
             settings = new SpecialKHelperSettingsViewModel(this, _specialKServiceManager);
             Properties = new GenericPluginProperties
             {
@@ -82,7 +82,6 @@ namespace SpecialKHelper
         {
             var game = args.Game;
             var startServices = GetShouldStartService(game);
-
             if (_steamHelper.IsEnvinronmentVariableSet())
             {
                 if (settings.Settings.SteamOverlayForBpm != SteamOverlay.BigPictureMode
@@ -128,14 +127,22 @@ namespace SpecialKHelper
                 LogSkPathNotFound(e);
                 return;
             }
-
-            if (service32Started || service64Started)
+            catch (Exception ex)
             {
-                SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
-                if (settings.Settings.EnableReshadeOnNewProfiles)
-                {
-                    SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
-                }
+                _logger.Error(ex, "Error while starting services OnGameStarting");
+                return;
+            }
+
+            if (!service32Started && !service64Started)
+            {
+                _logger.Info("Skipped Special K configuration validation because no services were started.");
+                return;
+            }
+
+            SpecialKConfigurationManager.ValidateDefaultProfile(game, skifPath, settings, GetPluginUserDataPath(), PlayniteApi);
+            if (settings.Settings.EnableReshadeOnNewProfiles)
+            {
+                SpecialKConfigurationManager.ValidateReshadeConfiguration(game, skifPath);
             }
         }
 
