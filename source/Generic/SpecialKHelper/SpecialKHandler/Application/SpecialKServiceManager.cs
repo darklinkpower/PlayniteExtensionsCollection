@@ -213,19 +213,18 @@ namespace SpecialKHelper.SpecialKHandler.Application
 
         private void ValidateServiceFiles(string skifPath, CpuArchitecture cpuArchitecture)
         {
-            var architectureName = cpuArchitecture == CpuArchitecture.X86
-                ? _32BitsPrefix
-                : _64BitsPrefix;
-            var serviceDllPath = Path.Combine(skifPath, $"SpecialK{architectureName}.dll");
-            if (!FileSystem.FileExists(serviceDllPath))
-            {
-                throw new SpecialKFileNotFoundException($"The service DLL file was not found: {serviceDllPath}");
-            }
+            var architectureName = cpuArchitecture == CpuArchitecture.X86 ? _32BitsPrefix : _64BitsPrefix;
+            ValidateFileExists(Path.Combine(skifPath, $"SpecialK{architectureName}.dll"), "service DLL");
+            ValidateFileExists(Path.Combine(skifPath, "Servlet", $"SKIFsvc{architectureName}.exe"), "servlet executable");
+        }
 
-            var servletExe = Path.Combine(skifPath, "Servlet", $"SKIFsvc{architectureName}.exe");
-            if (!FileSystem.FileExists(servletExe))
+        private void ValidateFileExists(string filePath, string fileDescription)
+        {
+            if (!FileSystem.FileExists(filePath))
             {
-                throw new SpecialKFileNotFoundException($"The servlet executable was not found: {servletExe}");
+                var exception = new SpecialKFileNotFoundException($"The {fileDescription} was not found: {filePath}");
+                _logger.Error(exception, $"Service validation failed: {fileDescription} is missing.");
+                throw exception;
             }
         }
 
@@ -343,7 +342,6 @@ namespace SpecialKHelper.SpecialKHandler.Application
             _logger.Info($"Special K {architecture} service status changed from {currentStatus} to {status}");
             SpecialKServiceStatusChanged?.Invoke(this, new SpecialKServiceStatusChangedEventArgs(status, architecture));
         }
-
 
     }
 }
