@@ -10,9 +10,9 @@ using static SteamViewer.SteamViewer;
 
 namespace SteamViewer.Application
 {
-    public static class SteamLauncher
+    public class SteamUriLauncherService
     {
-        private static readonly ILogger _logger = LogManager.GetLogger();
+        private bool _launchUrlsInSteamClient = true;
 
         private static readonly Dictionary<SteamClientGameUriType, string> _steamClientGameUriTemplates = new Dictionary<SteamClientGameUriType, string>()
         {
@@ -42,7 +42,18 @@ namespace SteamViewer.Application
             { SteamComponentType.Settings, "steam://open/settings" }
         };
 
-        public static void LaunchSteamComponent(SteamComponentType componentType)
+        public bool LaunchUrlsInSteamClient
+        {
+            get => _launchUrlsInSteamClient;
+            set => _launchUrlsInSteamClient = value;
+        }
+
+        public SteamUriLauncherService()
+        {
+
+        }
+
+        public void LaunchSteamComponent(SteamComponentType componentType)
         {
             if (_steamComponentTemplates.TryGetValue(componentType, out var uri))
             {
@@ -50,7 +61,7 @@ namespace SteamViewer.Application
             }
         }
 
-        public static void LaunchSteamClientUri(SteamClientGameUriType uriType, string steamId)
+        public void LaunchSteamClientUri(SteamClientGameUriType uriType, string steamId)
         {
             if (_steamClientGameUriTemplates.TryGetValue(uriType, out var urlTemplate))
             {
@@ -59,12 +70,19 @@ namespace SteamViewer.Application
             }
         }
 
-        public static void LaunchSteamWebUrl(SteamUrlType urlType, string steamId)
+        public void LaunchSteamWebUrl(SteamUrlType urlType, string steamId)
         {
             if (_steamGameUrlTemplates.TryGetValue(urlType, out var urlTemplate))
             {
                 var url = string.Format(urlTemplate, steamId);
-                ProcessStarter.StartUrl(url);
+                if (_launchUrlsInSteamClient)
+                {
+                    ProcessStarter.StartUrl("steam://openurl/" + url);
+                }
+                else
+                {
+                    ProcessStarter.StartUrl(url);
+                }
             }
         }
     }

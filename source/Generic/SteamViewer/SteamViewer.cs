@@ -19,6 +19,7 @@ namespace SteamViewer
     {
         private static readonly ILogger _logger = LogManager.GetLogger();
         private static readonly Guid _steamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
+        private readonly SteamUriLauncherService _steamUriLauncherService;
         private readonly SteamViewerSettingsViewModel _settingsViewModel;
         private readonly List<GameMenuItem> _steamComponentMenuItems;
         private const string _menuSection = "Steam Viewer";
@@ -26,9 +27,11 @@ namespace SteamViewer
 
         public SteamViewer(IPlayniteAPI api) : base(api)
         {
-            _settingsViewModel = new SteamViewerSettingsViewModel(this);
-            Properties = new GenericPluginProperties { HasSettings = false };
+            _steamUriLauncherService = new SteamUriLauncherService();
+            _settingsViewModel = new SteamViewerSettingsViewModel(this, _steamUriLauncherService);
+            Properties = new GenericPluginProperties { HasSettings = true };
             _steamComponentMenuItems = GetSteamComponentMenuItems();
+            _steamUriLauncherService.LaunchUrlsInSteamClient = _settingsViewModel.Settings.LaunchUrlsInSteamClient;
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -89,7 +92,7 @@ namespace SteamViewer
                 Description = ResourceProvider.GetString(descriptionKey),
                 Icon = PlayniteUtilities.GetIcoFontGlyphResource(icoChar),
                 MenuSection = $"{_menuSection}",
-                Action = _ => SteamLauncher.LaunchSteamComponent(componentType)
+                Action = _ => _steamUriLauncherService.LaunchSteamComponent(componentType)
             };
         }
 
@@ -99,7 +102,7 @@ namespace SteamViewer
             {
                 Description = ResourceProvider.GetString(descriptionKey),
                 Icon = PlayniteUtilities.GetIcoFontGlyphResource(icoChar),
-                Action = _ => SteamLauncher.LaunchSteamClientUri(type, game.GameId),
+                Action = _ => _steamUriLauncherService.LaunchSteamClientUri(type, game.GameId),
                 MenuSection = _menuSection
             };
         }
@@ -110,7 +113,7 @@ namespace SteamViewer
             {
                 Description = ResourceProvider.GetString(descriptionKey),
                 Icon = PlayniteUtilities.GetIcoFontGlyphResource(icoChar),
-                Action = _ => SteamLauncher.LaunchSteamWebUrl(type, game.GameId),
+                Action = _ => _steamUriLauncherService.LaunchSteamWebUrl(type, game.GameId),
                 MenuSection = _menuSection
             };
         }

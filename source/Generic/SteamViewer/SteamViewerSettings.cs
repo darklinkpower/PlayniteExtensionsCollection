@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using SteamViewer.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,30 @@ namespace SteamViewer
 {
     public class SteamViewerSettings : ObservableObject
     {
-        private string option1 = string.Empty;
-        private bool option2 = false;
-        private bool optionThatWontBeSaved = false;
-
-        public string Option1 { get => option1; set => SetValue(ref option1, value); }
-        public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
+        private bool _launchUrlsInSteamClient = true;
+        public bool LaunchUrlsInSteamClient { get => _launchUrlsInSteamClient; set => SetValue(ref _launchUrlsInSteamClient, value); }
     }
 
     public class SteamViewerSettingsViewModel : ObservableObject, ISettings
     {
-        private readonly SteamViewer plugin;
-        private SteamViewerSettings editingClone { get; set; }
-
-        private SteamViewerSettings settings;
+        private readonly SteamViewer _plugin;
+        private readonly SteamUriLauncherService _steamUriLauncherService;
+        private SteamViewerSettings _editingClone;
+        private SteamViewerSettings _settings;
         public SteamViewerSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
 
-        public SteamViewerSettingsViewModel(SteamViewer plugin)
+        public SteamViewerSettingsViewModel(SteamViewer plugin, SteamUriLauncherService teamUriLauncherService)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
-
+            _plugin = plugin;
+            _steamUriLauncherService = teamUriLauncherService;
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<SteamViewerSettings>();
 
@@ -59,29 +51,22 @@ namespace SteamViewer
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            _editingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = _editingClone;
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            _plugin.SavePluginSettings(Settings);
+            _steamUriLauncherService.LaunchUrlsInSteamClient = _settings.LaunchUrlsInSteamClient;
         }
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }

@@ -151,7 +151,7 @@
     <Compile Include="Domain\Enums\SteamClientGameUriType.cs" />
     <Compile Include="Domain\Enums\SteamComponentType.cs" />
     <Compile Include="Domain\Enums\SteamUrlType.cs" />
-    <Compile Include="Application\SteamLauncher.cs" />
+    <Compile Include="Application\SteamLauncherService.cs" />
     <Compile Include="SteamViewer.cs" />
     <Compile Include="SteamViewerSettings.cs" />
     <Compile Include="SteamViewerSettingsView.xaml.cs">
