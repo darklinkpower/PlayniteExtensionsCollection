@@ -2,6 +2,7 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteUtilitiesCommon;
 using PluginsCommon;
 using SteamViewer.Application;
 using SteamViewer.Domain.Enums;
@@ -38,21 +39,21 @@ namespace SteamViewer
             {
                 menuItems.AddRange(new List<GameMenuItem>
                 {
-                    CreateSteamClientMenuItem("LOCSteam_Viewer_MenuItemGameLibraryDetails", SteamClientGameUriType.Details, game),
-                    CreateSteamClientMenuItem("LOCSteam_Viewer_MenuItemGameSteamInput", SteamClientGameUriType.SteamInput, game),
-                    CreateSteamClientMenuItem("LOCSteam_Viewer_MenuItemGameProperties", SteamClientGameUriType.GameProperties, game)
+                    CreateSteamClientMenuItem("LOCSteam_Viewer_MenuItemGameLibraryDetails", SteamClientGameUriType.Details, game, '\uEF65'),
+                    CreateSteamClientMenuItem("LOCSteam_Viewer_MenuItemGameSteamInput", SteamClientGameUriType.SteamInput, game, '\uEA30'),
+                    CreateSteamClientMenuItem("LOCSteam_Viewer_MenuItemGameProperties", SteamClientGameUriType.GameProperties, game, '\uEF75')
                 });
 
                 AddSeparatorToMenuItems(menuItems, _menuSection);
                 menuItems.AddRange(new List<GameMenuItem>
                 {
-                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameStorePageDescription", SteamUrlType.StorePage, game),
+                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameStorePageDescription", SteamUrlType.StorePage, game, '\uEFE7'),
                     CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameCommunityHubDescription", SteamUrlType.CommunityHub, game),
-                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameDiscussionsDescription", SteamUrlType.Discussions, game),
-                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameGuidesDescription", SteamUrlType.Guides, game),
-                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, game),
-                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameNewsDescription", SteamUrlType.News, game),
-                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, game)
+                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameDiscussionsDescription", SteamUrlType.Discussions, game, '\uED44'),
+                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameGuidesDescription", SteamUrlType.Guides, game, '\uEF8B'),
+                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameAchievementsDescription", SteamUrlType.Achievements, game, '\uEDD7'),
+                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGameNewsDescription", SteamUrlType.News, game, '\uEFA7'),
+                    CreateSteamWebLinkMenuItem("LOCSteam_Viewer_MenuItemGamePointsShopDescription", SteamUrlType.PointsShop, game, '\uEFE7')
                 });
 
                 AddSeparatorToMenuItems(menuItems, _menuSection);
@@ -72,40 +73,43 @@ namespace SteamViewer
             var subSection = ResourceProvider.GetString("LOCSteam_Viewer_MenuItemComponentsSection");
             return new List<GameMenuItem>
             {
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentActivateProductDescription", SteamComponentType.ActivateProduct, subSection),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentDownloadsDescription", SteamComponentType.Downloads, subSection),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentFriendsDescription", SteamComponentType.Friends, subSection),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentNewsDescription", SteamComponentType.News, subSection),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentScreenshotsDescription", SteamComponentType.Screenshots, subSection),
-                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentSettingsDescription", SteamComponentType.Settings, subSection)
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentActivateProductDescription", SteamComponentType.ActivateProduct, subSection, '\uE963'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentDownloadsDescription", SteamComponentType.Downloads, subSection, '\uEF08'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentFriendsDescription", SteamComponentType.Friends, subSection, '\uECF9'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentNewsDescription", SteamComponentType.News, subSection, '\uEFA7'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentScreenshotsDescription", SteamComponentType.Screenshots, subSection, '\uEF4B'),
+                CreateMenuItem("LOCSteam_Viewer_MenuItemComponentSettingsDescription", SteamComponentType.Settings, subSection, '\uEFE1')
             };
         }
 
-        private GameMenuItem CreateMenuItem(string descriptionKey, SteamComponentType componentType, string section)
+        private GameMenuItem CreateMenuItem(string descriptionKey, SteamComponentType componentType, string section, char icoChar = '\uE93E')
         {
             return new GameMenuItem
             {
                 Description = ResourceProvider.GetString(descriptionKey),
+                Icon = PlayniteUtilities.GetIcoFontGlyphResource(icoChar),
                 MenuSection = $"{_menuSection}",
                 Action = _ => SteamLauncher.LaunchSteamComponent(componentType)
             };
         }
 
-        private GameMenuItem CreateSteamClientMenuItem(string descriptionKey, SteamClientGameUriType type, Game game)
+        private GameMenuItem CreateSteamClientMenuItem(string descriptionKey, SteamClientGameUriType type, Game game, char icoChar = '\uE93E')
         {
             return new GameMenuItem
             {
                 Description = ResourceProvider.GetString(descriptionKey),
+                Icon = PlayniteUtilities.GetIcoFontGlyphResource(icoChar),
                 Action = _ => SteamLauncher.LaunchSteamClientUri(type, game.GameId),
                 MenuSection = _menuSection
             };
         }
 
-        private GameMenuItem CreateSteamWebLinkMenuItem(string descriptionKey, SteamUrlType type, Game game)
+        private GameMenuItem CreateSteamWebLinkMenuItem(string descriptionKey, SteamUrlType type, Game game, char icoChar = '\uE93E')
         {
             return new GameMenuItem
             {
                 Description = ResourceProvider.GetString(descriptionKey),
+                Icon = PlayniteUtilities.GetIcoFontGlyphResource(icoChar),
                 Action = _ => SteamLauncher.LaunchSteamWebUrl(type, game.GameId),
                 MenuSection = _menuSection
             };
