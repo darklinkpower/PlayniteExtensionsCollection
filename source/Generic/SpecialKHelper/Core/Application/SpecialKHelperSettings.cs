@@ -117,7 +117,7 @@ namespace SpecialKHelper
             {
                 if (!_settings.CustomSpecialKPath.IsNullOrEmpty() && FileSystem.FileExists(_settings.CustomSpecialKPath))
                 {
-                    var directory = Path.GetDirectoryName(string.Empty);
+                    var directory = Path.GetDirectoryName(_settings.CustomSpecialKPath);
                     _specialKServiceManager.SetSpecialKInstallDirectory(directory);
                 }
                 else

@@ -4,7 +4,7 @@ Author: darklinkpower
 Version: 1.37
 Module: SpecialKHelper.dll
 Type: GenericPlugin
-Icon: icon.png
+Icon: Core\Resources\icon.png
 Links:
     - Name: GitHub
       Url: https://github.com/darklinkpower/PlayniteExtensionsCollection
