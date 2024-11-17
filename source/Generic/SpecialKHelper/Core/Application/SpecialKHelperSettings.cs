@@ -53,25 +53,27 @@ namespace SpecialKHelper
     public class SpecialKHelperSettingsViewModel : ObservableObject, ISettings
     {
         private readonly SpecialKHelper _plugin;
+        private readonly ILogger _logger;
         private readonly SpecialKServiceManager _specialKServiceManager;
 
-        private SpecialKHelperSettings editingClone { get; set; }
+        private SpecialKHelperSettings _editingClone;
 
-        private SpecialKHelperSettings settings;
+        private SpecialKHelperSettings _settings;
         public SpecialKHelperSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
 
-        public SpecialKHelperSettingsViewModel(SpecialKHelper plugin, SpecialKServiceManager specialKServiceManager)
+        public SpecialKHelperSettingsViewModel(SpecialKHelper plugin, SpecialKServiceManager specialKServiceManager, ILogger logger)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             _plugin = plugin;
+            _logger = logger;
             _specialKServiceManager = specialKServiceManager;
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<SpecialKHelperSettings>();
@@ -85,19 +87,20 @@ namespace SpecialKHelper
             {
                 Settings = new SpecialKHelperSettings();
             }
+            UpdateSpecialKServiceSettings();
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            _editingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = _editingClone;
         }
 
         public void EndEdit()
@@ -105,7 +108,27 @@ namespace SpecialKHelper
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
             _plugin.SavePluginSettings(Settings);
-            _specialKServiceManager.SetSpecialKInstallDirectory(Path.GetDirectoryName(settings.CustomSpecialKPath));
+            UpdateSpecialKServiceSettings();
+        }
+
+        private void UpdateSpecialKServiceSettings()
+        {
+            try
+            {
+                if (!_settings.CustomSpecialKPath.IsNullOrEmpty() && FileSystem.FileExists(_settings.CustomSpecialKPath))
+                {
+                    var directory = Path.GetDirectoryName(string.Empty);
+                    _specialKServiceManager.SetSpecialKInstallDirectory(directory);
+                }
+                else
+                {
+                    _specialKServiceManager.ResetSpecialKInstallDirectory();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Failed to set Special K installation from executable: {_settings.CustomSpecialKPath ?? "null"}");
+            }
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -132,7 +155,7 @@ namespace SpecialKHelper
                 var filePath = _plugin.PlayniteApi.Dialogs.SelectFile("SKIF|SKIF.exe");
                 if (!filePath.IsNullOrEmpty())
                 {
-                    settings.CustomSpecialKPath = filePath;
+                    _settings.CustomSpecialKPath = filePath;
                 }
             });
         }
@@ -141,7 +164,7 @@ namespace SpecialKHelper
         {
             get => new RelayCommand(() =>
             {
-                settings.CustomSpecialKPath = string.Empty;
+                _settings.CustomSpecialKPath = string.Empty;
             });
         }
     }

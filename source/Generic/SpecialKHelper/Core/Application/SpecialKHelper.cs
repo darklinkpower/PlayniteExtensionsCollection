@@ -48,7 +48,7 @@ namespace SpecialKHelper
         public SpecialKHelper(IPlayniteAPI api) : base(api)
         {
             _specialKServiceManager = new SpecialKServiceManager(_logger);
-            settings = new SpecialKHelperSettingsViewModel(this, _specialKServiceManager);
+            settings = new SpecialKHelperSettingsViewModel(this, _specialKServiceManager, _logger);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -59,7 +59,6 @@ namespace SpecialKHelper
             _sidebarItemSwitcherViewModel = new SidebarItemSwitcherViewModel(true, _pluginInstallPath, _specialKServiceManager, _specialKProfilesEditor);
             _easyAnticheatHelper = new EasyAnticheatService(new EasyAnticheatCache(GetPluginUserDataPath()));
             _steamHelper = new SteamHelper(GetPluginUserDataPath(), PlayniteApi);
-            _specialKServiceManager.SetSpecialKInstallDirectory(Path.GetDirectoryName(settings.Settings.CustomSpecialKPath));
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()

@@ -127,16 +127,30 @@ namespace SpecialKHelper.SpecialKHandler.Application
             return IsProcessRunning(_64BitsServiceProcessName);
         }
 
-        internal void SetSpecialKInstallDirectory(string customSpecialKPath)
+        public void ResetSpecialKInstallDirectory()
+        {
+            if (!_customSpecialKInstallationPath.IsNullOrEmpty())
+            {
+                _customSpecialKInstallationPath = string.Empty;
+                _logger.Info($"Special K installation path has been reset");
+            }
+        }
+
+        internal bool SetSpecialKInstallDirectory(string customSpecialKPath)
         {
             if (customSpecialKPath.IsNullOrWhiteSpace() || !FileSystem.DirectoryExists(customSpecialKPath))
             {
                 _logger.Info($"Failed to set Special K installation path: {customSpecialKPath ?? "null"}. Directory does not exist.");
-                return;
+                return false;
             }
 
-            _customSpecialKInstallationPath = customSpecialKPath;
-            _logger.Info($"Special K installation path successfully set to: {_customSpecialKInstallationPath}");
+            if (_customSpecialKInstallationPath != customSpecialKPath)
+            {
+                _customSpecialKInstallationPath = customSpecialKPath;
+                _logger.Info($"Special K installation path successfully set to: {_customSpecialKInstallationPath}");
+            }
+
+            return true;
         }
 
         public string GetInstallDirectory()
