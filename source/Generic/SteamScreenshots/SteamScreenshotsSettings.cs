@@ -13,6 +13,7 @@ namespace SteamScreenshots
         private bool _isControlVisible = false;
         [DontSerialize]
         public bool IsControlVisible { get => _isControlVisible; set => SetValue(ref _isControlVisible, value); }
+        public bool SteamAppDetailsMigrationDone { get; set; } = false;
     }
 
     public class SteamScreenshotsSettingsViewModel : ObservableObject, ISettings

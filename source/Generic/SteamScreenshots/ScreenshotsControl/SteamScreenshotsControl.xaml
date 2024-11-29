@@ -15,7 +15,7 @@
     </PluginUserControl.InputBindings>
     <PluginUserControl.Resources>
         <DataTemplate x:Key="ScreenshotHorizontalTemplate">
-            <Image Source="{Binding PathThumbnail, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+            <Image Source="{Binding ThumbnailImage}"
                    RenderOptions.BitmapScalingMode="Fant"
                    Stretch="UniformToFill"
                    StretchDirection="Both"/>
@@ -61,13 +61,13 @@
                 <Grid>
                     <Viewbox Stretch="Uniform">
                         <Image x:Name="OldImage"
-                               Source="{Binding OldImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+                               Source="{Binding OldImageBitmap}"
                                RenderOptions.BitmapScalingMode="Fant"
                                Stretch="Uniform" />
                     </Viewbox>
                     <Viewbox Stretch="Uniform">
                         <Image x:Name="NewImage"
-                               Source="{Binding CurrentImageUri, Converter={StaticResource ImageUriToBitmapImageConverter}, IsAsync=False}"
+                               Source="{Binding CurrentImageBitmap}"
                                RenderOptions.BitmapScalingMode="Fant"
                                Stretch="Uniform" />
                     </Viewbox>

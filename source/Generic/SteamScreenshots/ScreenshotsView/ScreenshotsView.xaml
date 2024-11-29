@@ -12,7 +12,7 @@
     <Grid>
 
         <Image x:Name="ImageA"
-               Source="{Binding ImageUriA, IsAsync=False}"
+               Source="{Binding BitmapImageA, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
                StretchDirection="Both"
@@ -20,7 +20,7 @@
                VerticalAlignment="Center"/>
 
         <Image x:Name="ImageB"
-               Source="{Binding ImageUriB, IsAsync=False}"
+               Source="{Binding BitmapImageB, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
                StretchDirection="Both"

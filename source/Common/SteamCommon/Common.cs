@@ -14,9 +14,8 @@ namespace SteamCommon
 {
     public static class Steam
     {
-        private static ILogger logger = LogManager.GetLogger();
-        private static Guid steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
-        private static readonly Regex steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.None);
+        private static Guid _steamPluginId = Guid.Parse("cb91dfc9-b977-43bf-8e70-55f46e410fab");
+        private static readonly Regex _steamLinkRegex = new Regex(@"^https?:\/\/store\.steampowered\.com\/app\/(\d+)", RegexOptions.None);
 
         public static string GetGameSteamId(Game game, bool useLinksDetection = false)
         {
@@ -32,9 +31,9 @@ namespace SteamCommon
             return null;
         }
 
-        private static string GetSteamIdFromLinks(Game game)
+        public static string GetSteamIdFromLinks(Game game)
         {
-            if (game.Links is null)
+            if (game.Links is null || !game.Links.Any())
             {
                 return null;
             }
@@ -46,7 +45,7 @@ namespace SteamCommon
                     continue;
                 }
 
-                var linkMatch = steamLinkRegex.Match(gameLink.Url);
+                var linkMatch = _steamLinkRegex.Match(gameLink.Url);
                 if (linkMatch.Success)
                 {
                     return linkMatch.Groups[1].Value;
@@ -58,7 +57,7 @@ namespace SteamCommon
 
         public static bool IsGameSteamGame(Game game)
         {
-            return game.PluginId == steamPluginId;
+            return game.PluginId == _steamPluginId;
         }
 
         public static string GetSteamApiMatchingLanguage(string playniteLanguage)

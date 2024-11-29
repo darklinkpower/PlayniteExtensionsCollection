@@ -277,6 +277,19 @@
     <Compile Include="..\..\common\temporarycache\models\CacheItem.cs">
       <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
     </Compile>
+    <Compile Include="Application\Services\ScreenshotManagementService.cs" />
+    <Compile Include="Application\Services\SteamAppDetailsService.cs" />
+    <Compile Include="Domain\Enums\ScreenshotServiceType.cs" />
+    <Compile Include="Domain\Interfaces\IImageProvider.cs" />
+    <Compile Include="Domain\Interfaces\IScreenshotProvider.cs" />
+    <Compile Include="Domain\Interfaces\ISteamAppDetailsRepository.cs" />
+    <Compile Include="Domain\Interfaces\ISteamAppDetailsService.cs" />
+    <Compile Include="Domain\ValueObjects\ScreenshotData.cs" />
+    <Compile Include="Domain\ValueObjects\Screenshot.cs" />
+    <Compile Include="Domain\ValueObjects\ScreenshotInitializationOptions.cs" />
+    <Compile Include="Infrastructure\Providers\UrlImageProvider.cs" />
+    <Compile Include="Infrastructure\Providers\SteamScreenshotProvider.cs" />
+    <Compile Include="Infrastructure\Repositories\SteamAppDetailsRepository.cs" />
     <Compile Include="ScreenshotsControl\SteamScreenshotsControl.xaml.cs">
       <DependentUpon>SteamScreenshotsControl.xaml</DependentUpon>
     </Compile>
@@ -326,6 +339,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets" Condition="Exists('..\..\packages\Microsoft.Extensions.Logging.Abstractions.6.0.0\build\Microsoft.Extensions.Logging.Abstractions.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
