@@ -98,20 +98,28 @@ Varies depending the extension functionality but in general. Refer to each exten
 | [Nova X](https://github.com/darklinkpower/Nova-X "Nova X") | Theme inspired by the Xbox PC App for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Nova_X_0a95b7a3-00e4-412d-b301-f2fa3f98dfad "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Nova-X/master/screenshots/screenshot_01.webp) |
 | [Stardust](https://github.com/darklinkpower/Stardust "Stardust") | Theme inspired by GOG Galaxy 2.0 for Playnite Desktop Mode. | [Database](https://playnite.link/addons.html#Stardust%202.0_1fb333b2-255b-43dd-aec1-8e2f2d5ea002 "Database") | ![Screenshot](https://raw.githubusercontent.com/darklinkpower/Stardust/master/Screenshots/screenshot_01.webp) |
 
-## Contributing
+## Contribution Guidelines
 
-Please contact me before working on a new PR to make sure that the changes are something that we can discuss beforehand.
+To maintain consistency and code quality, please follow these guidelines when submitting a Pull Request (PR).
 
-### General rules
-- If your PR contains new strings, they must be properly implemented as localization strings
-- Indentation must use 4 spaces. No tabs.
-- Always encapsulate the code body after *if, for, foreach, while* etc. with curly braces, for example:
-```csharp
-if (true)
-{
-    DoSomething();
-}
-```
+### General Contribution Rules
+- **Localization**: If your PR includes new strings (e.g., text displayed in the UI), ensure they are properly implemented as localization strings within the localization dictionary.
+  
+- **Code Formatting**:
+  - Use **4 spaces** for indentation. **Tabs** are not allowed.
+  - Always use **PascalCase** for public properties, e.g., `MyProperty`.
+  - Private fields must begin with an **underscore** and use **camelCase**, e.g., `_myPrivateField`.
+  - Use the `var` keyword to declare local variables, and ensure they are written in **camelCase**, e.g., `var myVariable = "text";`.
+
+- **Control Flow Statements**:
+  - Always use curly braces `{}` to encapsulate code blocks after control statements such as `if`, `for`, `foreach`, `while`, etc.
+  - Example:
+    ```csharp
+    if (condition)
+    {
+        DoSomething();
+    }
+    ```
 
 ### Powershell extensions rules
 - Functions names should use approved verbs and format: https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-5.1
@@ -123,8 +131,3 @@ instead of
 ```powershell
 Get-Service | Where {$_.Status -eq "Stopped"}
 ```
-
-### C# extensions rules
-- Private fields and properties should use camelCase
-- Private fields must use an underscore prefix
-- All methods (private and public) should use PascalCase
