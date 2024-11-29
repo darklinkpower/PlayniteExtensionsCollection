@@ -17,7 +17,8 @@ namespace FlowHttp.Requests
 {
     internal class FlowHttpFileRequest : FlowHttpRequestBase<FlowHttpFileRequest>
     {
-        private string _downloadPath;
+        public string DownloadPath { get; private set; }
+        public string TempStoragePath => DownloadPath + ".tmp";
         private bool _appendToFile = false;
 
         internal FlowHttpFileRequest(HttpClientFactory httpClientFactory) : base(httpClientFactory)
@@ -27,7 +28,7 @@ namespace FlowHttp.Requests
 
         internal FlowHttpFileRequest WithDownloadTo(string filePath)
         {
-            _downloadPath = filePath;
+            DownloadPath = filePath;
             return this;
         }
 
@@ -66,7 +67,7 @@ namespace FlowHttp.Requests
                 return HttpFileDownloadResult.Failure(_url, ex);
             }
 
-            if (string.IsNullOrEmpty(_downloadPath))
+            if (string.IsNullOrEmpty(DownloadPath))
             {
                 var ex = new InvalidOperationException("No download path provided.");
                 return HttpFileDownloadResult.Failure(_url, ex);
@@ -75,9 +76,9 @@ namespace FlowHttp.Requests
             OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Downloading);
             long resumeOffset = 0;
             var appendToFile = false;
-            if (_appendToFile && FileSystem.FileExists(_downloadPath))
+            if (_appendToFile && FileSystem.FileExists(TempStoragePath))
             {
-                var fileInfo = new FileInfo(FileSystem.FixPathLength(_downloadPath));
+                var fileInfo = new FileInfo(FileSystem.FixPathLength(TempStoragePath));
                 if (fileInfo.Length > 0)
                 {
                     resumeOffset = fileInfo.Length;
@@ -86,7 +87,7 @@ namespace FlowHttp.Requests
             }
 
 #if DEBUG
-            _logger.Info($"Starting download of url \"{_url}\" to \"{_downloadPath}\"...");
+            _logger.Info($"Starting download of url \"{_url}\" to \"{DownloadPath}\"...");
 #endif
             Exception error = null;
             HttpStatusCode? httpStatusCode = null;
@@ -133,7 +134,7 @@ namespace FlowHttp.Requests
                                 }
 
                                 await SaveFileContent(response, cts.Token, appendToFile, downloadStateController, stateChangedCallback, progressChangedCallback);
-                                var fileInfo = new FileInfo(_downloadPath);
+                                var fileInfo = new FileInfo(DownloadPath);
                                 var result = HttpFileDownloadResult.Success(_url, fileInfo, httpStatusCode, response);
                                 OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Completed);
                                 return result;
@@ -160,11 +161,14 @@ namespace FlowHttp.Requests
                     error = ex;
                     _logger.Error(ex, "Download failed");
                     OnDownloadStateChanged(stateChangedCallback, HttpRequestClientStatus.Failed);
-
                 }
                 finally
                 {
                     stringContent?.Dispose();
+                    if (!_appendToFile && FileSystem.FileExists(TempStoragePath))
+                    {
+                        FileSystem.DeleteFileSafe(TempStoragePath);
+                    }
                 }
 
                 return HttpFileDownloadResult.Failure(_url, error, httpStatusCode);
@@ -190,8 +194,8 @@ namespace FlowHttp.Requests
 
             var fileMode = appendToFile ? FileMode.Append : FileMode.Create;
             var deleteExistingFile = fileMode == FileMode.Create;
-            FileSystem.PrepareSaveFile(_downloadPath, deleteExistingFile);
-            using (var fs = new FileStream(_downloadPath, fileMode))
+            FileSystem.PrepareSaveFile(TempStoragePath, deleteExistingFile);
+            using (var fs = new FileStream(TempStoragePath, fileMode))
             {
                 using (var contentStream = await response.Content.ReadAsStreamAsync())
                 {
@@ -225,10 +229,12 @@ namespace FlowHttp.Requests
                                 lastTotalBytesRead = contentProgressLength;
                             }
                         }
-
                     }
                 }
             }
+
+            FileSystem.PrepareSaveFile(DownloadPath, true);
+            FileSystem.MoveFile(TempStoragePath, DownloadPath); // Rename temporary file to final path after download finishes
         }
 
 
