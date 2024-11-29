@@ -73,3 +73,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.15_c7cda3df/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_10.pext
     Changelog:
     - 'Fixed: Screenshots not following the original order when displayed in Fullscreen Mode themes'
+  - Version: 1.11
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-11-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.28_07636cd8/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_11.pext
+    Changelog:
+    - 'Changed: Added support for theme developers to access Screenshot objects in the control's ScreenshotsForExport property. This list contains ThumbnailImage and FullImage properties to retrieve these images.'
+    - 'Improved: Reduced memory usage by loading thumbnails at a lower resolution'
+    - 'Fixed: Crash occurring when attempting to load a corrupt image file.'
