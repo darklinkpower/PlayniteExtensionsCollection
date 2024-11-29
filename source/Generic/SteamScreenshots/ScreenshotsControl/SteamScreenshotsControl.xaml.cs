@@ -224,6 +224,7 @@ namespace SteamScreenshots.ScreenshotsControl
         {
             OnPropertyChanged(nameof(ScreenshotsBitmapImages));
             OnPropertyChanged(nameof(ScreenshotsFullBitmapImages));
+            OnPropertyChanged(nameof(ScreenshotsForExport));
             Visibility = Visibility.Visible;
             _settingsViewModel.Settings.IsControlVisible = true;
         }
@@ -263,6 +264,7 @@ namespace SteamScreenshots.ScreenshotsControl
             CurrentImageBitmap = null;
             OnPropertyChanged(nameof(ScreenshotsBitmapImages));
             OnPropertyChanged(nameof(ScreenshotsFullBitmapImages));
+            OnPropertyChanged(nameof(ScreenshotsForExport));
             _isValuesDefaultState = true;
         }
 
