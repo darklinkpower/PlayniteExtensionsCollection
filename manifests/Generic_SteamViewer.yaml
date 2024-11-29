@@ -103,3 +103,9 @@ Packages:
     - 'Changed: Items in menu will now display an icon'
     - 'Changed: Items in menu will now be in a single list and separated by categories'
     - 'Changed: The extension has been completely rewritten in C# to improve performance, reliability, and maintainability, while also enabling easier future feature additions'
+  - Version: 3.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-11-28
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.28_0d43de8b/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_1.pext
+    Changelog:
+    - 'Changed: Menu items for opening Steam URLs are now available for non-Steam games, provided they have a Steam store link added'
