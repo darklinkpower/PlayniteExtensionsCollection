@@ -148,6 +148,15 @@
     <Compile Include="..\..\common\pluginscommon\TaskExecutor.cs">
       <Link>Shared\PluginsCommon\TaskExecutor.cs</Link>
     </Compile>
+    <Compile Include="..\..\common\steamcommon\Client.cs">
+      <Link>Shared\SteamCommon\Client.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\steamcommon\Common.cs">
+      <Link>Shared\SteamCommon\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\steamcommon\models\SteamAppDetailsResponse.cs">
+      <Link>Shared\SteamCommon\Models\SteamAppDetailsResponse.cs</Link>
+    </Compile>
     <Compile Include="Domain\Enums\SteamClientGameUriType.cs" />
     <Compile Include="Domain\Enums\SteamComponentType.cs" />
     <Compile Include="Domain\Enums\SteamUrlType.cs" />

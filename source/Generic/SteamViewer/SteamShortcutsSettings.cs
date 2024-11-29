@@ -13,6 +13,9 @@ namespace SteamShortcuts
     {
         private bool _launchUrlsInSteamClient = true;
         public bool LaunchUrlsInSteamClient { get => _launchUrlsInSteamClient; set => SetValue(ref _launchUrlsInSteamClient, value); }
+
+        private bool _addWebLinksForNonSteam = true;
+        public bool AddWebLinksForNonSteam { get => _addWebLinksForNonSteam; set => SetValue(ref _addWebLinksForNonSteam, value); }
     }
 
     public class SteamShortcutsSettingsViewModel : ObservableObject, ISettings
