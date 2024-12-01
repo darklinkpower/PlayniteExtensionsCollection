@@ -34,7 +34,7 @@ namespace SteamWishlistDiscountNotifier
                 authStatus = AuthStatus.Ok;
 
                 // Username
-                var regeMatch = Regex.Match(source, @"<span class=""persona online"">(.+)<\/span>");
+                var regeMatch = Regex.Match(source, @"<span class=""account_name"">(.+)<\/span>");
                 if (regeMatch.Success)
                 {
                     username = regeMatch.Groups[1].Value;
