@@ -335,6 +335,13 @@ namespace PluginsCommon
             }
         }
 
+        public static void WriteBytesToFile(string filePath, byte[] data)
+        {
+            filePath = FixPathLength(filePath);
+            PrepareSaveFile(filePath);
+            File.WriteAllBytes(filePath, data);
+        }
+
         internal static string ReadStringFromFile(string path, bool useUtf8 = false)
         {
             path = FixPathLength(path);
@@ -346,6 +353,12 @@ namespace PluginsCommon
             {
                 return File.ReadAllText(path);
             }
+        }
+
+        public static byte[] ReadBytesFromFile(string filePath)
+        {
+            filePath = FixPathLength(filePath);
+            return File.ReadAllBytes(filePath);
         }
 
         internal static void WriteStringToFileSafe(string path, string content, int retryAttempts = 5)

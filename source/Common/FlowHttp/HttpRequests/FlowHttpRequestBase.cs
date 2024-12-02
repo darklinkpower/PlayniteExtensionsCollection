@@ -77,6 +77,23 @@ namespace FlowHttp.Requests
             return (T)this;
         }
 
+        internal T WithContent(IEnumerable<KeyValuePair<string, string>> nameValueCollection, HttpContentType httpContentType = null, Encoding encoding = null)
+        {
+            var formContent = string.Join("&", nameValueCollection.Select(kvp => $"{kvp.Key}={Uri.EscapeDataString(kvp.Value)}"));
+            _content = formContent;
+            if (encoding != null)
+            {
+                _contentEncoding = encoding;
+            }
+
+            if (httpContentType != null)
+            {
+                _contentMediaType = httpContentType.Value;
+            }
+
+            return (T)this;
+        }
+
         internal T WithHeaders(Dictionary<string, string> headers)
         {
             _headers.Clear();

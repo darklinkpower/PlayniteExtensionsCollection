@@ -117,6 +117,12 @@ namespace System
                 return null;
             }
 
+            int mod4 = str.Length % 4;
+            if (mod4 > 0)
+            {
+                str += new string('=', 4 - mod4); // Pad with '=' to make the length a multiple of 4
+            }
+
             return Encoding.UTF8.GetString(Convert.FromBase64String(str));
         }
 

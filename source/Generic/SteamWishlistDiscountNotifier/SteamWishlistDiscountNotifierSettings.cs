@@ -1,6 +1,8 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
-using SteamWishlistDiscountNotifier.Enums;
+using SteamWishlistDiscountNotifier.Application.Steam.Login;
+using SteamWishlistDiscountNotifier.Domain.Enums;
+using SteamWishlistDiscountNotifier.Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,18 +52,17 @@ namespace SteamWishlistDiscountNotifier
 
     public class SteamWishlistDiscountNotifierSettingsViewModel : ObservableObject, ISettings
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private const string _webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
-        private readonly SteamWishlistDiscountNotifier plugin;
-        private SteamWishlistDiscountNotifierSettings editingClone { get; set; }
-
-        private SteamWishlistDiscountNotifierSettings settings;
+        public event EventHandler<SettingsChangedEventArgs> SettingsChanged;
+        private readonly SteamWishlistDiscountNotifier _plugin;
+        private readonly SteamLoginService _steamLoginService;
+        private SteamWishlistDiscountNotifierSettings _editingClone;
+        private SteamWishlistDiscountNotifierSettings _settings;
         public SteamWishlistDiscountNotifierSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
@@ -76,24 +77,19 @@ namespace SteamWishlistDiscountNotifier
                     return CheckedStatus;
                 }
 
-                using (var webView = plugin.PlayniteApi.WebViews.CreateOffscreenView(new WebViewSettings { UserAgent = _webViewUserAgent }))
-                {
-                    var accountInfo = SteamLogin.GetLoggedInSteamId64(webView);
-                    CheckedStatus = accountInfo.AuthStatus;
-                    return accountInfo.AuthStatus;
-                }
+                var accountInfo = _steamLoginService.GetLoggedInStatus();
+                CheckedStatus = accountInfo.AuthStatus;
+                return accountInfo.AuthStatus;
             }
         }
 
-        public SteamWishlistDiscountNotifierSettingsViewModel(SteamWishlistDiscountNotifier plugin)
+        public RelayCommand LoginCommand { get; }
+
+        public SteamWishlistDiscountNotifierSettingsViewModel(SteamWishlistDiscountNotifier plugin, SteamLoginService steamLoginService)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
-
-            // Load saved settings.
+            _plugin = plugin;
+            _steamLoginService = steamLoginService;
             var savedSettings = plugin.LoadPluginSettings<SteamWishlistDiscountNotifierSettings>();
-
-            // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
                 Settings = savedSettings;
@@ -104,107 +100,35 @@ namespace SteamWishlistDiscountNotifier
             }
 
             CheckedStatus = AuthStatus.Checking;
+            LoginCommand = new RelayCommand(() => Login());
         }
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            _editingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = _editingClone;
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            _plugin.SavePluginSettings(Settings);
+            SettingsChanged?.Invoke(this, new SettingsChangedEventArgs(_editingClone, Settings));
         }
 
         public bool VerifySettings(out List<string> errors)
         {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
         }
 
-        public RelayCommand<object> LoginCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                Login();
-            });
-        }
-
         private void Login()
         {
-            try
-            {
-                var status = AuthStatus.AuthRequired;
-                var webViewSettings = new WebViewSettings { UserAgent = _webViewUserAgent, WindowWidth = 675, WindowHeight = 640 };
-                using (var webView = plugin.PlayniteApi.WebViews.CreateView(webViewSettings))
-                {
-                    webView.LoadingChanged += async (_, __) =>
-                    {
-                        var address = webView.GetCurrentAddress();
-                        if (address.IsNullOrEmpty())
-                        {
-                            status = AuthStatus.NoConnection;
-                            webView.Close();
-                        }
-                        else if (address.Contains(@"steampowered.com"))
-                        {
-                            var source = await webView.GetPageSourceAsync();
-                            if (source == @"<html><head></head><body></body></html>")
-                            {
-                                status = AuthStatus.NoConnection;
-                                webView.Close();
-                            }
-
-                            var idMatch = Regex.Match(source, @"<div class=""youraccount_steamid"">[^\d]+(\d+)");
-                            if (idMatch.Success)
-                            {
-                                status = AuthStatus.Ok;
-                                webView.Close();
-                            }
-                        }
-                    };
-
-                    var cookiesDomainsToDelete = new List<string>
-                    {
-                        "steamcommunity.com",
-                        "store.steampowered.com",
-                        "help.steampowered.com",
-                        "steampowered.com",
-                        "steam.tv",
-                        "checkout.steampowered.com",
-                        "login.steampowered.com"
-                    };
-
-                    foreach (var domain in cookiesDomainsToDelete)
-                    {
-                        webView.DeleteDomainCookies(domain);
-                        webView.DeleteDomainCookies($".{domain}"); //Cookies can also have a domain starting with a dot
-                    }
-
-                    webView.Navigate(@"https://store.steampowered.com/login/?redir=account%2F&redir_ssl=1");
-                    webView.OpenDialog();
-                }
-
-                CheckedStatus = status;
-                OnPropertyChanged(nameof(AuthStatus));
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, "Failed to authenticate user.");
-            }
+            CheckedStatus = _steamLoginService.Login();
+            OnPropertyChanged(nameof(AuthStatus));
         }
     }
 }
