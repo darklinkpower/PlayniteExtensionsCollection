@@ -236,3 +236,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_33.pext
     Changelog:
     - 'Fixed: Failing to identify games as already owned in wishlist view in some circumstances'
+  - Version: 1.34
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-12-02
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.02_2ff1a5b7/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_34.pext
+    Changelog:
+    - 'Fixed: Functionality to obtain Steam wishlist completely and everything that relied on it no longer working due to Steam removing the endpoint used by the plugin. The plugin has been entirely rewritten to use a more reliable and up-to-date endpoint.'
+    - 'Fixed: Extension failing to work in accounts with certain currencies.'
+    - 'Removed: Support to filter by tags in the sidebar wishlist view.'
+    - 'Note: The plugin has undergone a near-complete rewrite to accommodate changes in data retrieval and improve code quality. Removed functionality will be implemented again in the future in accordance to the new way wishlist data is obtained since this update.'
