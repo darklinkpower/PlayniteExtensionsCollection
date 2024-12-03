@@ -104,19 +104,22 @@ namespace SteamWishlistDiscountNotifier
 
         private void WishlistTrackerService_WishlistTrackedItemAdded(object sender, WishlistTrackedItemAddedEventArgs e)
         {
-            var newWishlistItem = e.Item;
-            if (newWishlistItem.DiscountPct == 0 || !GetShouldDisplayNotification(newWishlistItem))
+            var addedItem = e.Item;
+            if (!addedItem.DiscountPct.HasValue ||
+                addedItem.DiscountPct == 0 ||
+                _settings.Settings.NotificationMinDiscount > addedItem.DiscountPct ||
+                !GetShouldDisplayNotification(addedItem))
             {
                 return;
             }
 
             var notificationLines = new List<string>
             {
-                string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOnSaleLabel"), newWishlistItem.Name) + "\n",
-                string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), newWishlistItem.DiscountPct ?? 0),
+                string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOnSaleLabel"), addedItem.Name) + "\n",
+                string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), addedItem.DiscountPct ?? 0),
                 string.Format("{0} -> {1}",
-                              newWishlistItem.FormattedOriginalPrice ?? "?", 
-                              newWishlistItem.FormattedFinalPrice ?? "?")
+                              addedItem.FormattedOriginalPrice ?? "?", 
+                              addedItem.FormattedFinalPrice ?? "?")
             };
 
             var finalNotificationMessageText = string.Join("\n", notificationLines);
@@ -124,7 +127,7 @@ namespace SteamWishlistDiscountNotifier
                 e.Id.ToString(),
                 finalNotificationMessageText,
                 NotificationType.Info,
-                () => OpenDiscountedItemUrl(newWishlistItem.AppId)
+                () => OpenDiscountedItemUrl(addedItem.AppId)
             );
 
             PlayniteApi.Notifications.Add(notificationMessage);
@@ -179,11 +182,16 @@ namespace SteamWishlistDiscountNotifier
             else if (newItem.DiscountPct.HasValue && newItem.DiscountPct > 0)
             {
                 // Item now on discount
+                if (_settings.Settings.NotificationMinDiscount > newItem.DiscountPct)
+                {
+                    return;
+                }
+
                 var notificationLines = new List<string>
                 {
                     string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOnSaleLabel"), newItem.Name) + "\n",
                     string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), newItem.DiscountPct),
-                    string.Format("{0} -> {1}", oldItem.FormattedFinalPrice, newItem.FormattedFinalPrice)
+                    string.Format("{0} -> {1}", newItem.FormattedFinalPrice, newItem.FormattedFinalPrice)
                 };
 
                 PlayniteApi.Notifications.Add(new NotificationMessage(

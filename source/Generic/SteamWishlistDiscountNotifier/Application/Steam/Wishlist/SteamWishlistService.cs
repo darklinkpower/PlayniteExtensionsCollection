@@ -44,7 +44,6 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.Wishlist
             var allWishlistItems = new List<CWishlistGetWishlistSortedFilteredResponseWishlistItem>();
             var startIndex = 0;
             const int pageSize = 2000;
-
             while (true)
             {
                 var requestData = new CWishlistGetWishlistSortedFilteredRequest
@@ -81,8 +80,14 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.Wishlist
                 }
 
                 var response = ProtobufUtilities.DeserializeResponse<CWishlistGetWishlistSortedFilteredResponse>(requestResult.Content);
-                allWishlistItems.AddRange(response.Items);
-                if (response.Items.Count < pageSize)
+
+                // Steam returns the full wishlist list, but the StoreId of items will be null if they fall outside the requested index range.
+                // In this method, we ensure that only the items within the current range (defined by startIndex and pageSize) are added to the result list.
+                // We continue to request additional pages until all items in the wishlist are fetched.
+                var itemsToAdd = response.Items.Skip(startIndex).Take(pageSize).ToList();
+                allWishlistItems.AddRange(itemsToAdd);
+                var totalRequestedRange = startIndex + pageSize;
+                if (itemsToAdd.Count < pageSize || totalRequestedRange >= response.Items.Count)
                 {
                     break;
                 }
@@ -92,6 +97,7 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.Wishlist
 
             return allWishlistItems;
         }
+
 
 
     }
