@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK;
 using ProtoBuf;
+using ProtobufUtilities;
 using SteamWishlistDiscountNotifier.Domain.Interfaces;
-using SteamWishlistDiscountNotifier.SharedKernel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +68,7 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.Wishlist
                     PageSize = pageSize
                 };
 
-                var serializedRequest = ProtobufUtilities.SerializeRequest(requestData);
+                var serializedRequest = ProtobufSerialization.Serialize(requestData);
                 var serializedRequestBase64 = Convert.ToBase64String(serializedRequest);
                 var requestUrl = string.Format(_wishlistGetUrlTemplate, jwtToken.Token, serializedRequestBase64);
 
@@ -79,7 +79,7 @@ namespace SteamWishlistDiscountNotifier.Application.Steam.Wishlist
                     return new List<CWishlistGetWishlistSortedFilteredResponseWishlistItem>();
                 }
 
-                var response = ProtobufUtilities.DeserializeResponse<CWishlistGetWishlistSortedFilteredResponse>(requestResult.Content);
+                var response = ProtobufSerialization.Deserialize<CWishlistGetWishlistSortedFilteredResponse>(requestResult.Content);
 
                 // Steam returns the full wishlist list, but the StoreId of items will be null if they fall outside the requested index range.
                 // In this method, we ensure that only the items within the current range (defined by startIndex and pageSize) are added to the result list.

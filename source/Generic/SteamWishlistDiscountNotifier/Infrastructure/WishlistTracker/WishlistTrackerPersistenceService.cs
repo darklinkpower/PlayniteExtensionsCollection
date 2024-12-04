@@ -1,9 +1,9 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
 using PluginsCommon;
+using ProtobufUtilities;
 using SteamWishlistDiscountNotifier.Domain.Interfaces;
 using SteamWishlistDiscountNotifier.Domain.ValueObjects;
-using SteamWishlistDiscountNotifier.SharedKernel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -225,7 +225,7 @@ namespace SteamWishlistDiscountNotifier.Infrastructure.WishlistTracker
 
         private void SaveToFile()
         {
-            byte[] serializedData = ProtobufUtilities.SerializeRequest(_wishlistTrackerData);
+            byte[] serializedData = ProtobufSerialization.Serialize(_wishlistTrackerData);
             FileSystem.WriteBytesToFile(_storageFilePath, serializedData);
         }
 
@@ -236,7 +236,7 @@ namespace SteamWishlistDiscountNotifier.Infrastructure.WishlistTracker
                 try
                 {
                     byte[] fileContent = FileSystem.ReadBytesFromFile(_storageFilePath);
-                    return ProtobufUtilities.DeserializeResponse<WishlistTrackerData>(fileContent);
+                    return ProtobufSerialization.Deserialize<WishlistTrackerData>(fileContent);
                 }
                 catch (Exception ex)
                 {

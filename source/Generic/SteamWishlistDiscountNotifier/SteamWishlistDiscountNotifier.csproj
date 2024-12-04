@@ -221,6 +221,9 @@
     <Compile Include="..\..\Common\SteamCommon\Common.cs">
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
+    <Compile Include="..\..\ProtobufUtilities\ProtobufSerialization.cs">
+      <Link>Shared\ProtobufUtilities\ProtobufSerialization.cs</Link>
+    </Compile>
     <Compile Include="Application\WishlistTracker\WishlistTrackerService.cs" />
     <Compile Include="Domain\Enums\SteamReviewsValue.cs" />
     <Compile Include="Domain\Enums\SteamStoreItemAppType.cs" />
@@ -234,7 +237,6 @@
     <Compile Include="Infrastructure\WishlistTracker\WishlistTrackerData.cs" />
     <Compile Include="Infrastructure\WishlistTracker\WishlistTrackerPersistenceService.cs" />
     <Compile Include="Presentation\SteamWishlistViewItem.cs" />
-    <Compile Include="SharedKernel\Utilities\ProtobufUtilities.cs" />
     <Compile Include="Application\Steam\JwtToken\SteamJwtTokenService.cs" />
     <Compile Include="Application\Steam\UserAccount\SteamUserAccountService.cs" />
     <Compile Include="Application\Steam\UserAccount\GetClientWalletDetailsResponseDto.cs" />

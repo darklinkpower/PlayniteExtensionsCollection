@@ -107,6 +107,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebViewCore", "Common\WebVi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamShortcuts", "Generic\SteamViewer\SteamShortcuts.csproj", "{B362182C-0D36-4E85-94D6-2504CA50ED5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtobufUtilities", "ProtobufUtilities\ProtobufUtilities.csproj", "{55A0B98C-0D34-4F53-A11A-AF75A44C4349}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -301,6 +303,10 @@ Global
 		{B362182C-0D36-4E85-94D6-2504CA50ED5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B362182C-0D36-4E85-94D6-2504CA50ED5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B362182C-0D36-4E85-94D6-2504CA50ED5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55A0B98C-0D34-4F53-A11A-AF75A44C4349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55A0B98C-0D34-4F53-A11A-AF75A44C4349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55A0B98C-0D34-4F53-A11A-AF75A44C4349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55A0B98C-0D34-4F53-A11A-AF75A44C4349}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -354,6 +360,7 @@ Global
 		{C344303D-4A7E-4ACD-BDB6-6E20E0363355} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{279E9155-A80E-475C-97B5-B76AF0A5FDBE} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{B362182C-0D36-4E85-94D6-2504CA50ED5A} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
+		{55A0B98C-0D34-4F53-A11A-AF75A44C4349} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}
