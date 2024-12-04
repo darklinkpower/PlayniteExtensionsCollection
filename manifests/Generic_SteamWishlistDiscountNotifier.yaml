@@ -245,3 +245,10 @@ Packages:
     - 'Fixed: Extension failing to work in accounts with certain currencies.'
     - 'Removed: Support to filter by tags in the sidebar wishlist view.'
     - 'Note: The plugin has undergone a near-complete rewrite to accommodate changes in data retrieval and improve code quality. Removed functionality will be implemented again in the future in accordance to the new way wishlist data is obtained since this update.'
+  - Version: 1.35
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-12-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.04_405b486d/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_35.pext
+    Changelog:
+    - 'Fixed: Not correctly display previous pricing for wishlist items in all cases in notifications'
+    - 'Fixed: Prevent potential crashes when processing changes in wishlist'
