@@ -229,21 +229,33 @@ namespace SteamWishlistDiscountNotifier
                     () => OpenDiscountedItemUrl(newItem.AppId)
                 ));
             }
-            else if (_settings.Settings.EnablePriceChangesNotifications && oldItem.FinalPriceInCents != newItem.FinalPriceInCents)
+            else if (_settings.Settings.EnablePriceChangesNotifications)
             {
-                // Price has changed
-                var notificationLines = new List<string>
+                // Skip price change checks if either the old or new item is discounted.
+                // Discounted prices can be influenced by various game bundles, making it
+                // impossible to reliably detect changes in the base game price.
+                if ((oldItem.DiscountPct.HasValue && oldItem.DiscountPct.Value > 0) ||
+                    newItem.DiscountPct.HasValue && newItem.DiscountPct.Value > 0)
                 {
-                    string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GamePriceChangedLabel"), newItem.Name) + "\n",
-                    string.Format("{0} -> {1}", oldItem.FormattedOriginalPrice ?? "-", newItem.FormattedOriginalPrice ?? "-")
-                };
+                    return;
+                }
 
-                PlayniteApi.Notifications.Add(new NotificationMessage(
-                    e.Id.ToString(),
-                    string.Join("\n", notificationLines),
-                    NotificationType.Info,
-                    () => OpenDiscountedItemUrl(newItem.AppId)
-                ));
+                if (oldItem.PriceInCents != newItem.PriceInCents)
+                {
+                    // Price has changed
+                    var notificationLines = new List<string>
+                    {
+                        string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GamePriceChangedLabel"), newItem.Name) + "\n",
+                        string.Format("{0} -> {1}", oldItem.FormattedFinalPrice ?? "-", newItem.FormattedFinalPrice ?? "-")
+                    };
+
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
+                        e.Id.ToString(),
+                        string.Join("\n", notificationLines),
+                        NotificationType.Info,
+                        () => OpenDiscountedItemUrl(newItem.AppId)
+                    ));
+                }
             }
         }
 
