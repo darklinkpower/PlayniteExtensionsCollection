@@ -104,6 +104,39 @@ namespace SteamWishlistDiscountNotifier
 
         private void WishlistTrackerService_WishlistTrackedItemAdded(object sender, WishlistTrackedItemAddedEventArgs e)
         {
+            try
+            {
+                ProcessAddedItem(e);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex,
+                    "Failed to process tracked wishlist item addition. " +
+                    $"Item: {e.Item.Name}, AppId: {e.Item.AppId}. EventId: {e.Id}");
+            }
+        }
+
+        private void WishlistTrackerService_WishlistTrackedItemRemoved(object sender, WishlistTrackedItemRemovedEventArgs e)
+        {
+
+        }
+
+        private void WishlistTrackerService_WishlistTrackedItemChanged(object sender, WishlistTrackedItemChangedEventArgs e)
+        {
+            try
+            {
+                ProcessChangedItem(e);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex,
+                    "Failed to process tracked wishlist item change. " +
+                    $"Item: {e.OldItem.Name}, AppId: {e.OldItem.AppId}. EventId: {e.Id}");
+            }
+        }
+
+        private void ProcessAddedItem(WishlistTrackedItemAddedEventArgs e)
+        {
             var addedItem = e.Item;
             if (!addedItem.DiscountPct.HasValue ||
                 addedItem.DiscountPct == 0 ||
@@ -118,7 +151,7 @@ namespace SteamWishlistDiscountNotifier
                 string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOnSaleLabel"), addedItem.Name) + "\n",
                 string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), addedItem.DiscountPct ?? 0),
                 string.Format("{0} -> {1}",
-                              addedItem.FormattedOriginalPrice ?? "?", 
+                              addedItem.FormattedOriginalPrice ?? "?",
                               addedItem.FormattedFinalPrice ?? "?")
             };
 
@@ -133,12 +166,7 @@ namespace SteamWishlistDiscountNotifier
             PlayniteApi.Notifications.Add(notificationMessage);
         }
 
-        private void WishlistTrackerService_WishlistTrackedItemRemoved(object sender, WishlistTrackedItemRemovedEventArgs e)
-        {
-
-        }
-
-        private void WishlistTrackerService_WishlistTrackedItemChanged(object sender, WishlistTrackedItemChangedEventArgs e)
+        private void ProcessChangedItem(WishlistTrackedItemChangedEventArgs e)
         {
             if (!GetShouldDisplayNotification(e.NewItem))
             {
@@ -150,7 +178,7 @@ namespace SteamWishlistDiscountNotifier
             if (!oldItem.FinalPriceInCents.HasValue && newItem.FinalPriceInCents.HasValue && newItem.FinalPriceInCents > 0)
             {
                 // New item in the store
-                if (!_settings.Settings.EnableNewReleasesNotifications && newItem.DiscountPct == 0)
+                if (!_settings.Settings.EnableNewReleasesNotifications && newItem.DiscountPct.HasValue && newItem.DiscountPct == 0)
                 {
                     return;
                 }
@@ -164,7 +192,7 @@ namespace SteamWishlistDiscountNotifier
                 {
                     // New release with discount
                     notificationLines.Add(string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), newItem.DiscountPct));
-                    notificationLines.Add(string.Format("{0} -> {0} ", newItem.FormattedOriginalPrice, newItem.FormattedFinalPrice));
+                    notificationLines.Add(string.Format("{0} -> {1} ", newItem.FormattedOriginalPrice, newItem.FormattedFinalPrice));
                 }
                 else
                 {
@@ -191,7 +219,7 @@ namespace SteamWishlistDiscountNotifier
                 {
                     string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GameOnSaleLabel"), newItem.Name) + "\n",
                     string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_DiscountPercent"), newItem.DiscountPct),
-                    string.Format("{0} -> {1}", newItem.FormattedFinalPrice, newItem.FormattedFinalPrice)
+                    string.Format("{0} -> {1}", newItem.FormattedOriginalPrice ?? "-", newItem.FormattedFinalPrice ?? "-")
                 };
 
                 PlayniteApi.Notifications.Add(new NotificationMessage(
@@ -207,7 +235,7 @@ namespace SteamWishlistDiscountNotifier
                 var notificationLines = new List<string>
                 {
                     string.Format(ResourceProvider.GetString("LOCSteam_Wishlist_Notif_GamePriceChangedLabel"), newItem.Name) + "\n",
-                    string.Format("{0} -> {1}", oldItem.FormattedOriginalPrice, newItem.FormattedOriginalPrice)
+                    string.Format("{0} -> {1}", oldItem.FormattedOriginalPrice ?? "-", newItem.FormattedOriginalPrice ?? "-")
                 };
 
                 PlayniteApi.Notifications.Add(new NotificationMessage(
