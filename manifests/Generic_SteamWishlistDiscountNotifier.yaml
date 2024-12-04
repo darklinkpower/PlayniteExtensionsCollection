@@ -252,3 +252,9 @@ Packages:
     Changelog:
     - 'Fixed: Not correctly display previous pricing for wishlist items in all cases in notifications'
     - 'Fixed: Prevent potential crashes when processing changes in wishlist'
+  - Version: 1.36
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-12-04
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.04_2719a10d/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_36.pext
+    Changelog:
+    - 'Fixed: Incorrectly notifying that a game price has changed in some cases when a game is sold as part of a bundle'
