@@ -119,8 +119,8 @@ namespace SteamWishlistDiscountNotifier.Application.WishlistTracker
 
             if (_backgroundChecksWithoutSuccess >= 5)
             {
-                var backoffDelay = TimeSpan.FromMinutes(Math.Min(Math.Pow(2, _backgroundChecksWithoutSuccess - 5), 25));
-                _logger.Warn($"Multiple failed attempts: {_backgroundChecksWithoutSuccess}, increasing delay to {backoffDelay.TotalMinutes} minutes.");
+                var backoffDelay = TimeSpan.FromMinutes(Math.Min(Math.Pow(2, _backgroundChecksWithoutSuccess - 5), 20));
+                _logger.Warn($"Background check failed {_backgroundChecksWithoutSuccess} times consecutively. Applying exponential backoff: waiting {backoffDelay.TotalMinutes} minute(s) before next check.");
                 await Task.Delay(backoffDelay);
             }
         }
