@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewsViewer.Models
+namespace NewsViewer.Infrastructure
 {
     public class SteamHtmlTransformDefinition
     {

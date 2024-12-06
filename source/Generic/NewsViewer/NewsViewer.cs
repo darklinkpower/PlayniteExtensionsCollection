@@ -1,4 +1,5 @@
-﻿using NewsViewer.Models;
+﻿using NewsViewer.Infrastructure;
+using NewsViewer.Models;
 using NewsViewer.PluginControls;
 using Playnite.SDK;
 using Playnite.SDK.Events;
@@ -18,10 +19,10 @@ namespace NewsViewer
 {
     public class NewsViewer : GenericPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly CacheManager<Guid, SteamNewsRssFeed> newsCacheManager = new CacheManager<Guid, SteamNewsRssFeed>(TimeSpan.FromSeconds(120));
+        private static readonly ILogger _logger = LogManager.GetLogger();
+        
         private readonly CacheManager<Guid, NumberOfPlayersResponse> playersCountCacheManager = new CacheManager<Guid, NumberOfPlayersResponse>(TimeSpan.FromSeconds(120));
-        private readonly string steamApiLanguage;
+        private readonly SteamNewsService _steamNewsService;
 
         public NewsViewerSettingsViewModel settings { get; set; }
 
@@ -47,7 +48,8 @@ namespace NewsViewer
                 SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
             });
 
-            steamApiLanguage = Steam.GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
+            var steamApiLanguage = Steam.GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
+            _steamNewsService = new SteamNewsService(_logger, steamApiLanguage, TimeSpan.FromSeconds(120));
         }
 
         public override IEnumerable<SidebarItem> GetSidebarItems()
@@ -74,7 +76,7 @@ namespace NewsViewer
         {
             if (args.Name == "NewsViewerControl")
             {
-                return new NewsViewerControl(PlayniteApi, settings, steamApiLanguage, newsCacheManager);
+                return new NewsViewerControl(PlayniteApi, settings, _steamNewsService);
             }
             else if (args.Name == "PlayersInGameViewerControl")
             {

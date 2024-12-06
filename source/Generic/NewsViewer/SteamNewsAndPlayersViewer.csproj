@@ -218,15 +218,19 @@
       <Link>Shared\TemporaryCache\Models\CacheItem.cs</Link>
     </Compile>
     <Compile Include="Controls\HtmlTextView.cs" />
-    <Compile Include="Models\SteamHtmlTransformDefinition.cs" />
-    <Compile Include="Models\SteamNewsRssFeed.cs" />
+    <Compile Include="Domain\ValueObjects\SteamNewsArticle.cs" />
+    <Compile Include="Domain\ValueObjects\SteamNewsFeed.cs" />
+    <Compile Include="Domain\ValueObjects\SteamNewsIdentifier.cs" />
+    <Compile Include="Domain\ValueObjects\SteamNewsRequestOptions.cs" />
+    <Compile Include="Infrastructure\SteamHtmlTransformDefinition.cs" />
+    <Compile Include="Infrastructure\SteamNewsService.cs" />
     <Compile Include="Models\NumberOfPlayersResponse.cs" />
     <Compile Include="NewsViewer.cs" />
     <Compile Include="NewsViewerSettings.cs" />
     <Compile Include="NewsViewerSettingsView.xaml.cs">
       <DependentUpon>NewsViewerSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PluginControls\NewsViewerControl.xaml.cs">
+    <Compile Include="Presentation\NewsViewerControl.xaml.cs">
       <DependentUpon>NewsViewerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PluginControls\PlayersInGameViewerControl.xaml.cs">
@@ -254,7 +258,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PluginControls\NewsViewerControl.xaml">
+    <Page Include="Presentation\NewsViewerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
