@@ -204,32 +204,20 @@ namespace PlayniteUtilitiesCommon
 
         public static bool RemoveTagFromGame(IPlayniteAPI PlayniteApi, Game game, string tagName)
         {
-            if (!game.Tags.HasItems())
+            var tag = game.Tags?.FirstOrDefault(x => x.Name == tagName);
+            if (tag == null || !game.TagIds.Remove(tag.Id))
             {
                 return false;
             }
 
-            var tag = game.Tags.FirstOrDefault(x => x.Name == tagName);
-            if (tag != null)
-            {
-                game.TagIds.Remove(tag.Id);
-                PlayniteApi.Database.Games.Update(game);
-                return true;
-            }
-
-            return false;
+            PlayniteApi.Database.Games.Update(game);
+            return true;
         }
 
         public static bool RemoveTagFromGame(IPlayniteAPI PlayniteApi, Game game, Tag tag)
         {
-            if (game.Tags == null)
+            if (game.TagIds?.Remove(tag.Id) == true)
             {
-                return false;
-            }
-
-            if (game.TagIds.Any(x => x == tag.Id))
-            {
-                game.TagIds.Remove(tag.Id);
                 PlayniteApi.Database.Games.Update(game);
                 return true;
             }
