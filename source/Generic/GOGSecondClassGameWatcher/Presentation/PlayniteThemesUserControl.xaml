@@ -1,0 +1,21 @@
+﻿<PluginUserControl x:Class="GOGSecondClassGameWatcher.Presentation.PlayniteThemesUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GOGSecondClassGameWatcher.Presentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Button Foreground="Red"
+                Padding="0" Background="Transparent" BorderThickness="0"
+                Command="{Binding OpenWindowCommand}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xEF4E;" FontFamily="{DynamicResource FontIcoFont}" Foreground="Red" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{DynamicResource LOC_GogSecondClass_NumberOfIssuesOnGog}" Foreground="Red" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text=":" Foreground="Red" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding NumberOfIssues}" Foreground="Red" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Center" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</PluginUserControl>

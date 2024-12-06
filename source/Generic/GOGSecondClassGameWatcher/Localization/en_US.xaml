@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_GogSecondClass_NotifyOnGameInstalling">Notify about issues when installing a game</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AddStatusTagOnLibraryUpdate">Tag games with issues during library updates</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_DeveloperLabel">Developer</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_PublisherLabel">Publisher</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_NumberOfIssues">Number of issues</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_NumberOfIssuesOnGog">Number of issues on GOG</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_IssuesToNotify">Issues to notify:</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_GeneralIssuesLabel">General issues</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingUpdatesLabel">Missing updates</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingLanguagesLabel">Missing languages</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingFreeDlcLabel">Missing free DLC</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingPaidDlcLabel">Missing paid DLC</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingFeaturesLabel">Missing features</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSoundtrackLabel">Missing soundtrack</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_OtherIssuesLabel">Other issues</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingBuildsLabel">Missing builds</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_RegionLockingLabel">Region locking</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Source one</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Source two</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Release Year</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Achievements issues</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Missing all achievements</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Missing some achievements</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Broken achievements</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Developer response on achievements</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Source</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Open information window</sys:String>
+</ResourceDictionary>

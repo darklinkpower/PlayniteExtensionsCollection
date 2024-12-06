@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="GOGSecondClassGameWatcher.GOGSecondClassGameWatcherSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="600">
+    <ScrollViewer Margin="20">
+        <StackPanel>
+            <CheckBox IsChecked="{Binding Settings.NotifyOnGameInstalling}" Content="{DynamicResource LOC_GogSecondClass_NotifyOnGameInstalling}" />
+            <CheckBox IsChecked="{Binding Settings.AddStatusTagOnLibraryUpdate}" Content="{DynamicResource LOC_GogSecondClass_AddStatusTagOnLibraryUpdate}" Margin="0,10,0,0" />
+
+            <TextBlock Text="{DynamicResource LOC_GogSecondClass_IssuesToNotify}" Margin="0,20,0,0" FontWeight="Bold" />
+            <StackPanel Margin="10,5,0,0">
+                <TextBlock Text="{DynamicResource LOC_GogSecondClass_GeneralIssuesLabel}" FontWeight="SemiBold" />
+
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingUpdates}" Content="{DynamicResource LOC_GogSecondClass_MissingUpdatesLabel}" Margin="0,10,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingLanguages}" Content="{DynamicResource LOC_GogSecondClass_MissingLanguagesLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingFreeDlc}" Content="{DynamicResource LOC_GogSecondClass_MissingFreeDlcLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingPaidDlc}" Content="{DynamicResource LOC_GogSecondClass_MissingPaidDlcLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingFeatures}" Content="{DynamicResource LOC_GogSecondClass_MissingFeaturesLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingSoundtrack}" Content="{DynamicResource LOC_GogSecondClass_MissingSoundtrackLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyOtherIssues}" Content="{DynamicResource LOC_GogSecondClass_OtherIssuesLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingBuilds}" Content="{DynamicResource LOC_GogSecondClass_MissingBuildsLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyRegionLocking}" Content="{DynamicResource LOC_GogSecondClass_RegionLockingLabel}" Margin="0,5,0,0" />
+
+                <TextBlock Text="{DynamicResource LOC_GogSecondClass_AchievementsIssuesLabel}" FontWeight="SemiBold" Margin="0,20,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingAllAchievements}" Content="{DynamicResource LOC_GogSecondClass_MissingAllAchievementsLabel}" Margin="0,10,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyMissingSomeAchievements}" Content="{DynamicResource LOC_GogSecondClass_MissingSomeAchievementsLabel}" Margin="0,5,0,0" />
+                <CheckBox IsChecked="{Binding Settings.NotifyBrokenAchievements}" Content="{DynamicResource LOC_GogSecondClass_BrokenAchievementsLabel}" Margin="0,5,0,0" />
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

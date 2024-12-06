@@ -1,0 +1,206 @@
+﻿<UserControl x:Class="GOGSecondClassGameWatcher.Presentation.GogSecondClassGameDisplayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GOGSecondClassGameWatcher.Presentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="700">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    </UserControl.Resources>
+    <DockPanel Margin="10">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Image Source="{Binding ImagePath, Converter={StaticResource ImageStringToImageConverter}}" Height="200" RenderOptions.BitmapScalingMode="Fant" />
+            <StackPanel Margin="10,0,0,0">
+                <TextBlock Text="{Binding Title}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="30" FontWeight="Bold" TextTrimming="CharacterEllipsis" Margin="0,0,0,0"/>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Developer -->
+                    <TextBlock Text="{DynamicResource LOC_GogSecondClass_DeveloperLabel}" Grid.Row="0" Grid.Column="0" FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding Developer}" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0"/>
+
+                    <!-- Publisher -->
+                    <TextBlock Text="{DynamicResource LOC_GogSecondClass_PublisherLabel}" Grid.Row="1" Grid.Column="0" FontWeight="SemiBold" Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding Publisher}" Grid.Row="1" Grid.Column="1" Margin="10,5,0,0"/>
+
+                    <!-- Publisher -->
+                    <TextBlock Text="{DynamicResource LOC_GogSecondClass_NumberOfIssues}" Grid.Row="2" Grid.Column="0" FontWeight="SemiBold" Foreground="Red" Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding NumberOfIssues}" Grid.Row="2" Grid.Column="1" Margin="10,5,0,0" Foreground="Red" />
+                </Grid>
+            </StackPanel>
+            
+        </StackPanel>
+        
+        <ScrollViewer DockPanel.Dock="Top" Margin="0,10,0,0">
+            <StackPanel>
+                <StackPanel Visibility="{Binding GeneralIssuesVisibility}">
+                    <TextBlock Text="{DynamicResource LOC_GogSecondClass_GeneralIssuesLabel}" FontWeight="SemiBold" Margin="0,0,0,0" FontSize="18" />
+                    <Separator Margin="0,3,0,5" />
+                    <Grid Margin="0,5,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="SharedGroup1" />
+                            <ColumnDefinition Width="*" SharedSizeGroup="SharedGroup2" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Missing Updates -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingUpdatesLabel}" Grid.Row="0" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingUpdatesVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingUpdates}" Grid.Row="0" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingUpdatesVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Languages -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingLanguagesLabel}" Grid.Row="1" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingLanguagesVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingLanguages}" Grid.Row="1" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingLanguagesVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Free DLC -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingFreeDlcLabel}" Grid.Row="2" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingFreeDlcVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingFreeDlc}" Grid.Row="2" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingFreeDlcVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Paid DLC -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingPaidDlcLabel}" Grid.Row="3" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingPaidDlcVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingPaidDlc}" Grid.Row="3" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingPaidDlcVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Features -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingFeaturesLabel}" Grid.Row="4" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingFeaturesVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingFeatures}" Grid.Row="4" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingFeaturesVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Soundtrack -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingSoundtrackLabel}" Grid.Row="5" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingSoundtrackVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingSoundtrack}" Grid.Row="5" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingSoundtrackVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Other Issues -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_OtherIssuesLabel}" Grid.Row="6" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding OtherIssuesVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding OtherIssues}" Grid.Row="6" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding OtherIssuesVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Builds -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingBuildsLabel}" Grid.Row="7" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingBuildsVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingBuilds}" Grid.Row="7" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingBuildsVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Region Locking -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_RegionLockingLabel}" Grid.Row="8" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding RegionLockingVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding RegionLocking}" Grid.Row="8" Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding RegionLockingVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Source 1 -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_SourceOneLabel}" Grid.Row="9" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding GeneralIssuesSourceOneVisibility}" Margin="0,15,0,0" />
+                        <TextBox Text="{Binding GeneralIssuesSourceOne, Mode=OneWay}" IsReadOnly="True" Grid.Row="9" Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding GeneralIssuesSourceOneVisibility}" Margin="10,15,0,0"/>
+
+                        <!-- Source 2 -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_SourceTwoLabel}" Grid.Row="10" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding GeneralIssuesSourceTwoVisibility}" Margin="0,5,0,0" />
+                        <TextBox Text="{Binding GeneralIssuesSourceTwo, Mode=OneWay}" IsReadOnly="True" Grid.Row="10" Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding GeneralIssuesSourceTwoVisibility}" Margin="10,5,0,0"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding AchievementsIssuesVisibility}" Margin="0,20,0,0">
+                    <TextBlock Text="{DynamicResource LOC_GogSecondClass_AchievementsIssuesLabel}" FontWeight="SemiBold" Margin="0,0,0,0" FontSize="18" />
+                    <Separator Margin="0,3,0,5" />
+                    <Grid Margin="0,5,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="SharedGroup1" />
+                            <ColumnDefinition Width="*" SharedSizeGroup="SharedGroup2" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Missing All Achievements -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingAllAchievementsLabel}" Grid.Row="0" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingAllAchievementsVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingAllAchievements}" Grid.Row="0" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingAllAchievementsVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Some Achievements -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_MissingSomeAchievementsLabel}" Grid.Row="1" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding MissingSomeAchievementsVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding MissingSomeAchievements}" Grid.Row="1" Grid.Column="1"
+                           TextWrapping="Wrap"
+                   Visibility="{Binding MissingSomeAchievementsVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Missing Free DLC -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_BrokenAchievementsLabel}" Grid.Row="2" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding BrokenAchievementsVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding BrokenAchievements}" Grid.Row="2" Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding BrokenAchievementsVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Developer Response on Achievements -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_AchievementsAskedResponseLabel}" Grid.Row="3" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding AchievementsAskedResponseVisibility}" Margin="0,5,0,0" />
+                        <TextBlock Text="{Binding AchievementsAskedResponse}" Grid.Row="3" Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding AchievementsAskedResponseVisibility}" Margin="10,5,0,0"/>
+
+                        <!-- Source -->
+                        <TextBlock Text="{DynamicResource LOC_GogSecondClass_SourceLabel}" Grid.Row="4" Grid.Column="0" FontWeight="SemiBold"
+                   Visibility="{Binding AchievementsIssuesSourceVisibility}" Margin="0,15,0,0" />
+                        <TextBox Text="{Binding AchievementsIssuesSource, Mode=OneWay}" IsReadOnly="True" Grid.Row="4" Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Visibility="{Binding AchievementsIssuesSourceVisibility}" Margin="10,15,0,0"/>
+                    </Grid>
+                </StackPanel>
+                
+            </StackPanel>
+            
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
