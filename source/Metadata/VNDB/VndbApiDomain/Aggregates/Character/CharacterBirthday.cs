@@ -8,7 +8,7 @@ namespace VndbApiDomain.CharacterAggregate
 {
     public class CharacterBirthday
     {
-        public int Month { get; set; }
-        public int Day { get; set; }
+        public int? Month { get; set; }
+        public int? Day { get; set; }
     }
 }

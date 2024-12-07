@@ -30,9 +30,16 @@ namespace VNDBNexus.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is CharacterBirthday birthday && _monthNames.TryGetValue(birthday.Month, out string monthName))
+            if (value is CharacterBirthday birthday && birthday.Month.HasValue && _monthNames.TryGetValue(birthday.Month.Value, out string monthName))
             {
-                return $"{birthday.Day} {monthName}";
+                if (birthday.Day.HasValue)
+                {
+                    return $"{birthday.Day.Value} {monthName}";
+                }
+                else
+                {
+                    return $"{monthName}";
+                }
             }
 
             return null;

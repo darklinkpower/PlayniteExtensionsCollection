@@ -108,10 +108,12 @@ namespace VndbApiDomain.CharacterAggregate
             if (reader.TokenType == JsonToken.StartArray)
             {
                 JArray array = JArray.Load(reader);
-                if (array.Count == 2 && array[0].Type == JTokenType.Integer && array[1].Type == JTokenType.Integer)
+                if (array.Count == 2)
                 {
-                    int month = array[0].ToObject<int>();
-                    int day = array[1].ToObject<int>();
+                    // It's not indicated in the VNDB API documentation but month and day can be null
+                    int? month = array[0].Type == JTokenType.Null ? null : array[0].ToObject<int?>();
+                    int? day = array[1].Type == JTokenType.Null ? null : array[1].ToObject<int?>();
+                    
                     return new CharacterBirthday { Month = month, Day = day };
                 }
             }
