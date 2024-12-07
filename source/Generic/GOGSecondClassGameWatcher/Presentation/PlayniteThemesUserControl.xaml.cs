@@ -66,6 +66,7 @@ namespace GOGSecondClassGameWatcher.Presentation
             }
 
             DataContext = this;
+            ResetToDefaultValues();
         }
 
         private static void SetControlTextBlockStyle(IPlayniteAPI playniteApi, ResourceDictionary resources)

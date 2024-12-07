@@ -23,7 +23,7 @@ namespace GOGSecondClassGameWatcher
         public GOGSecondClassGameWatcherSettingsViewModel Settings { get; private set; }
         private readonly GogSecondClassService _gogSecondClassWatcherService;
         private readonly GogSecondClassGameWindowCreator _gogSecondClassGameWindowCreator;
-        private const string _gameWithIssuesTagName = "[GOG 2nd class] Game with issues";
+        private const string _gameWithIssuesTagName = "[GOG] Game with issues";
         private const string _pluginElementsSourceName = "GogSecondClassWatcher";
         private const string _themesControlName = "SecondClassWatcherControl";
 
@@ -88,6 +88,11 @@ namespace GOGSecondClassGameWatcher
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
+            if (!Settings.Settings.AddStatusTagOnLibraryUpdate)
+            {
+                return;
+            }
+            
             using (PlayniteApi.Database.BufferedUpdate())
             {
                 var issuesTag = PlayniteApi.Database.Tags.Add(_gameWithIssuesTagName);
@@ -101,11 +106,11 @@ namespace GOGSecondClassGameWatcher
                     var data = _gogSecondClassWatcherService.GetDataForGame(game);
                     if (data is null || !GogLibraryUtilities.ShouldWatcherNotify(Settings.Settings, data))
                     {
-                        PlayniteUtilities.AddTagToGame(PlayniteApi, game, issuesTag);
+                        PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, issuesTag);
                     }
                     else
                     {
-                        PlayniteUtilities.RemoveTagFromGame(PlayniteApi, game, issuesTag);
+                        PlayniteUtilities.AddTagToGame(PlayniteApi, game, issuesTag);
                     }
                 }
             }
