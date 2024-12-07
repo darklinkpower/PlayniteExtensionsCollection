@@ -61,3 +61,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.13_60b1b221/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_7.pext
     Changelog:
     - 'Fixed: Failing to obtain tags during metadata download if download of background images is disabled'
+  - Version: 1.8
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-12-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.07_e61f84d9/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_8.pext
+    Changelog:
+    - 'Fixed: Crash when a character with a birthday had missing day information.'
