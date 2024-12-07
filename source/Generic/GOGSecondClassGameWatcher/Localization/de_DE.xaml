@@ -6,7 +6,7 @@
     <sys:String x:Key="LOC_GogSecondClass_PublisherLabel">Publisher</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_NumberOfIssues">Anzahl der Probleme</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_NumberOfIssuesOnGog">Anzahl der Probleme auf GOG</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_IssuesToNotify">Issues to notify:</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_IssuesToNotify">Zu benachrichtigende Probleme:</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_GeneralIssuesLabel">Allgemeine Probleme</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingUpdatesLabel">Fehlende Updates</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingLanguagesLabel">Fehlende Sprachen</sys:String>
@@ -17,10 +17,10 @@
     <sys:String x:Key="LOC_GogSecondClass_OtherIssuesLabel">Sonstige Probleme</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingBuildsLabel">Fehlende Builds</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_RegionLockingLabel">Regionssperre</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Source one</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Source two</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Quelle 1</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Quelle 2</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Erscheinungsjahr</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Achievements issues</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Errungenschaftenprobleme</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Alle Errungenschaften fehlen</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Einige Errungenschaften fehlen</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Defekte Errungenschaften</sys:String>
