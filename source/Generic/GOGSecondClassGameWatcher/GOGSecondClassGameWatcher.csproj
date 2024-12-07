@@ -229,7 +229,6 @@
     <Compile Include="Application\GogSecondClassService.cs" />
     <Compile Include="Domain\Interfaces\ICsvDataSource.cs" />
     <Compile Include="Domain\Interfaces\IGogSecondClassPersistence.cs" />
-    <Compile Include="Domain\Interfaces\IPersistence.cs" />
     <Compile Include="Domain\ValueObjects\AchievementsIssues.cs" />
     <Compile Include="Domain\ValueObjects\GeneralIssues.cs" />
     <Compile Include="Domain\ValueObjects\GogSecondClassData.cs" />

@@ -30,7 +30,7 @@ namespace GOGSecondClassGameWatcher.Infrastructure
         public GogSecondClassPersistence(string storageFileDirectory, ILogger logger)
         {
             _logger = logger;
-            _storageFilePath = Path.Combine(storageFileDirectory, "GogSecondClassList.json");
+            _storageFilePath = Path.Combine(storageFileDirectory, "GogSecondClassList.bin");
             _data = LoadFromFile();
             BuildInMemoryCache();
         }
@@ -255,15 +255,14 @@ namespace GOGSecondClassGameWatcher.Infrastructure
 
         private void SaveToFile()
         {
-            try
+            if (ProtobufSerialization.TrySerializeToFile(_data, _storageFilePath, out var ex))
             {
-                var serializedData = Serialization.ToJson(_data);
-                FileSystem.WriteStringToFile(_storageFilePath, serializedData);
+                _logger.Info($"Persisted data to {_storageFilePath}");
             }
-            catch (Exception ex)
+            else
             {
                 _logger.Error(ex, $"Error saving file {_storageFilePath}");
-                throw;
+                throw ex;
             }
         }
 
@@ -271,12 +270,11 @@ namespace GOGSecondClassGameWatcher.Infrastructure
         {
             if (FileSystem.FileExists(_storageFilePath))
             {
-                try
+                if (ProtobufSerialization.TryDeserializeFile<GogSecondClassData>(_storageFilePath, out var data, out var ex))
                 {
-                    var data = Serialization.FromJsonFile<GogSecondClassData>(_storageFilePath);
-                    return data ?? new GogSecondClassData();
+                    return data;
                 }
-                catch (Exception ex)
+                else
                 {
                     _logger.Error(ex, $"Error loading file {_storageFilePath}");
                     FileSystem.DeleteFileSafe(_storageFilePath);

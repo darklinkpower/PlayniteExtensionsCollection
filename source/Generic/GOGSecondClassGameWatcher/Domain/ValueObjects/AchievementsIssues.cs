@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProtoBuf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,18 +7,34 @@ using System.Threading.Tasks;
 
 namespace GOGSecondClassGameWatcher.Domain.ValueObjects
 {
+    [ProtoContract]
     public class AchievementsIssues
     {
+        [ProtoMember(1)]
         public string Title { get; set; }
+        [ProtoMember(2)]
         public string Id { get; set; }
+        [ProtoMember(3)]
         public string Developer { get; set; }
+        [ProtoMember(4)]
         public string Publisher { get; set; }
+        [ProtoMember(5)]
         public string ReleaseYear { get; set; }
+        [ProtoMember(6)]
         public string MissingAllAchievements { get; set; }
+        [ProtoMember(7)]
         public string MissingSomeAchievements { get; set; }
-        public List<string> BrokenAchievements { get; set; }
+        [ProtoMember(8)]
+        public List<string> BrokenAchievements { get; set; } = new List<string>();
+        [ProtoMember(9)]
         public string AchievementsAskedResponse { get; set; }  // Reflects response from developers if achievements could be implemented
+        [ProtoMember(10)]
         public string Source { get; set; }
+
+        public AchievementsIssues()
+        {
+
+        }
 
         public AchievementsIssues(
             string title,
