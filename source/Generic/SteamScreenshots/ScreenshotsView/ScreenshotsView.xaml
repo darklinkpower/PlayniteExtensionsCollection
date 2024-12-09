@@ -12,6 +12,7 @@
     <Grid>
 
         <Image x:Name="ImageA"
+               MouseLeftButtonDown="Image_MouseLeftButtonDown"
                Source="{Binding BitmapImageA, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"
@@ -20,6 +21,7 @@
                VerticalAlignment="Center"/>
 
         <Image x:Name="ImageB"
+               MouseLeftButtonDown="Image_MouseLeftButtonDown"
                Source="{Binding BitmapImageB, IsAsync=False}"
                RenderOptions.BitmapScalingMode="Fant"
                Stretch="Uniform"

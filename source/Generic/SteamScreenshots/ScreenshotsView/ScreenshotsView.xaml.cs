@@ -22,6 +22,9 @@ namespace SteamScreenshots.Screenshots
     /// </summary>
     public partial class ScreenshotsView : UserControl
     {
+        private DateTime _lastClickTime = DateTime.MinValue;
+        private const int DoubleClickTimeLimit = 500;
+
         public ScreenshotsView()
         {
             SetControlTextBlockStyle();
@@ -52,6 +55,22 @@ namespace SteamScreenshots.Screenshots
                 var implicitStyle = new Style(typeof(TextBlock), baseStyle);
                 Resources.Add(typeof(TextBlock), implicitStyle);
             }
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var currentTime = DateTime.Now;
+            var elapsedMilliseconds = (currentTime - _lastClickTime).TotalMilliseconds;
+
+            if (elapsedMilliseconds < DoubleClickTimeLimit)
+            {
+                if (DataContext is ScreenshotsViewModel viewModel && viewModel.CloseWindowCommand.CanExecute(null))
+                {
+                    viewModel.CloseWindowCommand.Execute(null);
+                }
+            }
+
+            _lastClickTime = currentTime;
         }
     }
 }
