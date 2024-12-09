@@ -167,9 +167,6 @@ namespace SteamScreenshots.Screenshots
                     Storyboard.SetTarget(_fadeInAnimation, content.ImageB);
                 }
 
-                Storyboard.SetTargetProperty(_fadeOutAnimation, new PropertyPath("Opacity"));
-                Storyboard.SetTargetProperty(_fadeInAnimation, new PropertyPath("Opacity"));
-
                 var storyboard = new Storyboard();
                 storyboard.Children.Add(_fadeOutAnimation);
                 storyboard.Children.Add(_fadeInAnimation);
@@ -179,7 +176,26 @@ namespace SteamScreenshots.Screenshots
 
         private void CloseWindow()
         {
-            _window.Close();
+            if (_window.Content is ScreenshotsView content)
+            {
+                if (_lastImageSet == ImageIdentifier.ImageA)
+                {
+                    Storyboard.SetTarget(_fadeOutAnimation, content.ImageA);
+                }
+                else
+                {
+                    Storyboard.SetTarget(_fadeOutAnimation, content.ImageB);
+                }
+
+                var storyboard = new Storyboard();
+                storyboard.Children.Add(_fadeOutAnimation);
+                storyboard.Completed += (s, e) => _window.Close();
+                storyboard.Begin();
+            }
+            else
+            {
+                _window.Close();
+            }    
         }
 
         private bool CanNavigate()
@@ -228,6 +244,9 @@ namespace SteamScreenshots.Screenshots
                 Duration = TimeSpan.FromSeconds(0.25),
                 FillBehavior = FillBehavior.HoldEnd
             };
+
+            Storyboard.SetTargetProperty(_fadeOutAnimation, new PropertyPath("Opacity"));
+            Storyboard.SetTargetProperty(_fadeInAnimation, new PropertyPath("Opacity"));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
