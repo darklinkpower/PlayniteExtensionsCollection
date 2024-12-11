@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.06_cd94c1e1/GOGSecondClassGameWatcher_2661ddac-946a-4fee-ba80-3ece762cb64b_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-12-10
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.10_28b0d837/GOGSecondClassGameWatcher_2661ddac-946a-4fee-ba80-3ece762cb64b_1_1.pext
+    Changelog:
+    - 'Added: Tooltip with issues information to the plugin component displayed in themes'
