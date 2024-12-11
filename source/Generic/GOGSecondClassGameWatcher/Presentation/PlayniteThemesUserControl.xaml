@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Foreground="Red"
+        <Button Foreground="Red" ToolTip="{Binding Tooltip}"
                 Padding="0" Background="Transparent" BorderThickness="0"
                 Command="{Binding OpenWindowCommand}">
             <StackPanel Orientation="Horizontal">

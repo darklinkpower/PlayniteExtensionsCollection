@@ -37,6 +37,7 @@ namespace GOGSecondClassGameWatcher.Presentation
         public event PropertyChangedEventHandler PropertyChanged;
         private bool _isAtDefaultValues = true;
         private string _numberOfIssues = string.Empty;
+        private string _tooltip = null;
         private GogSecondClassGame _secondClassData;
 
         public string NumberOfIssues
@@ -45,6 +46,16 @@ namespace GOGSecondClassGameWatcher.Presentation
             set
             {
                 _numberOfIssues = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Tooltip
+        {
+            get => _tooltip;
+            set
+            {
+                _tooltip = value;
                 OnPropertyChanged();
             }
         }
@@ -111,6 +122,7 @@ namespace GOGSecondClassGameWatcher.Presentation
                 NumberOfIssues = _secondClassData.TotalIssues.ToString();
                 Visibility = Visibility.Visible;
                 _gOGSecondClassWatcherSettingsViewModel.Settings.IsControlVisible = true;
+                Tooltip = GetTooltip(_secondClassData);
                 _isAtDefaultValues = false;
             }
         }
@@ -119,6 +131,7 @@ namespace GOGSecondClassGameWatcher.Presentation
         {
             _secondClassData = null;
             NumberOfIssues = string.Empty;
+            Tooltip = null;
             Visibility = Visibility.Collapsed;
             _gOGSecondClassWatcherSettingsViewModel.Settings.IsControlVisible = false;
             _isAtDefaultValues = true;
@@ -132,6 +145,88 @@ namespace GOGSecondClassGameWatcher.Presentation
             }
 
             _gogSecondClassGameWindowCreator.OpenWindow(_secondClassData, this.GameContext);
+        }
+
+        private static string GetTooltip(GogSecondClassGame gogSecondClassGame)
+        {
+            if (gogSecondClassGame is null)
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder();
+            // General Issues
+            if (gogSecondClassGame.GeneralIssues.GetIssuesCount() > 0)
+            {
+                sb.Append(ResourceProvider.GetString("LOC_GogSecondClass_GeneralIssuesLabel"));
+                sb.Append($"\n{new string('-', 40)}\n");
+                var lines = new List<string>();
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingUpdates, "LOC_GogSecondClass_MissingUpdatesLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingLanguages, "LOC_GogSecondClass_MissingLanguagesLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingFreeDlc, "LOC_GogSecondClass_MissingFreeDlcLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingPaidDlc, "LOC_GogSecondClass_MissingPaidDlcLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingFeatures, "LOC_GogSecondClass_MissingFeaturesLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingSoundtrack, "LOC_GogSecondClass_MissingSoundtrackLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.OtherIssues, "LOC_GogSecondClass_OtherIssuesLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.MissingBuilds, "LOC_GogSecondClass_MissingBuildsLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.GeneralIssues.RegionLocking, "LOC_GogSecondClass_RegionLockingLabel");
+                sb.Append(string.Join("\n", lines));
+            }
+
+            // Achievements Issues
+            if (gogSecondClassGame.AchievementsIssues.GetIssuesCount() > 0)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append($"\n\n");
+                }
+
+                sb.Append(ResourceProvider.GetString("LOC_GogSecondClass_AchievementsIssuesLabel"));
+                sb.Append($"\n{new string('-', 40)}\n");
+                var lines = new List<string>();
+                AddLinesToTooltip(lines, gogSecondClassGame.AchievementsIssues.MissingAllAchievements, "LOC_GogSecondClass_MissingAllAchievementsLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.AchievementsIssues.MissingSomeAchievements, "LOC_GogSecondClass_MissingSomeAchievementsLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.AchievementsIssues.BrokenAchievements, "LOC_GogSecondClass_BrokenAchievementsLabel");
+                AddLinesToTooltip(lines, gogSecondClassGame.AchievementsIssues.AchievementsAskedResponse, "LOC_GogSecondClass_AchievementsAskedResponseLabel");
+                sb.Append(string.Join("\n", lines));
+            }
+
+            return sb.ToString();
+        }
+
+        private static void AddLinesToTooltip(List<string> lines, IReadOnlyList<string> issuesStrings, string locStringKey)
+        {
+            if (!issuesStrings?.Any() == true)
+            {
+                return;
+            }
+
+            lines.Add($"{ResourceProvider.GetString(locStringKey)}:");
+            var lineIndentString = new string(' ', 8);
+            foreach (var issueString in issuesStrings)
+            {
+                var splittedIssueString = issueString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var str in splittedIssueString)
+                {
+                    lines.Add($"{lineIndentString}{str}");
+                }
+            }
+        }
+
+        private static void AddLinesToTooltip(List<string> lines, string issuesString, string locStringKey)
+        {
+            if (issuesString.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            lines.Add($"{ResourceProvider.GetString(locStringKey)}:");
+            var lineIndentString = new string(' ', 8);
+            var splittedIssueString = issuesString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var str in splittedIssueString)
+            {
+                lines.Add($"{lineIndentString}{str}");
+            }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
