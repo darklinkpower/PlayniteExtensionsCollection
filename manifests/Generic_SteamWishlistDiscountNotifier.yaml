@@ -258,3 +258,16 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.04_2719a10d/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_36.pext
     Changelog:
     - 'Fixed: Incorrectly notifying that a game price has changed in some cases when a game is sold as part of a bundle'
+  - Version: 1.37
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-12-14
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.14_9e149c6c/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_37.pext
+    Changelog:
+    - 'Added: Display of discount end date and remaining discount time for discounted wishlist items'
+    - 'Added: Button to open wishlist items on SteamDB'
+    - 'Added: Support for filtering wishlist items by tags'
+    - 'Added: Display of most important tags for wishlist items, which are used during filtering'
+    - 'Added: Banner to wishlist items indicating if game is in Early Access'
+    - 'Fixed: Wishlist items now show the release date in local system time instead of UTC timezone, preventing potential mismatches'
+    - 'Fixed: Certain buttons in wishlist view not working'
+    - 'Changed: Minor color changes in wishlist view'
