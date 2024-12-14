@@ -45,6 +45,7 @@ Steam istek listesi kontrol edilemedi. Kimlik doğrulama gerekli.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">En yüksek fiyat:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Öğe türü:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Fiyat:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">Early Access</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Mevcut</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Mevcut değil</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Tüm nesneler:</sys:String>
@@ -60,6 +61,7 @@ Steam istek listesi kontrol edilemedi. Kimlik doğrulama gerekli.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Sahip olunmayan</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Web'de aç</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Steam'de aç</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">Open on SteamDB</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">İndirimler için Steam istek listesini kontrol edin</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">İstek listesinden kaldır</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">İstek listesinden kaldırılamadı</sys:String>
