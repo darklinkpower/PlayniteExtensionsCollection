@@ -24,6 +24,8 @@
             <SolidColorBrush Color="#3d4c5d" x:Key="WishlistItemBackgroundBrush" />
             <SolidColorBrush Color="#b9bfc6" x:Key="RankForegroundBrush" />
             <SolidColorBrush Color="#313d4a" x:Key="RankBorderSeparatorBrush" />
+            <SolidColorBrush Color="#67c1f5" x:Key="EarlyAccessBackgroundBrush" />
+            <SolidColorBrush Color="#000000" x:Key="EarlyAccessForegroundBrush" />
             <BitmapImage x:Key="DefaultBannerBitmap" UriSource="{Binding DefaultBannerUri}" CacheOption="Default" />
             <DataTemplate x:Key="WishlistItemTemplate">
                 <Grid d:DataContext="{d:DesignInstance local:SteamWishlistViewItem}"
@@ -68,11 +70,16 @@
                     <StackPanel Grid.Column="2" VerticalAlignment="Center"
                                 Margin="5,0,0,0">
                         <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
-                            <TextBlock Text="{Binding Name}" Margin="0,0,10,0"
+                            <TextBlock Text="{Binding Name}" Margin="0,0,0,0"
                                    HorizontalAlignment="Left" VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    TextTrimming="CharacterEllipsis"/>
-                            <StackPanel Orientation="Horizontal"
+                            <Border Padding="6,2,6,2" VerticalAlignment="Center" Margin="10,0,0,0" Background="{StaticResource EarlyAccessBackgroundBrush}"
+                                    Visibility="{Binding IsEarlyAccess, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBox Text="{DynamicResource LOCSteam_Wishlist_Notif_GameEarlyAccessLabel}" VerticalAlignment="Center" Padding="0"
+                                         Foreground="{StaticResource EarlyAccessForegroundBrush}" FontWeight="SemiBold"/>
+                            </Border>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0"
                                         Visibility="{Binding FormattedOwnedSources, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
                                 <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat}"
                                            Foreground="{StaticResource DiscountPercentTextForegroundBrush}"
