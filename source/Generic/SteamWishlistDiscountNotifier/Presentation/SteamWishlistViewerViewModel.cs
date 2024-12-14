@@ -261,6 +261,11 @@ namespace SteamWishlistDiscountNotifier.Presentation
         #endregion
 
         #region Commands
+        public RelayCommand NavigateBackCommand { get; }
+        public RelayCommand ResetSearchStringCommand { get; }
+        public RelayCommand ResetFilterMinimumPriceCommand { get; }
+        public RelayCommand ResetFilterMaximumPriceCommand { get; }
+        public RelayCommand SetMaximumPriceToWalletCommand { get; }
         public RelayCommand<SteamWishlistViewItem> RemoveItemFromWishlistCommand { get; }
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnSteamCommand { get; }
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnWebCommand { get; }
@@ -280,6 +285,11 @@ namespace SteamWishlistDiscountNotifier.Presentation
             WishlistItemsCollection = CreateViewItems(wishlistResponseItems, bannersPathsMapper);
             DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
 
+            NavigateBackCommand = new RelayCommand(() => _playniteApi.MainView.SwitchToLibraryView());
+            ResetSearchStringCommand = new RelayCommand(() => SearchString = string.Empty);
+            ResetFilterMinimumPriceCommand = new RelayCommand(() => FilterMinimumPrice = 0);
+            ResetFilterMaximumPriceCommand = new RelayCommand(() => FilterMaximumPrice = 999999);
+            SetMaximumPriceToWalletCommand = new RelayCommand(() => FilterMaximumPrice = (double)walletDetails.Balance / 100);
             RemoveItemFromWishlistCommand = new RelayCommand<SteamWishlistViewItem>((a) => RemoveWishlistItem(a));
             OpenWishlistItemOnSteamCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInSteamClient(a));
             OpenWishlistItemOnWebCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInBrowser(a));
