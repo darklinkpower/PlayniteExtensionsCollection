@@ -45,6 +45,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Максимальна ціна:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Тип товару:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Ціна:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">Ранній доступ</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Доступно</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Не доступно</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Усього товарів:</sys:String>
@@ -60,6 +61,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Не придбано</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Відкрити в Інтернеті</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Відкрити у Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">Відкрити на SteamDB</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Перевірити список бажань Steam на знижки</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Вилучити зі списку бажань</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Не вдалося вилучити зі списку бажань</sys:String>
