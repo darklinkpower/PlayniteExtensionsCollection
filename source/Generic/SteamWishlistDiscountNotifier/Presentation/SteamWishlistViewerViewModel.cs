@@ -270,6 +270,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
         public RelayCommand<SteamWishlistViewItem> RemoveItemFromWishlistCommand { get; }
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnSteamCommand { get; }
         public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnWebCommand { get; }
+        public RelayCommand<SteamWishlistViewItem> OpenWishlistItemOnSteamDbCommand { get; }
+
         #endregion
 
         #region Constructor
@@ -295,6 +297,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
             RemoveItemFromWishlistCommand = new RelayCommand<SteamWishlistViewItem>((a) => RemoveWishlistItem(a));
             OpenWishlistItemOnSteamCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInSteamClient(a));
             OpenWishlistItemOnWebCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInBrowser(a));
+            OpenWishlistItemOnSteamDbCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInSteamDb(a));
 
             TagFilters = new FilterGroup(CreateFilterItems(WishlistItemsCollection));
             TagFilters.SettingsChanged += OnTagFiltersSettingsChanged;
@@ -532,6 +535,12 @@ namespace SteamWishlistDiscountNotifier.Presentation
         private void OpenWishlistItemInBrowser(SteamWishlistViewItem wishlistItem)
         {
             var subIdSteamUrl = string.Format(_steamStoreSubUrlMask, wishlistItem.Appid);
+            ProcessStarter.StartUrl(subIdSteamUrl);
+        }
+
+        private void OpenWishlistItemInSteamDb(SteamWishlistViewItem wishlistItem)
+        {
+            var subIdSteamUrl = string.Format("https://steamdb.info/app/{0}/", wishlistItem.Appid);
             ProcessStarter.StartUrl(subIdSteamUrl);
         }
 
