@@ -45,21 +45,26 @@ namespace SteamWishlistDiscountNotifier.Presentation
 
         private void UpdateTextBlocksText()
         {
-            _dispatcher.Invoke(() =>
+            try
             {
-                try
+                if (_dispatcher.HasShutdownStarted || _dispatcher.HasShutdownFinished)
+                {
+                    return;
+                }
+
+                _dispatcher.Invoke(() =>
                 {
                     foreach (var textBlock in _textBlocksToUpdate)
                     {
                         var binding = textBlock.GetBindingExpression(TextBlock.TextProperty);
                         binding?.UpdateTarget();
                     }
-                }
-                catch
-                {
+                });
+            }
+            catch
+            {
 
-                }
-            });
+            }
         }
 
         private void SteamWishlistViewerView_Unloaded(object sender, RoutedEventArgs e)
