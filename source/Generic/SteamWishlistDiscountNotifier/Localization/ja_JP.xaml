@@ -51,6 +51,7 @@ Failed to check Steam wishlist. Authentication is required.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Overall Reviews:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">発売日:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">タグ:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Discount End Date:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Owned in:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Show if game is owned in other sources</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Ownership:</sys:String>
