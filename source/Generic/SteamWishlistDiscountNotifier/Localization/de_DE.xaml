@@ -51,7 +51,7 @@ Fehler beim Überprüfen der Steam Wunschliste. Authentifizierung ist erforderli
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Gesamte Bewertungen:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Erscheinungsdatum:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Tags:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Discount End Date:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Rabattenddatum:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Im Besitz auf:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Zeige an, ob das Spiel in anderen Quellen im Besitz ist</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Besitz:</sys:String>
