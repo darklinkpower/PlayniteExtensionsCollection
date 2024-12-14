@@ -51,6 +51,7 @@ Falha ao verificar a lista de desejos do Steam. Autenticação é necessária.</
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Avaliações Gerais:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Data de lançamento:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Marcadores:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Discount End Date:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Adquirido em:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Mostrar se o jogo pertence a outras fontes</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Proprietário:</sys:String>
