@@ -51,6 +51,7 @@ Error al comprobar la lista de deseados de Steam. Se requiere autenticación.</s
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Reseñas globales:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Fecha de lanzamiento:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Etiquetas:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Discount End Date:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Poseído en:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Mostrar si el juego se posee en otras fuentes</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Propiedad:</sys:String>
