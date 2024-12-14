@@ -12,6 +12,7 @@
     <Grid>
         <Grid.Resources>
             <conv:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+            <conv:EnumerableStringJoinConverter x:Key="EnumerableStringJoinConverter" />
             <presentationConverters:TimeRemainingConverter x:Key="TimeRemainingConverter" />
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             <SolidColorBrush Color="#b2b8bd" x:Key="SubtitleColorBrush" />
@@ -86,7 +87,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="12" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -116,8 +117,8 @@
                                        Grid.Column="0" Grid.Row="2"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}" />
-                            <TextBlock Text=""
-                                       TextWrapping="Wrap"
+                            <TextBlock Text="{Binding Tags, Converter={StaticResource EnumerableStringJoinConverter}, ConverterParameter=', '}"
+                                       TextTrimming="CharacterEllipsis"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        Grid.Column="2" Grid.Row="2" />
@@ -147,7 +148,7 @@
 
                     </StackPanel>
 
-                    <Border Grid.Column="3" Background="{StaticResource DiscountBlockBackgroundBrush}" Padding="2" DockPanel.Dock="Right" Margin="0,0,2,0">
+                    <Border Grid.Column="3" Background="{StaticResource DiscountBlockBackgroundBrush}" Padding="2" DockPanel.Dock="Right" Margin="0,0,0,0">
                         <DockPanel>
                             <Border Background="{StaticResource DiscountPercentAreaBackgroundBrush}" MinWidth="60"
                                     Visibility="{Binding IsDiscounted, Converter={StaticResource BooleanToVisibilityConverter}}">

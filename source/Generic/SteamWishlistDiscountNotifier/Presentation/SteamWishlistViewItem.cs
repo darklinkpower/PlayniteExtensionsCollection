@@ -12,6 +12,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
         public string Name { get; }
         public uint Appid { get; }
         public uint Priority { get; }
+        public List<string> Tags { get; }
         public string FormattedDateAdded { get; }
         public string FormattedReleaseDate { get; }
         public bool IsEarlyAccess { get; }
@@ -32,6 +33,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
             string name,
             uint appid,
             uint priority,
+            List<string> tags,
             string formattedDateAdded,
             string formattedReleaseDate,
             bool isEarlyAccess,
@@ -50,6 +52,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
             Name = name;
             Appid = appid;
             Priority = priority;
+            Tags = tags;
             FormattedDateAdded = formattedDateAdded;
             FormattedReleaseDate = formattedReleaseDate;
             IsEarlyAccess = isEarlyAccess;

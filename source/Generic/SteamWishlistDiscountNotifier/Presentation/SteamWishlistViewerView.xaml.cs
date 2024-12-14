@@ -47,10 +47,17 @@ namespace SteamWishlistDiscountNotifier.Presentation
         {
             _dispatcher.Invoke(() =>
             {
-                foreach (var textBlock in _textBlocksToUpdate)
+                try
                 {
-                    var binding = textBlock.GetBindingExpression(TextBlock.TextProperty);
-                    binding?.UpdateTarget();
+                    foreach (var textBlock in _textBlocksToUpdate)
+                    {
+                        var binding = textBlock.GetBindingExpression(TextBlock.TextProperty);
+                        binding?.UpdateTarget();
+                    }
+                }
+                catch
+                {
+
                 }
             });
         }

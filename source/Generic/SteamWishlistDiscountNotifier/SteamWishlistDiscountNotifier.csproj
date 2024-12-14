@@ -158,6 +158,9 @@
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumerableStringJoinConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumerableStringJoinConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\EnumToListConverter.cs">
       <Link>Shared\PluginsCommon\Converters\EnumToListConverter.cs</Link>
     </Compile>
@@ -224,6 +227,8 @@
     <Compile Include="..\..\ProtobufUtilities\ProtobufSerialization.cs">
       <Link>Shared\ProtobufUtilities\ProtobufSerialization.cs</Link>
     </Compile>
+    <Compile Include="Application\Steam\Tags\GetTagListResponseDto.cs" />
+    <Compile Include="Application\Steam\Tags\SteamTagsService.cs" />
     <Compile Include="Application\WishlistTracker\WishlistTrackerService.cs" />
     <Compile Include="Domain\Enums\SteamReviewsValue.cs" />
     <Compile Include="Domain\Enums\SteamStoreItemAppType.cs" />

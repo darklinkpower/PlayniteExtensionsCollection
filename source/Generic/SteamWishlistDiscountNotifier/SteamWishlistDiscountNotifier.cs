@@ -21,6 +21,7 @@ using SteamWishlistDiscountNotifier.Domain.Events;
 using SteamWishlistDiscountNotifier.Domain.Enums;
 using SteamWishlistDiscountNotifier.Presentation;
 using SteamWishlistDiscountNotifier.Application.Steam.Login;
+using SteamWishlistDiscountNotifier.Application.Steam.Tags;
 
 namespace SteamWishlistDiscountNotifier
 {
@@ -35,6 +36,7 @@ namespace SteamWishlistDiscountNotifier
         private readonly SteamJwtTokenService _steamJwtTokenService;
         private readonly SteamUserAccountService _steamUserAccountService;
         private readonly SteamWishlistService _steamWishlistService;
+        private readonly SteamTagsService _steamTagsService;
         private readonly WishlistTrackerService _wishlistTrackerService;
         private SteamWishlistViewerViewModel _wishlistViewDataContext = null;
 
@@ -48,6 +50,7 @@ namespace SteamWishlistDiscountNotifier
             _steamJwtTokenService = new SteamJwtTokenService(PlayniteApi, _logger);
             _steamUserAccountService = new SteamUserAccountService(_steamJwtTokenService, PlayniteApi, _logger);
             _steamWishlistService = new SteamWishlistService(_steamJwtTokenService, PlayniteApi, _logger);
+            _steamTagsService = new SteamTagsService();
             _wishlistTrackerService = new WishlistTrackerService
             (
                 _logger,
@@ -306,6 +309,7 @@ namespace SteamWishlistDiscountNotifier
             var wishlistItems = new List<CWishlistGetWishlistSortedFilteredResponseWishlistItem>();
             SteamWalletDetails walletDetails = null;
             Dictionary<uint, string> bannersPathsMapper = null;
+            var tags = new List<Tag>();
             var tokenWasCancelled = false;
             PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
@@ -316,6 +320,7 @@ namespace SteamWishlistDiscountNotifier
                     if (wishlistItems.HasItems())
                     {
                         bannersPathsMapper = GetBannerPaths(wishlistItems, a);
+                        tags = _steamTagsService.GetTagsList(cancellationToken: a.CancelToken);
                     }
                 }
 
@@ -327,7 +332,7 @@ namespace SteamWishlistDiscountNotifier
                 return null;
             }
 
-            _wishlistViewDataContext = new SteamWishlistViewerViewModel(PlayniteApi, walletDetails, wishlistItems, bannersPathsMapper, GetPluginUserDataPath());
+            _wishlistViewDataContext = new SteamWishlistViewerViewModel(PlayniteApi, walletDetails, wishlistItems, tags, bannersPathsMapper, GetPluginUserDataPath());
             return new SteamWishlistViewerView { DataContext = _wishlistViewDataContext };
         }
 

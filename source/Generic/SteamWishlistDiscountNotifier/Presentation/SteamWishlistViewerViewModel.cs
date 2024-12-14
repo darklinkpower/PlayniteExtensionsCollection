@@ -19,6 +19,7 @@ using SteamCommon;
 using SteamWishlistDiscountNotifier.Domain.Enums;
 using SteamWishlistDiscountNotifier.Application.Steam.Wishlist;
 using SteamWishlistDiscountNotifier.Presentation.Filters;
+using SteamWishlistDiscountNotifier.Application.Steam.Tags;
 
 namespace SteamWishlistDiscountNotifier.Presentation
 {
@@ -277,12 +278,13 @@ namespace SteamWishlistDiscountNotifier.Presentation
             IPlayniteAPI playniteApi,
             SteamWalletDetails walletDetails,
             List<CWishlistGetWishlistSortedFilteredResponseWishlistItem> wishlistResponseItems,
+            List<Tag> tags,
             Dictionary<uint, string> bannersPathsMapper,
             string pluginInstallPath)
         {
             _playniteApi = playniteApi;
             FormattedBalance = walletDetails.FormattedBalance;
-            WishlistItemsCollection = CreateViewItems(wishlistResponseItems, bannersPathsMapper);
+            WishlistItemsCollection = CreateViewItems(wishlistResponseItems, bannersPathsMapper, tags);
             DefaultBannerUri = new Uri(Path.Combine(pluginInstallPath, "Resources", "DefaultBanner.png"), UriKind.Absolute);
 
             NavigateBackCommand = new RelayCommand(() => _playniteApi.MainView.SwitchToLibraryView());
@@ -294,7 +296,7 @@ namespace SteamWishlistDiscountNotifier.Presentation
             OpenWishlistItemOnSteamCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInSteamClient(a));
             OpenWishlistItemOnWebCommand = new RelayCommand<SteamWishlistViewItem>((a) => OpenWishlistItemInBrowser(a));
 
-            TagFilters = CreateTagsFilterGroup(WishlistItemsCollection);
+            TagFilters = new FilterGroup(CreateFilterItems(WishlistItemsCollection));
             TagFilters.SettingsChanged += OnTagFiltersSettingsChanged;
 
             _wishlistCollectionView = InitializeWishlistCollectionView(WishlistItemsCollection);
@@ -326,17 +328,54 @@ namespace SteamWishlistDiscountNotifier.Presentation
             };
         }
 
-        private List<SteamWishlistViewItem> CreateViewItems(List<CWishlistGetWishlistSortedFilteredResponseWishlistItem> wishlistResponseItems, Dictionary<uint, string> bannersPathsMapper)
+        public ObservableCollection<FilterItem> CreateFilterItems(List<SteamWishlistViewItem> wishlistItemsCollection)
+        {
+            var dict = new Dictionary<string, FilterItem>();
+            foreach (var wishlistItem in wishlistItemsCollection)
+            {
+                foreach (var tag in wishlistItem.Tags)
+                {
+                    if (!dict.ContainsKey(tag))
+                    {
+                        dict[tag] = new FilterItem(false, tag);
+                    }
+                }
+            }
+
+            return dict.OrderBy(x => x.Key).Select(x => x.Value).ToObservable();
+        }
+
+        public List<string> GetWishlistItemTags(CWishlistGetWishlistSortedFilteredResponseWishlistItem wishlistItem, Dictionary<uint, string> tagsDictionary)
+        {
+            if (wishlistItem.StoreItem.Tags is null)
+            {
+                return new List<string>();
+            }
+
+            return wishlistItem.StoreItem.Tags
+                .OrderByDescending(x => x.Weight)
+                .Take(5)
+                .Select(x => tagsDictionary.TryGetValue(x.Tagid, out var tagName) ? tagName : null)
+                .Where(tagName => tagName != null)
+                .ToList();
+        }
+
+        private List<SteamWishlistViewItem> CreateViewItems(
+            List<CWishlistGetWishlistSortedFilteredResponseWishlistItem> wishlistResponseItems,
+            Dictionary<uint, string> bannersPathsMapper,
+            List<Tag> tags)
         {
             var otherSourcesOwnership = GetNonSteamOwnedItems();
             var items = new List<SteamWishlistViewItem>();
-            foreach (var x in wishlistResponseItems)
+            var tagsDictionary = tags.ToDictionary(x => x.Tagid, x => x.Name);
+            foreach (var wishlistItem in wishlistResponseItems)
             {
-                if (x.StoreItem.BestPurchaseOption != null)
+                var wishlistItemTags = GetWishlistItemTags(wishlistItem, tagsDictionary);
+                if (wishlistItem.StoreItem.BestPurchaseOption != null)
                 {
                     DateTime? activeDiscountEndDate = null;
                     var formattedActiveDiscountEndDate = string.Empty;
-                    var activeDiscount = x.StoreItem.BestPurchaseOption.ActiveDiscounts.FirstOrDefault();
+                    var activeDiscount = wishlistItem.StoreItem.BestPurchaseOption.ActiveDiscounts.FirstOrDefault();
                     if (activeDiscount != null)
                     {
                         activeDiscountEndDate = DateTimeOffset.FromUnixTimeSeconds(activeDiscount.DiscountEndDate).DateTime.ToLocalTime();
@@ -345,21 +384,22 @@ namespace SteamWishlistDiscountNotifier.Presentation
 
                     var item = new SteamWishlistViewItem
                     (
-                        x.StoreItem.Name,
-                        x.Appid,
-                        x.Priority,
-                        DateTimeOffset.FromUnixTimeSeconds(x.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
-                        x.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(x.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/MM/dd") : string.Empty,
-                        x.StoreItem.IsEarlyAccess,
-                        x.StoreItem.BestPurchaseOption.DiscountPct,
-                        x.StoreItem.BestPurchaseOption.FormattedFinalPrice,
-                        x.StoreItem.BestPurchaseOption.FormattedOriginalPrice,
-                        x.StoreItem.BestPurchaseOption.FinalPriceInCents / 100,
-                        x.StoreItem.BestPurchaseOption.OriginalPriceInCents / 100,
-                        string.Join(", ", otherSourcesOwnership.ContainsKey(x.StoreItem.Name.Satinize()) ? otherSourcesOwnership[x.StoreItem.Name.Satinize()] : new List<string>()),
-                        bannersPathsMapper.ContainsKey(x.Appid) ? bannersPathsMapper[x.Appid] : string.Empty,
-                        (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), x.StoreItem.Type),
-                        x.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
+                        wishlistItem.StoreItem.Name,
+                        wishlistItem.Appid,
+                        wishlistItem.Priority,
+                        wishlistItemTags,
+                        DateTimeOffset.FromUnixTimeSeconds(wishlistItem.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
+                        wishlistItem.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(wishlistItem.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/MM/dd") : string.Empty,
+                        wishlistItem.StoreItem.IsEarlyAccess,
+                        wishlistItem.StoreItem.BestPurchaseOption.DiscountPct,
+                        wishlistItem.StoreItem.BestPurchaseOption.FormattedFinalPrice,
+                        wishlistItem.StoreItem.BestPurchaseOption.FormattedOriginalPrice,
+                        wishlistItem.StoreItem.BestPurchaseOption.FinalPriceInCents / 100,
+                        wishlistItem.StoreItem.BestPurchaseOption.OriginalPriceInCents / 100,
+                        string.Join(", ", otherSourcesOwnership.ContainsKey(wishlistItem.StoreItem.Name.Satinize()) ? otherSourcesOwnership[wishlistItem.StoreItem.Name.Satinize()] : new List<string>()),
+                        bannersPathsMapper.ContainsKey(wishlistItem.Appid) ? bannersPathsMapper[wishlistItem.Appid] : string.Empty,
+                        (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), wishlistItem.StoreItem.Type),
+                        wishlistItem.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
                         activeDiscountEndDate,
                         formattedActiveDiscountEndDate
                     );
@@ -370,21 +410,22 @@ namespace SteamWishlistDiscountNotifier.Presentation
                 {
                     var item = new SteamWishlistViewItem
                     (
-                        x.StoreItem.Name,
-                        x.Appid,
-                        x.Priority,
-                        DateTimeOffset.FromUnixTimeSeconds(x.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
-                        x.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(x.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/M/d") : string.Empty,
-                        x.StoreItem.IsEarlyAccess,
+                        wishlistItem.StoreItem.Name,
+                        wishlistItem.Appid,
+                        wishlistItem.Priority,
+                        wishlistItemTags,
+                        DateTimeOffset.FromUnixTimeSeconds(wishlistItem.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
+                        wishlistItem.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(wishlistItem.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/M/d") : string.Empty,
+                        wishlistItem.StoreItem.IsEarlyAccess,
                         0,
                         string.Empty,
                         string.Empty,
                         0,
                         0,
-                        string.Join(", ", otherSourcesOwnership.ContainsKey(x.StoreItem.Name.Satinize()) ? otherSourcesOwnership[x.StoreItem.Name.Satinize()] : new List<string>()),
-                        bannersPathsMapper.ContainsKey(x.Appid) ? bannersPathsMapper[x.Appid] : string.Empty,
-                        (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), x.StoreItem.ItemType),
-                        x.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
+                        string.Join(", ", otherSourcesOwnership.ContainsKey(wishlistItem.StoreItem.Name.Satinize()) ? otherSourcesOwnership[wishlistItem.StoreItem.Name.Satinize()] : new List<string>()),
+                        bannersPathsMapper.ContainsKey(wishlistItem.Appid) ? bannersPathsMapper[wishlistItem.Appid] : string.Empty,
+                        (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), wishlistItem.StoreItem.ItemType),
+                        wishlistItem.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
                         null,
                         string.Empty
                     );
@@ -412,32 +453,6 @@ namespace SteamWishlistDiscountNotifier.Presentation
         #endregion
 
         #region Private Methods
-
-        private FilterGroup CreateTagsFilterGroup(IEnumerable<SteamWishlistViewItem> wishlistItems)
-        {
-            var tags = new HashSet<string>();
-            var tagsFiltersSource = new ObservableCollection<FilterItem>();
-            //foreach (var item in wishlistItems)
-            //{
-            //    if (!item.Data.WishlistItem.Tags.HasItems())
-            //    {
-            //        continue;
-            //    }
-
-            //    foreach (var tag in item.Data.WishlistItem.Tags)
-            //    {
-            //        if (tags.Contains(tag))
-            //        {
-            //            continue;
-            //        }
-
-            //        tagsFiltersSource.Add(new FilterItem(false, tag));
-            //        tags.Add(tag);
-            //    }
-            //}
-
-            return new FilterGroup(tagsFiltersSource);
-        }
 
         // Event Handlers
         private void OnTagFiltersSettingsChanged(object sender, EventArgs e)
@@ -585,10 +600,10 @@ namespace SteamWishlistDiscountNotifier.Presentation
                 return false;
             }
 
-            //if (TagFilters.EnabledFiltersNames.Any(x => !wishlistItem.WishlistItem.Tags.Contains(x)))
-            //{
-            //    return false;
-            //}
+            if (TagFilters.EnabledFiltersNames.Any(x => !wishlistItem.Tags.Contains(x)))
+            {
+                return false;
+            }
 
             return true;
         }
