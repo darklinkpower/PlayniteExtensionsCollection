@@ -16,12 +16,12 @@
             <presentationConverters:TimeRemainingConverter x:Key="TimeRemainingConverter" />
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             <SolidColorBrush Color="#b2b8bd" x:Key="SubtitleColorBrush" />
-            <SolidColorBrush Color="#3f5436" x:Key="DiscountPercentAreaBackgroundBrush" />
-            <SolidColorBrush Color="#a4d007" x:Key="DiscountPercentTextForegroundBrush" />
-            <SolidColorBrush Color="#707e89" x:Key="DiscountBlockStrikeTextForegroundBrush" />
-            <SolidColorBrush Color="#202326" x:Key="ItemsPanelBackgroundBrush" />
-            <SolidColorBrush Color="#313d4a" x:Key="DiscountBlockBackgroundBrush" />
-            <SolidColorBrush Color="#3d4c5d" x:Key="WishlistItemBackgroundBrush" />
+            <SolidColorBrush Color="#3e5537" x:Key="DiscountPercentAreaBackgroundBrush" />
+            <SolidColorBrush Color="#beee11" x:Key="DiscountPercentTextForegroundBrush" />
+            <SolidColorBrush Color="#738895" x:Key="DiscountBlockStrikeTextForegroundBrush" />
+            <SolidColorBrush Color="Transparent" x:Key="ItemsPanelBackgroundBrush" />
+            <SolidColorBrush Color="#303e4c" x:Key="DiscountBlockBackgroundBrush" />
+            <SolidColorBrush Color="#3c4d5f" x:Key="WishlistItemBackgroundBrush" />
             <SolidColorBrush Color="#b9bfc6" x:Key="RankForegroundBrush" />
             <SolidColorBrush Color="#313d4a" x:Key="RankBorderSeparatorBrush" />
             <SolidColorBrush Color="#67c1f5" x:Key="EarlyAccessBackgroundBrush" />
@@ -76,7 +76,7 @@
                                    TextTrimming="CharacterEllipsis"/>
                             <Border Padding="6,2,6,2" VerticalAlignment="Center" Margin="10,0,0,0" Background="{StaticResource EarlyAccessBackgroundBrush}"
                                     Visibility="{Binding IsEarlyAccess, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBox Text="{DynamicResource LOCSteam_Wishlist_Notif_GameEarlyAccessLabel}" VerticalAlignment="Center" Padding="0"
+                                <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_GameEarlyAccessLabel}" VerticalAlignment="Center" Padding="0"
                                          Foreground="{StaticResource EarlyAccessForegroundBrush}" FontWeight="SemiBold"/>
                             </Border>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0"
@@ -188,11 +188,12 @@
                                         CommandParameter="{Binding}" />
                                 <Button ToolTip="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb}"
                                         Margin="0,0,0,0"
+                                        Name="ButtonOpenOnSteamDB"
                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.OpenWishlistItemOnSteamDbCommand}"
                                         CommandParameter="{Binding}">
                                     <Viewbox Height="15">
                                         <Canvas Width="128" Height="128">
-                                            <Path Fill="{Binding ElementName=ButtonOpenOnWeb, Path=Foreground}"
+                                            <Path Fill="{Binding ElementName=ButtonOpenOnSteamDB, Path=Foreground}"
                                                   Data="M63.9 0C30.5 0 3.1 11.9.1 27.1l35.6 6.7c2.9-.9 6.2-1.3 9.6-1.3l16.7-10c-.2-2.5 1.3-5.1 4.7-7.2 4.8-3.1 12.3-4.8 19.9-4.8 5.2-.1 10.5.7 15 2.2 11.2 3.8 13.7 11.1 5.7 16.3-5.1 3.3-13.3 5-21.4 4.8l-22 7.9c-.2 1.6-1.3 3.1-3.4 4.5-5.9 3.8-17.4 4.7-25.6 1.9-3.6-1.2-6-3-7-4.8L2.5 38.4c2.3 3.6 6 6.9 10.8 9.8C5 53 0 59 0 65.5c0 6.4 4.8 12.3 12.9 17.1C4.8 87.3 0 93.2 0 99.6 0 115.3 28.6 128 64 128c35.3 0 64-12.7 64-28.4 0-6.4-4.8-12.3-12.9-17 8.1-4.8 12.9-10.7 12.9-17.1 0-6.5-5-12.6-13.4-17.4 8.3-5.1 13.3-11.4 13.3-18.2 0-16.5-28.7-29.9-64-29.9zm22.8 14.2c-5.2.1-10.2 1.2-13.4 3.3-5.5 3.6-3.8 8.5 3.8 11.1 7.6 2.6 18.1 1.8 23.6-1.8s3.8-8.5-3.8-11c-3.1-1-6.7-1.5-10.2-1.5zm.3 1.7c7.4 0 13.3 2.8 13.3 6.2 0 3.4-5.9 6.2-13.3 6.2s-13.3-2.8-13.3-6.2c0-3.4 5.9-6.2 13.3-6.2zM45.3 34.4c-1.6.1-3.1.2-4.6.4l9.1 1.7a10.8 5 0 1 1-8.1 9.3l-8.9-1.7c1 .9 2.4 1.7 4.3 2.4 6.4 2.2 15.4 1.5 20-1.5s3.2-7.2-3.2-9.3c-2.6-.9-5.7-1.3-8.6-1.3zM109 51v9.3c0 11-20.2 19.9-45 19.9-24.9 0-45-8.9-45-19.9v-9.2c11.5 5.3 27.4 8.6 44.9 8.6 17.6 0 33.6-3.3 45.2-8.7zm0 34.6v8.8c0 11-20.2 19.9-45 19.9-24.9 0-45-8.9-45-19.9v-8.8c11.6 5.1 27.4 8.2 45 8.2s33.5-3.1 45-8.2z"/>
                                         </Canvas>
                                     </Viewbox>
@@ -487,6 +488,8 @@
                 </StackPanel>
             </ScrollViewer>
             <Border Background="{StaticResource ItemsPanelBackgroundBrush}"
+                    BorderBrush="#0Df2f2f2"
+                    BorderThickness="2,0,0,0"
                     Padding="5,35,5,2">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5,0,0,10">
