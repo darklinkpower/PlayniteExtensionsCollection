@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:conv="clr-namespace:PluginsCommon.Converters"
+             xmlns:presentationConverters="clr-namespace:SteamWishlistDiscountNotifier.Presentation.Converters"
              xmlns:local="clr-namespace:SteamWishlistDiscountNotifier.Presentation"
              d:DataContext="{d:DesignInstance local:SteamWishlistViewerViewModel}"
              mc:Ignorable="d" 
@@ -11,6 +12,7 @@
     <Grid>
         <Grid.Resources>
             <conv:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />
+            <presentationConverters:TimeRemainingConverter x:Key="TimeRemainingConverter" />
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
             <SolidColorBrush Color="#b2b8bd" x:Key="SubtitleColorBrush" />
             <SolidColorBrush Color="#3f5436" x:Key="DiscountPercentAreaBackgroundBrush" />
@@ -27,7 +29,7 @@
                       Margin="0" Background="{StaticResource WishlistItemBackgroundBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="135" />
+                        <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -48,7 +50,7 @@
                                        VerticalAlignment="Bottom" />
                         </DockPanel>
                     </Border>
-                    <Image Height="60" Grid.Column="1"
+                    <Image Grid.Column="1"
                            Margin="2"
                            RenderOptions.BitmapScalingMode="Fant"
                            Stretch="Uniform" StretchDirection="Both"
@@ -90,32 +92,57 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews}"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        FontWeight="Medium"
                                        Grid.Column="0" Grid.Row="0" />
-                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate}"
-                                       Foreground="{StaticResource SubtitleColorBrush}"
-                                       FontWeight="Medium"
-                                       Grid.Column="0" Grid.Row="1" />
-                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
-                                       Grid.Column="0" Grid.Row="2"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource SubtitleColorBrush}" />
                             <TextBlock Text="{Binding ReviewScoreLabel}"
                                        Foreground="#66c0f4"
                                        FontWeight="Medium"
                                        Grid.Column="2" Grid.Row="0" />
+
+                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate}"
+                                       Foreground="{StaticResource SubtitleColorBrush}"
+                                       FontWeight="Medium"
+                                       Grid.Column="0" Grid.Row="1" />
                             <TextBlock Text="{Binding FormattedReleaseDate}"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        FontWeight="Medium"
                                        Grid.Column="2" Grid.Row="1" />
+
+                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags}"
+                                       Grid.Column="0" Grid.Row="2"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource SubtitleColorBrush}" />
                             <TextBlock Text=""
                                        TextWrapping="Wrap"
                                        FontWeight="Medium"
                                        Foreground="{StaticResource SubtitleColorBrush}"
                                        Grid.Column="2" Grid.Row="2" />
+
+                            <TextBlock Text="{DynamicResource LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate}"
+                                       Visibility="{Binding FormattedDiscountEndDate, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}"
+                                       Margin="0,5,0,0"
+                                       Grid.Column="0" Grid.Row="3"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource SubtitleColorBrush}" />
+                            <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="3" Margin="0,5,0,0"
+                                        Visibility="{Binding FormattedDiscountEndDate, Converter={StaticResource StringNullOrEmptyToVisibilityConverter}}">
+                                <TextBlock Text="{Binding FormattedDiscountEndDate}"
+                                       TextWrapping="Wrap"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource SubtitleColorBrush}" />
+
+                                <TextBlock Text="{Binding DiscountEndDate, Converter={StaticResource TimeRemainingConverter}, StringFormat='({0})'}"
+                                           Margin="5,0,0,0"
+                                           Loaded="OnRemainingTimeTextBlockLoaded"
+                                           TextWrapping="Wrap"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource SubtitleColorBrush}" />
+                            </StackPanel>
+
                         </Grid>
 
                     </StackPanel>

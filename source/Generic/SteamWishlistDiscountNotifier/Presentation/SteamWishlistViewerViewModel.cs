@@ -324,13 +324,22 @@ namespace SteamWishlistDiscountNotifier.Presentation
             {
                 if (x.StoreItem.BestPurchaseOption != null)
                 {
+                    DateTime? activeDiscountEndDate = null;
+                    var formattedActiveDiscountEndDate = string.Empty;
+                    var activeDiscount = x.StoreItem.BestPurchaseOption.ActiveDiscounts.FirstOrDefault();
+                    if (activeDiscount != null)
+                    {
+                        activeDiscountEndDate = DateTimeOffset.FromUnixTimeSeconds(activeDiscount.DiscountEndDate).DateTime.ToLocalTime();
+                        formattedActiveDiscountEndDate = activeDiscountEndDate.Value.ToString("yyyy/MM/dd");
+                    }
+
                     var item = new SteamWishlistViewItem
                     (
                         x.StoreItem.Name,
                         x.Appid,
                         x.Priority,
-                        DateTimeOffset.FromUnixTimeSeconds(x.DateAdded).DateTime.ToString("yyyy/M/d"),
-                        x.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(x.StoreItem.Release.SteamReleaseDate).DateTime.ToString("yyyy/M/d") : string.Empty,
+                        DateTimeOffset.FromUnixTimeSeconds(x.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
+                        x.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(x.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/MM/dd") : string.Empty,
                         x.StoreItem.IsEarlyAccess,
                         x.StoreItem.BestPurchaseOption.DiscountPct,
                         x.StoreItem.BestPurchaseOption.FormattedFinalPrice,
@@ -340,7 +349,9 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         string.Join(", ", otherSourcesOwnership.ContainsKey(x.StoreItem.Name.Satinize()) ? otherSourcesOwnership[x.StoreItem.Name.Satinize()] : new List<string>()),
                         bannersPathsMapper.ContainsKey(x.Appid) ? bannersPathsMapper[x.Appid] : string.Empty,
                         (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), x.StoreItem.Type),
-                        x.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty
+                        x.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
+                        activeDiscountEndDate,
+                        formattedActiveDiscountEndDate
                     );
 
                     items.Add(item);
@@ -352,8 +363,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         x.StoreItem.Name,
                         x.Appid,
                         x.Priority,
-                        DateTimeOffset.FromUnixTimeSeconds(x.DateAdded).DateTime.ToString("yyyy/M/d"),
-                        x.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(x.StoreItem.Release.SteamReleaseDate).DateTime.ToString("yyyy/M/d") : string.Empty,
+                        DateTimeOffset.FromUnixTimeSeconds(x.DateAdded).DateTime.ToLocalTime().ToString("yyyy/M/d"),
+                        x.StoreItem.Release?.SteamReleaseDate != null ? DateTimeOffset.FromUnixTimeSeconds(x.StoreItem.Release.SteamReleaseDate).DateTime.ToLocalTime().ToString("yyyy/M/d") : string.Empty,
                         x.StoreItem.IsEarlyAccess,
                         0,
                         string.Empty,
@@ -363,7 +374,9 @@ namespace SteamWishlistDiscountNotifier.Presentation
                         string.Join(", ", otherSourcesOwnership.ContainsKey(x.StoreItem.Name.Satinize()) ? otherSourcesOwnership[x.StoreItem.Name.Satinize()] : new List<string>()),
                         bannersPathsMapper.ContainsKey(x.Appid) ? bannersPathsMapper[x.Appid] : string.Empty,
                         (SteamStoreItemAppType)Enum.ToObject(typeof(SteamStoreItemAppType), x.StoreItem.ItemType),
-                        x.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty
+                        x.StoreItem.Reviews?.SummaryFiltered.ReviewScoreLabel ?? string.Empty,
+                        null,
+                        string.Empty
                     );
 
                     items.Add(item);

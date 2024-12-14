@@ -24,6 +24,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
         public string BannerImagePath { get; }
         public SteamStoreItemAppType SteamStoreItemType { get; }
         public string ReviewScoreLabel { get; }
+        public DateTime? DiscountEndDate { get; }
+        public string FormattedDiscountEndDate { get; }
 
         public bool IsDiscounted => DiscountPct > 0;
         public SteamWishlistViewItem(
@@ -41,7 +43,9 @@ namespace SteamWishlistDiscountNotifier.Presentation
             string formattedOwnedSources,
             string bannerImagePath,
             SteamStoreItemAppType steamStoreItemType,
-            string reviewScoreLabel)
+            string reviewScoreLabel,
+            DateTime? discountEndDate,
+            string formattedDiscountEndDate)
         {
             Name = name;
             Appid = appid;
@@ -58,6 +62,8 @@ namespace SteamWishlistDiscountNotifier.Presentation
             BannerImagePath = bannerImagePath;
             SteamStoreItemType = steamStoreItemType;
             ReviewScoreLabel = reviewScoreLabel;
+            DiscountEndDate = discountEndDate;
+            FormattedDiscountEndDate = formattedDiscountEndDate;
         }
     }
 }

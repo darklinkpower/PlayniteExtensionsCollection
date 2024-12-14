@@ -236,6 +236,7 @@
     <Compile Include="Domain\ValueObjects\WishlistTrackedItemChanges.cs" />
     <Compile Include="Infrastructure\WishlistTracker\WishlistTrackerData.cs" />
     <Compile Include="Infrastructure\WishlistTracker\WishlistTrackerPersistenceService.cs" />
+    <Compile Include="Presentation\Converters\TimeRemainingConverter.cs" />
     <Compile Include="Presentation\SteamWishlistViewItem.cs" />
     <Compile Include="Application\Steam\JwtToken\SteamJwtTokenService.cs" />
     <Compile Include="Application\Steam\UserAccount\SteamUserAccountService.cs" />
