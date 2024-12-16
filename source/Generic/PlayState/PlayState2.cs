@@ -241,7 +241,11 @@ namespace PlayState
             if (gameAction != null && !gameAction.Path.IsNullOrEmpty())
             {
                 var expandedAction = PlayniteApi.ExpandGameVariables(game, gameAction);
-                if (Path.IsPathRooted(expandedAction.Path))
+                if (!expandedAction.TrackingPath.IsNullOrEmpty() && FileSystem.DirectoryExists(expandedAction.TrackingPath))
+                {
+                    return expandedAction.TrackingPath;
+                }
+                else if (Path.IsPathRooted(expandedAction.Path))
                 {
                     return Path.GetDirectoryName(expandedAction.Path);
                 }
