@@ -67,3 +67,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.23_6ce05621/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_10.pext
     Changelog:
     - 'Added: Support to "Stardust (Legacy Layout)" theme'
+  - Version: 1.11
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-12-21
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.21_6839de06/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_11.pext
+    Changelog:
+    - 'Added: Indication to increase Grid View Details panel width to Settings and the notification message, to ensure the converted layout displays correctly.'
+    - 'Changed: The extension will now convert all supported themes layouts by default.'
+    - 'Fixed: Addressed an issue where the original Grid View Details layout backup file was overwritten if the Details View layout file was modified externally, preventing the restoration of the original layout'
