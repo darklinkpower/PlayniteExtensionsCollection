@@ -208,9 +208,10 @@ namespace ThemesDetailsViewToGridViewConverter
                 return;
             }
 
-            PlayniteApi.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString("LOCThemeDetailsToGridConverter_ConvertSuccessMessage"), manifest.Name),
-                messagesCaption);
+            var notificationString = $"{string.Format(ResourceProvider.GetString("LOCThemeDetailsToGridConverter_ConvertSuccessMessage"), manifest.Name)}"
+                + $"\n\n{ResourceProvider.GetString("LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth")}"
+                + $"\n\n{ResourceProvider.GetString("LOCMenuPlayniteSettingsTitle")} -> {ResourceProvider.GetString("LOCSettingsAppearanceLabel")} -> {ResourceProvider.GetString("LOCSettingsLayoutLabel")} -> {ResourceProvider.GetString("LOCSettingsGridViewDetailsPosition")} -> {ResourceProvider.GetString("LOCWidth")}";
+            PlayniteApi.Dialogs.ShowMessage(notificationString, messagesCaption);
         }
 
         private bool IsNewContentValid(string gridViewNewContent)
