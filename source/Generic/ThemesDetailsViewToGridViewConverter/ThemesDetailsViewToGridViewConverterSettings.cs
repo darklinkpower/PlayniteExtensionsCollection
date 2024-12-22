@@ -10,21 +10,21 @@ namespace ThemesDetailsViewToGridViewConverter
 {
     public class ThemesDetailsViewToGridViewConverterSettings : ObservableObject
     {
-        private bool convertHelium = false;
+        private bool convertHelium = true;
         public bool ConvertHelium { get => convertHelium; set => SetValue(ref convertHelium, value); }
-        private bool convertStardust = false;
+        private bool convertStardust = true;
         public bool ConvertStardust { get => convertStardust; set => SetValue(ref convertStardust, value); }
-        private bool convertStardustLegacy = false;
+        private bool convertStardustLegacy = true;
         public bool ConvertStardustLegacy { get => convertStardustLegacy; set => SetValue(ref convertStardustLegacy, value); }
-        private bool convertMythic = false;
+        private bool convertMythic = true;
         public bool ConvertMythic { get => convertMythic; set => SetValue(ref convertMythic, value); }
-        private bool convertHarmony = false;
+        private bool convertHarmony = true;
         public bool ConvertHarmony { get => convertHarmony; set => SetValue(ref convertHarmony, value); }
-        private bool convertDhDawn = false;
+        private bool convertDhDawn = true;
         public bool ConvertDhDawn { get => convertDhDawn; set => SetValue(ref convertDhDawn, value); }
-        private bool convertDhNight = false;
+        private bool convertDhNight = true;
         public bool ConvertDhNight { get => convertDhNight; set => SetValue(ref convertDhNight, value); }
-        private bool convertNovaX = false;
+        private bool convertNovaX = true;
         public bool ConvertNovaX { get => convertNovaX; set => SetValue(ref convertNovaX, value); }
     }
 
