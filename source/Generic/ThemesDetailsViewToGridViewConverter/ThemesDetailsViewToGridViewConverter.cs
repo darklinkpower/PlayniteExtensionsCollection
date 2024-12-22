@@ -192,7 +192,10 @@ namespace ThemesDetailsViewToGridViewConverter
             }
 
             var gridBackupPath = Path.Combine(GetPluginUserDataPath(), "Backup", manifest.Id, manifest.Version, "GridViewGameOverview.xaml");
-            FileSystem.CopyFile(gridViewPath, gridBackupPath);
+            if (!FileSystem.FileExists(gridBackupPath))
+            {
+                FileSystem.CopyFile(gridViewPath, gridBackupPath);
+            }
 
             try
             {
