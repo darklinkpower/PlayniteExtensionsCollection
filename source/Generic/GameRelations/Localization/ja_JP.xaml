@@ -2,18 +2,18 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGameRelations_GeneralSettingsLabel">一般設定</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlsSettingsLabel">Controls settings</sys:String>
-    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">Covers height:</sys:String>
-    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">Related games</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">Same series</sys:String>
+    <sys:String x:Key="LOCGameRelations_CoversHeightSettingsLabel">カバーの高さ:</sys:String>
+    <sys:String x:Key="LOCGameRelations_RelatedGamesLabel">関連ゲーム</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameSeriesLabel">同じシリーズ</sys:String>
     <sys:String x:Key="LOCGameRelations_TagsToExcludeLabel">Tags to exclude during matching</sys:String>
     <sys:String x:Key="LOCGameRelations_GenresToExcludeLabel">Genres to exclude during matching</sys:String>
     <sys:String x:Key="LOCGameRelations_CategoriesToExcludeLabel">Categories to exclude during matching</sys:String>
     <sys:String x:Key="LOCGameRelations_ExcludeSameSeriesLabel">Exclude games from the same series</sys:String>
-    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">Same developer</sys:String>
-    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">Same publisher</sys:String>
-    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">Similar games</sys:String>
+    <sys:String x:Key="LOCGameRelations_SameDeveloperLabel">同じ開発元</sys:String>
+    <sys:String x:Key="LOCGameRelations_SamePublisherLabel">同じパブリッシャー</sys:String>
+    <sys:String x:Key="LOCGameRelations_SimilarGamesLabel">類似のゲーム</sys:String>
     <sys:String x:Key="LOCGameRelations_ControlSettingEnableLabel">有効</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">Display game names</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">Only show installed</sys:String>
-    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">Maximum items to display</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayGameNamesLabel">ゲーム名を表示</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingOnlyShowInstalledLabel">インストール済みのみを表示</sys:String>
+    <sys:String x:Key="LOCGameRelations_ControlSettingDisplayMaxItemsLabel">表示するアイテムの最大数</sys:String>
 </ResourceDictionary>
