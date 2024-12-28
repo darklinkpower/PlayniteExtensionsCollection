@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_JUL_SettingsHelpLabel">Help</sys:String>
+    <sys:String x:Key="LOC_JUL_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsEmailLabel">Eメール:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsPasswordLabel">パスワード:</sys:String>
     <sys:String x:Key="LOC_JUL_SettingsAuthenticateLabel">Authenticate</sys:String>
