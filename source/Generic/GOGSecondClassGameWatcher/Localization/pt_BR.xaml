@@ -17,14 +17,14 @@
     <sys:String x:Key="LOC_GogSecondClass_OtherIssuesLabel">Outros problemas</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_MissingBuildsLabel">Compilações ausentes</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_RegionLockingLabel">Região bloqueada</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Source one</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Source two</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Release Year</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Achievements issues</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Missing all achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Missing some achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Broken achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Developer response on achievements</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Source</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Open information window</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Fonte um</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Fonte dois</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Ano de Lançamento</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Problemas de conquistas</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Faltando todas as conquistas</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Faltando algumas conquistas</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Conquistas quebradas</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Resposta do desenvolvedor sobre conquistas</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Fonte</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Abrir janela de informações</sys:String>
 </ResourceDictionary>
