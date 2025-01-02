@@ -31,16 +31,17 @@ using JastUsaLibrary.DownloadManager.Application;
 using JastUsaLibrary.JastLibraryCacheService.Application;
 using JastUsaLibrary.DownloadManager.Presentation;
 using JastUsaLibrary.JastLibraryCacheService.Interfaces;
-using JastUsaLibrary.DownloadManager.Domain.Interfaces;
 using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
+using JastUsaLibrary.JastLibraryCacheService.Persistence;
+using JastUsaLibrary.Features.MetadataProvider;
+using JastUsaLibrary.Features.DownloadManager.Application;
+using JastUsaLibrary.Features.DownloadManager.Infrastructure;
 
 namespace JastUsaLibrary
 {
     public class JastUsaLibrary : LibraryPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly IEventAggregator _eventBus;
-
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private JastUsaLibrarySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("d407a620-5953-4ca4-a25c-8194c8559381");
@@ -54,22 +55,22 @@ namespace JastUsaLibrary
         private readonly JastUsaAccountClient _accountClient;
         private readonly string _userGamesCachePath;
         public string UserGamesCachePath => _userGamesCachePath;
-        private readonly string _authenticationPath;
         private readonly ILibraryCacheService _libraryCacheService;
         private readonly DownloadsManager _downloadsManager;
         private DownloadsManagerViewModel _downloadsManagerViewModel;
 
         public JastUsaLibrary(IPlayniteAPI api) : base(api)
         {
-            _eventBus = new EventAggregator();
-            _userGamesCachePath = Path.Combine(GetPluginUserDataPath(), "userGamesCache.json");
+            var apiClient = new JastUsaApiClient(_logger);
             var authenticationPersistence = new AuthenticationPersistence(Path.Combine(GetPluginUserDataPath(), "authentication.json"));
-            var apiClient = new JastUsaApiClient();
             _accountClient = new JastUsaAccountClient(api, apiClient, authenticationPersistence);
-            var downloadsPersistence = new DownloadsPersistence(settings);
-            _libraryCacheService = new LibraryCacheService(PlayniteApi, settings, Id);
-            _downloadsManager = new DownloadsManager(this, _accountClient, settings, downloadsPersistence, _libraryCacheService, _eventBus);
             settings = new JastUsaLibrarySettingsViewModel(this, PlayniteApi, _accountClient);
+            _userGamesCachePath = Path.Combine(GetPluginUserDataPath(), "userGamesCache.json");
+
+            //var downloadsPersistence = new DownloadDataPersistencePluginSettings(settings);
+            var downloadsPersistence = new DownloadDataPersistenceJson(_logger, GetPluginUserDataPath());
+            _libraryCacheService = new LibraryCacheService(PlayniteApi, new LibraryCachePersistencePluginSettings(settings), Id);
+            _downloadsManager = new DownloadsManager(this, _accountClient, settings, PlayniteApi, downloadsPersistence, _libraryCacheService);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
@@ -85,7 +86,7 @@ namespace JastUsaLibrary
                 ProgressValue = 0,
                 ProgressMaximum = 100,
                 Opened = () => {
-                    _downloadsManagerViewModel = new DownloadsManagerViewModel(this, settings, PlayniteApi, _libraryCacheService, _eventBus);
+                    _downloadsManagerViewModel = new DownloadsManagerViewModel(this, settings, PlayniteApi, _libraryCacheService, _downloadsManager);
                     return new DownloadsManagerView() { DataContext = _downloadsManagerViewModel };
                 },
                 Closed = () => {
@@ -98,20 +99,20 @@ namespace JastUsaLibrary
 
         private void SubscribeToEvents()
         {
-            _eventBus.Subscribe<GlobalProgressChangedEventArgs>(OnGlobalProgressChanged);
+            _downloadsManager.GlobalDownloadProgressChanged += OnGlobalProgressChanged;
         }
 
-        private void UnsubscribeToEvents()
+        private void UnsubscribeFromEvents()
         {
-            _eventBus.Unsubscribe<GlobalProgressChangedEventArgs>(OnGlobalProgressChanged);
+            _downloadsManager.GlobalDownloadProgressChanged -= OnGlobalProgressChanged;
         }
 
-        private void OnGlobalProgressChanged(GlobalProgressChangedEventArgs args)
+        private void OnGlobalProgressChanged(object sender, GlobalDownloadProgressChangedEventArgs e)
         {
-            UpdateSidebarProgress(args);
+            UpdateSidebarProgress(e);
         }
 
-        private void UpdateSidebarProgress(GlobalProgressChangedEventArgs e)
+        private void UpdateSidebarProgress(GlobalDownloadProgressChangedEventArgs e)
         {
             if (e.TotalItems == 0 || !e.TotalDownloadProgress.HasValue)
             {
@@ -150,21 +151,19 @@ namespace JastUsaLibrary
             }
 
             FileSystem.WriteStringToFile(_userGamesCachePath, Serialization.ToJson(jastProducts), true);
-            var libraryCache = settings.Settings.LibraryCache;
-            var saveSettings = false;
-            foreach (var kv in libraryCache.ToList())
+            var libraryCache = _libraryCacheService.GetAllCache();
+            foreach (var kv in libraryCache)
             {
-                var gameVariant = jastProducts.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == kv.Value.GameId);
+                var gameVariant = jastProducts.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == kv.GameId);
                 if (gameVariant is null)
                 {
-                    libraryCache.Remove(kv.Key);
-                    saveSettings = true;
-                    logger.Debug($"Removed cache with id {kv.Value.GameId} because it was not found in the JAST games list response");
+                    _libraryCacheService.RemoveCacheById(kv.GameId);
+                    _logger.Debug($"Removed cache with id {kv.GameId} because it was not found in the JAST games list response");
                 }
-                else if (kv.Value.Product is null || Serialization.ToJson(kv.Value.Product) != Serialization.ToJson(gameVariant)) // TODO Properly compare if it has changed
+                else if (kv.Product is null || Serialization.ToJson(kv.Product) != Serialization.ToJson(gameVariant)) // TODO Properly compare if it has changed
                 {
-                    kv.Value.Product = gameVariant;
-                    saveSettings = true;
+                    kv.Product = gameVariant;
+                    _libraryCacheService.SaveCache(kv);
                 }
             }
 
@@ -183,7 +182,8 @@ namespace JastUsaLibrary
                     Source = new MetadataNameProperty("JAST USA")
                 };
 
-                if (libraryCache.TryGetValue(game.GameId, out var existingCache))
+                var existingCache = libraryCache.FirstOrDefault(x => x.GameId == game.GameId);
+                if (existingCache != null)
                 {
                     if (existingCache.Program?.Path.IsNullOrEmpty() == false && FileSystem.FileExists(existingCache.Program?.Path))
                     {
@@ -199,14 +199,13 @@ namespace JastUsaLibrary
                         Product = jastProduct
                     };
 
-                    libraryCache[game.GameId] = newLibraryCache;
-                    saveSettings = true;
+                    _libraryCacheService.SaveCache(newLibraryCache);
                 }
 
                 games.Add(game);
             }
 
-            foreach (var cache in libraryCache.Values)
+            foreach (var cache in libraryCache)
             {
                 if (cache.Assets != null)
                 {
@@ -238,12 +237,7 @@ namespace JastUsaLibrary
                 }
 
                 cache.Assets = assets;
-                saveSettings = true;
-            }
-
-            if (saveSettings)
-            {
-                SavePluginSettings();
+                _libraryCacheService.SaveCache(cache);
             }
 
             return games;
@@ -276,8 +270,14 @@ namespace JastUsaLibrary
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             var game = args.Games.Last();
-            if (args.Games.Count == 1 && game.PluginId == Id && settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache))
+            if (args.Games.Count == 1 && game.PluginId == Id)
             {
+                var gameCache = _libraryCacheService.GetCacheById(game.GameId);
+                if (gameCache is null)
+                {
+                    return base.GetGameMenuItems(args);
+                }
+
                 const string menuSection = "JAST USA Library";
                 return new List<GameMenuItem>
                 {
@@ -288,7 +288,7 @@ namespace JastUsaLibrary
                         Icon = PlayniteUtilities.GetIcoFontGlyphResource('\uEC5B'),
                         Action = a =>
                         {
-                            var selectedProgram = Programs.SelectExecutable();
+                            var selectedProgram = ProgramsService.SelectExecutable();
                             if (selectedProgram != null)
                             {
                                 gameCache.Program = selectedProgram;
@@ -300,6 +300,7 @@ namespace JastUsaLibrary
                         }
                     }
                 };
+
             }
 
             return base.GetGameMenuItems(args);
@@ -310,7 +311,8 @@ namespace JastUsaLibrary
             var game = args.Game;
             if (game.PluginId == Id)
             {
-                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) && gameCache.Program != null)
+                var gameCache = _libraryCacheService.GetCacheById(game.GameId);
+                if (gameCache != null && gameCache.Program != null)
                 {
                     return new List<PlayController>
                     {
@@ -343,7 +345,7 @@ namespace JastUsaLibrary
                 var gameCache = _libraryCacheService.GetCacheById(game.GameId);
                 if (gameCache?.Product != null)
                 {
-                    return new List<InstallController> { new JastInstallController(game, gameCache, _downloadsManager, _eventBus, this) };
+                    return new List<InstallController> { new JastInstallController(game, gameCache, PlayniteApi, _logger, _downloadsManager, this) };
                 }
             }
 
@@ -361,8 +363,8 @@ namespace JastUsaLibrary
                     return base.GetUninstallActions(args);
                 }
 
-                if (settings.Settings.LibraryCache.TryGetValue(game.GameId, out var gameCache) &&
-                    gameCache.Program != null && FileSystem.FileExists(gameCache.Program.Path))
+                var gameCache = _libraryCacheService.GetCacheById(game.GameId);
+                if (gameCache != null && gameCache.Program != null && FileSystem.FileExists(gameCache.Program.Path))
                 {
                     return new List<UninstallController> { new JastUninstallController(game, gameCache, this) };
                 }
@@ -373,7 +375,7 @@ namespace JastUsaLibrary
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
-            UnsubscribeToEvents();
+            UnsubscribeFromEvents();
             _downloadsManager.StopDownloadsAndPersistDownloadData();
             _downloadsManager?.Dispose();
             _downloadsManagerViewModel?.Dispose();

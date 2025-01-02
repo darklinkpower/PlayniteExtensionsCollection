@@ -1,7 +1,7 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
+using JastUsaLibrary.JastLibraryCacheService.Entities;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
 using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
-using JastUsaLibrary.Models;
 using JastUsaLibrary.ProgramsHelper.Models;
 using JastUsaLibrary.ViewModels;
 using Playnite.SDK;
@@ -26,6 +26,28 @@ namespace JastUsaLibrary
         public JastProduct Product = null;
         public Program Program = null;
         public string GameId;
+        public GameCache GetClone()
+        {
+            // Create a new instance of GameCache
+            var clone = new GameCache();
+            if (Assets != null)
+            {
+                clone.Assets = new ObservableCollection<JastAssetWrapper>(
+                    Assets.Select(asset => Serialization.GetClone(asset)).ToList());
+            }
+
+            if (Product != null)
+            {
+                clone.Product = Serialization.GetClone(Product);
+            }
+            if (Program != null)
+            {
+                clone.Program = Serialization.GetClone(Program);
+            }
+
+            clone.GameId = GameId;
+            return clone;
+        }
     }
 
     public class DownloadSettings : ObservableObject
@@ -276,7 +298,7 @@ namespace JastUsaLibrary
             if (!LoginEmail.IsNullOrEmpty() && !passwordBox.Password.IsNullOrEmpty())
             {
                 isUserLoggedIn = null;
-                IsUserLoggedIn = _accountClient.Login(LoginEmail, passwordBox.Password).ToString();
+                IsUserLoggedIn = _accountClient.Login(LoginEmail, passwordBox.Password, true).ToString();
             }
         }
 
