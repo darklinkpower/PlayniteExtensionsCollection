@@ -1,4 +1,5 @@
-﻿using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
+﻿using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ namespace JastUsaLibrary.DownloadManager.Domain.Exceptions
 {
     public class AssetAlreadyDownloadedException : Exception
     {
-        public GameLink GameLink { get; }
+        public JastGameDownloadData DownloadData { get; }
         public string DownloadPath { get; }
 
-        public AssetAlreadyDownloadedException(GameLink gameLink, string downloadPath)
-            : base($"Download {gameLink.Label} with Id \"{gameLink.GameId}-{gameLink.GameLinkId}\" file download already existed in {downloadPath}")
+        public AssetAlreadyDownloadedException(JastGameDownloadData downloadData, string downloadPath)
+            : base($"Download {downloadData.Label} with Id \"{downloadData.GameId}-{downloadData.GameLinkId}\" file download already existed in {downloadPath}")
         {
-            GameLink = gameLink;
-            DownloadPath = downloadPath;
+            DownloadData = Guard.Against.Null(downloadData);
+            DownloadPath = Guard.Against.NullOrEmpty(downloadPath);
         }
     }
 }

@@ -8,23 +8,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JastUsaLibrary.JastUsaIntegration.Domain.Aggregates.Product;
-using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs;
+using JastUsaLibrary.JastLibraryCacheService.Interfaces;
 
 namespace JastUsaLibrary.Features.MetadataProvider
 {
     public class JastUsaLibraryMetadataProvider : LibraryMetadataProvider
     {
-        private readonly string _userGamesCachePath;
+        private readonly ILibraryCacheService _libraryCacheService;
 
-        public JastUsaLibraryMetadataProvider(string userGamesCachePath)
+        public JastUsaLibraryMetadataProvider(ILibraryCacheService libraryCacheService)
         {
-            _userGamesCachePath = userGamesCachePath;
+            _libraryCacheService = libraryCacheService;
         }
 
-        public override GameMetadata GetMetadata(Game game)
+        public override GameMetadata GetMetadata(Playnite.SDK.Models.Game game)
         {
-            var apiUrl = GetProductApiIdFromGameId(game.GameId);
+            var apiUrl = _libraryCacheService.GetCacheById(game.GameId)?.JastGameData?.ApiRoute;
             if (apiUrl.IsNullOrEmpty())
             {
                 return new GameMetadata();
@@ -119,17 +119,6 @@ namespace JastUsaLibrary.Features.MetadataProvider
             }
 
             return metadata;
-        }
-
-        private string GetProductApiIdFromGameId(string gameId)
-        {
-            if (!FileSystem.FileExists(_userGamesCachePath))
-            {
-                return null;
-            }
-
-            var cache = Serialization.FromJsonFile<List<JastProduct>>(_userGamesCachePath);
-            return cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == gameId)?.IdApiEndpoint ?? null;
         }
 
         private string GetSingleAttributeMatch(ProductResponse productResponse, string attributeName, Locale locale = Locale.En_Us)

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JastUsaLibrary.JastUsaIntegration.Domain.Entities
+namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
 {
-    public class AuthenticationToken
+    public class AuthenticationTokenResponse
     {
         [SerializationPropertyName("token")]
         public string Token { get; set; }
@@ -17,5 +17,18 @@ namespace JastUsaLibrary.JastUsaIntegration.Domain.Entities
 
         [SerializationPropertyName("refresh_token")]
         public string RefreshToken { get; set; }
+
+        public AuthenticationTokenResponse()
+        {
+
+        }
+
+        public AuthenticationTokenResponse(string token, string customer, string refreshToken)
+        {
+            Token = token;
+            Customer = customer;
+            RefreshToken = refreshToken;
+        }
+
     }
 }

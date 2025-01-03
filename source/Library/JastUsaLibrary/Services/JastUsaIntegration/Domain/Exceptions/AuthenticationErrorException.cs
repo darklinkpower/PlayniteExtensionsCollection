@@ -1,5 +1,4 @@
-﻿using JastUsaLibrary.JastUsaIntegration.Application.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,15 +11,15 @@ namespace JastUsaLibrary.JastUsaIntegration.Domain.Exceptions
     {
         public HttpStatusCode? StatusCode { get; }
 
-        public AuthenticationErrorException(AuthenticationTokenRequest authenticationTokenRequest, HttpStatusCode? statusCode = null)
-            : base(GenerateMessage(authenticationTokenRequest, statusCode))
+        public AuthenticationErrorException(string email, string password, HttpStatusCode? statusCode = null)
+            : base(GenerateMessage(email, password, statusCode))
         {
             StatusCode = statusCode;
         }
 
-        private static string GenerateMessage(AuthenticationTokenRequest authenticationTokenRequest, HttpStatusCode? statusCode)
+        private static string GenerateMessage(string email, string password, HttpStatusCode? statusCode)
         {
-            var message = $"Error during authentication. Email: \"{new string('*', authenticationTokenRequest.Email.Length)}\" Password: \"{new string('*', authenticationTokenRequest.Password.Length)}\"";
+            var message = $"Error during authentication. Email: \"{new string('*', email.Length)}\" Password: \"{new string('*', password.Length)}\"";
 
             if (statusCode.HasValue)
             {

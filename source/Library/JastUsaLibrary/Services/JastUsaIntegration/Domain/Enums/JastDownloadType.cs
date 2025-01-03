@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace JastUsaLibrary.Services.JastUsaIntegration.Domain.Enums
 {
-    public enum JastPlatform
+    public enum JastDownloadType
     {
-        Linux,
-        Mac,
-        Windows
-    };
+        Game,
+        Patch,
+        Extra
+    }
 }

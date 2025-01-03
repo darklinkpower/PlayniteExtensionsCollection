@@ -1,8 +1,10 @@
-﻿using EventsCommon;
-using JastUsaLibrary.DownloadManager.Domain.Entities;
+﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.Features.DownloadManager.Application;
+using JastUsaLibrary.JastLibraryCacheService.Interfaces;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using JastUsaLibrary.ViewModels;
 using JastUsaLibrary.Views;
 using Playnite.SDK;
@@ -29,8 +31,9 @@ namespace JastUsaLibrary
         private readonly GameCache _gameCache;
         private readonly JastUsaLibrary _plugin;
         private readonly IDownloadService _downloadsManager;
+        private readonly ILibraryCacheService _libraryCacheService;
         private bool _subscribedToEvents = false;
-        private JastAssetWrapper _downloadingAsset;
+        private JastGameDownloadData _downloadingAsset;
 
         public JastInstallController(
             Game game,
@@ -38,14 +41,16 @@ namespace JastUsaLibrary
             IPlayniteAPI playniteApi,
             ILogger logger,
             IDownloadService downloadsManager,
+            ILibraryCacheService libraryCacheService,
             JastUsaLibrary jastUsaLibrary) : base(game)
         {
-            _playniteApi = playniteApi;
-            _logger = logger;
-            _game = game;
-            _gameCache = gameCache;
-            _plugin = jastUsaLibrary;
-            _downloadsManager = downloadsManager;
+            _playniteApi = Guard.Against.Null(playniteApi);
+            _logger = Guard.Against.Null(logger);
+            _game = Guard.Against.Null(game);
+            _gameCache = Guard.Against.Null(gameCache);
+            _plugin = Guard.Against.Null(jastUsaLibrary);
+            _downloadsManager = Guard.Against.Null(downloadsManager);
+            _libraryCacheService = Guard.Against.Null(libraryCacheService);
         }
 
         private void SubscribeToEvents()
@@ -80,7 +85,8 @@ namespace JastUsaLibrary
         {
             foreach (var removedItem in args.Items)
             {
-                if (removedItem.DownloadData.GameLink.Equals(_downloadingAsset.Asset))
+                if (removedItem.DownloadData.JastGameDownloadData.GameId == _downloadingAsset.GameId
+                    && removedItem.DownloadData.JastGameDownloadData.GameLinkId == _downloadingAsset.GameLinkId)
                 {
                     StopInstallationProcess();
                     break;
@@ -116,8 +122,7 @@ namespace JastUsaLibrary
 
         private void AddGameProgramAndSave(Program browsedProgram)
         {
-            _gameCache.Program = browsedProgram;
-            _plugin.SavePluginSettings();
+            _libraryCacheService.ApplyProgramToGameCache(Game, _gameCache, browsedProgram);
             var installInfo = new GameInstallationData()
             {
                 InstallDirectory = Path.GetDirectoryName(browsedProgram.Path)
@@ -128,7 +133,7 @@ namespace JastUsaLibrary
 
         public GameInstallWindowViewModel OpenGameInstallWindow()
         {
-            var window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions
+            var window = _playniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false,
                 ShowMaximizeButton = true
@@ -138,7 +143,7 @@ namespace JastUsaLibrary
             window.Width = 500;
             window.Title = ResourceProvider.GetString("LOC_JUL_WindowTitleJastLibraryUninstaller");
             var dataContext = new GameInstallWindowViewModel(_game, _gameCache, window, _playniteApi, _downloadsManager, _logger);
-            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
+            window.Owner = _playniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             window.DataContext = dataContext;
@@ -159,23 +164,27 @@ namespace JastUsaLibrary
 
     public class JastUninstallController : UninstallController
     {
-        private readonly IPlayniteAPI _playniteAPI = API.Instance;
+        private readonly IPlayniteAPI _playniteApi;
+        private readonly ILibraryCacheService _libraryCacheService;
         private readonly Game _game;
         private readonly string _gameExecutablePath;
         private readonly GameCache _gameCache;
         private readonly JastUsaLibrary _plugin;
 
-        public JastUninstallController(Game game) : base(game)
+        public JastUninstallController(
+            Game game,
+            IPlayniteAPI playniteApi,
+            ILibraryCacheService libraryCacheService,
+            GameCache gameCache,
+            JastUsaLibrary jastUsaLibrary) : base(game)
         {
+            _playniteApi = Guard.Against.Null(playniteApi);
+            _libraryCacheService = Guard.Against.Null(libraryCacheService);
+            _game = Guard.Against.Null(game);
+            _gameExecutablePath = Guard.Against.NullOrEmpty(gameCache.Program.Path);
+            _gameCache = Guard.Against.Null(gameCache);
+            _plugin = Guard.Against.Null(jastUsaLibrary);
             Name = ResourceProvider.GetString("LOC_JUL_UninstallJastLibGame");
-        }
-
-        public JastUninstallController(Game game, GameCache gameCache, JastUsaLibrary jastUsaLibrary) : this(game)
-        {
-            _game = game;
-            _gameExecutablePath = gameCache.Program.Path;
-            _gameCache = gameCache;
-            _plugin = jastUsaLibrary;
         }
 
         public override void Uninstall(UninstallActionArgs args)
@@ -200,19 +209,19 @@ namespace JastUsaLibrary
                 // Restore game installation state since it wasn't uninstalled
                 _game.IsInstalled = true;
                 _game.InstallDirectory = Path.GetDirectoryName(_gameExecutablePath);
-                _playniteAPI.Database.Games.Update(_game);
+                _playniteApi.Database.Games.Update(_game);
             }
         }
 
         private void DeleteGameProgramAndSave()
         {
-            _gameCache.Program = null;
+            _libraryCacheService.ApplyProgramToGameCache(Game, _gameCache, null);
             _plugin.SavePluginSettings();
         }
 
         public bool OpenDeleteItemsWindow()
         {
-            var window = API.Instance.Dialogs.CreateWindow(new WindowCreationOptions
+            var window = _playniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = false,
                 ShowMaximizeButton = true
@@ -222,7 +231,7 @@ namespace JastUsaLibrary
             window.Width = 500;
             window.Title = ResourceProvider.GetString("LOC_JUL_WindowTitleJastLibraryUninstaller");
             var dataContext = new GameUninstallWindowViewModel(_game, window);
-            window.Owner = API.Instance.Dialogs.GetCurrentAppWindow();
+            window.Owner = _playniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             
             window.DataContext = dataContext;

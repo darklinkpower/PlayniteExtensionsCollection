@@ -76,8 +76,8 @@
         <DataTemplate x:Key="ListBoxGameWrapperTemplate">
             <Border Padding="5" Margin="0,3,0,3">
                 <StackPanel Margin="0,0,0,0">
-                    <TextBlock Text="{Binding Asset.Label}" FontWeight="Medium" FontSize="16" />
-                    <TextBlock Text="{Binding Type, Converter={StaticResource JastAssetTypeToLocalizedStringConverter}}" FontSize="12" Margin="0,5,0,0" />
+                    <TextBlock Text="{Binding Label}" FontWeight="Medium" FontSize="16" />
+                    <TextBlock Text="{Binding JastDownloadType, Converter={StaticResource JastAssetTypeToLocalizedStringConverter}}" FontSize="12" Margin="0,5,0,0" />
                     <Separator Margin="0,5,0,5" />
                 </StackPanel>
             </Border>

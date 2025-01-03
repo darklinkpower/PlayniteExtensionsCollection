@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JastUsaLibrary.JastUsaIntegration.Application.DTOs
+namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
 {
     public class AuthenticationTokenRequest
     {

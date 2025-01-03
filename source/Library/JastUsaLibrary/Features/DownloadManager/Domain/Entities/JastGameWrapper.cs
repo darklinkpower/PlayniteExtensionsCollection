@@ -1,4 +1,7 @@
-﻿using Playnite.SDK.Models;
+﻿using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
+using Playnite.SDK.Models;
+using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,16 +13,33 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
 {
     public class JastGameWrapper : ObservableObject
     {
-        private Game _game;
-        public Game Game { get => _game; set => SetValue(ref _game, value); }
-
-        private ObservableCollection<JastAssetWrapper> _assets;
-        public ObservableCollection<JastAssetWrapper> Assets { get => _assets; set => SetValue(ref _assets, value); }
-
-        public JastGameWrapper(Game game, ObservableCollection<JastAssetWrapper> jastAssetWrappers)
+        public Game Game { get; }
+        public ObservableCollection<JastGameDownloadData> Assets { get; }
+        public GameCache GameCache { get; }
+        public JastGameWrapper(Game game, GameCache gameCache)
         {
-            Game = game;
-            Assets = jastAssetWrappers;
+            Game = Guard.Against.Null(game);
+            GameCache = gameCache;
+
+            Assets = new ObservableCollection<JastGameDownloadData>();
+            UpdateDownloads();
+        }
+
+        public void UpdateDownloads()
+        {
+            Assets.Clear();
+            var downloadsData = new List<JastGameDownloadData>();
+            if (GameCache != null)
+            {
+                downloadsData.AddRange(GameCache.Downloads?.GameDownloads ?? Enumerable.Empty<JastGameDownloadData>());
+                downloadsData.AddRange(GameCache.Downloads?.ExtraDownloads ?? Enumerable.Empty<JastGameDownloadData>());
+                downloadsData.AddRange(GameCache.Downloads?.PatchDownloads ?? Enumerable.Empty<JastGameDownloadData>());
+            }
+
+            foreach (var downloadData in downloadsData)
+            {
+                Assets.Add(downloadData);
+            }
         }
     }
 }

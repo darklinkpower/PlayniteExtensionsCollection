@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JastUsaLibrary.JastUsaIntegration.Domain.Entities
+namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
 {
     public class GameTranslationsResponse
     {
@@ -27,4 +27,28 @@ namespace JastUsaLibrary.JastUsaIntegration.Domain.Entities
         [SerializationPropertyName("gamePatchLinks")]
         public List<GameLink> GamePatchLinks { get; set; }
     }
+
+    public class GameLink
+    {
+        [SerializationPropertyName("@type")]
+        public string Type { get; set; }
+
+        [SerializationPropertyName("gameId")]
+        public int GameId { get; set; }
+
+        [SerializationPropertyName("gameLinkId")]
+        public int GameLinkId { get; set; }
+
+        [SerializationPropertyName("label")]
+        public string Label { get; set; }
+
+        [SerializationPropertyName("platforms")]
+        public JastPlatforms[] Platforms { get; set; }
+
+        [SerializationPropertyName("version")]
+        public string Version { get; set; }
+    }
+
+
+
 }

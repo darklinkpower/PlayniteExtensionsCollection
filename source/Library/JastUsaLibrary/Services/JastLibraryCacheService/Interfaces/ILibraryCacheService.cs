@@ -1,5 +1,7 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,8 @@ namespace JastUsaLibrary.JastLibraryCacheService.Interfaces
     public interface ILibraryCacheService
     {
         bool ApplyProgramToGameCache(Game databaseGame, Program program);
-        bool ApplyAssetsToCache(string gameId, IEnumerable<JastAssetWrapper> assetWrappers);
+        bool ApplyProgramToGameCache(GameCache gameCache, Program program);
+        bool ApplyProgramToGameCache(Game databaseGame, GameCache gameCache, Program program);
         List<JastGameWrapper> LibraryGames { get; }
         GameCache GetCacheById(string gameId);
         void SaveCache(GameCache gameCache);

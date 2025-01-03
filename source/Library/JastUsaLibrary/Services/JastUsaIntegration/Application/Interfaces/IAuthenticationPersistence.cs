@@ -1,4 +1,4 @@
-﻿using JastUsaLibrary.JastUsaIntegration.Application.DTOs;
+﻿using JastUsaLibrary.Services.JastUsaIntegration.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Interfaces
 {
     public interface IAuthenticationPersistence
     {
-        AuthenticationTokenRequest LoadAuthentication();
-        bool SaveAuthentication(AuthenticationTokenRequest authentication);
+        AuthenticationCredentials LoadAuthentication();
+        bool SaveAuthentication(AuthenticationCredentials authentication);
         void DeleteAuthentication();
     }
 }

@@ -7,9 +7,10 @@ using JastUsaLibrary.DownloadManager.Domain.Exceptions;
 using JastUsaLibrary.Features.DownloadManager.Domain.Events;
 using JastUsaLibrary.JastLibraryCacheService.Interfaces;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
-using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
 using JastUsaLibrary.ProgramsHelper;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Enums;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginsCommon;
@@ -236,14 +237,13 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             }
         }
 
-        public async Task<bool> AddAssetToDownloadAsync(JastAssetWrapper assetWrapper, CancellationToken cancellationToken = default)
+        public async Task<bool> AddAssetToDownloadAsync(JastGameDownloadData assetWrapper, CancellationToken cancellationToken = default)
         {
             try
             {
                 var assetParentGameWrapper = _libraryCacheService.LibraryGames
                     .FirstOrDefault(x => x.Assets?.Any(
-                        y => y.Asset.GameId == assetWrapper.Asset.GameId
-                        && y.Asset.GameLinkId == assetWrapper.Asset.GameLinkId) == true);
+                        y => y.GameId == assetWrapper.GameId && y.GameLinkId == assetWrapper.GameLinkId) == true);
                 if (assetParentGameWrapper is null)
                 {
                     return false;
@@ -260,7 +260,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             }
             catch (Exception e)
             {
-                _logger.Error(e, $"Error while adding asset download {assetWrapper.Asset.GameId-assetWrapper.Asset.GameLinkId}");
+                _logger.Error(e, $"Error while adding asset download {assetWrapper.GameId-assetWrapper.GameLinkId}");
                 throw;
             }
         }
@@ -355,21 +355,20 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             _downloadsPersistence.PersistDownloadData(downloadDataItems);
         }
 
-        private string GenerateGameLinkDownloadId(GameLink gamelink)
+        private string GenerateGameLinkDownloadId(JastGameDownloadData gamelink)
         {
             return $"{gamelink.GameId}-{gamelink.GameLinkId}";
         }
 
-        public bool IsGameLinkAssetInQueue(GameLink gamelink)
+        public bool IsGameLinkAssetInQueue(JastGameDownloadData gamelink)
         {
             var id = GenerateGameLinkDownloadId(gamelink);
             var alreadyInQueue = GetExistsById(id);
             return alreadyInQueue;
         }
 
-        private DownloadItem CreateNewDownloadItem(JastGameWrapper gameWrapper, JastAssetWrapper jastAsset, CancellationToken cancellationToken)
+        private DownloadItem CreateNewDownloadItem(JastGameWrapper gameWrapper, JastGameDownloadData downloadAsset, CancellationToken cancellationToken)
         {
-            var downloadAsset = jastAsset.Asset;            
             var alreadyInQueue = IsGameLinkAssetInQueue(downloadAsset);
             if (alreadyInQueue)
             {
@@ -382,16 +381,16 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 return null;
             }
 
-            var downloadSettings = GetItemDownloadSettings(jastAsset.Type);
+            var downloadSettings = GetItemDownloadSettings(downloadAsset.JastDownloadType);
             var baseDownloadDirectory = downloadSettings.DownloadDirectory;
             var satinizedGameDirectoryName = Paths.ReplaceInvalidCharacters(gameWrapper.Game.Name);
             var gameDownloadDirectory = Path.Combine(baseDownloadDirectory, satinizedGameDirectoryName);
 
             var id = GenerateGameLinkDownloadId(downloadAsset);
-            var downloadData = new DownloadData(gameWrapper.Game, id, jastAsset, assetUri, gameDownloadDirectory);
+            var downloadData = new DownloadData(gameWrapper.Game, id, downloadAsset, assetUri, gameDownloadDirectory);
             if (FileSystem.FileExists(downloadData.DownloadPath))
             {
-                throw new AssetAlreadyDownloadedException(jastAsset.Asset, downloadData.DownloadPath);
+                throw new AssetAlreadyDownloadedException(downloadAsset, downloadData.DownloadPath);
             }
 
             return new DownloadItem(_jastAccountClient, downloadData, this);
@@ -399,7 +398,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
 
         public bool RefreshDownloadItemUri(DownloadItem downloadItem, CancellationToken cancellationToken = default)
         {
-            var uri = GetAssetUri(downloadItem.DownloadData.GameLink, cancellationToken);
+            var uri = GetAssetUri(downloadItem.DownloadData.JastGameDownloadData, cancellationToken);
             if (uri != null)
             {
                 downloadItem.DownloadData.SetUrl(uri);
@@ -411,7 +410,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             }
         }
 
-        private Uri GetAssetUri(GameLink downloadAsset, CancellationToken cancellationToken = default)
+        private Uri GetAssetUri(JastGameDownloadData downloadAsset, CancellationToken cancellationToken = default)
         {
             return Task.Run(() => _jastAccountClient.GetAssetDownloadLinkAsync(downloadAsset, cancellationToken)).GetAwaiter().GetResult();
         }
@@ -604,15 +603,15 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             PersistDownloadData();
         }
 
-        private DownloadSettings GetItemDownloadSettings(JastAssetType assetType)
+        private DownloadSettings GetItemDownloadSettings(JastDownloadType assetType)
         {
             switch (assetType)
             {
-                case JastAssetType.Game:
+                case JastDownloadType.Game:
                     return _settingsViewModel.Settings.GamesDownloadSettings;
-                case JastAssetType.Patch:
+                case JastDownloadType.Patch:
                     return _settingsViewModel.Settings.PatchesDownloadSettings;
-                case JastAssetType.Extra:
+                case JastDownloadType.Extra:
                     return _settingsViewModel.Settings.ExtrasDownloadSettings;
                 default:
                     throw new InvalidOperationException();
@@ -676,7 +675,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 }
             }
 
-            if (extractSuccess && downloadItem.DownloadData.AssetType == JastAssetType.Game)
+            if (extractSuccess && downloadItem.DownloadData.AssetType == JastDownloadType.Game)
             {
                 _playniteApi.MainView.UIDispatcher.Invoke(() =>
                 {

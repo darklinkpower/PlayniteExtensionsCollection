@@ -253,54 +253,32 @@
     <Compile Include="Features\DownloadManager\Domain\Enums\JastAssetType.cs" />
     <Compile Include="Features\DownloadManager\Domain\Entities\DownloadData.cs" />
     <Compile Include="Features\DownloadManager\Domain\Entities\DownloadItem.cs" />
-    <Compile Include="Features\DownloadManager\Domain\Entities\JastAssetWrapper.cs" />
     <Compile Include="Features\DownloadManager\Domain\Entities\JastGameWrapper.cs" />
     <Compile Include="Features\MetadataProvider\JastUsaWebUrls.cs" />
     <Compile Include="Common\GameNameSanitizer.cs" />
     <Compile Include="Services\JastLibraryCacheService\Application\LibraryCacheService.cs" />
+    <Compile Include="Services\JastLibraryCacheService\Entities\GameCache.cs" />
     <Compile Include="Services\JastLibraryCacheService\Interfaces\ILibraryCachePersistence.cs" />
     <Compile Include="Services\JastLibraryCacheService\Interfaces\ILibraryCacheService.cs" />
     <Compile Include="Services\JastLibraryCacheService\Persistence\LibraryCachePersistencePluginSettings.cs" />
+    <Compile Include="Services\JastUsaIntegration\Domain\Enums\JastDownloadType.cs" />
+    <Compile Include="Services\JastUsaIntegration\Domain\ValueObjects\AuthenticationToken.cs" />
+    <Compile Include="Services\JastUsaIntegration\Domain\ValueObjects\AuthenticationCredentials.cs" />
+    <Compile Include="Services\JastUsaIntegration\Domain\Entities\JastGameData.cs" />
+    <Compile Include="Services\JastUsaIntegration\Domain\Entities\JastGameDownloadData.cs" />
+    <Compile Include="Services\JastUsaIntegration\Domain\Entities\JastGameDownloads.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\GetGamesResponse.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\ProductDataResponse.cs" />
     <Compile Include="Services\JastUsaIntegration\Infrastructure\External\JastUrls.cs" />
-    <Compile Include="Services\JastUsaIntegration\Application\DTOs\AuthenticationRefreshResponse.cs" />
-    <Compile Include="Services\JastUsaIntegration\Application\DTOs\AuthenticationTokenRequest.cs" />
-    <Compile Include="Services\JastUsaIntegration\Application\DTOs\GenerateLinkRequest.cs" />
-    <Compile Include="Services\JastUsaIntegration\Application\DTOs\GenerateLinkResponse.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\AuthenticationRefreshResponse.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\AuthenticationTokenRequest.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\GenerateLinkRequest.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\GenerateLinkResponse.cs" />
     <Compile Include="Services\JastUsaIntegration\Application\Interfaces\IAccountClient.cs" />
     <Compile Include="Services\JastUsaIntegration\Application\Interfaces\IAuthenticationPersistence.cs" />
     <Compile Include="Services\JastUsaIntegration\Application\Services\JastUsaAccountClient.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\AttributeConfigurationConverter.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\AttributeType.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\BonusPoints.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ChannelPricing.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ConfigurationClassConverter.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\Image.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ImageType.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\Locale.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductEsrb.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductResponse.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductResponseAttribute.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductResponseAttributeConfiguration.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductResponseTranslationData.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductResponseVariant.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\ProductResponseVariantTranslation.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\SingleValueArrayConverter.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Aggregates\Product\TypeEnum.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\GameLink.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\GameTranslationsResponse.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\JastGame.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\JastProduct.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\UserGamesProductVariant.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\UserGamesResponseAtribute.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\UserGamesResponseTranslation.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\UserGameTag.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\Value.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Enums\GameType.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\GameTranslationsResponse.cs" />
     <Compile Include="Services\JastUsaIntegration\Domain\Enums\JastPlatform.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Enums\ProductVariantType.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Enums\TranslationType.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Enums\UserGameTagType.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Enums\ValueType.cs" />
     <Compile Include="Services\JastUsaIntegration\Domain\Exceptions\AuthenticationErrorException.cs" />
     <Compile Include="Services\JastUsaIntegration\Domain\Exceptions\InvalidLoginCredentialsException.cs" />
     <Compile Include="Services\JastUsaIntegration\Infrastructure\External\JastUsaApiClient.cs" />
@@ -316,8 +294,7 @@
     <Compile Include="JastUsaLibrarySettingsView.xaml.cs">
       <DependentUpon>JastUsaLibrarySettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\AuthenticationToken.cs" />
-    <Compile Include="Services\JastUsaIntegration\Domain\Entities\UserGamesResponse.cs" />
+    <Compile Include="Services\JastUsaIntegration\Infrastructure\DTOs\AuthenticationTokenResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\GameUninstaller\GameUninstallWindowViewModel.cs" />
     <Compile Include="Features\DownloadManager\Presentation\DownloadsManagerViewModel.cs" />
@@ -383,8 +360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\DownloadManager\Domain\Interfaces\" />
-    <Folder Include="Services\JastUsaIntegration\Domain\Services\" />
-    <Folder Include="Services\JastUsaIntegration\Domain\ValueObjects\" />
     <Folder Include="Services\JastUsaIntegration\Infrastructure\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

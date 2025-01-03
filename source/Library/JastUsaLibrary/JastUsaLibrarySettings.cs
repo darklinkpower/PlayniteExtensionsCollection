@@ -1,9 +1,7 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.JastLibraryCacheService.Entities;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
-using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
-using JastUsaLibrary.ProgramsHelper.Models;
-using JastUsaLibrary.ViewModels;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -20,39 +18,8 @@ using System.Windows.Media;
 
 namespace JastUsaLibrary
 {
-    public class GameCache
-    {
-        public ObservableCollection<JastAssetWrapper> Assets;
-        public JastProduct Product = null;
-        public Program Program = null;
-        public string GameId;
-        public GameCache GetClone()
-        {
-            // Create a new instance of GameCache
-            var clone = new GameCache();
-            if (Assets != null)
-            {
-                clone.Assets = new ObservableCollection<JastAssetWrapper>(
-                    Assets.Select(asset => Serialization.GetClone(asset)).ToList());
-            }
-
-            if (Product != null)
-            {
-                clone.Product = Serialization.GetClone(Product);
-            }
-            if (Program != null)
-            {
-                clone.Program = Serialization.GetClone(Program);
-            }
-
-            clone.GameId = GameId;
-            return clone;
-        }
-    }
-
     public class DownloadSettings : ObservableObject
     {
-
         private bool _extractOnDownload = true;
         public bool ExtractOnDownload { get => _extractOnDownload; set => SetValue(ref _extractOnDownload, value); }
 
@@ -208,42 +175,6 @@ namespace JastUsaLibrary
             var settingsUpdated = false;
             if (settings.SettingsVersion < 2)
             {
-                var libraryGames = _playniteApi.Database.Games.Where(g => g.PluginId == _plugin.Id);
-                var gamesInstallCache = new List<GameInstallCache>();
-                var gameInstallCachePath = Path.Combine(_plugin.GetPluginUserDataPath(), "gameInstallCache.json");
-                if (FileSystem.FileExists(gameInstallCachePath))
-                {
-                    gamesInstallCache = Serialization.FromJsonFile<List<GameInstallCache>>(gameInstallCachePath);
-                }
-
-                var cache = new List<JastProduct>();
-                if (FileSystem.FileExists(_plugin.UserGamesCachePath))
-                {
-                    cache = Serialization.FromJsonFile<List<JastProduct>>(_plugin.UserGamesCachePath);
-                }
-
-                foreach (var game in libraryGames)
-                {
-                    var gameCache = new GameCache
-                    {
-                        GameId = game.GameId
-                    };
-
-                    var gameVariant = cache.FirstOrDefault(x => x.ProductVariant.GameId.ToString() == game.GameId);
-                    if (gameVariant != null)
-                    {
-                        gameCache.Product = gameVariant;
-                    }
-
-                    var gameInstallCache = gamesInstallCache.FirstOrDefault(x => x.GameId == game.GameId);
-                    if (gameInstallCache != null)
-                    {
-                        gameCache.Program = gameInstallCache.Program;
-                    }
-
-                    settings.LibraryCache[game.GameId] = gameCache;
-                }
-
                 settings.SettingsVersion = 2;
                 settingsUpdated = true;
             }

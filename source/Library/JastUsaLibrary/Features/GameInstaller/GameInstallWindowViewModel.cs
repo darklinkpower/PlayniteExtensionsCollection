@@ -4,6 +4,8 @@ using JastUsaLibrary.DownloadManager.Domain.Exceptions;
 using JastUsaLibrary.Features.DownloadManager.Application;
 using JastUsaLibrary.ProgramsHelper;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -18,17 +20,17 @@ namespace JastUsaLibrary.ViewModels
     public class GameInstallWindowViewModel
     {
         public Game Game { get; }
-        public IEnumerable<JastAssetWrapper> GameAssets { get; }
+        public IEnumerable<JastGameDownloadData> GameAssets { get; }
 
         private readonly Window _window;
         private readonly IDownloadService _downloadsManager;
         private readonly ILogger _logger;
 
-        public JastAssetWrapper SelectedGameAsset { get; }
+        public JastGameDownloadData SelectedGameAsset { get; }
 
         private readonly IPlayniteAPI _playniteApi;
 
-        public JastAssetWrapper AddedGameAsset { get; private set; }
+        public JastGameDownloadData AddedGameAsset { get; private set; }
         public Program BrowsedProgram { get; private set; }
         public RelayCommand CancelCommand { get; }
         public RelayCommand BrowseAndSelectProgramCommand { get; }
@@ -43,7 +45,7 @@ namespace JastUsaLibrary.ViewModels
             ILogger logger)
         {
             Game = game;
-            GameAssets = gameCache.Assets.Where(x => x.Type == JastAssetType.Game).OrderBy(x => x.Asset.Label);
+            GameAssets = gameCache?.Downloads.GameDownloads.OrderBy(x => x.Label);
             SelectedGameAsset = GameAssets.FirstOrDefault();
             _playniteApi = playniteApi;
             _window = window;
@@ -85,9 +87,9 @@ namespace JastUsaLibrary.ViewModels
             }
         }
 
-        public bool StartAssetGameInstallation(JastAssetWrapper jastAssetWrapper)
+        public bool StartAssetGameInstallation(JastGameDownloadData jastAssetWrapper)
         {
-            var text = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainingAssetUrlFormat"), jastAssetWrapper.Asset.Label);
+            var text = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainingAssetUrlFormat"), jastAssetWrapper.Label);
             var progressOptions = new GlobalProgressOptions(text, true)
             {
                 IsIndeterminate = true
@@ -102,17 +104,17 @@ namespace JastUsaLibrary.ViewModels
                 }
                 catch (DownloadAlreadyInQueueException e)
                 {
-                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_AssetAlreadyInDlListFormat"), e.GameLink.Label);
+                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_AssetAlreadyInDlListFormat"), e.DownloadData.Label);
                     _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
                 }
                 catch (AssetAlreadyDownloadedException e)
                 {
-                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_AssetExistsInPathFormat"), e.GameLink.Label, e.DownloadPath);
+                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_AssetExistsInPathFormat"), e.DownloadData.Label, e.DownloadPath);
                     _playniteApi.Dialogs.ShowErrorMessage(errorMessage, ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
                 }
                 catch (Exception e)
                 {
-                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainAssetUrlFailFormat"), SelectedGameAsset.Asset.Label);
+                    var errorMessage = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainAssetUrlFailFormat"), SelectedGameAsset.Label);
                     _playniteApi.Dialogs.ShowErrorMessage(errorMessage + $"\n\n{e.Message}", ResourceProvider.GetString("LOC_JUL_JastLibraryManager"));
                 }
 

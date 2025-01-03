@@ -1,4 +1,5 @@
 ﻿using JastUsaLibrary.JastLibraryCacheService.Interfaces;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

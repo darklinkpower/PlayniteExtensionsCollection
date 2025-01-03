@@ -1,11 +1,11 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.JastLibraryCacheService.Interfaces;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,31 +29,36 @@ namespace JastUsaLibrary.JastLibraryCacheService.Application
 
         public bool ApplyProgramToGameCache(Game databaseGame, Program program)
         {
-            var cache = _libraryCachePersistence.GetCacheById(databaseGame.GameId);
-            if (cache != null)
+            var gameCache = _libraryCachePersistence.GetCacheById(databaseGame.GameId);
+            if (gameCache != null)
             {
-                cache.Program = program;
-                _libraryCachePersistence.SaveCache(cache);
-
-                databaseGame.InstallDirectory = Path.GetDirectoryName(program.Path);
-                databaseGame.IsInstalled = true;
-                _playniteApi.Database.Games.Update(databaseGame);
-                return true;
+                return ApplyProgramToGameCache(gameCache, program);
             }
 
             return false;
         }
 
-        public bool ApplyAssetsToCache(string gameId, IEnumerable<JastAssetWrapper> assetWrappers)
+        public bool ApplyProgramToGameCache(GameCache gameCache, Program program)
         {
-            var cache = _libraryCachePersistence.GetCacheById(gameId);
-            if (cache != null)
+            var databaseGame = _playniteApi.Database.Games.FirstOrDefault(g => g.PluginId == _pluginId && g.GameId == gameCache.GameId);
+            if (databaseGame is null)
             {
-                cache.Assets = assetWrappers.ToObservable();
-                _libraryCachePersistence.SaveCache(cache);
+                return false;
             }
 
-            return false;
+            ApplyProgramToGameCache(databaseGame, gameCache, program);
+            return true;
+        }
+
+        public bool ApplyProgramToGameCache(Game databaseGame, GameCache gameCache, Program program)
+        {
+            gameCache.UpdateProgram(program);
+            _libraryCachePersistence.SaveCache(gameCache);
+
+            databaseGame.InstallDirectory = Path.GetDirectoryName(program.Path);
+            databaseGame.IsInstalled = true;
+            _playniteApi.Database.Games.Update(databaseGame);
+            return true;
         }
 
         public GameCache GetCacheById(string gameId)
@@ -77,11 +82,11 @@ namespace JastUsaLibrary.JastLibraryCacheService.Application
                     var cache = _libraryCachePersistence.GetCacheById(game.GameId);
                     if (cache != null)
                     {
-                        return new JastGameWrapper(game, cache.Assets);
+                        return new JastGameWrapper(game, cache);
                     }
                     else
                     {
-                        return new JastGameWrapper(game, new ObservableCollection<JastAssetWrapper>());
+                        return new JastGameWrapper(game, null);
                     }
                 }).ToList();
         }

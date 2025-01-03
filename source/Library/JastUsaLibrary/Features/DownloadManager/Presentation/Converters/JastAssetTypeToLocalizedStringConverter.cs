@@ -1,4 +1,5 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Enums;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Enums;
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
@@ -18,15 +19,15 @@ namespace JastUsaLibrary.Converters
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is JastAssetType assetType)
+            if (value is JastDownloadType assetType)
             {
                 switch (assetType)
                 {
-                    case JastAssetType.Game:
+                    case JastDownloadType.Game:
                         return GameString;
-                    case JastAssetType.Extra:
+                    case JastDownloadType.Extra:
                         return ExtraString;
-                    case JastAssetType.Patch:
+                    case JastDownloadType.Patch:
                         return PatchString;
                     default:
                         return value.ToString();

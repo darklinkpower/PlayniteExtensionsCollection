@@ -13,7 +13,8 @@ using System.Web;
 using FlowHttp.Enums;
 using FlowHttp.Events;
 using JastUsaLibrary.DownloadManager.Domain.Enums;
-using JastUsaLibrary.JastUsaIntegration.Domain.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Enums;
 
 namespace JastUsaLibrary.DownloadManager.Domain.Entities
 {
@@ -22,9 +23,8 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
         #region Game Information
 
         public Guid GameId { get; set; }
-        public GameLink GameLink { get; set; }
-        public JastAssetType AssetType { get; set; }
-        public string Name => GameLink.Label;
+        public JastGameDownloadData JastGameDownloadData { get; set; }
+        public string Name => JastGameDownloadData.Label;
         public string Id { get; set; }
         #endregion
 
@@ -195,12 +195,13 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
         }
 
         [DontSerialize]
+        public JastDownloadType AssetType => JastGameDownloadData.JastDownloadType;
+        [DontSerialize]
         public string DownloadPath => Path.Combine(DownloadDirectory, FileName);
 
         [DontSerialize]
         public string TemporaryDownloadPath => Path.Combine(DownloadDirectory, FileName + ".tmp");
 
-        [DontSerialize]
         public bool IsComplete => Progress == 100;
 
         #endregion
@@ -210,10 +211,9 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
 
         }
 
-        public DownloadData(Game game, string id, JastAssetWrapper assetWrapper, Uri uri, string downloadDirectory)
+        public DownloadData(Game game, string id, JastGameDownloadData downloadData, Uri uri, string downloadDirectory)
         {
-            AssetType = assetWrapper.Type;
-            GameLink = assetWrapper.Asset;
+            JastGameDownloadData = downloadData;
             GameId = game.Id;
             Id = id;
             DownloadDirectory = downloadDirectory;

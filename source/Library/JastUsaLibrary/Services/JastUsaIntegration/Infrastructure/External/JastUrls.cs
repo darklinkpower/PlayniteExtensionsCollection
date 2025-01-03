@@ -23,7 +23,7 @@ namespace JastUsaLibrary
             public static class Account
             {
                 private const string RouteBase = "shop/account/";
-                public static string GetGames(int page) => $"{BaseApiUrl}{RouteBase}user-games-dev?localeCode={LocaleCode}&phrase=&page={page}&itemsPerPage=1000";
+                public static string GetGames(int page) => $"{BaseApiUrl}{RouteBase}user-games?localeCode={LocaleCode}&phrase=&page={page}&itemsPerPage=1000";
                 public static string GenerateLink => $"{BaseApiUrl}{RouteBase}user-games/generate-link";
             }
         }

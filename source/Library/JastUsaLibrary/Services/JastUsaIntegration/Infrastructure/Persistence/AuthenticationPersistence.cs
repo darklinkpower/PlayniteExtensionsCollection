@@ -1,10 +1,11 @@
-﻿using JastUsaLibrary.JastUsaIntegration.Application.DTOs;
-using JastUsaLibrary.JastUsaIntegration.Application.Interfaces;
+﻿using JastUsaLibrary.JastUsaIntegration.Application.Interfaces;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.ValueObjects;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -17,12 +18,12 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.Persistence
         private readonly string _authenticationPath;
         private readonly ILogger _logger = LogManager.GetLogger();
 
-        public AuthenticationPersistence(string authenticationPath)
+        public AuthenticationPersistence(string authenticationDirectory)
         {
-            _authenticationPath = authenticationPath;
+            _authenticationPath = Path.Combine(authenticationDirectory, "authentication.json");
         }
 
-        public AuthenticationTokenRequest LoadAuthentication()
+        public AuthenticationCredentials LoadAuthentication()
         {
             if (!FileSystem.FileExists(_authenticationPath))
             {
@@ -31,7 +32,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.Persistence
 
             try
             {
-                return Serialization.FromJson<AuthenticationTokenRequest>(
+                return Serialization.FromJson<AuthenticationCredentials>(
                     Encryption.DecryptFromFile(_authenticationPath, Encoding.UTF8, WindowsIdentity.GetCurrent().User.Value));
             }
             catch (Exception e)
@@ -42,7 +43,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.Persistence
             }
         }
 
-        public bool SaveAuthentication(AuthenticationTokenRequest authentication)
+        public bool SaveAuthentication(AuthenticationCredentials authentication)
         {
             try
             {

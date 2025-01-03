@@ -1,6 +1,7 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.Features.DownloadManager.Domain.Events;
+using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +23,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
         //Task RestoreDownloadsAsync();
         Task MoveDownloadItemOnePlaceBeforeAsync(DownloadItem downloadItem);
         Task MoveDownloadItemOnePlaceAfterAsync(DownloadItem downloadItem);
-        Task<bool> AddAssetToDownloadAsync(JastAssetWrapper assetWrapper, CancellationToken cancellationToken = default);
+        Task<bool> AddAssetToDownloadAsync(JastGameDownloadData assetWrapper, CancellationToken cancellationToken = default);
         bool GetExistsById(string Id);
         //void PersistDownloadData();
         int AvailableDownloadSlots { get; }
