@@ -37,9 +37,9 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
         public event EventHandler<DownloadItemMovedEventArgs> DownloadItemMoved;
         public event EventHandler<DownloadItemStatusChangedEventArgs> DownloadItemStatusChanged;
 
-        private void OnGameInstallationApplied(Game game, GameCache cache)
+        private void OnGameInstallationApplied(Game game, Program program)
         {
-            GameInstallationApplied?.Invoke(this, new GameInstallationAppliedEventArgs(game, cache));
+            GameInstallationApplied?.Invoke(this, new GameInstallationAppliedEventArgs(game, program));
         }
 
         private static readonly ILogger _logger = LogManager.GetLogger();
@@ -495,10 +495,11 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 }
             }
 
+            var tempDownloadPath = item.DownloadData.TemporaryDownloadPath + ".tmp";
             if (deleteTemporaryFile && !item.DownloadData.IsComplete &&
-                FileSystem.FileExists(item.DownloadData.TemporaryDownloadPath))
+                FileSystem.FileExists(tempDownloadPath))
             {
-                FileSystem.DeleteFileSafe(item.DownloadData.TemporaryDownloadPath);
+                FileSystem.DeleteFileSafe(tempDownloadPath);
             }
 
             item.Dispose();
@@ -699,6 +700,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
 
             var program = ProgramsService.GetProgramData(gameExecutablePath);
             _libraryCacheService.ApplyProgramToGameCache(databaseGame, program);
+            OnGameInstallationApplied(databaseGame, program);
         }
 
         private static bool TryFindExecutable(string extractDirectory, out string executableFullPath)

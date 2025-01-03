@@ -63,7 +63,6 @@ namespace JastUsaLibrary
         private void OnGameInstallationApplied(object sender, GameInstallationAppliedEventArgs args)
         {
             var eventGame = args.Game;
-            var cache = args.Cache;
             if (_game.Id != eventGame.Id)
             {
                 return;
@@ -71,7 +70,7 @@ namespace JastUsaLibrary
 
             var installInfo = new GameInstallationData()
             {
-                InstallDirectory = Path.GetDirectoryName(cache.Program.Path)
+                InstallDirectory = Path.GetDirectoryName(args.Program.Path)
             };
 
             InvokeOnInstalled(new GameInstalledEventArgs(installInfo));

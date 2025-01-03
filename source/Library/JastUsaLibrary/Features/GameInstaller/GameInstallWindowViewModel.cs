@@ -63,9 +63,10 @@ namespace JastUsaLibrary.ViewModels
 
             AddSelectedAssetToDownloadsAndClose = new RelayCommand(() =>
             {
-                var success = StartAssetGameInstallation();
+                var success = StartAssetGameInstallation(SelectedGameAsset);
                 if (success)
                 {
+                    AddedGameAsset = SelectedGameAsset;
                     CloseWindow();
                 }
             }, () => SelectedGameAsset != null);
@@ -84,9 +85,9 @@ namespace JastUsaLibrary.ViewModels
             }
         }
 
-        public bool StartAssetGameInstallation()
+        public bool StartAssetGameInstallation(JastAssetWrapper jastAssetWrapper)
         {
-            var text = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainingAssetUrlFormat"), SelectedGameAsset.Asset.Label);
+            var text = string.Format(ResourceProvider.GetString("LOC_JUL_ObtainingAssetUrlFormat"), jastAssetWrapper.Asset.Label);
             var progressOptions = new GlobalProgressOptions(text, true)
             {
                 IsIndeterminate = true
@@ -97,7 +98,7 @@ namespace JastUsaLibrary.ViewModels
             {
                 try
                 {
-                    success = await _downloadsManager.AddAssetToDownloadAsync(SelectedGameAsset);
+                    success = await _downloadsManager.AddAssetToDownloadAsync(jastAssetWrapper);
                 }
                 catch (DownloadAlreadyInQueueException e)
                 {

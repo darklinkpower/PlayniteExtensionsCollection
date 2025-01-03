@@ -56,8 +56,8 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
-            <ListBox DockPanel.Dock="Top" Margin="0,10,0,0" ItemsSource="{Binding GameAssets}"
-                     SelectedItem="{Binding SelectedGameAsset}" ItemTemplate="{StaticResource ListBoxGameAssetTemplate}" />
+            <ListBox DockPanel.Dock="Top" Margin="0,10,0,0" ItemsSource="{Binding GameAssets, Mode=OneWay}"
+                     SelectedItem="{Binding SelectedGameAsset, Mode=OneWay}" ItemTemplate="{StaticResource ListBoxGameAssetTemplate}" />
         </DockPanel>
     </Grid>
 </UserControl>

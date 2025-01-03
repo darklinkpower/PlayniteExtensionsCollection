@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using JastUsaLibrary.ProgramsHelper.Models;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace JastUsaLibrary.DownloadManager.Domain.Events
         public Guid EventId { get; }
         public DateTime CreatedAtUtc { get; }
         public Game Game { get; }
-        public GameCache Cache { get; }
+        public Program Program { get; }
 
-        public GameInstallationAppliedEventArgs(Game game, GameCache cache)
+        public GameInstallationAppliedEventArgs(Game game, Program program)
         {
             EventId = Guid.NewGuid();
             CreatedAtUtc = DateTime.UtcNow;
             Game = game;
-            Cache = cache;
+            Program = program;
         }
     }
 }
