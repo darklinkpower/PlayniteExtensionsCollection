@@ -28,6 +28,10 @@ obj/**
 _ReSharper*/
 [Tt]est[Rr]esult*
 .vs/
+
+# Ignore files built by JetBrains Rider
+.idea/
+
 # NuGet packages folder
 packages/
 
