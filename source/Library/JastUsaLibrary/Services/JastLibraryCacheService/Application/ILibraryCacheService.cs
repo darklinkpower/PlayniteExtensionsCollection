@@ -9,17 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JastUsaLibrary.JastLibraryCacheService.Interfaces
+namespace JastUsaLibrary.JastLibraryCacheService.Application
 {
     public interface ILibraryCacheService
     {
-        bool ApplyProgramToGameCache(Game databaseGame, Program program);
-        bool ApplyProgramToGameCache(GameCache gameCache, Program program);
-        bool ApplyProgramToGameCache(Game databaseGame, GameCache gameCache, Program program);
-        List<JastGameWrapper> LibraryGames { get; }
-        GameCache GetCacheById(string gameId);
+        List<JastGameWrapper> GetLibraryGames();
+        GameCache GetCacheById(int gameId);
         void SaveCache(GameCache gameCache);
-        void RemoveCacheById(string id);
+        void RemoveCacheById(int id);
         List<GameCache> GetAllCache();
     }
 }

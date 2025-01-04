@@ -1,24 +1,19 @@
-﻿using EventsCommon;
-using FlowHttp.Events;
-using JastUsaLibrary.DownloadManager.Application;
-using JastUsaLibrary.DownloadManager.Domain.Entities;
+﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.DownloadManager.Domain.Enums;
 using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.DownloadManager.Domain.Exceptions;
 using JastUsaLibrary.Features.DownloadManager.Application;
 using JastUsaLibrary.Features.DownloadManager.Domain.Events;
-using JastUsaLibrary.JastLibraryCacheService.Interfaces;
+using JastUsaLibrary.JastLibraryCacheService.Application;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
 using JastUsaLibrary.ProgramsHelper;
-using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.GameInstallationManager.Application;
 using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -35,6 +30,7 @@ namespace JastUsaLibrary.DownloadManager.Presentation
         private readonly IPlayniteAPI _playniteApi;
         private readonly ILogger _logger;
         private readonly ILibraryCacheService _libraryCacheService;
+        private readonly IGameInstallationManagerService _gameInstallationManagerService;
         private readonly JastUsaLibrary _plugin;
         private readonly JastUsaAccountClient _jastUsaAccountClient;
         private bool _isDisposed = false;
@@ -153,12 +149,14 @@ namespace JastUsaLibrary.DownloadManager.Presentation
             IPlayniteAPI playniteApi,
             ILogger logger,
             ILibraryCacheService libraryCacheService,
+            IGameInstallationManagerService gameInstallationManagerService,
             IDownloadService downloadService)
         {
             _jastUsaAccountClient = Guard.Against.Null(jastUsaAccountClient);
             _playniteApi = Guard.Against.Null(playniteApi);
             _logger = Guard.Against.Null(logger);
             _libraryCacheService = Guard.Against.Null(libraryCacheService);
+            _gameInstallationManagerService = Guard.Against.Null(gameInstallationManagerService);
             _downloadService = Guard.Against.Null(downloadService);
             _plugin = Guard.Against.Null(plugin);
             _settingsViewModel = Guard.Against.Null(settingsViewModel);
@@ -214,7 +212,7 @@ namespace JastUsaLibrary.DownloadManager.Presentation
                 .OrderBy(g => g.Name)
                 .Select(game =>
                 {
-                    var gameCache = _libraryCacheService.GetCacheById(game.GameId);
+                    var gameCache = _libraryCacheService.GetCacheById(Convert.ToInt32(game.GameId));
                     return new JastGameWrapper(game, gameCache);
                 }).ToObservable();
         }
@@ -234,18 +232,25 @@ namespace JastUsaLibrary.DownloadManager.Presentation
 
             _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var cache = gameWrapper.GameCache;
-                var downloadsId = cache.JastGameData.EnUsId.Value;
+                var downloadsId = gameWrapper?.GameCache?.JastGameData?.EnUsId;
+                if (downloadsId is null || !downloadsId.HasValue)
+                {
+                    return;
+                }
+
                 try
                 {
-                    var gameDownloads = _jastUsaAccountClient.GetGameTranslationsAsync(downloadsId).GetAwaiter().GetResult();
-                    cache.UpdateDownloads(gameDownloads);
-                    _libraryCacheService.SaveCache(cache);
-                    gameWrapper.UpdateDownloads();
+                    var gameDownloads = _jastUsaAccountClient.GetGameTranslationsAsync(downloadsId.Value).GetAwaiter().GetResult();
+                    if (gameDownloads != null)
+                    {
+                        gameWrapper.GameCache.UpdateDownloads(gameDownloads);
+                        _libraryCacheService.SaveCache(gameWrapper.GameCache);
+                        gameWrapper.UpdateDownloads();
+                    }
                 }
                 catch (Exception e)
                 {
-                    _logger.Error(e, $"Error during GetGames while obtaining GameTranslations for {cache.JastGameData.ProductName} with id {downloadsId}");
+                    _logger.Error(e, $"Error during GetGames while obtaining GameTranslations for {gameWrapper.GameCache.JastGameData.ProductName} with id {downloadsId}");
                 }
             }, progressOptions);
         }
@@ -266,7 +271,7 @@ namespace JastUsaLibrary.DownloadManager.Presentation
                 return;
             }
 
-            _libraryCacheService.ApplyProgramToGameCache(gameWrapper.Game, selectedProgram);
+            _gameInstallationManagerService.ApplyProgramToGameCache(gameWrapper.Game, selectedProgram);
         }
 
         private bool CanPauseAllDownloads()

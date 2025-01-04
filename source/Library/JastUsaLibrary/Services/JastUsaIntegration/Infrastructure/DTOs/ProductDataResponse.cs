@@ -42,7 +42,7 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         public object[] Reviews { get; set; }
 
         [SerializationPropertyName("averageRating")]
-        public int AverageRating { get; set; }
+        public double AverageRating { get; set; }
 
         [SerializationPropertyName("images")]
         public Image[] Images { get; set; }

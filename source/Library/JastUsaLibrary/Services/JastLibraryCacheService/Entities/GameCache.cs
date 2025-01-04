@@ -1,4 +1,5 @@
-﻿using JastUsaLibrary.ProgramsHelper.Models;
+﻿using GenericEntityJsonRepository;
+using JastUsaLibrary.ProgramsHelper.Models;
 using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using Playnite.SDK.Data;
 using PluginsCommon;
@@ -11,21 +12,20 @@ using System.Threading.Tasks;
 
 namespace JastUsaLibrary.Services.JastLibraryCacheService.Entities
 {
-    public class GameCache
+    public class GameCache : IEntity<int>
     {
         public JastGameDownloads Downloads { get; set; } = null;
         public JastGameData JastGameData { get; set; } = null;
-        public Program Program { get; set; } = null;
-        public string GameId { get; set; }
+        public int Id { get; set; }
 
         public GameCache()
         {
 
         }
 
-        public GameCache(string gameId)
+        public GameCache(int gameId)
         {
-            GameId = Guard.Against.NullOrEmpty(gameId);
+            Id = Guard.Against.Null(gameId);
         }
 
         internal void UpdateDownloads(JastGameDownloads downloads)
@@ -38,14 +38,9 @@ namespace JastUsaLibrary.Services.JastLibraryCacheService.Entities
             JastGameData = jastGameData;
         }
 
-        internal void UpdateProgram(Program program)
-        {
-            Program = program;
-        }
-
         public GameCache GetClone()
         {
-            var clone = new GameCache(GameId);
+            var clone = new GameCache(Id);
             if (Downloads != null)
             {
                 clone.Downloads = Serialization.GetClone(Downloads);
@@ -54,11 +49,6 @@ namespace JastUsaLibrary.Services.JastLibraryCacheService.Entities
             if (JastGameData != null)
             {
                 clone.JastGameData = Serialization.GetClone(JastGameData);
-            }
-
-            if (Program != null)
-            {
-                clone.Program = Serialization.GetClone(Program);
             }
 
             return clone;

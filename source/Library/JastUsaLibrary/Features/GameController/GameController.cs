@@ -1,8 +1,9 @@
-﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
-using JastUsaLibrary.DownloadManager.Domain.Events;
+﻿using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.Features.DownloadManager.Application;
-using JastUsaLibrary.JastLibraryCacheService.Interfaces;
+using JastUsaLibrary.JastLibraryCacheService.Application;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.GameInstallationManager.Application;
+using JastUsaLibrary.Services.GameInstallationManager.Entities;
 using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
 using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using JastUsaLibrary.ViewModels;
@@ -29,9 +30,8 @@ namespace JastUsaLibrary
         private readonly ILogger _logger;
         private readonly Game _game;
         private readonly GameCache _gameCache;
-        private readonly JastUsaLibrary _plugin;
         private readonly IDownloadService _downloadsManager;
-        private readonly ILibraryCacheService _libraryCacheService;
+        private readonly IGameInstallationManagerService _gameInstallationManagerService;
         private bool _subscribedToEvents = false;
         private JastGameDownloadData _downloadingAsset;
 
@@ -41,16 +41,14 @@ namespace JastUsaLibrary
             IPlayniteAPI playniteApi,
             ILogger logger,
             IDownloadService downloadsManager,
-            ILibraryCacheService libraryCacheService,
-            JastUsaLibrary jastUsaLibrary) : base(game)
+            IGameInstallationManagerService gameInstallationManagerService) : base(game)
         {
             _playniteApi = Guard.Against.Null(playniteApi);
             _logger = Guard.Against.Null(logger);
             _game = Guard.Against.Null(game);
             _gameCache = Guard.Against.Null(gameCache);
-            _plugin = Guard.Against.Null(jastUsaLibrary);
             _downloadsManager = Guard.Against.Null(downloadsManager);
-            _libraryCacheService = Guard.Against.Null(libraryCacheService);
+            _gameInstallationManagerService = Guard.Against.Null(gameInstallationManagerService);
         }
 
         private void SubscribeToEvents()
@@ -122,7 +120,7 @@ namespace JastUsaLibrary
 
         private void AddGameProgramAndSave(Program browsedProgram)
         {
-            _libraryCacheService.ApplyProgramToGameCache(Game, _gameCache, browsedProgram);
+            _gameInstallationManagerService.ApplyProgramToGameCache(Game, browsedProgram);
             var installInfo = new GameInstallationData()
             {
                 InstallDirectory = Path.GetDirectoryName(browsedProgram.Path)
@@ -165,24 +163,24 @@ namespace JastUsaLibrary
     public class JastUninstallController : UninstallController
     {
         private readonly IPlayniteAPI _playniteApi;
-        private readonly ILibraryCacheService _libraryCacheService;
+        private readonly IGameInstallationManagerService _gameInstallationManagerService;
         private readonly Game _game;
         private readonly string _gameExecutablePath;
-        private readonly GameCache _gameCache;
+        private readonly GameInstallCache _gameInstallCache;
         private readonly JastUsaLibrary _plugin;
 
         public JastUninstallController(
             Game game,
             IPlayniteAPI playniteApi,
-            ILibraryCacheService libraryCacheService,
-            GameCache gameCache,
+            IGameInstallationManagerService gameInstallationManagerService,
+            GameInstallCache gameInstallCache,
             JastUsaLibrary jastUsaLibrary) : base(game)
         {
             _playniteApi = Guard.Against.Null(playniteApi);
-            _libraryCacheService = Guard.Against.Null(libraryCacheService);
+            _gameInstallationManagerService = Guard.Against.Null(gameInstallationManagerService);
             _game = Guard.Against.Null(game);
-            _gameExecutablePath = Guard.Against.NullOrEmpty(gameCache.Program.Path);
-            _gameCache = Guard.Against.Null(gameCache);
+            _gameExecutablePath = Guard.Against.NullOrEmpty(gameInstallCache.Program.Path);
+            _gameInstallCache = Guard.Against.Null(gameInstallCache);
             _plugin = Guard.Against.Null(jastUsaLibrary);
             Name = ResourceProvider.GetString("LOC_JUL_UninstallJastLibGame");
         }
@@ -215,7 +213,7 @@ namespace JastUsaLibrary
 
         private void DeleteGameProgramAndSave()
         {
-            _libraryCacheService.ApplyProgramToGameCache(Game, _gameCache, null);
+            _gameInstallationManagerService.RemoveCacheById(Game.Id);
             _plugin.SavePluginSettings();
         }
 
@@ -230,7 +228,7 @@ namespace JastUsaLibrary
             window.Height = 800;
             window.Width = 500;
             window.Title = ResourceProvider.GetString("LOC_JUL_WindowTitleJastLibraryUninstaller");
-            var dataContext = new GameUninstallWindowViewModel(_game, window);
+            var dataContext = new GameUninstallWindowViewModel(_game, window, _playniteApi);
             window.Owner = _playniteApi.Dialogs.GetCurrentAppWindow();
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             

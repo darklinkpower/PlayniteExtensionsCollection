@@ -12,8 +12,6 @@ using FlowHttp;
 using FlowHttp.Enums;
 using FlowHttp.Events;
 using JastUsaLibrary.DownloadManager.Domain.Enums;
-using JastUsaLibrary.DownloadManager.Application;
-using EventsCommon;
 using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
 using JastUsaLibrary.Features.DownloadManager.Application;
@@ -26,7 +24,6 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
         public event EventHandler<DownloadItemStatusChangedEventArgs> DownloadItemStatusChanged;
         public event EventHandler<DownloadItemProgressChangedEventArgs> DownloadItemProgressChanged;
 
-        private readonly JastUsaAccountClient _jastAccountClient;
         private readonly DownloadsManager _downloadsManagerViewModel;
         private DownloadData _downloadData;
         public string Id => _downloadData.Id;
@@ -64,13 +61,11 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
         }
 
         public DownloadItem(
-            JastUsaAccountClient jastAccountClient,
             DownloadData downloadData,
             DownloadsManager downloadsManagerViewModel)
         {
-            _jastAccountClient = jastAccountClient;
-            _downloadsManagerViewModel = downloadsManagerViewModel;
-            DownloadData = downloadData;
+            _downloadsManagerViewModel = Guard.Against.Null(downloadsManagerViewModel);
+            DownloadData = Guard.Against.Null(downloadData);
         }
 
         public async Task StartDownloadAsync()

@@ -14,6 +14,7 @@
     <ProjectGuid>{DB33EC10-055B-4644-97CE-B2D983A9B1DD}</ProjectGuid>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -106,12 +107,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Common\EventsCommon\EventAggregator.cs">
-      <Link>Shared\EventsCommon\EventAggregator.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\EventsCommon\IEventAggregator.cs">
-      <Link>Shared\EventsCommon\IEventAggregator.cs</Link>
-    </Compile>
     <Compile Include="..\..\Common\FlowHttp\Constants\HttpContentTypeConstants.cs">
       <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
     </Compile>
@@ -229,6 +224,15 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
+    <Compile Include="..\..\GenericEntityJsonRepository\EntityJsonRepository.cs">
+      <Link>Shared\GenericEntityJsonRepository\EntityJsonRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\GenericEntityJsonRepository\IEntity.cs">
+      <Link>Shared\GenericEntityJsonRepository\IEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\..\GenericEntityJsonRepository\IEntityRepository.cs">
+      <Link>Shared\GenericEntityJsonRepository\IEntityRepository.cs</Link>
+    </Compile>
     <Compile Include="Features\DownloadManager\Application\IDownloadDataPersistence.cs" />
     <Compile Include="Features\DownloadManager\Domain\Events\DownloadItemStatusChangedEventArgs.cs" />
     <Compile Include="Features\DownloadManager\Infrastructure\DownloadDataPersistenceJson.cs" />
@@ -256,11 +260,15 @@
     <Compile Include="Features\DownloadManager\Domain\Entities\JastGameWrapper.cs" />
     <Compile Include="Features\MetadataProvider\JastUsaWebUrls.cs" />
     <Compile Include="Common\GameNameSanitizer.cs" />
+    <Compile Include="Services\GameInstallationManager\Application\IGameInstallationManagerPersistence.cs" />
+    <Compile Include="Services\GameInstallationManager\Application\GameInstallationManagerService.cs" />
+    <Compile Include="Services\GameInstallationManager\Application\IGameInstallationManagerService.cs" />
+    <Compile Include="Services\GameInstallationManager\Infrastructure\GameInstallationManagerPersistenceJson.cs" />
     <Compile Include="Services\JastLibraryCacheService\Application\LibraryCacheService.cs" />
     <Compile Include="Services\JastLibraryCacheService\Entities\GameCache.cs" />
-    <Compile Include="Services\JastLibraryCacheService\Interfaces\ILibraryCachePersistence.cs" />
-    <Compile Include="Services\JastLibraryCacheService\Interfaces\ILibraryCacheService.cs" />
-    <Compile Include="Services\JastLibraryCacheService\Persistence\LibraryCachePersistencePluginSettings.cs" />
+    <Compile Include="Services\JastLibraryCacheService\Application\ILibraryCachePersistence.cs" />
+    <Compile Include="Services\JastLibraryCacheService\Application\ILibraryCacheService.cs" />
+    <Compile Include="Services\JastLibraryCacheService\Infrastructure\LibraryCachePersistenceJson.cs" />
     <Compile Include="Services\JastUsaIntegration\Domain\Enums\JastDownloadType.cs" />
     <Compile Include="Services\JastUsaIntegration\Domain\ValueObjects\AuthenticationToken.cs" />
     <Compile Include="Services\JastUsaIntegration\Domain\ValueObjects\AuthenticationCredentials.cs" />
@@ -283,7 +291,7 @@
     <Compile Include="Services\JastUsaIntegration\Domain\Exceptions\InvalidLoginCredentialsException.cs" />
     <Compile Include="Services\JastUsaIntegration\Infrastructure\External\JastUsaApiClient.cs" />
     <Compile Include="Services\JastUsaIntegration\Infrastructure\Persistence\AuthenticationPersistence.cs" />
-    <Compile Include="Services\JastLibraryCacheService\Entities\GameInstallCache.cs" />
+    <Compile Include="Services\GameInstallationManager\Entities\GameInstallCache.cs" />
     <Compile Include="Services\ProgramsService\Program.cs" />
     <Compile Include="Services\ProgramsService\ProgramsService.cs" />
     <Compile Include="Features\GameController\GameController.cs" />
@@ -360,7 +368,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\DownloadManager\Domain\Interfaces\" />
-    <Folder Include="Services\JastUsaIntegration\Infrastructure\Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

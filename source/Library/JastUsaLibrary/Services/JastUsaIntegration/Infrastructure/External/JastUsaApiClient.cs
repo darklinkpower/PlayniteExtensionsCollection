@@ -138,19 +138,13 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 .WithHeaders(headers);
 
             var result = await request.DownloadStringAsync(cancellationToken);
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                return Serialization.FromJson<GenerateLinkResponse>(result.Content).Url;
+                _logger.Error(result.Error, "Failed to generate download link");
+                return null;
             }
 
-            _logger.Error(result.Error, "Failed to generate download link");
-            //if (!result.IsCancelled)
-            //{
-            //    _playniteApi.Dialogs.ShowErrorMessage(string.Format(ResourceProvider.GetString("LOC_JUL_DialogMessageGenerateLinkError"), downloadStringResult.Error?.Message), "JAST USA Library");
-            //    _logger.Warn(downloadStringResult.Error, $"Error while obtaining download link with params gameId {gameLink.GameId} and gameLinkId {gameLink.GameLinkId}");
-            //}
-
-            return null;
+            return Serialization.FromJson<GenerateLinkResponse>(result.Content).Url;
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs;
-using JastUsaLibrary.JastLibraryCacheService.Interfaces;
+using JastUsaLibrary.JastLibraryCacheService.Application;
 
 namespace JastUsaLibrary.Features.MetadataProvider
 {
@@ -24,13 +24,13 @@ namespace JastUsaLibrary.Features.MetadataProvider
 
         public override GameMetadata GetMetadata(Playnite.SDK.Models.Game game)
         {
-            var apiUrl = _libraryCacheService.GetCacheById(game.GameId)?.JastGameData?.ApiRoute;
-            if (apiUrl.IsNullOrEmpty())
+            var productCode = _libraryCacheService.GetCacheById(Convert.ToInt32(game.GameId))?.JastGameData?.ProductCode;
+            if (productCode.IsNullOrEmpty())
             {
                 return new GameMetadata();
             }
 
-            var url = JastUsaWebUrls.JastBaseAppUrl + apiUrl;
+            var url = string.Format(@"https://app.jastusa.com/api/v2/shop/products/{0}?localeCode=en_US", productCode);
             var downloadedString = HttpRequestFactory.GetHttpRequest().WithUrl(url).DownloadString();
             if (!downloadedString.IsSuccess)
             {

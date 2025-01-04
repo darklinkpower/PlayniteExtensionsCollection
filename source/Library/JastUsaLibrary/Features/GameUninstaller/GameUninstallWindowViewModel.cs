@@ -17,7 +17,12 @@ namespace JastUsaLibrary.ViewModels
     public class GameUninstallWindowViewModel : ObservableObject
     {
         private readonly Window _window;
+        private readonly IPlayniteAPI _playniteApi;
 
+        public RelayCommand CancelCommand { get; }
+        public RelayCommand SelectAllItemsCommand { get; }
+        public RelayCommand UnselectAllItemsCommand { get; }
+        public RelayCommand DeleteItemsAndCloseCommand { get; }
         public Game Game { get; }
         public string InstallDirectory { get; }
 
@@ -37,13 +42,18 @@ namespace JastUsaLibrary.ViewModels
 
         public ObservableCollection<FileSystemItem> FileSystemItems { get; } = new ObservableCollection<FileSystemItem>();
 
-        public GameUninstallWindowViewModel(Game game, Window window)
+        public GameUninstallWindowViewModel(Game game, Window window, IPlayniteAPI playniteApi)
         {
-            Game = game;
-            InstallDirectory = game.InstallDirectory;
+            Game = Guard.Against.Null(game);
+            InstallDirectory = Guard.Against.NullOrEmpty(game.InstallDirectory);
+            _window = Guard.Against.Null(window);
+            _playniteApi = Guard.Against.Null(playniteApi);
             nonSavesExtensions = new HashSet<string>() { ".bat", ".exe", ".url" };
             LoadItems();
-            _window = window;
+            CancelCommand = new RelayCommand(() => _window?.Close());
+            SelectAllItemsCommand = new RelayCommand(() => SelectAllItems(), () => FileSystemItems.Any(x => !x.IsChecked));
+            UnselectAllItemsCommand = new RelayCommand(() => UnselectAllItems(), () => FileSystemItems.Any(x => x.IsChecked));
+            DeleteItemsAndCloseCommand = new RelayCommand(() => DeleteItemsAndClose());
         }
 
         private void LoadItems()
@@ -131,24 +141,21 @@ namespace JastUsaLibrary.ViewModels
             return finishedDeleting;
         }
 
-        public RelayCommand DeleteItemsAndCloseCommand
+        private void DeleteItemsAndClose()
         {
-            get => new RelayCommand(() =>
+            var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("Deleting game files..."), true)
             {
-                var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("Deleting game files..."), true)
-                {
-                    IsIndeterminate = false,
-                };
+                IsIndeterminate = false,
+            };
 
-                API.Instance.Dialogs.ActivateGlobalProgress((a) =>
-                {
-                    a.ProgressMaxValue = FileSystemItems.Count;
-                    var finishedDeleting = DeleteItems(a, a.CancelToken);
-                    FilesDeleted = finishedDeleting;
-                }, progressOptions);
+            _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                a.ProgressMaxValue = FileSystemItems.Count;
+                var finishedDeleting = DeleteItems(a, a.CancelToken);
+                FilesDeleted = finishedDeleting;
+            }, progressOptions);
 
-                _window?.Close();
-            });
+            _window?.Close();
         }
 
         private void SelectAllItems()
@@ -181,30 +188,6 @@ namespace JastUsaLibrary.ViewModels
         {
             OnPropertyChanged(nameof(SelectAllItemsCommand));
             OnPropertyChanged(nameof(UnselectAllItemsCommand));
-        }
-
-        public RelayCommand CancelCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                _window?.Close();
-            });
-        }
-
-        public RelayCommand SelectAllItemsCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                SelectAllItems();
-            }, () => FileSystemItems.Any(x => !x.IsChecked));
-        }
-
-        public RelayCommand UnselectAllItemsCommand
-        {
-            get => new RelayCommand(() =>
-            {
-                UnselectAllItems();
-            }, () => FileSystemItems.Any(x => x.IsChecked));
         }
     }
 }

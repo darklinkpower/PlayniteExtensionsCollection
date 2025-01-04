@@ -1,14 +1,13 @@
-﻿using EventsCommon;
-using FlowHttp.Events;
-using JastUsaLibrary.DownloadManager.Domain.Entities;
+﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
 using JastUsaLibrary.DownloadManager.Domain.Enums;
 using JastUsaLibrary.DownloadManager.Domain.Events;
 using JastUsaLibrary.DownloadManager.Domain.Exceptions;
 using JastUsaLibrary.Features.DownloadManager.Domain.Events;
-using JastUsaLibrary.JastLibraryCacheService.Interfaces;
+using JastUsaLibrary.JastLibraryCacheService.Application;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
 using JastUsaLibrary.ProgramsHelper;
 using JastUsaLibrary.ProgramsHelper.Models;
+using JastUsaLibrary.Services.GameInstallationManager.Application;
 using JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities;
 using JastUsaLibrary.Services.JastUsaIntegration.Domain.Enums;
 using Playnite.SDK;
@@ -18,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -46,6 +44,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
         private static readonly ILogger _logger = LogManager.GetLogger();
         private readonly IPlayniteAPI _playniteApi;
         private readonly ILibraryCacheService _libraryCacheService;
+        private readonly IGameInstallationManagerService _gameInstallationManagerService;
         private readonly JastUsaLibrary _plugin;
         private readonly JastUsaAccountClient _jastAccountClient;
         private readonly JastUsaLibrarySettingsViewModel _settingsViewModel;
@@ -68,14 +67,16 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             JastUsaLibrarySettingsViewModel settingsViewModel,
             IPlayniteAPI playniteApi,
             IDownloadDataPersistence downloadsPersistence,
-            ILibraryCacheService libraryCacheService)
+            ILibraryCacheService libraryCacheService,
+            IGameInstallationManagerService gameInstallationManagerService)
         {
-            _playniteApi = playniteApi;
-            _libraryCacheService = libraryCacheService;
-            _plugin = plugin;
-            _downloadsPersistence = downloadsPersistence;
-            _jastAccountClient = jastAccountClient;
-            _settingsViewModel = settingsViewModel;
+            _playniteApi = Guard.Against.Null(playniteApi);
+            _libraryCacheService = Guard.Against.Null(libraryCacheService);
+            _gameInstallationManagerService = Guard.Against.Null(gameInstallationManagerService);
+            _plugin = Guard.Against.Null(plugin);
+            _downloadsPersistence = Guard.Against.Null(downloadsPersistence);
+            _jastAccountClient = Guard.Against.Null(jastAccountClient);
+            _settingsViewModel = Guard.Against.Null(settingsViewModel);
             _downloadsList = new ObservableCollection<DownloadItem>();           
             Task.Run(async () => await RestorePersistingDownloads()).Wait();
             _persistOnListChanges = true;
@@ -120,7 +121,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 if (isExecutable && databaseGame != null && !databaseGame.IsInstalled)
                 {
                     var program = ProgramsService.GetProgramData(downloadItem.DownloadData.DownloadPath);
-                    _libraryCacheService.ApplyProgramToGameCache(databaseGame, program);
+                    _gameInstallationManagerService.ApplyProgramToGameCache(databaseGame, program);
                 }
                 else if (downloadSettings.ExtractOnDownload)
                 {
@@ -232,7 +233,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                     downloadData.Status = DownloadItemStatus.Idle;
                 }
 
-                var downloadItem = new DownloadItem(_jastAccountClient, downloadData, this);
+                var downloadItem = new DownloadItem(downloadData, this);
                 await AddDownloadAsync(downloadItem);
             }
         }
@@ -241,7 +242,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
         {
             try
             {
-                var assetParentGameWrapper = _libraryCacheService.LibraryGames
+                var assetParentGameWrapper = _libraryCacheService.GetLibraryGames()
                     .FirstOrDefault(x => x.Assets?.Any(
                         y => y.GameId == assetWrapper.GameId && y.GameLinkId == assetWrapper.GameLinkId) == true);
                 if (assetParentGameWrapper is null)
@@ -393,7 +394,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
                 throw new AssetAlreadyDownloadedException(downloadAsset, downloadData.DownloadPath);
             }
 
-            return new DownloadItem(_jastAccountClient, downloadData, this);
+            return new DownloadItem(downloadData, this);
         }
 
         public bool RefreshDownloadItemUri(DownloadItem downloadItem, CancellationToken cancellationToken = default)
@@ -655,9 +656,9 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
 
                 downloadItem.DownloadData.Status = extractSuccess ? DownloadItemStatus.ExtractionCompleted : DownloadItemStatus.ExtractionFailed;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.Error(ex, $"Error while extracting compressed file: {ex.Message}");
+                _logger.Error(e, $"Error while extracting compressed file: {filePath}");
                 downloadItem.DownloadData.Status = DownloadItemStatus.ExtractionFailed;
                 return;
             }
@@ -686,20 +687,27 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
 
         private void ApplyGameInstalation(DownloadItem downloadItem, string extractDirectory)
         {
-            var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
-            if (databaseGame is null || databaseGame.IsInstalled)
+            try
             {
-                return;
-            }
+                var databaseGame = _playniteApi.Database.Games[downloadItem.DownloadData.GameId];
+                if (databaseGame is null || databaseGame.IsInstalled)
+                {
+                    return;
+                }
 
-            if (!TryFindExecutable(extractDirectory, out var gameExecutablePath))
+                if (!TryFindExecutable(extractDirectory, out var gameExecutablePath))
+                {
+                    return;
+                }
+
+                var program = ProgramsService.GetProgramData(gameExecutablePath);
+                _gameInstallationManagerService.ApplyProgramToGameCache(databaseGame, program);
+                OnGameInstallationApplied(databaseGame, program);
+            }
+            catch (Exception e)
             {
-                return;
+                _logger.Error(e, $"Error while applying game installation");
             }
-
-            var program = ProgramsService.GetProgramData(gameExecutablePath);
-            _libraryCacheService.ApplyProgramToGameCache(databaseGame, program);
-            OnGameInstallationApplied(databaseGame, program);
         }
 
         private static bool TryFindExecutable(string extractDirectory, out string executableFullPath)

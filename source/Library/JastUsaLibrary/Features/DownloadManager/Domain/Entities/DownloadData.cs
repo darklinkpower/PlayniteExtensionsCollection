@@ -43,7 +43,6 @@ namespace JastUsaLibrary.DownloadManager.Domain.Entities
 
         public long UrlExpiresTimeStamp { get; set; }
 
-
         #endregion
 
         #region Download Data

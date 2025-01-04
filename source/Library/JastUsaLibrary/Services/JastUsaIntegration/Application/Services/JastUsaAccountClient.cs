@@ -92,6 +92,10 @@ namespace JastUsaLibrary.JastUsaIntegration.Application.Services
         {
             var token = GetAuthenticationToken(cancellationToken);
             var response = await _apiClient.GetGameTranslationsAsync(token, id, cancellationToken);
+            if (response is null)
+            {
+                return null;
+            }
 
             // We remove all the assets that are not for Windows because Playnite only supports windows after all
             List<JastGameDownloadData> GetDownloads(List<GameLink> links, JastDownloadType jastDownloadType)

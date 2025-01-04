@@ -1,5 +1,4 @@
 ﻿using JastUsaLibrary.DownloadManager.Domain.Entities;
-using JastUsaLibrary.JastLibraryCacheService.Entities;
 using JastUsaLibrary.JastUsaIntegration.Application.Services;
 using JastUsaLibrary.Services.JastLibraryCacheService.Entities;
 using Playnite.SDK;
@@ -18,6 +17,12 @@ using System.Windows.Media;
 
 namespace JastUsaLibrary
 {
+    public class OldGameCache
+    {
+        public ProgramsHelper.Models.Program Program = null;
+        public string GameId;
+    }
+
     public class DownloadSettings : ObservableObject
     {
         private bool _extractOnDownload = true;
@@ -43,9 +48,6 @@ namespace JastUsaLibrary
 
         private bool _startDownloadsOnStartup = true;
         public bool StartDownloadsOnStartup { get => _startDownloadsOnStartup; set => SetValue(ref _startDownloadsOnStartup, value); }
-
-        private Dictionary<string, GameCache> _libraryCache = new Dictionary<string, GameCache>();
-        public Dictionary<string, GameCache> LibraryCache { get => _libraryCache; set => SetValue(ref _libraryCache, value); }
         public List<DownloadData> DownloadsData { get; set; } = new List<DownloadData>();
 
         private DownloadSettings _gamesDownloadSettings;
@@ -56,6 +58,10 @@ namespace JastUsaLibrary
 
         private DownloadSettings _extrasDownloadSettings;
         public DownloadSettings ExtrasDownloadSettings { get => _extrasDownloadSettings; set => SetValue(ref _extrasDownloadSettings, value); }
+
+        private Dictionary<string, OldGameCache> _libraryCache = new Dictionary<string, OldGameCache>();
+        [Obsolete("The _libraryCache field is deprecated. Cache is now handled by the GameInstallationManager and JastLibraryCacheService")]
+        public Dictionary<string, OldGameCache> LibraryCache { get => _libraryCache; set => SetValue(ref _libraryCache, value); }
     }
 
     public class JastUsaLibrarySettingsViewModel : ObservableObject, ISettings

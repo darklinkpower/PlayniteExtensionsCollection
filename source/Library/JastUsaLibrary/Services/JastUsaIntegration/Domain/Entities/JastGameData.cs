@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities
 {
-    public class JastGameData
+    public class JastGameData : IEquatable<JastGameData>
     {
         public string ProductName { get; set; }
         public string ProductCode { get; set; }
@@ -36,6 +36,71 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Domain.Entities
             JaId = jaId;
             ZhHansId = zhHansId;
             ZhHantId = zhHantId;
+        }
+
+        public bool Equals(JastGameData other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return string.Equals(ProductName, other.ProductName) &&
+                   string.Equals(ProductCode, other.ProductCode) &&
+                   GameId == other.GameId &&
+                   string.Equals(ApiRoute, other.ApiRoute) &&
+                   EnUsId == other.EnUsId &&
+                   JaId == other.JaId &&
+                   ZhHansId == other.ZhHansId &&
+                   ZhHantId == other.ZhHantId;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+                
+
+            if (obj is JastGameData other)
+            {
+                return Equals(other);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (ProductName?.GetHashCode() ?? 0) ^
+                   (ProductCode?.GetHashCode() ?? 0) ^
+                   GameId.GetHashCode() ^
+                   (ApiRoute?.GetHashCode() ?? 0) ^
+                   (EnUsId?.GetHashCode() ?? 0) ^
+                   (JaId?.GetHashCode() ?? 0) ^
+                   (ZhHansId?.GetHashCode() ?? 0) ^
+                   (ZhHantId?.GetHashCode() ?? 0);
+        }
+
+        public static bool operator ==(JastGameData left, JastGameData right)
+        {
+            if (ReferenceEquals(left, right))
+            {
+                return true;
+            }
+
+            if (left is null || right is null)
+            {
+                return false;
+            }
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(JastGameData left, JastGameData right)
+        {
+            return !(left == right);
         }
     }
 }
