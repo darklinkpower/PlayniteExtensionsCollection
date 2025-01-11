@@ -152,3 +152,12 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.09.13_60b1b221/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_22.pext
     Changelog:
     - 'Changed: Additional variants of pre-order games suffixes will be removed from game names'
+  - Version: 1.23
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-01-11
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.01.11_67f255e3/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_23.pext
+    Changelog:
+    - 'Fixed: Error during metadata download for games with user ratings that prevented obtaining metadata.'
+    - 'Fixed: Game assets downloading no longer being able to be downloaded due to recent changes on the JAST USA site.'
+    - 'Improved: The extension has been rewritten almost entirely to make it work better, and improve future maintenance and development.'
+    - 'Note: After updating and due to code changes, a single library update will need to be performed for the extension to be able to obtain and download game assets and metadata.'
