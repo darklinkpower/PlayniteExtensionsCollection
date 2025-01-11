@@ -107,11 +107,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebViewCore", "Common\WebVi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamShortcuts", "Generic\SteamViewer\SteamShortcuts.csproj", "{B362182C-0D36-4E85-94D6-2504CA50ED5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtobufUtilities", "ProtobufUtilities\ProtobufUtilities.csproj", "{55A0B98C-0D34-4F53-A11A-AF75A44C4349}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtobufUtilities", "Common\ProtobufUtilities\ProtobufUtilities.csproj", "{55A0B98C-0D34-4F53-A11A-AF75A44C4349}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOGSecondClassGameWatcher", "Generic\GOGSecondClassGameWatcher\GOGSecondClassGameWatcher.csproj", "{577FD1B8-3225-430A-8A32-7FC9709A98B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericEntityJsonRepository", "GenericEntityJsonRepository\GenericEntityJsonRepository.csproj", "{A50B3291-225D-4928-8E33-DC7D410A6A0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericEntityJsonRepository", "Common\GenericEntityJsonRepository\GenericEntityJsonRepository.csproj", "{A50B3291-225D-4928-8E33-DC7D410A6A0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -224,13 +224,13 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\..\GenericEntityJsonRepository\EntityJsonRepository.cs">
+    <Compile Include="..\..\common\GenericEntityJsonRepository\EntityJsonRepository.cs">
       <Link>Shared\GenericEntityJsonRepository\EntityJsonRepository.cs</Link>
     </Compile>
-    <Compile Include="..\..\GenericEntityJsonRepository\IEntity.cs">
+    <Compile Include="..\..\common\GenericEntityJsonRepository\IEntity.cs">
       <Link>Shared\GenericEntityJsonRepository\IEntity.cs</Link>
     </Compile>
-    <Compile Include="..\..\GenericEntityJsonRepository\IEntityRepository.cs">
+    <Compile Include="..\..\common\GenericEntityJsonRepository\IEntityRepository.cs">
       <Link>Shared\GenericEntityJsonRepository\IEntityRepository.cs</Link>
     </Compile>
     <Compile Include="Features\DownloadManager\Application\IDownloadDataPersistence.cs" />

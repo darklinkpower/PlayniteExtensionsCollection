@@ -224,7 +224,7 @@
     <Compile Include="..\..\Common\SteamCommon\Common.cs">
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
-    <Compile Include="..\..\ProtobufUtilities\ProtobufSerialization.cs">
+    <Compile Include="..\..\common\ProtobufUtilities\ProtobufSerialization.cs">
       <Link>Shared\ProtobufUtilities\ProtobufSerialization.cs</Link>
     </Compile>
     <Compile Include="Application\Steam\Tags\GetTagListResponseDto.cs" />

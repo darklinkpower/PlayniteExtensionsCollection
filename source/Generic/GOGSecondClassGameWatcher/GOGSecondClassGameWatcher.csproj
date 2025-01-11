@@ -221,7 +221,7 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="..\..\protobufutilities\ProtobufSerialization.cs">
+    <Compile Include="..\..\common\protobufutilities\ProtobufSerialization.cs">
       <Link>Shared\ProtobufUtilities\ProtobufSerialization.cs</Link>
     </Compile>
     <Compile Include="Application\GogLibraryUtilities.cs" />
