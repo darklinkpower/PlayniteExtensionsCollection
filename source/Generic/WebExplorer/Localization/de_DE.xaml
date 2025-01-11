@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCWebExplorer_WebLabel">Web</sys:String>
-    <sys:String x:Key="LOCWebExplorer_SettingShowLinksInContextMenu">Zeige Game-Links im Spiele-Menü um sie im Playnite-Web-Browser zu öffnen</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegration">Integration der Themes-Webansicht</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegrationDesc" xml:space="preserve">Legt fest, ob die Web-Ansicht in unterstützten benutzerdefinierten Themes angezeigt werden soll.
-Änderungen erfordern einen Neustart.</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Desktop-Modus (Detailansicht)</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Desktop-Modus (Rasteransicht)</sys:String>
-    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Vollbildmodus</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SettingShowLinksInContextMenu">Zeige Spiel Links im Rechtsklick Spiel Menü, um sie im Web Browser von Playnite zu öffnen</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegration">Themen Web Ansicht Integration</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegrationDesc" xml:space="preserve">Legt fest, ob die Web Ansicht in unterstützten benutzerdefinierten Themen angezeigt werden soll. Änderungen erfordern einen Neustart.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Desktop Modus (Detailansicht)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Desktop Modus (Raster Ansicht)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Vollbild Modus</sys:String>
     <sys:String x:Key="LOCWebExplorer_GeneralSettings">Allgemeine Einstellungen</sys:String>
-    <sys:String x:Key="LOCWebExplorer_SidebarWebView">Seitenleisten-Web-Ansicht</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemesWebView">Theme-Integration Web-Ansicht</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SidebarWebView">Seitenleisten Web Ansicht</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebView">Themen Integration Web Ansicht</sys:String>
     <sys:String x:Key="LOCWebExplorer_Bookmarks">Lesezeichen</sys:String>
     <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Standardeinstellungen wiederherstellen</sys:String>
     <sys:String x:Key="LOCWebExplorer_AddBookmark">Hinzufügen</sys:String>
     <sys:String x:Key="LOCWebExplorer_RemoveSelected">Ausgewählte entfernen</sys:String>
-    <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Hier hinzugefügte Lesezeichen werden neben den Spiel-Links im Webbrowser zur Verfügung gestellt.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Hier hinzugefügte Lesezeichen werden neben den Spiel Links im Webbrowser zur Verfügung gestellt.</sys:String>
     <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">Name:</sys:String>
     <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">Adresse:</sys:String>
-    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Symbol:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Icon:</sys:String>
 </ResourceDictionary>
