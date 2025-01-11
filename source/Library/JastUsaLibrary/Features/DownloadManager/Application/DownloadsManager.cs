@@ -41,7 +41,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             GameInstallationApplied?.Invoke(this, new GameInstallationAppliedEventArgs(game, program));
         }
 
-        private static readonly ILogger _logger = LogManager.GetLogger();
+        private readonly ILogger _logger;
         private readonly IPlayniteAPI _playniteApi;
         private readonly ILibraryCacheService _libraryCacheService;
         private readonly IGameInstallationManagerService _gameInstallationManagerService;
@@ -65,11 +65,13 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             JastUsaLibrary plugin,
             JastUsaAccountClient jastAccountClient,
             JastUsaLibrarySettingsViewModel settingsViewModel,
+            ILogger logger,
             IPlayniteAPI playniteApi,
             IDownloadDataPersistence downloadsPersistence,
             ILibraryCacheService libraryCacheService,
             IGameInstallationManagerService gameInstallationManagerService)
         {
+            _logger = Guard.Against.Null(logger);
             _playniteApi = Guard.Against.Null(playniteApi);
             _libraryCacheService = Guard.Against.Null(libraryCacheService);
             _gameInstallationManagerService = Guard.Against.Null(gameInstallationManagerService);
@@ -77,7 +79,7 @@ namespace JastUsaLibrary.Features.DownloadManager.Application
             _downloadsPersistence = Guard.Against.Null(downloadsPersistence);
             _jastAccountClient = Guard.Against.Null(jastAccountClient);
             _settingsViewModel = Guard.Against.Null(settingsViewModel);
-            _downloadsList = new ObservableCollection<DownloadItem>();           
+            _downloadsList = new ObservableCollection<DownloadItem>();
             Task.Run(async () => await RestorePersistingDownloads()).Wait();
             _persistOnListChanges = true;
             _enableDownloadsOnAdd = true;

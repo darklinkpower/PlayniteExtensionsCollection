@@ -60,7 +60,7 @@ namespace JastUsaLibrary
             settings = new JastUsaLibrarySettingsViewModel(this, PlayniteApi, _jastUsaAccountClient);
             _gameInstallationManagerService = new GameInstallationManagerService(PlayniteApi, new GameInstallationManagerPersistenceJson(GetPluginUserDataPath(), _logger));
             _jastUsaCacheService = new LibraryCacheService(PlayniteApi, new LibraryCachePersistenceJson(GetPluginUserDataPath(), _logger), Id);
-            _downloadsManager = new DownloadsManager(this, _jastUsaAccountClient, settings, PlayniteApi, new DownloadDataPersistenceJson(_logger, GetPluginUserDataPath()), _jastUsaCacheService, _gameInstallationManagerService);
+            _downloadsManager = new DownloadsManager(this, _jastUsaAccountClient, settings, _logger, PlayniteApi, new DownloadDataPersistenceJson(_logger, GetPluginUserDataPath()), _jastUsaCacheService, _gameInstallationManagerService);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = true
