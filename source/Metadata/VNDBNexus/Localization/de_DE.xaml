@@ -80,7 +80,7 @@
     <sys:String x:Key="LOC_VndbNexus_SettingsAllowPartialDatesTooltip">Wenn diese Option aktiviert ist, werden Daten, bei denen der Monat oder der Tag fehlt, beim Herunterladen der Metadaten importiert.</sys:String>
     <sys:String x:Key="LOC_VndbNexus_EnableVndbControl">VNDB Informationsfeld in unterstützten Themen anzeigen</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LoadingVndbDataProgressFormat">Laden der Daten für {0}…</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_SearchingVnsProgress">Suche Visual Novels…</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchingVnsProgress">Suche nach Visual Novels…</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthVeryShort">Sehr kurz</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthShort">Kurz</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LengthMedium">Mittel</sys:String>
@@ -116,7 +116,7 @@
     <sys:String x:Key="LOC_VndbNexus_CharacterHeightFormat">Größe: {0} cm</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterWeightFormat">Gewicht: {0} kg</sys:String>
     <sys:String x:Key="LOC_VndbNexus_CharacterBustWaistHipsFormat">Brust-Taile-Hüfte: {0}-{1}-{2} cm</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_SearchOnVndbLabel">Auf VNDB suchen</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SearchOnVndbLabel">Suche auf VNDB</sys:String>
     <sys:String x:Key="LOC_VndbNexus_EnterSearchTermLabel">Suchbegriff oder VNDB ID eingeben</sys:String>
     <sys:String x:Key="LOC_VndbNexus_EnterSearchHint">Suche nach Visual Novels auf VNDB</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ViewVnInPlayniteLabel">In Playnite anzeigen</sys:String>
@@ -128,7 +128,7 @@
     <sys:String x:Key="LOC_VndbNexus_MinutesFormat">{0}Min.</sys:String>
     <sys:String x:Key="LOC_VndbNexus_FromNumberVotesFormatLowerCase">von {0} Bewertungen</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VotesAverageFormat">Durchschnittlich {0}</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_VotesWeightedFormat">Gewichtet {0}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VotesWeightedFormat">{0} gewogen</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">Unbekannt</sys:String>
     <sys:String x:Key="LOC_VndbNexus_LanguageArabic">Arabisch</sys:String>
