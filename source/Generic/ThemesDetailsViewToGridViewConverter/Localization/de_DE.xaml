@@ -8,5 +8,5 @@ Bitte neu starten, um die Änderungen zu übernehmen.</sys:String>
 
 Bitte neu starten, um die Änderungen zu übernehmen.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Version {0} des Themes &quot;{1}&quot; wird nicht unterstützt.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">Falls noch nicht erfolgt: Die Breite der Rasteransicht in den Playnite-Einstellungen vergrößern, um sicherzustellen, dass das Layout korrekt angezeigt wird!</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">Falls du es noch nicht getan hast, vergiss nicht, die Details der Rasteransicht Panel Breite in den Playnite Einstellungen zu erhöhen, damit das Layout richtig angezeigt wird!</sys:String>
 </ResourceDictionary>
