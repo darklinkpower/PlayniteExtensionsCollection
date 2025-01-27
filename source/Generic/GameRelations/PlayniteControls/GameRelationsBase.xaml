@@ -37,16 +37,11 @@
                             Margin="0" Background="Transparent" BorderThickness="0" Padding="0"
                             Height="{Binding ElementName=CoverImage, Path=Height}" Width="{Binding ElementName=CoverImage, Path=Width}">
                         <Grid>
-                            <Grid.OpacityMask>
-                                <VisualBrush Visual="{Binding ElementName=Mask}"/>
-                            </Grid.OpacityMask>
-                            <Border x:Name="Mask" Background="Black" CornerRadius="5" />
+
                             <Image x:Name="CoverImage" Source="{Binding CoverImage}"
                                    VerticalAlignment="Center"
                                    Height="{Binding ElementName=MainGrid, Path=DataContext.Settings.CoversHeight}"
                                    RenderOptions.BitmapScalingMode="HighQuality" />
-                            <Border Background="#BF000000"
-                                    Visibility="{Binding Game.IsInstalled, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
                         </Grid>
                     </Button>
                 </Grid>
