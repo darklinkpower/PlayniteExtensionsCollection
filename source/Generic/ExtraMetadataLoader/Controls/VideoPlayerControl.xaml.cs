@@ -283,6 +283,15 @@ namespace ExtraMetadataLoader
             }, () => SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
         }
 
+        public RelayCommand HideCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                MediaPause();
+                SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails = !SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails;
+            });
+        }
+
         public RelayCommand SwitchAutoPlayStatusCommand
         {
             get => new RelayCommand(() =>
