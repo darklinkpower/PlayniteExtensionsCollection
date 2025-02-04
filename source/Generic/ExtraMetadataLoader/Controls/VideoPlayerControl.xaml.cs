@@ -262,6 +262,7 @@ namespace ExtraMetadataLoader
             get => new RelayCommand<object>((a) =>
             {
                 MediaPlay();
+                SettingsModel.Settings.ShowVideoPreviewNotPlayingDetails = true;
             }, (a) => !SettingsModel.Settings.IsVideoPlaying && VideoSource != null);
         }
 
