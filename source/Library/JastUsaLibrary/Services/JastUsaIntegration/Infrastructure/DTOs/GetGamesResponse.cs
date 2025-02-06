@@ -20,20 +20,32 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         [JsonProperty("@type")]
         public string Type { get; set; }
 
-        [JsonProperty("hydra:member")]
-        public HydraMember[] HydraMember { get; set; }
+        [JsonProperty("products")]
+        public Product[] Products { get; set; }
 
-        [JsonProperty("hydra:totalItems")]
-        public int HydraTotalItems { get; set; }
+        [JsonProperty("total")]
+        public int Total { get; set; }
 
-        [JsonProperty("hydra:view")]
-        public HydraView HydraView { get; set; }
-
-        [JsonProperty("hydra:search")]
-        public HydraSearch HydraSearch { get; set; }
+        [JsonProperty("pages")]
+        public int Pages { get; set; }
     }
 
-    public class HydraMember
+    public class Product
+    {
+        [JsonProperty("@id")]
+        public string Id { get; set; }
+
+        [JsonProperty("@type")]
+        public ProductType Type { get; set; }
+
+        [JsonProperty("variants")]
+        public Variant[] Variants { get; set; }
+
+        [JsonProperty("variant")]
+        public Variant Variant { get; set; }
+    }
+
+    public class Variant
     {
         [JsonProperty("@id")]
         public string Id { get; set; }
@@ -66,7 +78,7 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         public int GameId { get; set; }
 
         [JsonProperty("userGameTags")]
-        public UserGameTags UserGameTags { get; set; }
+        public List<UserGameTag> UserGameTags { get; set; }
 
         [JsonProperty("hasPatches_en_US")]
         public bool HasPatchesEnUs { get; set; }
@@ -132,47 +144,22 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
         public JastPlatforms ZhHant { get; set; }
     }
 
-    public class UserGameTags
-    {
-    }
-
-    public class HydraSearch
-    {
-        [JsonProperty("@type")]
-        public string Type { get; set; }
-
-        [JsonProperty("hydra:template")]
-        public string HydraTemplate { get; set; }
-
-        [JsonProperty("hydra:variableRepresentation")]
-        public string HydraVariableRepresentation { get; set; }
-
-        [JsonProperty("hydra:mapping")]
-        public HydraMapping[] HydraMapping { get; set; }
-    }
-
-    public class HydraMapping
-    {
-        [JsonProperty("@type")]
-        public string Type { get; set; }
-
-        [JsonProperty("variable")]
-        public string Variable { get; set; }
-
-        [JsonProperty("property")]
-        public string Property { get; set; }
-
-        [JsonProperty("required")]
-        public bool HydraMappingRequired { get; set; }
-    }
-
-    public class HydraView
+    public class UserGameTag
     {
         [JsonProperty("@id")]
         public string Id { get; set; }
 
         [JsonProperty("@type")]
-        public string Type { get; set; }
+        public UserGameTagType Type { get; set; }
+
+        [JsonProperty("id")]
+        public long UserGameTagId { get; set; }
+
+        [JsonProperty("locale", NullValueHandling = NullValueHandling.Ignore)]
+        public Locale? Locale { get; set; }
+
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserGameTagType { get; set; }
     }
 
     public enum Locale
@@ -190,6 +177,10 @@ namespace JastUsaLibrary.Services.JastUsaIntegration.Infrastructure.DTOs
     public enum JastPlatforms { Linux, Mac, Windows };
 
     public enum HydraMemberType { ProductVariant };
+
+    public enum ProductType { Product };
+
+    public enum UserGameTagType { UserGameTag };
 
     internal static class Converter
     {

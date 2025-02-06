@@ -80,7 +80,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
             return result.IsSuccess ? Serialization.FromJson<GameTranslationsResponse>(result.Content) : null;
         }
 
-        public async Task<List<HydraMember>> GetProductsAsync(AuthenticationToken token, CancellationToken cancellationToken = default)
+        public async Task<List<Variant>> GetProductsAsync(AuthenticationToken token, CancellationToken cancellationToken = default)
         {
             var headers = new Dictionary<string, string>
             {
@@ -88,7 +88,7 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 ["Accept-Encoding"] = "utf-8"
             };
 
-            var products = new List<HydraMember>();
+            var products = new List<Variant>();
             var page = 1;
             while (true)
             {
@@ -105,13 +105,14 @@ namespace JastUsaLibrary.JastUsaIntegration.Infrastructure.External
                 }
 
                 var response = Serialization.FromJson<GetGamesResponse>(result.Content);
-                products.AddRange(response.HydraMember);
-                page++;
-
-                if (!response.HydraMember.Any())
+                var variants = response.Products?.Select(x => x.Variant).ToList();
+                products.AddRange(variants);
+                if (!variants.Any() || page == response.Pages)
                 {
                     break;
                 }
+
+                page++;
             }
 
             return products;

@@ -16,7 +16,7 @@ namespace JastUsaLibrary
             public static class Authentication
             {
                 private const string RouteBase = "shop/";
-                public static string AuthenticationToken => $"{BaseApiUrl}{RouteBase}authentication-token";
+                public static string AuthenticationToken => $"{BaseApiUrl}{RouteBase}customers/token";
                 public static string TokenRefresh(string refreshToken) => $"{BaseApiUrl}{RouteBase}authentication-refresh?refresh_token={refreshToken}";
             }
 
