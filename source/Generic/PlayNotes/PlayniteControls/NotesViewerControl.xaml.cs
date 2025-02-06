@@ -353,7 +353,7 @@ namespace PlayNotes.PlayniteControls
 
         private void ImportExistingNotes()
         {
-            var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("PlayNotes_SteamGuideImporterImportingMessage"), true)
+            var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("Importing Steam guide…"), true)
             {
                 IsIndeterminate = true
             };

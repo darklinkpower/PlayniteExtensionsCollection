@@ -22,7 +22,6 @@ namespace PlayNotes
         public bool IsControlVisible { get => _isControlVisible; set => SetValue(ref _isControlVisible, value); }
 
         private Style _markdownStyle;
-
         [JsonIgnore]
         public Style MarkdownStyle { get => _markdownStyle; set => SetValue(ref _markdownStyle, value); }
 
@@ -143,6 +142,7 @@ namespace PlayNotes
             errors = new List<string>();
             return true;
         }
+
         public RelayCommand BrowseFolder
         {
             get => new RelayCommand(() =>
