@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace PlayNotes
@@ -21,6 +22,9 @@ namespace PlayNotes
 
         private Style _markdownStyle;
         public Style MarkdownStyle { get => _markdownStyle; set => SetValue(ref _markdownStyle, value); }
+
+        private string _existingNotesFolderPath;
+        public string ExistingNotesFolderPath { get => _existingNotesFolderPath; set => SetValue(ref _existingNotesFolderPath, value); }
     }
 
     public class PlayNotesSettingsViewModel : ObservableObject, ISettings
@@ -75,7 +79,7 @@ namespace PlayNotes
                 imageStyle.Setters.Add(new Setter(Image.StretchProperty, Stretch.Uniform));
                 imageStyle.Setters.Add(new Setter(Image.StretchDirectionProperty, StretchDirection.DownOnly));
 
-                var maxWidthBinding = new Binding("ActualWidth");
+                var maxWidthBinding = new System.Windows.Data.Binding("ActualWidth");
                 var relativeSource = new RelativeSource(RelativeSourceMode.FindAncestor)
                 {
                     AncestorType = typeof(MarkdownScrollViewer)
@@ -135,6 +139,22 @@ namespace PlayNotes
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+        public RelayCommand BrowseFolder
+        {
+            get => new RelayCommand(() =>
+            {
+                using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+                {
+                    folderDialog.Description = "Select a folder";
+                    folderDialog.ShowNewFolderButton = true;
+
+                    if (folderDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        Settings.ExistingNotesFolderPath = folderDialog.SelectedPath; // Updates the bound property
+                    }
+                }
+            });
         }
     }
 }

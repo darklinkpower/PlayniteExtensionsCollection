@@ -6,9 +6,10 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Settings.Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Settings.Option2}"/>
+        <DockPanel Margin="0,10,0,0" LastChildFill="True">
+            <TextBlock Text="Notes folder path: " DockPanel.Dock="Left" VerticalAlignment="Center" />
+            <TextBox Width="330" Margin="10,0,0,0" DockPanel.Dock="Left" Text="{Binding Settings.ExistingNotesFolderPath}" />
+            <Button Content="Browse" Width="75" Command="{Binding BrowseFolder}" />
+        </DockPanel>
     </StackPanel>
 </UserControl>
