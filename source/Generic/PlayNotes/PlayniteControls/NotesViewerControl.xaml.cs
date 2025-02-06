@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using DatabaseCommon;
+using Microsoft.Win32;
 
 namespace PlayNotes.PlayniteControls
 {
@@ -44,6 +45,8 @@ namespace PlayNotes.PlayniteControls
         private Game currentGame = null;
 
         public SteamGuideImporter SteamGuideImporter { get; }
+
+        public ExistingNotesImporter ExistingNotesImporter { get; }
 
         private PlayNote _selectedNotes;
         public PlayNote SelectedNotes
@@ -156,6 +159,7 @@ namespace PlayNotes.PlayniteControls
             _updateControl.Tick += UpdateControl_Tick;
             SetControlTextBlockStyle();
             SteamGuideImporter = new SteamGuideImporter(playniteApi);
+            ExistingNotesImporter = new ExistingNotesImporter(playniteApi, Settings);
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -225,6 +229,7 @@ namespace PlayNotes.PlayniteControls
             Visibility = Visibility.Visible;
             Settings.IsControlVisible = true;
             SteamGuideImporter.ResetValues();
+            ExistingNotesImporter.ResetValues();
             await Task.Run(UpdateSectionsVisibilityAndCanExecute);
         }
 
@@ -255,6 +260,7 @@ namespace PlayNotes.PlayniteControls
             OnPropertyChanged(nameof(MoveNotePreviousCommand));
             OnPropertyChanged(nameof(RemoveCurrentItemCommand));
             OnPropertyChanged(nameof(ImportSteamGuideCommand));
+            OnPropertyChanged(nameof(ImportExistingNotesCommand));
         }
 
         private void AddItem()
@@ -345,6 +351,29 @@ namespace PlayNotes.PlayniteControls
             }
         }
 
+        private void ImportExistingNotes()
+        {
+            var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("PlayNotes_SteamGuideImporterImportingMessage"), true)
+            {
+                IsIndeterminate = true
+            };
+
+            var importSuccessful = false;
+            _playniteApi.Dialogs.ActivateGlobalProgress((a) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    importSuccessful = ExistingNotesImporter.ImportExistingNotes(CurrentGameNotes, a.CancelToken);
+                });
+            }, progressOptions);
+
+            if (importSuccessful)
+            {
+                SelectedNotes = CurrentGameNotes.Notes.FirstOrDefault();
+                UpdateSectionsVisibilityAndCanExecute();
+            }
+        }
+
         public RelayCommand SwitchMarkdownHeightCommand
         {
             get => new RelayCommand(() =>
@@ -414,6 +443,28 @@ namespace PlayNotes.PlayniteControls
             get => new RelayCommand(() =>
             {
                 ImportSteamGuide();
+            }, () => !(CurrentGameNotes is null));
+        }
+
+        public RelayCommand ImportExistingNotesCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                ImportExistingNotes();
+            }, () => !(CurrentGameNotes is null));
+        }
+
+        public RelayCommand BrowseFile
+        {
+            get => new RelayCommand(() =>
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "All Files|*.*"; // Change filter if needed
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ExistingNotesImporter.OverrideFilePath = openFileDialog.FileName;
+                }
+
             }, () => !(CurrentGameNotes is null));
         }
     }

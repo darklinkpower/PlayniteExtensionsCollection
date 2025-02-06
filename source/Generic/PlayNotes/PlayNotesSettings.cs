@@ -1,4 +1,5 @@
 ﻿using MdXaml;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
@@ -21,6 +22,8 @@ namespace PlayNotes
         public bool IsControlVisible { get => _isControlVisible; set => SetValue(ref _isControlVisible, value); }
 
         private Style _markdownStyle;
+
+        [JsonIgnore]
         public Style MarkdownStyle { get => _markdownStyle; set => SetValue(ref _markdownStyle, value); }
 
         private string _existingNotesFolderPath;

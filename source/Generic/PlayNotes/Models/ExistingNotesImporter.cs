@@ -16,32 +16,18 @@ namespace PlayNotes.Models
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlayniteAPI _playniteApi;
-        private readonly List<SteamHtmlTransformDefinition> _contentTransformElems;
-        private readonly Dictionary<string, string> _unsupportedElemsRegexFormatters;
         private bool clearBaseNotes = false;
         public bool ClearBaseNotes { get => clearBaseNotes; set => SetValue(ref clearBaseNotes, value); }
-
+        private bool useOverride = false;
+        public bool UseOverride { get => useOverride; set => SetValue(ref useOverride, value); }
+        private string overrideFilePath;
+        public string OverrideFilePath { get => overrideFilePath; set => SetValue(ref overrideFilePath, value); }
         private PlayNotesSettings _settings;
 
         public ExistingNotesImporter(IPlayniteAPI playniteApi, PlayNotesSettings settings)
         {
             _playniteApi = playniteApi;
             _settings = settings;
-            _contentTransformElems = new List<SteamHtmlTransformDefinition>()
-            {
-                new SteamHtmlTransformDefinition("span", "bb_strike", "strike"),
-                new SteamHtmlTransformDefinition("div", "bb_h1", "h1"),
-                new SteamHtmlTransformDefinition("div", "bb_h2", "h2"),
-                new SteamHtmlTransformDefinition("div", "bb_h3", "h3"),
-                new SteamHtmlTransformDefinition("div", "bb_h4", "h4"),
-                new SteamHtmlTransformDefinition("div", "bb_h5", "h5")
-            };
-
-            _unsupportedElemsRegexFormatters = new Dictionary<string, string>
-            {
-                {@"<strike class=""bb_strike"">((.|\n)*?)</strike>", "~~$1~~" },
-                {@"<u>((.|\n)*?)</u>", "*$1*" }
-            };
         }
 
         public void ResetValues()
@@ -56,8 +42,18 @@ namespace PlayNotes.Models
                 return false;
             }
 
-            string path = Path.Combine(_settings.ExistingNotesFolderPath, _playniteApi.MainView.SelectedGames.First().Name + ".md");
-            path = path.Trim();
+            string gameName = _playniteApi.MainView.SelectedGames.First().Name;
+            gameName = Regex.Replace(gameName, @"[^a-zA-Z0-9\s]", "").Trim();
+
+            string path;
+            if (!UseOverride)
+            {
+                path = Path.Combine(_settings.ExistingNotesFolderPath, gameName + ".md").Trim();
+            }
+            else
+            {
+                path = OverrideFilePath;
+            }
 
             if (string.IsNullOrEmpty(path) ||
                 !File.Exists(path))
@@ -79,7 +75,7 @@ namespace PlayNotes.Models
             try
             {
                 string markdownContent = File.ReadAllText(path);
-                Dictionary<string, string> sections = ExtractH2Sections(markdownContent);
+                Dictionary<string, string> sections = ExtractHeadingsAndSections(markdownContent, gameName);
 
                 var notes = new List<PlayNote>();
                 foreach (var section in sections)
@@ -115,20 +111,50 @@ namespace PlayNotes.Models
 
             return true;
         }
-
-        private static Dictionary<string, string> ExtractH2Sections(string markdown)
+        private static Dictionary<string, string> ExtractHeadingsAndSections(string markdown, string gameName)
         {
             Dictionary<string, string> sections = new Dictionary<string, string>();
 
-            // Regex to match H2 headings and their content
-            Regex regex = new Regex(@"##\s+(.*?)\n([\s\S]*?)(?=\n## |\z)", RegexOptions.Multiline);
+            // Regex to match H1 and H2 headings and their content
+            Regex regex = new Regex(@"^(#{1,2})\s+(.*?)\n([\s\S]*?)(?=\n#{1,2} |\z)", RegexOptions.Multiline);
 
-            // Extract and store sections
-            foreach (Match match in regex.Matches(markdown))
+            // Check for the first chunk of text before any headings
+            string firstChunk = null;
+            int firstHeadingIndex = markdown.IndexOf("#"); // Find where the first heading starts
+
+            if (firstHeadingIndex == -1)
             {
-                string heading = match.Groups[1].Value.Trim();
-                string content = match.Groups[2].Value.Trim();
-                sections[heading] = content;
+                if (!string.IsNullOrEmpty(markdown))
+                {
+                    sections[gameName] = markdown.Trim();
+                }
+            }
+            else
+            {
+                if (firstHeadingIndex > 0)
+                {
+                    firstChunk = markdown.Substring(0, firstHeadingIndex).Trim(); // Content before any heading
+                    if (!string.IsNullOrEmpty(firstChunk))
+                    {
+                        if (!string.IsNullOrEmpty(firstChunk))
+                        {
+                            sections["First"] = firstChunk;
+                        }
+                    }
+                }
+
+                // Extract and store sections for H1 and H2 headings
+                foreach (Match match in regex.Matches(markdown))
+                {
+                    string headingType = match.Groups[1].Value.Trim(); // # for H1, ## for H2
+                    string heading = match.Groups[2].Value.Trim();
+                    string content = match.Groups[3].Value.Trim();
+
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        sections[heading] = content;
+                    }
+                }
             }
 
             return sections;
