@@ -253,3 +253,9 @@ Packages:
     Changelog:
     - 'Fixed: plugin failing to load if custom install path has not been set'
     - 'Fixed: plugin icon not displaying in Playnite addons list'
+  - Version: 1.39
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-02-07
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.02.07_503e0ad3/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_39.pext
+    Changelog:
+    - 'Fixed: Special K services starting in selective mode when game does not have any Features'
