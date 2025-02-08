@@ -186,27 +186,23 @@ namespace SpecialKHelper
                 return false;
             }
 
-            if (game.Features.HasItems())
+            if (settings.Settings.StopExecutionIfVac &&
+                game.Features?.Any(x => x.Name == "Valve Anti-Cheat Enabled") == true)
             {
-                if (settings.Settings.StopExecutionIfVac && game.Features.Any(x => x.Name == "Valve Anti-Cheat Enabled"))
-                {
-                    return false;
-                }
+                return false;
+            }
 
-                if (settings.Settings.SpecialKExecutionMode == SpecialKExecutionMode.Global)
-                {
-                    if (game.Features.Any(x => x.Name == _globalModeDisableFeatureName))
-                    {
-                        return false;
-                    }
-                }
-                else if (settings.Settings.SpecialKExecutionMode == SpecialKExecutionMode.Selective)
-                {
-                    if (!game.Features.Any(x => x.Name == _selectiveModeEnableFeatureName))
-                    {
-                        return false;
-                    }
-                }
+            var executionMode = settings.Settings.SpecialKExecutionMode;
+            if (executionMode == SpecialKExecutionMode.Selective &&
+                game.Features?.Any(x => x.Name == _selectiveModeEnableFeatureName) != true)
+            {
+                return false;
+            }
+
+            if (executionMode == SpecialKExecutionMode.Global &&
+                game.Features?.Any(x => x.Name == _globalModeDisableFeatureName) == true)
+            {
+                return false;
             }
 
             return true;
