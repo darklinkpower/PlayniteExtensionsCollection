@@ -84,4 +84,11 @@ Uzantının oyuna başlarken Special K hizmetlerini başlatmasına izin verilip 
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Special K'yi belirli bir yerde kullanmak istiyorsanız veya taşınabilir bir kurulumunuz var ise kullanın</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Göz at…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Kaldır</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Open Special K</sys:String>
 </ResourceDictionary>

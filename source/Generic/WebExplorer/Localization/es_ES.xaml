@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCWebExplorer_WebLabel">Web</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SettingShowLinksInContextMenu">Mostrar enlaces de juegos en el menú del juego haciendo clic derecho para abrirlos en el navegador web de Playnite</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegration">Integración de la vista web en temas</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegrationDesc" xml:space="preserve">Configura si la vista web debe mostrarse en temas personalizados compatibles.
+Los cambios requieren reiniciar.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Modo de escritorio (vista de detalles)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Modo de escritorio (vista de cuadrícula)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Modo de pantalla completa</sys:String>
+    <sys:String x:Key="LOCWebExplorer_GeneralSettings">Configuración General</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SidebarWebView">Vista web de la barra lateral</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebView">Integración de vista web en temas</sys:String>
+    <sys:String x:Key="LOCWebExplorer_Bookmarks">Marcadores</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Restaurar los valores predeterminados</sys:String>
+    <sys:String x:Key="LOCWebExplorer_AddBookmark">Añadir</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RemoveSelected">Eliminar seleccionados</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Los marcadores agregados aquí estarán disponibles junto con los enlaces del juego en el navegador web.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">Nombre:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">Dirección:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Icono:</sys:String>
+</ResourceDictionary>

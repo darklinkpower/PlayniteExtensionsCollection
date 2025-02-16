@@ -45,7 +45,7 @@ Selective Mode: Special K services are started only for games that have the incl
     <sys:String x:Key="LOCSpecial_K_Helper_SettingNewProfileTargetFpsNote" xml:space="preserve">Note: To make sure you provide a correct value for your specific monitor, please refer first to the values provided in Special K overlay.
 
 After you have a correct value, you can paste it to the text box.</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">Global mode</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeGlobal">グローバルモード</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSpecialKExecutionModeSelective">Selective mode</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayDesktop">デスクトップ</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EnumDescriptionSteamOverlayBpm">Big Picture Mode</sys:String>
@@ -54,14 +54,14 @@ After you have a correct value, you can paste it to the text box.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelUseFuzzySearch">Use fuzzy search</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfiles">Profiles</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSections">Sections</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">Keys</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">Key</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKeys">キー</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelKey">キー</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelValue">Value</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfile">Profile:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelProfilePath">Profile path:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveProfile">Save profile</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">Delete profile</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfile">プロファイルを削除</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelDeleteProfileNotice">Are you sure you wish to delete the profile? This action cannot be reverted.</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorDeleteProfileError" xml:space="preserve">Failed to delete profile &quot;{0}&quot; in {1}
     
@@ -73,7 +73,7 @@ Profile path: {1}</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSaveValue">Save value</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelSelectedOption">Selected option</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniSection">Section:</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">Key:</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniKey">キー:</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_EditorLabelIniValue">Value:</sys:String>
 
     <sys:String x:Key="LOCSpecial_K_Helper_SidebarTooltip" xml:space="preserve">Special K Helper status switcher
@@ -85,4 +85,11 @@ If this set as disabled, the services won't be started no matter the settings or
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Use if you want to use Special K in a specific location or if you are using a portable installation</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">参照…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">削除</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Open Special K</sys:String>
 </ResourceDictionary>

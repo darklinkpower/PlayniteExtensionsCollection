@@ -15,4 +15,9 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">成就</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">点数商店</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">在 Steam 库中查看</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDetails">Details</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameSteamInput">Steam Input</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameProperties">Properties</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_LaunchWebUrlsInSteam">Launch Steam web urls in Steam client</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_SteamShortcutsLabel">Steam shortcuts</sys:String>
 </ResourceDictionary>

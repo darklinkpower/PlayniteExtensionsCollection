@@ -8,4 +8,5 @@ Değişiklikleri uygulamak için lütfen yeniden başlatın.</sys:String>
 
 Değişiklikleri uygulamak için lütfen yeniden başlatın.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">&quot;{1}&quot; temasının {0} sürümü desteklenmiyor.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">Henüz yapmadıysanız, düzenin doğru görüntülenmesini sağlamak için Playnite ayarlarındaki ızgara görünümü ayrıntıları paneli genişliğini artırmayı unutmayın!</sys:String>
 </ResourceDictionary>
