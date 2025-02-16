@@ -15,4 +15,9 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Досягнення</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Крамниця жетонів</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Переглянути в бібліотеці Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDetails">Деталі</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameSteamInput">Steam Input</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameProperties">Властивості</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_LaunchWebUrlsInSteam">Запускати вебпосилання Steam у клієнті Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_SteamShortcutsLabel">Ярлики Steam</sys:String>
 </ResourceDictionary>

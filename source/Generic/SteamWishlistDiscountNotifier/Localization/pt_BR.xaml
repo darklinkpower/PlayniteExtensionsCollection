@@ -45,12 +45,14 @@ Falha ao verificar a lista de desejos do Steam. Autenticação é necessária.</
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Preço máximo:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Tipo de Item:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Preço:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">Early Access</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Disponível</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Não disponível</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Total de itens:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">Avaliações Gerais:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">Data de lançamento:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">Marcadores:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Discount End Date:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Adquirido em:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Mostrar se o jogo pertence a outras fontes</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Proprietário:</sys:String>
@@ -59,6 +61,7 @@ Falha ao verificar a lista de desejos do Steam. Autenticação é necessária.</
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Não Adquirido</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Abrir no navegador</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Abrir no Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">Open on SteamDB</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Verificar Lista de Desejos do Steam para descontos</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Remover da lista de desejos</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Falha ao remover da lista de desejos</sys:String>

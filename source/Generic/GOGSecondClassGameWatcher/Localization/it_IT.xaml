@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_GogSecondClass_NotifyOnGameInstalling">Notifica i problemi durante l'installazione di un gioco</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AddStatusTagOnLibraryUpdate">Etichetta giochi con problemi durante gli aggiornamenti della libreria</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_DeveloperLabel">Sviluppatore</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_PublisherLabel">Editore</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_NumberOfIssues">Numero di problemi</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_NumberOfIssuesOnGog">Numero di problemi relativi a GOG</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_IssuesToNotify">Problemi da segnalare:</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_GeneralIssuesLabel">Problemi generali</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingUpdatesLabel">Aggiornamenti mancanti</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingLanguagesLabel">Lingue mancanti</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingFreeDlcLabel">DLC gratuito mancante</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingPaidDlcLabel">DLC pagato mancante</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingFeaturesLabel">Funzionalità mancanti</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSoundtrackLabel">Suono mancante</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_OtherIssuesLabel">Altri problemi</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingBuildsLabel">Build mancanti</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_RegionLockingLabel">Blocco regionale</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceOneLabel">Fonte uno</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceTwoLabel">Fonte due</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_ReleaseYearLabel">Anno di uscita</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsIssuesLabel">Problemi relativi agli obiettivi</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingAllAchievementsLabel">Mancano tutti gli obiettivi</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_MissingSomeAchievementsLabel">Mancano alcuni obiettivi</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_BrokenAchievementsLabel">Obiettivi interrotti</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AchievementsAskedResponseLabel">Risposta degli sviluppatori sugli obiettivi</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_SourceLabel">Fonte</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_OpenInformationWindowLabel">Apri finestra informazioni</sys:String>
+</ResourceDictionary>

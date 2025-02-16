@@ -12,7 +12,7 @@
     <sys:String x:Key="LOC_NewsViewer_NewsViewerControl_NewsLabel">Nachrichten</sys:String>
 
     <sys:String x:Key="LOC_NewsViewer_SettingsEnablePlayersInGameViewerControlLabel">Steuerung aktivieren, um Spieler im Spiel anzuzeigen</sys:String>
-    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">In-Game</sys:String>
+    <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel">Im Spiel</sys:String>
     <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_OnlineNowCountLabel">Jetzt online</sys:String>
     <sys:String x:Key="LOC_NewsViewer_PlayersInGameViewerControl_PlayersCountSearchNonSteamLabel">Zeige auch Daten für Spiele, die nicht von Steam sind</sys:String>
 </ResourceDictionary>

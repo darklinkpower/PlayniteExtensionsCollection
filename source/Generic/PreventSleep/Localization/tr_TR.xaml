@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_PreventSleep_PreventingSystemScreenSleep">Sistemin ve ekranın uyku moduna geçmesi engelleniyor…</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">Sistem ve ekran uyku moduna izin veriliyor</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">Sistemin ve ekranın uyku moduna geçmesini önlemek veya buna izin vermek amacıyla modu değiştirmek için üst paneldeki öğeyi göster</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">Oynarken sistemin ve ekranın uykuya geçmesini önleyin</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames">Herhangi bir oyun oynanmaktayken sistemin veya ekranın uykuya geçmesini her zaman önle</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">Yapılandırmayı kaldır</sys:String>
+</ResourceDictionary>

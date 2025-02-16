@@ -15,4 +15,9 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">実績</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">ポイントショップ</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Steam ライブラリで見る</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDetails">詳細</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameSteamInput">Steam 入力</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameProperties">プロパティ</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_LaunchWebUrlsInSteam">Steam クライアントで Steam ウェブURL を起動する</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_SteamShortcutsLabel">Steam ショートカット</sys:String>
 </ResourceDictionary>

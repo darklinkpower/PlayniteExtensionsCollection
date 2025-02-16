@@ -8,4 +8,5 @@
 
 Будь ласка, перезапустіть застосунок, щоб побачити зміни.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Версія {0} теми &quot;{1}&quot; не підтримується.</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">Не забудьте збільшити ширину панелі деталей Сітки у налаштуваннях Playnite, щоб макет показувався правильно!</sys:String>
 </ResourceDictionary>

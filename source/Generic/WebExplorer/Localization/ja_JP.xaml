@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCWebExplorer_WebLabel">Web</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SettingShowLinksInContextMenu">Show game links in right click game menu to open them in Playnite's web browser</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegration">Themes web view integration</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebViewIntegrationDesc" xml:space="preserve">Configures if the web view should be displayed in supported custom themes.
+Changes require restart.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeDetails">Desktop Mode (Details View)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteDesktopModeGrid">Desktop Mode (Grid View)</sys:String>
+    <sys:String x:Key="LOCWebExplorer_PlayniteFullscreenMode">Fullscreen Mode</sys:String>
+    <sys:String x:Key="LOCWebExplorer_GeneralSettings">General settings</sys:String>
+    <sys:String x:Key="LOCWebExplorer_SidebarWebView">Sidebar web view</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemesWebView">Themes integration web view</sys:String>
+    <sys:String x:Key="LOCWebExplorer_Bookmarks">Bookmarks</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RestoreDefaults">Restore defaults</sys:String>
+    <sys:String x:Key="LOCWebExplorer_AddBookmark">追加</sys:String>
+    <sys:String x:Key="LOCWebExplorer_RemoveSelected">Remove Selected</sys:String>
+    <sys:String x:Key="LOCWebExplorer_ThemeBookmarksInstruction">Bookmarks added here will be made available alongside the game links in the web browser.</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkNameIs">Name:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkAddressIs">Address:</sys:String>
+    <sys:String x:Key="LOCWebExplorer_BookmarkIconIs">Icon:</sys:String>
+</ResourceDictionary>

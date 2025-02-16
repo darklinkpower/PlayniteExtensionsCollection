@@ -85,4 +85,11 @@ Wenn diese Einstellung deaktiviert ist, werden die Dienste unabhängig von Einst
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">Verwenden Sie, wenn Sie Special K an einem bestimmten Ort verwenden wollen oder wenn Sie eine portable Installation verwenden</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">Durchsuchen…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">Löschen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">32 und 64 Bit Dienste starten</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">32 und 64 Bit Dienste stoppen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">32 Bit Dienst starten</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">32 Bit Dienst stoppen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">64 Bit Dienst starten</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">64 Bit Dienst stoppen</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Special K öffnen</sys:String>
 </ResourceDictionary>

@@ -3,7 +3,7 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_SettingsHelpLabel">ヘルプ</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemBrowseCatalogDescription">Browse Game Pass Catalog</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemAddAllCatalogDescription">Add all Catalog to the Playnite library</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">Reset Cache</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_MenuItemResetCacheDescription">キャッシュをリセット</sys:String>
 
     <sys:String x:Key="LOCGamePass_Catalog_Browser_ResetCacheResultsMessage">Game Pass catalog has been reset.</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_AddAllGamesSelectionMessage">Are you sure you want to add all the Game Pass catalog to your library?</sys:String>
@@ -13,10 +13,10 @@
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogProgressMessage">Updating Game Pass Catalog...</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_UpdatingCatalogAddGamesProgressMessage">Updating Game Pass Catalog and adding games...</sys:String>
     
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">Collection:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCollectionLabel">コレクション:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewCategoryLabel">Category:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewSearchLabel">検索:</sys:String>
-    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">Developer:</sys:String>
+    <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewDeveloperLabel">開発元:</sys:String>
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewPublisherLabel">Publisher:</sys:String>
 
     <sys:String x:Key="LOCGamePass_Catalog_Browser_WindowViewOpenInXboxApp">View in Xbox app</sys:String>

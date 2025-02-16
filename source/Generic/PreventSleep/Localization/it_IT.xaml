@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOC_PreventSleep_PreventingSystemScreenSleep">Prevenzione della sospensione del sistema e dello schermo…</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">La sospensione del sistema e dello schermo è consentita</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">Mostra elemento nel pannello superiore per cambiare modalità per prevenire o consentire lo spegnimento del sistema e dello schermo</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">Impedisci lo spegnimento del sistema e dello schermo durante la riproduzione</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames">Previeni sempre lo spegnimento del sistema e dello schermo quando si gioca a un gioco</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">Rimuovi configurazione</sys:String>
+</ResourceDictionary>
