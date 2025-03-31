@@ -191,6 +191,11 @@ namespace VndbApiDomain.CharacterAggregate
             /// Both.
             /// </summary>
             public const string Both = "b";
+
+            /// <summary>
+            /// Sexless.
+            /// </summary>
+            public const string Sexless = "n";
         }
 
         public static class VisualNovelRoles
