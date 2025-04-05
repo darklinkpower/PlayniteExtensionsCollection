@@ -112,7 +112,7 @@ namespace VNDBNexus
         {
             if (args.Name == _vndbVisualNovelViewControlName)
             {
-                return new VndbVisualNovelViewControl(this, Settings, _vndbDatabase, _imageUriToBitmapImageConverter, _eventAggregator);
+                return new VndbVisualNovelViewControl(this, Settings, _vndbDatabase, _imageUriToBitmapImageConverter, _logger, _eventAggregator);
             }
 
             return null;

@@ -57,6 +57,7 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
         private readonly VNDBNexusSettingsViewModel _settingsViewModel;
         private readonly DesktopView _activeViewAtCreation;
         private readonly DispatcherTimer _updateControlDataDelayTimer;
+        private readonly ILogger _logger;
         private readonly ImageUriToBitmapImageConverter _imageUriToBitmapImageConverter;
         private readonly EnumToLocalizationStringConverter _enumToLocalizationConverter;
         private bool _isValuesDefaultState = true;
@@ -542,8 +543,15 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
             }
         }
 
-        public VndbVisualNovelViewControl(VNDBNexus plugin, VNDBNexusSettingsViewModel settingsViewModel, VndbDatabase vndbDatabase, ImageUriToBitmapImageConverter imageUriToBitmapImageConverter, IEventAggregator eventAggregator)
+        public VndbVisualNovelViewControl(
+            VNDBNexus plugin,
+            VNDBNexusSettingsViewModel settingsViewModel,
+            VndbDatabase vndbDatabase,
+            ImageUriToBitmapImageConverter imageUriToBitmapImageConverter,
+            ILogger logger,
+            IEventAggregator eventAggregator)
         {
+            _logger = logger;
             _imageUriToBitmapImageConverter = imageUriToBitmapImageConverter;
             _enumToLocalizationConverter = new EnumToLocalizationStringConverter();
             Resources.Add("ImageUriToBitmapImageConverter", imageUriToBitmapImageConverter);
@@ -817,6 +825,10 @@ namespace VNDBNexus.VndbVisualNovelViewControlAggregate
                 }
 
                 _playniteApi.MainView.UIDispatcher.Invoke(() => SetVisibleVisibility());
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"Error while obtaining data from VNDB API for id {vndbId}");
             }
             finally
             {
