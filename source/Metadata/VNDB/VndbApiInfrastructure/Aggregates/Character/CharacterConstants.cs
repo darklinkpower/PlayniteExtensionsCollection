@@ -169,7 +169,7 @@ namespace VndbApiInfrastructure.CharacterAggregate
             public const string Birthday = "birthday";
 
             /// <summary>
-            /// Possibly null, otherwise an array of two strings: the character’s apparent (non-spoiler) sex and the character’s real (spoiler) sex. Possible values are null, "m", "f" or "b" (meaning “both”).
+            /// Possibly null, otherwise an array of two strings: the character’s apparent (non-spoiler) sex and the character’s real (spoiler) sex. Possible values are null, "m", "f", "b" (meaning “both”) or "n" (sexless).
             /// </summary>
             public const string Sex = "sex";
 

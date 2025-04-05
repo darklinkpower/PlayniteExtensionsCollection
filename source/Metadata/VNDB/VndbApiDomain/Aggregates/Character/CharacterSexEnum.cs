@@ -25,7 +25,13 @@ namespace VndbApiDomain.CharacterAggregate
         /// Both.
         /// </summary>
         [StringRepresentation(CharacterConstants.Sex.Both)]
-        Both
+        Both,
+
+        /// <summary>
+        /// Sexless.
+        /// </summary>
+        [StringRepresentation(CharacterConstants.Sex.Sexless)]
+        Sexless
     }
 
 }
