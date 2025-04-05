@@ -114,6 +114,23 @@ namespace VndbApiInfrastructure.CharacterAggregate
         }
 
         /// <summary>
+        /// Character spoiler sex.
+        /// </summary>
+        public static class SexSpoiler
+        {
+            public static string FilterName = CharacterConstants.Filters.SexSpoil;
+            public static bool CanBeNull { get; } = false;
+            private static SimpleFilterBase<Character> CreateFilter(string operatorString, CharacterSexEnum value) =>
+                FilterFactory.CreateFilter<Character, CharacterSexEnum>(FilterName, CanBeNull, operatorString, value);
+
+            public static SimpleFilterBase<Character> EqualTo(CharacterSexEnum value) =>
+                CreateFilter(RequestConstants.Operators.Matching.IsEqual, value);
+
+            public static SimpleFilterBase<Character> NotEqualTo(CharacterSexEnum value) =>
+                CreateFilter(RequestConstants.Operators.Matching.NotEqual, value);
+        }
+
+        /// <summary>
         /// Height value.
         /// </summary>
         public static class Height

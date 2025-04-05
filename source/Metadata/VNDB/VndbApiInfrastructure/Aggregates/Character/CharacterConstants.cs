@@ -36,6 +36,21 @@ namespace VndbApiInfrastructure.CharacterAggregate
             public const string Sex = "sex";
 
             /// <summary>
+            /// String.
+            /// </summary>
+            public const string SexSpoil = "sex_spoil";
+
+            /// <summary>
+            /// String.
+            /// </summary>
+            public const string Gender = "gender";
+
+            /// <summary>
+            /// String.
+            /// </summary>
+            public const string GenderSpoil = "gender_spoil";
+
+            /// <summary>
             /// Integer, cm.
             /// </summary>
             public const string Height = "height";
