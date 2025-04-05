@@ -88,3 +88,9 @@ Packages:
     Changelog:
     - 'Added: Support to close the fullscreen screenshot view by double clicking the image'
     - 'Changed: A small fade-out animation now plays when closing the fullscreen screenshot view.'
+  - Version: 1.13
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/SteamScreenshots_8e77fe31-5e62-41e2-8fa2-64844cfd5b6b_1_13.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

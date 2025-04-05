@@ -167,3 +167,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.02.06_746aab3d/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_24.pext
     Changelog:
     - 'Fixed: Failing to update game library or download game assets due to changes on the JAST USA site API.'
+  - Version: 1.25
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/JastUsaLibrary_d407a620-5953-4ca4-a25c-8194c8559381_1_25.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

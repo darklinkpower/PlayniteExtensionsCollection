@@ -540,3 +540,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.16_ee497472/PlayState_2_78.pext
     Changelog:
     - 'Fixed: Not using the correct directory to detect the game executables in some circumstances'
+  - Version: 2.79
+    RequiredApiVersion: 6.6.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/PlayState_2_79.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

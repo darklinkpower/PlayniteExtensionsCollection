@@ -1,7 +1,7 @@
-﻿Id: PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13
+Id: PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13
 Name: Prevent Sleep
 Author: darklinkpower
-Version: 1.0
+Version: 1.1
 Module: PreventSleep.dll
 Type: GenericPlugin
 Icon: icon.png

@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.13_a8ed3eb7/WebExplorer_181ddd05-2168-4162-a116-b9c2a20c652c_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/WebExplorer_181ddd05-2168-4162-a116-b9c2a20c652c_1_1.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOC_GogSecondClass_NotifyOnGameInstalling">Notificar sobre problemas al instalar un juego</sys:String>
-    <sys:String x:Key="LOC_GogSecondClass_AddStatusTagOnLibraryUpdate">Etiquetar juegos con problemas durante las actualizaciones de la biblioteca</sys:String>
+    <sys:String x:Key="LOC_GogSecondClass_AddStatusTagOnLibraryUpdate">Etiquetar juegos con problemas durante actualizaciones de la biblioteca</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_DeveloperLabel">Desarrollador</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_PublisherLabel">Editor</sys:String>
     <sys:String x:Key="LOC_GogSecondClass_NumberOfIssues">Número de problemas</sys:String>

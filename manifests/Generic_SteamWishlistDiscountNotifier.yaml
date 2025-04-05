@@ -271,3 +271,9 @@ Packages:
     - 'Fixed: Wishlist items now show the release date in local system time instead of UTC timezone, preventing potential mismatches'
     - 'Fixed: Certain buttons in wishlist view not working'
     - 'Changed: Minor color changes in wishlist view'
+  - Version: 1.38
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/SteamWishlistDiscountNotifier_d5825a82-42bf-426b-ac47-5bea5df7aede_1_38.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

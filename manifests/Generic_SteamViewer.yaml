@@ -109,3 +109,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.11.28_0d43de8b/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_1.pext
     Changelog:
     - 'Changed: Menu items for opening Steam URLs are now available for non-Steam games, provided they have a Steam store link added'
+  - Version: 3.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/Steam_Viewer_0a3edabb-065f-4056-a294-d6bc0656e2ac_3_2.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

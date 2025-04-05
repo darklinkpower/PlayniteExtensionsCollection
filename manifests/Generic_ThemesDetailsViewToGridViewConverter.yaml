@@ -75,3 +75,9 @@ Packages:
     - 'Added: Indication to increase Grid View Details panel width to Settings and the notification message, to ensure the converted layout displays correctly.'
     - 'Changed: The extension will now convert all supported themes layouts by default.'
     - 'Fixed: Addressed an issue where the original Grid View Details layout backup file was overwritten if the Details View layout file was modified externally, preventing the restoration of the original layout'
+  - Version: 1.12
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/ThemesDetailsViewToGridViewConverter_ef8a7226-eedc-478d-a506-92ee6c088aa3_1_12.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

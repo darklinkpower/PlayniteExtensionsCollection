@@ -259,3 +259,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.02.07_503e0ad3/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_39.pext
     Changelog:
     - 'Fixed: Special K services starting in selective mode when game does not have any Features'
+  - Version: 1.40
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/SpecialKHelper_71349310-9ed8-4bf5-8bf2-e92cdb222748_1_40.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

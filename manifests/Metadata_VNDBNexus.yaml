@@ -73,3 +73,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.12.10_28b0d837/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_9.pext
     Changelog:
     - 'Fixed: Reverted the previous fix for missing birthday information introduced in v1.8, as it was an unintended bug in the VNDB API thas has been promptly fixed by the site developer after being reported.'
+  - Version: 1.10
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/VNDBNexus_39229206-1199-4fee-a014-e8478ea4cd77_1_10.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'

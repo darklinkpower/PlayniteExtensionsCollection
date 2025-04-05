@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.10_2b7752b9/PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/PreventSleep_d1ccef15-c9aa-4df4-9041-14a2abcb2f13_1_1.pext
+    Changelog:
+    - 'Changed: Updated localizations for improved language support'
