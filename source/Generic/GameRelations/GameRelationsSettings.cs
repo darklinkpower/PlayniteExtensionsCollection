@@ -27,6 +27,8 @@ namespace GameRelations
 
         private SimilarGamesControlSettings similarGamesControlSettings = new SimilarGamesControlSettings();
         public SimilarGamesControlSettings SimilarGamesControlSettings { get => similarGamesControlSettings; set => SetValue(ref similarGamesControlSettings, value); }
+
+        public int SettingsVersion = 1;
     }
 
     public class GameRelationsSettingsViewModel : ObservableObject, ISettings
@@ -72,10 +74,12 @@ namespace GameRelations
             if (savedSettings != null)
             {
                 Settings = savedSettings;
+                UpgradeSettings();
             }
             else
             {
                 Settings = new GameRelationsSettings();
+                SetAdvancedSectionDefaults();
             }
         }
 
@@ -185,6 +189,29 @@ namespace GameRelations
             }
         }
 
+        private string GetResourceString(string key) => plugin.PlayniteApi.Resources.GetString(key);
+
+        public void SetAdvancedSectionDefaults()
+        {
+            Settings.SimilarGamesControlSettings.JacardSimilarityPerField = 0.73D;
+            Settings.SimilarGamesControlSettings.FieldSettings.Clear();
+            settings.SimilarGamesControlSettings.FieldSettings.Add(new SimilarGamesFieldSettings(GameField.TagIds, GetResourceString("LOCTagsLabel"), true, 1));
+            settings.SimilarGamesControlSettings.FieldSettings.Add(new SimilarGamesFieldSettings(GameField.GenreIds, GetResourceString("LOCGenresLabel"), true, 1.2));
+            settings.SimilarGamesControlSettings.FieldSettings.Add(new SimilarGamesFieldSettings(GameField.CategoryIds, GetResourceString("LOCCategoriesLabel"), true, 1.3));
+        }
+
+        public void UpgradeSettings()
+        {
+            int currentVersion = 2;
+
+            if (settings.SettingsVersion < 2)
+            {
+                SetAdvancedSectionDefaults();
+            }
+
+            Settings.SettingsVersion = currentVersion;
+        }
+
         public RelayCommand AddSelectedTagsToExcludeCommand
         {
             get => new RelayCommand(() =>
@@ -233,6 +260,9 @@ namespace GameRelations
             }, () => SgExcludeCategoriesSelectedItems.Count > 0);
         }
 
-
+        public RelayCommand SetAdvancedSectionDefaultsCommand
+        {
+            get => new RelayCommand(SetAdvancedSectionDefaults);
+        }
     }
 }
