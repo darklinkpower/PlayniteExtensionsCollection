@@ -27,7 +27,15 @@ namespace SpecialKHelper.EasyAnticheat.Persistence
                 return null;
             }
 
-            return Serialization.FromJsonFile<GameDataCache>(cachePath);
+            try
+            {
+                return Serialization.FromJsonFile<GameDataCache>(cachePath);
+            }
+            catch (Exception)
+            {
+                FileSystem.DeleteFileSafe(cachePath);
+                return null;
+            }
         }
 
         public void SaveCache(GameDataCache cache)
