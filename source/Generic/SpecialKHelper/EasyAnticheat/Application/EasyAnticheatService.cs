@@ -28,9 +28,9 @@ namespace SpecialKHelper.EasyAnticheat.Application
         public bool IsGameEacEnabled(Game game)
         {
             var cache = _easyAnticheatCache.LoadCache(game.Id);
-            if (cache != null && cache.EasyAnticheatStatus == EasyAnticheatStatus.Detected)
+            if (cache != null)
             {
-                return true;
+                return cache.EasyAnticheatStatus == EasyAnticheatStatus.Detected;
             }
 
             var status = GetGameEasyAnticheatStatus(game);
