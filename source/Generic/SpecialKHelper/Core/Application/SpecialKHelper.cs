@@ -174,13 +174,11 @@ namespace SpecialKHelper
                 _logger.Info("Start of services is disabled by sidebar item");
                 return false;
             }
-
             if (settings.Settings.StopIfEasyAntiCheat && _easyAnticheatHelper.IsGameEacEnabled(game))
             {
                 _logger.Info($"Start of services disabled due to game {game.Name} using EasyAntiCheat");
                 return false;
             }
-
             if (settings.Settings.OnlyExecutePcGames && !PlayniteUtilities.IsGamePcGame(game))
             {
                 return false;
@@ -202,6 +200,12 @@ namespace SpecialKHelper
             if (executionMode == SpecialKExecutionMode.Global &&
                 game.Features?.Any(x => x.Name == _globalModeDisableFeatureName) == true)
             {
+                return false;
+            }
+
+            if (settings.Settings.StopIfEasyAntiCheat && _easyAnticheatHelper.IsGameEacEnabled(game))
+            {
+                _logger.Info($"Start of services disabled due to game {game.Name} using EasyAntiCheat");
                 return false;
             }
 
