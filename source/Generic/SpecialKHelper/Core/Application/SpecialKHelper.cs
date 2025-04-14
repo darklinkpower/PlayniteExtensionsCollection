@@ -181,20 +181,20 @@ namespace SpecialKHelper
             }
 
             if (settings.Settings.StopExecutionIfVac &&
-                game.Features?.Any(x => x.Name == "Valve Anti-Cheat Enabled") == true)
+                game.Features?.Any(x => x.Name.Equals("Valve Anti-Cheat Enabled", StringComparison.OrdinalIgnoreCase)) == true)
             {
                 return false;
             }
 
             var executionMode = settings.Settings.SpecialKExecutionMode;
             if (executionMode == SpecialKExecutionMode.Selective &&
-                game.Features?.Any(x => x.Name == _selectiveModeEnableFeatureName) != true)
+                game.Features?.Any(x => x.Name.Equals(_selectiveModeEnableFeatureName, StringComparison.OrdinalIgnoreCase)) != true)
             {
                 return false;
             }
 
             if (executionMode == SpecialKExecutionMode.Global &&
-                game.Features?.Any(x => x.Name == _globalModeDisableFeatureName) == true)
+                game.Features?.Any(x => x.Name.Equals(_globalModeDisableFeatureName, StringComparison.OrdinalIgnoreCase)) == true)
             {
                 return false;
             }
