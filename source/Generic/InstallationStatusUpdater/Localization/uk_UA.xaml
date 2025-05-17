@@ -7,8 +7,8 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_MenuRemoveIgnoreFeatureDescription">Видалити обрані ігри зі списку ігнорованих</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterResultsMessage" xml:space="preserve">Готово.
 
-Раніше встановлених ігор позначено як невстановлених: {0}
-Раніше невстановлених ігор позначено встановлених: {1}</sys:String>
+Раніше встановлених ігор позначено як не встановлених: {0}
+Раніше не встановлених ігор позначено встановлених: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Додано можливість ігнорування до {0} гри/ігор.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Прибрано можливість ігнорування до {0} гри/ігор.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Завершено оновлення тегів з диском, де встановлено ігри.</sys:String>
@@ -31,13 +31,13 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvPathLabel">Шлях</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsAddLabel">Додати</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">Вилучити</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Оновлення стану встановлення: Позначено {0} ігор як встановлені і {1} як невстановлені</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Оновлення стану встановлення: Позначено {0} ігор як встановлені і {1} як не встановлені</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">Виявити статус встановлення використовуючи розширення &quot;Installation Status Updater&quot;</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowTitle">Результати сканування статусу встановлення</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesInstalledLabel">Ігри позначені як встановлені:</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel">Ігри позначені як невстановлені:</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel">Ігри позначені як не встановлені:</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel">Позначити як встановлене</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel">Позначити як невстановлене</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel">Позначити як не встановлене</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel">Назва</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel">Джерело</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel">Платформи</sys:String>
