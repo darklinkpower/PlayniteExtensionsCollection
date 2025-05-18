@@ -8,5 +8,5 @@ Veuillez redémarrer pour appliquer les modifications.</sys:String>
 
 Veuillez redémarrer pour appliquer les modifications.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">La version {0} du thème &quot;{1}&quot; n'est pas prise en charge.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">If you haven't already, remember to increase the Grid View details panel width in Playnite Settings to ensure the layout displays correctly!</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">Si vous ne l'avez pas déjà fait, n'oubliez pas d'augmenter la largeur du panneau de détails de la vue grille dans les paramètres Playnite pour vous assurer que la mise en page s'affiche correctement !</sys:String>
 </ResourceDictionary>
