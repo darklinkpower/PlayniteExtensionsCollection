@@ -15,9 +15,9 @@
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameAchievementsDescription">Succès</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGamePointsShopDescription">Boutique des points</sys:String>
     <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDescription">Voir dans la bibliothèque Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDetails">Details</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameSteamInput">Steam Input</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameProperties">Properties</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_LaunchWebUrlsInSteam">Launch Steam web urls in Steam client</sys:String>
-    <sys:String x:Key="LOCSteam_Viewer_SteamShortcutsLabel">Steam shortcuts</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameLibraryDetails">Détails</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameSteamInput">Entrée Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_MenuItemGameProperties">Propriétés</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_LaunchWebUrlsInSteam">Lancer les URLs web Steam dans le client Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Viewer_SteamShortcutsLabel">Raccourcis Steam</sys:String>
 </ResourceDictionary>
