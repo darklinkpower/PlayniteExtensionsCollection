@@ -45,7 +45,7 @@ Kunne ikke sjekke Steam-ønskelisten. Godkjenning er påkrevd.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">Makspris:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Varetype:</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Pris:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">Early Access</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">Tidlig tilgang</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Tilgjengelig</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Ikke tilgjengelig</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">Totalt antall elementer:</sys:String>
@@ -61,7 +61,7 @@ Kunne ikke sjekke Steam-ønskelisten. Godkjenning er påkrevd.</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Ikke eid</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">Åpne i nettleser</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">Åpne i Steam</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">Open on SteamDB</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">Åpne på SteamDB</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Se etter tilbud på spill på Steam-ønskelisten</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Fjern fra ønskelisten</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Kunne ikke fjerne fra ønskelisten</sys:String>
