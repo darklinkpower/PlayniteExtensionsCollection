@@ -53,6 +53,8 @@ namespace CoverCollageMaker.Presentation.Controls
             DependencyProperty.RegisterReadOnly(nameof(ImageHeight), typeof(double), typeof(ZoomableImageViewer),
                 new PropertyMetadata(0.0));
         public static readonly DependencyProperty ImageHeightProperty = ImageHeightPropertyKey.DependencyProperty;
+        private readonly ScaleTransform _zoomTransform;
+        private readonly TranslateTransform _panTransform;
 
         #endregion
 
@@ -134,6 +136,10 @@ namespace CoverCollageMaker.Presentation.Controls
         {
             InitializeComponent();
             Loaded += (s, e) => FitToView();
+            _zoomTransform = new ScaleTransform();
+            _panTransform = new TranslateTransform();
+            ZoomContainer.LayoutTransform = _zoomTransform;
+            PanContainer.RenderTransform = _panTransform;
         }
 
         #endregion
@@ -144,10 +150,10 @@ namespace CoverCollageMaker.Presentation.Controls
         {
             base.OnMouseWheel(e);
             double factor = e.Delta > 0 ? 1.1 : 1 / 1.1;
-            Point mousePos = e.GetPosition(ImageContainer);
+            Point mousePos = e.GetPosition(PanContainer);
 
-            double clampedX = Math.Max(0, Math.Min(mousePos.X, DisplayedImage.ActualWidth * ZoomTransform.ScaleX));
-            double clampedY = Math.Max(0, Math.Min(mousePos.Y, DisplayedImage.ActualHeight * ZoomTransform.ScaleY));
+            double clampedX = Math.Max(0, Math.Min(mousePos.X, DisplayedImage.ActualWidth * _zoomTransform.ScaleX));
+            double clampedY = Math.Max(0, Math.Min(mousePos.Y, DisplayedImage.ActualHeight * _zoomTransform.ScaleY));
             ZoomAt(new Point(clampedX, clampedY), factor);
         }
 
@@ -158,6 +164,7 @@ namespace CoverCollageMaker.Presentation.Controls
                 _isPanning = true;
                 _lastMousePosition = e.GetPosition(this);
                 Cursor = Cursors.Hand;
+                DisplayedImage.SetValue(RenderOptions.BitmapScalingModeProperty, BitmapScalingMode.LowQuality);
                 CaptureMouse();
             }
         }
@@ -169,6 +176,7 @@ namespace CoverCollageMaker.Presentation.Controls
                 _isPanning = false;
                 Cursor = Cursors.Arrow;
                 ReleaseMouseCapture();
+                DisplayedImage.SetValue(RenderOptions.BitmapScalingModeProperty, BitmapScalingMode.Fant);
                 //ClampPan();
             }
         }
@@ -181,8 +189,8 @@ namespace CoverCollageMaker.Presentation.Controls
                 var delta = pos - _lastMousePosition;
                 _lastMousePosition = pos;
 
-                PanTransform.X += delta.X;
-                PanTransform.Y += delta.Y;
+                _panTransform.X += delta.X;
+                _panTransform.Y += delta.Y;
 
                 ClampPan();
             }
@@ -208,10 +216,10 @@ namespace CoverCollageMaker.Presentation.Controls
         private static void OnZoomLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var viewer = (ZoomableImageViewer)d;
-            double newZoom = Math.Max(viewer.MinZoomLevel, Math.Min(viewer.MaxZoomLevel, (double)e.NewValue));
+            double newZoom = Math.Round(Math.Max(viewer.MinZoomLevel, Math.Min(viewer.MaxZoomLevel, (double)e.NewValue)));
 
-            viewer.ZoomTransform.ScaleX = newZoom / 100.0;
-            viewer.ZoomTransform.ScaleY = newZoom / 100.0;
+            viewer._zoomTransform.ScaleX = newZoom / 100.0;
+            viewer._zoomTransform.ScaleY = newZoom / 100.0;
 
             if (newZoom != (double)e.NewValue)
             {
@@ -245,24 +253,27 @@ namespace CoverCollageMaker.Presentation.Controls
             double zoom = Math.Min(cW / imgW, cH / imgH);
             if (zoom >= 1.0) zoom = 1.0;
 
-            ZoomTransform.ScaleX = zoom;
-            ZoomTransform.ScaleY = zoom;
+            _zoomTransform.ScaleX = zoom;
+            _zoomTransform.ScaleY = zoom;
             ZoomLevel = zoom * 100;
             ZoomChanged?.Invoke(this, ZoomLevel);
 
             double scaledImgW = imgW * zoom;
             double scaledImgH = imgH * zoom;
-            PanTransform.X = (cW - scaledImgW) / 2.0;
-            PanTransform.Y = (cH - scaledImgH) / 2.0;
+            _panTransform.X = (cW - scaledImgW) / 2.0;
+            _panTransform.Y = (cH - scaledImgH) / 2.0;
         }
 
         private void ClampPan()
         {
-            if (ImageContainer == null) return;
+            if (ZoomContainer == null)
+            {
+                return;
+            }
 
-            double zoom = ZoomTransform.ScaleX;
-            double contentWidth = ImageContainer.ActualWidth * zoom;
-            double contentHeight = ImageContainer.ActualHeight * zoom;
+            double zoom = _zoomTransform.ScaleX;
+            double contentWidth = ZoomContainer.ActualWidth * zoom;
+            double contentHeight = ZoomContainer.ActualHeight * zoom;
             double viewportWidth = ActualWidth;
             double viewportHeight = ActualHeight;
 
@@ -271,23 +282,22 @@ namespace CoverCollageMaker.Presentation.Controls
 
             double minY = contentHeight <= viewportHeight ? (viewportHeight - contentHeight) / 2 : viewportHeight - contentHeight;
             double maxY = contentHeight <= viewportHeight ? minY : 0;
-
-            PanTransform.X = MathUtils.Clamp(PanTransform.X, minX, maxX);
-            PanTransform.Y = MathUtils.Clamp(PanTransform.Y, minY, maxY);
+            _panTransform.X = Math.Round(MathUtils.Clamp(_panTransform.X, minX, maxX));
+            _panTransform.Y = Math.Round(MathUtils.Clamp(_panTransform.Y, minY, maxY));
         }
 
         private void ZoomAt(Point mousePos, double factor)
         {
-            double oldZoom = ZoomTransform.ScaleX;
-            double newZoom = MathUtils.Clamp(oldZoom * factor, MinZoomLevel / 100.0, MaxZoomLevel / 100.0);
+            double oldZoom = _zoomTransform.ScaleX;
+            double newZoom = Math.Round(MathUtils.Clamp(oldZoom * factor, MinZoomLevel / 100.0, MaxZoomLevel / 100.0), 2);
 
             if (Math.Abs(newZoom - oldZoom) < 0.001) return;
 
-            ZoomTransform.ScaleX = newZoom;
-            ZoomTransform.ScaleY = newZoom;
+            _zoomTransform.ScaleX = newZoom;
+            _zoomTransform.ScaleY = newZoom;
 
-            PanTransform.X = mousePos.X - (mousePos.X - PanTransform.X) * (newZoom / oldZoom);
-            PanTransform.Y = mousePos.Y - (mousePos.Y - PanTransform.Y) * (newZoom / oldZoom);
+            _panTransform.X = mousePos.X - (mousePos.X - _panTransform.X) * (newZoom / oldZoom);
+            _panTransform.Y = mousePos.Y - (mousePos.Y - _panTransform.Y) * (newZoom / oldZoom);
 
             ClampPan();
             ZoomLevel = newZoom * 100;

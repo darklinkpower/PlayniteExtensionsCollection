@@ -227,11 +227,7 @@ namespace CoverCollageMaker.Presentation.ViewModels
 
                     _playniteApi.MainView.UIDispatcher.Invoke(() =>
                     {
-                        // If WriteableBitmap is null or size has changed, recreate it
-                        if (CollageImageBitmap is null || CollageImageBitmap.PixelWidth != skBitmap.Width || CollageImageBitmap.PixelHeight != skBitmap.Height)
-                        {
-                            CollageImageBitmap = new WriteableBitmap(skBitmap.Width, skBitmap.Height, 96, 96, PixelFormats.Bgra32, null);
-                        }
+                        CollageImageBitmap = new WriteableBitmap(skBitmap.Width, skBitmap.Height, 96, 96, PixelFormats.Bgra32, null);
 
                         // Lock the bitmap for writing
                         CollageImageBitmap.Lock();

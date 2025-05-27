@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CoverCollageMaker.Presentation.Controls"
              mc:Ignorable="d" 
-             ClipToBounds="True"
+             ClipToBounds="True" UseLayoutRounding="True" SnapsToDevicePixels="True"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <DrawingBrush x:Key="CheckeredBackground" TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
@@ -48,21 +48,19 @@
         <Canvas x:Name="ViewportCanvas"
             Background="Transparent"
             ClipToBounds="True">
-            
-            <Grid x:Name="ImageContainer"
-              RenderTransformOrigin="0,0">
-                <Grid.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform x:Name="ZoomTransform" />
-                        <TranslateTransform x:Name="PanTransform" />
-                    </TransformGroup>
-                </Grid.RenderTransform>
-                
-                <Border Background="{StaticResource CheckeredBackground}" />
-                <Border Background="#80000000" IsHitTestVisible="False"/>
-                
-                <Image x:Name="DisplayedImage"
-                   Stretch="None"  />
+
+            <Grid x:Name="PanContainer" UseLayoutRounding="True" SnapsToDevicePixels="True"
+                  RenderTransformOrigin="0,0">
+                <Grid x:Name="ZoomContainer">
+                    <Border Background="{StaticResource CheckeredBackground}" />
+                    <Border Background="#80000000" IsHitTestVisible="False"/>
+
+                    <Image x:Name="DisplayedImage"
+                       Stretch="None"
+                       SnapsToDevicePixels="True"
+                       UseLayoutRounding="True"
+                       RenderOptions.BitmapScalingMode="Fant" />
+                </Grid>
             </Grid>
         </Canvas>
     </Border>
