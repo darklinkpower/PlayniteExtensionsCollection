@@ -8,5 +8,5 @@ Start på nytt for å ta i bruk endringene.</sys:String>
 
 Vennligst start på nytt for å aktivere endringene.</sys:String>
     <sys:String x:Key="LOCThemeDetailsToGridConverter_ThemeVersionNotSupported">Versjon {0} av temaet &quot;{1} er ikke støttet.</sys:String>
-    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">If you haven't already, remember to increase the Grid View details panel width in Playnite Settings to ensure the layout displays correctly!</sys:String>
+    <sys:String x:Key="LOCThemeDetailsToGridConverter_ReminderIncreasePanelWidth">Husk å øke bredden til detaljpanelet for rutevisning i innstillingene til Playnite slik at layouten vises riktig!</sys:String>
 </ResourceDictionary>
