@@ -113,6 +113,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOGSecondClassGameWatcher",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericEntityJsonRepository", "Common\GenericEntityJsonRepository\GenericEntityJsonRepository.csproj", "{A50B3291-225D-4928-8E33-DC7D410A6A0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoverCollageMaker", "Generic\CoverCollageMaker\CoverCollageMaker.csproj", "{3915E934-7B96-4331-B543-09C573629FB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -319,6 +321,10 @@ Global
 		{A50B3291-225D-4928-8E33-DC7D410A6A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A50B3291-225D-4928-8E33-DC7D410A6A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A50B3291-225D-4928-8E33-DC7D410A6A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3915E934-7B96-4331-B543-09C573629FB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3915E934-7B96-4331-B543-09C573629FB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3915E934-7B96-4331-B543-09C573629FB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3915E934-7B96-4331-B543-09C573629FB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -375,6 +381,7 @@ Global
 		{55A0B98C-0D34-4F53-A11A-AF75A44C4349} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
 		{577FD1B8-3225-430A-8A32-7FC9709A98B6} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 		{A50B3291-225D-4928-8E33-DC7D410A6A0B} = {82DA706F-BCA9-4D05-912F-E23A589A66C8}
+		{3915E934-7B96-4331-B543-09C573629FB2} = {0B392A79-5131-438C-BDB2-AEF170C06F60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F739A97-4CBD-45FB-9A77-3D79008FD096}
