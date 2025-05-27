@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="CoverCollageMaker.Presentation.Controls.ZoomableImageViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CoverCollageMaker.Presentation.Controls"
+             mc:Ignorable="d" 
+             ClipToBounds="True"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DrawingBrush x:Key="CheckeredBackground" TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <!-- Dark square -->
+                    <GeometryDrawing Brush="LightGray">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,10,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <!-- Light square -->
+                    <GeometryDrawing Brush="White">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="10,0,10,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <!-- Dark square -->
+                    <GeometryDrawing Brush="LightGray">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="10,10,10,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+
+                    <!-- Light square -->
+                    <GeometryDrawing Brush="White">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,10,10,10" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </UserControl.Resources>
+    <Border x:Name="RootBorder"
+        Background="Transparent"
+        ClipToBounds="True">
+        <Canvas x:Name="ViewportCanvas"
+            Background="Transparent"
+            ClipToBounds="True">
+            
+            <Grid x:Name="ImageContainer"
+              RenderTransformOrigin="0,0">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="ZoomTransform" />
+                        <TranslateTransform x:Name="PanTransform" />
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                
+                <Border Background="{StaticResource CheckeredBackground}" />
+                <Border Background="#80000000" IsHitTestVisible="False"/>
+                
+                <Image x:Name="DisplayedImage"
+                   Stretch="None"  />
+            </Grid>
+        </Canvas>
+    </Border>
+</UserControl>

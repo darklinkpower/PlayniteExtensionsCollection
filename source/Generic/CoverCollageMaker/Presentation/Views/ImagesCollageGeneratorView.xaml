@@ -204,60 +204,11 @@
                 </TabItem>
             </TabControl>
 
-            <Grid Grid.Column="4" MouseWheel="OnGridMouseWheel" ClipToBounds="True">
-                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="DownOnly" Stretch="Uniform" >
-                    <Grid RenderTransformOrigin="0.5, 0.5">
-                        <Grid.RenderTransform>
-                            <ScaleTransform ScaleX="{Binding ZoomScale}" ScaleY="{Binding ZoomScale}" />
-                        </Grid.RenderTransform>
-                        <Border>
-                            <Border.Background>
-                                <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute" Viewbox="0,0,20,20" ViewboxUnits="Absolute">
-                                    <DrawingBrush.Drawing>
-                                        <DrawingGroup>
-                                            <!-- Dark square -->
-                                            <GeometryDrawing Brush="LightGray">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="0,0,10,10" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-
-                                            <!-- Light square -->
-                                            <GeometryDrawing Brush="White">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="10,0,10,10" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-
-                                            <!-- Dark square -->
-                                            <GeometryDrawing Brush="LightGray">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="10,10,10,10" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-
-                                            <!-- Light square -->
-                                            <GeometryDrawing Brush="White">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="0,10,10,10" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Border.Background>
-                        </Border>
-                        <Border Background="#80000000" />
-
-                        <Image x:Name="CollageImage"
-                           Source="{Binding CollageImageBitmap}"
-                           RenderOptions.BitmapScalingMode="Fant"
-                           StretchDirection="DownOnly"
-                           Stretch="Uniform" 
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center" />
-                    </Grid>
-                </Viewbox>
+            <Grid Grid.Column="4" ClipToBounds="True">
+                <!--For god know what reason, giving a name to this ZoomableImageViewer causes a ton of errors...-->
+                <controls:ZoomableImageViewer ImageSource="{Binding CollageImageBitmap}"
+                                              ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}"
+                                              MinZoomLevel="20" MaxZoomLevel="400"/>
 
                 <Border Padding="5" HorizontalAlignment="Left" VerticalAlignment="Top"
                         Margin="10"
@@ -272,15 +223,14 @@
                         CornerRadius="4"
                         Background="#66000000">
                     <StackPanel>
-                        <TextBlock Text="{Binding ZoomLevel, StringFormat=Zoom: {0}}" 
-                               HorizontalAlignment="Center" 
+                        <TextBlock Text="{Binding ZoomLevel, StringFormat='Zoom: {0:F0}%'}" 
+                               HorizontalAlignment="Center"
                                VerticalAlignment="Center" />
-                        <Slider Minimum="0.5" Maximum="3.0" 
-                                Value="{Binding ZoomScale}" 
-                                SmallChange="0.1" 
-                                LargeChange="0.1" 
-                                HorizontalAlignment="Stretch" 
-                                VerticalAlignment="Top" 
+                        <Slider Minimum="20" Maximum="400" TickFrequency="1"
+                                SmallChange="1" LargeChange="1"
+                                Value="{Binding ZoomLevel, Mode=TwoWay}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
                                 Margin="0,5,0,0" />
 
                         <Button Content="Reset Zoom" 
@@ -289,11 +239,24 @@
                             VerticalAlignment="Top" 
                             Margin="10"/>
                     </StackPanel>
-
                 </Border>
 
-                <Button Content="Copy image to clipboard" Command="{Binding CopyImageToClipboardCommand}" Margin="10"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                <Border Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Margin="10"
+                        CornerRadius="4"
+                        Background="#66000000">
+                    <StackPanel>
+                        <TextBlock Text="&#xEC4D;"
+                                   FontFamily="{DynamicResource FontIcoFont}"
+                                   FontSize="25"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+
+                        <Button Content="Copy image to clipboard" Command="{Binding CopyImageToClipboardCommand}" Margin="10"
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </Border>
+
             </Grid>
 
             <ScrollViewer Padding="10" Grid.Column="2">

@@ -38,7 +38,19 @@ namespace CoverCollageMaker.Presentation.ViewModels
             }
         }
 
-        public string ZoomLevel => $"{(int)(_zoomScale * 100)}%";
+        private double _zoomLevel = 100;
+        public double ZoomLevel
+        {
+            get => _zoomLevel;
+            set
+            {
+                if (_zoomLevel != value)
+                {
+                    _zoomLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public RelayCommand ResetZoomCommand { get; }
 
@@ -163,7 +175,7 @@ namespace CoverCollageMaker.Presentation.ViewModels
 
         private void ResetZoom()
         {
-            ZoomScale = 1.0;
+            ZoomLevel = 100;
         }
 
         public void OnMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
@@ -239,7 +251,6 @@ namespace CoverCollageMaker.Presentation.ViewModels
 
                         //ToWriteableBitmap(skBitmap, ref WriteableBitmap);
                         CollageImageBitmapResolution = $"{CollageImageBitmap.Width}x{CollageImageBitmap.Height}px";
-                        ResetZoom();
                     });
                 }
                 catch (OperationCanceledException e)

@@ -151,6 +151,9 @@
     <Compile Include="Presentation\Controls\ColorPickerControl.xaml.cs">
       <DependentUpon>ColorPickerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Controls\ZoomableImageViewer.xaml.cs">
+      <DependentUpon>ZoomableImageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\ViewModels\ImagesCollageGeneratorViewModel.cs" />
     <Compile Include="Presentation\Views\ImagesCollageGeneratorView.xaml.cs">
       <DependentUpon>ImagesCollageGeneratorView.xaml</DependentUpon>
@@ -178,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\Controls\ColorPickerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Controls\ZoomableImageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
