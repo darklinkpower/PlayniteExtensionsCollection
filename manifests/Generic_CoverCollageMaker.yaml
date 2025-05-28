@@ -6,3 +6,14 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.05.26_4de645ff/CoverCollageMaker_7713ea8c-cdec-46ac-b603-6d666515f3da_1_0.pext
     Changelog:
     - 'Initial release'
+  - Version: 1.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-05-27
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.05.27_14f25552/CoverCollageMaker_7713ea8c-cdec-46ac-b603-6d666515f3da_1_1.pext
+    Changelog:
+    - 'Added: Ability to drag the output image by clicking and holding the mouse.'
+    - 'Improved: Zooming with the scroll wheel now centers around the mouse position, keeps the image within the visible area, and automatically centers the image when it fits entirely within the panel.'
+    - 'Changed: Transparency background now only covers the output image instead of the entire panel.'
+    - 'Fixed: Zoom level display now correctly reflects the scale relative to the original image size.'
+    - 'Fixed: Output images in panel being displayed blurry under certain conditions.'
+    - 'Fixed: Output image not updating when replacing it with another image of the same resolution.'
