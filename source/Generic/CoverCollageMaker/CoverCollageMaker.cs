@@ -39,7 +39,7 @@ namespace CoverCollageMaker
                 new GameMenuItem
                 {
                     Description = "Create game covers collage...",
-                    MenuSection = "Cover Collage Maker",
+                    MenuSection = "Covers Collage Maker",
                     Action = a =>
                     {
                         CreateCollage(a.Games.Distinct().OrderBy(x => x.Name).ToList());
@@ -52,7 +52,7 @@ namespace CoverCollageMaker
         {
             var gamesWithCoverImages = games.Where(x => !x.CoverImage.IsNullOrEmpty())
                 .Select(x => new ImageData(PlayniteApi.Database.GetFullFilePath(x.CoverImage), x.Name));
-            var gamesWithValidCoverImages = gamesWithCoverImages.Where(x => FileSystem.FileExists(x.Path)).ToList();
+            var imagesData = gamesWithCoverImages.Where(x => FileSystem.FileExists(x.Path)).ToList();
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions
             {
                 ShowMinimizeButton = true,
@@ -67,7 +67,7 @@ namespace CoverCollageMaker
             var viewModel = new ImagesCollageGeneratorViewModel(
                 _logger,
                 PlayniteApi,
-                gamesWithValidCoverImages,
+                imagesData,
                 _settingsViewModel.Settings.ExportDirectory,
                 _settingsViewModel.Settings.CollageParameters);
             window.DataContext = viewModel;
