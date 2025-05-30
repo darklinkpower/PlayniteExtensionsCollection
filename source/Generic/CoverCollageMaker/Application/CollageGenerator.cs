@@ -228,19 +228,20 @@ namespace CoverCollageMaker.Application
                 bitmapResizePaint.IsDither = false;
 
                 // Resized images become blurry so we apply a little sharpening
-                var kernel = new float[9]
-                {
-                       0, -.1f,    0,
-                    -.1f, 1.4f, -.1f,
-                       0, -.1f,    0,
-                };
+                // TODO: Restore as an optional parameter. It causes a noticeable slowdown in bitmap resizing
+                //var kernel = new float[9]
+                //{
+                //       0, -.1f,    0,
+                //    -.1f, 1.4f, -.1f,
+                //       0, -.1f,    0,
+                //};
 
-                var kernelSize = new SKSizeI(3, 3);
-                var kernelOffset = new SKPointI(1, 1);
+                //var kernelSize = new SKSizeI(3, 3);
+                //var kernelOffset = new SKPointI(1, 1);
 
-                bitmapResizePaint.ImageFilter = SKImageFilter.CreateMatrixConvolution(
-                    kernelSize, kernel, 1f, 0f, kernelOffset,
-                    SKShaderTileMode.Clamp, false);
+                //bitmapResizePaint.ImageFilter = SKImageFilter.CreateMatrixConvolution(
+                //    kernelSize, kernel, 1f, 0f, kernelOffset,
+                //    SKShaderTileMode.Clamp, false);
 
                 using (var textDrawPaint = GetPaintFromParameters(parameters))
                 {
