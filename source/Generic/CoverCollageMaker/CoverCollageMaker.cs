@@ -42,7 +42,7 @@ namespace CoverCollageMaker
                     MenuSection = "Covers Collage Maker",
                     Action = a =>
                     {
-                        CreateCollage(a.Games.Distinct().OrderBy(x => x.Name).ToList());
+                        CreateCollage(a.Games.Distinct().ToList());
                     }
                 }
             };

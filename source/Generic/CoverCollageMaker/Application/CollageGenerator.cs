@@ -23,6 +23,8 @@ namespace CoverCollageMaker.Application
         {
             ValidateParameters(imagesData, parameters);
             parameters = parameters.CreateClone();
+            imagesData = imagesData.ToList();
+            SortImagesData(imagesData, parameters.ImagesInsertMode, parameters.ImagesInsertOrder);
             SortAndSetRowsAndColumns(imagesData, parameters);
             CalculateDimensionsForFinalSize(parameters, imagesData, cancellationToken);
 
@@ -36,6 +38,8 @@ namespace CoverCollageMaker.Application
         {
             ValidateParameters(imagesData, parameters, checkCellWidth: true);
             parameters = parameters.CreateClone();
+            imagesData = imagesData.ToList();
+            SortImagesData(imagesData, parameters.ImagesInsertMode, parameters.ImagesInsertOrder);
             SortAndSetRowsAndColumns(imagesData, parameters);
 
             var tallestImageInfo = GetTallestImageDimensions(imagesData);
@@ -52,6 +56,8 @@ namespace CoverCollageMaker.Application
         {
             ValidateParameters(imagesData, parameters, checkCellHeight: true);
             parameters = parameters.CreateClone();
+            imagesData = imagesData.ToList();
+            SortImagesData(imagesData, parameters.ImagesInsertMode, parameters.ImagesInsertOrder);
             SortAndSetRowsAndColumns(imagesData, parameters);
 
             var widestImageInfo = GetWidestImageDimensions(imagesData);
@@ -95,7 +101,6 @@ namespace CoverCollageMaker.Application
 
         private static void SortAndSetRowsAndColumns(List<ImageData> imagesData, CollageParameters parameters)
         {
-            SortImages(imagesData, parameters.ImageInsertOrder);
             parameters.Columns = Math.Min(parameters.Columns, imagesData.Count);
             parameters.Rows = CalculateRowCountForGrid(imagesData.Count, parameters.Columns);
         }
@@ -356,19 +361,57 @@ namespace CoverCollageMaker.Application
         #endregion
 
         #region Utility Methods
-        private static void SortImages(List<ImageData> imagesData, ImageInsertOrder order)
+        private static void SortImagesData(List<ImageData> imagesData,
+            ImagesInsertMode imageInsertMode,
+            ImagesInsertOrder imageInsertOrder)
         {
-            switch (order)
+            switch (imageInsertMode)
             {
-                case ImageInsertOrder.Original:
+                case ImagesInsertMode.Original:
+                    {
+                        var indexed = imagesData
+                            .Select((image, index) => new { Index = index, Image = image });
+
+                        if (imageInsertOrder == ImagesInsertOrder.Descending)
+                        {
+                            indexed = indexed.OrderByDescending(x => x.Index);
+                        }
+                        else
+                        {
+                            indexed = indexed.OrderBy(x => x.Index);
+                        }
+
+                        var sorted = indexed.Select(x => x.Image).ToList();
+                        imagesData.Clear();
+                        imagesData.AddRange(sorted);
+                        break;
+                    }
+                case ImagesInsertMode.Path:
+                    SortWithOrder(imagesData, x => x.Path, imageInsertOrder);
                     break;
-                case ImageInsertOrder.Path:
-                    imagesData.Sort((x, y) => string.Compare(x.Path, y.Path, StringComparison.OrdinalIgnoreCase));
+                case ImagesInsertMode.Name:
+                    SortWithOrder(imagesData, x => x.Name, imageInsertOrder);
                     break;
-                case ImageInsertOrder.Name:
-                    imagesData.Sort((x, y) => string.Compare(x.Name, y.Name, StringComparison.OrdinalIgnoreCase));
+                case ImagesInsertMode.Random:
+                    var shuffled = imagesData.OrderBy(_ => Guid.NewGuid()).ToList();
+                    imagesData.Clear();
+                    imagesData.AddRange(shuffled);
                     break;
             }
+        }
+
+        private static void SortWithOrder<TKey>(
+            List<ImageData> list,
+            Func<ImageData, TKey> keySelector,
+            ImagesInsertOrder order)
+        {
+            IOrderedEnumerable<ImageData> ordered = order == ImagesInsertOrder.Descending
+                ? list.OrderByDescending(keySelector)
+                : list.OrderBy(keySelector);
+
+            var sorted = ordered.ToList();
+            list.Clear();
+            list.AddRange(sorted);
         }
 
         private static SKColor ToSKColor(Color color)

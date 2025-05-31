@@ -141,7 +141,8 @@
       <DependentUpon>CoverCollageMakerSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Domain\Enums\CollageGenerationMethod.cs" />
-    <Compile Include="Domain\Enums\ImageInsertOrder.cs" />
+    <Compile Include="Domain\Enums\ImagesInsertMode.cs" />
+    <Compile Include="Domain\Enums\ImagesInsertOrder.cs" />
     <Compile Include="Domain\Enums\TextHorizontalAlignment.cs" />
     <Compile Include="Domain\Enums\TextInsertMethod.cs" />
     <Compile Include="Domain\Enums\TextVerticalAlignment.cs" />

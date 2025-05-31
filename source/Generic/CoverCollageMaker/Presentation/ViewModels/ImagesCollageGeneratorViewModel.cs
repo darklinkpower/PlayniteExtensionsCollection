@@ -84,6 +84,8 @@ namespace CoverCollageMaker.Presentation.ViewModels
 
         public List<TextInsertMethod> TextInsertMethods { get; }
         public List<TextHorizontalAlignment> TextHorizontalAlignments { get; }
+        public List<ImagesInsertMode> SelectedImagesInsertMode { get; }
+        public List<ImagesInsertOrder> SelectedImagesInsertOrder { get; }
         public RelayCommand CreateCollageWithCellHeightCommand { get; }
         public RelayCommand CreateCollageWithCellWidthCommand { get; }
         public RelayCommand CreateCollageWithFinalSizeCommand { get; }
@@ -159,6 +161,20 @@ namespace CoverCollageMaker.Presentation.ViewModels
                 TextHorizontalAlignment.Left,
                 TextHorizontalAlignment.Center,
                 TextHorizontalAlignment.Right
+            };
+
+            SelectedImagesInsertMode = new List<ImagesInsertMode>
+            {
+                ImagesInsertMode.Original,
+                ImagesInsertMode.Name,
+                ImagesInsertMode.Path,
+                ImagesInsertMode.Random
+            };
+
+            SelectedImagesInsertOrder = new List<ImagesInsertOrder>
+            {
+                ImagesInsertOrder.Ascending,
+                ImagesInsertOrder.Descending
             };
 
             PageBackgroundColor = System.Windows.Media.Color.FromArgb(0, 255, 255, 255);

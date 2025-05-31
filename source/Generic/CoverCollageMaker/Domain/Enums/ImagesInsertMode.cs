@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace CoverCollageMaker.Domain.Enums
 {
-    public enum ImageInsertOrder
+    public enum ImagesInsertMode
     {
         Original,
         Path,
-        Name
+        Name,
+        Random
     }
 }

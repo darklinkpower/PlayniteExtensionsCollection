@@ -28,7 +28,8 @@ namespace CoverCollageMaker.Domain.ValueObjects
         public TextInsertMethod TextInsertMethod { get; set; } = TextInsertMethod.Wrap;
         public TextHorizontalAlignment TextHorizontalAlignment { get; set; } = TextHorizontalAlignment.Center;
         public TextVerticalAlignment TextVerticalAlignment { get; set; } = TextVerticalAlignment.Center;
-        public ImageInsertOrder ImageInsertOrder { get; set; } = ImageInsertOrder.Original;
+        public ImagesInsertMode ImagesInsertMode { get; set; } = ImagesInsertMode.Original;
+        public ImagesInsertOrder ImagesInsertOrder { get; set; } = ImagesInsertOrder.Ascending;
         public bool ShowTexts { get; set; } = false;
         public bool TextAntiAliasing { get; set; } = true;
 
@@ -54,7 +55,8 @@ namespace CoverCollageMaker.Domain.ValueObjects
                 TextInsertMethod = this.TextInsertMethod,
                 TextHorizontalAlignment = this.TextHorizontalAlignment,
                 TextVerticalAlignment = this.TextVerticalAlignment,
-                ImageInsertOrder = this.ImageInsertOrder,
+                ImagesInsertMode = this.ImagesInsertMode,
+                ImagesInsertOrder = this.ImagesInsertOrder,
                 ShowTexts = this.ShowTexts,
                 TextAntiAliasing = this.TextAntiAliasing
             };

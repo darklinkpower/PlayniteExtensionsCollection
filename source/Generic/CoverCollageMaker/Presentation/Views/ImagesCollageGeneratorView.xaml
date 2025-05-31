@@ -55,6 +55,29 @@
                 <TabItem>
                     <TabItem.Header>
                         <StackPanel>
+                            <TextBlock Text="&#xEB16;" FontFamily="{DynamicResource FontIcoFont}" FontSize="25" HorizontalAlignment="Center" />
+                            <TextBlock Text="Images settings" HorizontalAlignment="Center" Margin="0,5,0,0" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <ScrollViewer Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="Images insert mode:" Margin="0,10,0,0" />
+                            <ComboBox 
+                                SelectedItem="{Binding CollageParameters.ImagesInsertMode}"
+                                ItemsSource="{Binding SelectedImagesInsertMode}" 
+                                MinWidth="120"/>
+                            <TextBlock Text="Images insert order:" Margin="0,10,0,0" />
+                            <ComboBox 
+                                SelectedItem="{Binding CollageParameters.ImagesInsertOrder}"
+                                ItemsSource="{Binding SelectedImagesInsertOrder}" 
+                                MinWidth="120"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel>
                             <TextBlock Text="&#xEBFA;" FontFamily="{DynamicResource FontIcoFont}" FontSize="25" HorizontalAlignment="Center" />
                             <TextBlock Text="Layout settings" HorizontalAlignment="Center" Margin="0,5,0,0" />
                         </StackPanel>
