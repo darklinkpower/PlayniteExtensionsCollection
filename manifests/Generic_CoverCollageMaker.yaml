@@ -17,3 +17,10 @@ Packages:
     - 'Fixed: Zoom level display now correctly reflects the scale relative to the original image size.'
     - 'Fixed: Output images in panel being displayed blurry under certain conditions.'
     - 'Fixed: Output image not updating when replacing it with another image of the same resolution.'
+  - Version: 1.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-05-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.05.30_2f42d7c4/CoverCollageMaker_7713ea8c-cdec-46ac-b603-6d666515f3da_1_2.pext
+    Changelog:
+    - 'Added: Support to configure the images insert order by Original, Name, Path and Random, as well as ordering by Ascending and Descending.'
+    - 'Changed: Removed sharpening of resized images to improve processing speed when generating the collage image. It is planned to make this configurable in a future update.'
