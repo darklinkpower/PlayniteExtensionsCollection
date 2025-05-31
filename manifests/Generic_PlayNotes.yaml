@@ -53,3 +53,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.12_b43337e1/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_8.pext
     Changelog:
     - 'Changed: Updated localizations'
+  - Version: 1.9
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-05-30
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.05.30_4ec9ef88/PlayNotes_4208657d-4f78-42d2-968f-39f24de275e1_1_9.pext
+    Changelog:
+    - 'Fixed: Crash on startup if Notes database is corrupted.'
