@@ -47,7 +47,7 @@ namespace PlayNotes
             });
 
             var databasePath = Path.Combine(GetPluginUserDataPath(), "database.db");
-            _notesDatabase = new LiteDbRepository<MarkdownDatabaseItem>(databasePath);
+            _notesDatabase = new LiteDbRepository<MarkdownDatabaseItem>(databasePath, logger);
 
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
