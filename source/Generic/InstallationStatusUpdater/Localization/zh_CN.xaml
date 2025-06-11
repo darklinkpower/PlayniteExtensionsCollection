@@ -16,14 +16,14 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">将指令类型为“链接”的游戏检测为已安装</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">将指令类型为“脚本”的游戏检测为已安装</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUseOnlyFirstRomDetection">在通过 ROM 检测时，仅使用所列出的第一项 ROM</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">Scan games from library plugins using their installation directory</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScanLibraryGamesWithAction">通过安装目录从库插件扫描游戏</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingOnlyUsePlayActionGameActions">仅检测标记为“游玩指令”的指令</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnStartup">在启动时更新安装状态</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateOnLibraryUpdate">在库更新时更新安装状态</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateLocTagsOnLibUpdate">在库更新时更新游戏安装所在的驱动器的标签</sys:String>
 
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnUsbChanges">当有存储设备插入或移除时更新安装状态</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">当文件在目录中改变时更新安装状态（需要重开）</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChanges">当文件在目录中改变时更新安装状态（需要重新启动）</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUpdateStatusOnDirChangesIncludeSubDirs">同时检测子目录</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLabel">要检测的目录</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsLvEnabledLabel">已启用</sys:String>
@@ -33,14 +33,14 @@
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingDetectionDirsRemoveLabel">移除</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_NotificationMessageMarkedInstalledResults">Installation Status Updater：已将 {0} 个游戏标记为已安装，{1} 个游戏为未安装。</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_PlayButtonActionLabel">用“安装状态更新-Installation Status Updater”扩展检测安装状态</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowTitle">Installation status scan results</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesInstalledLabel">Games set as installed:</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel">Games set as uninstalled:</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel">Set as installed</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel">Set as uninstalled</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel">Name</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel">Source</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel">Platforms</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogViewResultsLabel">View results</sys:String>
-    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogCloseLabel">Close</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowTitle">安装状态扫描结果</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesInstalledLabel">游戏已安装：</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetGamesUninstalledLabel">游戏已卸载：</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetInstalledLabel">设置为已安装</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSetUninstalledLabel">设置为已卸载</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowNameLabel">名称</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowSourceLabel">来源</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsWindowPlatformsLabel">平台</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogViewResultsLabel">显示结果</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdateResultsDialogCloseLabel">关闭</sys:String>
 </ResourceDictionary>
