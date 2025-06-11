@@ -9,16 +9,16 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NotLoggedIn">需要身份验证</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_NoConnection">无连接</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableWishlistNotificationsLabel">启用愿望单折扣通知</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">Notify when the price of an item has changed</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">Notify when an item is available on Steam</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnablePriceChangesNotificationsLabel">当项目价格发生变化时通知</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsEnableNewReleasesNotificationsLabel">当有物品在Steam上可用时通知</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsCheckEveryMinutesLabel">检查愿望单中更新的间隔时间（分钟）：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SettingsOpenUrlsInBrowserLabel">在网络浏览器中打开商店页面而不是 Steam 客户端</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistCheckNotLoggedIn" xml:space="preserve">Steam 愿望单通知器
 
 无法检查 Steam 愿望单。需要身份验证。</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOnSaleLabel">&quot;{0}&quot; 正在 Steam 上促销！</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; is now available on Steam!</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">&quot;{0}&quot; price has changed.</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameNewAvailableLabel">&quot;{0}&quot; 正在 Steam 上促销！</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GamePriceChangedLabel">&quot;{0}&quot;价格已经改变。</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_DiscountPercent">折扣：{0}%</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeGame">游戏</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeDlc">可下载内容（DLC）</sys:String>
@@ -29,7 +29,7 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ItemTypeMod">模组</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_SidebarTitle">查看 Steam 愿望单</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_ObtainingWishlistMessage">正在获取 Steam 愿望单数据…</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam Wallet</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSteamWalletLabel">Steam钱包</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeName">名称</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeRank">排名</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewSortingTypeDiscount">折扣</sys:String>
@@ -43,27 +43,27 @@
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumDiscount">最低折扣：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMinimumPrice">最低价格：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelMaximumPrice">最高价格：</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">Item type:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">Price:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">Early Access</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">Available</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">Not Available</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelItemType">项目类型：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatus">价格:</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameEarlyAccessLabel">抢先体验</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusReleased">可用的</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelReleaseStatusNotReleased">不可用</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewLabelTotalItems">总项目数：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOverallReviews">总体评论：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelReleaseDate">发布日期：</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelTags">标签：</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">Discount End Date:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">Owned in:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">Show if game is owned in other sources</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">Ownership:</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">Any</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">Owned</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">Not owned</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelDiscountEndDate">折扣结束日期：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnedInStoresSourcesFormat">拥有于：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OptionShowOwnedInLibrary">是否在其他来源中拥有游戏</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_OwnershipLabel">所有者：</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipAny">任意</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipOwned">已拥有</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_GameOwnershipNotOwned">未拥有</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnWeb">在网络打开</sys:String>
     <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteam">在 Steam 打开</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">Open on SteamDB</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">Check Steam wishlist for discounts</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">Remove from wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">Failed to remove from wishlist</sys:String>
-    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">Removing from wishlist…</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_WishlistViewItemLabelOpenOnSteamDb">在 SteamDB 上打开</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_MenuItemStartWishlistDiscountCheckDescription">查看Steam愿望单以获取折扣</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlist">从愿望单中删除</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemoveFromWishlistFail">从愿望单中移除失败</sys:String>
+    <sys:String x:Key="LOCSteam_Wishlist_Notif_RemovingFromWishlist">从愿望单中移除…</sys:String>
 </ResourceDictionary>
