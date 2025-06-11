@@ -126,8 +126,8 @@
     <sys:String x:Key="LOC_VndbNexus_HoursMinutesFormat">{0} 小时  {1} 分钟</sys:String>
     <sys:String x:Key="LOC_VndbNexus_HoursFormat">{0} 小时</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MinutesFormat">{0}分钟</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_FromNumberVotesFormatLowerCase">from {0} votes</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_VotesAverageFormat">{0} average</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_FromNumberVotesFormatLowerCase">从 {0} 票</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_VotesAverageFormat">平均 {0}</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VotesWeightedFormat">{0} weighted</sys:String>
     
     <sys:String x:Key="LOC_VndbNexus_LanguageUnknown">未知的</sys:String>
