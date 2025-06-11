@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LOC_PreventSleep_PreventingSystemScreenSleep">Preventing system and screen sleep…</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">System and screen sleep is allowed</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">Show item in top panel to switch mode to prevent or allow system and screen sleep</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">Prevent system and screen sleep when playing</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames">Always prevent system and screen sleep when any game is being played</sys:String>
-    <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">Remove configuration</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_PreventingSystemScreenSleep">正在防止系统和屏幕睡眠…</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SystemScreenSleepAllowed">允许系统和屏幕休眠</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_ShowSwitchModeItemOnTopPanel">在顶部面板中显示项目以切换模式以防止或允许系统和屏幕睡眠</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_SetGamesPreventSleepPlaying">游玩时防止系统和屏幕睡眠</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_AlwaysPreventSleepWhenPlayingGames">当游玩任何游戏时防止系统和屏幕睡眠</sys:String>
+    <sys:String x:Key="LOC_PreventSleep_RemoveConfiguration">删除配置</sys:String>
 </ResourceDictionary>
