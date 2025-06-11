@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="MetadataFieldsObtainLabel">Metadata fields to obtain:</sys:String>
-    <sys:String x:Key="PreferredCoverFormat">Preferred Cover format:</sys:String>
-    <sys:String x:Key="PreferredMarketLanguageLabel">Preferred market and language:</sys:String>
-    <sys:String x:Key="ImageQualityLabel">Image quality:</sys:String>
-    <sys:String x:Key="OriginalImageResolutionLabel">Original</sys:String>
-    <sys:String x:Key="ImageVerticalFormatLabel">Vertical</sys:String>
-    <sys:String x:Key="ImageSquareFormatLabel">Square</sys:String>
-    <sys:String x:Key="ImageLandscapeFormatLabel">Landscape</sys:String>
-    <sys:String x:Key="PreferredVerticalCoverResolution">Preferred vertical cover resolution:</sys:String>
-    <sys:String x:Key="PreferredSquareCoverResolution">Preferred square cover resolution:</sys:String>
-    <sys:String x:Key="PreferredImageResolutionLabel">Preferred resolution:</sys:String>
+    <sys:String x:Key="MetadataFieldsObtainLabel">要获取的元数据字段：</sys:String>
+    <sys:String x:Key="PreferredCoverFormat">首选封面格式：</sys:String>
+    <sys:String x:Key="PreferredMarketLanguageLabel">首选市场和语言：</sys:String>
+    <sys:String x:Key="ImageQualityLabel">图像质量：</sys:String>
+    <sys:String x:Key="OriginalImageResolutionLabel">原始的</sys:String>
+    <sys:String x:Key="ImageVerticalFormatLabel">垂直的</sys:String>
+    <sys:String x:Key="ImageSquareFormatLabel">正方形的</sys:String>
+    <sys:String x:Key="ImageLandscapeFormatLabel">横屏</sys:String>
+    <sys:String x:Key="PreferredVerticalCoverResolution">首选垂直封面分辨率：</sys:String>
+    <sys:String x:Key="PreferredSquareCoverResolution">首选正方形封面分辨率：</sys:String>
+    <sys:String x:Key="PreferredImageResolutionLabel">分辨率偏好：</sys:String>
 </ResourceDictionary>
