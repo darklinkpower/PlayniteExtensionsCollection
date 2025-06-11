@@ -85,11 +85,11 @@
     <sys:String x:Key="LOCSpecial_K_Helper_SettingCustomSpecialKLocationTooltip">在您想要使用位于特定位置的 Special K 或您使用了便携式安装时使用</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_BrowseLabel">浏览…</sys:String>
     <sys:String x:Key="LOCSpecial_K_Helper_RemoveLabel">移除</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">Start 32 and 64 bits services</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">Stop 32 and 64 bits services</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">Start 32 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">Stop 32 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">Start 64 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">Stop 64 bits service</sys:String>
-    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">Open Special K</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StartAllServices">启动 32 和 64 位服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_StopAllServices">停止 32 和 64 位的服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start32BitsService">启动 32 位服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop32BitsService">停止 32 位服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Start64BitsService">启动 64 位服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_Stop64BitsService">停止 64 位服务</sys:String>
+    <sys:String x:Key="LOCSpecial_K_Helper_OpenSpecialK">打开 Special K</sys:String>
 </ResourceDictionary>
