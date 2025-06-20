@@ -326,3 +326,11 @@ Packages:
     Changelog:
     - 'Added: Support for additional Steam Store filters including review type, purchase type, language, playtime, etc.'
     - 'Improved: Local storage of reviews has been improved for faster access and performance'
+  - Version: 2.50
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-06-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.20_96f8ca17/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_50.pext
+    Changelog:
+    - 'Added: Icons to display if reviewer purchased the game on Steam and if they played primarily on Steam Deck'
+    - 'Added: Label to indicate if review was written during the game Early Access period'
+    - 'Added: Button to refresh reviews using the currently active filters'
