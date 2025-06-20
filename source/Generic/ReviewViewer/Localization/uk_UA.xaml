@@ -7,13 +7,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Відбувається оновлення даних оглядів...</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Оновлення даних завершено.</sys:String>
 
-    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Використовувати мову, яка використовується Playnite для пошуку відгуків якщо вона доступна в Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Завантажувати дані огляду при виборі гри</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Завантажити, якщо відсутні дані огляду</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">Якщо дані старші за днів:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Висота опису</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Показувати корисність відгуку</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Показувати дату огляду</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Всього відгуків:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Позитивні відгуки:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Негативні відгуки:</sys:String>
