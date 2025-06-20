@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel Margin="10">
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="50,15,0,0">
             <Button Content="Save" MinWidth="80" Margin="0,0,10,0" Command="{Binding ConfirmCommand}" />
             <Button Content="Cancel" MinWidth="80" Command="{Binding CancelCommand}" />
         </StackPanel>
@@ -15,7 +15,7 @@
             <ItemsControl ItemsSource="{Binding Languages}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding DisplayName}" Margin="0,0,5,0" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                        <CheckBox Content="{Binding DisplayName}" Margin="0,8,5,0" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
