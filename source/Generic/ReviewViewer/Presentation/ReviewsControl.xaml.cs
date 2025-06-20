@@ -78,6 +78,14 @@ namespace ReviewViewer.Presentation
             set { SetValue(ref _displayIconReviewSteamDeck, value); }
         }
 
+        private bool _displayEarlyAccessLabel;
+
+        public bool DisplayEarlyAccessLabel
+        {
+            get => _displayEarlyAccessLabel;
+            set { SetValue(ref _displayEarlyAccessLabel, value); }
+        }
+
         private Visibility _thumbsUpVisibility = Visibility.Collapsed;
         public Visibility ThumbsUpVisibility
         {
@@ -417,6 +425,7 @@ namespace ReviewViewer.Presentation
                 ResourceProvider.GetString("LOCReview_Viewer_ReviewPostedDateLabel"),
                 UnixTimeStampToFormattedString(SelectedReview.TimestampUpdated));
 
+            DisplayEarlyAccessLabel = SelectedReview.WrittenDuringEarlyAccess;
             DisplayIconReviewCounted = SelectedReview.SteamPurchase;
             if (SelectedReview.Author.DeckPlaytimeAtReview.HasValue)
             {

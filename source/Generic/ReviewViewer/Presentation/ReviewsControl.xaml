@@ -8,7 +8,7 @@
              xmlns:commonBehaviors="clr-namespace:PluginsCommon.Behaviors"
              xmlns:common="clr-namespace:PluginsCommon"
              xmlns:domain="clr-namespace:ReviewViewer.Domain"
-             xmlns:presentation="clr-namespace:ReviewViewer.Presentation" xmlns:reviewviewer="clr-namespace:ReviewViewer" d:DataContext="{d:DesignInstance Type=reviewviewer:ReviewViewerSettingsViewModel}"
+             xmlns:presentation="clr-namespace:ReviewViewer.Presentation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <common:PluginUserControlBase.Resources>
@@ -412,6 +412,16 @@
                                Visibility="{Binding DisplayIconReviewSteamDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
                                ToolTip="{Binding IconReviewSteamDeckTooltip}" />
                     </DockPanel>
+
+                    <Border BorderBrush="#66ffffff" BorderThickness="1"
+                            Visibility="{Binding DisplayEarlyAccessLabel, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            Background="{StaticResource SectionHeaderBackgroundBrush}" Padding="4,1,4,1"
+                            Margin="0,0,0,15"
+                            HorizontalAlignment="Left"
+                            ToolTip="This review was written while the game was marked as Steam Early Access">
+                        <TextBlock Tag="Early Access Review" Text="{Binding RelativeSource={RelativeSource Self}, Path=Tag, Converter={StaticResource StringToUpperCaseConverter}}" />
+                    </Border>
+                    
                     <ScrollViewer x:Name="ReviewsScrollViewer" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"
                           Height="{Binding SettingsModel.Settings.DescriptionHeight}">
                         <presentation:HtmlTextView HtmlText="{Binding SelectedReviewText}" HorizontalAlignment="left"
