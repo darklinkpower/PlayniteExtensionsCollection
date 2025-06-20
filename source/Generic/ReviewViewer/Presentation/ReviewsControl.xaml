@@ -374,10 +374,14 @@
                             <StackPanel Margin="10,0,0,0">
                                 <DockPanel>
                                     <Button DockPanel.Dock="Right" Content="&#xEF1F;"
-                                    FontFamily="{DynamicResource FontIcoFont}"
-                                    Margin="10,0,0,0"
-                                    Visibility="{Binding CurrentSteamId, Converter={StaticResource NullToVisibilityConverter}}"
-                                    Command="{Binding OpenSelectedReviewCommand}" VerticalAlignment="Center" />
+                                            FontFamily="{DynamicResource FontIcoFont}"
+                                            Margin="10,0,0,0"
+                                            Visibility="{Binding CurrentSteamId, Converter={StaticResource NullToVisibilityConverter}}"
+                                            Command="{Binding OpenSelectedReviewCommand}" VerticalAlignment="Center" />
+                                    <Button DockPanel.Dock="Right" Content="&#xEFF6;"
+                                            FontFamily="{DynamicResource FontIcoFont}"
+                                            Margin="10,0,0,0"
+                                            Command="{Binding RefreshReviewsCommand}" VerticalAlignment="Center" />
                                     <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
                                        Text="{DynamicResource LOCReview_Viewer_ReviewRecommendedLabel}"
                                        Visibility="{Binding ThumbsUpVisibility}" />

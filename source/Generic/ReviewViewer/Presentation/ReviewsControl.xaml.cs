@@ -323,7 +323,7 @@ namespace ReviewViewer.Presentation
         public ICommand NextReviewCommand { get; }
         public ICommand PreviousReviewCommand { get; }
         public ICommand OpenSelectedReviewCommand { get; }
-
+        public ICommand RefreshReviewsCommand { get; }
         public ReviewsControl(
             ReviewViewerSettingsViewModel settingsViewModel,
             IPlayniteAPI playniteApi,
@@ -342,8 +342,8 @@ namespace ReviewViewer.Presentation
             {
                 _activeViewAtCreation = _playniteApi.MainView.ActiveDesktopView;
             }
-            
-            
+
+            RefreshReviewsCommand = new RelayCommand(async () => await UpdateReviewsContextAsync(CancellationToken.None, true));
             OpenSteamLanguageSelectorCommand = new RelayCommand(() => OpenSteamLanguageSelector());
             NextReviewCommand = new RelayCommand(() => NextReview(), () => MultipleReviewsAvailable);
             PreviousReviewCommand = new RelayCommand(() => PreviousReview(), () => MultipleReviewsAvailable);
@@ -507,7 +507,7 @@ namespace ReviewViewer.Presentation
             }
 
             RunOnUI(() => ControlVisibility = Visibility.Visible);
-            await UpdateReviewsContextAsync(token);
+            await UpdateReviewsContextAsync(token, false);
         }
 
         private void ResetBindingValues()
@@ -525,7 +525,7 @@ namespace ReviewViewer.Presentation
             IconReviewSteamDeckTooltip = string.Empty;
         }
 
-        public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken)
+        public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken, bool forceRefresh)
         {
             var contextId = Guid.NewGuid();
             var executingContextId = contextId;
@@ -533,7 +533,7 @@ namespace ReviewViewer.Presentation
             var requestQuery = _queryOptions.ToDomain();
             var requestKey = $"{CurrentSteamId}_{Serialization.ToJson(requestQuery)}";
             // To prevent making a request unnecessarily
-            if (_activeRequestQueryKey == requestKey || CurrentSteamId.IsNullOrEmpty())
+            if ((_activeRequestQueryKey == requestKey && !forceRefresh) || CurrentSteamId.IsNullOrEmpty())
             {
                 return;
             }
@@ -545,7 +545,7 @@ namespace ReviewViewer.Presentation
                 _inProgressDataUpdates++;
                 UpdateSectionsVisibility();
                 var reviewsResponse = await _steamReviewsCoordinator
-                    .GetReviewsAsync(int.Parse(CurrentSteamId), requestQuery, false, cancellationToken: cancellationToken);
+                    .GetReviewsAsync(int.Parse(CurrentSteamId), requestQuery, forceRefresh, cancellationToken: cancellationToken);
                 // To detect if game changed while downloading data
                 if (contextId != executingContextId || reviewsResponse is null)
                 {
