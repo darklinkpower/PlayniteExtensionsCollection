@@ -7,13 +7,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Actualización de datos de reseñas en curso...</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Actualización de datos terminada.</sys:String>
 
-    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Usar lenguaje usado por Playnite para buscar reseñas si está disponible en Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Descarga de datos de reseñas durante selección del juego</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Descargar si faltan datos de reseñas</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">Si los datos son más antiguos que días:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Altura de descripción</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Mostrar utilidad de las reseñas</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Mostrar fecha de reseña</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Reseñas totales:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Revisiones positivas:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Reseñas negativas:</sys:String>
