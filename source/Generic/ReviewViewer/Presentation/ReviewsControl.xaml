@@ -394,9 +394,7 @@
                                 <TextBlock Text="{Binding TotalFormattedPlaytime}" Opacity="0.75" />
                             </StackPanel>
                         </DockPanel>
-                        <TextBlock Text="{Binding ReviewPostedDate}"
-                           Visibility="{Binding SettingsModel.Settings.DisplayReviewDate, Converter={StaticResource BooleanToVisibilityConverter}}"
-                           Margin="0,10,0,0" Opacity="0.75" />
+                        <TextBlock Text="{Binding ReviewPostedDate}" Margin="0,10,0,0" Opacity="0.75" />
                     </StackPanel>
 
                     <DockPanel VerticalAlignment="Center" Margin="0,0,0,10" LastChildFill="False">
@@ -434,9 +432,7 @@
                             LinkForeground="{DynamicResource GlyphColor}"
                             HtmlFontSize="{DynamicResource FontSize}" />
                     </ScrollViewer>
-                    <StackPanel Margin="0,0,0,10"
-                        Visibility="{Binding SettingsModel.Settings.DisplayHelpfulnessData,
-                            Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Margin="0,0,0,10">
                         <TextBlock Text="{Binding ReviewHelpfulnessHelpful}" Opacity="0.75" />
                         <TextBlock Text="{Binding ReviewHelpfulnessFunny}" Opacity="0.75" />
                     </StackPanel>

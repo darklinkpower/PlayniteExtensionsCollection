@@ -13,73 +13,36 @@ namespace ReviewViewer
     {
         public QueryOptions LastUsedQuery { get; set; } = new QueryOptions();
         public int DatabaseVersion { get; set; } = 1;
-        [DontSerialize]
-        private bool downloadDataOnGameSelection { get; set; } = true;
-        public bool DownloadDataOnGameSelection
-        {
-            get => downloadDataOnGameSelection;
-            set
-            {
-                downloadDataOnGameSelection = value;
-                OnPropertyChanged();
-            }
-        }
 
-        private bool downloadDataIfOlderThanDays { get; set; } = true;
+        private bool _downloadDataIfOlderThanDays = true;
         public bool DownloadDataIfOlderThanDays
         {
-            get => downloadDataIfOlderThanDays;
+            get => _downloadDataIfOlderThanDays;
             set
             {
-                downloadDataIfOlderThanDays = value;
+                _downloadDataIfOlderThanDays = value;
                 OnPropertyChanged();
             }
         }
 
-        [DontSerialize]
-        private int downloadIfOlderThanValue { get; set; } = 7;
+        private int _downloadIfOlderThanValue = 7;
         public int DownloadIfOlderThanValue
         {
-            get => downloadIfOlderThanValue;
+            get => _downloadIfOlderThanValue;
             set
             {
-                downloadIfOlderThanValue = value;
+                _downloadIfOlderThanValue = value;
                 OnPropertyChanged();
             }
         }
 
-        [DontSerialize]
-        private double descriptionHeight { get; set; } = 180;
+        private double _descriptionHeight = 180;
         public double DescriptionHeight
         {
-            get => descriptionHeight;
+            get => _descriptionHeight;
             set
             {
-                descriptionHeight = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DontSerialize]
-        private bool displayHelpfulnessData { get; set; } = true;
-        public bool DisplayHelpfulnessData
-        {
-            get => displayHelpfulnessData;
-            set
-            {
-                displayHelpfulnessData = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [DontSerialize]
-        private bool displayReviewDate { get; set; } = true;
-        public bool DisplayReviewDate
-        {
-            get => displayReviewDate;
-            set
-            {
-                displayReviewDate = value;
+                _descriptionHeight = value;
                 OnPropertyChanged();
             }
         }
