@@ -7,13 +7,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">İnceleme verileri güncellemesi devam ediyor...</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Veri yenileme tamamlandı.</sys:String>
 
-    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Steam'de mevcutsa incelemeleri aramak için Playnite tarafından kullanılan dili kullanın</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Oyun seçiminde veri indirmeyi inceleyin</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">İnceleme verileri eksikse indirin</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">Veriler belirtilen günden daha eskiyse:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Açıklama yüksekliği</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">İnceleme yararlılığını göster</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">İnceleme tarihini göster</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Toplam inceleme:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Olumlu inceleme:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Olumsuz inceleme:</sys:String>
