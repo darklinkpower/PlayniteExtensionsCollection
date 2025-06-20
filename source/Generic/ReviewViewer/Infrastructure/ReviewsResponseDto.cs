@@ -30,13 +30,13 @@ namespace ReviewViewer.Infrastructure
         public string ReviewScoreDesc { get; set; }
 
         [SerializationPropertyName("total_positive")]
-        public long TotalPositive { get; set; }
+        public int TotalPositive { get; set; }
 
         [SerializationPropertyName("total_negative")]
-        public long TotalNegative { get; set; }
+        public int TotalNegative { get; set; }
 
         [SerializationPropertyName("total_reviews")]
-        public long TotalReviews { get; set; }
+        public int TotalReviews { get; set; }
     }
 
     public class Review
@@ -106,6 +106,9 @@ namespace ReviewViewer.Infrastructure
 
         [SerializationPropertyName("playtime_at_review")]
         public long PlaytimeAtReview { get; set; }
+
+        [SerializationPropertyName("deck_playtime_at_review")]
+        public long? DeckPlaytimeAtReview { get; set; }
 
         [SerializationPropertyName("last_played")]
         public long LastPlayed { get; set; }

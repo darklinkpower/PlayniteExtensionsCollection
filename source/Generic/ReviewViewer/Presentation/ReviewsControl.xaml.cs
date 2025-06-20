@@ -62,6 +62,22 @@ namespace ReviewViewer.Presentation
             set { SetValue(ref _displayNoReviewsPanel, value); }
         }
 
+        private bool _displayIconReviewCounted;
+
+        public bool DisplayIconReviewCounted
+        {
+            get => _displayIconReviewCounted;
+            set { SetValue(ref _displayIconReviewCounted, value); }
+        }
+
+        private bool _displayIconReviewSteamDeck;
+
+        public bool DisplayIconReviewSteamDeck
+        {
+            get => _displayIconReviewSteamDeck;
+            set { SetValue(ref _displayIconReviewSteamDeck, value); }
+        }
+
         private Visibility _thumbsUpVisibility = Visibility.Collapsed;
         public Visibility ThumbsUpVisibility
         {
@@ -185,6 +201,13 @@ namespace ReviewViewer.Presentation
         {
             get => _formattedPlaytime;
             set => SetValue(ref _formattedPlaytime, value);
+        }
+
+        private string _iconReviewSteamDeckTooltip = string.Empty;
+        public string IconReviewSteamDeckTooltip
+        {
+            get => _iconReviewSteamDeckTooltip;
+            set => SetValue(ref _iconReviewSteamDeckTooltip, value);
         }
 
         private string _totalFormattedPlaytime;
@@ -393,6 +416,21 @@ namespace ReviewViewer.Presentation
             ReviewPostedDate = string.Format(
                 ResourceProvider.GetString("LOCReview_Viewer_ReviewPostedDateLabel"),
                 UnixTimeStampToFormattedString(SelectedReview.TimestampUpdated));
+
+            DisplayIconReviewCounted = SelectedReview.SteamPurchase;
+            if (SelectedReview.Author.DeckPlaytimeAtReview.HasValue)
+            {
+                double hours = Math.Round(SelectedReview.Author.DeckPlaytimeAtReview.Value / 60.0, 1);
+                IconReviewSteamDeckTooltip = string.Format(
+                    "This reviewer played this game primarily on Steam Deck at the time of writing ({0} hours)",
+                    hours);
+                DisplayIconReviewSteamDeck = true; 
+            }
+            else
+            {
+                IconReviewSteamDeckTooltip = string.Empty;
+                DisplayIconReviewSteamDeck = false;
+            }
         }
 
         public static string UnixTimeStampToFormattedString(double unixTimeStamp)
@@ -475,6 +513,7 @@ namespace ReviewViewer.Presentation
             SelectedReviewText = string.Empty;
             ReviewHelpfulnessHelpful = string.Empty;
             ReviewHelpfulnessFunny = string.Empty;
+            IconReviewSteamDeckTooltip = string.Empty;
         }
 
         public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken)
