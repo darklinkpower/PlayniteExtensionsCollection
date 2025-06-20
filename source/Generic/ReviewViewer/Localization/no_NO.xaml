@@ -7,13 +7,9 @@
     <sys:String x:Key="LOCReview_Viewer_DialogDataUpdateProgressMessage">Oppdatering av omtaledata pågår...</sys:String>
     <sys:String x:Key="LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage">Dataoppdatering fullført.</sys:String>
 
-    <sys:String x:Key="LOCReview_Viewer_SettingUseMatchingSteamApiLang">Bruk språk som brukes av Playnite til å søke etter omtaler hvis det er tilgjengelig på Steam</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionDescription">Last ned omtaledata når spill velges</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfMissingDescription">Last ned hvis omtaledata mangler</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription">Hvis data er eldre enn dette antallet dager:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_SettingDescriptionHeightDescription">Omtalefeltets høyde</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayHelpfulnessDataDescription">Vis data om omtalens kvalitet</sys:String>
-    <sys:String x:Key="LOCReview_Viewer_SettingDisplayDateDescription">Vis omtaledato</sys:String>
     <sys:String x:Key="LOCReview_Viewer_TotalUserReviews">Totalt antall omtaler:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_PositiveUserReviews">Positive omtaler:</sys:String>
     <sys:String x:Key="LOCReview_Viewer_NegativeUserReviews">Negative omtaler:</sys:String>
