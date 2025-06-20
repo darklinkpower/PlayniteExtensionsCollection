@@ -1,10 +1,8 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Events;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PluginsCommon;
 using FlowHttp;
-using ReviewViewer.Controls;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
@@ -19,21 +17,27 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using DatabaseCommon;
+using ReviewViewer.Application;
+using ReviewViewer.Domain;
+using ReviewViewer.Infrastructure;
+using ReviewViewer.Presentation;
 
 namespace ReviewViewer
 {
     public class ReviewViewer : GenericPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private string steamApiLanguage;
+        private static readonly ILogger _logger = LogManager.GetLogger();
+        private readonly LiteDbRepository<ReviewsResponseRecord> _reviewsRecordsDatabase;
+        private readonly SteamReviewsCoordinator _steamReviewsCoordinator;
 
-        public ReviewViewerSettingsViewModel settings { get; set; }
+        public ReviewViewerSettingsViewModel Settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("ca24e37a-76d9-49bf-89ab-d3cba4a54bd1");
 
         public ReviewViewer(IPlayniteAPI api) : base(api)
         {
-            settings = new ReviewViewerSettingsViewModel(this);
+            Settings = new ReviewViewerSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -48,106 +52,63 @@ namespace ReviewViewer
             AddSettingsSupport(new AddSettingsSupportArgs
             {
                 SourceName = "ReviewViewer",
-                SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
+                SettingsRoot = $"{nameof(Settings)}.{nameof(Settings.Settings)}"
             });
 
-            steamApiLanguage = "english";
-            if (settings.Settings.UseMatchingSteamApiLang)
-            {
-                steamApiLanguage = Steam.GetSteamApiMatchingLanguage(PlayniteApi.ApplicationSettings.Language);
-            }
+            var reviewsDatabasePath = Path.Combine(GetPluginUserDataPath(), "reviewsDatabase.db");
+            _reviewsRecordsDatabase = new LiteDbRepository<ReviewsResponseRecord>(reviewsDatabasePath, _logger);
+            var rawCollection = _reviewsRecordsDatabase.GetRawCollection();
+            rawCollection.EnsureIndex(nameof(ReviewsResponseRecord.CacheKey), true);
 
-            var menuIcon = new TextBlock
-            {
-                Text = "\xEC80",
-                FontSize = 20,
-                FontFamily = ResourceProvider.GetResource("FontIcoFont") as FontFamily
-            };
-
-            Application.Current.Resources.Add("reviewViewerUpdateIcon", menuIcon);
-
+            _steamReviewsCoordinator = new SteamReviewsCoordinator
+                (new SteamReviewsService(), _reviewsRecordsDatabase, TimeSpan.FromDays(Settings.Settings.DownloadIfOlderThanValue));
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
             if (args.Name == "ReviewsControl")
             {
-                return new ReviewsControl(GetPluginUserDataPath(), steamApiLanguage, settings, PlayniteApi);
+                return new ReviewsControl(Settings, PlayniteApi, _logger, _steamReviewsCoordinator);
             }
 
             return null;
         }
 
+        public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        {
+            var databaseVersion = Settings.Settings.DatabaseVersion;
+            if (databaseVersion == 1)
+            {
+                _logger.Info("Upgrading plugin data to database version 2. Deleting legacy JSON files.");
+                var folderPath = GetPluginUserDataPath();
+                if (Directory.Exists(folderPath))
+                {
+                    var jsonFiles = Directory.GetFiles(folderPath, "*.json", SearchOption.TopDirectoryOnly);
+                    foreach (var file in jsonFiles)
+                    {
+                        FileSystem.DeleteFileSafe(file);
+                    }
+                }
+
+                Settings.Settings.DatabaseVersion = 2;
+                base.SavePluginSettings(Settings.Settings);
+                _logger.Info("Plugin data upgraded to version 2.");
+            }
+        }
+
+        public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
+        {
+            base.SavePluginSettings(Settings.Settings);
+        }
+
         public override ISettings GetSettings(bool firstRunSettings)
         {
-            return settings;
+            return Settings;
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
             return new ReviewViewerSettingsView();
-        }
-
-        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
-        {
-            return new List<GameMenuItem>
-            {
-                new GameMenuItem
-                {
-                    Description = ResourceProvider.GetString("LOCReview_Viewer_MenuItemUpdateDataDescription"),
-                    MenuSection = "Steam Reviews Viewer",
-                    Icon = "reviewViewerUpdateIcon",
-                    Action = a => {
-                       RefreshGameData(args.Games);
-                    }
-                }
-            };
-        }
-
-        public void RefreshGameData(List<Game> games)
-        {
-            var userOverwriteChoice = PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogOverwriteChoiceMessage"), "Steam Reviews Viewer", MessageBoxButton.YesNo);
-            var reviewSearchTypes = new string[] { "all", "positive", "negative" };
-            var pluginDataPath = GetPluginUserDataPath();
-            var reviewsApiMask = @"https://store.steampowered.com/appreviews/{0}?json=1&purchase_type=all&language={1}&review_type={2}&playtime_filter_min=0&filter=summary";
-
-            var progressTitle = ResourceProvider.GetString("LOCReview_Viewer_DialogDataUpdateProgressMessage");
-            var progressOptions = new GlobalProgressOptions(progressTitle, true);
-            progressOptions.IsIndeterminate = false;
-            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
-            {
-                a.ProgressMaxValue = games.Count() + 1;
-                foreach (Game game in games)
-                {
-                    if (a.CancelToken.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                    a.CurrentProgressValue++;
-                    a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{a.ProgressMaxValue - 1}\n{game.Name}";
-                    var steamId = Steam.GetGameSteamId(game, true);
-                    if (steamId.IsNullOrEmpty())
-                    {
-                        continue;
-                    }
-
-                    foreach (string reviewSearchType in reviewSearchTypes)
-                    {
-                        var gameDataPath = Path.Combine(pluginDataPath, $"{game.Id}_{reviewSearchType}.json");
-                        if (FileSystem.FileExists(gameDataPath) && userOverwriteChoice != MessageBoxResult.Yes)
-                        {
-                            continue;
-                        }
-                        var uri = string.Format(reviewsApiMask, steamId, steamApiLanguage, reviewSearchType);
-
-                        // To prevent being rate limited
-                        Thread.Sleep(200);
-                        HttpRequestFactory.GetHttpFileRequest().WithUrl(uri).WithDownloadTo(gameDataPath).DownloadFile();
-                    }
-                }
-            }, progressOptions);
-
-            PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCReview_Viewer_DialogResultsDataRefreshFinishedMessage"), "Steam Reviews Viewer");
         }
 
     }

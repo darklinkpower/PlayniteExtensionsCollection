@@ -1,0 +1,423 @@
+﻿<common:PluginUserControlBase x:Class="ReviewViewer.Presentation.ReviewsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:commonConverters="clr-namespace:PluginsCommon.Converters"
+             xmlns:commonBehaviors="clr-namespace:PluginsCommon.Behaviors"
+             xmlns:common="clr-namespace:PluginsCommon"
+             xmlns:domain="clr-namespace:ReviewViewer.Domain"
+             xmlns:presentation="clr-namespace:ReviewViewer.Presentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <common:PluginUserControlBase.Resources>
+        <commonConverters:EnumEqualityConverter x:Key="EnumEqualityConverter"/>
+        <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <commonConverters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
+        <SolidColorBrush Color="#E6646464" x:Key="PopupBackgroundBrush" />
+        <SolidColorBrush Color="#66808080" x:Key="SectionHeaderBackgroundBrush" />
+        <Style TargetType="Separator" x:Key="PopupSeparatorStyle">
+            <Setter Property="Background" Value="{DynamicResource GlyphBrush}" />
+        </Style>
+        <Style TargetType="Border" x:Key="SectionHeaderBorderStyle">
+            <Setter Property="CornerRadius" Value="3,3,3,3" />
+            <Setter Property="Background" Value="{StaticResource SectionHeaderBackgroundBrush}" />
+        </Style>
+        <Style TargetType="Border" x:Key="SectionHeaderActivePopupBorderStyle">
+            <Setter Property="CornerRadius" Value="3,3,0,0" />
+            <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
+        </Style>
+        <Style TargetType="Border" x:Key="PopupBackgroundStyle">
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
+        </Style>
+    </common:PluginUserControlBase.Resources>
+    <StackPanel Name="MainPanel" Visibility="{Binding ControlVisibility}">
+        <StackPanel>
+            <WrapPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <!-- Review Type Section -->
+                <Grid Margin="0,5,5,0">
+                    <Grid Name="ReviewTypeTrigger">
+                        <Border Style="{StaticResource SectionHeaderBorderStyle}"
+                                Visibility="{Binding IsReviewTypePopupOpen, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Border Style="{StaticResource SectionHeaderActivePopupBorderStyle}"
+                                Visibility="{Binding IsReviewTypePopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Review Type" Margin="10"/>
+                        <i:Interaction.Behaviors>
+                            <commonBehaviors:HoverPopupBehavior
+                                Popup="{Binding ElementName=ReviewTypePopup}"
+                                IsOpen="{Binding IsReviewTypePopupOpen, Mode=TwoWay}"
+                                Delay="0:0:0.150" />
+                        </i:Interaction.Behaviors>
+                    </Grid>
+
+                    <Popup Name="ReviewTypePopup"
+                           Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=ReviewTypeTrigger}"
+                           StaysOpen="True"
+                           IsOpen="{Binding IsReviewTypePopupOpen, Mode=TwoWay}">
+                        <Border Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel>
+                                <RadioButton Content="All Reviews" GroupName="ReviewTypeGroup"
+                                     IsChecked="{Binding QueryOptions.ReviewType, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:ReviewType.All}}" />
+                                <RadioButton Content="Recommended" GroupName="ReviewTypeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.ReviewType, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:ReviewType.Positive}}" />
+                                <RadioButton Content="Not Recommended" GroupName="ReviewTypeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.ReviewType, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:ReviewType.Negative}}" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- Purchase Type Section -->
+                <Grid Margin="0,5,5,0">
+                    <Grid Name="PurchaseTypeTrigger">
+                        <Border Style="{StaticResource SectionHeaderBorderStyle}"
+                                Visibility="{Binding IsPurchaseTypePopupOpen, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Border Style="{StaticResource SectionHeaderActivePopupBorderStyle}"
+                                Visibility="{Binding IsPurchaseTypePopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Purchase Type" Margin="10"/>
+                        <i:Interaction.Behaviors>
+                            <commonBehaviors:HoverPopupBehavior
+                                Popup="{Binding ElementName=PurchaseTypePopup}"
+                                IsOpen="{Binding IsPurchaseTypePopupOpen, Mode=TwoWay}"
+                                Delay="0:0:0.150" />
+                        </i:Interaction.Behaviors>
+                    </Grid>
+
+                    <Popup Name="PurchaseTypePopup"
+                           Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=PurchaseTypeTrigger}"
+                           StaysOpen="True"
+                           IsOpen="{Binding IsPurchaseTypePopupOpen, Mode=TwoWay}">
+                        <Border Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel>
+                                <RadioButton Content="All" GroupName="PurchaseTypeGroup"
+                                     IsChecked="{Binding QueryOptions.PurchaseType, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PurchaseType.All}}" />
+                                <RadioButton Content="Steam Purchasers" GroupName="PurchaseTypeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PurchaseType, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PurchaseType.Steam}}" />
+                                <RadioButton Content="Other" GroupName="PurchaseTypeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PurchaseType, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PurchaseType.Other}}" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- Language Section -->
+                <Grid Margin="0,5,5,0">
+                    <Grid Name="LanguageTrigger">
+                        <Border Style="{StaticResource SectionHeaderBorderStyle}"
+                                Visibility="{Binding IsLanguagePopupOpen, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Border Style="{StaticResource SectionHeaderActivePopupBorderStyle}"
+                                Visibility="{Binding IsLanguagePopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Language" Margin="10"/>
+                        <i:Interaction.Behaviors>
+                            <commonBehaviors:HoverPopupBehavior
+                                Popup="{Binding ElementName=LanguagePopup}"
+                                IsOpen="{Binding IsLanguagePopupOpen, Mode=TwoWay}"
+                                Delay="0:0:0.150" />
+                        </i:Interaction.Behaviors>
+                    </Grid>
+
+                    <Popup Name="LanguagePopup"
+                           Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=LanguageTrigger}"
+                           StaysOpen="True"
+                           IsOpen="{Binding IsLanguagePopupOpen, Mode=TwoWay}">
+                        <Border Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel>
+                                <RadioButton Content="All Languages" GroupName="LanguageGroup"
+                                     IsChecked="{Binding QueryOptions.LanguageSelectionMode, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:LanguageSelectionMode.All}}" />
+                                <RadioButton Content="Custom" GroupName="LanguageGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.LanguageSelectionMode, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:LanguageSelectionMode.Custom}}" />
+
+                                <Button Content="Customize" Margin="0,5,0,0" Command="{Binding OpenSteamLanguageSelectorCommand}" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- Date Range Section -->
+                <Grid Margin="0,5,5,0" Visibility="Collapsed">
+                    <Grid Name="DateRangeTrigger">
+                        <Border Style="{StaticResource SectionHeaderBorderStyle}"
+                                Visibility="{Binding IsDateRangePopupOpen, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Border Style="{StaticResource SectionHeaderActivePopupBorderStyle}"
+                                Visibility="{Binding IsDateRangePopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Date range" Margin="10"/>
+                        <i:Interaction.Behaviors>
+                            <commonBehaviors:HoverPopupBehavior
+                                Popup="{Binding ElementName=DateRangePopup}"
+                                IsOpen="{Binding IsDateRangePopupOpen, Mode=TwoWay}"
+                                Delay="0:0:0.150" />
+                        </i:Interaction.Behaviors>
+                    </Grid>
+
+                    <Popup Name="DateRangePopup"
+                           Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=DateRangeTrigger}"
+                           StaysOpen="True"
+                           IsOpen="{Binding IsDateRangePopupOpen, Mode=TwoWay}">
+                        <Border Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel>
+                                <RadioButton Content="Lifetime" GroupName="DateRangeGroup"
+                                     IsChecked="{Binding QueryOptions.DateRangeMode, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DateRangeMode.Lifetime}}" />
+                                <RadioButton Content="Only Specific Range" GroupName="DateRangeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.DateRangeMode, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DateRangeMode.Specific}}" />
+                                <RadioButton Content="Exclude Specific Range" GroupName="DateRangeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.DateRangeMode, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DateRangeMode.Exclude}}" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- Playtime Section -->
+                <Grid Margin="0,5,5,0">
+                    <Grid Name="PlaytimeTrigger">
+                        <Border Style="{StaticResource SectionHeaderBorderStyle}"
+                                Visibility="{Binding IsPlaytimePopupOpen, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Border Style="{StaticResource SectionHeaderActivePopupBorderStyle}"
+                                Visibility="{Binding IsPlaytimePopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Playtime" Margin="10"/>
+                        <i:Interaction.Behaviors>
+                            <commonBehaviors:HoverPopupBehavior
+                                Popup="{Binding ElementName=PlaytimePopup}"
+                                IsOpen="{Binding IsPlaytimePopupOpen, Mode=TwoWay}"
+                                Delay="0:0:0.150" />
+                        </i:Interaction.Behaviors>
+                    </Grid>
+
+                    <Popup Name="PlaytimePopup"
+                           Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=PlaytimeTrigger}"
+                           StaysOpen="True"
+                           IsOpen="{Binding IsPlaytimePopupOpen, Mode=TwoWay}">
+                        <Border Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel>
+                                <RadioButton Content="No Minimum" GroupName="PlaytimeGroup"
+                                     IsChecked="{Binding QueryOptions.PlaytimePreset, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimePreset.None}}" />
+                                <RadioButton Content="Over 1 hour" GroupName="PlaytimeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PlaytimePreset, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimePreset.Over1Hour}}" />
+                                <RadioButton Content="Over 10 hours" GroupName="PlaytimeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PlaytimePreset, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimePreset.Over10Hours}}" />
+                                <RadioButton Content="Custom" GroupName="PlaytimeGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PlaytimePreset, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimePreset.Custom}}" />
+
+                                <TextBlock Text="Minimum Playtime (hours)" Margin="0,5,0,0" />
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMinHours}" Width="150" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMinHours}" Margin="10,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+
+                                <TextBlock Text="Maximum Playtime (hours)" Margin="0,5,0,0" />
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMaxHours}" Width="150" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMaxHours}" Margin="10,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+
+                                <Separator Margin="5" Style="{StaticResource PopupSeparatorStyle}"/>
+
+                                <RadioButton Content="Played across all devices" GroupName="PlaytimeDeviceGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PlaytimeDevice, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimeDevice.All}}" />
+                                <RadioButton Content="Played mostly on Steam Deck" GroupName="PlaytimeDeviceGroup" Margin="0,5,0,0"
+                                     IsChecked="{Binding QueryOptions.PlaytimeDevice, Mode=TwoWay,
+                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimeDevice.SteamDeck}}" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- Display Section -->
+                <Grid Margin="0,5,5,0">
+                    <Grid Name="DisplayTrigger">
+                        <Border Style="{StaticResource SectionHeaderBorderStyle}"
+                                Visibility="{Binding IsDisplayPopupOpen, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+                        <Border Style="{StaticResource SectionHeaderActivePopupBorderStyle}"
+                                Visibility="{Binding IsDisplayPopupOpen, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="Display" Margin="10"/>
+                        <i:Interaction.Behaviors>
+                            <commonBehaviors:HoverPopupBehavior
+                                Popup="{Binding ElementName=DisplayPopup}"
+                                IsOpen="{Binding IsDisplayPopupOpen, Mode=TwoWay}"
+                                Delay="0:0:0.150" />
+                        </i:Interaction.Behaviors>
+                    </Grid>
+
+                    <Popup Name="DisplayPopup"
+                           Placement="Bottom"
+                           PlacementTarget="{Binding ElementName=DisplayTrigger}"
+                           StaysOpen="True"
+                           IsOpen="{Binding IsDisplayPopupOpen, Mode=TwoWay}">
+                        <Border Style="{StaticResource PopupBackgroundStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Show reviews in selected display order" Margin="5"/>
+                                <Separator Margin="5" Style="{StaticResource PopupSeparatorStyle}"/>
+                                <RadioButton Content="Summary" GroupName="DisplayGroup" Margin="0,5,0,0"
+                                    IsChecked="{Binding QueryOptions.Display, Mode=TwoWay,
+                                    Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DisplayType.Summary}}" />
+                                <RadioButton Content="Most Helpful" GroupName="DisplayGroup" Margin="0,5,0,0"
+                                    IsChecked="{Binding QueryOptions.Display, Mode=TwoWay,
+                                    Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DisplayType.MostHelpful}}" />
+                                <RadioButton Content="Recent" GroupName="DisplayGroup" Margin="0,5,0,0"
+                                    IsChecked="{Binding QueryOptions.Display, Mode=TwoWay,
+                                    Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DisplayType.Recent}}" />
+                                <RadioButton Content="Funny" GroupName="DisplayGroup" Margin="0,5,0,0"
+                                    IsChecked="{Binding QueryOptions.Display, Mode=TwoWay,
+                                    Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DisplayType.Funny}}" />
+                                <Separator Margin="5"/>
+
+                                <CheckBox IsChecked="{Binding QueryOptions.UseHelpfulSystem}">
+                                    <TextBlock Text="Use new helpfulness system. Only applies to Summary and Most Helpful views."
+                                               TextWrapping="Wrap"
+                                               MaxWidth="200" />
+                                </CheckBox>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+            </WrapPanel>
+            <Grid>
+                <Grid Visibility="{Binding DisplayProgressPanel, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      MinHeight="200">
+                    <StackPanel VerticalAlignment="Center" Margin="20,0,20,0">
+                        <TextBlock Text="Fetching reviews from Steam..." TextWrapping="Wrap"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <ProgressBar IsIndeterminate="True" Height="30" HorizontalAlignment="Stretch" Margin="0,10,0,0" />
+                    </StackPanel>
+                </Grid>
+                
+                <Grid Visibility="{Binding DisplayNoReviewsPanel, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      MinHeight="200">
+                    <TextBlock Text="No reviews found matching the selected filters." TextWrapping="Wrap"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,20,0" />
+                </Grid>
+                
+                <StackPanel Visibility="{Binding DisplayReviewsPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Margin="0,15,0,10">
+                        <DockPanel>
+                            <Viewbox Stretch="Uniform" Height="50" VerticalAlignment="Center"
+                             Visibility="{Binding ThumbsUpVisibility}">
+                                <Canvas Width="256" Height="256" Canvas.Left="0" Canvas.Top="0">
+                                    <Canvas.Background>
+                                        <RadialGradientBrush GradientOrigin="0.06,0.08" Center="0.5, 0.5"
+                                    RadiusX="1" RadiusY="1">
+                                            <RadialGradientBrush.GradientStops>
+                                                <GradientStop Color="#2b526c" Offset="0.0" />
+                                                <GradientStop Color="#254c6f" Offset="0.34" />
+                                                <GradientStop Color="#0d2f5f" Offset="1.0" />
+                                            </RadialGradientBrush.GradientStops>
+                                        </RadialGradientBrush>
+                                    </Canvas.Background>
+                                    <Canvas.RenderTransform>
+                                        <TranslateTransform X="0" Y="0"/>
+                                    </Canvas.RenderTransform>
+                                    <Canvas.Resources/>
+                                    <Path Fill="#61b6e8">
+                                        <Path.Data>
+                                            <PathGeometry Figures="M126.16 44c-0.18-1.38-0.8-3.93-2.71-4.15c0 0-16.02-1.85-18.59 12.29c0 0-5.13 18.82 9.41 46.21l-15.08 0.64    H68.51c-10.2 0-18.45 10.81-18.51 24.16h44.89c1.87 0 3.38 1.51 3.38 3.38c0 1.86-1.51 3.38-3.38 3.38H51.86l5.43 19.22h43.68    c1.86 0 3.38 1.51 3.38 3.38c0 1.86-1.52 3.37-3.38 3.37H59.2l5.43 19.23h33.45c1.86 0 3.38 1.51 3.38 3.37    c0 1.86-1.51 3.38-3.38 3.38H67.09c5.27 11.59 13.82 20.4 23.03 20.4h68.13l21.34-62.23C174.13 134.96 132.53 92.42 126.16 44z     M208.44 154.04c-1.8-3.64-4.9-6.36-8.74-7.67l-7.55-2.57L170.86 206l7.56 2.59c3.84 1.32 7.99 1.05 11.64-0.74    c3.65-1.79 6.36-4.89 7.67-8.73l11.45-33.45C210.49 161.82 210.23 157.69 208.44 154.04z" FillRule="NonZero"/>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                            </Viewbox>
+
+                            <Viewbox Stretch="Uniform" Height="50" VerticalAlignment="Center" RenderTransformOrigin="0.5, 0.5"
+                                    Visibility="{Binding ThumbsDownVisibility}">
+                                <Viewbox.RenderTransform>
+                                    <ScaleTransform ScaleX="-1" />
+                                </Viewbox.RenderTransform>
+                                <Canvas Width="256" Height="256" Canvas.Left="0" Canvas.Top="0"
+                                    RenderTransformOrigin="0.5, 0.5">
+                                    <Canvas.Background>
+                                        <RadialGradientBrush GradientOrigin="0.06,0.92" Center="0.5, 0.5"
+                                    RadiusX="1" RadiusY="1">
+                                            <RadialGradientBrush.GradientStops>
+                                                <GradientStop Color="#753e41" Offset="0.0" />
+                                                <GradientStop Color="#683439" Offset="0.30" />
+                                                <GradientStop Color="#4b2125" Offset="1.0" />
+                                            </RadialGradientBrush.GradientStops>
+                                        </RadialGradientBrush>
+                                    </Canvas.Background>
+                                    <Canvas.RenderTransform>
+                                        <RotateTransform Angle="180" />
+                                    </Canvas.RenderTransform>
+                                    <Canvas.Resources/>
+                                    <Path Fill="#ec666d">
+                                        <Path.Data>
+                                            <PathGeometry Figures="M126.16 44c-0.18-1.38-0.8-3.93-2.71-4.15c0 0-16.02-1.85-18.59 12.29c0 0-5.13 18.82 9.41 46.21l-15.08 0.64    H68.51c-10.2 0-18.45 10.81-18.51 24.16h44.89c1.87 0 3.38 1.51 3.38 3.38c0 1.86-1.51 3.38-3.38 3.38H51.86l5.43 19.22h43.68    c1.86 0 3.38 1.51 3.38 3.38c0 1.86-1.52 3.37-3.38 3.37H59.2l5.43 19.23h33.45c1.86 0 3.38 1.51 3.38 3.37    c0 1.86-1.51 3.38-3.38 3.38H67.09c5.27 11.59 13.82 20.4 23.03 20.4h68.13l21.34-62.23C174.13 134.96 132.53 92.42 126.16 44z     M208.44 154.04c-1.8-3.64-4.9-6.36-8.74-7.67l-7.55-2.57L170.86 206l7.56 2.59c3.84 1.32 7.99 1.05 11.64-0.74    c3.65-1.79 6.36-4.89 7.67-8.73l11.45-33.45C210.49 161.82 210.23 157.69 208.44 154.04z" FillRule="NonZero"/>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                            </Viewbox>
+
+                            <StackPanel Margin="10,0,0,0">
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Right" Content="&#xEF1F;"
+                                    FontFamily="{DynamicResource FontIcoFont}"
+                                    Margin="10,0,0,0"
+                                    Visibility="{Binding CurrentSteamId, Converter={StaticResource NullToVisibilityConverter}}"
+                                    Command="{Binding OpenSelectedReviewCommand}" VerticalAlignment="Center" />
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                                       Text="{DynamicResource LOCReview_Viewer_ReviewRecommendedLabel}"
+                                       Visibility="{Binding ThumbsUpVisibility}" />
+                                    <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center"
+                                       Text="{DynamicResource LOCReview_Viewer_ReviewNotRecommendedLabel}"
+                                       Visibility="{Binding ThumbsDownVisibility}" />
+                                </DockPanel>
+
+                                <TextBlock Text="{Binding FormattedPlaytime}" Opacity="0.75" />
+                                <TextBlock Text="{Binding TotalFormattedPlaytime}" Opacity="0.75" />
+                            </StackPanel>
+                        </DockPanel>
+                        <TextBlock Text="{Binding ReviewPostedDate}"
+                           Visibility="{Binding SettingsModel.Settings.DisplayReviewDate, Converter={StaticResource BooleanToVisibilityConverter}}"
+                           Margin="0,10,0,0" Opacity="0.75" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" MinWidth="40">
+                            <TextBlock Text="{Binding SelectedReviewDisplayIndex}" Margin="0" VerticalAlignment="Center"/>
+                            <TextBlock Text="/" Margin="0" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding TotalReviewsAvailable}" Margin="0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Button DockPanel.Dock="Right" Background="Transparent" BorderThickness="0" Content="&#xEAC9;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
+                            Command="{Binding PreviousReviewCommand}" Margin="10,0,0,0" Padding="0" VerticalAlignment="Center" />
+                        <Button Name="ButtonNextReview" Background="Transparent" BorderThickness="0" Content="&#xEACA;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
+                            Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ScrollViewer x:Name="ReviewsScrollViewer" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"
+                          Height="{Binding SettingsModel.Settings.DescriptionHeight}">
+                        <presentation:HtmlTextView HtmlText="{Binding SelectedReviewText}" HorizontalAlignment="left"
+                            HtmlFontFamily="{DynamicResource FontFamily}"
+                            HtmlForeground="{DynamicResource TextColor}"
+                            LinkForeground="{DynamicResource GlyphColor}"
+                            HtmlFontSize="{DynamicResource FontSize}" />
+                    </ScrollViewer>
+                    <StackPanel Margin="0,0,0,10"
+                        Visibility="{Binding SettingsModel.Settings.DisplayHelpfulnessData,
+                            Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="{Binding ReviewHelpfulnessHelpful}" Opacity="0.75" />
+                        <TextBlock Text="{Binding ReviewHelpfulnessFunny}" Opacity="0.75" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+    </StackPanel>
+</common:PluginUserControlBase>

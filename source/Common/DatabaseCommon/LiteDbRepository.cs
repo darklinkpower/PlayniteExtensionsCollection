@@ -30,6 +30,8 @@ namespace DatabaseCommon
             _autoProcessTimer = new Timer(AutoProcessBuffer, null, Timeout.InfiniteTimeSpan, Timeout.InfiniteTimeSpan);
         }
 
+        public LiteCollection<T> GetRawCollection() => _collection;
+
         private void StartAutoProcessTimer() =>
             _autoProcessTimer.Change(TimeSpan.FromMilliseconds(_bufferProcessTime), TimeSpan.FromMilliseconds(_bufferProcessTime));
 

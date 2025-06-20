@@ -42,6 +42,9 @@
     <Reference Include="HtmlRenderer.WPF, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlRenderer.WPF.1.5.0.6\lib\net45\HtmlRenderer.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -65,6 +68,9 @@
     </Reference>
     <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Playnite.SDK, Version=6.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PlayniteSDK.6.9.0\lib\net462\Playnite.SDK.dll</HintPath>
@@ -109,6 +115,15 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\common\databasecommon\IDatabaseItem.cs">
+      <Link>Shared\DatabaseCommon\IDatabaseItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\databasecommon\IRepository.cs">
+      <Link>Shared\DatabaseCommon\IRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\..\common\databasecommon\LiteDbRepository.cs">
+      <Link>Shared\DatabaseCommon\LiteDbRepository.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\FlowHttp\Constants\HttpContentTypeConstants.cs">
       <Link>Shared\FlowHttp\Constants\HttpContentTypeConstants.cs</Link>
     </Compile>
@@ -163,6 +178,18 @@
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Behaviors\HoverPopupBehavior.cs">
+      <Link>Shared\PluginsCommon\Behaviors\HoverPopupBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\BooleanToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\BooleanToVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\EnumEqualityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\EnumEqualityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedBooleanToVisibilityConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\InvertedBooleanToVisibilityConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\converters\NumericConverters.cs">
       <Link>Shared\PluginsCommon\Converters\NumericConverters.cs</Link>
     </Compile>
@@ -202,18 +229,40 @@
     <Compile Include="..\..\common\pluginscommon\Paths.cs">
       <Link>Shared\PluginsCommon\Paths.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\PluginUserControlBase.cs">
+      <Link>Shared\PluginsCommon\PluginUserControlBase.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
     <Compile Include="..\..\Common\SteamCommon\Common.cs">
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
+    <Compile Include="Application\ISteamReviewsProvider.cs" />
+    <Compile Include="Application\SteamReviewsCoordinator.cs" />
     <Compile Include="BbCodeProcessor.cs" />
-    <Compile Include="Controls\HtmlTextView.cs" />
-    <Compile Include="Controls\ReviewsControl.xaml.cs">
+    <Compile Include="Domain\DateRangeMode.cs" />
+    <Compile Include="Domain\DisplayType.cs" />
+    <Compile Include="Domain\LanguageSelectionMode.cs" />
+    <Compile Include="Domain\PlaytimeDevice.cs" />
+    <Compile Include="Domain\PlaytimePreset.cs" />
+    <Compile Include="Domain\PurchaseType.cs" />
+    <Compile Include="Domain\QueryOptions.cs" />
+    <Compile Include="Domain\ReviewsResponseRecord.cs" />
+    <Compile Include="Domain\ReviewType.cs" />
+    <Compile Include="Domain\SteamLanguage.cs" />
+    <Compile Include="Infrastructure\ReviewsResponseDto.cs" />
+    <Compile Include="Infrastructure\SteamReviewsService.cs" />
+    <Compile Include="Presentation\HtmlTextView.cs" />
+    <Compile Include="Presentation\QueryOptionsViewModel.cs" />
+    <Compile Include="Presentation\ReviewsControl.xaml.cs">
       <DependentUpon>ReviewsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ReviewsResponse.cs" />
+    <Compile Include="Presentation\SteamLanguageSelector\LanguageOptionEntry.cs" />
+    <Compile Include="Presentation\SteamLanguageSelector\SteamLanguageSelectorView.xaml.cs">
+      <DependentUpon>SteamLanguageSelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\SteamLanguageSelector\SteamLanguageSelectorViewModel.cs" />
     <Compile Include="ReviewViewer.cs" />
     <Compile Include="ReviewViewerSettings.cs" />
     <Compile Include="ReviewViewerSettingsView.xaml.cs">
@@ -233,12 +282,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ReviewsControl.xaml">
+    <Page Include="Localization\en_US.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Localization\en_US.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Presentation\ReviewsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\SteamLanguageSelector\SteamLanguageSelectorView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReviewViewerSettingsView.xaml">

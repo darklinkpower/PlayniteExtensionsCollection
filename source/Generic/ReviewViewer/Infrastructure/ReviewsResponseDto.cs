@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Playnite.SDK.Data;
 
-namespace ReviewViewer.Models
+namespace ReviewViewer.Infrastructure
 {
-    public partial class ReviewsResponse
+    public class ReviewsResponseDto
     {
         [SerializationPropertyName("success")]
         public int Success { get; set; }
@@ -16,13 +12,13 @@ namespace ReviewViewer.Models
         public QuerySummary QuerySummary { get; set; }
 
         [SerializationPropertyName("reviews")]
-        public Review[] Reviews { get; set; }
+        public List<Review> Reviews { get; set; }
 
         [SerializationPropertyName("cursor")]
         public string Cursor { get; set; }
     }
 
-    public partial class QuerySummary
+    public class QuerySummary
     {
         [SerializationPropertyName("num_reviews")]
         public long NumReviews { get; set; }
@@ -43,7 +39,7 @@ namespace ReviewViewer.Models
         public long TotalReviews { get; set; }
     }
 
-    public partial class Review
+    public class Review
     {
         [SerializationPropertyName("recommendationid")]
         public long Recommendationid { get; set; }
@@ -67,16 +63,16 @@ namespace ReviewViewer.Models
         public bool VotedUp { get; set; }
 
         [SerializationPropertyName("votes_up")]
-        public long VotesUp { get; set; }
+        public int VotesUp { get; set; }
 
         [SerializationPropertyName("votes_funny")]
-        public long VotesFunny { get; set; }
+        public int VotesFunny { get; set; }
 
         [SerializationPropertyName("weighted_vote_score")]
         public string WeightedVoteScore { get; set; }
 
         [SerializationPropertyName("comment_count")]
-        public long CommentCount { get; set; }
+        public int CommentCount { get; set; }
 
         [SerializationPropertyName("steam_purchase")]
         public bool SteamPurchase { get; set; }
@@ -86,9 +82,12 @@ namespace ReviewViewer.Models
 
         [SerializationPropertyName("written_during_early_access")]
         public bool WrittenDuringEarlyAccess { get; set; }
+
+        [SerializationPropertyName("primarily_steam_deck")]
+        public bool PrimarilySteamDeck { get; set; }
     }
 
-    public partial class Author
+    public class Author
     {
         [SerializationPropertyName("steamid")]
         public string Steamid { get; set; }

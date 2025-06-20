@@ -5,23 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReviewViewer.Domain;
 
 namespace ReviewViewer
 {
     public class ReviewViewerSettings : ObservableObject
     {
-        [DontSerialize]
-        private bool useMatchingSteamApiLang { get; set; } = true;
-        public bool UseMatchingSteamApiLang
-        {
-            get => useMatchingSteamApiLang;
-            set
-            {
-                useMatchingSteamApiLang = value;
-                OnPropertyChanged();
-            }
-        }
-
+        public QueryOptions LastUsedQuery { get; set; } = new QueryOptions();
+        public int DatabaseVersion { get; set; } = 1;
         [DontSerialize]
         private bool downloadDataOnGameSelection { get; set; } = true;
         public bool DownloadDataOnGameSelection

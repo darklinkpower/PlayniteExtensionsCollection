@@ -1,0 +1,35 @@
+﻿namespace ReviewViewer.Domain
+{
+    public enum SteamLanguage
+    {
+        Bulgarian,
+        Czech,
+        Danish,
+        Dutch,
+        English,
+        Finnish,
+        French,
+        German,
+        Greek,
+        Hungarian,
+        Indonesian,
+        Italian,
+        Japanese,
+        Korean,
+        Norwegian,
+        Polish,
+        PortugueseBrazil,
+        PortuguesePortugal,
+        Romanian,
+        Russian,
+        SimplifiedChinese,
+        SpanishSpain,
+        SpanishLatinAmerica,
+        Swedish,
+        Thai,
+        TraditionalChinese,
+        Turkish,
+        Ukrainian,
+        Vietnamese
+    }
+}
