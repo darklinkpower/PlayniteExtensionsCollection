@@ -160,11 +160,11 @@
     <Compile Include="..\..\common\playniteutilitiescommon\PlayniteUtilities.cs">
       <Link>Shared\PlayniteUtilitiesCommon\PlayniteUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Behaviors\ScrollIntoViewBehavior.cs">
+      <Link>Shared\PluginsCommon\Behaviors\ScrollIntoViewBehavior.cs</Link>
+    </Compile>
     <Compile Include="..\..\common\pluginscommon\BindingTools.cs">
       <Link>Shared\PluginsCommon\BindingTools.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Common\PluginsCommon\ControlBehaviors\ScrollIntoViewBehavior.cs">
-      <Link>Shared\PluginsCommon\ControlBehaviors\ScrollIntoViewBehavior.cs</Link>
     </Compile>
     <Compile Include="..\..\common\pluginscommon\converters\BooleanToOpacityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\BooleanToOpacityConverter.cs</Link>
