@@ -31,7 +31,7 @@ namespace PlayNotes
             Settings = new PlayNotesSettingsViewModel(this);
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
 
             AddCustomElementSupport(new AddCustomElementSupportArgs
