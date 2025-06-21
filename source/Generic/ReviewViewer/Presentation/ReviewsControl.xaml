@@ -12,31 +12,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <common:PluginUserControlBase.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/ImageResources.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <commonConverters:EnumEqualityConverter x:Key="EnumEqualityConverter"/>
-            <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-            <commonConverters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
-            <SolidColorBrush Color="#E6646464" x:Key="PopupBackgroundBrush" />
-            <SolidColorBrush Color="#66808080" x:Key="SectionHeaderBackgroundBrush" />
-            <Style TargetType="Separator" x:Key="PopupSeparatorStyle">
-                <Setter Property="Background" Value="{DynamicResource GlyphBrush}" />
-            </Style>
-            <Style TargetType="Border" x:Key="SectionHeaderBorderStyle">
-                <Setter Property="CornerRadius" Value="3,3,3,3" />
-                <Setter Property="Background" Value="{StaticResource SectionHeaderBackgroundBrush}" />
-            </Style>
-            <Style TargetType="Border" x:Key="SectionHeaderActivePopupBorderStyle">
-                <Setter Property="CornerRadius" Value="3,3,0,0" />
-                <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
-            </Style>
-            <Style TargetType="Border" x:Key="PopupBackgroundStyle">
-                <Setter Property="Padding" Value="10" />
-                <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
-            </Style>
-        </ResourceDictionary>
+        <BitmapImage x:Key="IconReviewCounted"
+                 UriSource="pack://application:,,,/ReviewViewer;component/Presentation/Resources/icon_review_counted.png"/>
+        <BitmapImage x:Key="IconReviewSteamDeck"
+                 UriSource="pack://application:,,,/ReviewViewer;component/Presentation/Resources/icon_review_steamdeck.png"/>
+        <commonConverters:EnumEqualityConverter x:Key="EnumEqualityConverter"/>
+        <commonConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <commonConverters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
+        <commonConverters:IntSubstitutionConverter x:Key="IntSubstitutionConverter"/>
+        <SolidColorBrush Color="#E6646464" x:Key="PopupBackgroundBrush" />
+        <SolidColorBrush Color="#66808080" x:Key="SectionHeaderBackgroundBrush" />
+        <Style TargetType="Separator" x:Key="PopupSeparatorStyle">
+            <Setter Property="Background" Value="{DynamicResource GlyphBrush}" />
+        </Style>
+        <Style TargetType="Border" x:Key="SectionHeaderBorderStyle">
+            <Setter Property="CornerRadius" Value="3,3,3,3" />
+            <Setter Property="Background" Value="{StaticResource SectionHeaderBackgroundBrush}" />
+        </Style>
+        <Style TargetType="Border" x:Key="SectionHeaderActivePopupBorderStyle">
+            <Setter Property="CornerRadius" Value="3,3,0,0" />
+            <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
+        </Style>
+        <Style TargetType="Border" x:Key="PopupBackgroundStyle">
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
+        </Style>
     </common:PluginUserControlBase.Resources>
     <StackPanel Name="MainPanel" Visibility="{Binding ControlVisibility}">
         <StackPanel>
@@ -220,20 +220,24 @@
                                 <RadioButton Content="Over 10 hours" GroupName="PlaytimeGroup" Margin="0,5,0,0"
                                      IsChecked="{Binding QueryOptions.PlaytimePreset, Mode=TwoWay,
                                      Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimePreset.Over10Hours}}" />
-                                <RadioButton Content="Custom" GroupName="PlaytimeGroup" Margin="0,5,0,0"
+                                <RadioButton x:Name="PlaytimeGroupCustomButton" Content="Custom" GroupName="PlaytimeGroup" Margin="0,5,0,0"
                                      IsChecked="{Binding QueryOptions.PlaytimePreset, Mode=TwoWay,
                                      Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:PlaytimePreset.Custom}}" />
 
-                                <TextBlock Text="Minimum Playtime (hours)" Margin="0,5,0,0" />
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMinHours}" Width="150" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMinHours}" Margin="10,0,0,0" VerticalAlignment="Center" />
-                                </StackPanel>
+                                <StackPanel Margin="15,0,0,0" IsEnabled="{Binding ElementName=PlaytimeGroupCustomButton, Path=IsChecked}">
+                                    <TextBlock Text="Minimum Playtime (hours)" Margin="0,5,0,0" />
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMinHours}" Width="150" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMinHours, Converter={StaticResource IntSubstitutionConverter}, ConverterParameter='0=∅;100=∞'}"
+                                                   Margin="10,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
 
-                                <TextBlock Text="Maximum Playtime (hours)" Margin="0,5,0,0" />
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMaxHours}" Width="150" VerticalAlignment="Center" />
-                                    <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMaxHours}" Margin="10,0,0,0" VerticalAlignment="Center" />
+                                    <TextBlock Text="Maximum Playtime (hours)" Margin="0,5,0,0" />
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMaxHours}" Width="150" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMaxHours, Converter={StaticResource IntSubstitutionConverter}, ConverterParameter='0=∅;100=∞'}"
+                                                   Margin="10,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
                                 </StackPanel>
 
                                 <Separator Margin="5" Style="{StaticResource PopupSeparatorStyle}"/>
@@ -286,7 +290,7 @@
                                 <RadioButton Content="Funny" GroupName="DisplayGroup" Margin="0,5,0,0"
                                     IsChecked="{Binding QueryOptions.Display, Mode=TwoWay,
                                     Converter={StaticResource EnumEqualityConverter}, ConverterParameter={x:Static domain:DisplayType.Funny}}" />
-                                <Separator Margin="5"/>
+                                <Separator Margin="5" Style="{StaticResource PopupSeparatorStyle}" />
 
                                 <CheckBox IsChecked="{Binding QueryOptions.UseHelpfulSystem}">
                                     <TextBlock Text="Use new helpfulness system. Only applies to Summary and Most Helpful views."
@@ -310,8 +314,12 @@
                 
                 <Grid Visibility="{Binding DisplayNoReviewsPanel, Converter={StaticResource BooleanToVisibilityConverter}}"
                       MinHeight="200">
-                    <TextBlock Text="No reviews found matching the selected filters." TextWrapping="Wrap"
-                               VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,20,0" />
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,0,20,0">
+                        <TextBlock Text="No reviews found matching the selected filters." TextWrapping="Wrap"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,10" />
+                        <Button Content="&#xEFF6;" FontFamily="{DynamicResource FontIcoFont}"
+                                Command="{Binding RefreshReviewsCommand}" HorizontalAlignment="Center" />
+                    </StackPanel>
                 </Grid>
                 
                 <StackPanel Visibility="{Binding DisplayReviewsPanel, Converter={StaticResource BooleanToVisibilityConverter}}">

@@ -187,6 +187,9 @@
     <Compile Include="..\..\Common\PluginsCommon\Converters\EnumEqualityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\EnumEqualityConverter.cs</Link>
     </Compile>
+    <Compile Include="..\..\Common\PluginsCommon\Converters\IntSubstitutionConverter.cs">
+      <Link>Shared\PluginsCommon\Converters\IntSubstitutionConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\Common\PluginsCommon\Converters\InvertedBooleanToVisibilityConverter.cs">
       <Link>Shared\PluginsCommon\Converters\InvertedBooleanToVisibilityConverter.cs</Link>
     </Compile>

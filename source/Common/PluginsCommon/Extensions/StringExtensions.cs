@@ -337,6 +337,29 @@ namespace System
             return newName;
         }
 
+        public static string SeparateByCapital(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            var result = new StringBuilder();
+            result.Append(str[0]);
+            for (int i = 1; i < str.Length; i++)
+            {
+                char c = str[i];
+                if (char.IsUpper(c))
+                {
+                    result.Append(' ');
+                }
+
+                result.Append(c);
+            }
+
+            return result.ToString();
+        }
+
         internal static string RemoveTrademarks(this string str, string replacement = "")
         {
             if (str.IsNullOrEmpty())

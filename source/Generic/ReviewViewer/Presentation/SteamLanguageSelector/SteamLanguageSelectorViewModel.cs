@@ -30,7 +30,7 @@ namespace ReviewViewer.Presentation.SteamLanguageSelector
                     .Select(lang => new LanguageOptionEntry
                     {
                         Language = lang,
-                        DisplayName = lang.ToString(),
+                        DisplayName = lang.ToString().SeparateByCapital(),
                         IsSelected = selectedLanguages.Contains(lang)
                     }));
 

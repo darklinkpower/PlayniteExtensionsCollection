@@ -63,6 +63,7 @@
     <Compile Include="Converters\ImagePathToBitmapImageConverter.cs" />
     <Compile Include="Converters\ImagePathToBitmapImageWithCacheConverter.cs" />
     <Compile Include="Converters\ImageUriToBitmapImageConverter.cs" />
+    <Compile Include="Converters\IntSubstitutionConverter.cs" />
     <Compile Include="Converters\InvertedBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\InvertedEnumValueToVisibilityConverter.cs" />
     <Compile Include="Converters\EnumValueToVisibilityConverter.cs" />
