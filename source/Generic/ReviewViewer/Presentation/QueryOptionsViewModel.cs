@@ -59,15 +59,35 @@ namespace ReviewViewer.Presentation
         public int CustomPlaytimeMinHours
         {
             get => _customPlaytimeMinHours;
-            set => SetValue(ref _customPlaytimeMinHours, value);
+            set
+            {
+                value = Clamp(value, 0, 100);
+                if (value > CustomPlaytimeMaxHours)
+                {
+                    CustomPlaytimeMaxHours = value;
+                }
+
+                SetValue(ref _customPlaytimeMinHours, value);
+            }
         }
+
         private int _customPlaytimeMinHours = 0;
 
         public int CustomPlaytimeMaxHours
         {
             get => _customPlaytimeMaxHours;
-            set => SetValue(ref _customPlaytimeMaxHours, value);
+            set
+            {
+                value = Clamp(value, 0, 100);
+                if (value < CustomPlaytimeMinHours)
+                {
+                    CustomPlaytimeMinHours = value;
+                }
+
+                SetValue(ref _customPlaytimeMaxHours, value);
+            }
         }
+
         private int _customPlaytimeMaxHours = 0;
 
         public PlaytimeDevice PlaytimeDevice
@@ -154,6 +174,13 @@ namespace ReviewViewer.Presentation
                 UseHelpfulSystem = this.UseHelpfulSystem,
                 FilterOfftopicActivity = this.FilterOfftopicActivity
             };
+        }
+
+        private static int Clamp(int value, int min, int max)
+        {
+            if (value < min) return min;
+            if (value > max) return max;
+            return value;
         }
     }
 
