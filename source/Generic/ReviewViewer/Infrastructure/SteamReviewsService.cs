@@ -145,21 +145,24 @@ namespace ReviewViewer.Infrastructure
 
             if (opt.PlaytimePreset == PlaytimePreset.None)
             {
-                sb.Append($"&playtime_filter_min=0");
-                sb.Append($"&playtime_filter_max=0");
+                sb.Append("&playtime_filter_min=0");
+                sb.Append("&playtime_filter_max=0");
             }
             else if (opt.PlaytimePreset == PlaytimePreset.Over1Hour)
             {
                 sb.Append("&playtime_filter_min=1");
+                sb.Append("&playtime_filter_max=0");
             }
             else if (opt.PlaytimePreset == PlaytimePreset.Over10Hours)
             {
                 sb.Append("&playtime_filter_min=10");
+                sb.Append("&playtime_filter_max=0");
             }
             else if (opt.PlaytimePreset == PlaytimePreset.Custom)
             {
                 sb.Append($"&playtime_filter_min={opt.CustomPlaytimeMinHours}");
-                sb.Append($"&playtime_filter_max={opt.CustomPlaytimeMaxHours}");
+                var maxFilter = opt.CustomPlaytimeMaxHours == 100 ? 0 : opt.CustomPlaytimeMaxHours;
+                sb.Append($"&playtime_filter_max={maxFilter}");
             }
 
             switch (opt.PlaytimeDevice)

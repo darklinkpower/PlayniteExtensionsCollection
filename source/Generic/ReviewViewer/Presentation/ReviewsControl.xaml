@@ -228,14 +228,14 @@
                                     <TextBlock Text="Minimum Playtime (hours)" Margin="0,5,0,0" />
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMinHours}" Width="150" VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMinHours, Converter={StaticResource IntSubstitutionConverter}, ConverterParameter='0=∅;100=∞'}"
+                                        <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMinHours, Converter={StaticResource IntSubstitutionConverter}}"
                                                    Margin="10,0,0,0" VerticalAlignment="Center" />
                                     </StackPanel>
 
                                     <TextBlock Text="Maximum Playtime (hours)" Margin="0,5,0,0" />
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <Slider Minimum="0" Maximum="100" Value="{Binding QueryOptions.CustomPlaytimeMaxHours}" Width="150" VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMaxHours, Converter={StaticResource IntSubstitutionConverter}, ConverterParameter='0=∅;100=∞'}"
+                                        <TextBlock Text="{Binding QueryOptions.CustomPlaytimeMaxHours, Converter={StaticResource IntSubstitutionConverter}, ConverterParameter='0=∞;100=∞'}"
                                                    Margin="10,0,0,0" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </StackPanel>
