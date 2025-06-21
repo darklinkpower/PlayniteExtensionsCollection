@@ -427,7 +427,7 @@ namespace ReviewViewer.Presentation
 
             DisplayEarlyAccessLabel = SelectedReview.WrittenDuringEarlyAccess;
             DisplayIconReviewCounted = SelectedReview.SteamPurchase;
-            if (SelectedReview.Author.DeckPlaytimeAtReview.HasValue)
+            if (SelectedReview.PrimarilySteamDeck && SelectedReview.Author.DeckPlaytimeAtReview.HasValue)
             {
                 double hours = Math.Round(SelectedReview.Author.DeckPlaytimeAtReview.Value / 60.0, 1);
                 IconReviewSteamDeckTooltip = string.Format(
