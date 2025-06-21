@@ -334,3 +334,13 @@ Packages:
     - 'Added: Icons to display if reviewer purchased the game on Steam and if they played primarily on Steam Deck'
     - 'Added: Label to indicate if review was written during the game Early Access period'
     - 'Added: Button to refresh reviews using the currently active filters'
+  - Version: 2.51
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-06-20
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.20_8df7deda/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_51.pext
+    Changelog:
+    - 'Added: Additional button to refresh reviews when the current request did not obtain reviews'
+    - 'Improved: Various improvements to the reviews control UI'
+    - 'Fixed: Incorrectly displaying icon to indicate reviewer played primarily on Steam Deck in some cases'
+    - 'Fixed: Setting max playtime not treated as infinite when set to 100 hours in request logic, as it works on the Steam Store web'
+    - 'Fixed: Ensure Min playtime cannot exceed Max, and Max playtime cannot go below Min when using the sliders by adjusting the other slider value if needed, to prevent fetching invalid requests'
