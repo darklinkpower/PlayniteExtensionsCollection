@@ -175,12 +175,29 @@ namespace PlayState.Models
         {
             foreach (var gameProcess in GameProcesses)
             {
-                if (gameProcess is null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
+                if (gameProcess?.Process is null)
                 {
                     continue;
                 }
 
-                Ntdll.NtSuspendProcess(gameProcess.Process.Handle);
+                try
+                {
+                    if (!gameProcess.Process.HasExited)
+                    {
+                        var handle = gameProcess.Process.Handle;
+                        Ntdll.NtSuspendProcess(handle);
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    _logger.Error(ex, "Error on process suspend");
+                    continue;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Error on process suspend");
+                    continue;
+                }
             }
 
             IsSuspended = true;
@@ -192,12 +209,29 @@ namespace PlayState.Models
         {
             foreach (var gameProcess in GameProcesses)
             {
-                if (gameProcess is null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
+                if (gameProcess?.Process is null)
                 {
                     continue;
                 }
 
-                Ntdll.NtResumeProcess(gameProcess.Process.Handle);
+                try
+                {
+                    if (!gameProcess.Process.HasExited)
+                    {
+                        var handle = gameProcess.Process.Handle;
+                        Ntdll.NtResumeProcess(handle);
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    _logger.Error(ex, "Error on process resume");
+                    continue;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, "Error on process resume");
+                    continue;
+                }
             }
 
             IsSuspended = false;
@@ -235,36 +269,90 @@ namespace PlayState.Models
                 return null;
             }
 
-            var process = GameProcesses.FirstOrDefault(x => x.Process?.MainWindowHandle == handle);
-            return process;
+            foreach (var processItem in GameProcesses)
+            {
+                if (processItem?.Process is null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    if (!processItem.Process.HasExited &&
+                        processItem.Process.MainWindowHandle == handle)
+                    {
+                        return processItem;
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    _logger.Warn(ex, $"GetProcessByWindowHandle: Failed to access process {processItem.Process?.Id}.");
+                    continue;
+                }
+            }
+
+            return null;
         }
 
         public void BringToForeground()
         {
-            if (!GameProcesses.HasItems() || IsSuspended)
+            if (!GameProcesses.HasItems())
             {
+                _logger.Debug("BringToForeground: No game processes.");
+                return;
+            }
+
+            if (IsSuspended)
+            {
+                _logger.Debug("BringToForeground: Skipped because game is suspended.");
                 return;
             }
 
             if (IsWindowInForeground())
             {
+                _logger.Debug("BringToForeground: Already in foreground.");
                 return;
             }
 
-            var processItem = GameProcesses?.FirstOrDefault(x => x.Process.MainWindowHandle != null && x.Process.MainWindowHandle != IntPtr.Zero);
-            if (processItem is null)
+            IntPtr? windowHandle = null;
+            foreach (var processItem in GameProcesses)
             {
+                if (processItem?.Process is null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    if (!processItem.Process.HasExited)
+                    {
+                        var handle = processItem.Process.MainWindowHandle;
+                        if (handle != IntPtr.Zero)
+                        {
+                            windowHandle = handle;
+                            break;
+                        }
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    _logger.Warn(ex, $"BringToForeground: Process {processItem.Process?.Id} may have exited.");
+                }
+            }
+
+            if (windowHandle == null)
+            {
+                _logger.Warn($"BringToForeground: No valid window handle found for game {Game.Name}.");
                 return;
             }
 
-            var windowHandle = processItem.Process.MainWindowHandle;
             try
             {
-                WindowsHelper.RestoreAndFocusWindow(windowHandle);
+                WindowsHelper.RestoreAndFocusWindow(windowHandle.Value);
             }
             catch (Exception e)
             {
-                _logger.Error(e, $"Error while restoring game window of game {Game.Name}, {windowHandle}");
+                _logger.Error(e, $"BringToForeground: Error while restoring game window {windowHandle} for game {Game.Name}.");
             }
         }
 
@@ -300,9 +388,29 @@ namespace PlayState.Models
             }
 
             var foregroundWindowHandle = WindowsHelper.GetForegroundWindowHandle();
-            var isInForeground = GameProcesses?
-                .Any(x => x.Process.MainWindowHandle == foregroundWindowHandle) == true;
-            return isInForeground;
+            foreach (var processItem in GameProcesses)
+            {
+                if (processItem?.Process is null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    if (!processItem.Process.HasExited &&
+                        processItem.Process.MainWindowHandle == foregroundWindowHandle)
+                    {
+                        return true;
+                    }
+                }
+                catch (InvalidOperationException ex)
+                {
+                    _logger.Error(ex, "IsWindowInForeground: Failed to check process. It may have exited.");
+                    continue;
+                }
+            }
+
+            return false;
         }
 
         public bool IsWindowMinimized()
@@ -317,14 +425,23 @@ namespace PlayState.Models
             var windowHandles = new List<IntPtr>();
             foreach (var gameProcess in GameProcesses)
             {
-                if (gameProcess is null || gameProcess.Process.Handle == null || gameProcess.Process.Handle == IntPtr.Zero)
+                if (gameProcess?.Process is null)
                 {
                     continue;
                 }
 
-                if (gameProcess.Process.MainWindowHandle != IntPtr.Zero)
+                try
                 {
-                    windowHandles.AddMissing(gameProcess.Process.MainWindowHandle);
+                    if (!gameProcess.Process.HasExited && gameProcess.Process.MainWindowHandle != IntPtr.Zero)
+                    {
+                        windowHandles.AddMissing(gameProcess.Process.MainWindowHandle);
+                    }
+                }
+                catch (InvalidOperationException e)
+                {
+                    // Process has likely exited between checks
+                    _logger.Error(e, $"Error during while obtaining Handles of {nameof(GameProcesses)}");
+                    continue;
                 }
             }
 
