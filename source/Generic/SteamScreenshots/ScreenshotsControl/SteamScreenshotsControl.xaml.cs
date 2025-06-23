@@ -150,7 +150,7 @@ namespace SteamScreenshots.ScreenshotsControl
 
             _updateControlDataDelayTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(1100)
+                Interval = TimeSpan.FromMilliseconds(700)
             };
             _updateControlDataDelayTimer.Tick += new EventHandler(UpdateControlData);
 
