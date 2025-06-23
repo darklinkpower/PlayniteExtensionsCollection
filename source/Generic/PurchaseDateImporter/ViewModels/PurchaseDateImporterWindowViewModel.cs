@@ -53,12 +53,15 @@ namespace PurchaseDateImporter.ViewModels
                     ApplyDatesToLibrary("Legendary (Epic)", legendaryPluginId, licenses, true);
                     break;
                 case GogLicenseService.LibraryName:
+                    var gogLicenses = EpicLicenseService.GetLicensesDict();
                     ApplyDatesToLibrary(GogLicenseService.LibraryName,
-                    GogLicenseService.PluginId, GogLicenseService.GetLicensesDict(), false);
+                        GogLicenseService.PluginId, gogLicenses, false);
+                    ApplyDatesToLibrary("GOG OSS library integration",
+                        Guid.Parse("EAD65C3B-2F8F-4E37-B4E6-B3DE6BE540C6"), gogLicenses, false);
                     break;
                 case SteamLicenseService.LibraryName:
                     ApplyDatesToLibrary(SteamLicenseService.LibraryName,
-                    SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict(), true, true);
+                        SteamLicenseService.PluginId, SteamLicenseService.GetLicensesDict(), true, true);
                     break;
                 default:
                     break;
@@ -79,6 +82,7 @@ namespace PurchaseDateImporter.ViewModels
 
             var updated = 0;
             playniteApi.Database.BufferedUpdate();
+            var anyGameProcessed = false;
             foreach (var game in playniteApi.Database.Games)
             {
                 if (game.PluginId != pluginId)
@@ -86,6 +90,7 @@ namespace PurchaseDateImporter.ViewModels
                     continue;
                 }
 
+                anyGameProcessed = true;
                 if (useNameToCompare)
                 {
                     var matchingName = game.Name.Satinize();
@@ -126,9 +131,12 @@ namespace PurchaseDateImporter.ViewModels
             }
 
             logger.Debug($"ApplyDatesToLibrary finish. {updated} games updated.");
-            playniteApi.Dialogs.ShowMessage(
-                string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage"), updated, libraryName), 
-                "Purchase Date Importer");
+            if (anyGameProcessed)
+            {
+                playniteApi.Dialogs.ShowMessage(
+                    string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowDatesImportResultMessage"), updated, libraryName),
+                    "Purchase Date Importer");
+            }
         }
 
         private bool IsDateDifferent(DateTime? dateAdded, DateTime purchaseDate, bool compareOnlyDay)
