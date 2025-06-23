@@ -93,3 +93,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.06.05_bfd867aa/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_27.pext
     Changelog:
     - 'Fixed: Failing to correctly match to games to purchase data in some circumstances'
+  - Version: 2.28
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-06-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.23_9dc54c33/Date_Importer_d0e7fb90-e74e-4955-b7bc-43a13339637e_2_28.pext
+    Changelog:
+    - 'Added: Support for GOG OSS library integration plugin'

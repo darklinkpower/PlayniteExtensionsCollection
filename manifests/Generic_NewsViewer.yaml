@@ -232,3 +232,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.04.05_8a0219de/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_36.pext
     Changelog:
     - 'Changed: Updated localizations for improved language support'
+  - Version: 1.37
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-06-23
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.23_9dc54c33/NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d_1_37.pext
+    Changelog:
+    - 'Changed: Increase maximum possible height to configure the News control'
