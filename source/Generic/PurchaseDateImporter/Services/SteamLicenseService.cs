@@ -186,7 +186,7 @@ namespace PurchaseDateImporter.Services
 
             var years = new List<string>
             {
-                "2016", "2017", "2018", "2019", "2020", "2021, 2022", "2023", "2024"
+                "2016", "2017", "2018", "2019", "2020", "2021, 2022", "2023", "2024", "2025", "2026"
             };
 
             foreach (var year in years)
