@@ -14,7 +14,7 @@ namespace PurchaseDateImporter.ViewModels
     public class PurchaseDateImporterWindowViewModel : ObservableObject
     {
         private const string webViewUserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Vivaldi/4.3";
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
         private IPlayniteAPI playniteApi;
 
         private string selectedLibrary;
@@ -70,10 +70,10 @@ namespace PurchaseDateImporter.ViewModels
 
         private void ApplyDatesToLibrary(string libraryName, Guid pluginId, Dictionary<string, LicenseData> licensesDictionary, bool useNameToCompare, bool compareOnlyDay = false)
         {
-            logger.Debug($"ApplyDatesToLibrary start. Library: \"{libraryName}\", {pluginId}");
+            _logger.Debug($"ApplyDatesToLibrary start. Library: \"{libraryName}\", {pluginId}");
             if (!licensesDictionary.HasItems())
             {
-                logger.Debug($"licensesDictionary did not have items");
+                _logger.Debug($"licensesDictionary did not have items");
                 playniteApi.Dialogs.ShowErrorMessage(
                     string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicensesNotObtained"), libraryName),
                     "Purchase Date Importer");
@@ -81,56 +81,58 @@ namespace PurchaseDateImporter.ViewModels
             }
 
             var updated = 0;
-            playniteApi.Database.BufferedUpdate();
             var anyGameProcessed = false;
-            foreach (var game in playniteApi.Database.Games)
+            using (playniteApi.Database.BufferedUpdate())
             {
-                if (game.PluginId != pluginId)
+                foreach (var game in playniteApi.Database.Games)
                 {
-                    continue;
-                }
-
-                anyGameProcessed = true;
-                if (useNameToCompare)
-                {
-                    var matchingName = game.Name.Satinize();
-                    if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
+                    if (game.PluginId != pluginId)
                     {
-                        if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
-                        {
-                            continue;
-                        }
+                        continue;
+                    }
 
-                        game.Added = licenseData.PurchaseDate;
-                        playniteApi.Database.Games.Update(game);
-                        updated++;
+                    anyGameProcessed = true;
+                    if (useNameToCompare)
+                    {
+                        var matchingName = game.Name.Satinize();
+                        if (licensesDictionary.TryGetValue(matchingName, out var licenseData))
+                        {
+                            if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
+                            {
+                                continue;
+                            }
+
+                            game.Added = licenseData.PurchaseDate;
+                            playniteApi.Database.Games.Update(game);
+                            updated++;
+                        }
+                        else
+                        {
+                            _logger.Debug($"Matching by name for {game.Name}, matching name: \"{matchingName}\" not found");
+                        }
                     }
                     else
                     {
-                        logger.Debug($"Matching by name for {game.Name}, matching name: \"{matchingName}\" not found");
-                    }
-                }
-                else
-                {
-                    if (licensesDictionary.TryGetValue(game.GameId.ToString(), out var licenseData))
-                    {
-                        if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
+                        if (licensesDictionary.TryGetValue(game.GameId.ToString(), out var licenseData))
                         {
-                            continue;
-                        }
+                            if (!IsDateDifferent(game.Added, licenseData.PurchaseDate, compareOnlyDay))
+                            {
+                                continue;
+                            }
 
-                        game.Added = licenseData.PurchaseDate;
-                        playniteApi.Database.Games.Update(game);
-                        updated++;
-                    }
-                    else
-                    {
-                        logger.Debug($"Matching by GameId for {game.Name} Id: \"{game.GameId}\" not found");
+                            game.Added = licenseData.PurchaseDate;
+                            playniteApi.Database.Games.Update(game);
+                            updated++;
+                        }
+                        else
+                        {
+                            _logger.Debug($"Matching by GameId for {game.Name} Id: \"{game.GameId}\" not found");
+                        }
                     }
                 }
             }
 
-            logger.Debug($"ApplyDatesToLibrary finish. {updated} games updated.");
+            _logger.Debug($"ApplyDatesToLibrary finish. {updated} games updated.");
             if (anyGameProcessed)
             {
                 playniteApi.Dialogs.ShowMessage(
@@ -315,7 +317,7 @@ namespace PurchaseDateImporter.ViewModels
             }
             catch (Exception e)
             {
-                logger.Error(e, $"Failed to export licenses to {savePath}");
+                _logger.Error(e, $"Failed to export licenses to {savePath}");
                 playniteApi.Dialogs.ShowMessage(
                     string.Format(ResourceProvider.GetString("LOC_PurchaseDateImporter_ImporterWindowLicenseExportFailMessage"), savePath),
                     "Purchase Date Importer");
