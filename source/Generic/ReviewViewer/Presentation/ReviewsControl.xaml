@@ -37,6 +37,19 @@
             <Setter Property="Padding" Value="10" />
             <Setter Property="Background" Value="{StaticResource PopupBackgroundBrush}" />
         </Style>
+        <DataTemplate x:Key="ClosableButtonContentTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Text="{Binding}"
+                    VerticalAlignment="Center" />
+                <TextBlock
+                    Text="&#xEEE1;"
+                    FontFamily="{DynamicResource FontIcoFont}"
+                    FontWeight="Medium"
+                    Margin="8,0,0,0"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
     </common:PluginUserControlBase.Resources>
     <StackPanel Name="MainPanel" Visibility="{Binding ControlVisibility}">
         <StackPanel>
@@ -301,6 +314,26 @@
                         </Border>
                     </Popup>
                 </Grid>
+            </WrapPanel>
+
+            <WrapPanel Margin="0,10,0,5"
+                       Visibility="{Binding DisplayClearFiltersPanel, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button ContentTemplate="{StaticResource ClosableButtonContentTemplate}" Margin="0,0,10,5"
+                        Visibility="{Binding DisplayReviewTypeClearButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Content="{Binding ReviewTypeClearButtonText}"
+                        Command="{Binding ReviewTypeFilterClearCommand}"/>
+                <Button ContentTemplate="{StaticResource ClosableButtonContentTemplate}" Margin="0,0,10,5"
+                        Visibility="{Binding DisplayPurchaseTypeClearButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Content="{Binding PurchaseTypeClearButtonText}"
+                        Command="{Binding PurchaseTypeFilterClearCommand}"/>
+                <Button ContentTemplate="{StaticResource ClosableButtonContentTemplate}" Margin="0,0,10,5"
+                        Visibility="{Binding DisplayPlaytimeClearButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Content="{Binding PlaytimeClearButtonText}"
+                        Command="{Binding PlaytimeFilterClearCommand}"/>
+                <Button ContentTemplate="{StaticResource ClosableButtonContentTemplate}" Margin="0,0,10,5"
+                        Visibility="{Binding DisplayPlayedMostlyOnSteamDeckClearButton, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Content="Played mostly on Steam Deck"
+                        Command="{Binding PlayedMostlyOnSteamDeckFilterClearCommand}"/>
             </WrapPanel>
             <Grid>
                 <Grid Visibility="{Binding DisplayProgressPanel, Converter={StaticResource BooleanToVisibilityConverter}}"

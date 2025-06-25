@@ -8,6 +8,7 @@ using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using PluginsCommon;
 using ReviewViewer.Application;
+using ReviewViewer.Domain;
 using ReviewViewer.Infrastructure;
 using ReviewViewer.Presentation.SteamLanguageSelector;
 using SteamCommon;
@@ -26,7 +27,7 @@ namespace ReviewViewer.Presentation
         private readonly IPlayniteAPI _playniteApi;
         private readonly ILogger _logger;
 
-        protected override TimeSpan UpdateDebounceInterval => TimeSpan.FromMilliseconds(220);
+        protected override TimeSpan UpdateDebounceInterval => TimeSpan.FromMilliseconds(300);
 
         // ──────── State Fields ────────
         private Game _currentGame;
@@ -84,6 +85,67 @@ namespace ReviewViewer.Presentation
         {
             get => _displayEarlyAccessLabel;
             set { SetValue(ref _displayEarlyAccessLabel, value); }
+        }
+
+        private bool _displayReviewTypeClearButton;
+
+        public bool DisplayReviewTypeClearButton
+        {
+            get => _displayReviewTypeClearButton;
+            set { SetValue(ref _displayReviewTypeClearButton, value); }
+        }
+
+        private string _reviewTypeClearButtonText;
+        public string ReviewTypeClearButtonText
+        {
+            get => _reviewTypeClearButtonText;
+            set => SetValue(ref _reviewTypeClearButtonText, value);
+        }
+
+        private bool _displayPurchaseTypeClearButton;
+
+        public bool DisplayPurchaseTypeClearButton
+        {
+            get => _displayPurchaseTypeClearButton;
+            set { SetValue(ref _displayPurchaseTypeClearButton, value); }
+        }
+
+        private string _purchaseTypeClearButtonText;
+        public string PurchaseTypeClearButtonText
+        {
+            get => _purchaseTypeClearButtonText;
+            set => SetValue(ref _purchaseTypeClearButtonText, value);
+        }
+
+        private bool _displayPlaytimeClearButton;
+
+        public bool DisplayPlaytimeClearButton
+        {
+            get => _displayPlaytimeClearButton;
+            set { SetValue(ref _displayPlaytimeClearButton, value); }
+        }
+
+        private string _playtimeClearButtonText;
+        public string PlaytimeClearButtonText
+        {
+            get => _playtimeClearButtonText;
+            set => SetValue(ref _playtimeClearButtonText, value);
+        }
+
+        private bool _displayPlayedMostlyOnSteamDeckClearButton;
+
+        public bool DisplayPlayedMostlyOnSteamDeckClearButton
+        {
+            get => _displayPlayedMostlyOnSteamDeckClearButton;
+            set { SetValue(ref _displayPlayedMostlyOnSteamDeckClearButton, value); }
+        }
+
+        private bool _displayClearFiltersPanel;
+
+        public bool DisplayClearFiltersPanel
+        {
+            get => _displayClearFiltersPanel;
+            set { SetValue(ref _displayClearFiltersPanel, value); }
         }
 
         private Visibility _thumbsUpVisibility = Visibility.Collapsed;
@@ -315,15 +377,20 @@ namespace ReviewViewer.Presentation
 
         private void OnAllPopupsClosed()
         {
+            UpdateClearFiltersButtons();
             base.ScheduleUpdate();
         }
 
         // ──────── Commands ────────
-        public ICommand OpenSteamLanguageSelectorCommand { get; }
-        public ICommand NextReviewCommand { get; }
-        public ICommand PreviousReviewCommand { get; }
-        public ICommand OpenSelectedReviewCommand { get; }
-        public ICommand RefreshReviewsCommand { get; }
+        public RelayCommand ReviewTypeFilterClearCommand { get; }
+        public RelayCommand PurchaseTypeFilterClearCommand { get; }
+        public RelayCommand PlaytimeFilterClearCommand { get; }
+        public RelayCommand PlayedMostlyOnSteamDeckFilterClearCommand { get; }
+        public RelayCommand OpenSteamLanguageSelectorCommand { get; }
+        public RelayCommand NextReviewCommand { get; }
+        public RelayCommand PreviousReviewCommand { get; }
+        public RelayCommand OpenSelectedReviewCommand { get; }
+        public RelayCommand RefreshReviewsCommand { get; }
         public ReviewsControl(
             ReviewViewerSettingsViewModel settingsViewModel,
             IPlayniteAPI playniteApi,
@@ -343,6 +410,34 @@ namespace ReviewViewer.Presentation
                 _activeViewAtCreation = _playniteApi.MainView.ActiveDesktopView;
             }
 
+            ReviewTypeFilterClearCommand = new RelayCommand(() =>
+            {
+                _queryOptions.ReviewType = ReviewType.All;
+                UpdateClearFiltersButtons();
+                base.ScheduleUpdate();
+            }, () => _queryOptions.ReviewType != ReviewType.All);
+
+            PurchaseTypeFilterClearCommand = new RelayCommand(() =>
+            {
+                _queryOptions.PurchaseType = PurchaseType.All;
+                UpdateClearFiltersButtons();
+                base.ScheduleUpdate();
+            }, () => _queryOptions.PurchaseType != PurchaseType.All);
+
+            PlaytimeFilterClearCommand = new RelayCommand(() =>
+            {
+                _queryOptions.PlaytimePreset = PlaytimePreset.None;
+                UpdateClearFiltersButtons();
+                base.ScheduleUpdate();
+            }, () => _queryOptions.PlaytimePreset != PlaytimePreset.None);
+
+            PlayedMostlyOnSteamDeckFilterClearCommand = new RelayCommand(() =>
+            {
+                _queryOptions.PlaytimeDevice = PlaytimeDevice.All;
+                UpdateClearFiltersButtons();
+                base.ScheduleUpdate();
+            }, () => _queryOptions.PlaytimeDevice != PlaytimeDevice.All);
+
             RefreshReviewsCommand = new RelayCommand(async () => await UpdateReviewsContextAsync(CancellationToken.None, true));
             OpenSteamLanguageSelectorCommand = new RelayCommand(() => OpenSteamLanguageSelector());
             NextReviewCommand = new RelayCommand(() => NextReview(), () => MultipleReviewsAvailable);
@@ -359,12 +454,13 @@ namespace ReviewViewer.Presentation
                     _selectedReview.Author.Steamid, _currentSteamId);
                 ProcessStarter.StartUrl(reviewUrl);
             });
+
+            UpdateClearFiltersButtons();
         }
 
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             base.CancelScheduledUpdate();
-            base.CancelOngoingUpdate();
             if (!_areBindingValuesDefault)
             {
                 ResetBindingValues();
@@ -441,6 +537,94 @@ namespace ReviewViewer.Presentation
                 IconReviewSteamDeckTooltip = string.Empty;
                 DisplayIconReviewSteamDeck = false;
             }
+        }
+
+        private void UpdateClearFiltersButtons()
+        {
+            switch (_queryOptions.ReviewType)
+            {
+                case ReviewType.Positive:
+                    DisplayReviewTypeClearButton = true;
+                    ReviewTypeClearButtonText = string.Format(
+                        "{0}: {1}",
+                        "Review Type",
+                        "Recommended");
+                    break;
+                case ReviewType.Negative:
+                    DisplayReviewTypeClearButton = true;
+                    ReviewTypeClearButtonText = string.Format(
+                        "{0}: {1}",
+                        "Review Type",
+                        "Not Recommended");
+                    break;
+                default:
+                    DisplayReviewTypeClearButton = false;
+                    ReviewTypeClearButtonText = string.Empty;
+                    break;
+            }
+
+            switch (_queryOptions.PurchaseType)
+            {
+                case PurchaseType.Steam:
+                    DisplayPurchaseTypeClearButton = true;
+                    PurchaseTypeClearButtonText = string.Format(
+                        "{0}: {1}",
+                        "Purchase Type",
+                        "Steam Purchasers");
+                    break;
+                case PurchaseType.Other:
+                    DisplayPurchaseTypeClearButton = true;
+                    PurchaseTypeClearButtonText = string.Format(
+                        "{0}: {1}",
+                        "Purchase Type",
+                        "Other");
+                    break;
+                default:
+                    DisplayPurchaseTypeClearButton = false;
+                    PurchaseTypeClearButtonText = string.Empty;
+                    break;
+            }
+
+            switch (_queryOptions.PlaytimePreset)
+            {
+                case PlaytimePreset.Over1Hour:
+                    DisplayPlaytimeClearButton = true;
+                    PlaytimeClearButtonText = string.Format(
+                        "{0}: {1}",
+                        "Playtime",
+                        "Over 1 hour");
+                    break;
+                case PlaytimePreset.Over10Hours:
+                    DisplayPlaytimeClearButton = true;
+                    PlaytimeClearButtonText = string.Format(
+                        "{0}: {1}",
+                        "Playtime",
+                        "Over 10 hours");
+                    break;
+                case PlaytimePreset.Custom:
+                    DisplayPlaytimeClearButton = true;
+                    var maxHoursText = (
+                        _queryOptions.CustomPlaytimeMaxHours == 100 || _queryOptions.CustomPlaytimeMaxHours == 0)
+                        ? "∞"
+                        : _queryOptions.CustomPlaytimeMaxHours.ToString();
+                    PlaytimeClearButtonText = string.Format(
+                        "{0}: {1} ({2}-{3})",
+                        "Playtime",
+                        "Custom",
+                        _queryOptions.CustomPlaytimeMinHours,
+                        maxHoursText);
+                    break;
+                default:
+                    DisplayPlaytimeClearButton = false;
+                    PlaytimeClearButtonText = string.Empty;
+                    break;
+            }
+
+            DisplayPlayedMostlyOnSteamDeckClearButton = _queryOptions.PlaytimeDevice == PlaytimeDevice.SteamDeck;
+            DisplayClearFiltersPanel = DisplayReviewTypeClearButton||
+                DisplayPurchaseTypeClearButton ||
+                DisplayPlaytimeClearButton ||
+                DisplayPlayedMostlyOnSteamDeckClearButton;
         }
 
         public static string UnixTimeStampToFormattedString(double unixTimeStamp)
