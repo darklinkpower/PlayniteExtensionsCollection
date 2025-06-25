@@ -344,3 +344,14 @@ Packages:
     - 'Fixed: Incorrectly displaying icon to indicate reviewer played primarily on Steam Deck in some cases'
     - 'Fixed: Setting max playtime not treated as infinite when set to 100 hours in request logic, as it works on the Steam Store web'
     - 'Fixed: Ensure Min playtime cannot exceed Max, and Max playtime cannot go below Min when using the sliders by adjusting the other slider value if needed, to prevent fetching invalid requests'
+  - Version: 2.52
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-06-24
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.24_a506956c/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_52.pext
+    Changelog:
+    - 'Added: Buttons to quickly reset active filters to Reviews control interface'
+    - 'Improved: Increased resolution of icons to indicate if reviewer purchased the game on Steam and if they played mostly on Steam Deck to reduce blurriness'
+    - 'Improved: Added rate limiting to prevent Steam from rejecting review requests during high activity'
+    - 'Improved: Improvements to how the extension handles multiple requests when quickly switching games in Playnite interface'
+    - 'Changed: Increased maximum possible value for setting to control the Reviews height'
+    - 'Fixed: Removed unused settings from Settings interface'
