@@ -75,10 +75,6 @@ namespace PluginsCommon
         {
             lock (_ctsLock)
             {
-                CancelScheduledUpdate(); // Safely cancel previous update
-
-                _cts = new CancellationTokenSource();
-
                 _updateDebounceTimer.Stop();
                 _updateDebounceTimer.Interval = UpdateDebounceInterval;
                 _updateDebounceTimer.Start();
@@ -93,23 +89,27 @@ namespace PluginsCommon
             lock (_ctsLock)
             {
                 _updateDebounceTimer.Stop();
+            }
+        }
 
-                if (_cts != null)
+        /// <summary>
+        /// Cancels any ongoing update that is currently executing by triggering the cancellation token.
+        /// Does not affect scheduled updates waiting for the debounce timer.
+        /// </summary>
+        protected void CancelOngoingUpdate()
+        {
+            lock (_ctsLock)
+            {
+                if (_cts != null && !_cts.IsCancellationRequested)
                 {
                     try
                     {
-                        if (!_cts.IsCancellationRequested)
-                        {
-                            _cts.Cancel();
-                        }
+                        _cts.Cancel();
                     }
-                    catch
+                    catch (Exception)
                     {
-
+                        
                     }
-
-                    _cts.Dispose();
-                    _cts = null;
                 }
             }
         }
@@ -125,32 +125,36 @@ namespace PluginsCommon
         private async void OnDebounceTimerTick(object sender, EventArgs e)
         {
             _updateDebounceTimer.Stop();
-
-            CancellationToken token;
-            CancellationTokenSource toDispose;
-
+            CancellationTokenSource ctsLocal;
             lock (_ctsLock)
             {
-                token = _cts?.Token ?? CancellationToken.None;
-                toDispose = _cts;
-                _cts = null;
+                _cts = new CancellationTokenSource();
+                ctsLocal = _cts;
             }
 
             try
             {
-                await OnDebouncedUpdateAsync(token);
+                await OnDebouncedUpdateAsync(ctsLocal.Token);
             }
             catch (OperationCanceledException)
             {
-                // Silent
+                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
             finally
             {
-                toDispose?.Dispose();
+                lock (_ctsLock)
+                {
+                    // Dispose only if this is still the active CTS
+                    if (_cts.Equals(ctsLocal))
+                    {
+                        _cts.Dispose();
+                        _cts = null;
+                    }
+                }
             }
         }
 

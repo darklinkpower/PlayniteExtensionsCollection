@@ -364,6 +364,7 @@ namespace ReviewViewer.Presentation
         public override void GameContextChanged(Game oldContext, Game newContext)
         {
             base.CancelScheduledUpdate();
+            base.CancelOngoingUpdate();
             if (!_areBindingValuesDefault)
             {
                 ResetBindingValues();
