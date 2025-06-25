@@ -105,7 +105,7 @@ namespace ReviewViewer
             {
                 return bbcodeParser.ToHtml(bbCodeString);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Certain reviews will be badly formatted by authors or the parser will fail.
                 // Fallback to old parser in those cases

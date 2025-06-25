@@ -60,8 +60,8 @@ namespace ReviewViewer
             var rawCollection = _reviewsRecordsDatabase.GetRawCollection();
             rawCollection.EnsureIndex(nameof(ReviewsResponseRecord.CacheKey), true);
 
-            _steamReviewsCoordinator = new SteamReviewsCoordinator
-                (new SteamReviewsService(), _reviewsRecordsDatabase, TimeSpan.FromDays(Settings.Settings.DownloadIfOlderThanValue));
+            _steamReviewsCoordinator = new SteamReviewsCoordinator(
+                new SteamReviewsService(TimeSpan.FromMilliseconds(1100)), _reviewsRecordsDatabase, TimeSpan.FromDays(Settings.Settings.DownloadIfOlderThanValue));
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
