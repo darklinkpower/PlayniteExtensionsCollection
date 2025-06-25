@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FlowHttp;
 using Playnite.SDK.Data;
+using RateLimiter;
 using ReviewViewer.Application;
 using ReviewViewer.Domain;
 
@@ -14,6 +15,7 @@ namespace ReviewViewer.Infrastructure
     public class SteamReviewsService : ISteamReviewsProvider
     {
         private const string BaseUrl = "https://store.steampowered.com/appreviews";
+        private readonly TimeLimiter _requestLimiter;
         private static readonly Dictionary<SteamLanguage, string> _steamQueryMap = new Dictionary<SteamLanguage, string>
         {
             { SteamLanguage.Bulgarian, "bulgarian" },
@@ -47,18 +49,27 @@ namespace ReviewViewer.Infrastructure
             { SteamLanguage.Vietnamese, "vietnamese" },
         };
 
+        public SteamReviewsService(TimeSpan requestInterval)
+        {
+            _requestLimiter = TimeLimiter.GetFromMaxCountByInterval(1, requestInterval);
+        }
+
         public async Task<ReviewsResponseDto> GetReviewsAsync(
             int appId, QueryOptions options, CancellationToken cancellationToken = default, string cursor = "*")
         {
-            var url = BuildUrl(appId, options, cursor);
-            var request = HttpRequestFactory.GetHttpRequest().WithUrl(url);
-            var response = await request.DownloadStringAsync(cancellationToken);
-            if (Serialization.TryFromJson<ReviewsResponseDto>(response.Content, out var data))
+            return await _requestLimiter.Enqueue(async () =>
             {
-                return data;
-            }
+                var url = BuildUrl(appId, options, cursor);
+                var request = HttpRequestFactory.GetHttpRequest().WithUrl(url);
+                var response = await request.DownloadStringAsync(cancellationToken);
+                if (response.IsSuccess &&
+                    Serialization.TryFromJson<ReviewsResponseDto>(response.Content, out var data))
+                {
+                    return data;
+                }
 
-            return null;
+                return null;
+            }, cancellationToken);
         }
 
         private string BuildUrl(int appId, QueryOptions opt, string cursor)
