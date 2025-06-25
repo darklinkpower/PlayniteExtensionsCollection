@@ -373,6 +373,10 @@ namespace ReviewViewer.Presentation
             {
                 OnAllPopupsClosed();
             }
+            else
+            {
+                base.CancelScheduledUpdate();
+            }
         }
 
         private void OnAllPopupsClosed()
