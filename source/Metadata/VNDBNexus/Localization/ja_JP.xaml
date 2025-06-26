@@ -91,7 +91,7 @@
     <sys:String x:Key="LOC_VndbNexus_VotesFormat">{0} votes</sys:String>
     <sys:String x:Key="LOC_VndbNexus_RefreshDataLabel">Refresh data</sys:String>
     <sys:String x:Key="LOC_VndbNexus_VisualNovelScreenshotsFormat">{0} スクリーンショット</sys:String>
-    <sys:String x:Key="LOC_VndbNexus_SelectedScreenshotPositionFormat">{0} of {1}</sys:String>
+    <sys:String x:Key="LOC_VndbNexus_SelectedScreenshotPositionFormat">{0} / {1}</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MoveBackLabel">戻る</sys:String>
     <sys:String x:Key="LOC_VndbNexus_MoveNextLabel">次へ</sys:String>
     <sys:String x:Key="LOC_VndbNexus_ReleaseOfficialPatchMtl">(machine translation patch)</sys:String>
