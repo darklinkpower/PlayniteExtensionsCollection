@@ -355,3 +355,9 @@ Packages:
     - 'Improved: Improvements to how the extension handles multiple requests when quickly switching games in Playnite interface'
     - 'Changed: Increased maximum possible value for setting to control the Reviews height'
     - 'Fixed: Removed unused settings from Settings interface'
+  - Version: 2.53
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-06-26
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.26_dd9e908e/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_53.pext
+    Changelog:
+    - 'Fixed: Resolved a rare issue that could cause the plugin to crash during background updates when switching between games'
