@@ -449,9 +449,11 @@
                         <Button Name="ButtonNextReview" Background="Transparent" BorderThickness="0" Content="&#xEACA;" FontSize="40" FontFamily="{DynamicResource FontIcoFont}"
                             Command="{Binding NextReviewCommand}" Margin="5,0,10,0" Padding="0" VerticalAlignment="Center"/>
                         <Image Source="{StaticResource IconReviewCounted}" DockPanel.Dock="Right" Opacity="0.5" Margin="10,0,0,0" Height="16" VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="Fant"
                                Visibility="{Binding DisplayIconReviewCounted, Converter={StaticResource BooleanToVisibilityConverter}}"
                                ToolTip="This review is counted in the overall review score because this user purchased the game directly on Steam or got a free license of a free game" />
                         <Image Source="{StaticResource IconReviewSteamDeck}" DockPanel.Dock="Right" Opacity="0.5" Margin="10,0,0,0" Height="16" VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="Fant"
                                Visibility="{Binding DisplayIconReviewSteamDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
                                ToolTip="{Binding IconReviewSteamDeckTooltip}" />
                     </DockPanel>
