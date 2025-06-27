@@ -148,13 +148,13 @@ namespace PluginsCommon
             {
                 lock (_ctsLock)
                 {
-                    // Dispose only if this is still the active CTS
-                    if (_cts.Equals(ctsLocal))
+                    if (ReferenceEquals(_cts, ctsLocal))
                     {
-                        _cts.Dispose();
                         _cts = null;
                     }
                 }
+
+                ctsLocal.Dispose();
             }
         }
 
