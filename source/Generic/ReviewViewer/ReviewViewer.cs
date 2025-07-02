@@ -113,6 +113,22 @@ namespace ReviewViewer
 
         public override void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
+            
+            var lastCompactedTime = DateTime.UtcNow - Settings.Settings.LastReviewsDbCompactTime;
+            if (lastCompactedTime.TotalDays >= 7)
+            {
+                // Use double the threshold as a safety margin in case newer data fails to download at runtime.
+                // This ensures we keep slightly older entries as a fallback.
+                var maxAge = TimeSpan.FromDays(Settings.Settings.DownloadIfOlderThanValue * 2);
+                var earliestAllowedDate = DateTime.UtcNow - maxAge;
+                var deletedCount = _reviewsRecordsDatabase.Delete(x => x.CreatedAt <= earliestAllowedDate);
+                _logger.Info($"Deleted {deletedCount} outdated reviews.");
+
+                _reviewsRecordsDatabase.ShrinkDatabase();
+                Settings.Settings.LastReviewsDbCompactTime = DateTime.UtcNow;
+                _logger.Info($"Shrinked database.");
+            }
+
             base.SavePluginSettings(Settings.Settings);
         }
 

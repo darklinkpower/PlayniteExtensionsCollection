@@ -305,6 +305,19 @@ namespace DatabaseCommon
 
         public bool Delete(T item) => Delete(item.Id);
 
+        public int Delete(Expression<Func<T, bool>> predicate)
+        {
+            _lock.EnterWriteLock();
+            try
+            {
+                return _collection.Delete(predicate);
+            }
+            finally
+            {
+                _lock.ExitWriteLock();
+            }
+        }
+
         public void AddToDeleteBuffer(T item)
         {
             _lock.EnterWriteLock();
@@ -343,6 +356,23 @@ namespace DatabaseCommon
                 _deleteIdsBuffer.Clear();
                 _collection.Delete(Query.All());
                 _db.Shrink();
+            }
+            finally
+            {
+                _lock.ExitWriteLock();
+            }
+        }
+
+        public void ShrinkDatabase()
+        {
+            _lock.EnterWriteLock();
+            try
+            {
+                _db.Shrink();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to shrink LiteDB database.");
             }
             finally
             {
