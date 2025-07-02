@@ -361,3 +361,11 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.06.26_dd9e908e/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_53.pext
     Changelog:
     - 'Fixed: Resolved a rare issue that could cause the plugin to crash during background updates when switching between games'
+  - Version: 2.54
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-07-01
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.01_df9e71ca/Review_Viewer_ca24e37a-76d9-49bf-89ab-d3cba4a54bd1_2_54.pext
+    Changelog:
+    - 'Fixed: Bug that caused the plugin to fail fetching reviews after numerous Playnite startups due to duplicating language settings when loading saved settings'
+    - 'Improved: Automatically clean up outdated reviews and shrink the local database weekly to reduce file size and improve performance'
+    - 'Changed: Adjusted the default review update threshold to 14 days and increased the maximum configurable limit to 60 days'
