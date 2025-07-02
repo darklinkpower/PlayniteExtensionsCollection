@@ -37,7 +37,8 @@ namespace ReviewViewer.Application
             string cursor = "*")
         {
             var cacheKey = $"{appId}_{Serialization.ToJson(options)}_{cursor}";
-            var existingCache = _repository.Find(x => x.CacheKey == cacheKey).FirstOrDefault();
+            var hashedCacheKey = cacheKey.ToHashedKey();
+            var existingCache = _repository.Find(x => x.CacheKey == hashedCacheKey).FirstOrDefault();
             if (!forceRefresh && existingCache != null && (DateTime.UtcNow - existingCache.CreatedAt) < _cacheDuration)
             {
                 return existingCache.Response;
@@ -53,7 +54,7 @@ namespace ReviewViewer.Application
 
                 var newRecord = new ReviewsResponseRecord
                 {
-                    CacheKey = cacheKey,
+                    CacheKey = hashedCacheKey,
                     Response = freshData
                 };
 

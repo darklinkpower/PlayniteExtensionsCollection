@@ -41,12 +41,30 @@ namespace System
             }
         }
 
+        public static string ToHashedKey(this string input)
+        {
+            using (var sha = Security.Cryptography.SHA256.Create())
+            {
+                var inputBytes = Encoding.UTF8.GetBytes(input);
+                var hashBytes = sha.ComputeHash(inputBytes);
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+
         internal static string GetSHA256Hash(this string input)
         {
             using (var sha = Security.Cryptography.SHA256.Create())
             {
                 var hash = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
                 return BitConverter.ToString(hash).Replace("-", "");
+            }
+        }
+
+        public static byte[] GetSHA256HashByte(this string input)
+        {
+            using (var sha = System.Security.Cryptography.SHA256.Create())
+            {
+                return sha.ComputeHash(Encoding.UTF8.GetBytes(input));
             }
         }
 
