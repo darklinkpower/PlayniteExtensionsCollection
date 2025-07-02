@@ -76,8 +76,7 @@ namespace ReviewViewer
 
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            var databaseVersion = Settings.Settings.DatabaseVersion;
-            if (databaseVersion == 1)
+            if (Settings.Settings.DatabaseVersion == 1)
             {
                 _logger.Info("Upgrading plugin data to database version 2. Deleting legacy JSON files.");
                 var folderPath = GetPluginUserDataPath();
@@ -93,6 +92,22 @@ namespace ReviewViewer
                 Settings.Settings.DatabaseVersion = 2;
                 base.SavePluginSettings(Settings.Settings);
                 _logger.Info("Plugin data upgraded to version 2.");
+            }
+
+            if (Settings.Settings.DatabaseVersion == 2)
+            {
+                _logger.Info("Upgrading plugin data to database version 3.");
+                try
+                {
+                    _reviewsRecordsDatabase.DeleteAll();
+                    Settings.Settings.DatabaseVersion = 3;
+                    base.SavePluginSettings(Settings.Settings);
+                    _logger.Info("Plugin data upgraded to version 3.");
+                }
+                catch (Exception e)
+                {
+                    _logger.Info(e, "Error upgrading Plugin data to version 3.");
+                }
             }
         }
 

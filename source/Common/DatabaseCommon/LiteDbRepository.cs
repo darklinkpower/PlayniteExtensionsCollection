@@ -225,6 +225,58 @@ namespace DatabaseCommon
             }
         }
 
+        public T FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return _collection.Find(predicate).FirstOrDefault();
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
+        public bool Any(Expression<Func<T, bool>> predicate)
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return _collection.Exists(predicate);
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return _collection.Count(predicate);
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
+        public int CountAll()
+        {
+            _lock.EnterReadLock();
+            try
+            {
+                return _collection.Count();
+            }
+            finally
+            {
+                _lock.ExitReadLock();
+            }
+        }
+
         public bool Update(T item)
         {
             _lock.EnterWriteLock();
@@ -274,6 +326,23 @@ namespace DatabaseCommon
             {
                 _deleteIdsBuffer.Add(id);
                 StartAutoProcessTimer();
+            }
+            finally
+            {
+                _lock.ExitWriteLock();
+            }
+        }
+
+        public void DeleteAll()
+        {
+            _lock.EnterWriteLock();
+            try
+            {
+                StopAutoProcessTimer();
+                _deleteBuffer.Clear();
+                _deleteIdsBuffer.Clear();
+                _collection.Delete(Query.All());
+                _db.Shrink();
             }
             finally
             {

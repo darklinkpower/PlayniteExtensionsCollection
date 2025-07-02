@@ -17,7 +17,7 @@ namespace ReviewViewer.Domain
         public PlaytimeDevice PlaytimeDevice { get; set; } = PlaytimeDevice.All;
         public DisplayType Display { get; set; } = DisplayType.MostHelpful;
         public LanguageSelectionMode LanguageSelectionMode { get; set; } = LanguageSelectionMode.Custom;
-        public List<SteamLanguage> SelectedLanguages { get; set; } = new List<SteamLanguage> { SteamLanguage.English };
+        public List<SteamLanguage> SelectedLanguages { get; set; } = new List<SteamLanguage>();
         public bool UseHelpfulSystem { get; set; } = true;
         public bool FilterOfftopicActivity { get; set; } = true;
     }

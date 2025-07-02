@@ -80,11 +80,15 @@ namespace ReviewViewer
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
             {
+                savedSettings.LastUsedQuery.SelectedLanguages =
+                    savedSettings.LastUsedQuery.SelectedLanguages?.Distinct().ToList()
+                    ?? new List<SteamLanguage> { SteamLanguage.English };
                 Settings = savedSettings;
             }
             else
             {
                 Settings = new ReviewViewerSettings();
+                Settings.LastUsedQuery.SelectedLanguages = new List<SteamLanguage> { SteamLanguage.English };
             }
         }
 
