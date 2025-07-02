@@ -19,7 +19,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                 <CheckBox IsChecked="{Binding Settings.DownloadDataIfOlderThanDays}"
                           VerticalAlignment="Center" Content="{DynamicResource LOCReview_Viewer_SettingDownloadOnGameSelectionIfOlderThanDescription}" />
-                <Slider Margin="10,0,0,0" Minimum="1" Maximum="30" Width="250"
+                <Slider Margin="10,0,0,0" Minimum="1" Maximum="60" Width="250"
                         VerticalAlignment="Center"
                         TickFrequency="1" IsSnapToTickEnabled="True"
                         Value="{Binding Settings.DownloadIfOlderThanValue}" />

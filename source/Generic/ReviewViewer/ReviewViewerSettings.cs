@@ -12,6 +12,8 @@ namespace ReviewViewer
     public class ReviewViewerSettings : ObservableObject
     {
         public QueryOptions LastUsedQuery { get; set; } = new QueryOptions();
+        public DateTime LastReviewsDbCompactTime { get; set; } = DateTime.UtcNow;
+
         public int DatabaseVersion { get; set; } = 1;
 
         private bool _downloadDataIfOlderThanDays = true;
@@ -25,7 +27,7 @@ namespace ReviewViewer
             }
         }
 
-        private int _downloadIfOlderThanValue = 7;
+        private int _downloadIfOlderThanValue = 14;
         public int DownloadIfOlderThanValue
         {
             get => _downloadIfOlderThanValue;
