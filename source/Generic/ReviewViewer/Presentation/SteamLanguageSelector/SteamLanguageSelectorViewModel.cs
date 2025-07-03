@@ -20,7 +20,7 @@ namespace ReviewViewer.Presentation.SteamLanguageSelector
 
         private readonly Window _window;
 
-        public SteamLanguageSelectorViewModel(List<SteamLanguage> selectedLanguages, Window window)
+        public SteamLanguageSelectorViewModel(HashSet<SteamLanguage> selectedLanguages, Window window)
         {
             _window = window;
 
@@ -38,10 +38,14 @@ namespace ReviewViewer.Presentation.SteamLanguageSelector
             CancelCommand = new RelayCommand(() => Cancel());
         }
 
-        private void Confirm(List<SteamLanguage> selectedLanguages)
+        private void Confirm(HashSet<SteamLanguage> selectedLanguages)
         {
             selectedLanguages.Clear();
-            selectedLanguages.AddRange(Languages.Where(x => x.IsSelected).Select(x => x.Language));
+            foreach (var optionEntry in Languages.Where(x => x.IsSelected))
+            {
+                selectedLanguages.Add(optionEntry.Language);
+            }
+
             DialogResult = true;
             _window.Close();
         }

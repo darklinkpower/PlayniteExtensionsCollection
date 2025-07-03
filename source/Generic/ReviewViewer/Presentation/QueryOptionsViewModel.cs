@@ -111,12 +111,12 @@ namespace ReviewViewer.Presentation
         }
         private LanguageSelectionMode _languageSelectionMode = LanguageSelectionMode.Custom;
 
-        public List<SteamLanguage> SelectedLanguages
+        public HashSet<SteamLanguage> SelectedLanguages
         {
             get => _selectedLanguages;
             set => SetValue(ref _selectedLanguages, value);
         }
-        private List<SteamLanguage> _selectedLanguages = new List<SteamLanguage> { SteamLanguage.English };
+        private HashSet<SteamLanguage> _selectedLanguages = new HashSet<SteamLanguage> { SteamLanguage.English };
 
         public bool UseHelpfulSystem
         {
@@ -148,7 +148,9 @@ namespace ReviewViewer.Presentation
                 PlaytimeDevice = domain.PlaytimeDevice,
                 Display = domain.Display,
                 LanguageSelectionMode = domain.LanguageSelectionMode,
-                SelectedLanguages = domain.SelectedLanguages.ToList(),
+                SelectedLanguages = domain.SelectedLanguages != null
+                    ? new HashSet<SteamLanguage>(domain.SelectedLanguages)
+                    : new HashSet<SteamLanguage>(),
                 UseHelpfulSystem = domain.UseHelpfulSystem,
                 FilterOfftopicActivity = domain.FilterOfftopicActivity
             };
@@ -170,7 +172,9 @@ namespace ReviewViewer.Presentation
                 PlaytimeDevice = this.PlaytimeDevice,
                 Display = this.Display,
                 LanguageSelectionMode = this.LanguageSelectionMode,
-                SelectedLanguages = this.SelectedLanguages.ToList(),
+                SelectedLanguages = this.SelectedLanguages != null
+                    ? new HashSet<SteamLanguage>(this.SelectedLanguages)
+                    : new HashSet<SteamLanguage>(),
                 UseHelpfulSystem = this.UseHelpfulSystem,
                 FilterOfftopicActivity = this.FilterOfftopicActivity
             };
