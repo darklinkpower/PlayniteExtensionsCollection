@@ -14,6 +14,8 @@
     <common:PluginUserControlBase.Resources>
         <BitmapImage x:Key="IconReviewCounted"
                  UriSource="pack://application:,,,/ReviewViewer;component/Presentation/Resources/icon_review_counted.png"/>
+        <BitmapImage x:Key="IconReviewNotCounted"
+                 UriSource="pack://application:,,,/ReviewViewer;component/Presentation/Resources/icon_review_notcounted.png"/>
         <BitmapImage x:Key="IconReviewSteamDeck"
                  UriSource="pack://application:,,,/ReviewViewer;component/Presentation/Resources/icon_review_steamdeck.png"/>
         <commonConverters:EnumEqualityConverter x:Key="EnumEqualityConverter"/>
@@ -452,6 +454,10 @@
                                RenderOptions.BitmapScalingMode="Fant"
                                Visibility="{Binding DisplayIconReviewCounted, Converter={StaticResource BooleanToVisibilityConverter}}"
                                ToolTip="This review is counted in the overall review score because this user purchased the game directly on Steam or got a free license of a free game" />
+                        <Image Source="{StaticResource IconReviewNotCounted}" DockPanel.Dock="Right" Opacity="0.5" Margin="10,0,0,0" Height="16" VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Visibility="{Binding DisplayIconReviewCounted, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                               ToolTip="This review is not counted in the overall review score because this user activated the product via a Steam key, received as a gift, or via a temporary free license" />
                         <Image Source="{StaticResource IconReviewSteamDeck}" DockPanel.Dock="Right" Opacity="0.5" Margin="10,0,0,0" Height="16" VerticalAlignment="Center"
                                RenderOptions.BitmapScalingMode="Fant"
                                Visibility="{Binding DisplayIconReviewSteamDeck, Converter={StaticResource BooleanToVisibilityConverter}}"
