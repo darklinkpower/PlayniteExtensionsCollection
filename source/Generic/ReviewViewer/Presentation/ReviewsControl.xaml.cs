@@ -716,11 +716,16 @@ namespace ReviewViewer.Presentation
 
         public async Task UpdateReviewsContextAsync(CancellationToken cancellationToken, bool forceRefresh)
         {
+            if (CurrentSteamId.IsNullOrEmpty())
+            {
+                return;
+            }
+
             var contextId = Guid.NewGuid();
             var executingContextId = contextId;
 
             var requestQuery = _queryOptions.ToDomain();
-            var requestKey = $"{CurrentSteamId}_{Serialization.ToJson(requestQuery)}";
+            var requestKey = CacheKeyBuilder.BuildCacheKey(int.Parse(CurrentSteamId), requestQuery);;
             // To prevent making a request unnecessarily
             if ((_activeRequestQueryKey == requestKey && !forceRefresh) || CurrentSteamId.IsNullOrEmpty())
             {

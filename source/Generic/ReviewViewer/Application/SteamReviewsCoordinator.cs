@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DatabaseCommon;
@@ -36,9 +38,9 @@ namespace ReviewViewer.Application
             CancellationToken cancellationToken,
             string cursor = "*")
         {
-            var cacheKey = $"{appId}_{Serialization.ToJson(options)}_{cursor}";
+            var cacheKey = CacheKeyBuilder.BuildCacheKey(appId, options, cursor);
             var hashedCacheKey = cacheKey.ToHashedKey();
-            var existingCache = _repository.Find(x => x.CacheKey == hashedCacheKey).FirstOrDefault();
+            var existingCache = _repository.FirstOrDefault(x => x.CacheKey == hashedCacheKey);
             if (!forceRefresh && existingCache != null && (DateTime.UtcNow - existingCache.CreatedAt) < _cacheDuration)
             {
                 return existingCache.Response;
@@ -69,6 +71,5 @@ namespace ReviewViewer.Application
 
             return null;
         }
-
     }
 }

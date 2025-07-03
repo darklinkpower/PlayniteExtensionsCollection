@@ -247,6 +247,7 @@
     <Compile Include="..\..\Common\SteamCommon\Common.cs">
       <Link>Shared\SteamCommon\Common.cs</Link>
     </Compile>
+    <Compile Include="Application\CacheKeyBuilder.cs" />
     <Compile Include="Application\ISteamReviewsProvider.cs" />
     <Compile Include="Application\SteamReviewsCoordinator.cs" />
     <Compile Include="BbCodeProcessor.cs" />
