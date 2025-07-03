@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -61,6 +62,14 @@ namespace ReviewViewer.Presentation
         {
             get => _displayNoReviewsPanel;
             set { SetValue(ref _displayNoReviewsPanel, value); }
+        }
+
+        private bool _displayTextReceivedForFree;
+
+        public bool DisplayTextReceivedForFree
+        {
+            get => _displayTextReceivedForFree;
+            set { SetValue(ref _displayTextReceivedForFree, value); }
         }
 
         private bool _displayIconReviewCounted;
@@ -541,6 +550,8 @@ namespace ReviewViewer.Presentation
                 IconReviewSteamDeckTooltip = string.Empty;
                 DisplayIconReviewSteamDeck = false;
             }
+
+            DisplayTextReceivedForFree = SelectedReview.ReceivedForFree;
         }
 
         private void UpdateClearFiltersButtons()

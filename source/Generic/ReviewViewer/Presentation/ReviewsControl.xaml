@@ -337,6 +337,7 @@
                         Content="Played mostly on Steam Deck"
                         Command="{Binding PlayedMostlyOnSteamDeckFilterClearCommand}"/>
             </WrapPanel>
+            
             <Grid>
                 <Grid Visibility="{Binding DisplayProgressPanel, Converter={StaticResource BooleanToVisibilityConverter}}"
                       MinHeight="200">
@@ -464,6 +465,12 @@
                                ToolTip="{Binding IconReviewSteamDeckTooltip}" />
                     </DockPanel>
 
+                    <TextBlock Text="Product received for free" Margin="0,0,0,15"
+                               ToolTip="This reviewer received the game for free."
+                               Visibility="{Binding DisplayTextReceivedForFree, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               Foreground="#dd8763"
+                               TextWrapping="Wrap" />
+                    
                     <Border BorderBrush="#66ffffff" BorderThickness="1"
                             Visibility="{Binding DisplayEarlyAccessLabel, Converter={StaticResource BooleanToVisibilityConverter}}"
                             Background="{StaticResource SectionHeaderBackgroundBrush}" Padding="4,1,4,1"
