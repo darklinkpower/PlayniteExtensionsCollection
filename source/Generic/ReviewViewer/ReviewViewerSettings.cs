@@ -109,6 +109,12 @@ namespace ReviewViewer
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
             plugin.SavePluginSettings(Settings);
+            var settingsChangedInfo = new SettingsChangedInfo<ReviewViewerSettings>(
+                Serialization.GetClone(editingClone),
+                Serialization.GetClone(Settings)
+            );
+
+            OnSettingsChanged?.Invoke(settingsChangedInfo);
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -119,5 +125,7 @@ namespace ReviewViewer
             errors = new List<string>();
             return true;
         }
+
+        public event Action<SettingsChangedInfo<ReviewViewerSettings>> OnSettingsChanged;
     }
 }

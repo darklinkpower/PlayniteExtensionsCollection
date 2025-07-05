@@ -62,6 +62,12 @@ namespace ReviewViewer
 
             _steamReviewsCoordinator = new SteamReviewsCoordinator(
                 new SteamReviewsService(TimeSpan.FromMilliseconds(1100)), _reviewsRecordsDatabase, TimeSpan.FromDays(Settings.Settings.DownloadIfOlderThanValue));
+            Settings.OnSettingsChanged += Settings_OnSettingsChanged;
+        }
+
+        private void Settings_OnSettingsChanged(SettingsChangedInfo<ReviewViewerSettings> settingsChangedInfo)
+        {
+            _steamReviewsCoordinator.ChangeCacheDuration(TimeSpan.FromDays(Settings.Settings.DownloadIfOlderThanValue));
         }
 
         public override Control GetGameViewControl(GetGameViewControlArgs args)
