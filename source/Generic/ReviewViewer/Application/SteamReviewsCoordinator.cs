@@ -15,7 +15,7 @@ namespace ReviewViewer.Application
     {
         private readonly ISteamReviewsProvider _reviewProvider;
         private readonly LiteDbRepository<ReviewsResponseRecord> _repository;
-        private readonly TimeSpan _cacheDuration;
+        private TimeSpan _cacheDuration;
 
         public SteamReviewsCoordinator(
             ISteamReviewsProvider reviewProvider,
@@ -24,6 +24,11 @@ namespace ReviewViewer.Application
         {
             _reviewProvider = reviewProvider;
             _repository = repository;
+            _cacheDuration = cacheDuration;
+        }
+
+        public void ChangeCacheDuration(TimeSpan cacheDuration)
+        {
             _cacheDuration = cacheDuration;
         }
 

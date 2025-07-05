@@ -191,3 +191,9 @@ Packages:
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2024.05.31_4157eed2/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_29.pext
     Changelog:
     - 'Fixed: Not adding tags that indicate that games imported on Playnite have expired on Game Pass (By sukarn-m)'
+  - Version: 2.30
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-07-05
+    PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2025.07.05_c6fc93a5/GamePassCatalogBrowser_50c85177-570f-4494-be16-99d6aa5b8a93_2_30.pext
+    Changelog:
+    - 'Added: Support for more countries when selecting the Game Pass catalog region in the extension settings.'
