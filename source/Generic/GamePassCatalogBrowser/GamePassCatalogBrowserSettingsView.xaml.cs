@@ -21,12 +21,113 @@ namespace GamePassCatalogBrowser
         public GamePassCatalogBrowserSettingsView()
         {
             InitializeComponent();
-            string[] regionCodes = { "AR", "AU", "AT", "BE", "BR", "CA", "CL", "CN", "CO", "CZ", "DK", "FI", "FR", "GE", "DE", "GR", "HK", "HU", "IN", "IL", "IT", "JP", "KR", "MX", "NL", "NZ", "NO", "PL", "RU", "SA", "ES", "SE", "CH", "TW", "TR", "AE", "GB", "US" };
-            var regionsDictionary = new Dictionary<string, string> { };
-            foreach (string regionCode in regionCodes)
+            // From https://www.xbox.com/en-US/regions
+            var regionCodes = new List<string>
             {
-                var regionInfo = new RegionInfo(regionCode);
-                regionsDictionary.Add(regionCode, regionInfo.NativeName);
+                "AL", // Albania
+                "DZ", // Algeria
+                "AR", // Argentina
+                "AU", // Australia
+                "AT", // Austria
+                "BH", // Bahrain
+                "BE", // Belgium
+                "BO", // Bolivia
+                "BA", // Bosnia & Herzegovina
+                "BR", // Brazil
+                "BG", // Bulgaria
+                "CA", // Canada
+                "CL", // Chile
+                //"CN", // China
+                "CO", // Colombia
+                "CR", // Costa Rica
+                "HR", // Croatia
+                "CY", // Cyprus
+                "CZ", // Czechia
+                "DK", // Denmark
+                "EC", // Ecuador
+                "EG", // Egypt
+                "SV", // El Salvador
+                "EE", // Estonia
+                "FI", // Finland
+                "FR", // France
+                "GE", // Georgia
+                "DE", // Germany
+                "GR", // Greece
+                "GT", // Guatemala
+                "HN", // Honduras
+                "HK", // Hong Kong SAR
+                "HU", // Hungary
+                "IS", // Iceland
+                "IN", // India
+                "ID", // Indonesia
+                "IE", // Ireland
+                "IL", // Israel
+                "IT", // Italy
+                "JP", // Japan
+                "KR", // Korea
+                "KW", // Kuwait
+                "LV", // Latvia
+                "LY", // Libya
+                "LI", // Liechtenstein
+                "LT", // Lithuania
+                "LU", // Luxembourg
+                "MY", // Malaysia
+                "MT", // Malta
+                "MX", // Mexico
+                "MD", // Moldova
+                "ME", // Montenegro
+                "MA", // Morocco
+                "NL", // Netherlands
+                "NZ", // New Zealand
+                "NI", // Nicaragua
+                "MK", // North Macedonia
+                "NO", // Norway
+                "OM", // Oman
+                "PA", // Panama
+                "PY", // Paraguay
+                "PE", // Peru
+                "PH", // Philippines
+                "PL", // Poland
+                "PT", // Portugal
+                "QA", // Qatar
+                "RO", // Romania
+                "RU", // Russia
+                "SA", // Saudi Arabia
+                "RS", // Serbia
+                "SG", // Singapore
+                "SK", // Slovakia
+                "SI", // Slovenia
+                "ZA", // South Africa
+                "ES", // Spain
+                "SE", // Sweden
+                "CH", // Switzerland
+                "TW", // Taiwan
+                "TH", // Thailand
+                "TN", // Tunisia
+                "TR", // Turkey
+                "UA", // Ukraine
+                "AE", // United Arab Emirates
+                "GB", // United Kingdom
+                "US", // United States
+                "UY", // Uruguay
+                "VN"  // Vietnam
+            };
+
+            var regionsDictionary = new Dictionary<string, string> { };
+            foreach (var regionCode in regionCodes)
+            {
+                try
+                {   
+                    if (!regionsDictionary.ContainsKey(regionCode))
+                    {
+                        var regionInfo = new RegionInfo(regionCode);
+                        regionsDictionary.Add(regionCode, regionInfo.NativeName);
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
             }
 
             regionsComboBox.ItemsSource = regionsDictionary;
