@@ -12,6 +12,7 @@ I giochi precedentemente disinstallati sono stati impostati come installati: {1}
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">Aggiunta la funzione Ignora a {0} gioco(i).</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">Rimosso la funzione Ignora da {0} gioco(i).</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Aggiornamento terminato dei tag dell'unità di installazione.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">Updating installation status of games…</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Aggiornamento tag unità di installazione...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Rileva i giochi con un'azione di tipo &quot;Collegamento&quot; come installato</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Rileva i giochi con un'azione di tipo &quot;Script&quot; come installato</sys:String>
