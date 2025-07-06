@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InstallationStatusUpdater.Views
+namespace InstallationStatusUpdater.Presentation
 {
     /// <summary>
     /// Interaction logic for StatusUpdateResultsWindow.xaml

@@ -1,6 +1,6 @@
-﻿namespace InstallationStatusUpdater.Enums
+﻿namespace InstallationStatusUpdater.Domain.Results
 {
-    public enum DetectedInstallationStatus
+    public enum InstallationDetectionResult
     {
         Installed = 0,
         Uninstalled = 1,

@@ -57,7 +57,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StatusUpdateResultsWindow.xaml">
+    <Page Include="Presentation\StatusUpdateResultsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,18 +108,23 @@
     <Compile Include="..\..\common\pluginscommon\ProcessStarter.cs">
       <Link>Shared\PluginsCommon\ProcessStarter.cs</Link>
     </Compile>
-    <Compile Include="Enums\DetectedInstallationStatus.cs" />
+    <Compile Include="Application\DeviceEventWatcherService.cs" />
+    <Compile Include="Application\DirectoryWatcherService.cs" />
+    <Compile Include="Domain\Results\StatusUpdateResults.cs" />
+    <Compile Include="Domain\Results\UpdatedEntryData.cs" />
+    <Compile Include="Domain\ValueObjects\WatchedDirectory.cs" />
+    <Compile Include="Domain\Results\InstallationDetectionResult.cs" />
+    <Compile Include="Application\GamesInstallationStatusScanner.cs" />
     <Compile Include="InstallationStatusUpdater.cs" />
     <Compile Include="InstallationStatusUpdaterSettings.cs" />
-    <Compile Include="InstallationStatusUpdaterSettingsView.xaml.cs">
+    <Compile Include="Presentation\InstallationStatusUpdaterSettingsView.xaml.cs">
       <DependentUpon>InstallationStatusUpdaterSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\StatusUpdateResults.cs" />
-    <Compile Include="Models\UpdatedEntryData.cs" />
+    <Compile Include="Application\PathsResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\SelectableDirectoryPath.cs" />
-    <Compile Include="ViewModels\StatusUpdateResultsWindowViewModel.cs" />
-    <Compile Include="Views\StatusUpdateResultsWindow.xaml.cs">
+    <Compile Include="Application\TagsUpdater.cs" />
+    <Compile Include="Presentation\StatusUpdateResultsWindowViewModel.cs" />
+    <Compile Include="Presentation\StatusUpdateResultsWindow.xaml.cs">
       <DependentUpon>StatusUpdateResultsWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -130,7 +135,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="InstallationStatusUpdaterSettingsView.xaml">
+    <Page Include="Presentation\InstallationStatusUpdaterSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,6 +145,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PostBuildEvent>

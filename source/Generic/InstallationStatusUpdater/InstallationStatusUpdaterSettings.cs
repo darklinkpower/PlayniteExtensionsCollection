@@ -1,4 +1,4 @@
-﻿using InstallationStatusUpdater.Models;
+﻿using InstallationStatusUpdater.Domain.ValueObjects;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
@@ -21,13 +21,13 @@ namespace InstallationStatusUpdater
         public bool UpdateLocTagsOnLibUpdate { get; set; } = false;
         public bool UpdateStatusOnUsbChanges { get; set; } = true;
         public bool UpdateStatusOnDirChanges { get; set; } = false;
-        private List<SelectableDirectory> detectionDirectories { get; set; } = new List<SelectableDirectory>();
-        public List<SelectableDirectory> DetectionDirectories
+        private List<WatchedDirectory> _detectionDirectories = new List<WatchedDirectory>();
+        public List<WatchedDirectory> DetectionDirectories
         {
-            get => detectionDirectories;
+            get => _detectionDirectories;
             set
             {
-                detectionDirectories = value;
+                _detectionDirectories = value;
                 OnPropertyChanged();
             }
         }
@@ -35,30 +35,29 @@ namespace InstallationStatusUpdater
 
     public class InstallationStatusUpdaterSettingsViewModel : ObservableObject, ISettings
     {
-        private IPlayniteAPI PlayniteApi;
-        private readonly InstallationStatusUpdater plugin;
-        private InstallationStatusUpdaterSettings editingClone { get; set; }
+        private readonly IPlayniteAPI _playniteApi;
+        private readonly InstallationStatusUpdater _plugin;
+        private InstallationStatusUpdaterSettings _editingClone;
 
-        private InstallationStatusUpdaterSettings settings;
+        private InstallationStatusUpdaterSettings _settings;
         public InstallationStatusUpdaterSettings Settings
         {
-            get => settings;
+            get => _settings;
             set
             {
-                settings = value;
+                _settings = value;
                 OnPropertyChanged();
             }
         }
 
+        public RelayCommand AddDetectionDirectoryCommand { get; }
+        public RelayCommand<IList<object>> RemoveDetectionDirectoriesCommand { get; }
+
         public InstallationStatusUpdaterSettingsViewModel(InstallationStatusUpdater plugin, IPlayniteAPI playniteApi)
         {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
-
-            // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<InstallationStatusUpdaterSettings>();
-
-            // LoadPluginSettings returns null if not saved data is available.
+            _playniteApi = playniteApi ?? throw new ArgumentNullException(nameof(plugin));
+            _plugin = plugin ?? throw new ArgumentNullException(nameof(plugin));
+            var savedSettings = _plugin.LoadPluginSettings<InstallationStatusUpdaterSettings>();
             if (savedSettings != null)
             {
                 Settings = savedSettings;
@@ -68,27 +67,30 @@ namespace InstallationStatusUpdater
                 Settings = new InstallationStatusUpdaterSettings();
             }
 
-            PlayniteApi = playniteApi;
+            AddDetectionDirectoryCommand = new RelayCommand(() => AddNewDetectionDirectory());
+            RemoveDetectionDirectoriesCommand = new RelayCommand<IList<object>>(
+                items => RemoveDetectionDirectories(items),
+                (items) => items != null && items.Count > 0);
         }
 
         public void BeginEdit()
         {
             // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            _editingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            Settings = _editingClone;
         }
 
         public void EndEdit()
         {
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            _plugin.SavePluginSettings(Settings);
         }
 
         public bool VerifySettings(out List<string> errors)
@@ -100,41 +102,40 @@ namespace InstallationStatusUpdater
             return true;
         }
 
-        public RelayCommand<object> AddDetectionDirectoryCommand
+        private void AddNewDetectionDirectory()
         {
-            get => new RelayCommand<object>((a) =>
+            var newDir = _playniteApi.Dialogs.SelectFolder();
+            if (newDir.IsNullOrEmpty())
             {
-                var newDir = PlayniteApi.Dialogs.SelectFolder();
-                if (string.IsNullOrEmpty(newDir))
-                {
-                    return;
-                }
-                if (Settings.DetectionDirectories.FirstOrDefault(s => s.DirectoryPath.Equals(newDir, StringComparison.OrdinalIgnoreCase)) != null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                var newDetectionDirectory = new SelectableDirectory
-                {
-                    DirectoryPath = newDir,
-                    Enabled = true,
-                    ScanSubDirs = false
-                };
-                Settings.DetectionDirectories.Add(newDetectionDirectory);
-                Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
-            });
+            if (Settings.DetectionDirectories
+                .FirstOrDefault(s => s.DirectoryPath.Equals(newDir, StringComparison.OrdinalIgnoreCase)) != null)
+            {
+                return;
+            }
+
+            var newDetectionDirectory = new WatchedDirectory
+            {
+                DirectoryPath = newDir,
+                Enabled = true,
+                ScanSubDirs = false
+            };
+
+            Settings.DetectionDirectories.Add(newDetectionDirectory);
+            Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
         }
 
-        public RelayCommand<IList<object>> RemoveDetectionDirectoryCommand
+        private void RemoveDetectionDirectories(IList<object> items)
         {
-            get => new RelayCommand<IList<object>>((items) =>
+            var directories = items.OfType<WatchedDirectory>().ToList();
+            foreach (var dir in directories)
             {
-                foreach (SelectableDirectory item in items.ToList())
-                {
-                    Settings.DetectionDirectories.Remove(item);
-                }
-                Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
-            }, (items) => items != null && items.Count > 0);
+                Settings.DetectionDirectories.Remove(dir);
+            }
+
+            Settings.DetectionDirectories = Serialization.GetClone(Settings.DetectionDirectories);
         }
     }
 }
