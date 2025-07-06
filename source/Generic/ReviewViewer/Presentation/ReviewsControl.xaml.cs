@@ -732,22 +732,22 @@ namespace ReviewViewer.Presentation
                 return;
             }
 
-            var contextId = Guid.NewGuid();
-            var executingContextId = contextId;
-
-            var requestQuery = _queryOptions.ToDomain();
-            var requestKey = CacheKeyBuilder.BuildCacheKey(int.Parse(CurrentSteamId), requestQuery);;
-            // To prevent making a request unnecessarily
-            if ((_activeRequestQueryKey == requestKey && !forceRefresh) || CurrentSteamId.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            SettingsModel.Settings.LastUsedQuery = requestQuery;
-            _activeRequestQueryKey = requestKey;
             try
             {
                 _inProgressDataUpdates++;
+                var contextId = Guid.NewGuid();
+                var executingContextId = contextId;
+                var requestQuery = _queryOptions.ToDomain();
+                var requestKey = CacheKeyBuilder.BuildCacheKey(int.Parse(CurrentSteamId), requestQuery); ;
+                // To prevent making a request unnecessarily
+                if ((_activeRequestQueryKey == requestKey && !forceRefresh) || CurrentSteamId.IsNullOrEmpty())
+                {
+                    return;
+                }
+
+                SettingsModel.Settings.LastUsedQuery = requestQuery;
+                _activeRequestQueryKey = requestKey;
+
                 UpdateSectionsVisibility();
                 var reviewsResponse = await _steamReviewsCoordinator
                     .GetReviewsAsync(int.Parse(CurrentSteamId), requestQuery, forceRefresh, cancellationToken: cancellationToken);
