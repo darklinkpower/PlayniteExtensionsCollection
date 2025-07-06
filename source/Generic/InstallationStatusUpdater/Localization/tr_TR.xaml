@@ -12,6 +12,7 @@ Daha önce kaldırılan oyunlar yüklü olarak ayarlandı: {1}</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterAddIgnoreFeatureMessage">{0} oyuna yoksayma özelliği eklendi.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterRemoveIgnoreFeatureMessage">{0} oyundan yoksayma özelliği kaldırıldı.</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsFinishMessage">Kurulum sürücüsü etiketlerinin güncellenmesi tamamlandı.</sys:String>
+    <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingInstallStatusProgressMessage">Updating installation status of games…</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterUpdatingTagsProgressMessage">Kurulum sürücüsü etiketleri güncelleniyor...</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingUrlActionIsInstalled">Yüklü olarak &quot;Bağlantı&quot; türündeki bir eyleme sahip oyunları algıla</sys:String>
     <sys:String x:Key="LOCInstallation_Status_Updater_StatusUpdaterSettingScriptActionIsInstalled">Yüklü olarak &quot;Script&quot; türündeki bir eyleme sahip oyunları algıla</sys:String>
